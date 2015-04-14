@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.stage.FileChooser;
 import sil.org.syllableparser.MainApp;
@@ -35,6 +36,13 @@ public class RootLayoutController implements Initializable {
 
 	private MainApp mainApp;
 	private Locale currentLocale;
+	@FXML private Button buttonCVApproach;
+	@FXML private Button buttonSonorityHierarchyApproach;
+	@FXML private Button buttonONCApproach;
+	@FXML private Button buttonMoraicApproach;
+	@FXML private Button buttonNuclearProjectionApproach;
+	@FXML private Button buttonOTApproach;
+	private Button currentButtonSelected;
 
 	private static String kSyllableParserDataExtension = ".sylpdata";
 	private String syllableParserFilterDescription;
@@ -47,6 +55,8 @@ public class RootLayoutController implements Initializable {
 	private String sChangeInterfaceLanguage;
 	private String sChooseInterfaceLanguage;
 	private String sChooseLanguage;
+	private String sNotImplementedYetHeader;
+	private String sNotImplementedYetContent;
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
@@ -144,12 +154,88 @@ public class RootLayoutController implements Initializable {
 		alert.showAndWait();
 	}
 
+	private void showNotImplemetnedYet() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(MainApp.kApplicationTitle);
+		alert.setHeaderText(sNotImplementedYetHeader);
+		alert.setContentText(sNotImplementedYetContent);
+
+		alert.showAndWait();
+	}
+
 	/**
 	 * Closes the application.
 	 */
 	@FXML
 	private void handleExit() {
 		System.exit(0);
+	}
+	
+	@FXML
+	private void handleApproachClick() {
+		
+	}
+
+	/**
+	 * CV Approach
+	 */
+	@FXML
+	private void handleCVApproach() {
+		toggleButtonSelectedStatus(buttonCVApproach);
+		showNotImplemetnedYet();
+	}
+
+	private void toggleButtonSelectedStatus(Button myButton) {
+		if (currentButtonSelected != null) {
+			currentButtonSelected.setStyle("-fx-background-color: #BFD0FF;");
+		}
+		currentButtonSelected = myButton;
+		myButton.setStyle("-fx-background-color: #F5DEB3;");
+	}
+
+	/**
+	 * Sonority Hierarchy Approach
+	 */
+	@FXML
+	private void handleSonorityHierarchyApproach() {
+		toggleButtonSelectedStatus(buttonSonorityHierarchyApproach);
+		showNotImplemetnedYet();
+	}
+
+	/**
+	 * ONC Approach
+	 */
+	@FXML
+	private void handleONCApproach() {
+		toggleButtonSelectedStatus(buttonONCApproach);
+		showNotImplemetnedYet();
+	}
+
+	/**
+	 * Moraic Approach
+	 */
+	@FXML
+	private void handleMoraicApproach() {
+		toggleButtonSelectedStatus(buttonMoraicApproach);
+		showNotImplemetnedYet();
+	}
+
+	/**
+	 * Nuclear Projection Approach
+	 */
+	@FXML
+	private void handleNuclearProjectionApproach() {
+		toggleButtonSelectedStatus(buttonNuclearProjectionApproach);
+		showNotImplemetnedYet();
+	}
+
+	/**
+	 * OT Approach
+	 */
+	@FXML
+	private void handleOTApproach() {
+		toggleButtonSelectedStatus(buttonOTApproach);
+		showNotImplemetnedYet();
 	}
 
 	/**
@@ -196,6 +282,8 @@ public class RootLayoutController implements Initializable {
 		sChooseInterfaceLanguage = bundle
 				.getString("dialog.chooseinterfacelanguage");
 		sChooseLanguage = bundle.getString("dialog.chooselanguage");
+		sNotImplementedYetHeader = bundle.getString("misc.niyheader");
+		sNotImplementedYetContent = bundle.getString("misc.niycontent");
 
 	}
 }

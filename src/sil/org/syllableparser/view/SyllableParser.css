@@ -1,0 +1,10 @@
+/* custom CSS for SYllable Parser */
+
+.button-blue {
+	-fx-background-color: #BFD0FF;
+	-fx-border-style: solid ;
+	
+}
+.button-selected {
+	-fx-background-color: #F5DEB3;
+}
