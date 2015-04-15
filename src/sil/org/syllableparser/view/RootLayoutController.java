@@ -1,6 +1,9 @@
 package sil.org.syllableparser.view;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +16,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,8 +25,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.stage.FileChooser;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.SyllableParserException;
+import sil.org.syllableparser.model.ApproachView;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -36,6 +45,10 @@ public class RootLayoutController implements Initializable {
 
 	private MainApp mainApp;
 	private Locale currentLocale;
+	@FXML private ListView<ApproachView> approachViews;
+	private ObservableList<ApproachView> cvApproachViews = FXCollections.observableArrayList();
+	private ObservableList<ApproachView> oncApproachViews = FXCollections.observableArrayList();
+		
 	@FXML private Button buttonCVApproach;
 	@FXML private Button buttonSonorityHierarchyApproach;
 	@FXML private Button buttonONCApproach;
@@ -72,6 +85,12 @@ public class RootLayoutController implements Initializable {
 				+ kSyllableParserDataExtension + ")";
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
 
+		cvApproachViews.add(new ApproachView("Segment Inventory", "handleSegmentInventory"));
+		cvApproachViews.add(new ApproachView("Natural Classes", "handleNaturalClasses"));
+	
+		oncApproachViews.add(new ApproachView("Segment Inventory", "handleSegmentInventory"));
+		oncApproachViews.add(new ApproachView("Onset Segments", "handleOnsetSegments"));
+		
 	}
 
 	/**
@@ -182,7 +201,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleCVApproach() {
 		toggleButtonSelectedStatus(buttonCVApproach);
-		showNotImplemetnedYet();
+		approachViews.setItems(cvApproachViews);
 	}
 
 	private void toggleButtonSelectedStatus(Button myButton) {
@@ -208,7 +227,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleONCApproach() {
 		toggleButtonSelectedStatus(buttonONCApproach);
-		showNotImplemetnedYet();
+		approachViews.setItems(oncApproachViews);
 	}
 
 	/**
@@ -285,5 +304,49 @@ public class RootLayoutController implements Initializable {
 		sNotImplementedYetHeader = bundle.getString("misc.niyheader");
 		sNotImplementedYetContent = bundle.getString("misc.niycontent");
 
+		toggleButtonSelectedStatus(buttonCVApproach);
+		approachViews.setItems(cvApproachViews);
+		
+		approachViews.setCellFactory((list) -> {
+		    return new ListCell<ApproachView>() {
+		        @Override
+		        protected void updateItem(ApproachView item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(item.getViewName());
+		            }
+		        }
+		    };
+		});
+
+		// Handle ListView selection changes.
+		MultipleSelectionModel<ApproachView> m = approachViews.getSelectionModel();
+		ReadOnlyObjectProperty<ApproachView> p = m.selectedItemProperty();
+		p.addListener((observable, oldValue, newValue) -> {
+			if (newValue != null) {
+				System.out.println("ListView Selection Changed (selected: " + 
+						newValue.getViewHandler() + ")");
+				try {
+					Class<?> c = Class.forName(this.getClass().getName());
+					Method method = c.getDeclaredMethod(newValue.getViewHandler(), (Class<?>[])null);
+					method.invoke(this, (Object[])null);
+				} catch (NoSuchMethodException nsme) {
+					SyllableParserException spe = new SyllableParserException(newValue.getViewHandler() +
+							" method not found in RootLayoutController\n" +
+							nsme.getMessage());
+					System.out.println(spe.getMessage());
+					} 
+
+				catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		
 	}
 }

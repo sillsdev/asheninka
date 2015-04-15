@@ -23,8 +23,8 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(kApplicationTitle);
 		
-		String x = ApplicationPreferences.getLastLocaleLanguage();
-		String y = ApplicationPreferences.getLastLocaleCountry();
+		ApplicationPreferences.getLastLocaleLanguage();
+		ApplicationPreferences.getLastLocaleCountry();
 		
 		locale = new Locale(ApplicationPreferences.getLastLocaleLanguage()); 
 		

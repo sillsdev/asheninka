@@ -42,7 +42,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Label text="%cv.view.segmentinventory" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <ListView fx:id="approachViews" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="183.0" prefWidth="158.0">
