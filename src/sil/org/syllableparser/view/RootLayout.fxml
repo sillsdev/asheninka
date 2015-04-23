@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -58,4 +59,7 @@
         </items>
       </SplitPane>
    </left>
+   <center>
+      <StackPane fx:id="approachViewContent" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

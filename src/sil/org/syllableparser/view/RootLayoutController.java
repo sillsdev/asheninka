@@ -21,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -28,6 +29,8 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
@@ -45,10 +48,6 @@ public class RootLayoutController implements Initializable {
 
 	private MainApp mainApp;
 	private Locale currentLocale;
-	@FXML private ListView<ApproachView> approachViews;
-	private ObservableList<ApproachView> cvApproachViews = FXCollections.observableArrayList();
-	private ObservableList<ApproachView> oncApproachViews = FXCollections.observableArrayList();
-		
 	@FXML private Button buttonCVApproach;
 	@FXML private Button buttonSonorityHierarchyApproach;
 	@FXML private Button buttonONCApproach;
@@ -57,6 +56,13 @@ public class RootLayoutController implements Initializable {
 	@FXML private Button buttonOTApproach;
 	private Button currentButtonSelected;
 
+	@FXML private ListView<ApproachView> approachViews;
+	private CVApproachController cvApproachController;
+	private ONCApproachController oncApproachController;
+	private Object currentApproachController;
+	
+	@FXML private StackPane approachViewContent;
+	
 	private static String kSyllableParserDataExtension = ".sylpdata";
 	private String syllableParserFilterDescription;
 	private String syllableParserFilterExtensions;
@@ -84,13 +90,7 @@ public class RootLayoutController implements Initializable {
 		syllableParserFilterDescription = sFileFilterDescription + " (*."
 				+ kSyllableParserDataExtension + ")";
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
-
-		cvApproachViews.add(new ApproachView("Segment Inventory", "handleSegmentInventory"));
-		cvApproachViews.add(new ApproachView("Natural Classes", "handleNaturalClasses"));
-	
-		oncApproachViews.add(new ApproachView("Segment Inventory", "handleSegmentInventory"));
-		oncApproachViews.add(new ApproachView("Onset Segments", "handleOnsetSegments"));
-		
+		ApproachViewNavigator.setMainController(this);
 	}
 
 	/**
@@ -201,7 +201,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleCVApproach() {
 		toggleButtonSelectedStatus(buttonCVApproach);
-		approachViews.setItems(cvApproachViews);
+		approachViews.setItems(cvApproachController.getViews());
+		currentApproachController = cvApproachController;
 	}
 
 	private void toggleButtonSelectedStatus(Button myButton) {
@@ -227,7 +228,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleONCApproach() {
 		toggleButtonSelectedStatus(buttonONCApproach);
-		approachViews.setItems(oncApproachViews);
+		approachViews.setItems(oncApproachController.getViews());
+		currentApproachController = oncApproachController;
 	}
 
 	/**
@@ -304,9 +306,17 @@ public class RootLayoutController implements Initializable {
 		sNotImplementedYetHeader = bundle.getString("misc.niyheader");
 		sNotImplementedYetContent = bundle.getString("misc.niycontent");
 
-		toggleButtonSelectedStatus(buttonCVApproach);
-		approachViews.setItems(cvApproachViews);
+		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
+		oncApproachController = new ONCApproachController(bundle);
+
+		// set initial approach (TODO: make it be based on user's last choice)
+		handleCVApproach();
 		
+		listenForChangesInApproachViews();
+		
+	}
+
+	private void listenForChangesInApproachViews() {
 		approachViews.setCellFactory((list) -> {
 		    return new ListCell<ApproachView>() {
 		        @Override
@@ -327,12 +337,10 @@ public class RootLayoutController implements Initializable {
 		ReadOnlyObjectProperty<ApproachView> p = m.selectedItemProperty();
 		p.addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
-				System.out.println("ListView Selection Changed (selected: " + 
-						newValue.getViewHandler() + ")");
 				try {
-					Class<?> c = Class.forName(this.getClass().getName());
+					Class<?> c = Class.forName(currentApproachController.getClass().getName());//this.getClass().getName());
 					Method method = c.getDeclaredMethod(newValue.getViewHandler(), (Class<?>[])null);
-					method.invoke(this, (Object[])null);
+					method.invoke(currentApproachController, (Object[])null);//this, (Object[])null);
 				} catch (NoSuchMethodException nsme) {
 					SyllableParserException spe = new SyllableParserException(newValue.getViewHandler() +
 							" method not found in RootLayoutController\n" +
@@ -344,9 +352,16 @@ public class RootLayoutController implements Initializable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 			}
 		});
-		
 	}
+	
+	 /**
+     * Replaces the approach view displayed in the view content with a new view/StackPane.
+     *
+     * @param node the view node to be swapped in.
+     */
+    public void setApproachView(Node node) {
+    	approachViewContent.getChildren().setAll(node);
+    }
 }

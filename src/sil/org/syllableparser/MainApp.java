@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.view.RootLayoutController;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -17,8 +20,8 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
 	private Locale locale;
 	public static String kApplicationTitle = "Syllable Parser";
-    
-	@Override
+	
+		@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(kApplicationTitle);
