@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.ApproachView;
+import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.CVSegment;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -25,14 +26,7 @@ public class CVApproachController {
 	private ObservableList<ApproachView> views = FXCollections
 			.observableArrayList();
 	private Locale locale;
-
-	private ObservableList<CVSegment> cvSegmentInventoryData = FXCollections.observableArrayList();
-
-	/* following or testing; will want something else eventually */
-    public ObservableList<CVSegment> getCVSegmentInventoryData() {
-        return cvSegmentInventoryData;
-    }
-	
+	private CVApproach cvApproachData;
 
 	public CVApproachController(ResourceBundle bundle,
 			Locale locale) {
@@ -56,29 +50,17 @@ public class CVApproachController {
 		return views;
 	}
 
+	public void setCVApproachData(CVApproach data) {
+		this.cvApproachData = data;
+	}
 	public void handleCVSegmentInventory() {
 		System.out.println("handleCVSegmentInventory reached");
-		ApproachViewNavigator.loadApproachView("CVSegmentInventory.fxml", locale);
-//			FXMLLoader loader = new FXMLLoader();
-//			loader.setLocation(MainApp.class
-//					.getResource("/sil/org/syllableparser/view/CVSegmentInventory.fxml"));
-//			loader.setResources(ResourceBundle.getBundle(
-//					"sil.org.syllableparser.resources.SyllableParser", locale));
-//
-//			content = (AnchorPane) loader.load();
-//
-//			// Set the person into the controller.
-//			CVSegmentInventoryController controller = loader.getController();
-//			//CVSegment segment = new CVSegment("a", "a A",
-//			//		"low mid unrounded vowel");
-//			//controller.setSegment(segment);
-//			
-//	    	cvSegmentInventoryData.add(new CVSegment("a", "a A", "low mid unrounded vowel"));
-//	    	cvSegmentInventoryData.add(new CVSegment("b", "b B", "voiced bilabial stop"));
-//	    	cvSegmentInventoryData.add(new CVSegment("d", "d D", "voiced alveolar stop"));
-//
-//	    	controller.setData(this);
-		// controller.setDialogStage(dialogStage);
+		
+		FXMLLoader loader = new FXMLLoader();
+        ApproachViewNavigator.loadApproachView(loader, "CVSegmentInventory.fxml", locale);
+		CVSegmentInventoryController controller = loader.getController();
+		
+	    controller.setData(cvApproachData);
 	}
 
 	public void handleCVNaturalClasses() {

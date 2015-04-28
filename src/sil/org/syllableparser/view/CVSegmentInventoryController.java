@@ -6,7 +6,7 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.CVSegment;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,15 +29,14 @@ public class CVSegmentInventoryController implements Initializable {
 	@FXML
 	private TableColumn<CVSegment, String> commentColumn;
 
-	// Reference to the main application.
-	/* hopefully we can figure out a way to not need this */
-	private MainApp mainApp;
 	@FXML
 	private TextField segmentField;
 	@FXML
 	private TextField graphemesField;
 	@FXML
 	private TextField commentField;
+	
+	private CVSegment currentSegment;
 
 	public CVSegmentInventoryController() {
 		
@@ -54,22 +53,59 @@ public class CVSegmentInventoryController implements Initializable {
         segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
         graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
         commentColumn.setCellValueFactory(cellData -> cellData.getValue().commentPropery());;
-    
+        
+        // Clear cv segment details.
+        showCVSegmentDetails(null);
+        
+        // Listen for selection changes and show the  details when changed.
+        cvSegmentTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showCVSegmentDetails(newValue));
+        
 		// Handle TextField text changes.
-		segmentField
-				.textProperty()
-				.addListener(
-						(observable, oldValue, newValue) -> {
-							System.out
-									.println("segment TextField Text Changed (newValue: "
-											+ newValue + ")");
-						});
+		segmentField.textProperty().addListener(
+				(observable, oldValue, newValue) -> {
+					currentSegment.setSegment(segmentField.getText());
+				});
+		graphemesField.textProperty().addListener(
+				(observable, oldValue, newValue) -> {
+					currentSegment.setGraphemes(graphemesField.getText());
+				});
+		commentField.textProperty().addListener(
+				(observable, oldValue, newValue) -> {
+					currentSegment.setComment(commentField.getText());
+				});
 
-		// Handle TextField enter key event.
+		// Use of Enter move focus to next item.
 		segmentField.setOnAction((event) -> {
-			System.out.println("Enter key in segment TextField");
+			graphemesField.requestFocus();
 		});
+		graphemesField.setOnAction((event) -> {
+			commentField.requestFocus();
+		});
+		
+		segmentField.requestFocus();
 
+	}
+
+	/**
+	 * Fills all text fields to show details about the CV segment.
+	 * If the specified segment is null, all text fields are cleared.
+	 * 
+	 * @param segment the segment or null
+	 */
+	private void showCVSegmentDetails(CVSegment segment) {
+		currentSegment = segment;
+	    if (segment != null) {
+	        // Fill the text fields with info from the person object.
+	        segmentField.setText(segment.getSegment());
+	        graphemesField.setText(segment.getGraphemes());
+	        commentField.setText(segment.getComment());
+	    } else {
+	        // Segment is null, remove all the text.
+	        segmentField.setText("");
+	        graphemesField.setText("");
+	        commentField.setText("");
+	    }
 	}
 
 	public void setSegment(CVSegment segment) {
@@ -81,13 +117,19 @@ public class CVSegmentInventoryController implements Initializable {
 	/**
      * Is called by the main application to give a reference back to itself.
      * 
-     * @param mainApp
+     * @param cvApproachController
      */
-    public void setData(CVApproachController mainApp) {
+    public void setData(CVApproach cvApproachData) {
         // needed? this.mainApp = mainApp;
 
         // Add observable list data to the table
-        cvSegmentTable.setItems(mainApp.getCVSegmentInventoryData());
+        cvSegmentTable.setItems(cvApproachData.getCVSegmentInventory());
+        if (cvSegmentTable.getItems().size() > 0) {
+        	// select one
+        	cvSegmentTable.requestFocus();
+        	cvSegmentTable.getSelectionModel().select(0);
+        	cvSegmentTable.getFocusModel().focus(0);
+        }
     }
 
 }

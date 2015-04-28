@@ -62,10 +62,10 @@ public class ApproachViewNavigator {
      *
      * @param fxml the fxml file to be loaded.
      */
-    public static void loadApproachView(String fxml, Locale locale) {
+    public static void loadApproachView(FXMLLoader loader, String fxml, Locale locale) {
         try {
 
-        	FXMLLoader loader = new FXMLLoader();
+        	//FXMLLoader loader = new FXMLLoader();
             loader.setLocation(ApproachViewNavigator.class.getResource(fxml));
             loader.setResources(ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale));
         	

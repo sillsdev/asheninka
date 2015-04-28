@@ -35,6 +35,7 @@ import javafx.stage.FileChooser;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
+import sil.org.syllableparser.model.LanguageProject;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -47,6 +48,7 @@ import sil.org.syllableparser.model.ApproachView;
 public class RootLayoutController implements Initializable {
 
 	private MainApp mainApp;
+	private LanguageProject languageProject;
 	private Locale currentLocale;
 	@FXML private Button buttonCVApproach;
 	@FXML private Button buttonSonorityHierarchyApproach;
@@ -83,14 +85,17 @@ public class RootLayoutController implements Initializable {
 	 * @param mainApp
 	 * @param locale
 	 *            TODO
+	 * @param languageProject TODO
 	 */
-	public void setMainApp(MainApp mainApp, Locale locale) {
+	public void setMainApp(MainApp mainApp, Locale locale, LanguageProject languageProject) {
 		this.mainApp = mainApp;
 		this.currentLocale = locale;
+		this.languageProject = languageProject;
 		syllableParserFilterDescription = sFileFilterDescription + " (*."
 				+ kSyllableParserDataExtension + ")";
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
 		ApproachViewNavigator.setMainController(this);
+		cvApproachController.setCVApproachData(languageProject.getCVApproach());
 	}
 
 	/**
@@ -103,7 +108,7 @@ public class RootLayoutController implements Initializable {
 	}
 
 	/**
-	 * Opens a FileChooser to let the user select an address book to load.
+	 * Opens a FileChooser to let the user select a language project to load.
 	 */
 	@FXML
 	private void handleOpen() {
@@ -114,23 +119,23 @@ public class RootLayoutController implements Initializable {
 				syllableParserFilterDescription, syllableParserFilterExtensions);
 		fileChooser.getExtensionFilters().add(extFilter);
 
-		// Show save file dialog
+		// Show open file dialog
 		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
 		if (file != null) {
-			// mainApp.loadPersonDataFromFile(file);
+			mainApp.loadLanguageData(file);
 		}
 	}
 
 	/**
-	 * Saves the file to the person file that is currently open. If there is no
+	 * Saves the file to the language project file that is currently open. If there is no
 	 * open file, the "save as" dialog is shown.
 	 */
 	@FXML
 	private void handleSave() {
-		File personFile = null; // mainApp.getPersonFilePath();
-		if (personFile != null) {
-			// mainApp.savePersonDataToFile(personFile);
+		File file = mainApp.getLanguageProjectFilePath();
+		if (file != null) {
+			mainApp.saveLanguageData(file);
 		} else {
 			handleSaveAs();
 		}
@@ -156,7 +161,7 @@ public class RootLayoutController implements Initializable {
 			if (!file.getPath().endsWith(kSyllableParserDataExtension)) {
 				file = new File(file.getPath() + kSyllableParserDataExtension);
 			}
-			// mainApp.savePersonDataToFile(file);
+			mainApp.saveLanguageData(file);
 		}
 	}
 
