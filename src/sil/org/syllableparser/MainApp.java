@@ -32,15 +32,15 @@ public class MainApp extends Application {
 	
 		@Override
 	public void start(Stage primaryStage) {
+		locale = new Locale(ApplicationPreferences.getLastLocaleLanguage()); 
+			
 		languageProject = new LanguageProject();
-		xmlBackEndProvider = new XMLBackEndProvider(languageProject);
+		xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(kApplicationTitle);
 		
 		ApplicationPreferences.getLastLocaleLanguage();
 		ApplicationPreferences.getLastLocaleCountry();
-		
-		locale = new Locale(ApplicationPreferences.getLastLocaleLanguage()); 
 		
 		final boolean usePrecannedData = false;
 		if (usePrecannedData) {
