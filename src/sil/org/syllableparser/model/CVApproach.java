@@ -5,6 +5,10 @@ package sil.org.syllableparser.model;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,6 +23,8 @@ public class CVApproach {
 	/**
 	 * @return the cvSegmentInventoryData
 	 */
+	@XmlElementWrapper(name = "cvSegments")
+	@XmlElement(name = "cvSegment")
 	public ObservableList<CVSegment> getCVSegmentInventory() {
 		return cvSegmentInventory;
 	}
@@ -35,6 +41,16 @@ public class CVApproach {
 	 */
 	public void clear() {
 		cvSegmentInventory.clear();
+	}
+
+	/**
+	 * @param cvApproach
+	 */
+	public void load(CVApproach cvApproachLoaded) {
+    	ObservableList<CVSegment> cvSegmentInventoryLoadedData = cvApproachLoaded.getCVSegmentInventory();
+		for (CVSegment cvSegment : cvSegmentInventoryLoadedData) {
+			cvSegmentInventory.add(cvSegment);
+		}
 	}
 	
 

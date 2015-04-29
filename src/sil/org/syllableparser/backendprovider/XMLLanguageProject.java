@@ -23,9 +23,14 @@ public class XMLLanguageProject {
 	
 	private XMLCVApproach xmlCVApproach;
 	
+	public XMLLanguageProject() {
+		xmlCVApproach = new XMLCVApproach();
+	}
+
 	public XMLLanguageProject(LanguageProject languageProject) {
 		super();
 		this.languageProject = languageProject;
+		xmlCVApproach = new XMLCVApproach(languageProject.getCVApproach());
 	}
 
 	@XmlElement(name = "cvApproach")
@@ -41,7 +46,9 @@ public class XMLLanguageProject {
 	 * Clear all data from a language project
 	 */
 	public void clear() {
-		languageProject.clear();
+		if (languageProject != null) {
+			languageProject.clear();
+		}
 		
 	}
 
@@ -49,6 +56,9 @@ public class XMLLanguageProject {
 	 * load (i.e., fluff up) all data in a language project from the XML
 	 */
 	public void load() {
+		if (languageProject == null) {
+			languageProject = new LanguageProject();
+		}
 		languageProject.clear(); // no-op for now
 		
 	}

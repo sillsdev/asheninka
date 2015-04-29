@@ -90,7 +90,7 @@ public class RootLayoutController implements Initializable {
 	public void setMainApp(MainApp mainApp, Locale locale, LanguageProject languageProject) {
 		this.mainApp = mainApp;
 		this.currentLocale = locale;
-		this.languageProject = languageProject;
+		this.setLanguageProject(languageProject);
 		syllableParserFilterDescription = sFileFilterDescription + " (*."
 				+ kSyllableParserDataExtension + ")";
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
@@ -369,4 +369,18 @@ public class RootLayoutController implements Initializable {
     public void setApproachView(Node node) {
     	approachViewContent.getChildren().setAll(node);
     }
+
+	/**
+	 * @return the languageProject
+	 */
+	public LanguageProject getLanguageProject() {
+		return languageProject;
+	}
+
+	/**
+	 * @param languageProject the languageProject to set
+	 */
+	public void setLanguageProject(LanguageProject languageProject) {
+		this.languageProject = languageProject;
+	}
 }

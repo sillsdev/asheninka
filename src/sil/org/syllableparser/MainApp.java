@@ -28,6 +28,7 @@ public class MainApp extends Application {
 	
 	public static String kApplicationTitle = "Syllable Parser";
 	private static String kLanguageProjectFilePath = "languageProjectFilePath";
+	private RootLayoutController controller;
 	
 		@Override
 	public void start(Stage primaryStage) {
@@ -41,12 +42,14 @@ public class MainApp extends Application {
 		
 		locale = new Locale(ApplicationPreferences.getLastLocaleLanguage()); 
 		
-		CVApproach cvApproach = languageProject.getCVApproach();
-		ObservableList<CVSegment> cvSegmentInventoryData = cvApproach.getCVSegmentInventory();
-	    cvSegmentInventoryData.add(new CVSegment("a", "a A", "low mid unrounded vowel"));
-	    cvSegmentInventoryData.add(new CVSegment("b", "b B", "voiced bilabial stop"));
-	    cvSegmentInventoryData.add(new CVSegment("d", "d D", "voiced alveolar stop"));
-
+		final boolean usePrecannedData = false;
+		if (usePrecannedData) {
+			CVApproach cvApproach = languageProject.getCVApproach();
+			ObservableList<CVSegment> cvSegmentInventoryData = cvApproach.getCVSegmentInventory();
+			cvSegmentInventoryData.add(new CVSegment("a", "a A", "low mid unrounded vowel"));
+			cvSegmentInventoryData.add(new CVSegment("b", "b B", "voiced bilabial stop"));
+			cvSegmentInventoryData.add(new CVSegment("d", "d D", "voiced alveolar stop"));
+		}
 
 		initRootLayout();
 		
@@ -81,8 +84,7 @@ public class MainApp extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-         // Give the controller access to the main app.
-            RootLayoutController controller = loader.getController();
+            controller = loader.getController();
             controller.setMainApp(this, locale, languageProject);
 
             primaryStage.show();
