@@ -87,6 +87,12 @@ public class MainApp extends Application {
             controller = loader.getController();
             controller.setMainApp(this, locale, languageProject);
 
+         // Try to load last opened file.
+            File file = ApplicationPreferences.getLastOpenedFile();
+            if (file != null) {
+            	xmlBackEndProvider.loadLanguageDataFromFile(file);
+            }
+            
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -103,12 +109,23 @@ public class MainApp extends Application {
     
     public void loadLanguageData(File file) {
     	xmlBackEndProvider.loadLanguageDataFromFile(file);
-    	setLanguageProjectFilePath(file);
-    }
+    	ApplicationPreferences.setLastOpenedFilePath(file);
+    	ApplicationPreferences.setLastOpenedDirectoryPath(file.getParent());
+	    updateStageTitle(file);
+	}
+
+	private void updateStageTitle(File file) {
+		if (file != null) {
+	        primaryStage.setTitle(kApplicationTitle + " - " + file.getName());
+	    } else {
+	        primaryStage.setTitle(kApplicationTitle);
+	    }
+	}
     public void saveLanguageData(File file) {
     	xmlBackEndProvider.saveLanguageDataToFile(file);
-    	setLanguageProjectFilePath(file);
-    }
+    	ApplicationPreferences.setLastOpenedFilePath(file);
+    	ApplicationPreferences.setLastOpenedDirectoryPath(file.getParent());
+	}
 	/**
 	 * Returns the languge project file preference, i.e. the file that was last opened.
 	 * The preference is read from the OS specific registry. If no such
@@ -123,27 +140,6 @@ public class MainApp extends Application {
 	        return new File(filePath);
 	    } else {
 	        return null;
-	    }
-	}
-
-	/**
-	 * Sets the file path of the currently loaded file. The path is persisted in
-	 * the OS specific registry.
-	 * 
-	 * @param file the file or null to remove the path
-	 */
-	public void setLanguageProjectFilePath(File file) {
-	    Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-	    if (file != null) {
-	        prefs.put(kLanguageProjectFilePath, file.getPath());
-
-	        // Update the stage title.
-	        primaryStage.setTitle(kApplicationTitle + " - " + file.getName());
-	    } else {
-	        prefs.remove("filePath");
-
-	        // Update the stage title.
-	        primaryStage.setTitle(kApplicationTitle);
 	    }
 	}
 }

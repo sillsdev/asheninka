@@ -32,6 +32,7 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
@@ -112,18 +113,28 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleOpen() {
+		String sDirectoryPath;
 		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
 				syllableParserFilterDescription, syllableParserFilterExtensions);
 		fileChooser.getExtensionFilters().add(extFilter);
+		sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
+		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
+			File initialDirectory = new File(sDirectoryPath);
+			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
+				fileChooser.setInitialDirectory(initialDirectory);
+			}
+		}
 
 		// Show open file dialog
 		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
 		if (file != null) {
 			mainApp.loadLanguageData(file);
+			sDirectoryPath = file.getParent();
+			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		}
 	}
 

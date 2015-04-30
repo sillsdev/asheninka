@@ -6,6 +6,7 @@ import java.util.prefs.Preferences;
 public class ApplicationPreferences {
 	
 	final static String kLastOpenedFilePath = "lastOpenedFilePath";
+	final static String kLastOpenedDirectoryPath = "lastOpenedDirectoryPath";
 	final static String kLastLocaleLanguage = "lastLocaleLanguage";
 	final static String kLastLocaleCountry = "lastLocaleCountry";
 	
@@ -60,6 +61,25 @@ public class ApplicationPreferences {
 
 	    } else {
 	        prefs.remove(kLastOpenedFilePath);
+	    }
+	}
+
+	public static String getLastOpenedDirectoryPath() {
+		String directoryPath = getPreferencesKey(kLastOpenedDirectoryPath);
+	    if (directoryPath != null) {
+	        return directoryPath;
+	    } else {
+	        return null;
+	    }
+	}
+
+	public static void setLastOpenedDirectoryPath(String directoryPath) {
+		Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+	    if (directoryPath != null) {
+	    	setPreferencesKey(kLastOpenedDirectoryPath, directoryPath);
+
+	    } else {
+	        prefs.remove(kLastOpenedDirectoryPath);
 	    }
 	}
 
