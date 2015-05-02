@@ -62,7 +62,7 @@ public class RootLayoutController implements Initializable {
 	@FXML private ListView<ApproachView> approachViews;
 	private CVApproachController cvApproachController;
 	private ONCApproachController oncApproachController;
-	private Object currentApproachController;
+	private ApproachController currentApproachController;
 	
 	@FXML private StackPane approachViewContent;
 	
@@ -99,13 +99,17 @@ public class RootLayoutController implements Initializable {
 		cvApproachController.setCVApproachData(languageProject.getCVApproach());
 	}
 
+	@FXML
+	private void handleInsertNewItem() {
+		currentApproachController.handleInsertNewItem();
+	}
 	/**
 	 * Creates an empty language project.
 	 */
 	@FXML
 	private void handleNew() {
-		// mainApp.getPersonData().clear();
-		// mainApp.setPersonFilePath(null);
+		mainApp.getLanguageProject().clear();
+		ApplicationPreferences.setLastOpenedFilePath((String)null);
 	}
 
 	/**

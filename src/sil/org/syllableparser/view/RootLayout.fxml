@@ -27,7 +27,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="%menu.insert">
               <items>
-                <MenuItem mnemonicParsing="false" text="%menu.insertnew" />
+                <MenuItem mnemonicParsing="false" onAction="#handleInsertNewItem" text="%menu.insertnew" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="%menu.view">

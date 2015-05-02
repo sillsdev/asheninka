@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
  * @author Andy Black
  *
  */
-public class ONCApproachController {
+public class ONCApproachController extends ApproachController  {
 	
 	private ObservableList<ApproachView> views = FXCollections.observableArrayList() ;
 	
@@ -45,6 +45,15 @@ public class ONCApproachController {
 	
 	public void handleONCWords() {
 		System.out.println("handleONCWords reached");
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleInsertNewItem()
+	 */
+	@Override
+	void handleInsertNewItem() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

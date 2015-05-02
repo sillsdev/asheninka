@@ -19,7 +19,7 @@ import javafx.scene.control.TextField;
  *
  */
 
-public class CVSegmentInventoryController implements Initializable {
+public class CVSegmentInventoryController extends ApproachController implements Initializable {
 	@FXML
 	private TableView<CVSegment> cvSegmentTable;
 	@FXML
@@ -36,6 +36,7 @@ public class CVSegmentInventoryController implements Initializable {
 	@FXML
 	private TextField commentField;
 	
+	private CVApproach cvApproach;
 	private CVSegment currentSegment;
 
 	public CVSegmentInventoryController() {
@@ -120,7 +121,7 @@ public class CVSegmentInventoryController implements Initializable {
      * @param cvApproachController
      */
     public void setData(CVApproach cvApproachData) {
-        // needed? this.mainApp = mainApp;
+        cvApproach = cvApproachData;
 
         // Add observable list data to the table
         cvSegmentTable.setItems(cvApproachData.getCVSegmentInventory());
@@ -131,5 +132,17 @@ public class CVSegmentInventoryController implements Initializable {
         	cvSegmentTable.getFocusModel().focus(0);
         }
     }
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleInsertNewItem()
+	 */
+	@Override
+	void handleInsertNewItem() {
+		CVSegment newSegment = new CVSegment();
+		cvApproach.getCVSegmentInventory().add(newSegment);
+		int i = cvApproach.getCVSegmentInventory().size() - 1;
+		cvSegmentTable.requestFocus();
+		cvSegmentTable.getSelectionModel().select(i);
+    	cvSegmentTable.getFocusModel().focus(i);
+	}
 
 }

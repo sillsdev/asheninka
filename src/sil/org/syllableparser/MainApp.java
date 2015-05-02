@@ -126,6 +126,10 @@ public class MainApp extends Application {
     	ApplicationPreferences.setLastOpenedFilePath(file);
     	ApplicationPreferences.setLastOpenedDirectoryPath(file.getParent());
 	}
+	public LanguageProject getLanguageProject() {
+		return languageProject;
+	}
+
 	/**
 	 * Returns the languge project file preference, i.e. the file that was last opened.
 	 * The preference is read from the OS specific registry. If no such

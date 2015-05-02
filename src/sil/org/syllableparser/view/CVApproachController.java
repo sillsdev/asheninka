@@ -21,12 +21,13 @@ import javafx.scene.layout.AnchorPane;
  * @author Andy Black
  *
  */
-public class CVApproachController {
+public class CVApproachController extends ApproachController {
 
 	private ObservableList<ApproachView> views = FXCollections
 			.observableArrayList();
 	private Locale locale;
 	private CVApproach cvApproachData;
+	private ApproachController currentCVApproachController;
 
 	public CVApproachController(ResourceBundle bundle,
 			Locale locale) {
@@ -54,11 +55,10 @@ public class CVApproachController {
 		this.cvApproachData = data;
 	}
 	public void handleCVSegmentInventory() {
-		System.out.println("handleCVSegmentInventory reached");
-		
 		FXMLLoader loader = new FXMLLoader();
         ApproachViewNavigator.loadApproachView(loader, "CVSegmentInventory.fxml", locale);
 		CVSegmentInventoryController controller = loader.getController();
+		currentCVApproachController = controller;
 		
 	    controller.setData(cvApproachData);
 	}
@@ -77,5 +77,14 @@ public class CVApproachController {
 
 	public void handleCVWords() {
 		System.out.println("handleCVWords reached");
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleInsertNewItem()
+	 */
+	@Override
+	void handleInsertNewItem() {
+		currentCVApproachController.handleInsertNewItem();
+		
 	}
 }
