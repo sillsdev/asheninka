@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import sil.org.syllableparser.MainApp;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
 
 /**
  * @author Andy Black

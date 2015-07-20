@@ -3,12 +3,8 @@
  */
 package sil.org.syllableparser.model;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,6 +15,7 @@ import javafx.collections.ObservableList;
 public class CVApproach {
 	
 	private ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
+	private ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
 
 	/**
 	 * @return the cvSegmentInventoryData
@@ -37,10 +34,27 @@ public class CVApproach {
 	}
 
 	/**
+	 * @return the cvNaturalClassesData
+	 */
+	@XmlElementWrapper(name = "cvNaturalClasses")
+	@XmlElement(name = "cvNaturalClass")
+	public ObservableList<CVNaturalClass> getCVNaturalClasses() {
+		return cvNaturalClasses;
+	}
+
+	/**
+	 * @param cvSegmentInventoryData the cvSegmentInventoryData to set
+	 */
+	public void setCVNaturalClasses(ObservableList<CVNaturalClass> cvNaturalClassesData) {
+		this.cvNaturalClasses = cvNaturalClassesData;
+	}
+
+	/**
 	 * Clear out all data in this CV approach
 	 */
 	public void clear() {
 		cvSegmentInventory.clear();
+		cvNaturalClasses.clear();
 	}
 
 	/**
@@ -50,6 +64,10 @@ public class CVApproach {
     	ObservableList<CVSegment> cvSegmentInventoryLoadedData = cvApproachLoaded.getCVSegmentInventory();
 		for (CVSegment cvSegment : cvSegmentInventoryLoadedData) {
 			cvSegmentInventory.add(cvSegment);
+		}
+		ObservableList<CVNaturalClass> cvNaturalClassesLoadedData = cvApproachLoaded.getCVNaturalClasses();
+		for (CVNaturalClass cvNaturalClass : cvNaturalClassesLoadedData) {
+			cvNaturalClasses.add(cvNaturalClass);
 		}
 	}
 	

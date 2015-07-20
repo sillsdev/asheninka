@@ -3,19 +3,14 @@
  */
 package sil.org.syllableparser.view;
 
-import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVSegment;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * @author Andy Black
@@ -25,13 +20,13 @@ public class CVApproachController extends ApproachController {
 
 	private ObservableList<ApproachView> views = FXCollections
 			.observableArrayList();
-	private Locale locale;
 	private CVApproach cvApproachData;
 	private ApproachController currentCVApproachController;
 
 	public CVApproachController(ResourceBundle bundle,
 			Locale locale) {
 		super();
+		this.bundle = bundle;
 		this.locale = locale;
 		views.add(new ApproachView(
 				bundle.getString("cv.view.segmentinventory"),
@@ -56,7 +51,7 @@ public class CVApproachController extends ApproachController {
 	}
 	public void handleCVSegmentInventory() {
 		FXMLLoader loader = new FXMLLoader();
-        ApproachViewNavigator.loadApproachView(loader, "CVSegmentInventory.fxml", locale);
+        ApproachViewNavigator.loadApproachView(loader, "fxml/CVSegmentInventory.fxml", locale);
 		CVSegmentInventoryController controller = loader.getController();
 		currentCVApproachController = controller;
 		
@@ -65,6 +60,14 @@ public class CVApproachController extends ApproachController {
 
 	public void handleCVNaturalClasses() {
 		System.out.println("handleCVNaturalClasses reached");
+		FXMLLoader loader = new FXMLLoader();
+        ApproachViewNavigator.loadApproachView(loader, "fxml/CVNaturalClasses.fxml", locale);
+		CVNaturalClassesController controller = loader.getController();
+		currentCVApproachController = controller;
+		
+	    controller.setData(cvApproachData);
+	    controller.setMainApp(mainApp);
+	    controller.setLocale(locale);
 	}
 
 	public void handleCVSyllablePatterns() {

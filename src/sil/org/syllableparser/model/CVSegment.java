@@ -3,10 +3,6 @@
  */
 package sil.org.syllableparser.model;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -17,20 +13,20 @@ import javafx.beans.property.StringProperty;
 public class CVSegment {
 	private final StringProperty segment;
 	private final StringProperty graphemes;
-	private final StringProperty comment;
+	private final StringProperty description;
 
 	public CVSegment() {
 		super();
 		this.segment = new SimpleStringProperty("");
 		this.graphemes = new SimpleStringProperty("");
-		this.comment = new SimpleStringProperty("");
+		this.description = new SimpleStringProperty("");
 	}
 
 	public CVSegment(String segment, String graphemes, String comment) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
 		this.graphemes = new SimpleStringProperty(graphemes);
-		this.comment = new SimpleStringProperty(comment);
+		this.description = new SimpleStringProperty(comment);
 	}
 
 	public String getSegment() {
@@ -57,16 +53,16 @@ public class CVSegment {
 		this.graphemes.set(graphemes);
 	}
 
-	public String getComment() {
-		return comment.get();
+	public String getDescription() {
+		return description.get();
 	}
 
-	public StringProperty commentPropery() {
-		return comment;
+	public StringProperty descriptionProperty() {
+		return description;
 	}
 
-	public void setComment(String comment) {
-		this.comment.set(comment);
+	public void setDescription(String description) {
+		this.description.set(description);
 	}
 
 }

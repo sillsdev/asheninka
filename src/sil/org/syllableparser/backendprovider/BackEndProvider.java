@@ -5,8 +5,6 @@ package sil.org.syllableparser.backendprovider;
 
 import java.io.File;
 
-import sil.org.syllableparser.MainApp;
-
 
 /**
  * @author Andy Black

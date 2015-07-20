@@ -8,18 +8,27 @@ import java.util.prefs.Preferences;
 
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.CVApproach;
+import sil.org.syllableparser.model.CVNaturalClass;
 import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.view.RootLayoutController;
 import javafx.application.Application;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+	/**
+	 * 
+	 */
+	private static final String kApplicationIconResource = "file:src/sil/org/syllableparser/resources/images/SyllableParser.png";
 	private Stage primaryStage;
     private BorderPane rootLayout;
 	private Locale locale;
@@ -29,6 +38,9 @@ public class MainApp extends Application {
 	public static String kApplicationTitle = "Syllable Parser";
 	private static String kLanguageProjectFilePath = "languageProjectFilePath";
 	private RootLayoutController controller;
+	private String sNotImplementedYetHeader;
+	private String sNotImplementedYetContent;
+	//private Image mainIconImage;
 	
 		@Override
 	public void start(Stage primaryStage) {
@@ -38,6 +50,7 @@ public class MainApp extends Application {
 		xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(kApplicationTitle);
+		this.primaryStage.getIcons().add(getNewMainIconImage());
 		
 		ApplicationPreferences.getLastLocaleLanguage();
 		ApplicationPreferences.getLastLocaleCountry();
@@ -46,9 +59,20 @@ public class MainApp extends Application {
 		if (usePrecannedData) {
 			CVApproach cvApproach = languageProject.getCVApproach();
 			ObservableList<CVSegment> cvSegmentInventoryData = cvApproach.getCVSegmentInventory();
-			cvSegmentInventoryData.add(new CVSegment("a", "a A", "low mid unrounded vowel"));
-			cvSegmentInventoryData.add(new CVSegment("b", "b B", "voiced bilabial stop"));
-			cvSegmentInventoryData.add(new CVSegment("d", "d D", "voiced alveolar stop"));
+			CVSegment segA = new CVSegment("a", "a A", "low mid unrounded vowel");
+			CVSegment segB = new CVSegment("b", "b B", "voiced bilabial stop");
+			CVSegment segD = new CVSegment("d", "d D", "voiced alveolar stop");
+			cvSegmentInventoryData.add(segA);
+			cvSegmentInventoryData.add(segB);
+			cvSegmentInventoryData.add(segD);
+			ObservableList<CVNaturalClass> cvNaturalClassData = cvApproach.getCVNaturalClasses();
+			ObservableList<Object> consonants = new SimpleListProperty<Object>();
+			consonants.add(segB);
+			consonants.add(segD);
+			cvNaturalClassData.add(new CVNaturalClass("C", (SimpleListProperty<Object>) consonants, "Consonants", "bd"));
+			ObservableList<Object> vowels = new SimpleListProperty<Object>();
+			vowels.add(segA);
+			cvNaturalClassData.add(new CVNaturalClass("V", (SimpleListProperty<Object>) vowels, "Vowels", "a"));
 		}
 
 		initRootLayout();
@@ -77,9 +101,14 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
-            loader.setResources(ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale));
+            loader.setLocation(MainApp.class.getResource("view/fxml/RootLayout.fxml"));
+            ResourceBundle bundle = ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale); 
+            loader.setResources(bundle);
             rootLayout = (BorderPane) loader.load();
+            
+    		sNotImplementedYetHeader = bundle.getString("misc.niyheader");
+    		sNotImplementedYetContent = bundle.getString("misc.niycontent");
+
             
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
@@ -146,4 +175,25 @@ public class MainApp extends Application {
 	        return null;
 	    }
 	}
+
+	public void showNotImplementedYet() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(MainApp.kApplicationTitle);
+		alert.setHeaderText(sNotImplementedYetHeader);
+		alert.setContentText(sNotImplementedYetContent);
+		
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(getNewMainIconImage());
+	
+		alert.showAndWait();
+	}
+
+	/**
+	 * @return the mainIconImage
+	 */
+	public Image getNewMainIconImage() {
+		return new Image(kApplicationIconResource);
+	}
+
+
 }

@@ -2,23 +2,14 @@ package sil.org.syllableparser.view;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ListResourceBundle;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.TreeMap;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -29,7 +20,6 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import sil.org.syllableparser.ApplicationPreferences;
@@ -77,9 +67,6 @@ public class RootLayoutController implements Initializable {
 	private String sChangeInterfaceLanguage;
 	private String sChooseInterfaceLanguage;
 	private String sChooseLanguage;
-	private String sNotImplementedYetHeader;
-	private String sNotImplementedYetContent;
-
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
@@ -97,6 +84,7 @@ public class RootLayoutController implements Initializable {
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
 		ApproachViewNavigator.setMainController(this);
 		cvApproachController.setCVApproachData(languageProject.getCVApproach());
+		cvApproachController.setMainApp(mainApp);
 	}
 
 	@FXML
@@ -193,15 +181,6 @@ public class RootLayoutController implements Initializable {
 		alert.showAndWait();
 	}
 
-	private void showNotImplemetnedYet() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle(MainApp.kApplicationTitle);
-		alert.setHeaderText(sNotImplementedYetHeader);
-		alert.setContentText(sNotImplementedYetContent);
-
-		alert.showAndWait();
-	}
-
 	/**
 	 * Closes the application.
 	 */
@@ -239,7 +218,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleSonorityHierarchyApproach() {
 		toggleButtonSelectedStatus(buttonSonorityHierarchyApproach);
-		showNotImplemetnedYet();
+		mainApp.showNotImplementedYet();
 	}
 
 	/**
@@ -258,7 +237,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleMoraicApproach() {
 		toggleButtonSelectedStatus(buttonMoraicApproach);
-		showNotImplemetnedYet();
+		mainApp.showNotImplementedYet();
 	}
 
 	/**
@@ -267,7 +246,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleNuclearProjectionApproach() {
 		toggleButtonSelectedStatus(buttonNuclearProjectionApproach);
-		showNotImplemetnedYet();
+		mainApp.showNotImplementedYet();
 	}
 
 	/**
@@ -276,7 +255,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleOTApproach() {
 		toggleButtonSelectedStatus(buttonOTApproach);
-		showNotImplemetnedYet();
+		mainApp.showNotImplementedYet();
 	}
 
 	/**
@@ -323,8 +302,6 @@ public class RootLayoutController implements Initializable {
 		sChooseInterfaceLanguage = bundle
 				.getString("dialog.chooseinterfacelanguage");
 		sChooseLanguage = bundle.getString("dialog.chooselanguage");
-		sNotImplementedYetHeader = bundle.getString("misc.niyheader");
-		sNotImplementedYetContent = bundle.getString("misc.niycontent");
 
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle);

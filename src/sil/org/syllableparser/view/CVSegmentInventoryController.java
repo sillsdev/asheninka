@@ -27,14 +27,14 @@ public class CVSegmentInventoryController extends ApproachController implements 
 	@FXML
 	private TableColumn<CVSegment, String> graphemesColumn;
 	@FXML
-	private TableColumn<CVSegment, String> commentColumn;
+	private TableColumn<CVSegment, String> descriptionColumn;
 
 	@FXML
 	private TextField segmentField;
 	@FXML
 	private TextField graphemesField;
 	@FXML
-	private TextField commentField;
+	private TextField descriptionField;
 	
 	private CVApproach cvApproach;
 	private CVSegment currentSegment;
@@ -53,7 +53,7 @@ public class CVSegmentInventoryController extends ApproachController implements 
 		 // Initialize the table with the three columns.
         segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
         graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
-        commentColumn.setCellValueFactory(cellData -> cellData.getValue().commentPropery());;
+        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());;
         
         // Clear cv segment details.
         showCVSegmentDetails(null);
@@ -71,9 +71,9 @@ public class CVSegmentInventoryController extends ApproachController implements 
 				(observable, oldValue, newValue) -> {
 					currentSegment.setGraphemes(graphemesField.getText());
 				});
-		commentField.textProperty().addListener(
+		descriptionField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
-					currentSegment.setComment(commentField.getText());
+					currentSegment.setDescription(descriptionField.getText());
 				});
 
 		// Use of Enter move focus to next item.
@@ -81,7 +81,7 @@ public class CVSegmentInventoryController extends ApproachController implements 
 			graphemesField.requestFocus();
 		});
 		graphemesField.setOnAction((event) -> {
-			commentField.requestFocus();
+			descriptionField.requestFocus();
 		});
 		
 		segmentField.requestFocus();
@@ -100,19 +100,19 @@ public class CVSegmentInventoryController extends ApproachController implements 
 	        // Fill the text fields with info from the person object.
 	        segmentField.setText(segment.getSegment());
 	        graphemesField.setText(segment.getGraphemes());
-	        commentField.setText(segment.getComment());
+	        descriptionField.setText(segment.getDescription());
 	    } else {
 	        // Segment is null, remove all the text.
 	        segmentField.setText("");
 	        graphemesField.setText("");
-	        commentField.setText("");
+	        descriptionField.setText("");
 	    }
 	}
 
 	public void setSegment(CVSegment segment) {
 		segmentField.setText(segment.getSegment());
 		graphemesField.setText(segment.getGraphemes());
-		commentField.setText(segment.getComment());
+		descriptionField.setText(segment.getDescription());
 	}
 	
 	/**

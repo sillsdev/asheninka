@@ -32,7 +32,7 @@ public class ONCApproachController extends ApproachController  {
 	}
 	
 	public void handleONCSegmentInventory() {
-		System.out.println("handleCVSegmentInventory reached");
+		System.out.println("handleONCSegmentInventory reached");
 	}
 
 	public void handleONCSyllablePatterns() {
