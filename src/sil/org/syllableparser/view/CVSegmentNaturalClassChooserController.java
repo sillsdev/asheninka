@@ -11,6 +11,7 @@ import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.CVNaturalClass;
 import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.CVSegmentOrNaturalClass;
+import sil.org.syllableparser.model.SylParserObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,11 +39,12 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	Stage dialogStage;
 	private boolean okClicked = false;
 	private MainApp mainApp;
-	
+
 	private CVApproach cvApproach;
 	private CVSegmentOrNaturalClass currentSegmentOrNaturalClass;
-    private ObservableList<CVSegmentOrNaturalClass> cvSegmentsOrNaturalClasses = FXCollections.observableArrayList();
-    private CVNaturalClass naturalClass;
+	private ObservableList<CVSegmentOrNaturalClass> cvSegmentsOrNaturalClasses = FXCollections
+			.observableArrayList();
+	private CVNaturalClass naturalClass;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -50,10 +52,14 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
 		// Initialize the table with the three columns.
-		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
-		segOrNCColumn.setCellValueFactory(cellData -> cellData.getValue().segmentOrNaturalClassProperty());
-		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.checkedProperty());
+		segOrNCColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.segmentOrNaturalClassProperty());
+		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.descriptionProperty());
+		checkBoxColumn.setCellFactory(CheckBoxTableCell
+				.forTableColumn(checkBoxColumn));
 		checkBoxColumn.setEditable(true);
 		cvSegmentOrNaturalClassTable.setEditable(true);
 	}
@@ -66,33 +72,48 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
+
 	/**
-     * Is called by the main application to give a reference back to itself.
-     * 
-     * @param cvApproachController
-     */
-    public void setData(CVApproach cvApproachData) {
-        cvApproach = cvApproachData;
+	 * Is called by the main application to give a reference back to itself.
+	 * 
+	 * @param cvApproachController
+	 */
+	public void setData(CVApproach cvApproachData) {
+		cvApproach = cvApproachData;
 
 		for (CVSegment cvSegment : cvApproach.getCVSegmentInventory()) {
-			currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(cvSegment.getSegment(), 
-					cvSegment.getDescription(), true, cvSegment.getUuid());
+			currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
+					cvSegment.getSegment(), cvSegment.getDescription(), true,
+					cvSegment.getUuid());
+			setCheckedStatus(cvSegment);
 			cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
 		}
 		for (CVNaturalClass cvNaturalClass : cvApproach.getCVNaturalClasses()) {
-			currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(cvNaturalClass.getNCName(), 
-					cvNaturalClass.getDescription(), false, cvNaturalClass.getUuid());
-			cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
+			if (cvNaturalClass.getUuid() != naturalClass.getUuid()) {
+				currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
+						cvNaturalClass.getNCName(),
+						cvNaturalClass.getDescription(), false,
+						cvNaturalClass.getUuid());
+				cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
+				setCheckedStatus(cvNaturalClass);
+			}
 		}
-        // Add observable list data to the table
-        cvSegmentOrNaturalClassTable.setItems(cvSegmentsOrNaturalClasses);
-        if (cvSegmentOrNaturalClassTable.getItems().size() > 0) {
-        	// select one
-        	cvSegmentOrNaturalClassTable.requestFocus();
-        	cvSegmentOrNaturalClassTable.getSelectionModel().select(0);
-        	cvSegmentOrNaturalClassTable.getFocusModel().focus(0);
-        }
-    }
+		// Add observable list data to the table
+		cvSegmentOrNaturalClassTable.setItems(cvSegmentsOrNaturalClasses);
+		if (cvSegmentOrNaturalClassTable.getItems().size() > 0) {
+			// select one
+			cvSegmentOrNaturalClassTable.requestFocus();
+			cvSegmentOrNaturalClassTable.getSelectionModel().select(0);
+			cvSegmentOrNaturalClassTable.getFocusModel().focus(0);
+		}
+	}
+
+	private void setCheckedStatus(SylParserObject sylParserObject) {
+		if (SylParserObject.findIndexInSylParserObjectListByUuid(
+				naturalClass.getSnc(), sylParserObject.getUuid()) > -1) {
+			currentSegmentOrNaturalClass.setChecked(true);
+		}
+	}
 
 	/**
 	 * Returns true if the user clicked OK, false otherwise.
@@ -108,21 +129,27 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	 */
 	@FXML
 	private void handleOk() {
-		naturalClass.getSegmentsOrNaturalClasses().clear();	
+		naturalClass.getSegmentsOrNaturalClasses().clear();
 		naturalClass.getSnc().clear();
-		// find the segment or natural class with segmentOrNaturalClass.getUuid() and 
+		// find the segment or natural class with
+		// segmentOrNaturalClass.getUuid() and
 		// add it to the natural class list
-		// we use this method in order to guarantee we get the actual object and not a copy 
+		// we use this method in order to guarantee we get the actual object and
+		// not a copy
 		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
 			if (segmentOrNaturalClass.isChecked()) {
 				if (segmentOrNaturalClass.isSegment()) {
-					int i = CVSegment.findIndexInListByUuid(cvApproach.getCVSegmentInventory(), 
+					int i = CVSegment.findIndexInSegmentsListByUuid(
+							cvApproach.getCVSegmentInventory(),
 							segmentOrNaturalClass.getUuid());
-					naturalClass.getSnc().add(cvApproach.getCVSegmentInventory().get(i));
+					naturalClass.getSnc().add(
+							cvApproach.getCVSegmentInventory().get(i));
 				} else {
-					int i = CVNaturalClass.findIndexInListByUuid(cvApproach.getCVNaturalClasses(),
+					int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
+							cvApproach.getCVNaturalClasses(),
 							segmentOrNaturalClass.getUuid());
-					naturalClass.getSnc().add(cvApproach.getCVNaturalClasses().get(i));
+					naturalClass.getSnc().add(
+							cvApproach.getCVNaturalClasses().get(i));
 				}
 			}
 		}

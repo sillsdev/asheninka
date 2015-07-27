@@ -97,7 +97,7 @@ public class CVNaturalClass extends SylParserObject {
 		this.sncRepresentation.set(sncRepresentation);
 	}
 
-	public static int findIndexInListByUuid(ObservableList<CVNaturalClass> list, UUID uuid) {
+	public static int findIndexInNaturaClassListByUuid(ObservableList<CVNaturalClass> list, UUID uuid) {
 		// TODO: is there a way to do this with lambda expressions?
 		// Is there a way to use SylParserObject somehow?
 				int index = -1;

@@ -49,20 +49,20 @@ public class SylParserObjectTest {
 		cvNaturalClasses.add(ncC);
 		cvNaturalClasses.add(ncV);
 		
-		int index = CVSegment.findIndexInListByUuid(cvSegmentInventory, segA.getUuid());
+		int index = CVSegment.findIndexInSegmentsListByUuid(cvSegmentInventory, segA.getUuid());
 		assertEquals("Expected 0", 0, index);
-		index = CVSegment.findIndexInListByUuid(cvSegmentInventory, segB.getUuid());
+		index = CVSegment.findIndexInSegmentsListByUuid(cvSegmentInventory, segB.getUuid());
 		assertEquals("Expected 1", 1, index);
-		index = CVSegment.findIndexInListByUuid(cvSegmentInventory, segD.getUuid());
+		index = CVSegment.findIndexInSegmentsListByUuid(cvSegmentInventory, segD.getUuid());
 		assertEquals("Expected 2", 2, index);
 		UUID uuidNew = UUID.randomUUID();
-		index = CVSegment.findIndexInListByUuid(cvSegmentInventory, uuidNew);
+		index = CVSegment.findIndexInSegmentsListByUuid(cvSegmentInventory, uuidNew);
 		assertEquals("Expected -1", -1, index);
-		index = CVNaturalClass.findIndexInListByUuid(cvNaturalClasses, ncC.getUuid());
+		index = CVNaturalClass.findIndexInNaturaClassListByUuid(cvNaturalClasses, ncC.getUuid());
 		assertEquals("Expected 0", 0, index);
-		index = CVNaturalClass.findIndexInListByUuid(cvNaturalClasses, ncV.getUuid());
+		index = CVNaturalClass.findIndexInNaturaClassListByUuid(cvNaturalClasses, ncV.getUuid());
 		assertEquals("Expected 1", 1, index);
-		index = CVNaturalClass.findIndexInListByUuid(cvNaturalClasses, uuidNew);
+		index = CVNaturalClass.findIndexInNaturaClassListByUuid(cvNaturalClasses, uuidNew);
 		assertEquals("Expected -1", -1, index);
 	}
 

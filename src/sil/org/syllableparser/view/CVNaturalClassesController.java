@@ -194,7 +194,6 @@ public class CVNaturalClassesController extends ApproachController implements In
 
 	@FXML
 	void handleLaunchSNCChooser() {
-		System.out.println("handleLaunchSNCChooser reached");
 		showSNCChooser();
 		showSegmentOrNaturalClassContent();
 	}
@@ -210,7 +209,6 @@ public class CVNaturalClassesController extends ApproachController implements In
 	                	
 	        AnchorPane page = loader.load();
 	        Stage dialogStage = new Stage();
-	        //dialogStage.setTitle("Birthday Statistics");
 	        dialogStage.initModality(Modality.WINDOW_MODAL);
 	        dialogStage.initOwner(mainApp.getPrimaryStage());
 	        Scene scene = new Scene(page);
@@ -218,12 +216,11 @@ public class CVNaturalClassesController extends ApproachController implements In
 	        // set the icon
 	        dialogStage.getIcons().add(mainApp.getNewMainIconImage());
 
-	        // Set the persons into the controller.
 	        CVSegmentNaturalClassChooserController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        controller.setMainApp(mainApp);
-	        controller.setData(cvApproach);
 	        controller.setNaturalClass(currentNaturalClass);
+	        controller.setData(cvApproach);
 
 	        dialogStage.showAndWait();
 

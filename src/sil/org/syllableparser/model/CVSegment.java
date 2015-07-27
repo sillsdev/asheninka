@@ -69,7 +69,7 @@ public class CVSegment extends SylParserObject {
 		this.description.set(description);
 	}
 	
-	public static int findIndexInListByUuid(ObservableList<CVSegment> list,
+	public static int findIndexInSegmentsListByUuid(ObservableList<CVSegment> list,
 			UUID uuid) {
 		// TODO: is there a way to do this with lambda expressions?
 		// Is there a way to use SylParserObject somehow?
