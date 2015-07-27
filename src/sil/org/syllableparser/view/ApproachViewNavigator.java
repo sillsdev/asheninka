@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 
 /**
  * @author Andy Black
@@ -67,7 +68,8 @@ public class ApproachViewNavigator {
             loader.setLocation(ApproachViewNavigator.class.getResource(fxml));
             loader.setResources(ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale));
         	
-        	rootLayoutController.setApproachView(loader.load()
+        	Node node = loader.load();
+        			rootLayoutController.setApproachView(node //loader.load()
 //                FXMLLoader.load(
 //                		ApproachViewNavigator.class.getResource(
 //                        fxml

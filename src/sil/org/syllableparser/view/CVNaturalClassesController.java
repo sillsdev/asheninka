@@ -7,11 +7,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.CVNaturalClass;
 import sil.org.syllableparser.model.CVSegment;
-import javafx.beans.property.SimpleListProperty;
+import sil.org.syllableparser.model.SylParserObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -89,14 +88,18 @@ public class CVNaturalClassesController extends ApproachController implements In
 				(observable, oldValue, newValue) -> {
 					currentNaturalClass.setNCName(nameField.getText());
 				});
-		segmentOrNaturalClassField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentNaturalClass.setSNCRepresentation(segmentOrNaturalClassField.getText());
-				});
 		descriptionField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
 					currentNaturalClass.setDescription(descriptionField.getText());
 				});
+//		sncTextFlow.getChildren().addListener(
+//                (ListChangeListener<Node>) ((change) -> {
+//                	this.showSegmentOrNaturalClassContent();
+//                	//sncTextFlow.layout();
+//                    //textContainer.layout();
+//                    //textContainer.setVvalue(1.0f);
+                //}));
+				
 //		sncRepresentationField.textProperty().addListener(
 //				(observable, oldValue, newValue) -> {
 //					currentNaturalClass.setSNCRepresentation(sncRepresentationField.getText());
@@ -125,26 +128,36 @@ public class CVNaturalClassesController extends ApproachController implements In
 	    if (naturalClass != null) {
 	        // Fill the text fields with info from the person object.
 	        nameField.setText(naturalClass.getNCName());
-	        segmentOrNaturalClassField.setText(naturalClass.getSNCRepresentation());
 	        descriptionField.setText(naturalClass.getDescription());
-	        sncTextFlow.getChildren().clear();
-	        Text t1 = new Text("One");
-	        Text t2 = new Text("Two");
-	        Text tBar = new Text(" | ");
-	        sncTextFlow.getChildren().addAll(t1, tBar, t2);
+	        showSegmentOrNaturalClassContent();
 	    } else {
 	        // Segment is null, remove all the text.
 	        nameField.setText("");
-	        segmentOrNaturalClassField.setText("");
 	        descriptionField.setText("");
+	        sncTextFlow.getChildren().clear();
 	    }
 	    
 	    
 	}
+	private void showSegmentOrNaturalClassContent() {
+        sncTextFlow.getChildren().clear();
+        for (SylParserObject snc : currentNaturalClass.getSnc()) {
+			Text t;
+			if (snc instanceof CVSegment) {
+				t = new Text(((CVSegment) snc).getSegment());
+			} else if (snc instanceof CVNaturalClass) {
+				t = new Text(((CVNaturalClass) snc).getNCName());
+			} else {
+				t = new Text("ERROR!");
+			}
+		    Text tBar = new Text(" | ");
+		    tBar.setStyle("-fx-stroke: lightgrey;");
+		    sncTextFlow.getChildren().addAll(t, tBar);
+		}
+	}
 
 	public void setNaturalClass(CVNaturalClass naturalClass) {
 		nameField.setText(naturalClass.getNCName());
-		segmentOrNaturalClassField.setText(naturalClass.getSNCRepresentation());
 		descriptionField.setText(naturalClass.getDescription());
 		//sncRepresentationField.setText(naturalClass.getSNCRepresentation());
 	}
@@ -183,6 +196,7 @@ public class CVNaturalClassesController extends ApproachController implements In
 	void handleLaunchSNCChooser() {
 		System.out.println("handleLaunchSNCChooser reached");
 		showSNCChooser();
+		showSegmentOrNaturalClassContent();
 	}
 	/**
 	 * Opens a dialog to show birthday statistics.
@@ -193,8 +207,8 @@ public class CVNaturalClassesController extends ApproachController implements In
 	        FXMLLoader loader = new FXMLLoader();
 	        loader.setLocation(ApproachViewNavigator.class.getResource("fxml/CVSegmentNaturalClassChooser.fxml"));
 	        loader.setResources(ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale));
-        	
-	        AnchorPane page = (AnchorPane) loader.load();
+	                	
+	        AnchorPane page = loader.load();
 	        Stage dialogStage = new Stage();
 	        //dialogStage.setTitle("Birthday Statistics");
 	        dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -208,9 +222,10 @@ public class CVNaturalClassesController extends ApproachController implements In
 	        CVSegmentNaturalClassChooserController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        controller.setMainApp(mainApp);
-	        // TODO: controller.setPersonData(personData);
+	        controller.setData(cvApproach);
+	        controller.setNaturalClass(currentNaturalClass);
 
-	        dialogStage.show();
+	        dialogStage.showAndWait();
 
 	    } catch (IOException e) {
 	        e.printStackTrace();

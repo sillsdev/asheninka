@@ -97,7 +97,7 @@ public class CVSegmentInventoryController extends ApproachController implements 
 	private void showCVSegmentDetails(CVSegment segment) {
 		currentSegment = segment;
 	    if (segment != null) {
-	        // Fill the text fields with info from the person object.
+	        // Fill the text fields with info from the segment object.
 	        segmentField.setText(segment.getSegment());
 	        graphemesField.setText(segment.getGraphemes());
 	        descriptionField.setText(segment.getDescription());

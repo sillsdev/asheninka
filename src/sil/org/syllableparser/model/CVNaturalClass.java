@@ -3,27 +3,32 @@
  */
 package sil.org.syllableparser.model;
 
+import java.util.UUID;
+
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
  *
  */
-public class CVNaturalClass {
+public class CVNaturalClass extends SylParserObject {
 	private final StringProperty ncName;
 	private final SimpleListProperty<Object> segmentsOrNaturalClasses;
 	private final StringProperty description;
 	private final StringProperty sncRepresentation;
-
+	ObservableList<SylParserObject> snc = FXCollections.observableArrayList();
+	
 	public CVNaturalClass() {
 		super();
 		this.ncName = new SimpleStringProperty("");
 		this.segmentsOrNaturalClasses = new SimpleListProperty<Object>();
 		this.description = new SimpleStringProperty("");
 		this.sncRepresentation = new SimpleStringProperty("");
+		this.uuid = UUID.randomUUID();
 	}
 
 	public CVNaturalClass(String segment, SimpleListProperty<Object> segmentsOrNaturalClasses, 
@@ -33,6 +38,7 @@ public class CVNaturalClass {
 		this.segmentsOrNaturalClasses = new SimpleListProperty<Object>(segmentsOrNaturalClasses);
 		this.description = new SimpleStringProperty(description);
 		this.sncRepresentation = new SimpleStringProperty(sncRepresentation);
+		uuid = UUID.randomUUID();
 	}
 
 	public String getNCName() {
@@ -48,7 +54,15 @@ public class CVNaturalClass {
 	}
 
 	public ObservableList<Object> getSegmentsOrNaturalClasses() {
-		return segmentsOrNaturalClasses.get();
+		return segmentsOrNaturalClasses;
+	}
+
+	public ObservableList<SylParserObject> getSnc() {
+		return snc;
+	}
+
+	public void setSnc(ObservableList<SylParserObject> snc) {
+		this.snc = snc;
 	}
 
 	public SimpleListProperty<Object> segmentsOrNaturalClassesProperty() {
@@ -82,5 +96,18 @@ public class CVNaturalClass {
 	public void setSNCRepresentation(String sncRepresentation) {
 		this.sncRepresentation.set(sncRepresentation);
 	}
+
+	public static int findIndexInListByUuid(ObservableList<CVNaturalClass> list, UUID uuid) {
+		// TODO: is there a way to do this with lambda expressions?
+		// Is there a way to use SylParserObject somehow?
+				int index = -1;
+				for (SylParserObject sylParserObject : list) {
+					index++;
+					if (sylParserObject.getUuid() == uuid) {
+						return index;
+					}
+				}		
+				return -1;
+			}
 
 }

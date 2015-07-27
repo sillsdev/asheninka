@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -15,11 +16,11 @@
         </buttons>
       </ButtonBar>
       <Label layoutX="11.0" layoutY="14.0" text="%label.choosesnc" />
-      <TableView layoutX="11.0" layoutY="39.0" prefHeight="316.0" prefWidth="374.0">
+      <TableView fx:id="cvSegmentOrNaturalClassTable" layoutX="11.0" layoutY="39.0" prefHeight="316.0" prefWidth="374.0">
         <columns>
-            <TableColumn maxWidth="20.0" minWidth="20.0" prefWidth="20.0" text="□" />
-          <TableColumn maxWidth="109.0" prefWidth="200.0" text="%label.segmentsandnaturalclasses" />
-            <TableColumn minWidth="-1.0" prefWidth="244.0" text="%label.description" />
+            <TableColumn fx:id="checkBoxColumn" prefWidth="30.0" text="□" />
+            <TableColumn fx:id="segOrNCColumn" prefWidth="100.0" text="%label.segmentsandnaturalclasses" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="240.0" text="%label.description" />
         </columns>
       </TableView>
    </children>
