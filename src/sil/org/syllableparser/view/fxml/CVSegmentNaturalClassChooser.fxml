@@ -18,7 +18,10 @@
       <Label layoutX="11.0" layoutY="14.0" text="%label.choosesnc" />
       <TableView fx:id="cvSegmentOrNaturalClassTable" layoutX="11.0" layoutY="39.0" prefHeight="316.0" prefWidth="374.0">
         <columns>
-            <TableColumn fx:id="checkBoxColumn" prefWidth="30.0" text="□" />
+            <TableColumn fx:id="checkBoxColumn" prefWidth="30.0">
+               <graphic>
+                  <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" selected="true" onAction="#handleCheckBoxColumnHead"/>
+               </graphic></TableColumn>
             <TableColumn fx:id="segOrNCColumn" prefWidth="100.0" text="%label.segmentsandnaturalclasses" />
             <TableColumn fx:id="descriptionColumn" prefWidth="240.0" text="%label.description" />
         </columns>

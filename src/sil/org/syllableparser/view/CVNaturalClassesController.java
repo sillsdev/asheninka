@@ -73,8 +73,7 @@ public class CVNaturalClassesController extends ApproachController implements In
 
 		 // Initialize the table with the three columns.
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
-		//segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue().segmentsOrNaturalClassesProperty());
-        descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());;
+		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());;
         
         // Clear cv natural class details.
         showCVNaturalClassDetails(null);
@@ -92,18 +91,6 @@ public class CVNaturalClassesController extends ApproachController implements In
 				(observable, oldValue, newValue) -> {
 					currentNaturalClass.setDescription(descriptionField.getText());
 				});
-//		sncTextFlow.getChildren().addListener(
-//                (ListChangeListener<Node>) ((change) -> {
-//                	this.showSegmentOrNaturalClassContent();
-//                	//sncTextFlow.layout();
-//                    //textContainer.layout();
-//                    //textContainer.setVvalue(1.0f);
-                //}));
-				
-//		sncRepresentationField.textProperty().addListener(
-//				(observable, oldValue, newValue) -> {
-//					currentNaturalClass.setSNCRepresentation(sncRepresentationField.getText());
-//				});
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -159,7 +146,6 @@ public class CVNaturalClassesController extends ApproachController implements In
 	public void setNaturalClass(CVNaturalClass naturalClass) {
 		nameField.setText(naturalClass.getNCName());
 		descriptionField.setText(naturalClass.getDescription());
-		//sncRepresentationField.setText(naturalClass.getSNCRepresentation());
 	}
 	
 	/**

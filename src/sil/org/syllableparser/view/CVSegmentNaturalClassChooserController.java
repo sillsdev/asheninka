@@ -16,6 +16,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -35,6 +39,12 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	private TableColumn<CVSegmentOrNaturalClass, String> segOrNCColumn;
 	@FXML
 	private TableColumn<CVSegmentOrNaturalClass, String> descriptionColumn;
+	@FXML
+	private CheckBox checkBoxColumnHead;
+	private ContextMenu checkBoxContextMenu = new ContextMenu();
+	private MenuItem selectAll = new MenuItem("Select All");
+	private MenuItem clearAll = new MenuItem("Clear All");
+	private MenuItem toggle = new MenuItem("Toggle");
 
 	Stage dialogStage;
 	private boolean okClicked = false;
@@ -54,6 +64,9 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 		// Initialize the table with the three columns.
 		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.checkedProperty());
+		checkBoxColumnHead.setOnAction((event) -> {
+			handleCheckBoxColumnHead();
+		});
 		segOrNCColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.segmentOrNaturalClassProperty());
 		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -62,6 +75,26 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 				.forTableColumn(checkBoxColumn));
 		checkBoxColumn.setEditable(true);
 		cvSegmentOrNaturalClassTable.setEditable(true);
+		
+		initializeCheckBoxContextMenu(resources);
+	}
+
+	private void initializeCheckBoxContextMenu(ResourceBundle bundle) {
+		// set up context menu
+		selectAll.setOnAction((event) -> {
+			handleCheckBoxSelectAll();
+		});
+		clearAll.setOnAction((event) -> {
+			handleCheckBoxClearAll();
+		});
+		toggle.setOnAction((event) -> {
+			handleCheckBoxToggle();
+		});
+		selectAll.setText(bundle.getString("checkbox.context.menu.selectall"));
+		clearAll.setText(bundle.getString("checkbox.context.menu.clearall"));
+		toggle.setText(bundle.getString("checkbox.context.menu.toggle"));
+		checkBoxContextMenu.getItems().addAll(selectAll, clearAll, toggle);
+		checkBoxColumnHead.setContextMenu(checkBoxContextMenu);
 	}
 
 	/**
@@ -178,11 +211,44 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 		mainApp.showNotImplementedYet();
 	}
 
+	/**
+	 * Called when the user clicks on the check box column header
+	 */
+	@FXML
+	private void handleCheckBoxColumnHead() {
+		// make sure the check box stays checked
+		checkBoxColumnHead.setSelected(true);
+		// show the check box context menu
+		checkBoxColumnHead.contextMenuProperty().get().show(checkBoxColumnHead, Side.BOTTOM, 0.0, 0.0);
+	}
+
 	public CVNaturalClass getNaturalClass() {
 		return naturalClass;
 	}
 
 	public void setNaturalClass(CVNaturalClass naturalClass) {
 		this.naturalClass = naturalClass;
+	}
+	
+	void handleCheckBoxSelectAll() {
+		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
+			segmentOrNaturalClass.setChecked(true);
+		}
+	}
+	
+	void handleCheckBoxClearAll() {
+		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
+			segmentOrNaturalClass.setChecked(false);
+		}
+	}
+
+	void handleCheckBoxToggle() {
+		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
+			if (segmentOrNaturalClass.isChecked()) {
+				segmentOrNaturalClass.setChecked(false);
+			} else {
+				segmentOrNaturalClass.setChecked(true);
+			}
+		}
 	}
 }
