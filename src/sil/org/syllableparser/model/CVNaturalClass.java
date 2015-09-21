@@ -4,7 +4,6 @@
 package sil.org.syllableparser.model;
 
 import java.util.UUID;
-
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -21,7 +20,7 @@ public class CVNaturalClass extends SylParserObject {
 	private final StringProperty description;
 	private final StringProperty sncRepresentation;
 	ObservableList<SylParserObject> snc = FXCollections.observableArrayList();
-	
+
 	public CVNaturalClass() {
 		super();
 		this.ncName = new SimpleStringProperty("");
@@ -31,10 +30,10 @@ public class CVNaturalClass extends SylParserObject {
 		this.uuid = UUID.randomUUID();
 	}
 
-	public CVNaturalClass(String segment, SimpleListProperty<Object> segmentsOrNaturalClasses, 
+	public CVNaturalClass(String className, SimpleListProperty<Object> segmentsOrNaturalClasses, 
 			String description, String sncRepresentation) {
 		super();
-		this.ncName = new SimpleStringProperty(segment);
+		this.ncName = new SimpleStringProperty(className);
 		this.segmentsOrNaturalClasses = new SimpleListProperty<Object>(segmentsOrNaturalClasses);
 		this.description = new SimpleStringProperty(description);
 		this.sncRepresentation = new SimpleStringProperty(sncRepresentation);
@@ -109,5 +108,12 @@ public class CVNaturalClass extends SylParserObject {
 				}		
 				return -1;
 			}
+
+	/**
+	 * @return
+	 */
+	public StringProperty naturalClassProperty() {
+		return this.ncName;
+	}
 
 }

@@ -9,8 +9,7 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.CVNaturalClass;
-import sil.org.syllableparser.model.CVSegment;
-import sil.org.syllableparser.model.SylParserObject;
+import sil.org.syllableparser.model.CVSyllablePattern;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,36 +30,36 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends ApproachController implements Initializable {
+public class CVSyllablePatternsController extends ApproachController implements Initializable {
 	@FXML
-	private TableView<CVNaturalClass> cvNaturalClassTable;
+	private TableView<CVSyllablePattern> cvSyllablePatternTable;
 	@FXML
-	private TableColumn<CVNaturalClass, String> nameColumn;
+	private TableColumn<CVSyllablePattern, String> nameColumn;
 	@FXML
-	private TableColumn<CVNaturalClass, String> segmentOrNaturalClassColumn;
+	private TableColumn<CVSyllablePattern, String> naturalClassColumn;
 	@FXML
-	private TableColumn<CVNaturalClass, String> descriptionColumn;
+	private TableColumn<CVSyllablePattern, String> descriptionColumn;
 
 	@FXML
 	private TextField nameField;
 	@FXML
-	private TextField segmentOrNaturalClassField;
+	private TextField naturalClassesField;
 	@FXML
 	private TextField descriptionField;
 	@FXML
-	private FlowPane sncField;
+	private FlowPane ncsField;
 	@FXML
-	private TextFlow sncTextFlow;
+	private TextFlow ncsTextFlow;
 	@FXML
-	private Button sncButton;
+	private Button ncsButton;
 //	@FXML
 //	private TextField sncRepresentationField;
 	
 	
 	private CVApproach cvApproach;
-	private CVNaturalClass currentNaturalClass;
+	private CVSyllablePattern currentSyllablePattern;
 
-	public CVNaturalClassesController() {
+	public CVSyllablePatternsController() {
 		
 	}
 	/**
@@ -72,24 +71,24 @@ public class CVNaturalClassesController extends ApproachController implements In
 	//public void initialize() {
 
 		 // Initialize the table with the three columns.
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().spNameProperty());
 		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());;
         
         // Clear cv natural class details.
-        showCVNaturalClassDetails(null);
+        showCVSyllablePatternDetails(null);
         
         // Listen for selection changes and show the  details when changed.
-        cvNaturalClassTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showCVNaturalClassDetails(newValue));
+        cvSyllablePatternTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showCVSyllablePatternDetails(newValue));
         
 		// Handle TextField text changes.
 		nameField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
-					currentNaturalClass.setNCName(nameField.getText());
+					currentSyllablePattern.setSPName(nameField.getText());
 				});
 		descriptionField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
-					currentNaturalClass.setDescription(descriptionField.getText());
+					currentSyllablePattern.setDescription(descriptionField.getText());
 				});
 
 		// Use of Enter move focus to next item.
@@ -97,7 +96,7 @@ public class CVNaturalClassesController extends ApproachController implements In
 			descriptionField.requestFocus();
 		});
 		descriptionField.setOnAction((event) -> {
-			segmentOrNaturalClassField.requestFocus();
+			naturalClassesField.requestFocus();
 		});
 		
 		nameField.requestFocus();
@@ -108,44 +107,37 @@ public class CVNaturalClassesController extends ApproachController implements In
 	 * Fills all text fields to show details about the CV natural class.
 	 * If the specified segment is null, all text fields are cleared.
 	 * 
-	 * @param naturalClass the segment or null
+	 * @param syllablePattern the segment or null
 	 */
-	private void showCVNaturalClassDetails(CVNaturalClass naturalClass) {
-		currentNaturalClass = naturalClass;
-	    if (naturalClass != null) {
+	private void showCVSyllablePatternDetails(CVSyllablePattern syllablePattern) {
+		currentSyllablePattern = syllablePattern;
+	    if (syllablePattern != null) {
 	        // Fill the text fields with info from the person object.
-	        nameField.setText(naturalClass.getNCName());
-	        descriptionField.setText(naturalClass.getDescription());
-	        showSegmentOrNaturalClassContent();
+	        nameField.setText(syllablePattern.getSPName());
+	        descriptionField.setText(syllablePattern.getDescription());
+	        showNaturalClassesContent();
 	    } else {
 	        // Segment is null, remove all the text.
 	        nameField.setText("");
 	        descriptionField.setText("");
-	        sncTextFlow.getChildren().clear();
+	        ncsTextFlow.getChildren().clear();
 	    }
 	    
 	    
 	}
-	private void showSegmentOrNaturalClassContent() {
-        sncTextFlow.getChildren().clear();
-        for (SylParserObject snc : currentNaturalClass.getSnc()) {
-			Text t;
-			if (snc instanceof CVSegment) {
-				t = new Text(((CVSegment) snc).getSegment());
-			} else if (snc instanceof CVNaturalClass) {
-				t = new Text(((CVNaturalClass) snc).getNCName());
-			} else {
-				t = new Text("ERROR!");
-			}
-		    Text tBar = new Text(" | ");
+	private void showNaturalClassesContent() {
+        ncsTextFlow.getChildren().clear();
+        for (CVNaturalClass nc : currentSyllablePattern.getNCs()) {
+			Text t = new Text(nc.getNCName());
+			Text tBar = new Text(" | ");
 		    tBar.setStyle("-fx-stroke: lightgrey;");
-		    sncTextFlow.getChildren().addAll(t, tBar);
+		    ncsTextFlow.getChildren().addAll(t, tBar);
 		}
 	}
 
-	public void setNaturalClass(CVNaturalClass naturalClass) {
-		nameField.setText(naturalClass.getNCName());
-		descriptionField.setText(naturalClass.getDescription());
+	public void setSyllablePattern(CVSyllablePattern syllablePattern) {
+		nameField.setText(syllablePattern.getSPName());
+		descriptionField.setText(syllablePattern.getDescription());
 	}
 	
 	/**
@@ -157,12 +149,12 @@ public class CVNaturalClassesController extends ApproachController implements In
         cvApproach = cvApproachData;
 
         // Add observable list data to the table
-        cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
-        if (cvNaturalClassTable.getItems().size() > 0) {
+        cvSyllablePatternTable.setItems(cvApproachData.getCVSyllablePatterns());
+        if (cvSyllablePatternTable.getItems().size() > 0) {
         	// select first one
-        	cvNaturalClassTable.requestFocus();
-        	cvNaturalClassTable.getSelectionModel().select(0);
-        	cvNaturalClassTable.getFocusModel().focus(0);
+        	cvSyllablePatternTable.requestFocus();
+        	cvSyllablePatternTable.getSelectionModel().select(0);
+        	cvSyllablePatternTable.getFocusModel().focus(0);
         }
     }
 	/* (non-Javadoc)
@@ -170,27 +162,27 @@ public class CVNaturalClassesController extends ApproachController implements In
 	 */
 	@Override
 	void handleInsertNewItem() {
-		CVNaturalClass newNaturalClass = new CVNaturalClass();
-		cvApproach.getCVNaturalClasses().add(newNaturalClass);
-		int i = cvApproach.getCVNaturalClasses().size() - 1;
-		cvNaturalClassTable.requestFocus();
-		cvNaturalClassTable.getSelectionModel().select(i);
-    	cvNaturalClassTable.getFocusModel().focus(i);
+		CVSyllablePattern newSyllablePattern = new CVSyllablePattern();
+		cvApproach.getCVSyllablePatterns().add(newSyllablePattern);
+		int i = cvApproach.getCVSyllablePatterns().size() - 1;
+		cvSyllablePatternTable.requestFocus();
+		cvSyllablePatternTable.getSelectionModel().select(i);
+    	cvSyllablePatternTable.getFocusModel().focus(i);
 	}
 
 	@FXML
-	void handleLaunchSNCChooser() {
-		showSNCChooser();
-		showSegmentOrNaturalClassContent();
+	void handleLaunchNCChooser() {
+		showNCChooser();
+		showNaturalClassesContent();
 	}
 	/**
 	 * Opens a dialog to show birthday statistics.
 	 */
-	public void showSNCChooser() {
+	public void showNCChooser() {
 	    try {
 	        // Load the fxml file and create a new stage for the popup.
 	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(ApproachViewNavigator.class.getResource("fxml/CVSegmentNaturalClassChooser.fxml"));
+	        loader.setLocation(ApproachViewNavigator.class.getResource("fxml/CVNaturalClassChooser.fxml"));
 	        loader.setResources(ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale));
 	                	
 	        AnchorPane page = loader.load();
@@ -205,7 +197,7 @@ public class CVNaturalClassesController extends ApproachController implements In
 	        CVNaturalClassChooserController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        controller.setMainApp(mainApp);
-	        controller.setCurrentCVNaturalClass(currentNaturalClass);
+	        controller.setSyllablePattern(currentSyllablePattern);
 	        controller.setData(cvApproach);
 
 	        dialogStage.showAndWait();

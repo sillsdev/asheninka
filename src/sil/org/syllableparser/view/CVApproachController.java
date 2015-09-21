@@ -59,7 +59,6 @@ public class CVApproachController extends ApproachController {
 	}
 
 	public void handleCVNaturalClasses() {
-		System.out.println("handleCVNaturalClasses reached");
 		FXMLLoader loader = new FXMLLoader();
         ApproachViewNavigator.loadApproachView(loader, "fxml/CVNaturalClasses.fxml", locale);
 		CVNaturalClassesController controller = loader.getController();
@@ -72,6 +71,14 @@ public class CVApproachController extends ApproachController {
 
 	public void handleCVSyllablePatterns() {
 		System.out.println("handleCVSyllablePatterns reached");
+		FXMLLoader loader = new FXMLLoader();
+        ApproachViewNavigator.loadApproachView(loader, "fxml/CVSyllablePatterns.fxml", locale);
+		CVSyllablePatternsController controller = loader.getController();
+		currentCVApproachController = controller;
+		
+	    controller.setData(cvApproachData);
+	    controller.setMainApp(mainApp);
+	    controller.setLocale(locale);
 	}
 
 	public void handleCVExceptionsList() {

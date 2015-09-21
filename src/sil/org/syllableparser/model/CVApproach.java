@@ -16,6 +16,7 @@ public class CVApproach {
 	
 	private ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
 	private ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
+	private ObservableList<CVSyllablePattern> cvSyllablePatterns = FXCollections.observableArrayList();
 
 	/**
 	 * @return the cvSegmentInventoryData
@@ -47,6 +48,15 @@ public class CVApproach {
 	 */
 	public void setCVNaturalClasses(ObservableList<CVNaturalClass> cvNaturalClassesData) {
 		this.cvNaturalClasses = cvNaturalClassesData;
+	}
+
+	public ObservableList<CVSyllablePattern> getCVSyllablePatterns() {
+		return cvSyllablePatterns;
+	}
+
+	public void setCVSyllablePatterns(
+			ObservableList<CVSyllablePattern> cvSyllablePatterns) {
+		this.cvSyllablePatterns = cvSyllablePatterns;
 	}
 
 	/**
