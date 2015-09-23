@@ -3,8 +3,6 @@
  */
 package sil.org.syllableparser.model;
 
-import java.util.UUID;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -22,7 +20,7 @@ public class CVSegment extends SylParserObject {
 		this.segment = new SimpleStringProperty("");
 		this.graphemes = new SimpleStringProperty("");
 		this.description = new SimpleStringProperty("");
-		uuid = UUID.randomUUID();
+		createUUID();
 	}
 
 	public CVSegment(String segment, String graphemes, String comment) {
@@ -30,7 +28,7 @@ public class CVSegment extends SylParserObject {
 		this.segment = new SimpleStringProperty(segment);
 		this.graphemes = new SimpleStringProperty(graphemes);
 		this.description = new SimpleStringProperty(comment);
-		uuid = UUID.randomUUID();
+		createUUID();
 	}
 
 	public String getSegment() {
@@ -70,13 +68,13 @@ public class CVSegment extends SylParserObject {
 	}
 	
 	public static int findIndexInSegmentsListByUuid(ObservableList<CVSegment> list,
-			UUID uuid) {
+			String uuid) {
 		// TODO: is there a way to do this with lambda expressions?
 		// Is there a way to use SylParserObject somehow?
 		int index = -1;
 		for (SylParserObject sylParserObject : list) {
 			index++;
-			if (sylParserObject.getUuid() == uuid) {
+			if (sylParserObject.getID() == uuid) {
 				return index;
 			}
 		}

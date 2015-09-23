@@ -50,6 +50,8 @@ public class CVApproach {
 		this.cvNaturalClasses = cvNaturalClassesData;
 	}
 
+	@XmlElementWrapper(name = "cvSyllablePatterns")
+	@XmlElement(name = "cvSyllablePattern")
 	public ObservableList<CVSyllablePattern> getCVSyllablePatterns() {
 		return cvSyllablePatterns;
 	}
@@ -65,6 +67,7 @@ public class CVApproach {
 	public void clear() {
 		cvSegmentInventory.clear();
 		cvNaturalClasses.clear();
+		cvSyllablePatterns.clear();
 	}
 
 	/**
@@ -78,6 +81,10 @@ public class CVApproach {
 		ObservableList<CVNaturalClass> cvNaturalClassesLoadedData = cvApproachLoaded.getCVNaturalClasses();
 		for (CVNaturalClass cvNaturalClass : cvNaturalClassesLoadedData) {
 			cvNaturalClasses.add(cvNaturalClass);
+		}
+		ObservableList<CVSyllablePattern> cvSyllablePatternsLoadedData = cvApproachLoaded.getCVSyllablePatterns();
+		for (CVSyllablePattern cvSyllablePattern : cvSyllablePatternsLoadedData) {
+			cvSyllablePatterns.add(cvSyllablePattern);
 		}
 	}
 	

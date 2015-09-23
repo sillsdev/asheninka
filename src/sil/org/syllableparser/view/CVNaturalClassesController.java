@@ -202,10 +202,10 @@ public class CVNaturalClassesController extends ApproachController implements In
 	        // set the icon
 	        dialogStage.getIcons().add(mainApp.getNewMainIconImage());
 
-	        CVNaturalClassChooserController controller = loader.getController();
+	        CVSegmentNaturalClassChooserController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        controller.setMainApp(mainApp);
-	        controller.setCurrentCVNaturalClass(currentNaturalClass);
+	        controller.setNaturalClass(currentNaturalClass);
 	        controller.setData(cvApproach);
 
 	        dialogStage.showAndWait();

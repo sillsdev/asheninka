@@ -117,16 +117,16 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 		for (CVSegment cvSegment : cvApproach.getCVSegmentInventory()) {
 			currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
 					cvSegment.getSegment(), cvSegment.getDescription(), true,
-					cvSegment.getUuid());
+					cvSegment.getID());
 			setCheckedStatus(cvSegment);
 			cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
 		}
 		for (CVNaturalClass cvNaturalClass : cvApproach.getCVNaturalClasses()) {
-			if (cvNaturalClass.getUuid() != naturalClass.getUuid()) {
+			if (cvNaturalClass.getID() != naturalClass.getID()) {
 				currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
 						cvNaturalClass.getNCName(),
 						cvNaturalClass.getDescription(), false,
-						cvNaturalClass.getUuid());
+						cvNaturalClass.getID());
 				cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
 				setCheckedStatus(cvNaturalClass);
 			}
@@ -143,7 +143,7 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 
 	private void setCheckedStatus(SylParserObject sylParserObject) {
 		if (SylParserObject.findIndexInSylParserObjectListByUuid(
-				naturalClass.getSnc(), sylParserObject.getUuid()) > -1) {
+				naturalClass.getSnc(), sylParserObject.getID()) > -1) {
 			currentSegmentOrNaturalClass.setChecked(true);
 		}
 	}

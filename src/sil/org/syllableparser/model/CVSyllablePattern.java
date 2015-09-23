@@ -3,7 +3,9 @@
  */
 package sil.org.syllableparser.model;
 
-import java.util.UUID;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlList;
 
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,8 +20,8 @@ import javafx.collections.ObservableList;
 public class CVSyllablePattern extends SylParserObject {
 	private final StringProperty spName;
 	private final SimpleListProperty<CVNaturalClass> naturalClasses;
-	private StringProperty description;
-	private StringProperty ncsRepresentation;
+	private final StringProperty description;
+	private final StringProperty ncsRepresentation;
 	ObservableList<CVNaturalClass> ncs = FXCollections.observableArrayList();
 	
 	public CVSyllablePattern() {
@@ -28,17 +30,17 @@ public class CVSyllablePattern extends SylParserObject {
 		this.naturalClasses = new SimpleListProperty<CVNaturalClass>();
 		this.description = new SimpleStringProperty("");
 		this.ncsRepresentation = new SimpleStringProperty("");
-		this.uuid = UUID.randomUUID();
+		createUUID();
 	}
 
 	public CVSyllablePattern(String patternName, SimpleListProperty<CVNaturalClass> naturalClasses, 
-			String description, String sncRepresentation) {
+			String description, String ncsRepresentation) {
 		super();
 		this.spName = new SimpleStringProperty(patternName);
 		this.naturalClasses = new SimpleListProperty<CVNaturalClass>(naturalClasses);
 		this.description = new SimpleStringProperty(description);
-		this.ncsRepresentation = new SimpleStringProperty(sncRepresentation);
-		uuid = UUID.randomUUID();
+		this.ncsRepresentation = new SimpleStringProperty(ncsRepresentation);
+		createUUID();
 	}
 
 	public String getSPName() {
@@ -53,6 +55,29 @@ public class CVSyllablePattern extends SylParserObject {
 		this.spName.set(spName);
 	}
 
+	public ObservableList<CVNaturalClass> getNaturalClasses() {
+		return naturalClasses;
+	}
+
+	@XmlAttribute(name="ncs")
+	@XmlIDREF
+	@XmlList
+	public ObservableList<CVNaturalClass> getNCs() {
+		return ncs;
+	}
+
+	public void setNCs(ObservableList<CVNaturalClass> ncs) {
+		this.ncs = ncs;
+	}
+
+	public SimpleListProperty<CVNaturalClass> naturalClassesProperty() {
+		return naturalClasses;
+	}
+
+	public void setNaturalClasses(ObservableList<CVNaturalClass> naturalClasses) {
+		this.naturalClasses.set(naturalClasses);
+	}
+
 	public String getDescription() {
 		return description.get();
 	}
@@ -65,35 +90,34 @@ public class CVSyllablePattern extends SylParserObject {
 		this.description.set(description);
 	}
 
-	/**
-	 * @return the ncsRepresentation
-	 */
-	public StringProperty getNCsRepresentation() {
+	public StringProperty getNCSRepresentation() {
 		return ncsRepresentation;
 	}
 	public StringProperty sncRepresentationProperty() {
 		return ncsRepresentation;
 	}
-	public void setNCsRepresentation(StringProperty ncsRepresentation) {
-		this.ncsRepresentation = ncsRepresentation;
+	public void setNCSRepresentation(String ncsRepresentation) {
+		this.ncsRepresentation.set(ncsRepresentation);
 	}
-	public ObservableList<CVNaturalClass> getNaturalClasses() {
-		return naturalClasses;
-	}
+	
+	public static int findIndexInSyllablePatternListByUuid(ObservableList<CVSyllablePattern> list, String uuid) {
+		// TODO: is there a way to do this with lambda expressions?
+		// Is there a way to use SylParserObject somehow?
+				int index = -1;
+				for (SylParserObject sylParserObject : list) {
+					index++;
+					if (sylParserObject.getID() == uuid) {
+						return index;
+					}
+				}		
+				return -1;
+			}
 
-	public void setNaturalClasses(ObservableList<CVNaturalClass> naturalClasses) {
-		this.naturalClasses.set(naturalClasses);
-	}
-
-	public SimpleListProperty<CVNaturalClass> naturalClassesProperty() {
-		return naturalClasses;
-	}
-	public ObservableList<CVNaturalClass> getNCs() {
-		return ncs;
-	}
-
-	public void setNCs(ObservableList<CVNaturalClass> ncs) {
-		this.ncs = ncs;
+	/**
+	 * @return
+	 */
+	public StringProperty syllablePatternProperty() {
+		return this.spName;
 	}
 
 

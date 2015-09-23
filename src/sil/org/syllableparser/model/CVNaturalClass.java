@@ -3,7 +3,10 @@
  */
 package sil.org.syllableparser.model;
 
-import java.util.UUID;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlList;
+
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -27,7 +30,7 @@ public class CVNaturalClass extends SylParserObject {
 		this.segmentsOrNaturalClasses = new SimpleListProperty<Object>();
 		this.description = new SimpleStringProperty("");
 		this.sncRepresentation = new SimpleStringProperty("");
-		this.uuid = UUID.randomUUID();
+		createUUID();
 	}
 
 	public CVNaturalClass(String className, SimpleListProperty<Object> segmentsOrNaturalClasses, 
@@ -37,7 +40,7 @@ public class CVNaturalClass extends SylParserObject {
 		this.segmentsOrNaturalClasses = new SimpleListProperty<Object>(segmentsOrNaturalClasses);
 		this.description = new SimpleStringProperty(description);
 		this.sncRepresentation = new SimpleStringProperty(sncRepresentation);
-		uuid = UUID.randomUUID();
+		createUUID();
 	}
 
 	public String getNCName() {
@@ -56,6 +59,9 @@ public class CVNaturalClass extends SylParserObject {
 		return segmentsOrNaturalClasses;
 	}
 
+	@XmlAttribute(name="snc")
+	@XmlIDREF
+	@XmlList
 	public ObservableList<SylParserObject> getSnc() {
 		return snc;
 	}
@@ -96,13 +102,13 @@ public class CVNaturalClass extends SylParserObject {
 		this.sncRepresentation.set(sncRepresentation);
 	}
 
-	public static int findIndexInNaturaClassListByUuid(ObservableList<CVNaturalClass> list, UUID uuid) {
+	public static int findIndexInNaturaClassListByUuid(ObservableList<CVNaturalClass> list, String uuid) {
 		// TODO: is there a way to do this with lambda expressions?
 		// Is there a way to use SylParserObject somehow?
 				int index = -1;
 				for (SylParserObject sylParserObject : list) {
 					index++;
-					if (sylParserObject.getUuid() == uuid) {
+					if (sylParserObject.getID() == uuid) {
 						return index;
 					}
 				}		

@@ -96,7 +96,7 @@ public class CVNaturalClassChooserController implements Initializable {
 		int i = CVNaturalClass
 				.findIndexInNaturaClassListByUuid(
 						cvApproach.getCVNaturalClasses(),
-						currentNaturalClass.getUuid());
+						currentNaturalClass.getID());
 		syllablePattern.getNCs().add(cvApproach.getCVNaturalClasses().get(i));
 
 		okClicked = true;

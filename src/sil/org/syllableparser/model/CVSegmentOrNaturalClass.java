@@ -3,8 +3,6 @@
  */
 package sil.org.syllableparser.model;
 
-import java.util.UUID;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,14 +17,14 @@ public class CVSegmentOrNaturalClass {
 	private StringProperty segmentOrNaturalClass;
 	private StringProperty description;
 	private BooleanProperty checked;
-	private UUID uuid;
+	private String uuid;
 	private boolean isSegment = true;
 
 	public CVSegmentOrNaturalClass() {
 		this(null, null, true, null);
 	}
 
-	public CVSegmentOrNaturalClass(String segmentOrNaturalClass, String description, boolean isSegment, UUID uuid) {
+	public CVSegmentOrNaturalClass(String segmentOrNaturalClass, String description, boolean isSegment, String uuid) {
 		this.segmentOrNaturalClass = new SimpleStringProperty(segmentOrNaturalClass);
 		this.description = new SimpleStringProperty(description);
 		this.checked = new SimpleBooleanProperty(false);
@@ -53,11 +51,11 @@ public class CVSegmentOrNaturalClass {
 	public void setSegmentOrNaturalClass(String segmentOrNaturalClass) {
 		this.segmentOrNaturalClass.set(segmentOrNaturalClass);
 	}
-	public UUID getUuid() {
+	public String getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(UUID uuid) {
+	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 

@@ -5,6 +5,9 @@ package sil.org.syllableparser.model;
 
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
+
 import javafx.collections.ObservableList;
 
 /**
@@ -13,24 +16,31 @@ import javafx.collections.ObservableList;
  */
 public abstract class SylParserObject {
 
-	protected UUID uuid;
-
-	public UUID getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
-	}
+	protected String id;
 	
+	@XmlAttribute(name="id")
+	@XmlID
+	public String getID() {
+		return id;
+	}
+
+	public void setID(String id) {
+		this.id = id;
+	}
+
+	protected void createUUID() {
+		UUID uuid = UUID.randomUUID();
+		setID(uuid.toString());
+	}
+
 	public static int findIndexInSylParserObjectListByUuid(ObservableList<SylParserObject> list,
-			UUID uuid) {
+			String uuid) {
 		// TODO: is there a way to do this with lambda expressions?
 		// Is there a way to use SylParserObject somehow?
 		int index = -1;
 		for (SylParserObject sylParserObject : list) {
 			index++;
-			if (sylParserObject.getUuid().equals(uuid)) {
+			if (sylParserObject.getID().equals(uuid)) {
 				return index;
 			}
 		}
