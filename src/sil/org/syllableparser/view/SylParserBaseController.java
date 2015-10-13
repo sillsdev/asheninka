@@ -16,6 +16,7 @@ import javafx.scene.text.TextAlignment;
  */
 public abstract class SylParserBaseController extends ApproachController implements Initializable {
 
+	
 	protected void makeColumnHeaderWrappable(@SuppressWarnings("rawtypes") TableColumn col) {
 		Label label = new Label(col.getText());
 		label.setStyle("-fx-padding: 8px;");

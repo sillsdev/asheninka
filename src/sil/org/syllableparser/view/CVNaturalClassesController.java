@@ -11,6 +11,7 @@ import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.CVNaturalClass;
 import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.SylParserObject;
+import sil.org.syllableparser.view.SylParserBaseController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,8 +33,29 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends SylParserBaseController implements
-		Initializable {
+public class CVNaturalClassesController extends SylParserBaseController
+		implements Initializable {
+
+	protected final class WrappingTableCell extends
+			TableCell<CVNaturalClass, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(
+						getTableColumn().widthProperty());
+				setGraphic(text);
+			}
+		}
+	}
+
 	@FXML
 	private TableView<CVNaturalClass> cvNaturalClassTable;
 	@FXML
@@ -83,66 +105,13 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
-			return new TableCell<CVNaturalClass, String>() {
-				private Text text;
-
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null || empty) {
-						setText(null);
-						setStyle("");
-					} else {
-						text = new Text(item.toString());
-						// Get it to wrap.
-						text.wrappingWidthProperty().bind(
-								getTableColumn().widthProperty());
-						setGraphic(text);
-					}
-				};
-			};
+			return new WrappingTableCell();
 		});
 		segmentOrNaturalClassColumn.setCellFactory(column -> {
-			return new TableCell<CVNaturalClass, String>() {
-				private Text text;
-
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null || empty) {
-						setText(null);
-						setStyle("");
-					} else {
-						text = new Text(item.toString());
-						// Get it to wrap.
-						text.wrappingWidthProperty().bind(
-								getTableColumn().widthProperty());
-						setGraphic(text);
-						// text.setFill(Color.CHOCOLATE); // set the text color
-						// setStyle("-fx-background-color: yellow");
-					}
-				};
-			};
+			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new TableCell<CVNaturalClass, String>() {
-				private Text text;
-
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null || empty) {
-						setText(null);
-						setStyle("");
-					} else {
-						text = new Text(item.toString());
-						// Get it to wrap.
-						text.wrappingWidthProperty().bind(
-								getTableColumn().widthProperty());
-						setGraphic(text);
-					}
-				};
-			};
+			return new WrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(nameColumn);

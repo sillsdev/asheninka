@@ -32,8 +32,28 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVSyllablePatternsController extends SylParserBaseController implements
-		Initializable {
+public class CVSyllablePatternsController extends SylParserBaseController
+		implements Initializable {
+	protected final class WrappingTableCell extends
+			TableCell<CVSyllablePattern, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(
+						getTableColumn().widthProperty());
+				setGraphic(text);
+			}
+		}
+	}
+
 	@FXML
 	private TableView<CVSyllablePattern> cvSyllablePatternTable;
 	@FXML
@@ -76,66 +96,20 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		// Initialize the table with the three columns.
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.spNameProperty());
-		naturalClassColumn.setCellValueFactory(cellData -> cellData.getValue().ncsRepresentationProperty());
+		naturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.ncsRepresentationProperty());
 		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.descriptionProperty());
-		
+
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
-			return new TableCell<CVSyllablePattern, String>() {
-				private Text text;
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null || empty) {
-						setText(null);
-						setStyle("");
-					} else {
-						text =  new Text(item.toString());
-						// Get it to wrap.
-                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-                        setGraphic(text);
-        			}
-				};
-			};
+			return new WrappingTableCell();
 		});
 		naturalClassColumn.setCellFactory(column -> {
-			return new TableCell<CVSyllablePattern, String>() {
-				private Text text;
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null || empty) {
-						setText(null);
-						setStyle("");
-					} else {
-						text =  new Text(item.toString());
-						// Get it to wrap.
-                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-                        setGraphic(text);
-                        //text.setFill(Color.CHOCOLATE);  // set the text color
-						//setStyle("-fx-background-color: yellow");
-					}
-				};
-			};
+			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new TableCell<CVSyllablePattern, String>() {
-				private Text text;
-				@Override
-				protected void updateItem(String item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null || empty) {
-						setText(null);
-						setStyle("");
-					} else {
-						text =  new Text(item.toString());
-						// Get it to wrap.
-                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-                        setGraphic(text);
-        			}
-				};
-			};
+			return new WrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(nameColumn);
@@ -216,7 +190,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				}
 			}
 		}
-        currentSyllablePattern.setNCSRepresentation(sb.toString());
+		currentSyllablePattern.setNCSRepresentation(sb.toString());
 	}
 
 	public void setSyllablePattern(CVSyllablePattern syllablePattern) {
