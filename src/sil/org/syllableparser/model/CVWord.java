@@ -12,8 +12,8 @@ import javafx.beans.property.StringProperty;
  */
 public class CVWord extends SylParserObject {
 	private final StringProperty cvWord;
-	private final StringProperty predictedHyphenation;
-	private final StringProperty correctHyphenation;
+	private final StringProperty predictedSyllabification;
+	private final StringProperty correctSyllabification;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
 	// case this word represents
@@ -24,8 +24,8 @@ public class CVWord extends SylParserObject {
 	public CVWord() {
 		super();
 		this.cvWord = new SimpleStringProperty("");
-		this.predictedHyphenation = new SimpleStringProperty("");
-		this.correctHyphenation = new SimpleStringProperty("");
+		this.predictedSyllabification = new SimpleStringProperty("");
+		this.correctSyllabification = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -33,9 +33,9 @@ public class CVWord extends SylParserObject {
 			String correctHyphenation) {
 		super();
 		this.cvWord = new SimpleStringProperty(word);
-		this.predictedHyphenation = new SimpleStringProperty(
+		this.predictedSyllabification = new SimpleStringProperty(
 				predictedHyphenation);
-		this.correctHyphenation = new SimpleStringProperty(correctHyphenation);
+		this.correctSyllabification = new SimpleStringProperty(correctHyphenation);
 		createUUID();
 	}
 
@@ -51,27 +51,27 @@ public class CVWord extends SylParserObject {
 		this.cvWord.set(cvWord);
 	}
 
-	public String getPredictedHyphenation() {
-		return predictedHyphenation.get();
+	public String getPredictedSyllabification() {
+		return predictedSyllabification.get();
 	}
 
-	public StringProperty predictedHyphenationProperty() {
-		return predictedHyphenation;
+	public StringProperty predictedSyllabificationProperty() {
+		return predictedSyllabification;
 	}
 
-	public void setPredictedHyphenation(String predictedHyphenation) {
-		this.predictedHyphenation.set(predictedHyphenation);
+	public void setPredictedSyllabification(String predictedSyllabification) {
+		this.predictedSyllabification.set(predictedSyllabification);
 	}
 
-	public String getCorrectHyphenation() {
-		return correctHyphenation.get();
+	public String getCorrectSyllabification() {
+		return correctSyllabification.get();
 	}
 
-	public StringProperty correctHyphenationProperty() {
-		return correctHyphenation;
+	public StringProperty correctSyllabificationProperty() {
+		return correctSyllabification;
 	}
 
-	public void setCorrectHyphenation(String correctHyphenation) {
-		this.correctHyphenation.set(correctHyphenation);
+	public void setCorrectSyllabification(String correctSyllabification) {
+		this.correctSyllabification.set(correctSyllabification);
 	}
 }

@@ -49,16 +49,16 @@ public class CVWordsController extends SylParserBaseController
 	@FXML
 	private TableColumn<CVWord, String> wordColumn;
 	@FXML
-	private TableColumn<CVWord, String> predictedHyphenationColumn;
+	private TableColumn<CVWord, String> predictedSyllabificationColumn;
 	@FXML
-	private TableColumn<CVWord, String> correctHyphenationColumn;
+	private TableColumn<CVWord, String> correctSyllabificationColumn;
 
 	@FXML
 	private TextField wordField;
 	@FXML
-	private TextField predictedHyphenationField;
+	private TextField predictedSyllabificationField;
 	@FXML
-	private TextField correctHyphenationField;
+	private TextField correctSyllabificationField;
 
 	private CVApproach cvApproach;
 	private CVWord currentWord;
@@ -78,25 +78,25 @@ public class CVWordsController extends SylParserBaseController
 		// Initialize the table with the three columns.
 		wordColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.cvWordProperty());
-		predictedHyphenationColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.predictedHyphenationProperty());
-		correctHyphenationColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.correctHyphenationProperty());
+		predictedSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.predictedSyllabificationProperty());
+		correctSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.correctSyllabificationProperty());
 
 		// Custom rendering of the table cell.
 		wordColumn.setCellFactory(column -> {
 			return new WrappingTableCell();
 		});
-		predictedHyphenationColumn.setCellFactory(column -> {
+		predictedSyllabificationColumn.setCellFactory(column -> {
 			return new WrappingTableCell();
 		});
-		correctHyphenationColumn.setCellFactory(column -> {
+		correctSyllabificationColumn.setCellFactory(column -> {
 			return new WrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(wordColumn);
-		makeColumnHeaderWrappable(predictedHyphenationColumn);
-		makeColumnHeaderWrappable(correctHyphenationColumn);
+		makeColumnHeaderWrappable(predictedSyllabificationColumn);
+		makeColumnHeaderWrappable(correctSyllabificationColumn);
 
 		// Clear cv word details.
 		showCVWordDetails(null);
@@ -113,21 +113,21 @@ public class CVWordsController extends SylParserBaseController
 				(observable, oldValue, newValue) -> {
 					currentWord.setCVWord(wordField.getText());
 				});
-		predictedHyphenationField.textProperty().addListener(
+		predictedSyllabificationField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
-					currentWord.setPredictedHyphenation(predictedHyphenationField.getText());
+					currentWord.setPredictedSyllabification(predictedSyllabificationField.getText());
 				});
-		correctHyphenationField.textProperty().addListener(
+		correctSyllabificationField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
-					currentWord.setCorrectHyphenation(correctHyphenationField.getText());
+					currentWord.setCorrectSyllabification(correctSyllabificationField.getText());
 				});
 
 		// Use of Enter move focus to next item.
 		wordField.setOnAction((event) -> {
-			predictedHyphenationField.requestFocus();
+			predictedSyllabificationField.requestFocus();
 		});
-		predictedHyphenationField.setOnAction((event) -> {
-			correctHyphenationField.requestFocus();
+		predictedSyllabificationField.setOnAction((event) -> {
+			correctSyllabificationField.requestFocus();
 		});
 
 		wordField.requestFocus();
@@ -146,20 +146,20 @@ public class CVWordsController extends SylParserBaseController
 		if (cvWord != null) {
 			// Fill the text fields with info from the segment object.
 			wordField.setText(cvWord.getCVWord());
-			predictedHyphenationField.setText(cvWord.getPredictedHyphenation());
-			correctHyphenationField.setText(cvWord.getCorrectHyphenation());
+			predictedSyllabificationField.setText(cvWord.getPredictedSyllabification());
+			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");
-			predictedHyphenationField.setText("");
-			correctHyphenationField.setText("");
+			predictedSyllabificationField.setText("");
+			correctSyllabificationField.setText("");
 		}
 	}
 
 	public void setWord(CVWord cvWord) {
 		wordField.setText(cvWord.getCVWord());
-		predictedHyphenationField.setText(cvWord.getPredictedHyphenation());
-		correctHyphenationField.setText(cvWord.getCorrectHyphenation());
+		predictedSyllabificationField.setText(cvWord.getPredictedSyllabification());
+		correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
 	}
 
 	/**

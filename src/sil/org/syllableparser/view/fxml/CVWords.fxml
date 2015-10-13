@@ -15,8 +15,8 @@
                   <TableView fx:id="cvWordsTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="wordColumn" prefWidth="63.0" text="%label.word" />
-                      <TableColumn fx:id="predictedHyphenationColumn" prefWidth="119.0" text="%label.predictedhyphenation" />
-                        <TableColumn fx:id="correctHyphenationColumn" prefWidth="-1.0" text="%label.correcthyphenation" />
+                      <TableColumn fx:id="predictedSyllabificationColumn" prefWidth="119.0" text="%label.predictedsyllabification" />
+                        <TableColumn fx:id="correctSyllabificationColumn" prefWidth="-1.0" text="%label.correctsyllabification" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -39,11 +39,11 @@
                     </rowConstraints>
                      <children>
                         <Label text="%label.word" />
-                        <Label text="%label.predictedhyphenation" GridPane.rowIndex="1" />
-                        <Label text="%label.correcthyphenation" GridPane.rowIndex="2" />
+                        <Label text="%label.predictedsyllabification" GridPane.rowIndex="1" />
+                        <Label text="%label.correctsyllabification" GridPane.rowIndex="2" />
                         <TextField fx:id="wordField" GridPane.columnIndex="1" />
-                        <TextField fx:id="predictedHyphenationField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="correctHyphenationField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                </children>
