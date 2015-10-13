@@ -85,7 +85,13 @@ public class CVApproachController extends ApproachController {
 	}
 
 	public void handleCVWords() {
-		System.out.println("handleCVWords reached");
+		FXMLLoader loader = new FXMLLoader();
+        ApproachViewNavigator.loadApproachView(loader, "fxml/CVWords.fxml", locale);
+		CVWordsController controller = loader.getController();
+		currentCVApproachController = controller;
+		
+	    controller.setData(cvApproachData);
+
 	}
 
 	/* (non-Javadoc)

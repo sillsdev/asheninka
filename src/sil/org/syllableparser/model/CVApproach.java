@@ -17,7 +17,8 @@ public class CVApproach {
 	private ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
 	private ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
 	private ObservableList<CVSyllablePattern> cvSyllablePatterns = FXCollections.observableArrayList();
-
+	private ObservableList<CVWord> cvWords = FXCollections.observableArrayList();
+	
 	/**
 	 * @return the cvSegmentInventoryData
 	 */
@@ -60,6 +61,23 @@ public class CVApproach {
 			ObservableList<CVSyllablePattern> cvSyllablePatterns) {
 		this.cvSyllablePatterns = cvSyllablePatterns;
 	}
+	
+	/**
+	 * @return the cvWord Data
+	 */
+	@XmlElementWrapper(name = "cvWords")
+	@XmlElement(name = "cvWord")
+	public ObservableList<CVWord> getCVWords() {
+		return cvWords;
+	}
+
+	/**
+	 * @param cvWord Data to set
+	 */
+	public void setCVWords(ObservableList<CVWord> cvWords) {
+		this.cvWords = cvWords;
+	}
+
 
 	/**
 	 * Clear out all data in this CV approach
@@ -68,6 +86,7 @@ public class CVApproach {
 		cvSegmentInventory.clear();
 		cvNaturalClasses.clear();
 		cvSyllablePatterns.clear();
+		cvWords.clear();
 	}
 
 	/**
@@ -86,6 +105,11 @@ public class CVApproach {
 		for (CVSyllablePattern cvSyllablePattern : cvSyllablePatternsLoadedData) {
 			cvSyllablePatterns.add(cvSyllablePattern);
 		}
+		ObservableList<CVWord> cvWordsLoadedData = cvApproachLoaded.getCVWords();
+		for (CVWord cvWord : cvWordsLoadedData) {
+			cvWords.add(cvWord);
+		}
+
 	}
 	
 
