@@ -7,12 +7,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.CVApproach;
+import sil.org.syllableparser.model.CVNaturalClass;
 import sil.org.syllableparser.model.CVSegment;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 /**
  * @author Andy Black
@@ -55,6 +62,64 @@ public class CVSegmentInventoryController extends ApproachController implements 
         graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
         descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());;
         
+		// Custom rendering of the table cell.
+		segmentColumn.setCellFactory(column -> {
+			return new TableCell<CVSegment, String>() {
+				private Text text;
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text =  new Text(item.toString());
+						// Get it to wrap.
+                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+                        setGraphic(text);
+        			}
+				};
+			};
+		});
+		graphemesColumn.setCellFactory(column -> {
+			return new TableCell<CVSegment, String>() {
+				private Text text;
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text =  new Text(item.toString());
+						// Get it to wrap.
+                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+                        setGraphic(text);
+                        //text.setFill(Color.CHOCOLATE);  // set the text color
+						//setStyle("-fx-background-color: yellow");
+					}
+				};
+			};
+		});
+		descriptionColumn.setCellFactory(column -> {
+			return new TableCell<CVSegment, String>() {
+				private Text text;
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text =  new Text(item.toString());
+						// Get it to wrap.
+                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+                        setGraphic(text);
+        			}
+				};
+			};
+		});
+
         // Clear cv segment details.
         showCVSegmentDetails(null);
         
@@ -144,5 +209,4 @@ public class CVSegmentInventoryController extends ApproachController implements 
 		cvSegmentTable.getSelectionModel().select(i);
     	cvSegmentTable.getFocusModel().focus(i);
 	}
-
 }

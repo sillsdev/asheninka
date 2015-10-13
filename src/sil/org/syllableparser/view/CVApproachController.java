@@ -70,7 +70,6 @@ public class CVApproachController extends ApproachController {
 	}
 
 	public void handleCVSyllablePatterns() {
-		System.out.println("handleCVSyllablePatterns reached");
 		FXMLLoader loader = new FXMLLoader();
         ApproachViewNavigator.loadApproachView(loader, "fxml/CVSyllablePatterns.fxml", locale);
 		CVSyllablePatternsController controller = loader.getController();

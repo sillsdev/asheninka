@@ -14,14 +14,19 @@ import sil.org.syllableparser.model.SylParserObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -31,7 +36,8 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends ApproachController implements Initializable {
+public class CVNaturalClassesController extends ApproachController implements
+		Initializable {
 	@FXML
 	private TableView<CVNaturalClass> cvNaturalClassTable;
 	@FXML
@@ -53,35 +59,108 @@ public class CVNaturalClassesController extends ApproachController implements In
 	private TextFlow sncTextFlow;
 	@FXML
 	private Button sncButton;
-//	@FXML
-//	private TextField sncRepresentationField;
-	
-	
+	// @FXML
+	// private TextField sncRepresentationField;
+
 	private CVApproach cvApproach;
 	private CVNaturalClass currentNaturalClass;
 
 	public CVNaturalClassesController() {
-		
+
 	}
+
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	//public void initialize() {
+		// public void initialize() {
 
-		 // Initialize the table with the three columns.
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
-		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());;
-        
-        // Clear cv natural class details.
-        showCVNaturalClassDetails(null);
-        
-        // Listen for selection changes and show the  details when changed.
-        cvNaturalClassTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showCVNaturalClassDetails(newValue));
-        
+		// Initialize the table with the three columns.
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.ncNameProperty());
+		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData
+				.getValue().sncRepresentationProperty());
+		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.descriptionProperty());
+
+		// Custom rendering of the table cell.
+		nameColumn.setCellFactory(column -> {
+			return new TableCell<CVNaturalClass, String>() {
+				private Text text;
+
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text = new Text(item.toString());
+						// Get it to wrap.
+						text.wrappingWidthProperty().bind(
+								getTableColumn().widthProperty());
+						setGraphic(text);
+					}
+				};
+			};
+		});
+		segmentOrNaturalClassColumn.setCellFactory(column -> {
+			return new TableCell<CVNaturalClass, String>() {
+				private Text text;
+
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text = new Text(item.toString());
+						// Get it to wrap.
+						text.wrappingWidthProperty().bind(
+								getTableColumn().widthProperty());
+						setGraphic(text);
+						// text.setFill(Color.CHOCOLATE); // set the text color
+						// setStyle("-fx-background-color: yellow");
+					}
+				};
+			};
+		});
+		descriptionColumn.setCellFactory(column -> {
+			return new TableCell<CVNaturalClass, String>() {
+				private Text text;
+
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text = new Text(item.toString());
+						// Get it to wrap.
+						text.wrappingWidthProperty().bind(
+								getTableColumn().widthProperty());
+						setGraphic(text);
+					}
+				};
+			};
+		});
+
+		makeHeaderWrappable(segmentOrNaturalClassColumn);
+
+		// Clear cv natural class details.
+		showCVNaturalClassDetails(null);
+
+		// Listen for selection changes and show the details when changed.
+		cvNaturalClassTable
+				.getSelectionModel()
+				.selectedItemProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> showCVNaturalClassDetails(newValue));
+
 		// Handle TextField text changes.
 		nameField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
@@ -89,7 +168,8 @@ public class CVNaturalClassesController extends ApproachController implements In
 				});
 		descriptionField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
-					currentNaturalClass.setDescription(descriptionField.getText());
+					currentNaturalClass.setDescription(descriptionField
+							.getText());
 				});
 
 		// Use of Enter move focus to next item.
@@ -99,73 +179,91 @@ public class CVNaturalClassesController extends ApproachController implements In
 		descriptionField.setOnAction((event) -> {
 			segmentOrNaturalClassField.requestFocus();
 		});
-		
+
 		nameField.requestFocus();
 
 	}
 
 	/**
-	 * Fills all text fields to show details about the CV natural class.
-	 * If the specified segment is null, all text fields are cleared.
+	 * Fills all text fields to show details about the CV natural class. If the
+	 * specified segment is null, all text fields are cleared.
 	 * 
-	 * @param naturalClass the segment or null
+	 * @param naturalClass
+	 *            the segment or null
 	 */
 	private void showCVNaturalClassDetails(CVNaturalClass naturalClass) {
 		currentNaturalClass = naturalClass;
-	    if (naturalClass != null) {
-	        // Fill the text fields with info from the person object.
-	        nameField.setText(naturalClass.getNCName());
-	        descriptionField.setText(naturalClass.getDescription());
-	        showSegmentOrNaturalClassContent();
-	    } else {
-	        // Segment is null, remove all the text.
-	        nameField.setText("");
-	        descriptionField.setText("");
-	        sncTextFlow.getChildren().clear();
-	    }
-	    
-	    
-	}
-	private void showSegmentOrNaturalClassContent() {
-        sncTextFlow.getChildren().clear();
-        for (SylParserObject snc : currentNaturalClass.getSnc()) {
-			Text t;
-			if (snc instanceof CVSegment) {
-				t = new Text(((CVSegment) snc).getSegment());
-			} else if (snc instanceof CVNaturalClass) {
-				t = new Text(((CVNaturalClass) snc).getNCName());
-			} else {
-				t = new Text("ERROR!");
-			}
-		    Text tBar = new Text(" | ");
-		    tBar.setStyle("-fx-stroke: lightgrey;");
-		    sncTextFlow.getChildren().addAll(t, tBar);
+		if (naturalClass != null) {
+			// Fill the text fields with info from the person object.
+			nameField.setText(naturalClass.getNCName());
+			descriptionField.setText(naturalClass.getDescription());
+			showSegmentOrNaturalClassContent();
+		} else {
+			// Segment is null, remove all the text.
+			nameField.setText("");
+			descriptionField.setText("");
+			sncTextFlow.getChildren().clear();
 		}
+
+	}
+
+	private void showSegmentOrNaturalClassContent() {
+		StringBuilder sb = new StringBuilder();
+		sncTextFlow.getChildren().clear();
+		int i = 1;
+		int iCount = currentNaturalClass.getSnc().size();
+		for (SylParserObject snc : currentNaturalClass.getSnc()) {
+			Text t;
+			String s;
+			if (snc instanceof CVSegment) {
+				s = ((CVSegment) snc).getSegment();
+				t = new Text(s);
+				sb.append(s);
+			} else if (snc instanceof CVNaturalClass) {
+				s = ((CVNaturalClass) snc).getNCName();
+				t = new Text(s);
+				sb.append(s);
+			} else {
+				s = "ERROR!";
+				t = new Text(s);
+				sb.append(s);
+			}
+			Text tBar = new Text(" | ");
+			tBar.setStyle("-fx-stroke: lightgrey;");
+			sncTextFlow.getChildren().addAll(t, tBar);
+			if (i++ < iCount) {
+				sb.append(", ");
+			}
+		}
+		currentNaturalClass.setSNCRepresentation(sb.toString());
 	}
 
 	public void setNaturalClass(CVNaturalClass naturalClass) {
 		nameField.setText(naturalClass.getNCName());
 		descriptionField.setText(naturalClass.getDescription());
 	}
-	
-	/**
-     * Is called by the main application to give a reference back to itself.
-     * 
-     * @param cvApproachController
-     */
-    public void setData(CVApproach cvApproachData) {
-        cvApproach = cvApproachData;
 
-        // Add observable list data to the table
-        cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
-        if (cvNaturalClassTable.getItems().size() > 0) {
-        	// select first one
-        	cvNaturalClassTable.requestFocus();
-        	cvNaturalClassTable.getSelectionModel().select(0);
-        	cvNaturalClassTable.getFocusModel().focus(0);
-        }
-    }
-	/* (non-Javadoc)
+	/**
+	 * Is called by the main application to give a reference back to itself.
+	 * 
+	 * @param cvApproachController
+	 */
+	public void setData(CVApproach cvApproachData) {
+		cvApproach = cvApproachData;
+
+		// Add observable list data to the table
+		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
+		if (cvNaturalClassTable.getItems().size() > 0) {
+			// select first one
+			cvNaturalClassTable.requestFocus();
+			cvNaturalClassTable.getSelectionModel().select(0);
+			cvNaturalClassTable.getFocusModel().focus(0);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleInsertNewItem()
 	 */
 	@Override
@@ -175,7 +273,7 @@ public class CVNaturalClassesController extends ApproachController implements In
 		int i = cvApproach.getCVNaturalClasses().size() - 1;
 		cvNaturalClassTable.requestFocus();
 		cvNaturalClassTable.getSelectionModel().select(i);
-    	cvNaturalClassTable.getFocusModel().focus(i);
+		cvNaturalClassTable.getFocusModel().focus(i);
 	}
 
 	@FXML
@@ -183,35 +281,54 @@ public class CVNaturalClassesController extends ApproachController implements In
 		showSNCChooser();
 		showSegmentOrNaturalClassContent();
 	}
+
 	/**
 	 * Opens a dialog to show birthday statistics.
 	 */
 	public void showSNCChooser() {
-	    try {
-	        // Load the fxml file and create a new stage for the popup.
-	        FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(ApproachViewNavigator.class.getResource("fxml/CVSegmentNaturalClassChooser.fxml"));
-	        loader.setResources(ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale));
-	                	
-	        AnchorPane page = loader.load();
-	        Stage dialogStage = new Stage();
-	        dialogStage.initModality(Modality.WINDOW_MODAL);
-	        dialogStage.initOwner(mainApp.getPrimaryStage());
-	        Scene scene = new Scene(page);
-	        dialogStage.setScene(scene);
-	        // set the icon
-	        dialogStage.getIcons().add(mainApp.getNewMainIconImage());
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ApproachViewNavigator.class
+					.getResource("fxml/CVSegmentNaturalClassChooser.fxml"));
+			loader.setResources(ResourceBundle.getBundle(
+					"sil.org.syllableparser.resources.SyllableParser", locale));
 
-	        CVSegmentNaturalClassChooserController controller = loader.getController();
-	        controller.setDialogStage(dialogStage);
-	        controller.setMainApp(mainApp);
-	        controller.setNaturalClass(currentNaturalClass);
-	        controller.setData(cvApproach);
+			AnchorPane page = loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(mainApp.getPrimaryStage());
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			// set the icon
+			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
 
-	        dialogStage.showAndWait();
+			CVSegmentNaturalClassChooserController controller = loader
+					.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setNaturalClass(currentNaturalClass);
+			controller.setData(cvApproach);
 
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+
+	private void makeHeaderWrappable(@SuppressWarnings("rawtypes") TableColumn col) {
+		Label label = new Label(col.getText());
+		label.setStyle("-fx-padding: 8px;");
+		label.setWrapText(true);
+		label.setAlignment(Pos.CENTER);
+		label.setTextAlignment(TextAlignment.CENTER);
+
+		StackPane stack = new StackPane();
+		stack.getChildren().add(label);
+		stack.prefWidthProperty().bind(col.widthProperty().subtract(5));
+		label.prefWidthProperty().bind(stack.prefWidthProperty());
+		col.setGraphic(stack);
+	}
+
 }

@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -75,9 +76,68 @@ public class CVSyllablePatternsController extends ApproachController implements
 		// Initialize the table with the three columns.
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.spNameProperty());
+		naturalClassColumn.setCellValueFactory(cellData -> cellData.getValue().ncsRepresentationProperty());
 		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.descriptionProperty());
-		;
+		
+		// Custom rendering of the table cell.
+		nameColumn.setCellFactory(column -> {
+			return new TableCell<CVSyllablePattern, String>() {
+				private Text text;
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text =  new Text(item.toString());
+						// Get it to wrap.
+                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+                        setGraphic(text);
+        			}
+				};
+			};
+		});
+		naturalClassColumn.setCellFactory(column -> {
+			return new TableCell<CVSyllablePattern, String>() {
+				private Text text;
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text =  new Text(item.toString());
+						// Get it to wrap.
+                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+                        setGraphic(text);
+                        //text.setFill(Color.CHOCOLATE);  // set the text color
+						//setStyle("-fx-background-color: yellow");
+					}
+				};
+			};
+		});
+		descriptionColumn.setCellFactory(column -> {
+			return new TableCell<CVSyllablePattern, String>() {
+				private Text text;
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {
+						text =  new Text(item.toString());
+						// Get it to wrap.
+                        text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+                        setGraphic(text);
+        			}
+				};
+			};
+		});
+
 
 		// Clear cv natural class details.
 		showCVSyllablePatternDetails(null);
@@ -132,11 +192,14 @@ public class CVSyllablePatternsController extends ApproachController implements
 			descriptionField.setText("");
 			ncsTextFlow.getChildren().clear();
 		}
-
 	}
 
 	private void showNaturalClassesContent() {
+		// TODO: can we do this with lambdas?
+		StringBuilder sb = new StringBuilder();
 		ncsTextFlow.getChildren().clear();
+		int i = 1;
+		int iCount = currentSyllablePattern.getNCs().size();
 		for (SylParserObject spo : currentSyllablePattern.getNCs()) {
 			CVNaturalClass nc = (CVNaturalClass) spo;
 			if (nc != null) {
@@ -144,8 +207,13 @@ public class CVSyllablePatternsController extends ApproachController implements
 				Text tBar = new Text(" | ");
 				tBar.setStyle("-fx-stroke: lightgrey;");
 				ncsTextFlow.getChildren().addAll(t, tBar);
+				sb.append(nc.getNCName());
+				if (i++ < iCount) {
+					sb.append(", ");
+				}
 			}
 		}
+        currentSyllablePattern.setNCSRepresentation(sb.toString());
 	}
 
 	public void setSyllablePattern(CVSyllablePattern syllablePattern) {

@@ -90,10 +90,10 @@ public class CVSyllablePattern extends SylParserObject {
 		this.description.set(description);
 	}
 
-	public StringProperty getNCSRepresentation() {
-		return ncsRepresentation;
+	public String getNCSRepresentation() {
+		return ncsRepresentation.get();
 	}
-	public StringProperty sncRepresentationProperty() {
+	public StringProperty ncsRepresentationProperty() {
 		return ncsRepresentation;
 	}
 	public void setNCSRepresentation(String ncsRepresentation) {
