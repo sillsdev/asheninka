@@ -14,19 +14,15 @@ import sil.org.syllableparser.model.SylParserObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -36,7 +32,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends ApproachController implements
+public class CVNaturalClassesController extends SylParserBaseController implements
 		Initializable {
 	@FXML
 	private TableView<CVNaturalClass> cvNaturalClassTable;
@@ -149,7 +145,9 @@ public class CVNaturalClassesController extends ApproachController implements
 			};
 		});
 
-		makeHeaderWrappable(segmentOrNaturalClassColumn);
+		makeColumnHeaderWrappable(nameColumn);
+		makeColumnHeaderWrappable(segmentOrNaturalClassColumn);
+		makeColumnHeaderWrappable(descriptionColumn);
 
 		// Clear cv natural class details.
 		showCVNaturalClassDetails(null);
@@ -315,20 +313,6 @@ public class CVNaturalClassesController extends ApproachController implements
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void makeHeaderWrappable(@SuppressWarnings("rawtypes") TableColumn col) {
-		Label label = new Label(col.getText());
-		label.setStyle("-fx-padding: 8px;");
-		label.setWrapText(true);
-		label.setAlignment(Pos.CENTER);
-		label.setTextAlignment(TextAlignment.CENTER);
-
-		StackPane stack = new StackPane();
-		stack.getChildren().add(label);
-		stack.prefWidthProperty().bind(col.widthProperty().subtract(5));
-		label.prefWidthProperty().bind(stack.prefWidthProperty());
-		col.setGraphic(stack);
 	}
 
 }

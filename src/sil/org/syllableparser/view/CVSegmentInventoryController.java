@@ -7,26 +7,21 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVNaturalClass;
 import sil.org.syllableparser.model.CVSegment;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 /**
  * @author Andy Black
  *
  */
 
-public class CVSegmentInventoryController extends ApproachController implements Initializable {
+public class CVSegmentInventoryController extends SylParserBaseController implements Initializable {
 	@FXML
 	private TableView<CVSegment> cvSegmentTable;
 	@FXML
@@ -119,6 +114,10 @@ public class CVSegmentInventoryController extends ApproachController implements 
 				};
 			};
 		});
+		
+		makeColumnHeaderWrappable(segmentColumn);
+		makeColumnHeaderWrappable(graphemesColumn);
+		makeColumnHeaderWrappable(descriptionColumn);
 
         // Clear cv segment details.
         showCVSegmentDetails(null);

@@ -32,7 +32,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVSyllablePatternsController extends ApproachController implements
+public class CVSyllablePatternsController extends SylParserBaseController implements
 		Initializable {
 	@FXML
 	private TableView<CVSyllablePattern> cvSyllablePatternTable;
@@ -138,6 +138,9 @@ public class CVSyllablePatternsController extends ApproachController implements
 			};
 		});
 
+		makeColumnHeaderWrappable(nameColumn);
+		makeColumnHeaderWrappable(naturalClassColumn);
+		makeColumnHeaderWrappable(descriptionColumn);
 
 		// Clear cv natural class details.
 		showCVSyllablePatternDetails(null);
