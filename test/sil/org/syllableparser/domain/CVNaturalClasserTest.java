@@ -69,8 +69,8 @@ public class CVNaturalClasserTest {
 
 	@Test
 	public void naturalClassesyTest() {
-		assertEquals("Natural Classes size", 2, naturalClasses.size());
-		assertEquals("Natural Classes size", 2, cvNaturalClasses.size());
+		assertEquals("Natural Classes size", 3, naturalClasses.size());
+		assertEquals("Natural Classes size", 3, cvNaturalClasses.size());
 		String nc = cvNaturalClasses.get(0).getNCName().trim();
 		assertEquals("First natural class is [C]", "C", nc);
 		nc = cvNaturalClasses.get(1).getNCName().trim();

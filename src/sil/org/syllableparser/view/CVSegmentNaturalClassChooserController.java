@@ -162,7 +162,6 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	 */
 	@FXML
 	private void handleOk() {
-		naturalClass.getSegmentsOrNaturalClasses().clear();
 		naturalClass.getSnc().clear();
 		// find the segment or natural class with
 		// segmentOrNaturalClass.getUuid() and

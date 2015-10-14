@@ -55,10 +55,6 @@ public class CVNaturalClass extends SylParserObject {
 		this.ncName.set(ncName);
 	}
 
-	public ObservableList<Object> getSegmentsOrNaturalClasses() {
-		return segmentsOrNaturalClasses;
-	}
-
 	@XmlAttribute(name="snc")
 	@XmlIDREF
 	@XmlList
@@ -72,10 +68,6 @@ public class CVNaturalClass extends SylParserObject {
 
 	public SimpleListProperty<Object> segmentsOrNaturalClassesProperty() {
 		return segmentsOrNaturalClasses;
-	}
-
-	public void setSegmentsOrNaturalClasses(ObservableList<Object> segmentsOrNaturalClasses) {
-		this.segmentsOrNaturalClasses.set(segmentsOrNaturalClasses);
 	}
 
 	public String getDescription() {
