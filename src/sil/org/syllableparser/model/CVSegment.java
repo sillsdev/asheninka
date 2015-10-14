@@ -32,7 +32,7 @@ public class CVSegment extends SylParserObject {
 	}
 
 	public String getSegment() {
-		return segment.get();
+		return segment.get().trim();
 	}
 
 	public StringProperty segmentProperty() {

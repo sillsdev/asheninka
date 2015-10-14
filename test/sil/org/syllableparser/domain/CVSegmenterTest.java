@@ -6,8 +6,10 @@ package sil.org.syllableparser.domain;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 
@@ -15,7 +17,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.CVApproach;
@@ -26,22 +27,24 @@ import sil.org.syllableparser.model.LanguageProject;
  *
  */
 public class CVSegmenterTest {
-	
+
 	CVApproach cva;
 	ObservableList<CVSegment> segmentInventory;
 	CVSegmenter segmenter;
 	List<CVSegment> cvSegmentInventory;
-	
+
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		
+
 		LanguageProject languageProject = new LanguageProject();
-		Locale locale = new Locale("en"); 
-		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
-		File file = new File("test/sil/org/syllableparser/testData/CVTestData.sylpdata");
+		Locale locale = new Locale("en");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(
+				languageProject, locale);
+		File file = new File(
+				"test/sil/org/syllableparser/testData/CVTestData.sylpdata");
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
 		segmentInventory = cva.getCVSegmentInventory();
@@ -64,6 +67,26 @@ public class CVSegmenterTest {
 		assertEquals("First segment is /a/", "a", seg);
 		seg = cvSegmentInventory.get(26).getSegment().trim();
 		assertEquals("Last segment is /ɲ/", "ɲ", seg);
+		HashMap<String, CVSegment> graphemes = segmenter.getGraphemes();
+		assertEquals("Hash map size is 56", 56, graphemes.size());
 	}
 
+	@Test
+	public void wordSegmentingTest() {
+		checkSegmentation(null, "word is null", "", 0);
+		checkSegmentation("", "word is empty", "", 0);
+		checkSegmentation("añyicho", "Expect segments to be /a/, /ɲ/, /y/, /i/, /ch/, and /o/", "a, ɲ, y, i, ch, o", 6);
+		checkSegmentation("Chiko", "Expect segments to be /ch/, /i/, /k/, and /o/", "ch, i, k, o", 4);
+	}
+
+	protected void checkSegmentation(String word, String comment,
+			String expected, int numberOfSegments) {
+		List<CVSegment> segmentsInWord = segmenter.getSegmentsInWord();
+		boolean fSuccess = segmenter.segmentWord(word);
+		assertEquals("Expected word to parse", true, fSuccess);
+		assertEquals("number of segments should be = " + numberOfSegments, numberOfSegments, segmentsInWord.size());
+		String joined = segmentsInWord.stream().map(CVSegment::getSegment)
+				.collect(Collectors.joining(", "));
+		assertEquals(comment, expected, joined);
+	}
 }

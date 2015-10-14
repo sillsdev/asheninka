@@ -12,13 +12,22 @@ import org.junit.Test;
 public class ApplicationPreferencesTest {
 
 	ApplicationPreferences prefs;
+	File fileLastUsed;
+	String languageLastUsed;
+	String countryLastUsed;
 	@Before
 	public void setUp() throws Exception {
+	fileLastUsed = ApplicationPreferences.getLastOpenedFile();
+	countryLastUsed = ApplicationPreferences.getLastLocaleCountry();
+	languageLastUsed = ApplicationPreferences.getLastLocaleLanguage();
 	prefs = new ApplicationPreferences("last opened file",  "en",  "EN");
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		ApplicationPreferences.setLastOpenedFilePath(fileLastUsed);
+		ApplicationPreferences.setLastLocaleCountry(countryLastUsed);
+		ApplicationPreferences.setLastLocaleLanguage(languageLastUsed);
 	}
 
 	@Test
