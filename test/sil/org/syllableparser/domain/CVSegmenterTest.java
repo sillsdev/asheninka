@@ -73,17 +73,18 @@ public class CVSegmenterTest {
 
 	@Test
 	public void wordSegmentingTest() {
-		checkSegmentation(null, "word is null", "", 0);
-		checkSegmentation("", "word is empty", "", 0);
-		checkSegmentation("añyicho", "Expect segments to be /a/, /ɲ/, /y/, /i/, /ch/, and /o/", "a, ɲ, y, i, ch, o", 6);
-		checkSegmentation("Chiko", "Expect segments to be /ch/, /i/, /k/, and /o/", "ch, i, k, o", 4);
+		checkSegmentation(null, "word is null", "", 0, true);
+		checkSegmentation("", "word is empty", "", 0, true);
+		checkSegmentation("añyicho", "Expect segments to be /a/, /ɲ/, /y/, /i/, /ch/, and /o/", "a, ɲ, y, i, ch, o", 6, true);
+		checkSegmentation("Chiko", "Expect segments to be /ch/, /i/, /k/, and /o/", "ch, i, k, o", 4, true);
+		checkSegmentation("SHiju", "Expect segments to be /sh/, /i/, missing", "sh, i", 2, false);
 	}
 
 	protected void checkSegmentation(String word, String comment,
-			String expected, int numberOfSegments) {
+			String expected, int numberOfSegments, boolean success) {
 		List<CVSegment> segmentsInWord = segmenter.getSegmentsInWord();
 		boolean fSuccess = segmenter.segmentWord(word);
-		assertEquals("Expected word to parse", true, fSuccess);
+		assertEquals("Expected word to parse", success, fSuccess);
 		assertEquals("number of segments should be = " + numberOfSegments, numberOfSegments, segmentsInWord.size());
 		String joined = segmentsInWord.stream().map(CVSegment::getSegment)
 				.collect(Collectors.joining(", "));
