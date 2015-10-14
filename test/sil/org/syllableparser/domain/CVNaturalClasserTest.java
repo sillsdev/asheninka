@@ -26,7 +26,8 @@ import sil.org.syllableparser.model.LanguageProject;
 /**
  * @author Andy Black
  *
- * Note: this test assumes that the CVSegmenter class is functioning correctly
+ *         Note: this test assumes that the CVSegmenter class is functioning
+ *         correctly
  */
 public class CVNaturalClasserTest {
 
@@ -75,23 +76,36 @@ public class CVNaturalClasserTest {
 		assertEquals("First natural class is [C]", "C", nc);
 		nc = cvNaturalClasses.get(1).getNCName().trim();
 		assertEquals("Last natural class is [V]", "V", nc);
-		HashMap<String, CVNaturalClass> segmentToNaturalClass = naturalClasser.getSegmentToNaturalClass();
-		assertEquals("Hash map size is 27", 27, segmentToNaturalClass.size());
+		HashMap<String, CVNaturalClass> segmentToNaturalClass = naturalClasser
+				.getSegmentToNaturalClass();
+		assertEquals("Hash map size is 26", 26, segmentToNaturalClass.size());
 	}
 
 	@Test
 	public void wordToSegmentToNaturalClassesTest() {
-		String word = "Chiko";
+
+		checkNaturalClassParsing("Chiko", true, 4, "C, V, C, V");
+		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, V, V, N");
+		checkNaturalClassParsing("kaqui", false, 2, "C, V");
+	}
+
+	protected void checkNaturalClassParsing(String word, boolean success,
+			int numberOfNaturalClasses, String expectedCVPattern) {
 		List<CVSegment> segmentsInWord = segmenter.getSegmentsInWord();
 		boolean fSuccess = segmenter.segmentWord(word);
-		assertEquals("word segmented",  true,fSuccess);
-		fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
-		assertEquals("segments converted to natural classes", true, fSuccess);
-		List<CVNaturalClass> naturalClassesInWord = naturalClasser.getNaturalClassesInCurrentWord();
-		assertEquals("Expect 4 natural classes in word", 4, naturalClassesInWord.size());
-		String joined = naturalClassesInWord.stream().map(CVNaturalClass::getNCName)
+		assertEquals("word segmented", true, fSuccess);
+		fSuccess = naturalClasser
+				.convertSegmentsToNaturalClasses(segmentsInWord);
+		assertEquals("segments converted to natural classes", success, fSuccess);
+		List<CVNaturalClass> naturalClassesInWord = naturalClasser
+				.getNaturalClassesInCurrentWord();
+		assertEquals("Expect " + numberOfNaturalClasses
+				+ " natural classes in word", numberOfNaturalClasses,
+				naturalClassesInWord.size());
+		String joined = naturalClassesInWord.stream()
+				.map(CVNaturalClass::getNCName)
 				.collect(Collectors.joining(", "));
-		assertEquals("Expect C V C V", "C, V, C, V", joined);
+		assertEquals("Expected CV Pattern", expectedCVPattern, joined);
 	}
 
 }
