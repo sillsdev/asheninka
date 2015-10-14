@@ -143,7 +143,7 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 
 	private void setCheckedStatus(SylParserObject sylParserObject) {
 		if (SylParserObject.findIndexInSylParserObjectListByUuid(
-				naturalClass.getSnc(), sylParserObject.getID()) > -1) {
+				naturalClass.getSegmentsOrNaturalClasses(), sylParserObject.getID()) > -1) {
 			currentSegmentOrNaturalClass.setChecked(true);
 		}
 	}
@@ -162,7 +162,7 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	 */
 	@FXML
 	private void handleOk() {
-		naturalClass.getSnc().clear();
+		naturalClass.getSegmentsOrNaturalClasses().clear();
 		// find the segment or natural class with
 		// segmentOrNaturalClass.getUuid() and
 		// add it to the natural class list
@@ -174,13 +174,13 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 					int i = CVSegment.findIndexInSegmentsListByUuid(
 							cvApproach.getCVSegmentInventory(),
 							segmentOrNaturalClass.getUuid());
-					naturalClass.getSnc().add(
+					naturalClass.getSegmentsOrNaturalClasses().add(
 							cvApproach.getCVSegmentInventory().get(i));
 				} else {
 					int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
 							cvApproach.getCVNaturalClasses(),
 							segmentOrNaturalClass.getUuid());
-					naturalClass.getSnc().add(
+					naturalClass.getSegmentsOrNaturalClasses().add(
 							cvApproach.getCVNaturalClasses().get(i));
 				}
 			}

@@ -178,8 +178,8 @@ public class CVNaturalClassesController extends SylParserBaseController
 		StringBuilder sb = new StringBuilder();
 		sncTextFlow.getChildren().clear();
 		int i = 1;
-		int iCount = currentNaturalClass.getSnc().size();
-		for (SylParserObject snc : currentNaturalClass.getSnc()) {
+		int iCount = currentNaturalClass.getSegmentsOrNaturalClasses().size();
+		for (SylParserObject snc : currentNaturalClass.getSegmentsOrNaturalClasses()) {
 			Text t;
 			String s;
 			if (snc instanceof CVSegment) {

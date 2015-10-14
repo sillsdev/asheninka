@@ -58,11 +58,11 @@ public class CVNaturalClass extends SylParserObject {
 	@XmlAttribute(name="snc")
 	@XmlIDREF
 	@XmlList
-	public ObservableList<SylParserObject> getSnc() {
+	public ObservableList<SylParserObject> getSegmentsOrNaturalClasses() {
 		return snc;
 	}
 
-	public void setSnc(ObservableList<SylParserObject> snc) {
+	public void setSegmentsOrNaturalClasses(ObservableList<SylParserObject> snc) {
 		this.snc = snc;
 	}
 

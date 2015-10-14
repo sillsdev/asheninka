@@ -32,7 +32,7 @@ public class CVNaturalClasser {
 	}
 
 	protected void setSegmentToNaturalClassMapping(CVNaturalClass nc) {
-		for (Object snc : nc.getSnc()) {
+		for (Object snc : nc.getSegmentsOrNaturalClasses()) {
 			if (snc instanceof CVSegment) {
 				segmentToNaturalClass.put(((CVSegment) snc).getSegment(), nc);
 			} else if (snc instanceof CVNaturalClass) {
