@@ -22,6 +22,8 @@ import sil.org.syllableparser.model.CVNaturalClass;
 import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.valueobject.CVNaturalClassInSyllable;
+import sil.org.syllableparser.model.valueobject.CVSegmentInSyllable;
 
 /**
  * @author Andy Black
@@ -86,24 +88,24 @@ public class CVNaturalClasserTest {
 
 		checkNaturalClassParsing("Chiko", true, 4, "C, V, C, V");
 		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, V, V, N");
-		checkNaturalClassParsing("kaqui", false, 2, "C, V");
+		checkNaturalClassParsing("kaqui", false, 2, "C, V"); // there is no /q/
 	}
 
 	protected void checkNaturalClassParsing(String word, boolean success,
 			int numberOfNaturalClasses, String expectedCVPattern) {
-		List<CVSegment> segmentsInWord = segmenter.getSegmentsInWord();
+		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		boolean fSuccess = segmenter.segmentWord(word);
 		assertEquals("word segmented", true, fSuccess);
 		fSuccess = naturalClasser
 				.convertSegmentsToNaturalClasses(segmentsInWord);
 		assertEquals("segments converted to natural classes", success, fSuccess);
-		List<CVNaturalClass> naturalClassesInWord = naturalClasser
+		List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
 				.getNaturalClassesInCurrentWord();
 		assertEquals("Expect " + numberOfNaturalClasses
 				+ " natural classes in word", numberOfNaturalClasses,
 				naturalClassesInWord.size());
 		String joined = naturalClassesInWord.stream()
-				.map(CVNaturalClass::getNCName)
+				.map(CVNaturalClassInSyllable::getNaturalClassName)
 				.collect(Collectors.joining(", "));
 		assertEquals("Expected CV Pattern", expectedCVPattern, joined);
 	}

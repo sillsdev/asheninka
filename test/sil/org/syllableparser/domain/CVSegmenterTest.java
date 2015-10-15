@@ -21,6 +21,7 @@ import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.valueobject.CVSegmentInSyllable;
 
 /**
  * @author Andy Black
@@ -41,10 +42,8 @@ public class CVSegmenterTest {
 
 		LanguageProject languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
-		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(
-				languageProject, locale);
-		File file = new File(
-				"test/sil/org/syllableparser/testData/CVTestData.sylpdata");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
+		File file = new File("test/sil/org/syllableparser/testData/CVTestData.sylpdata");
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
 		segmentInventory = cva.getCVSegmentInventory();
@@ -67,27 +66,31 @@ public class CVSegmenterTest {
 		assertEquals("First segment is /a/", "a", seg);
 		seg = cvSegmentInventory.get(26).getSegment().trim();
 		assertEquals("Last segment is /ɲ/", "ɲ", seg);
-		HashMap<String, CVSegment> graphemes = segmenter.getGraphemes();
+		HashMap<String, CVSegment> graphemes = segmenter.getGraphemeToSegmentMapping();
 		assertEquals("Hash map size is 56", 56, graphemes.size());
 	}
 
 	@Test
 	public void wordSegmentingTest() {
-		checkSegmentation(null, "word is null", "", 0, true);
-		checkSegmentation("", "word is empty", "", 0, true);
-		checkSegmentation("añyicho", "Expect segments to be /a/, /ɲ/, /y/, /i/, /ch/, and /o/", "a, ɲ, y, i, ch, o", 6, true);
-		checkSegmentation("Chiko", "Expect segments to be /ch/, /i/, /k/, and /o/", "ch, i, k, o", 4, true);
-		checkSegmentation("SHiju", "Expect segments to be /sh/, /i/, missing", "sh, i", 2, false);
+		checkSegmentation(null, "word is null", "", "", 0, true);
+		checkSegmentation("", "word is empty", "", "", 0, true);
+		checkSegmentation("añyicho", "Expect graphemes to be /a/, /ñ,ɲ/, /y/, /i/, /ch/, and /o/", "a, ɲ, y, i, ch, o",
+				"a, ñ, y, i, ch, o", 6, true);
+		checkSegmentation("Chiko", "Expect graphemes to be /Ch,ch/, /i/, /k/, and /o/", "ch, i, k, o", "Ch, i, k, o",
+				4, true);
+		checkSegmentation("SHiju", "Expect graphemes to be /SH,sh/, /i/, missing", "sh, i", "SH, i", 2, false);
 	}
 
-	protected void checkSegmentation(String word, String comment,
-			String expected, int numberOfSegments, boolean success) {
-		List<CVSegment> segmentsInWord = segmenter.getSegmentsInWord();
+	protected void checkSegmentation(String word, String comment, String expectedSegments, String expectedGraphemes,
+			int numberOfSegments, boolean success) {
+		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		boolean fSuccess = segmenter.segmentWord(word);
 		assertEquals("Expected word to parse", success, fSuccess);
 		assertEquals("number of segments should be = " + numberOfSegments, numberOfSegments, segmentsInWord.size());
-		String joined = segmentsInWord.stream().map(CVSegment::getSegment)
+		String joined = segmentsInWord.stream().map(CVSegmentInSyllable::getSegmentName)
 				.collect(Collectors.joining(", "));
-		assertEquals(comment, expected, joined);
+		assertEquals(comment, expectedSegments, joined);
+		joined = segmentsInWord.stream().map(CVSegmentInSyllable::getGrapheme).collect(Collectors.joining(", "));
+		assertEquals(comment, expectedGraphemes, joined);
 	}
 }
