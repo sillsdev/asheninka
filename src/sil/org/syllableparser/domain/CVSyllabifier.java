@@ -4,146 +4,129 @@
 package sil.org.syllableparser.domain;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import javafx.collections.ObservableList;
 import sil.org.syllableparser.model.CVNaturalClass;
 import sil.org.syllableparser.model.CVSegment;
+import sil.org.syllableparser.model.CVSyllablePattern;
+import sil.org.syllableparser.model.valueobject.CVNaturalClassInSyllable;
+import sil.org.syllableparser.model.valueobject.CVSyllable;
 
 /**
  * @author Andy Black
  *
+ *         Takes a sequence of natural classes and parses them into a sequence
+ *         of syllables
  */
 public class CVSyllabifier {
 
-//	List<CVSegment> segmentsInCurrentWord;
-//	List<CVNaturalClass> naturalClassesInCurrentWord;
-//	List<CVNaturalClass> syllablesInCurrentWord = new LinkedList<CVNaturalClass>(
-//			Arrays.asList(new CVNaturalClass()));
-//	int iLongestGrapheme = 0;
-//
-//	public CVSyllabifier(List<CVSegment> segmentInventory) {
-//		super();
-//		this.segmentInventory = segmentInventory;
-//		for (CVSegment seg : segmentInventory) {
-//			String[] orthographemes = seg.getGraphemes().split(" +");
-//			for (String orthoform : orthographemes) {
-//				if (orthoform.length() > iLongestGrapheme) {
-//					iLongestGrapheme = orthoform.length();
-//				}
-//				graphemes.put(orthoform, seg);
-//			}
-//		}
-//	}
-//
-//	public List<CVSegment> getSegmentInventory() {
-//		return segmentInventory;
-//	}
-//
-//	public void setSegmentInventory(List<CVSegment> segmentInventory) {
-//		this.segmentInventory = segmentInventory;
-//	}
-//
-//	public List<CVSegment> getSegmentsInWord() {
-//		return segmentsInCurrentWord;
-//	}
-//
-//	public void setSegments(List<CVSegment> segments) {
-//		this.segmentsInCurrentWord = segments;
-//	}
-//
-//	public HashMap<String, CVSegment> getGraphemes() {
-//		return graphemes;
-//	}
-//
-//	public void setGraphemes(HashMap<String, CVSegment> graphemes) {
-//		this.graphemes = graphemes;
-//	}
-//
-//	public boolean segmentWord(String word) {
-//		segmentsInCurrentWord.clear();
-//		
-//		if (word == null || word.isEmpty()) {
-//			return true;
-//		}
-//
-//		int iSegLength;
-//		// work way through word left to right
-//		for (int iStart = 0; iStart < word.length(); iStart += iSegLength) {
-//			// Look for longest match
-//			for (iSegLength = iLongestGrapheme; iSegLength > 0; iSegLength--) {
-//				if ((iStart + iSegLength) > word.length()) {
-//					continue;
-//				}
-//				String sTemp = word.substring(iStart, iStart + iSegLength);
-//				CVSegment seg = graphemes.get(sTemp);
-//				if (seg != null) {
-//					segmentsInCurrentWord.add(seg);
-//					break;
-//				}
-//			}
-//			if (iSegLength == 0) {
-//				// TODO: give report of how far we got or some such so user knows
-//				return false;
-//			}
-//		}
-//		return true;
-//	}
+	private final List<CVSyllablePattern> cvPatterns;
+	private final List<CVNaturalClassInSyllable> naturalClassesInCurrentWord;
+
+	LinkedList<CVSyllable> syllablesInCurrentWord = new LinkedList<CVSyllable>(
+			Arrays.asList(new CVSyllable(null)));
+	String sSyllabifiedWord;
+
+	public CVSyllabifier(List<CVSyllablePattern> cvPatterns,
+			List<CVNaturalClassInSyllable> naturalClassesInCurrentWord) {
+		super();
+		this.cvPatterns = cvPatterns;
+		this.naturalClassesInCurrentWord = naturalClassesInCurrentWord;
+		sSyllabifiedWord = "";
+	}
+
+	public List<CVSyllable> getSyllablesInCurrentWord() {
+		return syllablesInCurrentWord;
+	}
+
+	public void setSyllablesInCurrentWord(LinkedList<CVSyllable> syllablesInCurrentWord) {
+		this.syllablesInCurrentWord = syllablesInCurrentWord;
+	}
+
+	public List<CVSyllablePattern> getCvPatterns() {
+		return cvPatterns;
+	}
+
+	public boolean convertNaturalClassesToSyllables() {
+		boolean result = false; // be pessimistic
+		syllablesInCurrentWord.clear();
+
+		// recursively parse into syllables
+		result = parseIntoSyllables(naturalClassesInCurrentWord, cvPatterns);
+
+		if (result) {
+			// the list of syllables found is in reverse order; flip them
+			Collections.reverse(syllablesInCurrentWord);
+		}
+		return result;
+	}
+
+	private boolean parseIntoSyllables(List<CVNaturalClassInSyllable> naturalClassesInWord,
+			List<CVSyllablePattern> patterns) {
+		if (naturalClassesInWord.size() == 0) {
+			return true;
+		}
+		for (CVSyllablePattern pattern : patterns) {
+			if (naturalClassesMatchSyllablePattern(naturalClassesInWord, pattern)) {
+				List<CVNaturalClassInSyllable> remainingNaturalClassesInWord = naturalClassesInWord
+						.subList(pattern.getNCs().size(), naturalClassesInWord.size());
+				if (parseIntoSyllables(remainingNaturalClassesInWord, cvPatterns)) {
+					List<CVNaturalClassInSyllable> naturalClassesInSyllable = naturalClassesInWord
+							.subList(0, pattern.getNCs().size());
+					CVSyllable syl = new CVSyllable(naturalClassesInSyllable);
+					syllablesInCurrentWord.add(syl);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean naturalClassesMatchSyllablePattern(
+			List<CVNaturalClassInSyllable> naturalClassesInWord, CVSyllablePattern currentCVPattern) {
+		// TODO: is there another, better way to compare the contents of two
+		// lists?
+		ObservableList<CVNaturalClass> naturalClassesInCVPattern = currentCVPattern.getNCs();
+		if (naturalClassesInCVPattern.size() > naturalClassesInWord.size()) {
+			return false;
+		}
+		Iterator<CVNaturalClassInSyllable> currentNaturalClass = naturalClassesInWord.iterator();
+		CVNaturalClassInSyllable ncInSyllable = currentNaturalClass.next();
+		for (CVNaturalClass ncInPattern : naturalClassesInCVPattern) {
+			if (!ncInSyllable.getNaturalClass().equals(ncInPattern)) {
+				return false;
+			}
+			if (currentNaturalClass.hasNext()) {
+				ncInSyllable = currentNaturalClass.next();
+			} else {
+				break;
+			}
+		}
+		return true;
+	}
+
+	public String getSyllabificationOfCurrentWord() {
+		// TODO: figure out a lambda way to do this
+		StringBuilder sb = new StringBuilder();
+		int iSize = syllablesInCurrentWord.size();
+		int i = 1;
+		for (CVSyllable syl : syllablesInCurrentWord) {
+			for (CVNaturalClassInSyllable nc : syl.getNaturalClassesInSyllable()) {
+				sb.append(nc.getSegmentInSyllable().getGrapheme());
+			}
+			if (i++ < iSize) {
+				sb.append(".");
+			}
+		}
+		return sb.toString();
+	}
+
 }
-//bool CWord::bFindParse(CCVPatternElementContainer  *pCVPattern,
-//CCVSyllablePatternContainer *pSylCVPatterns)
-//{
-//       // If the reference to the CV pattern of the
-//       // word is at the end of the word,
-//       // return success.
-//if (pCVPattern->isIteratorAtEnd())
-//return true;
-//       // remember initial (segment) position
-//CCVPatternElement * pInitialCVElement =
-//(CCVPatternElement *)pCVPattern->element();
-//       // For each syllable pattern in the ordered
-//       // list of syllable CV patterns:
-//pSylCVPatterns->initializeIterator();
-//while (!pSylCVPatterns->isIteratorAtEnd())
-//{                            // remember position of segment iterator
-//SgmlElementPointerContainer::iterator CVIter =
-//pCVPattern->currentIterator();
-//CCVSyllablePattern * pSylCVPattern =
-//(CCVSyllablePattern *)pSylCVPatterns->element();
-//       // If the syllable pattern matches the
-//       // beginning of the CV pattern of the word,
-//if (pSylCVPattern->GetEnabled() &&
-//bSyllablePatternMatchesCVPattern(pSylCVPattern, pCVPattern))
-//{
-//       // Set the word pattern reference to just
-//       // past the syllable pattern that matched;
-//       // (this is a side effect when
-//       //  bSyllablePatternMatchesCVPattern returns
-//       //  true)
-//       // remember position of syllable patterns
-//       // iterator
-//SgmlElementPointerContainer::iterator SylIter =
-//pSylCVPatterns->currentIterator();
-//       // Invoke this recursive procedure using the
-//       // new position of the reference and the
-//       // ordered list of CV patterns as arguments.
-//if (bFindParse( pCVPattern, pSylCVPatterns))
-//{
-//       // Set the syllable break indication in the
-//       // element referred to by the reference to
-//       // the CV pattern of the word;
-//pInitialCVElement->SetBeginsNextSyllable(true);
-//       // Return success.
-//return true;
-//}
-//       // restore position of syllable patterns
-//       // iterator and segment iterator
-//pSylCVPatterns->currentIterator(SylIter);
-//pCVPattern->currentIterator(CVIter);
-//}
-//pSylCVPatterns->incrementIterator();
-//}
-//       // return failure
-//return false;
-//}

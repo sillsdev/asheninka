@@ -16,11 +16,11 @@ import sil.org.syllableparser.model.valueobject.CVSegmentInSyllable;
 /**
  * @author Andy Black
  *
+ * Takes a sequence of segments and parses them into a sequence of natural classes
  */
 public class CVNaturalClasser {
 
-	List<CVSegment> segmentsInCurrentWord;
-	List<CVNaturalClass> naturalClasses;
+	private final List<CVNaturalClass> naturalClasses;
 	List<CVNaturalClassInSyllable> naturalClassesInCurrentWord = new LinkedList<CVNaturalClassInSyllable>(
 			Arrays.asList(new CVNaturalClassInSyllable(null, null)));
 	HashMap<String, CVNaturalClass> segmentToNaturalClassMapping = new HashMap<>();
@@ -28,10 +28,10 @@ public class CVNaturalClasser {
 	public CVNaturalClasser(List<CVNaturalClass> naturalClasses) {
 		super();
 		this.naturalClasses = naturalClasses;
-		buildSegmentToNaturalClassMapping(naturalClasses);
+		buildSegmentToNaturalClassMapping();
 	}
 
-	protected void buildSegmentToNaturalClassMapping(List<CVNaturalClass> naturalClasses) {
+	protected void buildSegmentToNaturalClassMapping() {
 		for (CVNaturalClass nc : naturalClasses) {
 			setSegmentToNaturalClassMapping(nc);
 		}
@@ -47,20 +47,8 @@ public class CVNaturalClasser {
 		}
 	}
 
-	public List<CVSegment> getSegmentsInCurrentWord() {
-		return segmentsInCurrentWord;
-	}
-
-	public void setSegmentsInCurrentWord(List<CVSegment> segmentsInCurrentWord) {
-		this.segmentsInCurrentWord = segmentsInCurrentWord;
-	}
-
 	public List<CVNaturalClass> getNaturalClasses() {
 		return naturalClasses;
-	}
-
-	public void setNaturalClasses(List<CVNaturalClass> naturalClasses) {
-		this.naturalClasses = naturalClasses;
 	}
 
 	public List<CVNaturalClassInSyllable> getNaturalClassesInCurrentWord() {

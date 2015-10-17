@@ -14,10 +14,11 @@ import sil.org.syllableparser.model.valueobject.CVSegmentInSyllable;
 /**
  * @author Andy Black
  *
+ * Takes a word string and parses it into a sequence of segments
  */
 public class CVSegmenter {
 
-	List<CVSegment> segmentInventory;
+	private final List<CVSegment> segmentInventory;
 	List<CVSegmentInSyllable> segmentsInCurrentWord = new LinkedList<CVSegmentInSyllable>(
 			Arrays.asList(new CVSegmentInSyllable(null, null)));
 	HashMap<String, CVSegment> graphemeToSegmentMapping = new HashMap<>();
@@ -26,10 +27,10 @@ public class CVSegmenter {
 	public CVSegmenter(List<CVSegment> segmentInventory) {
 		super();
 		this.segmentInventory = segmentInventory;
-		buildGraphemeToCVSegmentMapping(segmentInventory);
+		buildGraphemeToCVSegmentMapping();
 	}
 
-	protected void buildGraphemeToCVSegmentMapping(List<CVSegment> segmentInventory) {
+	protected void buildGraphemeToCVSegmentMapping() {
 		for (CVSegment seg : segmentInventory) {
 			String[] orthographemes = seg.getGraphemes().split(" +");
 			for (String orthoform : orthographemes) {
@@ -43,10 +44,6 @@ public class CVSegmenter {
 
 	public List<CVSegment> getSegmentInventory() {
 		return segmentInventory;
-	}
-
-	public void setSegmentInventory(List<CVSegment> segmentInventory) {
-		this.segmentInventory = segmentInventory;
 	}
 
 	public List<CVSegmentInSyllable> getSegmentsInWord() {

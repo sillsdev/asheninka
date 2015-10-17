@@ -58,10 +58,11 @@ public class CVSegmenterTest {
 	public void tearDown() throws Exception {
 	}
 
+	// make sure the setup is what we expect
 	@Test
 	public void inventoryTest() {
 		assertEquals("Segment inventory size", 27, segmentInventory.size());
-		assertEquals("Segment inventory size", 27, cvSegmentInventory.size());
+		assertEquals("Segment inventory in segmenter size", 27, cvSegmentInventory.size());
 		String seg = cvSegmentInventory.get(0).getSegment().trim();
 		assertEquals("First segment is /a/", "a", seg);
 		seg = cvSegmentInventory.get(26).getSegment().trim();

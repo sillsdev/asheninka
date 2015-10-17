@@ -14,14 +14,24 @@ import java.util.List;
  * A value object
  */
 public class CVSyllable extends Object {
-	public List<CVNaturalClassInSyllable> getNaturalClassesInSyllable() {
-		return naturalClassesInSyllable;
-	}
 
 	private final List<CVNaturalClassInSyllable> naturalClassesInSyllable;
 
 	public CVSyllable(List<CVNaturalClassInSyllable> naturalClassesInSyllable) {
 		super();
 		this.naturalClassesInSyllable = naturalClassesInSyllable;
+	}
+
+	public List<CVNaturalClassInSyllable> getNaturalClassesInSyllable() {
+		return naturalClassesInSyllable;
+	}
+	
+	public String getNaturalClassNamesInSyllable() {
+		StringBuilder sb = new StringBuilder();
+		
+		for (CVNaturalClassInSyllable nc : naturalClassesInSyllable) {
+			sb.append(nc.getNaturalClassName());
+		}	
+		return sb.toString();
 	}
 }

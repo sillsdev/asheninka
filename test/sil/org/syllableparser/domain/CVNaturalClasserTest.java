@@ -70,10 +70,11 @@ public class CVNaturalClasserTest {
 	public void tearDown() throws Exception {
 	}
 
+	// make sure the setup is what we expect
 	@Test
-	public void naturalClassesyTest() {
+	public void naturalClassesTest() {
 		assertEquals("Natural Classes size", 3, naturalClasses.size());
-		assertEquals("Natural Classes size", 3, cvNaturalClasses.size());
+		assertEquals("Natural Classes in natural classer size", 3, cvNaturalClasses.size());
 		String nc = cvNaturalClasses.get(0).getNCName().trim();
 		assertEquals("First natural class is [C]", "C", nc);
 		nc = cvNaturalClasses.get(1).getNCName().trim();
@@ -93,9 +94,9 @@ public class CVNaturalClasserTest {
 
 	protected void checkNaturalClassParsing(String word, boolean success,
 			int numberOfNaturalClasses, String expectedCVPattern) {
-		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		boolean fSuccess = segmenter.segmentWord(word);
 		assertEquals("word segmented", true, fSuccess);
+		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		fSuccess = naturalClasser
 				.convertSegmentsToNaturalClasses(segmentsInWord);
 		assertEquals("segments converted to natural classes", success, fSuccess);
