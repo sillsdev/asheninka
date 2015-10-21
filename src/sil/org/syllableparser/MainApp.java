@@ -167,8 +167,8 @@ public class MainApp extends Application {
 	 * @return
 	 */
 	public File getLanguageProjectFilePath() {
-	    Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-	    String filePath = prefs.get(kLanguageProjectFilePath, null);
+	//Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
+	    String filePath = ApplicationPreferences.getLastOpenedFilePath(); //prefs.get(kLanguageProjectFilePath, null);
 	    if (filePath != null) {
 	        return new File(filePath);
 	    } else {
