@@ -119,7 +119,7 @@ public class MainApp extends Application {
          // Try to load last opened file.
             File file = ApplicationPreferences.getLastOpenedFile();
             if (file != null) {
-            	xmlBackEndProvider.loadLanguageDataFromFile(file);
+            	loadLanguageData(file);
             }
             
             primaryStage.show();
