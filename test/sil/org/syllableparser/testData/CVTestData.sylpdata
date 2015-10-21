@@ -166,6 +166,11 @@
                 <NCSRepresentation>C, V, C</NCSRepresentation>
                 <SPName>CVC</SPName>
             </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" id="ad516e02-d5ae-4c06-b643-bd3105d3abc2">
+                <description>Nasal coda</description>
+                <NCSRepresentation>C, V, N</NCSRepresentation>
+                <SPName>CVN</SPName>
+            </cvSyllablePattern>
         </cvSyllablePatterns>
         <cvWords>
             <cvWord id="984410e9-18dd-4628-8b2a-ffa8288a2cc5">

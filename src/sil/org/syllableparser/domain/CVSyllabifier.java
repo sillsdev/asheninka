@@ -56,11 +56,10 @@ public class CVSyllabifier {
 	}
 
 	public boolean convertNaturalClassesToSyllables() {
-		boolean result = false; // be pessimistic
 		syllablesInCurrentWord.clear();
 
 		// recursively parse into syllables
-		result = parseIntoSyllables(naturalClassesInCurrentWord, cvPatterns);
+		boolean result = parseIntoSyllables(naturalClassesInCurrentWord, cvPatterns);
 
 		if (result) {
 			// the list of syllables found is in reverse order; flip them
@@ -78,7 +77,7 @@ public class CVSyllabifier {
 			if (naturalClassesMatchSyllablePattern(naturalClassesInWord, pattern)) {
 				List<CVNaturalClassInSyllable> remainingNaturalClassesInWord = naturalClassesInWord
 						.subList(pattern.getNCs().size(), naturalClassesInWord.size());
-				if (parseIntoSyllables(remainingNaturalClassesInWord, cvPatterns)) {
+				if (parseIntoSyllables(remainingNaturalClassesInWord, patterns)) {
 					List<CVNaturalClassInSyllable> naturalClassesInSyllable = naturalClassesInWord
 							.subList(0, pattern.getNCs().size());
 					CVSyllable syl = new CVSyllable(naturalClassesInSyllable);

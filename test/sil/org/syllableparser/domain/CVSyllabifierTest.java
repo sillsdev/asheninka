@@ -79,24 +79,29 @@ public class CVSyllabifierTest {
 	// make sure the setup is what we expect
 	@Test
 	public void syllabifierTest() {
-		assertEquals("CV patterns size", 2, patterns.size());
-		assertEquals("CV patterns in syllabifier size", 2, cvPatterns.size());
+		assertEquals("CV patterns size", 3, patterns.size());
+		assertEquals("CV patterns in syllabifier size", 3, cvPatterns.size());
 		String pattern = cvPatterns.get(0).getSPName().trim();
 		assertEquals("First CV pattern is [C][V]", "CV", pattern);
 		pattern = cvPatterns.get(1).getSPName().trim();
 		assertEquals("Last pattern is [CVC]", "CVC", pattern);
-//		HashMap<String, CVNaturalClass> segmentToNaturalClass = naturalClasser
-//				.getSegmentToNaturalClass();
-//		assertEquals("Hash map size is 26", 26, segmentToNaturalClass.size());
+		// HashMap<String, CVNaturalClass> segmentToNaturalClass =
+		// naturalClasser
+		// .getSegmentToNaturalClass();
+		// assertEquals("Hash map size is 26", 26,
+		// segmentToNaturalClass.size());
 	}
 
 	@Test
 	public void wordToSegmentToNaturalClassesToSyllableTest() {
-		String word = "Chiko";
-		boolean success = true;
-		int numberOfSyllables = 2;
-		String expectedSyllabification = "Chi.ko";
-		String expectedCVPatternsUsed = "CV, CV";
+		checkSyllabification("Chiko", true, 2, "CV, CV", "Chi.ko");
+		checkSyllabification("dapbek", true, 2, "CVC, CVC", "dap.bek");
+		checkSyllabification("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
+		checkSyllabification("fuhg", false, 0, "", "");
+	}
+
+	protected void checkSyllabification(String word, boolean success, int numberOfSyllables,
+			String expectedCVPatternsUsed, String expectedSyllabification) {
 		boolean fSuccess = segmenter.segmentWord(word);
 		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
@@ -106,19 +111,13 @@ public class CVSyllabifierTest {
 		fSuccess = syllabifier.convertNaturalClassesToSyllables();
 		assertEquals("word syllabified", success, fSuccess);
 		List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
-		assertEquals("Expect " + numberOfSyllables + " syllables in word",
-				numberOfSyllables, syllablesInWord.size());
-		String joined = syllablesInWord.stream()
-				.map(CVSyllable::getNaturalClassNamesInSyllable)
+		assertEquals("Expect " + numberOfSyllables + " syllables in word", numberOfSyllables,
+				syllablesInWord.size());
+		String joined = syllablesInWord.stream().map(CVSyllable::getNaturalClassNamesInSyllable)
 				.collect(Collectors.joining(", "));
 		assertEquals("Expected Syllable CV Pattern", expectedCVPatternsUsed, joined);
-		assertEquals("Expected Syllabification of word", expectedSyllabification, syllabifier.getSyllabificationOfCurrentWord());
-		
-
-
-//		checkNaturalClassParsing("Chiko", true, 4, "C, V, C, V");
-//		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, V, V, N");
-//		checkNaturalClassParsing("kaqui", false, 2, "C, V"); // there is no /q/
+		assertEquals("Expected Syllabification of word", expectedSyllabification,
+				syllabifier.getSyllabificationOfCurrentWord());
 	}
 
 }
