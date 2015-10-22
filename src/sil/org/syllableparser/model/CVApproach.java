@@ -5,6 +5,11 @@ package sil.org.syllableparser.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+
+import sil.org.syllableparser.model.entity.CVNaturalClass;
+import sil.org.syllableparser.model.entity.CVSegment;
+import sil.org.syllableparser.model.entity.CVSyllablePattern;
+import sil.org.syllableparser.model.entity.CVWord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

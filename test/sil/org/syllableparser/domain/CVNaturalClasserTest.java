@@ -18,12 +18,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
-import sil.org.syllableparser.model.CVNaturalClass;
-import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.entity.CVNaturalClass;
+import sil.org.syllableparser.model.entity.CVSegment;
 import sil.org.syllableparser.model.valueobject.CVNaturalClassInSyllable;
 import sil.org.syllableparser.model.valueobject.CVSegmentInSyllable;
+import sil.org.syllableparser.service.CVNaturalClasser;
+import sil.org.syllableparser.service.CVSegmenter;
 
 /**
  * @author Andy Black

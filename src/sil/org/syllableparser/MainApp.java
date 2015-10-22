@@ -8,9 +8,9 @@ import java.util.prefs.Preferences;
 
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVNaturalClass;
-import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.entity.CVNaturalClass;
+import sil.org.syllableparser.model.entity.CVSegment;
 import sil.org.syllableparser.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.beans.property.SimpleListProperty;

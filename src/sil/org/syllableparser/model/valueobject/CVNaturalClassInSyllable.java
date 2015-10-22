@@ -3,7 +3,7 @@
  */
 package sil.org.syllableparser.model.valueobject;
 
-import sil.org.syllableparser.model.CVNaturalClass;
+import sil.org.syllableparser.model.entity.CVNaturalClass;
 
 /**
  * @author Andy Black

@@ -102,4 +102,12 @@ public class CVApproachController extends ApproachController {
 		currentCVApproachController.handleInsertNewItem();
 		
 	}
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
+	 */
+	@Override
+	void handleRemoveItem() {
+		currentCVApproachController.handleRemoveItem();
+		
+	}
 }

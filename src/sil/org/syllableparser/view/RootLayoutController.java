@@ -91,6 +91,10 @@ public class RootLayoutController implements Initializable {
 	private void handleInsertNewItem() {
 		currentApproachController.handleInsertNewItem();
 	}
+	@FXML
+	private void handleRemoveItem() {
+		currentApproachController.handleRemoveItem();
+	}
 	/**
 	 * Creates an empty language project.
 	 */

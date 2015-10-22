@@ -8,8 +8,8 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVNaturalClass;
-import sil.org.syllableparser.model.CVSyllablePattern;
+import sil.org.syllableparser.model.entity.CVNaturalClass;
+import sil.org.syllableparser.model.entity.CVSyllablePattern;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;

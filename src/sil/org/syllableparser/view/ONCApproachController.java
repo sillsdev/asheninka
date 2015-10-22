@@ -56,4 +56,12 @@ public class ONCApproachController extends ApproachController  {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
+	 */
+	@Override
+	void handleRemoveItem() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVWord;
+import sil.org.syllableparser.model.entity.CVWord;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -193,5 +193,19 @@ public class CVWordsController extends SylParserBaseController
 		cvWordsTable.requestFocus();
 		cvWordsTable.getSelectionModel().select(i);
 		cvWordsTable.getFocusModel().focus(i);
+	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
+	 */
+	@Override
+	void handleRemoveItem() {
+//		CVWord newCVWord = new CVWord();
+//		cvApproach.getCVWords().add(newCVWord);
+//		int i = cvApproach.getCVWords().size() - 1;
+//		cvWordsTable.requestFocus();
+//		cvWordsTable.getSelectionModel().select(i);
+//		cvWordsTable.getFocusModel().focus(i);
 	}
 }

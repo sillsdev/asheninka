@@ -19,6 +19,7 @@ public abstract class ApproachController {
 	protected Locale locale;
 	
 	abstract void handleInsertNewItem();
+	abstract void handleRemoveItem();
 
 	/**
 	 * @return the mainApp

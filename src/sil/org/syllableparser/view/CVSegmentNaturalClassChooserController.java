@@ -8,10 +8,10 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVNaturalClass;
-import sil.org.syllableparser.model.CVSegment;
-import sil.org.syllableparser.model.CVSegmentOrNaturalClass;
 import sil.org.syllableparser.model.SylParserObject;
+import sil.org.syllableparser.model.entity.CVNaturalClass;
+import sil.org.syllableparser.model.entity.CVSegment;
+import sil.org.syllableparser.model.entity.CVSegmentOrNaturalClass;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

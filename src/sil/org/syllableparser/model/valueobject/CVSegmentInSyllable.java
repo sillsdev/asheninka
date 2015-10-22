@@ -3,7 +3,7 @@
  */
 package sil.org.syllableparser.model.valueobject;
 
-import sil.org.syllableparser.model.CVSegment;
+import sil.org.syllableparser.model.entity.CVSegment;
 
 /**
  * @author Andy Black

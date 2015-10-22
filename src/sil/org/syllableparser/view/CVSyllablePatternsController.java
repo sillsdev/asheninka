@@ -8,9 +8,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVNaturalClass;
-import sil.org.syllableparser.model.CVSyllablePattern;
 import sil.org.syllableparser.model.SylParserObject;
+import sil.org.syllableparser.model.entity.CVNaturalClass;
+import sil.org.syllableparser.model.entity.CVSyllablePattern;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -229,6 +229,21 @@ public class CVSyllablePatternsController extends SylParserBaseController
 		cvSyllablePatternTable.requestFocus();
 		cvSyllablePatternTable.getSelectionModel().select(i);
 		cvSyllablePatternTable.getFocusModel().focus(i);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
+	 */
+	@Override
+	void handleRemoveItem() {
+//		CVSyllablePattern newSyllablePattern = new CVSyllablePattern();
+//		cvApproach.getCVSyllablePatterns().add(newSyllablePattern);
+//		int i = cvApproach.getCVSyllablePatterns().size() - 1;
+//		cvSyllablePatternTable.requestFocus();
+//		cvSyllablePatternTable.getSelectionModel().select(i);
+//		cvSyllablePatternTable.getFocusModel().focus(i);
 	}
 
 	@FXML

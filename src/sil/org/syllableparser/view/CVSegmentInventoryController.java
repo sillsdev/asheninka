@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVSegment;
+import sil.org.syllableparser.model.entity.CVSegment;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -194,5 +194,19 @@ public class CVSegmentInventoryController extends SylParserBaseController
 		cvSegmentTable.requestFocus();
 		cvSegmentTable.getSelectionModel().select(i);
 		cvSegmentTable.getFocusModel().focus(i);
+	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
+	 */
+	@Override
+	void handleRemoveItem() {
+//		CVSegment newSegment = new CVSegment();
+//		cvApproach.getCVSegmentInventory().add(newSegment);
+//		int i = cvApproach.getCVSegmentInventory().size() - 1;
+//		cvSegmentTable.requestFocus();
+//		cvSegmentTable.getSelectionModel().select(i);
+//		cvSegmentTable.getFocusModel().focus(i);
 	}
 }

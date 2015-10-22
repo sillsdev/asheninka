@@ -8,9 +8,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.CVNaturalClass;
-import sil.org.syllableparser.model.CVSegment;
 import sil.org.syllableparser.model.SylParserObject;
+import sil.org.syllableparser.model.entity.CVNaturalClass;
+import sil.org.syllableparser.model.entity.CVSegment;
 import sil.org.syllableparser.view.SylParserBaseController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -243,6 +243,20 @@ public class CVNaturalClassesController extends SylParserBaseController
 		cvNaturalClassTable.getFocusModel().focus(i);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
+	 */
+	@Override
+	void handleRemoveItem() {
+//		CVNaturalClass newNaturalClass = new CVNaturalClass();
+//		cvApproach.getCVNaturalClasses().add(newNaturalClass);
+//		int i = cvApproach.getCVNaturalClasses().size() - 1;
+//		cvNaturalClassTable.requestFocus();
+//		cvNaturalClassTable.getSelectionModel().select(i);
+//		cvNaturalClassTable.getFocusModel().focus(i);
+	}
 	@FXML
 	void handleLaunchSNCChooser() {
 		showSNCChooser();
