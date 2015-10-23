@@ -202,10 +202,6 @@ public class CVSegmentInventoryController extends SylParserBaseController
 	 */
 	@Override
 	void handleRemoveItem() {
-		if (currentSegment != null) {
-			cvApproach.getCVSegmentInventory().remove(currentSegment);
-		}
-		
 		int i = cvApproach.getCVSegmentInventory().indexOf(currentSegment);
 		currentSegment = null;
 		if (i >= 0) {
