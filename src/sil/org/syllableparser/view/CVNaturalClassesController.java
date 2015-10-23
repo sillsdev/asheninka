@@ -133,6 +133,10 @@ public class CVNaturalClassesController extends SylParserBaseController
 				(observable, oldValue, newValue) -> {
 					currentNaturalClass.setNCName(nameField.getText());
 				});
+//		segmentOrNaturalClassField.textProperty().addListener(
+//				(observable, oldValue, newValue) -> {
+//					currentNaturalClass.setSNCRepresentation(segmentOrNaturalClassField.getText());
+//				});
 		descriptionField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
 					currentNaturalClass.setDescription(descriptionField
@@ -250,12 +254,16 @@ public class CVNaturalClassesController extends SylParserBaseController
 	 */
 	@Override
 	void handleRemoveItem() {
-//		CVNaturalClass newNaturalClass = new CVNaturalClass();
-//		cvApproach.getCVNaturalClasses().add(newNaturalClass);
-//		int i = cvApproach.getCVNaturalClasses().size() - 1;
-//		cvNaturalClassTable.requestFocus();
-//		cvNaturalClassTable.getSelectionModel().select(i);
-//		cvNaturalClassTable.getFocusModel().focus(i);
+		// need to deal with all pointers to this natural class
+		int i = cvApproach.getCVNaturalClasses().indexOf(currentNaturalClass);
+		currentNaturalClass = null;
+		if (i >= 0) {
+			cvApproach.getCVNaturalClasses().remove(i);
+		}
+		// the last item in the middle pane will be repeated if we delete an earlier one
+		// how can we get it to show a blank?
+		// chances are we do not have something set up properly - looks like it is just supposed to work
+		// Any (currently showing) item referring to the deleted item needs to be have its sncField recalculated.
 	}
 	@FXML
 	void handleLaunchSNCChooser() {

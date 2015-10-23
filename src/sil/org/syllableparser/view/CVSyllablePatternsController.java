@@ -238,12 +238,11 @@ public class CVSyllablePatternsController extends SylParserBaseController
 	 */
 	@Override
 	void handleRemoveItem() {
-//		CVSyllablePattern newSyllablePattern = new CVSyllablePattern();
-//		cvApproach.getCVSyllablePatterns().add(newSyllablePattern);
-//		int i = cvApproach.getCVSyllablePatterns().size() - 1;
-//		cvSyllablePatternTable.requestFocus();
-//		cvSyllablePatternTable.getSelectionModel().select(i);
-//		cvSyllablePatternTable.getFocusModel().focus(i);
+		int i = cvApproach.getCVSyllablePatterns().indexOf(currentSyllablePattern);
+		currentSyllablePattern = null;
+		if (i >= 0) {
+			cvApproach.getCVSyllablePatterns().remove(i);
+		}
 	}
 
 	@FXML

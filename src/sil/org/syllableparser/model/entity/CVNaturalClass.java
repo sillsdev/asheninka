@@ -12,7 +12,9 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.WeakListChangeListener;
 
 /**
  * @author Andy Black
@@ -24,7 +26,9 @@ public class CVNaturalClass extends SylParserObject {
 	private final StringProperty description;
 	private final StringProperty sncRepresentation;
 	ObservableList<SylParserObject> snc = FXCollections.observableArrayList();
-
+//	ListChangeListener<SylParserObject> lcl;
+//	WeakListChangeListener<SylParserObject> weakListener = new WeakListChangeListener<>(lcl);
+	
 	public CVNaturalClass() {
 		super();
 		this.ncName = new SimpleStringProperty("");
@@ -32,6 +36,7 @@ public class CVNaturalClass extends SylParserObject {
 		this.description = new SimpleStringProperty("");
 		this.sncRepresentation = new SimpleStringProperty("");
 		createUUID();
+//		snc.addListener(weakListener);
 	}
 
 	public CVNaturalClass(String className, SimpleListProperty<Object> segmentsOrNaturalClasses, 

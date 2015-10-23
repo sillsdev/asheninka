@@ -201,11 +201,10 @@ public class CVWordsController extends SylParserBaseController
 	 */
 	@Override
 	void handleRemoveItem() {
-//		CVWord newCVWord = new CVWord();
-//		cvApproach.getCVWords().add(newCVWord);
-//		int i = cvApproach.getCVWords().size() - 1;
-//		cvWordsTable.requestFocus();
-//		cvWordsTable.getSelectionModel().select(i);
-//		cvWordsTable.getFocusModel().focus(i);
+		int i = cvApproach.getCVWords().indexOf(currentWord);
+		currentWord = null;
+		if (i >= 0) {
+			cvApproach.getCVWords().remove(i);
+		}
 	}
 }

@@ -22,7 +22,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="%menu.edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="%menu.remove" />
+              <MenuItem mnemonicParsing="false" onAction="#handleRemoveItem" text="%menu.remove" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="%menu.insert">
