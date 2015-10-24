@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sil.org.syllableparser.model.valueobject;
+package sil.org.syllableparser.model.cvapproach;
 
 import java.util.List;
 

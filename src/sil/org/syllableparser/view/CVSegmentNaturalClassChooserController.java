@@ -7,11 +7,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.MainApp;
-import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.SylParserObject;
-import sil.org.syllableparser.model.entity.CVNaturalClass;
-import sil.org.syllableparser.model.entity.CVSegment;
-import sil.org.syllableparser.model.entity.CVSegmentOrNaturalClass;
+import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.model.cvapproach.CVSegment;
+import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

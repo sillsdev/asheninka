@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sil.org.syllableparser.model.entity;
+package sil.org.syllableparser.model.cvapproach;
 
 import sil.org.syllableparser.model.SylParserObject;
 import javafx.beans.property.SimpleStringProperty;

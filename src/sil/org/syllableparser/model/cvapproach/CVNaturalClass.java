@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sil.org.syllableparser.model.entity;
+package sil.org.syllableparser.model.cvapproach;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -12,13 +12,12 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.WeakListChangeListener;
 
 /**
  * @author Andy Black
  *
+ * an Entity
  */
 public class CVNaturalClass extends SylParserObject {
 	private final StringProperty ncName;

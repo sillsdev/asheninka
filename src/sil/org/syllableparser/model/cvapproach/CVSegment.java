@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sil.org.syllableparser.model.entity;
+package sil.org.syllableparser.model.cvapproach;
 
 import sil.org.syllableparser.model.SylParserObject;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 /**
  * @author Andy Black
  *
+ * an Entity
  */
 public class CVSegment extends SylParserObject {
 	private final StringProperty segment;

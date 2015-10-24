@@ -1,19 +1,17 @@
 /**
  * 
  */
-package sil.org.syllableparser.service;
+package sil.org.syllableparser.model.cvapproach;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import sil.org.syllableparser.model.entity.CVSegment;
-import sil.org.syllableparser.model.valueobject.CVSegmentInSyllable;
-
 /**
  * @author Andy Black
  *
+ * a Service
  * Takes a word string and parses it into a sequence of segments
  */
 public class CVSegmenter {

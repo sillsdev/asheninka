@@ -11,9 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sil.org.syllableparser.model.entity.CVNaturalClass;
-import sil.org.syllableparser.model.entity.CVSegment;
-import sil.org.syllableparser.model.entity.CVSegmentOrNaturalClass;
+import sil.org.syllableparser.model.cvapproach.*;;
 
 /**
  * @author Andy Black

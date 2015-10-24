@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import sil.org.syllableparser.model.CVApproach;
 import sil.org.syllableparser.model.SylParserObject;
-import sil.org.syllableparser.model.entity.CVNaturalClass;
-import sil.org.syllableparser.model.entity.CVSyllablePattern;
+import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

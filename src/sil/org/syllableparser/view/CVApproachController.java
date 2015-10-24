@@ -6,8 +6,8 @@ package sil.org.syllableparser.view;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import sil.org.syllableparser.model.ApproachView;
-import sil.org.syllableparser.model.CVApproach;
+import sil.org.syllableparser.model.*;
+import sil.org.syllableparser.model.cvapproach.CVApproach;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -46,8 +46,8 @@ public class CVApproachController extends ApproachController {
 		return views;
 	}
 
-	public void setCVApproachData(CVApproach data) {
-		this.cvApproachData = data;
+	public void setCVApproachData(CVApproach cvApproach) {
+		this.cvApproachData = cvApproach;
 	}
 	public void handleCVSegmentInventory() {
 		FXMLLoader loader = new FXMLLoader();

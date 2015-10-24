@@ -1,28 +1,20 @@
 /**
  * 
  */
-package sil.org.syllableparser.service;
+package sil.org.syllableparser.model.cvapproach;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javafx.collections.ObservableList;
-import sil.org.syllableparser.model.entity.CVNaturalClass;
-import sil.org.syllableparser.model.entity.CVSegment;
-import sil.org.syllableparser.model.entity.CVSyllablePattern;
-import sil.org.syllableparser.model.valueobject.CVNaturalClassInSyllable;
-import sil.org.syllableparser.model.valueobject.CVSyllable;
 
 /**
  * @author Andy Black
  *
+ * a Service
  *         Takes a sequence of natural classes and parses them into a sequence
  *         of syllables
  */

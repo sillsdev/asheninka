@@ -1,9 +1,8 @@
 /**
  * 
  */
-package sil.org.syllableparser.model.valueobject;
+package sil.org.syllableparser.model.cvapproach;
 
-import sil.org.syllableparser.model.entity.CVNaturalClass;
 
 /**
  * @author Andy Black

@@ -6,6 +6,8 @@ package sil.org.syllableparser.model;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import sil.org.syllableparser.model.cvapproach.CVApproach;
+
 /**
  * @author Andy Black
  *

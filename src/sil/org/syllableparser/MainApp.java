@@ -4,14 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.prefs.Preferences;
 
-import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
-import sil.org.syllableparser.model.CVApproach;
-import sil.org.syllableparser.model.LanguageProject;
-import sil.org.syllableparser.model.entity.CVNaturalClass;
-import sil.org.syllableparser.model.entity.CVSegment;
-import sil.org.syllableparser.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
@@ -22,6 +15,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
+import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.model.cvapproach.CVSegment;
+import sil.org.syllableparser.view.RootLayoutController;
 
 public class MainApp extends Application {
 
@@ -36,7 +35,7 @@ public class MainApp extends Application {
 	private LanguageProject languageProject;
 	
 	public static String kApplicationTitle = "Syllable Parser";
-	private static String kLanguageProjectFilePath = "languageProjectFilePath";
+	//private static String kLanguageProjectFilePath = "languageProjectFilePath";
 	private RootLayoutController controller;
 	private String sNotImplementedYetHeader;
 	private String sNotImplementedYetContent;
