@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.media.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ToolBar?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@SyllableParser.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.RootLayoutController">
    <top>
+   <VBox>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="%menu.file">
@@ -42,6 +47,13 @@
             </Menu>
         </menus>
       </MenuBar>
+      <ToolBar prefHeight="25.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        <items>
+               <Button fx:id="buttonToolbarFileOpen" mnemonicParsing="false" onAction="#handleOpen" prefHeight="23.0" text="" />
+               <Button fx:id="buttonToolbarEditRemove" mnemonicParsing="false" onAction="#handleRemoveItem" prefHeight="23.0" text="" />
+        </items>
+      </ToolBar>
+      </VBox>
    </top>
    <left>
       <SplitPane dividerPositions="0.6777003484320557" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">

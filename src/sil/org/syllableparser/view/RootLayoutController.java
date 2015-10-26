@@ -20,6 +20,8 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import sil.org.syllableparser.ApplicationPreferences;
@@ -47,6 +49,8 @@ public class RootLayoutController implements Initializable {
 	@FXML private Button buttonMoraicApproach;
 	@FXML private Button buttonNuclearProjectionApproach;
 	@FXML private Button buttonOTApproach;
+	@FXML private Button buttonToolbarFileOpen;
+	@FXML private Button buttonToolbarEditRemove;
 	private Button currentButtonSelected;
 
 	@FXML private ListView<ApproachView> approachViews;
@@ -310,6 +314,14 @@ public class RootLayoutController implements Initializable {
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle);
 
+		ImageView ivFileOpen = new ImageView();
+		Image icon = new Image("file:src/sil/org/syllableparser/resources/images/openAction.png");
+		ivFileOpen.setImage(icon);
+		buttonToolbarFileOpen.setGraphic(ivFileOpen);
+		ImageView ivEditRemove = new ImageView();
+		icon = new Image("file:src/sil/org/syllableparser/resources/images/deleteAction.png");
+		ivEditRemove.setImage(icon);
+		buttonToolbarEditRemove.setGraphic(ivEditRemove);
 		// set initial approach (TODO: make it be based on user's last choice)
 		handleCVApproach();
 		
