@@ -49,7 +49,13 @@
       </MenuBar>
       <ToolBar prefHeight="25.0" prefWidth="800.0" BorderPane.alignment="CENTER">
         <items>
+               <Button fx:id="buttonToolbarFileNew" mnemonicParsing="false" onAction="#handleNew" prefHeight="23.0" text="" />
                <Button fx:id="buttonToolbarFileOpen" mnemonicParsing="false" onAction="#handleOpen" prefHeight="23.0" text="" />
+               <Button fx:id="buttonToolbarFileSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="23.0" text="" />
+               <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
+               <Button fx:id="buttonToolbarEditCut" mnemonicParsing="false" onAction="#handleCut" prefHeight="23.0" text="" />
+               <Button fx:id="buttonToolbarEditCopy" mnemonicParsing="false" onAction="#handleCopy" prefHeight="23.0" text="" />
+               <Button fx:id="buttonToolbarEditPaste" mnemonicParsing="false" onAction="#handlePaste" prefHeight="23.0" text="" />
                <Button fx:id="buttonToolbarEditRemove" mnemonicParsing="false" onAction="#handleRemoveItem" prefHeight="23.0" text="" />
         </items>
       </ToolBar>

@@ -50,6 +50,11 @@ public class RootLayoutController implements Initializable {
 	@FXML private Button buttonNuclearProjectionApproach;
 	@FXML private Button buttonOTApproach;
 	@FXML private Button buttonToolbarFileOpen;
+	@FXML private Button buttonToolbarFileNew;
+	@FXML private Button buttonToolbarFileSave;
+	@FXML private Button buttonToolbarEditCut;
+	@FXML private Button buttonToolbarEditCopy;
+	@FXML private Button buttonToolbarEditPaste;
 	@FXML private Button buttonToolbarEditRemove;
 	private Button currentButtonSelected;
 
@@ -106,6 +111,18 @@ public class RootLayoutController implements Initializable {
 	private void handleNew() {
 		mainApp.getLanguageProject().clear();
 		ApplicationPreferences.setLastOpenedFilePath((String)null);
+	}
+	@FXML
+	private void handleCut() {
+		// TODO
+	}
+	@FXML
+	private void handleCopy() {
+		// TODO
+	}
+	@FXML
+	private void handlePaste() {
+		// TODO
 	}
 
 	/**
@@ -314,19 +331,30 @@ public class RootLayoutController implements Initializable {
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle);
 
-		ImageView ivFileOpen = new ImageView();
-		Image icon = new Image("file:src/sil/org/syllableparser/resources/images/openAction.png");
-		ivFileOpen.setImage(icon);
-		buttonToolbarFileOpen.setGraphic(ivFileOpen);
-		ImageView ivEditRemove = new ImageView();
-		icon = new Image("file:src/sil/org/syllableparser/resources/images/deleteAction.png");
-		ivEditRemove.setImage(icon);
-		buttonToolbarEditRemove.setGraphic(ivEditRemove);
+		createToolbarButtons();
+		
 		// set initial approach (TODO: make it be based on user's last choice)
 		handleCVApproach();
 		
 		listenForChangesInApproachViews();
 		
+	}
+
+	protected void createToolbarButtons() {
+		createToolbarButtonWithImage("newAction.png", buttonToolbarFileNew);
+		createToolbarButtonWithImage("openAction.png", buttonToolbarFileOpen);
+		createToolbarButtonWithImage("saveAction.png", buttonToolbarFileSave);
+		createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut);
+		createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy);
+		createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste);
+		createToolbarButtonWithImage("deleteAction.png", buttonToolbarEditRemove);
+	}
+
+	protected void createToolbarButtonWithImage(String sUrl, Button buttonToolbar) {
+		ImageView imageView = new ImageView(); 
+		Image icon = new Image("file:src/sil/org/syllableparser/resources/images/" + sUrl);
+		imageView.setImage(icon);
+		buttonToolbar.setGraphic(imageView);
 	}
 
 	private void listenForChangesInApproachViews() {
