@@ -3,7 +3,7 @@
  */
 package sil.org.syllableparser.model.cvapproach;
 
-import sil.org.syllableparser.model.SylParserObject;
+import sil.org.syllableparser.model.Word;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -11,10 +11,8 @@ import javafx.beans.property.StringProperty;
  * @author Andy Black
  *
  */
-public class CVWord extends SylParserObject {
-	private final StringProperty cvWord;
+public class CVWord extends Word {
 	private final StringProperty predictedSyllabification;
-	private final StringProperty correctSyllabification;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
 	// case this word represents
@@ -24,32 +22,26 @@ public class CVWord extends SylParserObject {
 
 	public CVWord() {
 		super();
-		this.cvWord = new SimpleStringProperty("");
 		this.predictedSyllabification = new SimpleStringProperty("");
-		this.correctSyllabification = new SimpleStringProperty("");
-		createUUID();
 	}
 
 	public CVWord(String word, String predictedHyphenation,
 			String correctHyphenation) {
-		super();
-		this.cvWord = new SimpleStringProperty(word);
+		super(word, correctHyphenation);
 		this.predictedSyllabification = new SimpleStringProperty(
 				predictedHyphenation);
-		this.correctSyllabification = new SimpleStringProperty(correctHyphenation);
-		createUUID();
 	}
 
 	public String getCVWord() {
-		return cvWord.get();
+		return word.get();
 	}
 
 	public StringProperty cvWordProperty() {
-		return cvWord;
+		return word;
 	}
 
 	public void setCVWord(String cvWord) {
-		this.cvWord.set(cvWord);
+		this.word.set(cvWord);
 	}
 
 	public String getPredictedSyllabification() {
@@ -62,17 +54,5 @@ public class CVWord extends SylParserObject {
 
 	public void setPredictedSyllabification(String predictedSyllabification) {
 		this.predictedSyllabification.set(predictedSyllabification);
-	}
-
-	public String getCorrectSyllabification() {
-		return correctSyllabification.get();
-	}
-
-	public StringProperty correctSyllabificationProperty() {
-		return correctSyllabification;
-	}
-
-	public void setCorrectSyllabification(String correctSyllabification) {
-		this.correctSyllabification.set(correctSyllabification);
 	}
 }

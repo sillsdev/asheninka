@@ -11,3 +11,7 @@
 .toolbarbutton {
     -fx-background-color: transparent, transparent, transparent, transparent;
 }
+
+.failedsyllabification {
+	-fx-color:red;
+}
