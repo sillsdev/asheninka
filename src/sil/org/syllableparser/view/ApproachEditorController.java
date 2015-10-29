@@ -12,7 +12,7 @@ import sil.org.syllableparser.MainApp;
  * @author Andy Black
  *
  */
-public abstract class ApproachController {
+public abstract class ApproachEditorController {
 	
 	protected MainApp mainApp;
 	protected ResourceBundle bundle;
@@ -20,7 +20,6 @@ public abstract class ApproachController {
 	
 	abstract void handleInsertNewItem();
 	abstract void handleRemoveItem();
-	abstract void handleSyllabifyWords();
 
 	/**
 	 * @return the mainApp

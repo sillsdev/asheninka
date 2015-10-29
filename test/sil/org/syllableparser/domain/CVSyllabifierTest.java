@@ -78,11 +78,6 @@ public class CVSyllabifierTest {
 		assertEquals("First CV pattern is [C][V]", "CV", pattern);
 		pattern = cvPatterns.get(1).getSPName().trim();
 		assertEquals("Last pattern is [CVC]", "CVC", pattern);
-		// HashMap<String, CVNaturalClass> segmentToNaturalClass =
-		// naturalClasser
-		// .getSegmentToNaturalClass();
-		// assertEquals("Hash map size is 26", 26,
-		// segmentToNaturalClass.size());
 	}
 
 	@Test
@@ -90,6 +85,7 @@ public class CVSyllabifierTest {
 		checkSyllabification("Chiko", true, 2, "CV, CV", "Chi.ko");
 		checkSyllabification("dapbek", true, 2, "CVC, CVC", "dap.bek");
 		checkSyllabification("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
+		checkSyllabification("border", true, 2, "CVC, CVC", "bor.der");
 		checkSyllabification("fuhg", false, 0, "", "");
 	}
 

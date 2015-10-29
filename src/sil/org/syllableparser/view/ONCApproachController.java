@@ -64,4 +64,13 @@ public class ONCApproachController extends ApproachController  {
 		// TODO Auto-generated method stub
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleSyllabifyWords()
+	 */
+	@Override
+	void handleSyllabifyWords() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -14,7 +14,7 @@ import javafx.scene.text.TextAlignment;
  * @author Andy Black
  *
  */
-public abstract class SylParserBaseController extends ApproachController implements Initializable {
+public abstract class SylParserBaseController extends ApproachEditorController implements Initializable {
 
 	
 	protected void makeColumnHeaderWrappable(@SuppressWarnings("rawtypes") TableColumn col) {

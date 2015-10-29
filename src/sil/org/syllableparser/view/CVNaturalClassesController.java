@@ -269,7 +269,6 @@ public class CVNaturalClassesController extends SylParserBaseController
 		showSNCChooser();
 		showSegmentOrNaturalClassContent();
 	}
-
 	/**
 	 * Opens a dialog to show birthday statistics.
 	 */

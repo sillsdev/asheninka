@@ -56,6 +56,7 @@ public class RootLayoutController implements Initializable {
 	@FXML private Button buttonToolbarEditCopy;
 	@FXML private Button buttonToolbarEditPaste;
 	@FXML private Button buttonToolbarEditRemove;
+	@FXML private Button buttonToolbarSyllabify;
 	private Button currentButtonSelected;
 
 	@FXML private ListView<ApproachView> approachViews;
@@ -103,6 +104,10 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleRemoveItem() {
 		currentApproachController.handleRemoveItem();
+	}
+	@FXML
+	private void handleSyllabifyWords() {
+		currentApproachController.handleSyllabifyWords();
 	}
 	/**
 	 * Creates an empty language project.
@@ -348,6 +353,7 @@ public class RootLayoutController implements Initializable {
 		createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy);
 		createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste);
 		createToolbarButtonWithImage("deleteAction.png", buttonToolbarEditRemove);
+		createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify);
 	}
 
 	protected void createToolbarButtonWithImage(String sUrl, Button buttonToolbar) {
