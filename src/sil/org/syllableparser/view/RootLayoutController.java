@@ -55,6 +55,7 @@ public class RootLayoutController implements Initializable {
 	@FXML private Button buttonToolbarEditCut;
 	@FXML private Button buttonToolbarEditCopy;
 	@FXML private Button buttonToolbarEditPaste;
+	@FXML private Button buttonToolbarEditInsert;
 	@FXML private Button buttonToolbarEditRemove;
 	@FXML private Button buttonToolbarSyllabify;
 	private Button currentButtonSelected;
@@ -352,6 +353,7 @@ public class RootLayoutController implements Initializable {
 		createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut);
 		createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy);
 		createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste);
+		createToolbarButtonWithImage("insertAction.png", buttonToolbarEditInsert);
 		createToolbarButtonWithImage("deleteAction.png", buttonToolbarEditRemove);
 		createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify);
 	}
