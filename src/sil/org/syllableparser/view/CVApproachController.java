@@ -173,4 +173,14 @@ public class CVApproachController extends ApproachController {
 		}
 
 	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#createNewWord(java.lang.String)
+	 */
+	@Override
+	void createNewWord(String word) {
+		CVWord newWord = new CVWord(word, "", "");
+		cvApproachData.getCVWords().add(newWord);
+		
+	}
 }

@@ -1,13 +1,16 @@
 package sil.org.syllableparser.view;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.fxml.FXML;
@@ -320,6 +323,37 @@ public class RootLayoutController implements Initializable {
 				choices.putIfAbsent(localeName, rb);
 			}
 		}
+	}
+
+	@FXML
+	private void handleImportWords() {
+		String sDirectoryPath;
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				sFileFilterDescription + " (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extFilter);
+		sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
+		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
+			File initialDirectory = new File(sDirectoryPath);
+			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
+				fileChooser.setInitialDirectory(initialDirectory);
+			}
+		}
+
+		// Show open file dialog
+		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+
+		if (file != null) {
+			try (Stream<String> stream = Files.lines(file.toPath())) {
+				stream.forEach(s -> currentApproachController.createNewWord(s));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	@Override

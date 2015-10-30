@@ -21,6 +21,7 @@ public abstract class ApproachController {
 	abstract void handleInsertNewItem();
 	abstract void handleRemoveItem();
 	abstract void handleSyllabifyWords();
+	abstract void createNewWord(String word);
 
 	/**
 	 * @return the mainApp

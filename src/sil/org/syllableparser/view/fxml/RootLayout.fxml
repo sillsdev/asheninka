@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@SyllableParser.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.RootLayoutController">
    <top>
@@ -22,6 +23,9 @@
               <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="%menu.open" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSave" text="%menu.save" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="%menu.saveas" />
+                  <SeparatorMenuItem />
+                  <MenuItem mnemonicParsing="false" onAction="#handleImportWords" text="%menu.importwords" />
+                  <SeparatorMenuItem />
                   <MenuItem mnemonicParsing="false" onAction="#handleExit" text="%menu.exit" />
             </items>
           </Menu>
