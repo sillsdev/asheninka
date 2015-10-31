@@ -5,10 +5,10 @@ package sil.org.syllableparser.view;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import sil.org.syllableparser.model.*;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -174,13 +174,27 @@ public class CVApproachController extends ApproachController {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.ApproachController#createNewWord(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * sil.org.syllableparser.view.ApproachController#createNewWord(java.lang
+	 * .String)
 	 */
 	@Override
 	void createNewWord(String word) {
 		CVWord newWord = new CVWord(word, "", "");
 		cvApproachData.getCVWords().add(newWord);
-		
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#getHyphenatedWords()
+	 */
+	@Override
+	public ArrayList<String> getHyphenatedWords() {
+		return cvApproachData.getHyphenatedWords();
 	}
 }

@@ -1,10 +1,15 @@
 package sil.org.syllableparser.view;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -199,6 +204,41 @@ public class RootLayoutController implements Initializable {
 				file = new File(file.getPath() + kSyllableParserDataExtension);
 			}
 			mainApp.saveLanguageData(file);
+		}
+	}
+	/**
+	 * Opens a FileChooser to let the user select a file to save to.
+	 */
+	@FXML
+	private void handleExportHyphenatedWords() {
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				sFileFilterDescription + " (*.hyp)", "*.hyp");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show save file dialog
+		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+		if (file != null) {
+			// Make sure it has the correct extension
+			if (!file.getPath().endsWith(".hyp")) {
+				file = new File(file.getPath() + ".hyp");
+			}
+			try {
+				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(
+						new FileOutputStream(file.getPath()), "UTF8"));
+				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords();
+				for (String hyphenatedWord : hyphenatedWords) {
+					fileWriter.write(hyphenatedWord);
+					fileWriter.write("\n");
+				}
+				fileWriter.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

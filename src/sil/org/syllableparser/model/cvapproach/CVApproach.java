@@ -3,6 +3,8 @@
  */
 package sil.org.syllableparser.model.cvapproach;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
@@ -14,12 +16,13 @@ import javafx.collections.ObservableList;
  *
  */
 public class CVApproach {
-	
+
 	private ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
 	private ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
-	private ObservableList<CVSyllablePattern> cvSyllablePatterns = FXCollections.observableArrayList();
+	private ObservableList<CVSyllablePattern> cvSyllablePatterns = FXCollections
+			.observableArrayList();
 	private ObservableList<CVWord> cvWords = FXCollections.observableArrayList();
-	
+
 	/**
 	 * @return the cvSegmentInventoryData
 	 */
@@ -30,7 +33,8 @@ public class CVApproach {
 	}
 
 	/**
-	 * @param cvSegmentInventoryData the cvSegmentInventoryData to set
+	 * @param cvSegmentInventoryData
+	 *            the cvSegmentInventoryData to set
 	 */
 	public void setCVSegmentInventory(ObservableList<CVSegment> cvSegmentInventoryData) {
 		this.cvSegmentInventory = cvSegmentInventoryData;
@@ -46,7 +50,8 @@ public class CVApproach {
 	}
 
 	/**
-	 * @param cvSegmentInventoryData the cvSegmentInventoryData to set
+	 * @param cvSegmentInventoryData
+	 *            the cvSegmentInventoryData to set
 	 */
 	public void setCVNaturalClasses(ObservableList<CVNaturalClass> cvNaturalClassesData) {
 		this.cvNaturalClasses = cvNaturalClassesData;
@@ -58,11 +63,10 @@ public class CVApproach {
 		return cvSyllablePatterns;
 	}
 
-	public void setCVSyllablePatterns(
-			ObservableList<CVSyllablePattern> cvSyllablePatterns) {
+	public void setCVSyllablePatterns(ObservableList<CVSyllablePattern> cvSyllablePatterns) {
 		this.cvSyllablePatterns = cvSyllablePatterns;
 	}
-	
+
 	/**
 	 * @return the cvWord Data
 	 */
@@ -73,12 +77,12 @@ public class CVApproach {
 	}
 
 	/**
-	 * @param cvWord Data to set
+	 * @param cvWord
+	 *            Data to set
 	 */
 	public void setCVWords(ObservableList<CVWord> cvWords) {
 		this.cvWords = cvWords;
 	}
-
 
 	/**
 	 * Clear out all data in this CV approach
@@ -94,15 +98,18 @@ public class CVApproach {
 	 * @param cvApproach
 	 */
 	public void load(CVApproach cvApproachLoaded) {
-    	ObservableList<CVSegment> cvSegmentInventoryLoadedData = cvApproachLoaded.getCVSegmentInventory();
+		ObservableList<CVSegment> cvSegmentInventoryLoadedData = cvApproachLoaded
+				.getCVSegmentInventory();
 		for (CVSegment cvSegment : cvSegmentInventoryLoadedData) {
 			cvSegmentInventory.add(cvSegment);
 		}
-		ObservableList<CVNaturalClass> cvNaturalClassesLoadedData = cvApproachLoaded.getCVNaturalClasses();
+		ObservableList<CVNaturalClass> cvNaturalClassesLoadedData = cvApproachLoaded
+				.getCVNaturalClasses();
 		for (CVNaturalClass cvNaturalClass : cvNaturalClassesLoadedData) {
 			cvNaturalClasses.add(cvNaturalClass);
 		}
-		ObservableList<CVSyllablePattern> cvSyllablePatternsLoadedData = cvApproachLoaded.getCVSyllablePatterns();
+		ObservableList<CVSyllablePattern> cvSyllablePatternsLoadedData = cvApproachLoaded
+				.getCVSyllablePatterns();
 		for (CVSyllablePattern cvSyllablePattern : cvSyllablePatternsLoadedData) {
 			cvSyllablePatterns.add(cvSyllablePattern);
 		}
@@ -112,6 +119,27 @@ public class CVApproach {
 		}
 
 	}
-	
+
+	public ArrayList<String> getHyphenatedWords() {
+		int totalNumberOfWords = cvWords.size();
+		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
+		for (CVWord word : cvWords) {
+			String sSyllabifiedWord = word.getCorrectSyllabification();
+			if (sSyllabifiedWord == null || sSyllabifiedWord.isEmpty()) {
+				// no overt correct syllabified word present; try predicted
+				sSyllabifiedWord = word.getPredictedSyllabification();
+				if (sSyllabifiedWord != null) {
+					// predicted has something
+					if (sSyllabifiedWord.contains("could not") || sSyllabifiedWord.isEmpty()) {
+						// is the error message or empty; skip this one
+						continue;
+					}
+				}
+			}
+			hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.", "="));
+		}
+
+		return hyphenatedWords;
+	}
 
 }

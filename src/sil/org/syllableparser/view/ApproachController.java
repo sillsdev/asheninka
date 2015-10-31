@@ -3,6 +3,7 @@
  */
 package sil.org.syllableparser.view;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -22,6 +23,7 @@ public abstract class ApproachController {
 	abstract void handleRemoveItem();
 	abstract void handleSyllabifyWords();
 	abstract void createNewWord(String word);
+	abstract ArrayList<String> getHyphenatedWords();
 
 	/**
 	 * @return the mainApp

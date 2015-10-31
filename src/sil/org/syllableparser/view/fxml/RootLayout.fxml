@@ -25,6 +25,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="%menu.saveas" />
                   <SeparatorMenuItem />
                   <MenuItem mnemonicParsing="false" onAction="#handleImportWords" text="%menu.importwords" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWords" text="%menu.exporthyphenatedwords" />
                   <SeparatorMenuItem />
                   <MenuItem mnemonicParsing="false" onAction="#handleExit" text="%menu.exit" />
             </items>

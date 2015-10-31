@@ -3,6 +3,7 @@
  */
 package sil.org.syllableparser.view;
 
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.ApproachView;
@@ -81,5 +82,14 @@ public class ONCApproachController extends ApproachController  {
 	void createNewWord(String word) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#getHyphenatedWords()
+	 */
+	@Override
+	ArrayList<String> getHyphenatedWords() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
