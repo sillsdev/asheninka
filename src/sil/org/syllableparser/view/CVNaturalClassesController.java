@@ -304,4 +304,31 @@ public class CVNaturalClassesController extends SylParserBaseController
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
+	 */
+	@Override
+	void handleCut() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
+	 */
+	@Override
+	void handleCopy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
+	 */
+	@Override
+	void handlePaste() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

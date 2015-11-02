@@ -18,6 +18,9 @@ public abstract class ApproachEditorController {
 	protected ResourceBundle bundle;
 	protected Locale locale;
 	
+	abstract void handleCut();
+	abstract void handleCopy();
+	abstract void handlePaste();
 	abstract void handleInsertNewItem();
 	abstract void handleRemoveItem();
 

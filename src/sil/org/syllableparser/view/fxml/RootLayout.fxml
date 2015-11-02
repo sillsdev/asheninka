@@ -32,6 +32,10 @@
           </Menu>
           <Menu mnemonicParsing="false" text="%menu.edit">
             <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleCut" text="%menu.cut" />
+              <MenuItem mnemonicParsing="false" onAction="#handleCopy" text="%menu.copy" />
+              <MenuItem mnemonicParsing="false" onAction="#handlePaste" text="%menu.paste" />
+              <SeparatorMenuItem />
               <MenuItem mnemonicParsing="false" onAction="#handleInsertNewItem" text="%menu.insertnew" />
               <MenuItem mnemonicParsing="false" onAction="#handleRemoveItem" text="%menu.remove" />
             </items>
