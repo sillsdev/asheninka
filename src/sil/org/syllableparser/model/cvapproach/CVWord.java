@@ -25,11 +25,11 @@ public class CVWord extends Word {
 		this.predictedSyllabification = new SimpleStringProperty("");
 	}
 
-	public CVWord(String word, String predictedHyphenation,
-			String correctHyphenation) {
-		super(word, correctHyphenation);
+	public CVWord(String word, String predictedSyllabification,
+			String correctSyllabification) {
+		super(word, correctSyllabification);
 		this.predictedSyllabification = new SimpleStringProperty(
-				predictedHyphenation);
+				predictedSyllabification);
 	}
 
 	public String getCVWord() {

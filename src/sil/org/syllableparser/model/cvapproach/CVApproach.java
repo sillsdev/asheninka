@@ -22,6 +22,7 @@ public class CVApproach {
 	private ObservableList<CVSyllablePattern> cvSyllablePatterns = FXCollections
 			.observableArrayList();
 	private ObservableList<CVWord> cvWords = FXCollections.observableArrayList();
+	private ObservableList<CVException> cvExceptions = FXCollections.observableArrayList();
 
 	/**
 	 * @return the cvSegmentInventoryData
@@ -84,6 +85,16 @@ public class CVApproach {
 		this.cvWords = cvWords;
 	}
 
+	@XmlElementWrapper(name = "cvExceptions")
+	@XmlElement(name = "cvException")
+	public ObservableList<CVException> getCVExceptions() {
+		return cvExceptions;
+	}
+
+	public void setCVExceptions(ObservableList<CVException> cvExceptions) {
+		this.cvExceptions = cvExceptions;
+	}
+
 	/**
 	 * Clear out all data in this CV approach
 	 */
@@ -91,6 +102,7 @@ public class CVApproach {
 		cvSegmentInventory.clear();
 		cvNaturalClasses.clear();
 		cvSyllablePatterns.clear();
+		cvExceptions.clear();
 		cvWords.clear();
 	}
 
@@ -116,6 +128,10 @@ public class CVApproach {
 		ObservableList<CVWord> cvWordsLoadedData = cvApproachLoaded.getCVWords();
 		for (CVWord cvWord : cvWordsLoadedData) {
 			cvWords.add(cvWord);
+		}
+		ObservableList<CVException> cvExceptionsLoadedData = cvApproachLoaded.getCVExceptions();
+		for (CVException cvException : cvExceptionsLoadedData) {
+			cvExceptions.add(cvException);
 		}
 
 	}

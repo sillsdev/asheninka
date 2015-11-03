@@ -92,6 +92,12 @@ public class CVApproachController extends ApproachController {
 
 	public void handleCVExceptionsList() {
 		System.out.println("handleCVExceptionsList reached");
+		FXMLLoader loader = new FXMLLoader();
+		ApproachViewNavigator.loadApproachView(loader, "fxml/CVExceptions.fxml", locale);
+		CVExceptionsController controller = loader.getController();
+		currentCVApproachController = controller;
+
+		controller.setData(cvApproachData);
 	}
 
 	public void handleCVWords() {
