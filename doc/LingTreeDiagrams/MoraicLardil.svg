@@ -1,0 +1,34 @@
+﻿<?xml version='1.0' standalone='no'?>
+<svg width='56.65mm' height='30.54mm' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>
+<script  id="clientEventHandlersJS">
+function OnClickLingTreeNode(node){}
+</script>
+<text x="26.06mm" y="1mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold"></text>
+<text x="5.49mm" y="6.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">σ</text>
+<text x="1.69mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#000000" font-weight="bold">C</text>
+<line x1="3.09mm" y1="20.98mm" x2="6.75mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="9.12mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">μ</text>
+<text x="8.92mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#000000" font-weight="bold">V</text>
+<line x1="10.42mm" y1="20.98mm" x2="10.42mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="10.42mm" y1="10.52mm" x2="6.75mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="23.89mm" y="6.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">σ</text>
+<text x="16.35mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#000000" font-weight="bold">C</text>
+<line x1="17.75mm" y1="20.98mm" x2="25.15mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="23.78mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">μ</text>
+<text x="23.58mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#000000" font-weight="bold">V</text>
+<line x1="25.08mm" y1="20.98mm" x2="25.08mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="25.08mm" y1="10.52mm" x2="25.15mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="31.26mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">μ</text>
+<text x="31.06mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#000000" font-weight="bold">V</text>
+<line x1="32.56mm" y1="20.98mm" x2="32.56mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="32.56mm" y1="10.52mm" x2="25.15mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="44.12mm" y="6.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">σ</text>
+<text x="38.49mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#000000" font-weight="bold">C</text>
+<line x1="39.89mm" y1="20.98mm" x2="45.38mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="49.58mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">μ</text>
+<text x="45.72mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#000000" font-weight="bold">V</text>
+<line x1="47.22mm" y1="20.98mm" x2="50.88mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="53.15mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#000000" font-weight="bold">C</text>
+<line x1="54.55mm" y1="20.98mm" x2="50.88mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="50.88mm" y1="10.52mm" x2="45.38mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+</svg>

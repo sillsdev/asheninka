@@ -1,5 +1,6 @@
 package sil.org.syllableparser.view;
 
+import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -300,6 +301,16 @@ public class RootLayoutController implements Initializable {
 		alert.showAndWait();
 	}
 
+	@FXML
+	private void handleHelpIntro() {
+		if (Desktop.isDesktopSupported()) {
+		    try {
+		        File myFile = new File("doc/Overview.pdf");
+		        Desktop.getDesktop().open(myFile);
+		    } catch (IOException ex) {
+		        // no application registered for PDFs
+		    }
+		}	}
 	/**
 	 * Closes the application.
 	 */

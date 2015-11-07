@@ -1,0 +1,46 @@
+<LingTreeTree>
+  <Version>0.7.4.24444</Version>
+  <Description>(\O (\O σ (R (N (\L æ)) (C (\L t)))) (\O σ (O (\L l)) (R (N (\L æ)) (C (\L n)))) (\O σ (O (\L t)) (R (N (\L ɪ)) (C (\L k)))) )</Description>
+  <VerticalGap>300</VerticalGap>
+  <HorizontalGap>300</HorizontalGap>
+  <InitialXCoord>100</InitialXCoord>
+  <InitialYCoord>100</InitialYCoord>
+  <HorizontalOffset>6240</HorizontalOffset>
+  <LexGlossGapAdjustment>0</LexGlossGapAdjustment>
+  <TrySmoothing>False</TrySmoothing>
+  <TryPixelOffset>False</TryPixelOffset>
+  <ShowFlatView>True</ShowFlatView>
+  <GlossFontFace>Times New Roman</GlossFontFace>
+  <GlossFontSize>12</GlossFontSize>
+  <GlossFontStyle>Bold</GlossFontStyle>
+  <LexFontFace>Charis SIL</LexFontFace>
+  <LexFontSize>12</LexFontSize>
+  <LexFontStyle>Bold</LexFontStyle>
+  <NTFontFace>Times New Roman</NTFontFace>
+  <NTFontSize>12</NTFontSize>
+  <NTFontStyle>Bold</NTFontStyle>
+  <GlossColorArgb>-16744448</GlossColorArgb>
+  <LexColorArgb>-16776961</LexColorArgb>
+  <NTColorArgb>-16777216</NTColorArgb>
+  <LinesColorArgb>-16777216</LinesColorArgb>
+  <BackgroundColorArgb>-1</BackgroundColorArgb>
+  <LineWidth>10</LineWidth>
+  <CustomColors>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+  </CustomColors>
+</LingTreeTree>

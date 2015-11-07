@@ -1,0 +1,19 @@
+﻿<?xml version='1.0' standalone='no'?>
+<svg width='25.85mm' height='35.76mm' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>
+<script  id="clientEventHandlersJS">
+function OnClickLingTreeNode(node){}
+</script>
+<text x="9.64mm" y="3.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">N''</text>
+<text x="4.49mm" y="9.22mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold"></text>
+<text x="3.15mm" y="31.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">b</text>
+<line x1="4.49mm" y1="27.5mm" x2="4.49mm" y2="9.62mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="4.49mm" y1="7.52mm" x2="11.97mm" y2="5.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="17.53mm" y="11.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">N'</text>
+<text x="17.94mm" y="20.05mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">N</text>
+<text x="13.11mm" y="31.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">ɑ</text>
+<line x1="14.47mm" y1="26.2mm" x2="19.46mm" y2="21.76mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="23.52mm" y="31.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">ɪ</text>
+<line x1="24.45mm" y1="26.2mm" x2="19.46mm" y2="21.76mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="19.46mm" y1="15.74mm" x2="19.46mm" y2="13.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="19.46mm" y1="7.52mm" x2="11.97mm" y2="5.32mm" stroke="#000000" stroke-width="0.1mm"/>
+</svg>

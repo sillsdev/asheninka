@@ -1,0 +1,1533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xlingpaper PUBLIC "-//XMLmind//DTD XLingPap//EN"
+"XLingPap.dtd">
+<xlingpaper
+version="2.24.0"
+><styledPaper
+><lingPaper
+automaticallywrapinterlinears="yes"
+version="2.20.0"
+><frontMatter
+><title
+>Syllable Parser Overview</title
+><author
+>H. Andrew Black</author
+><affiliation
+>SIL International</affiliation
+><date
+>7 November 2015</date
+></frontMatter
+><section1
+id="sIntro"
+><secTitle
+>Introduction</secTitle
+><p
+>The notion of a syllable has led to many linguistic analytical insights. <comment
+>Most current computational morphological parsers (such asFieldWorks Language Explorer, AMPLE, PC-KIMMO, and Hermit Crab) do not have an overt way of representing syllable structure. As a result, a user must restate their syllable-based insights in other terms. </comment
+>This paper describes some key considerations that a syllable parser should meet<comment
+>the seeks to address this deficiency by proposing task requirements for a syllable parser. Such a parser could be employed by various morphological parsers</comment
+>. Besides being useful in exploring the nature of syllables in a given language, a syllable parser can be used to insert discretionary hyphens at appropriate syllable boundaries within a word and thus be useful in preparing typeset text.</p
+></section1
+><section1
+id="sConsiderations"
+><secTitle
+>General considerations</secTitle
+><p
+>A syllable parser must take a word string as input, parse the string into its constituent segments and then produce the corresponding sequence of syllable structures, including showing which segments belong to which syllable. It also must be able to take a previously syllabified structure (which has since been modified by some kind of insertion or deletion of segmental material) and modify the syllable structure in an appropriate fashion to reflect the modification. That is, a syllable parser must be able to perform both syllabification and re-syllabification.</p
+><p
+>Currently this syllable parser only does initial syllabification.</p
+><section2
+id="sSegmentParsing"
+><secTitle
+>Segment parsing</secTitle
+><p
+>Given an input word string, the first task a syllable parser must perform is to break the input string into its constituent segments. Another way of looking at this is to say that there needs to be a mapping from the practical orthography to phonologically significant units.<comment
+> Such a task can be viewed as a distinct computational module and is addressed in another document. </comment
+></p
+></section2
+><section2
+id="sOverview"
+><secTitle
+>Syllabification overview</secTitle
+><p
+>Based on the list of segments, a syllable parser must then build the syllables. At least four views of syllable internal structure have been proposed as discussed below. A syllable parser must be able to model at least one of these. Ideally, a syllable parser would have the flexibility to allow a user to model any one or more of these four. Users then have the ability to model the view most familiar to them, to explore the advantages of the various views for their language, or to begin with a more simple model and incrementally move up the scale of complexity as they discover problems with the simpler model.</p
+><p
+>To illustrate the four views, consider how the English words <langData
+lang="lVernacular"
+>book</langData
+> and <langData
+lang="lVernacular"
+>buy</langData
+> would be syllabified. For this and all other English examples, we will represent the word using IPA script.<endnote
+id="nSymbolsUsed"
+><p
+>Throughout this document, the following symbols are used: <object
+type="tSyllable"
+></object
+> = syllable, I<object
+type="tOnset"
+></object
+> = onset, <object
+type="tRime"
+></object
+> = rime, <object
+type="tNucleus"
+></object
+> = nucleus, <object
+type="tCoda"
+></object
+> = coda, and <object
+type="tMora"
+></object
+> = mora.</p
+></endnote
+> The four views are CV Patterns (<citation
+paren="none"
+ref="rRensch"
+></citation
+>) as illustrated in <exampleRef
+letter="xCVC"
+num="xCVC"
+></exampleRef
+>, ONC Patterns (<citation
+paren="none"
+ref="rPikePike"
+></citation
+>) as illustrated in (2), the Moraic approach (<citation
+paren="none"
+ref="rMcCarthyPrince"
+></citation
+> and <citation
+paren="none"
+ref="rHayes"
+></citation
+>) as in (3), and what I’ll call the Nuclear Projection approach (<citation
+paren="none"
+ref="rLevin"
+></citation
+>) as in (4).</p
+><example
+num="xCVC"
+><exampleHeading
+>CVC:</exampleHeading
+><table
+><tr
+><td
+>a.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/CVCbook.svg"
+></img
+></td
+><td
+>    </td
+><td
+>b.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/CVVbuy.svg"
+></img
+></td
+></tr
+></table
+></example
+><p
+>In <exampleRef
+letter="xCVC"
+num="xCVC"
+></exampleRef
+>, the syllable consists simply of a sequence of consonants and vowels. The user would supply the list of possible CV patterns and an indication of which segments were consonants and which were vowels. The program would seek to match the consonant vowel sequences of the input word against the possible CV patterns to exhaustively parse the word into syllables. It can do this by a left-to-right sweep of the word.<endnote
+id="nRTL"
+><p
+>We realize that there are Non-Roman scripts which are not left-to-right in orientation.  Even in these situations, we suspect that it is the case that these can be encoded in a left-to-right roman script.  All processing would then be done in this roman script.</p
+></endnote
+></p
+><example
+num="xONC"
+><exampleHeading
+>ONC:</exampleHeading
+><table
+><tr
+><td
+>a.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/ONCbook.svg"
+></img
+></td
+><td
+>    </td
+><td
+>b.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/ONCbuy.svg"
+></img
+></td
+></tr
+></table
+></example
+><p
+>In <exampleRef
+letter="xONC"
+num="xONC"
+></exampleRef
+>, there is more structure to the syllable. There is an obligatory nucleus (N). This nucleus forms a rime (R) together with an optional coda constituent (C). The coda may consist of one or more consonants. An optional initial onset element (O) also can exist. Like the coda, it may consist of one or more consonants. The nucleus may consist of more than one vowel as shown in <exampleRef
+letter="xONC"
+num="xONC"
+paren="initial"
+></exampleRef
+>b) for the word <langData
+lang="lVernacular"
+>buy</langData
+> (<langData
+lang="lIPA"
+>bɑɪ</langData
+>). The program must seek to match onset, nucleus and coda symbols as part of its attempt to exhaustively parse the word into syllables. It can do this by a left-to-right sweep of the word.</p
+><example
+num="xMoraic"
+><exampleHeading
+>Moraic:</exampleHeading
+><table
+><tr
+><td
+XeLaTeXSpecial="μ"
+>a.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/MoraicBook.svg"
+></img
+></td
+><td
+>    </td
+><td
+>b.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/MoraicBuy.svg"
+></img
+></td
+></tr
+></table
+></example
+><p
+>In <exampleRef
+letter="xMoraic"
+num="xMoraic"
+></exampleRef
+>, issues of syllable weight are considered. Many languages have word stress patterns that make a distinction between light and heavy syllables. The Moraic approach seeks to model that distinction via a unit of syllabic weight called the mora (symbolized in <exampleRef
+letter="xMoraic"
+num="xMoraic"
+></exampleRef
+> by the Greek symbol mu - <object
+type="tMora"
+></object
+>). Light syllables have one mora while heavy syllables have two.<endnote
+id="nMoraicLightSyllables"
+><p
+>One may use the Moraic approach for a language that only has light syllables by setting a “maximum number of moras per syllable” parameter to 1.</p
+></endnote
+> The program must parse the segments of the word in such a fashion that it can determine which ones should be moraic and which ones should be onsets. It can do this by a left-to-right sweep of the word.</p
+><example
+num="xNuclearProjection"
+><exampleHeading
+>Nuclear-projection:</exampleHeading
+><table
+><tr
+><td
+>a.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/NucProjBook.svg"
+></img
+></td
+><td
+>    </td
+><td
+>b.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/NucProjBuy.svg"
+></img
+></td
+></tr
+></table
+></example
+><p
+>The next approach to syllabification we will consider involves building constituents in a predetermined fashion. Patterned after some approaches to syntactic constituent structure, <citation
+ref="rLevin"
+></citation
+> proposes what we will call the Nuclear-projection approach. Noting that every syllable has a nucleus, this approach projects it as the “category” <object
+type="tCategory"
+>N</object
+>. It has a “complement” (or right sister) of a coda, dominated by the <object
+type="tCategory"
+>N'</object
+> (pronounced N-bar) first level projection. The onset is the “specifier” of the head <object
+type="tCategory"
+>N</object
+> and is thus dominated by the second level projection <object
+type="tCategory"
+>N''</object
+> (pronounced N-double-bar).</p
+><p
+>Unlike the other three approaches, a single left-to-right sweep of the word is not appropriate for the Nuclear-projection approach. These X-bar-like structures are built by at least the three rules shown in (5). Each rule is applied in a separate sweep of the word. First, all vowels project an <object
+type="tCategory"
+>N</object
+> and associated <object
+type="tCategory"
+>N'</object
+> and <object
+type="tCategory"
+>N''</object
+> constituents (5a). The rule in (5b) then assigns a pre-vocalic consonant to the onset position. Finally, rule (5c) assigns any post-vocalic consonant not already in syllable structure to coda position. These three rules are applied in the order given.</p
+><example
+num="xNuclearProjectionRules"
+><table
+><tr
+><td
+>a.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/NucProjRuleA.svg"
+></img
+></td
+><td
+>    </td
+><td
+>b.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/NucProjRuleB.svg"
+></img
+></td
+><td
+>    </td
+><td
+>c.</td
+><td
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/NucProjRuleC.svg"
+></img
+></td
+></tr
+></table
+></example
+><p
+>Another approach to syllabification especially popular among generative linguists today is the one used in Optimality Theory (<citation
+paren="none"
+ref="rPrinceSmolensky"
+></citation
+>). We will call it the OT approach. For our purposes here, we will essentially follow the tack taken by <citation
+ref="rHammond"
+></citation
+> for syllable parsing. While Hammond uses just onsets, nuclei, and codas, we will augment it slightly to also include rimes. Thus, the syllable internal structure will be identical to the ONC approach. The algorithm, though, for parsing syllables will be quite different from the ONC approach.</p
+></section2
+><section2
+id="sOtherIssues"
+><secTitle
+>Other issues in syllabification</secTitle
+><p
+>There are some other issues that need to be kept in mind as well as one considers syllabification.</p
+><section3
+id="sCodas"
+><secTitle
+><object
+type="tParameter"
+>Codas</object
+></secTitle
+><p
+>First, not every language allows codas (although most do). Thus, there needs to be a parameter indicating whether or not codas even exist in the language being syllabified.<endnote
+id="nNoCoda"
+><p
+>The OT approach handles this via a <object
+type="tOTConstraint"
+>NoCoda</object
+> constraint.</p
+></endnote
+></p
+></section3
+><section3
+id="sSSP"
+><secTitle
+>Sonority Sequencing Principle (<object
+type="tSSP"
+></object
+>)</secTitle
+><p
+>All approaches except for the CV Pattern one must address an additional issue (at least as far as these requirements are concerned). Consider a form like <langData
+lang="lVernacular"
+>frantic</langData
+> (<langData
+lang="lIPA"
+>fɹæntɪk</langData
+>). Given that more than one consonant may appear in both the onset and the coda constituents, how should the <langData
+lang="lIPA"
+>nt</langData
+> consonant sequence be treated? Are both consonants in the coda of the first syllable or are both in the onset of the second syllable or should the first be in the coda of one syllable and the other be in the onset of the next syllable and how do we know?</p
+><p
+>For over a century, linguists have realized that onset and coda construction is governed by the Sonority Sequencing Principle (<object
+type="tSSP"
+></object
+>) (see <citation
+page="254-255"
+paren="none"
+ref="rKenstowicz"
+></citation
+> for a discussion). The <object
+type="tSSP"
+></object
+> states that onsets increase in sonority as they approach the nucleus and codas decrease in sonority as they get further from the nucleus. The scale of sonorancy is generally agreed to be as shown in <exampleRef
+letter="xSSP"
+num="xSSP"
+></exampleRef
+>, where vowels are more sonorous than glides, etc.</p
+><example
+num="xSSP"
+><table
+><tr
+><td
+>vowels</td
+><td
+><object
+type="tItalic"
+>more sonorous</object
+></td
+></tr
+><tr
+><td
+>glides</td
+><td
+> </td
+></tr
+><tr
+><td
+>liquids</td
+><td
+> </td
+></tr
+><tr
+><td
+>nasals</td
+><td
+> </td
+></tr
+><tr
+><td
+>obstuents</td
+><td
+><object
+type="tItalic"
+>less sonorous</object
+></td
+></tr
+></table
+></example
+><p
+>Given the <object
+type="tSSP"
+></object
+>, we know that the <langData
+lang="lIPA"
+>nt</langData
+> sequence cannot form an onset sequence since <langData
+lang="lIPA"
+>n</langData
+> (a nasal) is more sonorous than <langData
+lang="lIPA"
+>t</langData
+> (an obstruent). The <object
+type="tSSP"
+></object
+>, however, does not definitively determine the syllable constituency. Since <langData
+lang="lIPA"
+>n</langData
+> is more sonorous than <langData
+lang="lIPA"
+>t</langData
+>, both could be in the coda of the middle syllable. It is also possible for there to be a syllable break between the <langData
+lang="lIPA"
+>n</langData
+> and <langData
+lang="lIPA"
+>t</langData
+>, thus putting the <langData
+lang="lIPA"
+>n</langData
+> in the coda of the first syllable and the <langData
+lang="lIPA"
+>t</langData
+> in the onset of the final syllable. Which is to be preferred?</p
+></section3
+><section3
+id="sOnsetPrinciple"
+><secTitle
+>Onset Principle</secTitle
+><p
+>There is a general tendency in languages to avoid having onsetless syllables which <citation
+page="223"
+ref="rIto"
+></citation
+> refers to as the <object
+type="tParameter"
+>Onset Principle</object
+>.<endnote
+id="nOnsetPrinciple"
+><p
+>Many languages which require an onset word medially do not also require the initial syllable to have onsets.</p
+></endnote
+> Since English follows this tendency, the <langData
+lang="lIPA"
+>n</langData
+> should be in the coda of one syllable and the <langData
+lang="lIPA"
+>t</langData
+> should be in the onset of the last syllable as shown in <exampleRef
+letter="xOnsetPrinciple"
+num="xOnsetPrinciple"
+></exampleRef
+> for each of the three pertinent approaches.</p
+><example
+num="xOnsetPrinciple"
+><listDefinition
+letter="xOnsetPrincipleONC"
+><definition
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/ONCfrantic.svg"
+></img
+></definition
+></listDefinition
+><listDefinition
+letter="xOnsetPrincipleMoraic"
+><definition
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/MoraicFrantic.svg"
+></img
+></definition
+></listDefinition
+><listDefinition
+letter="xOnsetPrincipleNucleaerProjection"
+><definition
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/NucProjFrantic.svg"
+></img
+></definition
+></listDefinition
+></example
+><p
+>Note, however, that not all languages use the <object
+type="tParameter"
+>Onset Principle</object
+>. Therefore, we must treat it as a parameter (even though we will continue to call it a principle). Since some languages require all but the first syllable to have an onset, this parameter has three values:<endnote
+id="nOTMethod"
+><p
+>The OT approach uses two constraints to handle this parameter: <object
+type="tOTConstraint"
+>OnsetWordInitial</object
+> and <object
+type="tOTConstraint"
+>OnsetWordMedial</object
+>.</p
+></endnote
+></p
+><ul
+><li
+>every syllable must have an onset,</li
+><li
+>all but the first syllable must have an onset,</li
+><li
+>onsets are not required.</li
+></ul
+></section3
+><section3
+id="sOnsetMaximization"
+><secTitle
+>Onset Maximization</secTitle
+><p
+>Now consider the word <langData
+lang="lVernacular"
+>atrocious</langData
+> (<langData
+lang="lIPA"
+>ətɹoʊʃɪs</langData
+>). How should the <langData
+lang="lIPA"
+>tɹ</langData
+> sequence be handled? It cannot be in the coda of the first syllable because <langData
+lang="lIPA"
+>t</langData
+> (an obstruent) is less sonorous than <langData
+lang="lIPA"
+>ɹ</langData
+> (a liquid). Since there is rising sonority between the two consonants, the <langData
+lang="lIPA"
+>tɹ</langData
+> sequence could constitute the onset of the second syllable as shown<endnote
+id="nOnsetMaximizationIllustrations"
+><p
+>I use the ONC approach for illustrative purposes, but the same would apply for the Moraic and the Nuclear-projection approaches</p
+></endnote
+> in <exampleRef
+letter="xtrOnsetSecondSyllable"
+num="xtrOnsetSecondSyllable"
+></exampleRef
+>.</p
+><example
+num="xtrOnsetSecondSyllable"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/ONCatrocious2nd.svg"
+></img
+></chart
+></example
+><p
+>Alternatively, the sequence could be split between the two syllables: <langData
+lang="lIPA"
+>t</langData
+> would be in the coda of one syllable and <langData
+lang="lIPA"
+>ɹ</langData
+> would be in the onset of the other as shown in <exampleRef
+letter="xtrSplit"
+num="xtrSplit"
+></exampleRef
+>.</p
+><example
+num="xtrSplit"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/ONCatrociousSplit.svg"
+></img
+></chart
+></example
+><p
+>For English, example <exampleRef
+letter="xtrOnsetSecondSyllable"
+num="xtrOnsetSecondSyllable"
+></exampleRef
+> is the correct structure. That is, like many other languages, English maximizes its onsets: if the consonants in question are increasing in sonority, they are all placed in the onset. Since not every language maximizes its onsets, we need a parameter of <object
+type="tParameter"
+>Onset Maximization</object
+>.<endnote
+id="nOTOM"
+><p
+>The OT approach deals with <object
+type="tParameter"
+>Onset Maximization</object
+> by an appropriate ranking of the onset <object
+type="tOTConstraint"
+>*Complex</object
+> and <object
+type="tOTConstraint"
+>NoCoda</object
+> constraints.</p
+></endnote
+> So far, then, we have one principle (the <object
+type="tSSP"
+></object
+>) and three parameters (<object
+type="tParameter"
+>Codas</object
+>, the <object
+type="tParameter"
+>Onset Principle</object
+> and <object
+type="tParameter"
+>Onset Maximization</object
+>).</p
+></section3
+><section3
+id="sFilters"
+><secTitle
+>Filters</secTitle
+><p
+>Now consider the word <langData
+lang="lVernacular"
+>Atlantic</langData
+> (<langData
+lang="lIPA"
+>ætlæntɪk</langData
+>). Like frantic, <langData
+lang="lVernacular"
+>Atlantic</langData
+> also has a word medial <langData
+lang="lIPA"
+>nt</langData
+> sequence. Notice, however, that it also has a <langData
+lang="lIPA"
+>tl</langData
+> consonant sequence. Given the <object
+type="tSSP"
+></object
+> and <object
+type="tParameter"
+>Onset Maximization</object
+>, we would expect this word to be syllabified as in <exampleRef
+letter="xA.tlantic"
+num="xA.tlantic"
+></exampleRef
+> where the <langData
+lang="lIPA"
+>tl</langData
+> sequence constitutes the onset of the second syllable. Recall that <langData
+lang="lIPA"
+>t</langData
+> (an obstruent) is less sonorous than <langData
+lang="lIPA"
+>l</langData
+> (a liquid). Thus, <langData
+lang="lIPA"
+>tl</langData
+> is a perfectly fine onset as far as the <object
+type="tSSP"
+></object
+> is concerned.</p
+><example
+num="xA.tlantic"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/ONCa-tlantic.svg"
+></img
+></chart
+></example
+><p
+>English, however, never allows such a <langData
+lang="lIPA"
+>tl</langData
+> sequence in onset position. One solution to this problem is to posit <object
+type="tItalic"
+>filters</object
+> to rule out such sequences (<citation
+paren="none"
+ref="rClementsKeyser"
+></citation
+>).<endnote
+id="nOTnoFilters"
+><p
+>The OT approach does not employ filters.</p
+></endnote
+> Such a filter is shown in <exampleRef
+letter="xFilterFortl"
+num="xFilterFortl"
+></exampleRef
+> where all <object
+type="tFeature"
+>+coronal, -strident</object
+> segments are not allowed in an onset when they are immediately followed by a lateral.</p
+><example
+num="xFilterFortl"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/tlFilter.svg"
+></img
+></chart
+></example
+><p
+>Given such a filter, the syllabification will be as in <exampleRef
+letter="xAt.lantic"
+num="xAt.lantic"
+></exampleRef
+>.</p
+><example
+num="xAt.lantic"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/ONCat-lantic.svg"
+></img
+></chart
+></example
+></section3
+><section3
+id="sTemplates"
+><secTitle
+>Templates</secTitle
+><section4
+id="sTemplatesMotivation"
+><secTitle
+>Motivation for templates</secTitle
+><p
+>Now consider a word like <langData
+lang="lVernacular"
+>strap</langData
+> (<langData
+lang="lIPA"
+>stɹæp</langData
+>). The <object
+type="tSSP"
+></object
+> allows the <langData
+lang="lIPA"
+>tɹ</langData
+> sequence to be in the onset position, but what about the <langData
+lang="lIPA"
+>st</langData
+> sequence? It, too, is in the onset, yet here we have a violation of the <object
+type="tSSP"
+></object
+> since <langData
+lang="lIPA"
+>s</langData
+> is at least equal in sonority if not actually more sonorous than <langData
+lang="lIPA"
+>t</langData
+>. This happens not only word initially, but also word medially as a form such as <langData
+lang="lVernacular"
+>monster</langData
+> (<langData
+lang="lIPA"
+>mɑnstəɹ</langData
+>) demonstrates.</p
+><p
+>English has some other <object
+type="tSSP"
+></object
+> violations. Consider the coda of words such as <langData
+lang="lVernacular"
+>fifth</langData
+> (<langData
+lang="lIPA"
+>fɪfθ</langData
+>), <langData
+lang="lVernacular"
+>sixth</langData
+> (<langData
+lang="lIPA"
+>sɪksθ</langData
+>) or even <langData
+lang="lVernacular"
+>sixths</langData
+> (<langData
+lang="lIPA"
+>sɪksθs</langData
+>). These unusual forms have sequences of one, two or even three final coronal consonants all of which violate the <object
+type="tSSP"
+></object
+>.</p
+><p
+>While a number of approaches have been posited to deal with this abnormal behavior (see <citation
+page="258-261"
+paren="none"
+ref="rKenstowicz"
+></citation
+> for a discussion), as far as this paper is concerned we can treat them all by adding a mechanism of <object
+type="tItalic"
+>templates</object
+>.<endnote
+id="nOTnoTemplates"
+><p
+>The OT approach does not employ templates.</p
+></endnote
+> We’ll allow for two major kinds of templates and call them constituent templates and word templates.  Constituent templates can be used for the English <langData
+lang="lVernacular"
+>s</langData
+> case while word templates can be used for the English cases like <langData
+lang="lVernacular"
+>sixths</langData
+>.  Constituent templates deal with issues relating to onset, rime, nucleus, coda or syllable constituents.  That is, they are for the syllable constituent or any of its sub-constituents.  Word templates, on the other hand, deal with special conditions that occur only word initially or word finally.</p
+></section4
+><section4
+id="sTemplatesNature"
+><secTitle
+>The nature of templates</secTitle
+><p
+>Each such template (whether word or constituent) consists of one or more positions, each of which may be tagged as optional and each of which may be subject to the <object
+type="tSSP"
+></object
+> or not. Each position may further be limited to a particular set of segments by indicating their appropriate natural class. Thus we can handle the English <langData
+lang="lIPA"
+>s</langData
+> problem by using an onset-oriented constituent template like the one in <exampleRef
+letter="xOnsetTemplate"
+num="xOnsetTemplate"
+></exampleRef
+>.<endnote
+id="nNucProjRuleForS"
+><p
+>As <citation
+page="258"
+ref="rKenstowicz"
+></citation
+> notes, if one is using the Nuclear-projection approach, one can also write a rule to deal with the special status of the <langData
+lang="lIPA"
+>s</langData
+> as shown in <exampleRef
+letter="xNuclearProjectionSCase"
+num="xNuclearProjectionSCase"
+></exampleRef
+>.</p
+><example
+num="xNuclearProjectionSCase"
+><chart
+><img
+src="LingTreeDiagrams/NucProjRuleSAppendix.svg"
+></img
+></chart
+></example
+></endnote
+></p
+><example
+num="xOnsetTemplate"
+><exampleHeading
+>Onset Template:</exampleHeading
+><table
+><tr
+><td
+align="center"
+><langData
+lang="lIPA"
+>s</langData
+></td
+><td
+><object
+type="tFeature"
+>[voicelessNonCont]</object
+></td
+><td
+><object
+type="tFeature"
+>[sonorantCV]</object
+></td
+></tr
+><tr
+><td
+align="center"
+><object
+type="tFeature"
+>-ssp</object
+></td
+><td
+> </td
+><td
+> </td
+></tr
+></table
+></example
+><p
+>The final coronal sequences can be handled via a word template like the one in <exampleRef
+letter="xWordFinalTemplate"
+num="xWordFinalTemplate"
+></exampleRef
+>, where <object
+type="tFeature"
+>-ssp</object
+> means an <object
+type="tSSP"
+></object
+> exception and <object
+type="tFeature"
+>opt</object
+> means the position is optional.</p
+><example
+num="xWordFinalTemplate"
+><exampleHeading
+>Word Final Template:</exampleHeading
+><table
+><tr
+><td
+align="center"
+><object
+type="tFeature"
+>[coronal]</object
+></td
+><td
+align="center"
+><object
+type="tFeature"
+>[coronal]</object
+></td
+><td
+align="center"
+><object
+type="tFeature"
+>[coronal]</object
+></td
+></tr
+><tr
+><td
+align="center"
+><object
+type="tFeature"
+>-ssp</object
+></td
+><td
+align="center"
+><object
+type="tFeature"
+>-ssp</object
+></td
+><td
+align="center"
+><object
+type="tFeature"
+>-ssp</object
+></td
+></tr
+><tr
+><td
+> </td
+><td
+align="center"
+><object
+type="tFeature"
+>opt</object
+></td
+><td
+align="center"
+><object
+type="tFeature"
+>opt</object
+></td
+></tr
+></table
+></example
+><p
+>A word final template like the one in <exampleRef
+letter="xWordFinalTemplate"
+num="xWordFinalTemplate"
+></exampleRef
+> is treated as an appendix to the end of the word (similarly, a word-initial template is treated as an appendix to the beginning of the word). Thus, <langData
+lang="lIPA"
+>sɪksθs</langData
+> has the structure shown in <exampleRef
+letter="xSixthsNuclearProjection"
+num="xSixthsNuclearProjection"
+></exampleRef
+>, where the <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>A</object
+> constituent is an appendix.</p
+><example
+num="xSixthsNuclearProjection"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/WordTemplateSixths.svg"
+></img
+></chart
+></example
+><p
+>Some other observations about templates are in order.</p
+><p
+>The only time the parser should attempt to add an appendix to a word is when the parser was unable to successfully syllabify the entire word. This reflects the exceptional nature of word templates. Further, any appendix should be minimal: the parser should take what syllable structure it was able to build and then add any appendix structure needed to account for the remaining segments.</p
+><p
+>Constituent templates, on the other hand, are always tried while building the appropriate constituent. In fact, the tack taken here is that if there is at least one constituent template for a particular constituent, then at least one of those constituent templates must be met in order for that constituent to be valid. We note that constituent templates only make sense for the ONC and Moraic approaches. The Nuclear-projection approach will use a rule instead of a constituent template.</p
+></section4
+><section4
+id="sTemplatesApproach"
+><secTitle
+>A templatic approach to syllabification</secTitle
+><p
+>The fact that we will treat constituent templates as obligatory has special implications for the use of a constituent template which is for the entire syllable. If the constituent template is for the entire syllable, then every syllable must match the template and meeting the template becomes the dominating factor in the syllabification. This allows for approaches to syllabification like the one proposed in <citation
+ref="rIto"
+></citation
+> which has a required template for the syllable constituent. </p
+><p
+>For example, we could posit a constituent template such as the one in <exampleRef
+letter="xSyllableTemplate"
+num="xSyllableTemplate"
+></exampleRef
+>.</p
+><example
+num="xSyllableTemplate"
+><exampleHeading
+>Syllable template:</exampleHeading
+><table
+><tr
+><td
+><object
+type="tFeature"
+>[C]</object
+></td
+><td
+><object
+type="tFeature"
+>[V]</object
+></td
+><td
+><object
+type="tFeature"
+>[V]</object
+></td
+><td
+><object
+type="tFeature"
+>[Nasal]</object
+></td
+></tr
+><tr
+><td
+><object
+type="tFeature"
+>opt</object
+></td
+><td
+> </td
+><td
+><object
+type="tFeature"
+>opt</object
+></td
+><td
+><object
+type="tFeature"
+>opt</object
+></td
+></tr
+></table
+></example
+><p
+>This effectively says that syllables in this language consist of any of the following patterns (where N indicates a nasal): V, VV, VN, VVN, CV, CVV, CVN, CVVN. In some ways, then, it is like the CV approach. There are at least two crucial distinctions, however. One is that the syllable constituency of the ONC or Moraic approach is still maintained. The other is that unlike the CV approach, one can still have the Sonority Sequencing Principle apply for complex onsets and/or codas. </p
+></section4
+></section3
+><section3
+id="sSylllabicCoonsonant"
+><secTitle
+>Syllabic consonants</secTitle
+><p
+>Now consider a form like <langData
+lang="lVernacular"
+>beatle</langData
+> (<langData
+lang="lIPA"
+>bitl̩</langData
+>), where there are two syllables, but only one vowel. In the second syllable, the <langData
+lang="lIPA"
+>l̩</langData
+> is the nucleus of the syllable – it is a “syllabic consonant”. Thus, this word would be syllabified as in <exampleRef
+letter="xBeatle"
+num="xBeatle"
+></exampleRef
+>.</p
+><example
+num="xBeatle"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/ONCbeatle.svg"
+></img
+></chart
+></example
+><p
+>The syllable parser will need to be able to handle such syllabic consonants.</p
+></section3
+><section3
+id="sWeightByPostion"
+><secTitle
+>Weight by Position</secTitle
+><p
+>Finally, the Moraic approach has another consideration. Recall that this approach models the difference between light and heavy syllables by using one mora for light syllables and two moras for heavy syllables. It turns out that not every language which makes a distinction between heavy and light syllables treats syllables with codas (i.e. CVC) as being heavy. For instance, <citation
+page="255"
+ref="rHayes"
+></citation
+> notes that while Latin treats both CVV and CVC syllables as heavy and CV syllables as light, Lardil treats only CVV syllables as heavy and treats both CVC and CV syllables as light.</p
+><example
+num="xLatin"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/MoraicLatin.svg"
+></img
+></chart
+></example
+><example
+num="xLardil"
+><chart
+><img
+XeLaTeXSpecial="scaled='1250'"
+src="LingTreeDiagrams/MoraicLardil.svg"
+></img
+></chart
+></example
+><p
+>To account for those languages which do treat codas as heavy, <citation
+page="258"
+ref="rHayes"
+></citation
+> gives a rule of <object
+type="tParameter"
+>Weight by Position</object
+>. As he says, “… the basic idea is that certain coda consonants are given a mora when they are adjoined to the syllable…”.</p
+></section3
+><section3
+id="sOTConstraints"
+><secTitle
+>OT Constraints</secTitle
+><p
+>The OT approach uses a set of ranked and violable constraints. A set of potential candidate syllable parses is generated and then these candidates are evaluated against the set of ranked and violable constraints. The candidates which emerge are posited as the correct parses (although given the nature of the constraints, it is extremely unusual for more than one parse to emerge). The set of constraints is considered to be universal. The claim is that the different rankings of these constraints produces the different kinds of syllabification patterns exhibited by the world’s languages.</p
+></section3
+></section2
+></section1
+><backMatter
+><endnotes
+></endnotes
+><references
+><refAuthor
+citename="Clements &amp; Keyser"
+name="Clements, George N. and Samuel J. Keyser"
+><refWork
+id="rClementsKeyser"
+><refDate
+>1983</refDate
+><refTitle
+>CV phonology: A generative theory of the syllable</refTitle
+><book
+><location
+>Cambridge, Mass</location
+><publisher
+>MIT Press</publisher
+></book
+></refWork
+></refAuthor
+><refAuthor
+citename="Hammond"
+name="Hammond, Michael"
+><refWork
+id="rHammond"
+><refDate
+>1997</refDate
+><refTitle
+>Parsing in OT</refTitle
+><ms
+><institution
+>University of Arizona</institution
+><url
+>ftp://ruccs.rutgers.edu/pub/OT/TEXTS/archive/222-1097/222-10972.rtf</url
+></ms
+></refWork
+></refAuthor
+><refAuthor
+citename="Hayes"
+name="Hayes, Bruce"
+><refWork
+id="rHayes"
+><refDate
+>1989</refDate
+><refTitle
+>Compensatory lengthening in moraic phonology</refTitle
+><article
+><jTitle
+>Linguistic Inquiry</jTitle
+><jVol
+>20</jVol
+><jPages
+>253-306</jPages
+></article
+></refWork
+></refAuthor
+><refAuthor
+citename="Itô"
+name="Itô, Junko"
+><refWork
+id="rIto"
+><refDate
+>1989</refDate
+><refTitle
+>prosodic theory of epenthesis</refTitle
+><article
+><jTitle
+>Natural Language and Linguistic Theory</jTitle
+><jVol
+>7</jVol
+><jPages
+>217-259</jPages
+></article
+></refWork
+></refAuthor
+><refAuthor
+citename="Kenstowicz"
+name="Kenstowicz, Michael"
+><refWork
+id="rKenstowicz"
+><refDate
+>1994</refDate
+><refTitle
+>Phonology in Generative Grammar</refTitle
+><book
+><location
+>Cambridge, Mass</location
+><publisher
+>Basil Blackwell</publisher
+></book
+></refWork
+></refAuthor
+><refAuthor
+citename="Levin"
+name="Levin, Juliette"
+><refWork
+id="rLevin"
+><refDate
+>1985</refDate
+><refTitle
+>metrical theory of syllabicity</refTitle
+><dissertation
+><location
+>Cambridge, Mass</location
+><institution
+>MIT</institution
+></dissertation
+></refWork
+></refAuthor
+><refAuthor
+citename="McCarthy &amp; Prince"
+name="McCarthy, John and Alan Prince"
+><refWork
+id="rMcCarthyPrince"
+><refDate
+>1986</refDate
+><refTitle
+>Prosodic morphology</refTitle
+><ms
+><location
+>Waltham, Mass</location
+><institution
+>Brandeis University</institution
+></ms
+></refWork
+></refAuthor
+><refAuthor
+citename="Pike &amp; Pike"
+name="Pike, Kenneth L. and Eunice Pike"
+><refWork
+id="rPikePike"
+><refDate
+>1947</refDate
+><refTitle
+>Immediate constituents of Mazateco syllables</refTitle
+><article
+><jTitle
+>International Journal of American Linguistics</jTitle
+><jVol
+>13</jVol
+><jPages
+>78-91</jPages
+></article
+></refWork
+></refAuthor
+><refAuthor
+citename="Prince &amp; Smolensky"
+name="Prince, Alan and Paul Smolensky"
+><refWork
+id="rPrinceSmolensky"
+><refDate
+>1993</refDate
+><refTitle
+>Optimality theory: Constraint interaction in generative grammar</refTitle
+><ms
+><institution
+>Rutgers University</institution
+></ms
+></refWork
+></refAuthor
+><refAuthor
+citename="Rensch"
+name="Rensch, Carolyn M."
+><refWork
+id="rRensch"
+><refDate
+>n.d</refDate
+><refTitle
+>Problems for introduction to phonology, Part II – Handouts</refTitle
+><book
+><location
+>Dallas, TX</location
+><publisher
+>Summer Institute of Linguistics</publisher
+></book
+></refWork
+></refAuthor
+></references
+></backMatter
+><languages
+><language
+color="green"
+font-family="Charis SIL"
+font-style="italic"
+id="lVernacular"
+name="vernacular"
+></language
+><language
+color="blue"
+font-family="Charis SIL"
+id="lIPA"
+name="vernacular"
+></language
+><language
+color="green"
+id="lGloss"
+name="gloss"
+></language
+><language
+id="en"
+></language
+></languages
+><types
+><comment
+>The following types are provided as pre-set examples. You may well want to create your own types that refer to one or more of these. You do that by typing in the names of the types in the types attribute of your type.</comment
+><type
+font-weight="bold"
+id="tBold"
+></type
+><type
+font-style="italic"
+font-weight="bold"
+id="tBoldItalic"
+></type
+><type
+font-weight="bold"
+id="tEmphasis"
+></type
+><type
+id="tGrammaticalGloss"
+types="tSmallCaps"
+></type
+><type
+font-style="italic"
+id="tItalic"
+></type
+><type
+cssSpecial="text-decoration:none"
+id="tNoOverline"
+xsl-foSpecial="text-decoration=&quot;no-overline&quot;"
+></type
+><type
+font-variant="normal"
+id="tNoSmallCaps"
+></type
+><type
+cssSpecial="text-decoration:none"
+id="tNoStrikethrough"
+xsl-foSpecial="text-decoration=&quot;no-line-through&quot;"
+></type
+><type
+cssSpecial="text-decoration:none"
+id="tNoUnderline"
+xsl-foSpecial="text-decoration=&quot;no-underline&quot;"
+></type
+><type
+cssSpecial="text-decoration:overline"
+id="tOverline"
+xsl-foSpecial="text-decoration=&quot;overline&quot;"
+></type
+><type
+font-style="normal"
+font-variant="normal"
+font-weight="normal"
+id="tRegular"
+></type
+><type
+font-family="Charis SIL Small Caps"
+id="tSmallCaps"
+></type
+><type
+XeLaTeXSpecial="line-through"
+cssSpecial="text-decoration:line-through"
+id="tStrikethrough"
+xsl-foSpecial="text-decoration=&quot;line-through&quot;"
+></type
+><type
+XeLaTeXSpecial="subscript"
+cssSpecial="vertical-align:sub;"
+font-size="65%"
+id="tSubscript"
+xsl-foSpecial="baseline-shift='sub'"
+></type
+><type
+XeLaTeXSpecial="superscript"
+cssSpecial="vertical-align:super;"
+font-size="65%"
+id="tSuperscript"
+xsl-foSpecial="baseline-shift='super'"
+></type
+><type
+XeLaTeXSpecial="underline"
+cssSpecial="text-decoration:underline"
+id="tUnderline"
+xsl-foSpecial="text-decoration=&quot;underline&quot;"
+></type
+><comment
+>Add your custom types here.</comment
+><type
+font-family="Courier New"
+id="tCategory"
+></type
+><type
+after="C"
+font-family="Times New Roman"
+id="tCoda"
+></type
+><type
+font-family="Courier New"
+font-size="95%"
+id="tFeature"
+></type
+><type
+after="μ"
+font-family="Times New Roman"
+id="tMora"
+></type
+><type
+after="N"
+font-family="Times New Roman"
+id="tNucleus"
+></type
+><type
+after="O"
+font-family="Times New Roman"
+id="tOnset"
+></type
+><type
+font-family="Charis SIL Small Caps"
+id="tOTConstraint"
+></type
+><type
+id="tParameter"
+></type
+><type
+id="tPrinciple"
+></type
+><type
+after="R"
+font-family="Times New Roman"
+id="tRime"
+></type
+><type
+after="SSP"
+id="tSSP"
+></type
+><type
+after="σ"
+font-family="Times New Roman"
+id="tSyllable"
+></type
+></types
+></lingPaper
+><xi:include
+href="SILInternationalPaperStylesheet.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+></styledPaper
+></xlingpaper
+>

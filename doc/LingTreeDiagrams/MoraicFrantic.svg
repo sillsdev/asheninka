@@ -1,0 +1,29 @@
+﻿<?xml version='1.0' standalone='no'?>
+<svg width='41.38mm' height='30.54mm' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>
+<script  id="clientEventHandlersJS">
+function OnClickLingTreeNode(node){}
+</script>
+<text x="21.75mm" y="1mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold"></text>
+<text x="9.76mm" y="6.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">σ</text>
+<text x="1.8mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">fɹ</text>
+<line x1="3.4mm" y1="20.98mm" x2="11.02mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="9.89mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">μ</text>
+<text x="9.59mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">æ</text>
+<line x1="11.19mm" y1="20.98mm" x2="11.19mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="11.19mm" y1="10.52mm" x2="11.02mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="17.35mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">μ</text>
+<text x="17.27mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">n</text>
+<line x1="18.65mm" y1="20.98mm" x2="18.65mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="18.65mm" y1="10.52mm" x2="11.02mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="31.23mm" y="6.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">σ</text>
+<text x="24.59mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">t</text>
+<line x1="25.61mm" y1="20.98mm" x2="32.49mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="31.14mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">μ</text>
+<text x="31.51mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">ɪ</text>
+<line x1="32.44mm" y1="20.98mm" x2="32.44mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="32.44mm" y1="10.52mm" x2="32.49mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="38.08mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">μ</text>
+<text x="38.04mm" y="26.41mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">k</text>
+<line x1="39.38mm" y1="20.98mm" x2="39.38mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="39.38mm" y1="10.52mm" x2="32.49mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+</svg>

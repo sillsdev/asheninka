@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' standalone='no'?>
+<svg width='42.31mm' height='20.06mm' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>
+<script  id="clientEventHandlersJS">
+function OnClickLingTreeNode(node){}
+</script>
+<text x="19.44mm" y="3.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">*O</text>
+<text x="4.23mm" y="11.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">[+coronal</text>
+<text x="4.42mm" y="17.05mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">-strident]</text>
+<line x1="10.7mm" y1="7.52mm" x2="21.77mm" y2="5.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="26.55mm" y="11.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">[+lateral]</text>
+<line x1="32.85mm" y1="7.52mm" x2="21.77mm" y2="5.32mm" stroke="#000000" stroke-width="0.1mm"/>
+</svg>

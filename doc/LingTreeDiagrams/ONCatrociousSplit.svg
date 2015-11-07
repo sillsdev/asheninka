@@ -1,0 +1,44 @@
+﻿<?xml version='1.0' standalone='no'?>
+<svg width='53.42mm' height='38.76mm' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>
+<script  id="clientEventHandlersJS">
+function OnClickLingTreeNode(node){}
+</script>
+<text x="24.34mm" y="1mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold"></text>
+<text x="5.8mm" y="6.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">σ</text>
+<text x="5.54mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">R</text>
+<text x="1.76mm" y="23.05mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">N</text>
+<text x="2.04mm" y="34.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">ə</text>
+<line x1="3.28mm" y1="29.2mm" x2="3.28mm" y2="24.76mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="3.28mm" y1="18.74mm" x2="7.06mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="9.32mm" y="23.05mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">C</text>
+<text x="9.82mm" y="34.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">t</text>
+<line x1="10.84mm" y1="29.2mm" x2="10.84mm" y2="24.76mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="10.84mm" y1="18.74mm" x2="7.06mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="7.06mm" y1="10.52mm" x2="7.06mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="21.6mm" y="6.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">σ</text>
+<text x="16.92mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">O</text>
+<text x="17.42mm" y="34.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">ɹ</text>
+<line x1="18.52mm" y1="29.2mm" x2="18.52mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="18.52mm" y1="10.52mm" x2="22.86mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="25.69mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">R</text>
+<text x="25.69mm" y="23.05mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">N</text>
+<text x="25.01mm" y="34.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">oʊ</text>
+<line x1="27.21mm" y1="29.2mm" x2="27.21mm" y2="24.76mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="27.21mm" y1="18.74mm" x2="27.21mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="27.21mm" y1="10.52mm" x2="22.86mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="40.37mm" y="6.61mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">σ</text>
+<text x="34.3mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">O</text>
+<text x="34.86mm" y="34.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">ʃ</text>
+<line x1="35.9mm" y1="29.2mm" x2="35.9mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="35.9mm" y1="10.52mm" x2="41.63mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="45.84mm" y="14.83mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">R</text>
+<text x="42.06mm" y="23.05mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">N</text>
+<text x="42.65mm" y="34.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">ɪ</text>
+<line x1="43.58mm" y1="29.2mm" x2="43.58mm" y2="24.76mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="43.58mm" y1="18.74mm" x2="47.36mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<text x="49.62mm" y="23.05mm" font-family="Times New Roman" font-size="12" fill="#000000" font-weight="bold">C</text>
+<text x="50.02mm" y="34.63mm" font-family="Charis SIL" font-size="12" fill="#0000FF" font-weight="bold">s</text>
+<line x1="51.14mm" y1="29.2mm" x2="51.14mm" y2="24.76mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="51.14mm" y1="18.74mm" x2="47.36mm" y2="16.54mm" stroke="#000000" stroke-width="0.1mm"/>
+<line x1="47.36mm" y1="10.52mm" x2="41.63mm" y2="8.32mm" stroke="#000000" stroke-width="0.1mm"/>
+</svg>
