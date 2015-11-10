@@ -24,7 +24,6 @@ public class ONCApproachController extends ApproachController  {
 		super();
 		views.add(new ApproachView(bundle.getString("onc.view.segmentinventory"), "handleONCSegmentInventory"));
 		views.add(new ApproachView(bundle.getString("onc.view.syllablepatterns"), "handleONCSyllablePatterns"));
-		views.add(new ApproachView(bundle.getString("onc.view.exceptionlist"), "handleONCExceptionList"));
 		views.add(new ApproachView(bundle.getString("onc.view.words"), "handleONCWords"));
 	}
 
