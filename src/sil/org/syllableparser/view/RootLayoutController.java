@@ -34,6 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
@@ -297,6 +298,9 @@ public class RootLayoutController implements Initializable {
 		alert.setTitle(MainApp.kApplicationTitle);
 		alert.setHeaderText(sAboutHeader);
 		alert.setContentText(sAboutContent);
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(mainApp.getNewMainIconImage());
+
 
 		alert.showAndWait();
 	}

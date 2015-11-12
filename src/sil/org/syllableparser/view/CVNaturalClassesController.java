@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
@@ -289,6 +290,7 @@ public class CVNaturalClassesController extends SylParserBaseController
 			dialogStage.setScene(scene);
 			// set the icon
 			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
+			dialogStage.setTitle(MainApp.kApplicationTitle);
 
 			CVSegmentNaturalClassChooserController controller = loader
 					.getController();

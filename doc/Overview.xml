@@ -9,13 +9,20 @@ automaticallywrapinterlinears="yes"
 version="2.20.0"
 ><frontMatter
 ><title
->Syllable Parser Overview</title
+><object
+type="tAsheninka"
+></object
+> Overview</title
+><subtitle
+>A Syllable Parser</subtitle
 ><author
 >H. Andrew Black</author
 ><affiliation
 >SIL International</affiliation
 ><date
->7 November 2015</date
+>12 November 2015</date
+><contents
+></contents
 ></frontMatter
 ><section1
 id="sIntro"
@@ -23,7 +30,7 @@ id="sIntro"
 >Introduction</secTitle
 ><p
 >The notion of a syllable has led to many linguistic analytical insights. <comment
->Most current computational morphological parsers (such asFieldWorks Language Explorer, AMPLE, PC-KIMMO, and Hermit Crab) do not have an overt way of representing syllable structure. As a result, a user must restate their syllable-based insights in other terms. </comment
+>Most current computational morphological parsers (such as FieldWorks Language Explorer, AMPLE, PC-KIMMO, and Hermit Crab) do not have an overt way of representing syllable structure. As a result, a user must restate their syllable-based insights in other terms. </comment
 >This paper describes some key considerations that a syllable parser should meet<comment
 >the seeks to address this deficiency by proposing task requirements for a syllable parser. Such a parser could be employed by various morphological parsers</comment
 >. Besides being useful in exploring the nature of syllables in a given language, a syllable parser can be used to insert discretionary hyphens at appropriate syllable boundaries within a word and thus be useful in preparing typeset text.</p
@@ -101,7 +108,7 @@ ref="rMcCarthyPrince"
 paren="none"
 ref="rHayes"
 ></citation
->) as in (3), and what I’ll call the Nuclear Projection approach (<citation
+>) as in (3), and what I will call the Nuclear Projection approach (<citation
 paren="none"
 ref="rLevin"
 ></citation
@@ -141,7 +148,7 @@ num="xCVC"
 >, the syllable consists simply of a sequence of consonants and vowels. The user would supply the list of possible CV patterns and an indication of which segments were consonants and which were vowels. The program would seek to match the consonant vowel sequences of the input word against the possible CV patterns to exhaustively parse the word into syllables. It can do this by a left-to-right sweep of the word.<endnote
 id="nRTL"
 ><p
->We realize that there are Non-Roman scripts which are not left-to-right in orientation.  Even in these situations, we suspect that it is the case that these can be encoded in a left-to-right roman script.  All processing would then be done in this roman script.</p
+>We realize that there are Non-Roman scripts which are not left-to-right in orientation. Even in these situations, we suspect that it is the case that these can be encoded in a left-to-right roman script. All processing would then be done in this roman script.</p
 ></endnote
 ></p
 ><example
@@ -425,7 +432,7 @@ type="tItalic"
 ></tr
 ><tr
 ><td
->obstuents</td
+>obstruents</td
 ><td
 ><object
 type="tItalic"
@@ -836,13 +843,13 @@ id="nOTnoTemplates"
 ><p
 >The OT approach does not employ templates.</p
 ></endnote
-> We’ll allow for two major kinds of templates and call them constituent templates and word templates.  Constituent templates can be used for the English <langData
+> We will allow for two major kinds of templates and call them constituent templates and word templates. Constituent templates can be used for the English <langData
 lang="lVernacular"
 >s</langData
 > case while word templates can be used for the English cases like <langData
 lang="lVernacular"
 >sixths</langData
->.  Constituent templates deal with issues relating to onset, rime, nucleus, coda or syllable constituents.  That is, they are for the syllable constituent or any of its sub-constituents.  Word templates, on the other hand, deal with special conditions that occur only word initially or word finally.</p
+>. Constituent templates deal with issues relating to onset, rime, nucleus, coda or syllable constituents. That is, they are for the syllable constituent or any of its sub-constituents. Word templates, on the other hand, deal with special conditions that occur only word initially or word finally.</p
 ></section4
 ><section4
 id="sTemplatesNature"
@@ -1042,7 +1049,7 @@ id="sTemplatesApproach"
 >The fact that we will treat constituent templates as obligatory has special implications for the use of a constituent template which is for the entire syllable. If the constituent template is for the entire syllable, then every syllable must match the template and meeting the template becomes the dominating factor in the syllabification. This allows for approaches to syllabification like the one proposed in <citation
 ref="rIto"
 ></citation
-> which has a required template for the syllable constituent. </p
+> which has a required template for the syllable constituent.</p
 ><p
 >For example, we could posit a constituent template such as the one in <exampleRef
 letter="xSyllableTemplate"
@@ -1098,7 +1105,7 @@ type="tFeature"
 ></table
 ></example
 ><p
->This effectively says that syllables in this language consist of any of the following patterns (where N indicates a nasal): V, VV, VN, VVN, CV, CVV, CVN, CVVN. In some ways, then, it is like the CV approach. There are at least two crucial distinctions, however. One is that the syllable constituency of the ONC or Moraic approach is still maintained. The other is that unlike the CV approach, one can still have the Sonority Sequencing Principle apply for complex onsets and/or codas. </p
+>This effectively says that syllables in this language consist of any of the following patterns (where N indicates a nasal): V, VV, VN, VVN, CV, CVV, CVN, CVVN. In some ways, then, it is like the CV approach. There are at least two crucial distinctions, however. One is that the syllable constituency of the ONC or Moraic approach is still maintained. The other is that unlike the CV approach, one can still have the Sonority Sequencing Principle apply for complex onsets and/or codas.</p
 ></section4
 ></section3
 ><section3
@@ -1180,9 +1187,99 @@ id="sOTConstraints"
 ></section2
 ></section1
 ><backMatter
+><appendix
+id="aAsheninka"
+><secTitle
+>Why is it called <object
+type="tAsheninka"
+></object
+>?</secTitle
+><p
+>This syllable parsing program is called <object
+type="tAsheninka"
+></object
+> for historic reasons.</p
+><p
+>In late 1983 my family and I were living in the jungles of Peru and David Payne came and asked me if I would create a <object
+type="tTool"
+>Consistent Changes</object
+> table for him that would insert discretionary hyphens in Asheninka text.<endnote
+id="nCC"
+><p
+>A more current version of this program is <citation
+ref="rCC"
+></citation
+>.</p
+></endnote
+>  The algorithm he suggested was the CV Patterns approach (see example <exampleRef
+letter="xCVC"
+num="xCVC"
+></exampleRef
+> and the discussion around it).  Asheninka has long words and typesetting material in that language would improve readability with such a table.  In 1984 I wrote such a table.  </p
+><p
+>While it was functional, it ran slowly.  I then wrote the <object
+type="tTool"
+>Hyphen</object
+> program (<citation
+paren="none"
+ref="rDocPrepAids"
+></citation
+>) to improve the efficiency.  It implemented the same basic approach.  Amazingly, the <object
+type="tTool"
+>Hyphen</object
+> program is still being used (albeit occasionally) today.</p
+><p
+>Because of this beginning, I chose to call this tool <object
+type="tAsheninka"
+></object
+>.  The program icon (shown in example <exampleRef
+letter="xCushma"
+num="xCushma"
+></exampleRef
+> below) is the kind of material used for clothing by Asheninka people.<endnote
+id="nCushmaImage"
+><p
+>This image was gratefully taken from <link
+href="https://www.google.com/search?q=cushma+picture&amp;tbm=isch&amp;imgil=OG1p1lCNFHQUQM%253A%253BfZwnq3aDIZYMIM%253Bhttp%25253A%25252F%25252Fwww.shamansmarket.com%25252Fperuvian-shipibo-traditional-cushma-tunic.html&amp;source=iu&amp;pf=m&amp;fir=OG1p1lCNFHQUQM%253A%252CfZwnq3aDIZYMIM%252C_&amp;biw=1164&amp;bih=933&amp;usg=__HB4fkWBzdNc3fQFOcGtCBDZcSk8%3D&amp;ved=0CDsQyjdqFQoTCLSQiOSzi8kCFRPPYwod9tIM7A&amp;ei=p8tEVvSgFJOejwP2pbPgDg#imgrc=Q8xhgX9UvxfjDM%3A&amp;usg=__HB4fkWBzdNc3fQFOcGtCBDZcSk8%3D"
+>here</link
+> on 12 November, 2015.</p
+></endnote
+></p
+><example
+num="xCushma"
+><chart
+><img
+src="CushmaSmall.jpg"
+></img
+></chart
+></example
+></appendix
 ><endnotes
 ></endnotes
 ><references
+><refAuthor
+citename="Black et al."
+name="Black, H. Andrew, Fred Kuhl, Kathy Kuhl, and David J. Weber"
+><refWork
+id="rDocPrepAids"
+><refDate
+>1987</refDate
+><refTitle
+>Document preparation aids for non-major languages</refTitle
+><book
+><series
+>Occasional publications in academic computing Issue 7</series
+><location
+>Dallas, TX</location
+><publisher
+>Summer Institute of Linguistics</publisher
+><url
+>http://www.sil.org/resources/publications/entry/29601</url
+><dateAccessed
+>12 Nov. 2015</dateAccessed
+></book
+></refWork
+></refAuthor
 ><refAuthor
 citename="Clements &amp; Keyser"
 name="Clements, George N. and Samuel J. Keyser"
@@ -1357,6 +1454,23 @@ id="rRensch"
 ></book
 ></refWork
 ></refAuthor
+><refAuthor
+citename="SIL International"
+name="SIL International"
+><refWork
+id="rCC"
+><refDate
+>2005</refDate
+><refTitle
+>Consistent Changes Program</refTitle
+><webPage
+><url
+>http://www-01.sil.org/computing/catalog/show_software.asp?id=4</url
+><dateAccessed
+>12 Nov. 2015</dateAccessed
+></webPage
+></refWork
+></refAuthor
 ></references
 ></backMatter
 ><languages
@@ -1469,6 +1583,13 @@ xsl-foSpecial="text-decoration=&quot;underline&quot;"
 ><comment
 >Add your custom types here.</comment
 ><type
+after="Asheninka"
+color="navy"
+font-family="Courier New"
+font-size="95%"
+id="tAsheninka"
+></type
+><type
 font-family="Courier New"
 id="tCategory"
 ></type
@@ -1520,6 +1641,12 @@ id="tSSP"
 after="σ"
 font-family="Times New Roman"
 id="tSyllable"
+></type
+><type
+color="navy"
+font-family="Courier New"
+font-size="90%"
+id="tTool"
 ></type
 ></types
 ></lingPaper

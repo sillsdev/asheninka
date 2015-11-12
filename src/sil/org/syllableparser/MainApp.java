@@ -27,14 +27,14 @@ public class MainApp extends Application {
 	/**
 	 * 
 	 */
-	private static final String kApplicationIconResource = "file:src/sil/org/syllableparser/resources/images/SyllableParser.png";
+	private static final String kApplicationIconResource = "file:src/sil/org/syllableparser/resources/images/CushmaSmall128x128.png";
 	private Stage primaryStage;
     private BorderPane rootLayout;
 	private Locale locale;
 	private XMLBackEndProvider xmlBackEndProvider;
 	private LanguageProject languageProject;
 	
-	public static String kApplicationTitle = "Syllable Parser";
+	public static String kApplicationTitle = "Asheninka";
 	//private static String kLanguageProjectFilePath = "languageProjectFilePath";
 	private RootLayoutController controller;
 	private String sNotImplementedYetHeader;
