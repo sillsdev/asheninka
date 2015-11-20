@@ -30,8 +30,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -478,34 +476,24 @@ public class RootLayoutController implements Initializable {
 	}
 
 	protected void createToolbarButtons(ResourceBundle bundle) {
-		createToolbarButtonWithImage("newAction.png", buttonToolbarFileNew, tooltipToolbarFileNew,
+		ControllerUtilities.createToolbarButtonWithImage("newAction.png", buttonToolbarFileNew, tooltipToolbarFileNew,
 				bundle.getString("menu.new"));
-		createToolbarButtonWithImage("openAction.png", buttonToolbarFileOpen,
+		ControllerUtilities.createToolbarButtonWithImage("openAction.png", buttonToolbarFileOpen,
 				tooltipToolbarFileOpen, bundle.getString("menu.open"));
-		createToolbarButtonWithImage("saveAction.png", buttonToolbarFileSave,
+		ControllerUtilities.createToolbarButtonWithImage("saveAction.png", buttonToolbarFileSave,
 				tooltipToolbarFileSave, bundle.getString("menu.save"));
-		createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut, tooltipToolbarEditCut,
+		ControllerUtilities.createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut, tooltipToolbarEditCut,
 				bundle.getString("menu.cut"));
-		createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy,
+		ControllerUtilities.createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy,
 				tooltipToolbarEditCopy, bundle.getString("menu.copy"));
-		createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste,
+		ControllerUtilities.createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste,
 				tooltipToolbarEditPaste, bundle.getString("menu.paste"));
-		createToolbarButtonWithImage("insertAction.png", buttonToolbarEditInsert,
+		ControllerUtilities.createToolbarButtonWithImage("insertAction.png", buttonToolbarEditInsert,
 				tooltipToolbarEditInsert, bundle.getString("menu.insertnew"));
-		createToolbarButtonWithImage("deleteAction.png", buttonToolbarEditRemove,
+		ControllerUtilities.createToolbarButtonWithImage("deleteAction.png", buttonToolbarEditRemove,
 				tooltipToolbarEditRemove, bundle.getString("menu.remove"));
-		createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify,
+		ControllerUtilities.createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify,
 				tooltipToolbarSyllabify, bundle.getString("menu.syllabifywords"));
-	}
-
-	protected void createToolbarButtonWithImage(String sUrl, Button buttonToolbar,
-			Tooltip buttonTooltip, String sTooltip) {
-		ImageView imageView = new ImageView();
-		Image icon = new Image("file:src/sil/org/syllableparser/resources/images/" + sUrl);
-		imageView.setImage(icon);
-		buttonToolbar.setGraphic(imageView);
-		buttonTooltip = new Tooltip(sTooltip);
-		buttonToolbar.setTooltip(buttonTooltip);
 	}
 
 	private void listenForChangesInApproachViews() {

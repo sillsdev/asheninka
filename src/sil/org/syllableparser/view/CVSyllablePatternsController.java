@@ -5,6 +5,7 @@ package sil.org.syllableparser.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.MainApp;
@@ -21,6 +22,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
@@ -33,10 +35,8 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVSyllablePatternsController extends SylParserBaseController
-		implements Initializable {
-	protected final class WrappingTableCell extends
-			TableCell<CVSyllablePattern, String> {
+public class CVSyllablePatternsController extends SylParserBaseController implements Initializable {
+	protected final class WrappingTableCell extends TableCell<CVSyllablePattern, String> {
 		private Text text;
 
 		@Override
@@ -48,8 +48,7 @@ public class CVSyllablePatternsController extends SylParserBaseController
 			} else {
 				text = new Text(item.toString());
 				// Get it to wrap.
-				text.wrappingWidthProperty().bind(
-						getTableColumn().widthProperty());
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				setGraphic(text);
 			}
 		}
@@ -76,6 +75,14 @@ public class CVSyllablePatternsController extends SylParserBaseController
 	private TextFlow ncsTextFlow;
 	@FXML
 	private Button ncsButton;
+	@FXML
+	private Button buttonMoveUp;
+	@FXML
+	private Button buttonMoveDown;
+	@FXML
+	private Tooltip tooltipMoveUp;
+	@FXML
+	private Tooltip tooltipMoveDown;
 	// @FXML
 	// private TextField sncRepresentationField;
 
@@ -92,15 +99,19 @@ public class CVSyllablePatternsController extends SylParserBaseController
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// public void initialize() {
+		bundle = resources;
+		// Initialize the button icons
+		ControllerUtilities.createToolbarButtonWithImage("UpArrow.png", buttonMoveUp,
+				tooltipMoveUp, bundle.getString("cv.view.syllablepatterns.up"));
+		ControllerUtilities.createToolbarButtonWithImage("DownArrow.png", buttonMoveDown,
+				tooltipMoveDown, bundle.getString("cv.view.syllablepatterns.down"));
 
 		// Initialize the table with the three columns.
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.spNameProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().spNameProperty());
 		naturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.ncsRepresentationProperty());
-		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.descriptionProperty());
+		descriptionColumn
+				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
@@ -127,16 +138,20 @@ public class CVSyllablePatternsController extends SylParserBaseController
 				.addListener(
 						(observable, oldValue, newValue) -> showCVSyllablePatternDetails(newValue));
 
-		// Handle TextField text changes.
-		nameField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentSyllablePattern.setSPName(nameField.getText());
-				});
-		descriptionField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentSyllablePattern.setDescription(descriptionField
-							.getText());
-				});
+			// Handle TextField text changes.
+			nameField.textProperty().addListener((observable, oldValue, newValue) -> {
+				currentSyllablePattern.setSPName(nameField.getText());
+			});
+			descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
+				try {
+				currentSyllablePattern.setDescription(descriptionField.getText());
+				} catch (Exception e) {
+					if (e.getClass().getName() != "java.lang.NullPointerException") {
+						throw (e);
+					}
+				}
+			});
+
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -164,11 +179,30 @@ public class CVSyllablePatternsController extends SylParserBaseController
 			nameField.setText(syllablePattern.getSPName());
 			descriptionField.setText(syllablePattern.getDescription());
 			showNaturalClassesContent();
+			setUpDownButtonDisabled();
+				
 		} else {
 			// Segment is null, remove all the text.
 			nameField.setText("");
 			descriptionField.setText("");
 			ncsTextFlow.getChildren().clear();
+			buttonMoveDown.setDisable(true);
+			buttonMoveUp.setDisable(true);
+		}
+	}
+
+	protected void setUpDownButtonDisabled() {
+		int iThis = cvApproach.getCVSyllablePatterns().indexOf(currentSyllablePattern) + 1;
+		int iSize = cvApproach.getCVSyllablePatterns().size();
+		if (iThis > 1) {
+			buttonMoveUp.setDisable(false);
+		} else {
+			buttonMoveUp.setDisable(true);
+		}
+		if (iThis == iSize) {
+			buttonMoveDown.setDisable(true);
+		} else {
+			buttonMoveDown.setDisable(false);
 		}
 	}
 
@@ -287,30 +321,52 @@ public class CVSyllablePatternsController extends SylParserBaseController
 		}
 	}
 
-	/* (non-Javadoc)
+	@FXML
+	void handleMoveDown() {
+		int i = cvApproach.getCVSyllablePatterns().indexOf(currentSyllablePattern);
+		if ((i + 1) < cvApproach.getCVSyllablePatterns().size()) {
+			Collections.swap(cvApproach.getCVSyllablePatterns(), i, i + 1);
+		}
+	}
+
+	@FXML
+	void handleMoveUp() {
+		int i = cvApproach.getCVSyllablePatterns().indexOf(currentSyllablePattern);
+		if (i > 0) {
+			Collections.swap(cvApproach.getCVSyllablePatterns(), i, i - 1);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
 	 */
 	@Override
 	void handleCut() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
 	 */
 	@Override
 	void handleCopy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
 	 */
 	@Override
 	void handlePaste() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
