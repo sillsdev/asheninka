@@ -138,20 +138,17 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				.addListener(
 						(observable, oldValue, newValue) -> showCVSyllablePatternDetails(newValue));
 
-			// Handle TextField text changes.
-			nameField.textProperty().addListener((observable, oldValue, newValue) -> {
+		// Handle TextField text changes.
+		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentSyllablePattern != null) {
 				currentSyllablePattern.setSPName(nameField.getText());
-			});
-			descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
-				try {
+			}
+		});
+		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentSyllablePattern != null) {
 				currentSyllablePattern.setDescription(descriptionField.getText());
-				} catch (Exception e) {
-					if (e.getClass().getName() != "java.lang.NullPointerException") {
-						throw (e);
-					}
-				}
-			});
-
+			}
+		});
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -180,12 +177,18 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			descriptionField.setText(syllablePattern.getDescription());
 			showNaturalClassesContent();
 			setUpDownButtonDisabled();
-				
+
 		} else {
 			// Segment is null, remove all the text.
-			nameField.setText("");
-			descriptionField.setText("");
-			ncsTextFlow.getChildren().clear();
+			if (nameField != null) {
+				nameField.setText("");
+			}
+			if (descriptionField != null) {
+				descriptionField.setText("");
+			}
+			if (ncsTextFlow != null) {
+				ncsTextFlow.getChildren().clear();
+			}
 			buttonMoveDown.setDisable(true);
 			buttonMoveUp.setDisable(true);
 		}

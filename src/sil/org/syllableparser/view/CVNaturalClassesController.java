@@ -33,11 +33,9 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends SylParserBaseController
-		implements Initializable {
+public class CVNaturalClassesController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends
-			TableCell<CVNaturalClass, String> {
+	protected final class WrappingTableCell extends TableCell<CVNaturalClass, String> {
 		private Text text;
 
 		@Override
@@ -49,8 +47,7 @@ public class CVNaturalClassesController extends SylParserBaseController
 			} else {
 				text = new Text(item.toString());
 				// Get it to wrap.
-				text.wrappingWidthProperty().bind(
-						getTableColumn().widthProperty());
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				setGraphic(text);
 			}
 		}
@@ -96,12 +93,11 @@ public class CVNaturalClassesController extends SylParserBaseController
 		// public void initialize() {
 
 		// Initialize the table with the three columns.
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.ncNameProperty());
-		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData
-				.getValue().sncRepresentationProperty());
-		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.descriptionProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
+		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.sncRepresentationProperty());
+		descriptionColumn
+				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
@@ -129,19 +125,20 @@ public class CVNaturalClassesController extends SylParserBaseController
 						(observable, oldValue, newValue) -> showCVNaturalClassDetails(newValue));
 
 		// Handle TextField text changes.
-		nameField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentNaturalClass.setNCName(nameField.getText());
-				});
-//		segmentOrNaturalClassField.textProperty().addListener(
-//				(observable, oldValue, newValue) -> {
-//					currentNaturalClass.setSNCRepresentation(segmentOrNaturalClassField.getText());
-//				});
-		descriptionField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentNaturalClass.setDescription(descriptionField
-							.getText());
-				});
+		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentNaturalClass != null) {
+				currentNaturalClass.setNCName(nameField.getText());
+			}
+		});
+		// segmentOrNaturalClassField.textProperty().addListener(
+		// (observable, oldValue, newValue) -> {
+		// currentNaturalClass.setSNCRepresentation(segmentOrNaturalClassField.getText());
+		// });
+		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentNaturalClass != null) {
+				currentNaturalClass.setDescription(descriptionField.getText());
+			}
+		});
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -260,16 +257,21 @@ public class CVNaturalClassesController extends SylParserBaseController
 		if (i >= 0) {
 			cvApproach.getCVNaturalClasses().remove(i);
 		}
-		// the last item in the middle pane will be repeated if we delete an earlier one
+		// the last item in the middle pane will be repeated if we delete an
+		// earlier one
 		// how can we get it to show a blank?
-		// chances are we do not have something set up properly - looks like it is just supposed to work
-		// Any (currently showing) item referring to the deleted item needs to be have its sncField recalculated.
+		// chances are we do not have something set up properly - looks like it
+		// is just supposed to work
+		// Any (currently showing) item referring to the deleted item needs to
+		// be have its sncField recalculated.
 	}
+
 	@FXML
 	void handleLaunchSNCChooser() {
 		showSNCChooser();
 		showSegmentOrNaturalClassContent();
 	}
+
 	/**
 	 * Opens a dialog to show birthday statistics.
 	 */
@@ -292,8 +294,7 @@ public class CVNaturalClassesController extends SylParserBaseController
 			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
 			dialogStage.setTitle(MainApp.kApplicationTitle);
 
-			CVSegmentNaturalClassChooserController controller = loader
-					.getController();
+			CVSegmentNaturalClassChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setNaturalClass(currentNaturalClass);
@@ -306,31 +307,37 @@ public class CVNaturalClassesController extends SylParserBaseController
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
 	 */
 	@Override
 	void handleCut() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
 	 */
 	@Override
 	void handleCopy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
 	 */
 	@Override
 	void handlePaste() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

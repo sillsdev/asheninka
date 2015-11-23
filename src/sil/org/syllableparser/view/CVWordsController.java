@@ -21,11 +21,9 @@ import javafx.scene.text.Text;
  *
  */
 
-public class CVWordsController extends SylParserBaseController
-		implements Initializable {
+public class CVWordsController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends
-			TableCell<CVWord, String> {
+	protected final class WrappingTableCell extends TableCell<CVWord, String> {
 		private Text text;
 
 		@Override
@@ -37,8 +35,7 @@ public class CVWordsController extends SylParserBaseController
 			} else {
 				text = new Text(item.toString());
 				// Get it to wrap.
-				text.wrappingWidthProperty().bind(
-						getTableColumn().widthProperty());
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				setGraphic(text);
 			}
 		}
@@ -76,8 +73,7 @@ public class CVWordsController extends SylParserBaseController
 		// public void initialize() {
 
 		// Initialize the table with the three columns.
-		wordColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.cvWordProperty());
+		wordColumn.setCellValueFactory(cellData -> cellData.getValue().cvWordProperty());
 		predictedSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.predictedSyllabificationProperty());
 		correctSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -102,25 +98,30 @@ public class CVWordsController extends SylParserBaseController
 		showCVWordDetails(null);
 
 		// Listen for selection changes and show the details when changed.
-		cvWordsTable
-				.getSelectionModel()
-				.selectedItemProperty()
-				.addListener(
-						(observable, oldValue, newValue) -> showCVWordDetails(newValue));
+		cvWordsTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showCVWordDetails(newValue));
 
 		// Handle TextField text changes.
-		wordField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentWord.setCVWord(wordField.getText());
-				});
+		wordField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentWord != null) {
+				currentWord.setCVWord(wordField.getText());
+			}
+		});
 		predictedSyllabificationField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
-					currentWord.setPredictedSyllabification(predictedSyllabificationField.getText());
+					if (currentWord != null) {
+						currentWord.setPredictedSyllabification(predictedSyllabificationField
+								.getText());
+					}
 				});
-		correctSyllabificationField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentWord.setCorrectSyllabification(correctSyllabificationField.getText());
-				});
+		correctSyllabificationField.textProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> {
+							if (currentWord != null) {
+								currentWord.setCorrectSyllabification(correctSyllabificationField
+										.getText());
+							}
+						});
 
 		// Use of Enter move focus to next item.
 		wordField.setOnAction((event) -> {
@@ -135,8 +136,8 @@ public class CVWordsController extends SylParserBaseController
 	}
 
 	/**
-	 * Fills all text fields to show details about the CV word. If the
-	 * specified word is null, all text fields are cleared.
+	 * Fills all text fields to show details about the CV word. If the specified
+	 * word is null, all text fields are cleared.
 	 * 
 	 * @param cvWord
 	 *            the segment or null
@@ -194,6 +195,7 @@ public class CVWordsController extends SylParserBaseController
 		cvWordsTable.getSelectionModel().select(i);
 		cvWordsTable.getFocusModel().focus(i);
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -208,30 +210,36 @@ public class CVWordsController extends SylParserBaseController
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
 	 */
 	@Override
 	void handleCut() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
 	 */
 	@Override
 	void handleCopy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
 	 */
 	@Override
 	void handlePaste() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

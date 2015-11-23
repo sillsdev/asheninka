@@ -21,11 +21,9 @@ import javafx.scene.text.Text;
  *
  */
 
-public class CVSegmentInventoryController extends SylParserBaseController
-		implements Initializable {
+public class CVSegmentInventoryController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends
-			TableCell<CVSegment, String> {
+	protected final class WrappingTableCell extends TableCell<CVSegment, String> {
 		private Text text;
 
 		@Override
@@ -37,8 +35,7 @@ public class CVSegmentInventoryController extends SylParserBaseController
 			} else {
 				text = new Text(item.toString());
 				// Get it to wrap.
-				text.wrappingWidthProperty().bind(
-						getTableColumn().widthProperty());
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				setGraphic(text);
 			}
 		}
@@ -76,12 +73,10 @@ public class CVSegmentInventoryController extends SylParserBaseController
 		// public void initialize() {
 
 		// Initialize the table with the three columns.
-		segmentColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.segmentProperty());
-		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.graphemesProperty());
-		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.descriptionProperty());
+		segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
+		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
+		descriptionColumn
+				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		;
 
 		// Custom rendering of the table cell.
@@ -103,25 +98,25 @@ public class CVSegmentInventoryController extends SylParserBaseController
 		showCVSegmentDetails(null);
 
 		// Listen for selection changes and show the details when changed.
-		cvSegmentTable
-				.getSelectionModel()
-				.selectedItemProperty()
-				.addListener(
-						(observable, oldValue, newValue) -> showCVSegmentDetails(newValue));
+		cvSegmentTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showCVSegmentDetails(newValue));
 
 		// Handle TextField text changes.
-		segmentField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentSegment.setSegment(segmentField.getText());
-				});
-		graphemesField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentSegment.setGraphemes(graphemesField.getText());
-				});
-		descriptionField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					currentSegment.setDescription(descriptionField.getText());
-				});
+		segmentField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentSegment != null) {
+				currentSegment.setSegment(segmentField.getText());
+			}
+		});
+		graphemesField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentSegment != null) {
+				currentSegment.setGraphemes(graphemesField.getText());
+			}
+		});
+		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentSegment != null) {
+				currentSegment.setDescription(descriptionField.getText());
+			}
+		});
 
 		// Use of Enter move focus to next item.
 		segmentField.setOnAction((event) -> {
@@ -195,6 +190,7 @@ public class CVSegmentInventoryController extends SylParserBaseController
 		cvSegmentTable.getSelectionModel().select(i);
 		cvSegmentTable.getFocusModel().focus(i);
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -207,33 +203,39 @@ public class CVSegmentInventoryController extends SylParserBaseController
 		if (i >= 0) {
 			cvApproach.getCVSegmentInventory().remove(i);
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
 	 */
 	@Override
 	void handleCut() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
 	 */
 	@Override
 	void handleCopy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
 	 */
 	@Override
 	void handlePaste() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
