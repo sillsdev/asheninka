@@ -314,8 +314,8 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			CVSyllablePatternNaturalClassChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
-			controller.setSyllablePattern(currentSyllablePattern);
 			controller.setData(cvApproach);
+			controller.setSyllablePattern(currentSyllablePattern);
 
 			dialogStage.showAndWait();
 

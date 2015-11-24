@@ -27,7 +27,7 @@ import javafx.util.StringConverter;
  *
  */
 public class CVSyllablePatternNaturalClassChooserController implements Initializable {
-
+// TODO: is there a way to use an array for all of these combo boxes?  Will the fxml still work?
 	@FXML
 	private Label labelSequence;
 	@FXML
@@ -184,13 +184,15 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 		});
 	}
 
-	private void handleComboBoxSelectionEvent(ComboBox<CVNaturalClass> cb, ComboBox<CVNaturalClass> cbNext) {
+	private void handleComboBoxSelectionEvent(ComboBox<CVNaturalClass> cb,
+			ComboBox<CVNaturalClass> cbNext) {
 		cb.setOnAction((event) -> {
 			labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
 			cbNext.setVisible(true);
 		});
 
 	}
+
 	private String getNaturalClassSequenceFromComboBoxes() {
 		StringBuilder sb = new StringBuilder();
 		if (cb1.isVisible()) {
@@ -316,12 +318,41 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	 */
 	@FXML
 	private void handleOk() {
-		int i = CVNaturalClass.findIndexInNaturaClassListByUuid(cvApproach.getCVNaturalClasses(),
-				currentNaturalClass.getID());
-		syllablePattern.getNCs().add(cvApproach.getCVNaturalClasses().get(i));
+		syllablePattern.getNCs().clear();
+		getNaturalClassFromComboBox(cb1);
+		getNaturalClassFromComboBox(cb2);
+		getNaturalClassFromComboBox(cb3);
+		getNaturalClassFromComboBox(cb4);
+		getNaturalClassFromComboBox(cb5);
+		getNaturalClassFromComboBox(cb6);
+		getNaturalClassFromComboBox(cb7);
+		getNaturalClassFromComboBox(cb8);
+		getNaturalClassFromComboBox(cb9);
+		getNaturalClassFromComboBox(cb10);
+		getNaturalClassFromComboBox(cb11);
+		getNaturalClassFromComboBox(cb12);
+		getNaturalClassFromComboBox(cb13);
+		getNaturalClassFromComboBox(cb14);
+		getNaturalClassFromComboBox(cb15);
+		getNaturalClassFromComboBox(cb16);
+		getNaturalClassFromComboBox(cb17);
+		getNaturalClassFromComboBox(cb18);
+		getNaturalClassFromComboBox(cb19);
 
 		okClicked = true;
 		dialogStage.close();
+	}
+
+	protected void getNaturalClassFromComboBox(ComboBox<CVNaturalClass> cb) {
+		if (cb.isVisible()) {
+			CVNaturalClass selectedNaturalClass = (CVNaturalClass) cb.getSelectionModel()
+					.getSelectedItem();
+			if (selectedNaturalClass != null) {
+				int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
+						cvApproach.getCVNaturalClasses(), selectedNaturalClass.getID());
+				syllablePattern.getNCs().add(cvApproach.getCVNaturalClasses().get(i));
+			}
+		}
 	}
 
 	/**
@@ -350,6 +381,92 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 
 	public void setSyllablePattern(CVSyllablePattern syllablePattern) {
 		this.syllablePattern = syllablePattern;
+		// Following assumes that setData() has been called
+		ObservableList<CVNaturalClass> currentySetNCs = syllablePattern.getNCs();
+		int i = currentySetNCs.size() - 1;
+		if (i >= 0) {
+			cb1.setValue(currentySetNCs.get(0));
+			cb2.setVisible(true);
+			if (i >= 1) {
+				cb2.setValue(currentySetNCs.get(1));
+				cb3.setVisible(true);
+				if (i >= 2) {
+					cb3.setValue(currentySetNCs.get(2));
+					cb4.setVisible(true);
+					if (i >= 3) {
+						cb4.setValue(currentySetNCs.get(3));
+						cb5.setVisible(true);
+						if (i >= 4) {
+							cb5.setValue(currentySetNCs.get(4));
+							cb6.setVisible(true);
+							if (i >= 5) {
+								cb6.setValue(currentySetNCs.get(5));
+								cb7.setVisible(true);
+								if (i >= 6) {
+									cb7.setValue(currentySetNCs.get(6));
+									cb8.setVisible(true);
+									if (i >= 7) {
+										cb8.setValue(currentySetNCs.get(7));
+										cb9.setVisible(true);
+										if (i >= 8) {
+											cb9.setValue(currentySetNCs.get(8));
+											cb10.setVisible(true);
+											if (i >= 9) {
+												cb10.setValue(currentySetNCs.get(9));
+												cb11.setVisible(true);
+												if (i >= 10) {
+													cb11.setValue(currentySetNCs.get(10));
+													cb12.setVisible(true);
+													if (i >= 11) {
+														cb12.setValue(currentySetNCs.get(11));
+														cb13.setVisible(true);
+														if (i >= 12) {
+															cb13.setValue(currentySetNCs.get(12));
+															cb14.setVisible(true);
+															if (i >= 13) {
+																cb14.setValue(currentySetNCs
+																		.get(13));
+																cb15.setVisible(true);
+																if (i >= 14) {
+																	cb15.setValue(currentySetNCs
+																			.get(14));
+																	cb16.setVisible(true);
+																	if (i >= 15) {
+																		cb16.setValue(currentySetNCs
+																				.get(15));
+																		cb17.setVisible(true);
+																		if (i >= 16) {
+																			cb17.setValue(currentySetNCs
+																					.get(16));
+																			cb18.setVisible(true);
+																			if (i >= 17) {
+																				cb18.setValue(currentySetNCs
+																						.get(17));
+																				cb19.setVisible(true);
+																				if (i >= 18) {
+																					cb19.setValue(currentySetNCs
+																							.get(18));
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+		}
 	}
 
 	void setCurrentCVNaturalClass(CVNaturalClass naturalClass) {
