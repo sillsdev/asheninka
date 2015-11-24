@@ -284,20 +284,20 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	}
 
 	@FXML
-	void handleLaunchNCChooser() {
-		showNCChooser();
+	void handleLaunchNCSequenceChooser() {
+		showNCSequenceChooser();
 		showNaturalClassesContent();
 	}
 
 	/**
-	 * Opens a dialog to show birthday statistics.
+	 * Opens a dialog to show and set sequence of natural classes
 	 */
-	public void showNCChooser() {
+	public void showNCSequenceChooser() {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ApproachViewNavigator.class
-					.getResource("fxml/CVNaturalClassChooser.fxml"));
+					.getResource("fxml/CVSyllablePatternNaturalClassChooser.fxml"));
 			loader.setResources(ResourceBundle.getBundle(
 					"sil.org.syllableparser.resources.SyllableParser", locale));
 
@@ -311,7 +311,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
 			dialogStage.setTitle(MainApp.kApplicationTitle);
 
-			CVNaturalClassChooserController controller = loader.getController();
+			CVSyllablePatternNaturalClassChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setSyllablePattern(currentSyllablePattern);

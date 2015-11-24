@@ -59,7 +59,7 @@
                                  <padding>
                                     <Insets top="7.5" />
                                  </padding></TextFlow>
-                              <Button fx:id="ncsButton" mnemonicParsing="false" onAction="#handleLaunchNCChooser" text="...">
+                              <Button fx:id="ncsButton" mnemonicParsing="false" onAction="#handleLaunchNCSequenceChooser" text="...">
                                  <FlowPane.margin>
                                     <Insets left="3.0" />
                                  </FlowPane.margin></Button>
