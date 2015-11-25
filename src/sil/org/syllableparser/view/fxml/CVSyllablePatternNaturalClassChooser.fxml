@@ -36,5 +36,28 @@
       <ComboBox fx:id="cb17" layoutX="151.0" layoutY="223.0" prefHeight="22.0" prefWidth="117.0" promptText="%cv.view.syllablepatterns.ncs" visible="false" />
       <ComboBox fx:id="cb18" layoutX="281.0" layoutY="223.0" prefHeight="22.0" prefWidth="117.0" promptText="%cv.view.syllablepatterns.ncs" visible="false" />
       <ComboBox fx:id="cb19" layoutX="411.0" layoutY="223.0" prefHeight="22.0" prefWidth="117.0" promptText="%cv.view.syllablepatterns.ncs" visible="false" />
+<fx:define>
+        <ArrayList fx:id="comboBoxList" >
+            <fx:reference source="cb1"/>
+            <fx:reference source="cb2"/>
+            <fx:reference source="cb3"/>
+            <fx:reference source="cb4"/>
+            <fx:reference source="cb5"/>
+            <fx:reference source="cb6"/>
+            <fx:reference source="cb7"/>
+            <fx:reference source="cb8"/>
+            <fx:reference source="cb9"/>
+            <fx:reference source="cb10"/>
+            <fx:reference source="cb11"/>
+            <fx:reference source="cb12"/>
+            <fx:reference source="cb13"/>
+            <fx:reference source="cb14"/>
+            <fx:reference source="cb15"/>
+            <fx:reference source="cb16"/>
+            <fx:reference source="cb17"/>
+            <fx:reference source="cb18"/>
+            <fx:reference source="cb19"/>
+        </ArrayList>
+    </fx:define>
    </children>
 </AnchorPane>

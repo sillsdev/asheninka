@@ -4,6 +4,7 @@
 package sil.org.syllableparser.view;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.MainApp;
@@ -27,9 +28,12 @@ import javafx.util.StringConverter;
  *
  */
 public class CVSyllablePatternNaturalClassChooserController implements Initializable {
-// TODO: is there a way to use an array for all of these combo boxes?  Will the fxml still work?
+	// TODO: is there a way to use an array for all of these combo boxes? Will
+	// the fxml still work? Similarly can we use an array for the observable lists?
 	@FXML
 	private Label labelSequence;
+	@FXML
+	private List<ComboBox<CVNaturalClass>> comboBoxList;
 	@FXML
 	private ComboBox<CVNaturalClass> cb1;
 	private ObservableList<CVNaturalClass> cb1Data = FXCollections.observableArrayList();
@@ -96,11 +100,24 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	private CVNaturalClass currentNaturalClass;
 	private CVSyllablePattern syllablePattern;
 
+	private CVNaturalClass removeNC;
+	private CVNaturalClass wordBoundaryNC;
+	// want unique strings for the next two so we can be sure we get the correct one
+	private static String kSpecialRemoveCode = "Asheninka!@#RemoveCode";
+	private static String kSpecialWordBoundaryCode = "Asheninka!@#WordBoundaryCode";
+
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+
+		removeNC = new CVNaturalClass(resources.getString("cv.view.syllablepatterns.remove"), null,
+				"", kSpecialRemoveCode);
+		wordBoundaryNC = new CVNaturalClass(
+				resources.getString("cv.view.syllablepatterns.wordboundary"), null, "",
+				kSpecialWordBoundaryCode);
+
 		cb1.setItems(cb1Data);
 		cb2.setItems(cb2Data);
 		cb3.setItems(cb3Data);
@@ -160,7 +177,6 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 		cb19.setCellFactory(renderNCsInComboBox());
 		cb19.setConverter(renderSelectedNCInCombox());
 
-		// Handle ComboBox event.
 		handleComboBoxSelectionEvent(cb1, cb2);
 		handleComboBoxSelectionEvent(cb2, cb3);
 		handleComboBoxSelectionEvent(cb3, cb4);
@@ -187,13 +203,25 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	private void handleComboBoxSelectionEvent(ComboBox<CVNaturalClass> cb,
 			ComboBox<CVNaturalClass> cbNext) {
 		cb.setOnAction((event) -> {
-			labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
-			cbNext.setVisible(true);
+			CVNaturalClass nc = cb.getValue();
+			if (nc.getSNCRepresentation() == kSpecialRemoveCode) {
+				System.out.println("remove found");
+				removeContentFrom(cb);
+			} else if (nc.getSNCRepresentation() == kSpecialWordBoundaryCode) {
+				System.out.println("word boundary found");
+			} else {
+				labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+				cbNext.setVisible(true);
+			}
 		});
 
 	}
 
-	private String getNaturalClassSequenceFromComboBoxes() {
+	public void removeContentFrom(ComboBox cb) {
+		
+	}
+	// is public for unit testing
+	public String getNaturalClassSequenceFromComboBoxes() {
 		StringBuilder sb = new StringBuilder();
 		if (cb1.isVisible()) {
 			sb.append(cb1.getSelectionModel().getSelectedItem().getNCName());
@@ -241,7 +269,12 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 					if (item == null || empty) {
 						setText(null);
 					} else {
-						setText(item.getNCName() + " - " + item.getDescription());
+						String sCode = item.getSNCRepresentation();
+						if (sCode != kSpecialRemoveCode && sCode != kSpecialWordBoundaryCode) {
+							setText(item.getNCName() + " - " + item.getDescription());
+						} else {
+							setText(item.getNCName());
+						}
 					}
 				}
 			};
@@ -260,7 +293,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 			}
 
 			@Override
-			public CVNaturalClass fromString(String personString) {
+			public CVNaturalClass fromString(String naturalClassString) {
 				return null; // No conversion fromString needed.
 			}
 		};
@@ -282,26 +315,31 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
-		cb1Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb2Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb3Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb4Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb5Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb6Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb7Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb8Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb9Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb10Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb11Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb12Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb13Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb14Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb15Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb16Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb17Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb18Data.addAll(cvApproachData.getCVNaturalClasses());
-		cb19Data.addAll(cvApproachData.getCVNaturalClasses());
+		setComboBoxData(cb1Data);
+		setComboBoxData(cb2Data);
+		setComboBoxData(cb3Data);
+		setComboBoxData(cb4Data);
+		setComboBoxData(cb5Data);
+		setComboBoxData(cb6Data);
+		setComboBoxData(cb7Data);
+		setComboBoxData(cb8Data);
+		setComboBoxData(cb9Data);
+		setComboBoxData(cb10Data);
+		setComboBoxData(cb11Data);
+		setComboBoxData(cb12Data);
+		setComboBoxData(cb13Data);
+		setComboBoxData(cb14Data);
+		setComboBoxData(cb15Data);
+		setComboBoxData(cb16Data);
+		setComboBoxData(cb17Data);
+		setComboBoxData(cb18Data);
+		setComboBoxData(cb19Data);
+	}
 
+	protected void setComboBoxData(ObservableList<CVNaturalClass> cbData) {
+		cbData.addAll(cvApproach.getCVNaturalClasses());
+		cbData.add(removeNC);
+		cbData.add(wordBoundaryNC);
 	}
 
 	/**
@@ -471,6 +509,32 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 
 	void setCurrentCVNaturalClass(CVNaturalClass naturalClass) {
 		currentNaturalClass = naturalClass;
+	}
+	
+	// ComboBox getters are for unit testing; we only need 6
+
+	public ComboBox<CVNaturalClass> getCb1() {
+		return cb1;
+	}
+
+	public ComboBox<CVNaturalClass> getCb2() {
+		return cb2;
+	}
+
+	public ComboBox<CVNaturalClass> getCb3() {
+		return cb3;
+	}
+
+	public ComboBox<CVNaturalClass> getCb4() {
+		return cb4;
+	}
+
+	public ComboBox<CVNaturalClass> getCb5() {
+		return cb5;
+	}
+
+	public ComboBox<CVNaturalClass> getCb6() {
+		return cb6;
 	}
 
 }
