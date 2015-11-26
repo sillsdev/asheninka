@@ -73,11 +73,33 @@ public class CVSyllablePatternsUITest {
 	}
 
 	@Test
-	public void removeFirstComboBoxOf3Test() {
+	public void removeComboBoxesTest() {
+		// remove first
 		createCCVNpattern();
-		controller.getComboBox(1).getSelectionModel().select(3);
-		
-		
+		controller.removeContentFrom(controller.getComboBox(0));
+		String sPattern = controller.getNaturalClassSequenceFromComboBoxes();
+		assertEquals("expect C V N", "C V N", sPattern);
+		// remove second
+		createCCVNpattern();
+		controller.removeContentFrom(controller.getComboBox(1));
+		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
+		assertEquals("expect C V N", "C V N", sPattern);
+		// remove third
+		createCCVNpattern();
+		controller.removeContentFrom(controller.getComboBox(2));
+		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
+		assertEquals("expect C C N", "C C N", sPattern);
+		// remove fourth
+		createCCVNpattern();
+		controller.removeContentFrom(controller.getComboBox(3));
+		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
+		assertEquals("expect C C V", "C C V", sPattern);
+		// remove first then third
+		createCCVNpattern();
+		controller.removeContentFrom(controller.getComboBox(0));
+		controller.removeContentFrom(controller.getComboBox(2));
+		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
+		assertEquals("expect C V", "C V", sPattern);
 	}
 
 	protected void createCCVNpattern() {

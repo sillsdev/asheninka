@@ -12,6 +12,7 @@ import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,6 +44,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 
 	private CVNaturalClass removeNC;
 	private CVNaturalClass wordBoundaryNC;
+	private String sSequencePrompt;
 	// want unique strings for the next two so we can be sure we get the correct
 	// one
 	private static String kSpecialRemoveCode = "Asheninka!@#RemoveCode";
@@ -59,6 +61,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 		wordBoundaryNC = new CVNaturalClass(
 				resources.getString("cv.view.syllablepatterns.wordboundary"), null, "",
 				kSpecialWordBoundaryCode);
+		sSequencePrompt = resources.getString("cv.view.syllablepatterns.ncsequence");
 
 		int i = 0;
 		for (ComboBox<CVNaturalClass> cb : comboBoxList) {
@@ -81,31 +84,60 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 			ComboBox<CVNaturalClass> cbNext) {
 		cb.setOnAction((event) -> {
 			CVNaturalClass nc = cb.getValue();
-			if (nc.getSNCRepresentation() == kSpecialRemoveCode) {
-				System.out.println("remove found");
-				removeContentFrom(cb);
-			} else if (nc.getSNCRepresentation() == kSpecialWordBoundaryCode) {
-				System.out.println("word boundary found");
-			} else {
-				labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
-				cbNext.setVisible(true);
+			if (nc != null) {
+				if (nc.getSNCRepresentation() == kSpecialRemoveCode) {
+					// if we merely invoke the remove and update label code
+					// directly,
+					// we get an IndexOutOfBoundsException. This is because
+					// "In JavaFX, you cannot change the contents of an
+					// ObservableList
+					// while a change is already in progress." See
+					// http://stackoverflow.com/questions/32370394/javafx-combobox-change-value-causes-indexoutofboundsexception
+					// To avoid this, we ask the system to run the change later
+					// on the JavaFX platform thread.
+					// Doing so avoids the exception.
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							removeContentFrom(cb);
+							labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+						}
+					});
+					// removeContentFrom(cb);
+					// labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+				} else if (nc.getSNCRepresentation() == kSpecialWordBoundaryCode) {
+					System.out.println("word boundary found");
+				} else {
+					labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+					cbNext.setVisible(true);
+				}
 			}
 		});
-
 	}
 
 	public void removeContentFrom(ComboBox<CVNaturalClass> cb) {
-
+		int i = comboBoxList.indexOf(cb);
+		while ((i + 1) < comboBoxList.size() && comboBoxList.get(i + 1).isVisible()) {
+			comboBoxList.get(i).setValue(comboBoxList.get(i + 1).getValue());
+			i++;
+		}
+		if (i < comboBoxList.size() && comboBoxList.get(i).isVisible()) {
+			comboBoxList.get(i).setVisible(false);
+		}
 	}
 
 	// is public for unit testing
 	public String getNaturalClassSequenceFromComboBoxes() {
 		StringBuilder sb = new StringBuilder();
-		for (ComboBox<CVNaturalClass> cb : comboBoxList) {
-			if (cb.equals(comboBoxList.get(0))) {
-				sb.append(cb.getSelectionModel().getSelectedItem().getNCName());
-			} else {
-				getComboBoxSelectedNaturalClassName(cb, sb);
+		if (comboBoxList.get(0).getSelectionModel().getSelectedIndex() < 0) {
+			sb.append(sSequencePrompt);
+		} else {
+			for (ComboBox<CVNaturalClass> cb : comboBoxList) {
+				if (cb.equals(comboBoxList.get(0))) {
+					sb.append(cb.getSelectionModel().getSelectedItem().getNCName());
+				} else {
+					getComboBoxSelectedNaturalClassName(cb, sb);
+				}
 			}
 		}
 		return sb.toString();
