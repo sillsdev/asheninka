@@ -15,3 +15,9 @@
 .failedsyllabification {
 	-fx-color:red;
 }
+/* .combo-box-popup .list-cell:disabled  {
+    -fx-opacity: 0.4 ;
+}
+.combo-box-popup .list-cell  {
+    -fx-opacity: 1.0 ;
+} */

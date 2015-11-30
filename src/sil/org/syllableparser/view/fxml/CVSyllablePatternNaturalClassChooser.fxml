@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.util.ArrayList?>
 
-<AnchorPane prefHeight="303.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.CVSyllablePatternNaturalClassChooserController">
+<AnchorPane prefHeight="303.0" prefWidth="625.0" stylesheets="@SyllableParser.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.CVSyllablePatternNaturalClassChooserController">
    <children>
       <ButtonBar layoutX="372.0" layoutY="259.0" prefHeight="40.0" prefWidth="272.0">
         <buttons>

@@ -99,28 +99,47 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							removeContentFrom(cb);
+							removeContentFromComboBox(cb);
 							labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+							clearRemoveOptionFromComboBox(cb);
 						}
 					});
-					// removeContentFrom(cb);
-					// labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
 				} else if (nc.getSNCRepresentation() == kSpecialWordBoundaryCode) {
 					System.out.println("word boundary found");
 				} else {
-					labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
-					cbNext.setVisible(true);
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+							cbNext.setVisible(true);
+							addRemoveOptionToComboBox(cb);
+						}
+					});
 				}
 			}
 		});
 	}
 
-	public void removeContentFrom(ComboBox<CVNaturalClass> cb) {
+	protected void addRemoveOptionToComboBox(ComboBox<CVNaturalClass> cb) {
 		int i = comboBoxList.indexOf(cb);
+		ObservableList<CVNaturalClass> ol = comboBoxDataList.get(i);
+		if (!ol.contains(removeNC)) {
+			ol.add(removeNC);
+		}
+	}
+
+	// is public for unit testing
+	public void removeContentFromComboBox(ComboBox<CVNaturalClass> cb) {
+		int i = comboBoxList.indexOf(cb);
+		// shift values to the left
 		while ((i + 1) < comboBoxList.size() && comboBoxList.get(i + 1).isVisible()) {
 			comboBoxList.get(i).setValue(comboBoxList.get(i + 1).getValue());
 			i++;
 		}
+		// set next to last one to no longer have a remove option
+		ComboBox<CVNaturalClass> cbi = comboBoxList.get(i - 1);
+		clearRemoveOptionFromComboBox(cbi);
+		// no longer show final one
 		if (i < comboBoxList.size() && comboBoxList.get(i).isVisible()) {
 			comboBoxList.get(i).setVisible(false);
 		}
@@ -218,7 +237,6 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 
 	protected void setComboBoxData(ObservableList<CVNaturalClass> cbData) {
 		cbData.addAll(cvApproach.getCVNaturalClasses());
-		cbData.add(removeNC);
 		cbData.add(wordBoundaryNC);
 	}
 
@@ -309,6 +327,14 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	// ComboBox getter is for unit testing
 	public ComboBox<CVNaturalClass> getComboBox(int index) {
 		return comboBoxList.get(index);
+	}
+
+	protected void clearRemoveOptionFromComboBox(ComboBox<CVNaturalClass> cb) {
+		int i = comboBoxList.indexOf(cb);
+		ObservableList<CVNaturalClass> ol = comboBoxDataList.get(i);
+		if (ol.contains(removeNC)) {
+			ol.remove(removeNC);
+		}
 	}
 
 }
