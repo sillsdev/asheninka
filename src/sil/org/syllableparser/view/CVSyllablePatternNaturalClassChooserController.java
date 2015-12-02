@@ -120,7 +120,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 		});
 	}
 
-	protected void addRemoveOptionToComboBox(ComboBox<CVNaturalClass> cb) {
+	public void addRemoveOptionToComboBox(ComboBox<CVNaturalClass> cb) {
 		int i = comboBoxList.indexOf(cb);
 		ObservableList<CVNaturalClass> ol = comboBoxDataList.get(i);
 		if (!ol.contains(removeNC)) {

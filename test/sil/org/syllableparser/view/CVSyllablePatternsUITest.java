@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegment;
 import sil.org.syllableparser.model.cvapproach.CVSegmenter;
 
@@ -101,17 +103,34 @@ public class CVSyllablePatternsUITest {
 		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
 		assertEquals("expect C V", "C V", sPattern);
 	}
+	
+	@Test
+	public void addClearRemoveFromComboBoxTest() {
+		ComboBox<CVNaturalClass> cb = controller.getComboBox(0);
+		assertEquals("4 items in combo", 4, cb.getItems().size());
+		// want C C V N
+		cb.getSelectionModel().select(0);
+		cb.setVisible(true);
+		controller.addRemoveOptionToComboBox(cb);
+		assertEquals("5 items in combo", 5, cb.getItems().size());
+		controller.clearRemoveOptionFromComboBox(cb);
+		assertEquals("4 items in combo", 4, cb.getItems().size());
+	}
 
 	protected void createCCVNpattern() {
 		// want C C V N
-		controller.getComboBox(0).getSelectionModel().select(0);
-		controller.getComboBox(0).setVisible(true);
-		controller.getComboBox(1).getSelectionModel().select(0);
-		controller.getComboBox(1).setVisible(true);
-		controller.getComboBox(2).getSelectionModel().select(1);
-		controller.getComboBox(2).setVisible(true);
-		controller.getComboBox(3).getSelectionModel().select(2);
-		controller.getComboBox(3).setVisible(true);
+		ComboBox<CVNaturalClass> cb = controller.getComboBox(0);
+		cb.getSelectionModel().select(0);
+		cb.setVisible(true);
+		cb = controller.getComboBox(1);
+		cb.getSelectionModel().select(0);
+		cb.setVisible(true);
+		cb = controller.getComboBox(2);
+		cb.getSelectionModel().select(1);
+		cb.setVisible(true);
+		cb = controller.getComboBox(3);
+		cb.getSelectionModel().select(2);
+		cb.setVisible(true);
 		String sPattern = controller.getNaturalClassSequenceFromComboBoxes();
 		assertEquals("expect C C V N", "C C V N", sPattern);
 	}
