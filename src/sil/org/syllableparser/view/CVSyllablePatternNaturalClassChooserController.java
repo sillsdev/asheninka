@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
@@ -105,7 +106,22 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 						}
 					});
 				} else if (nc.getSNCRepresentation() == kSpecialWordBoundaryCode) {
-					System.out.println("word boundary found");
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+							addRemoveOptionToComboBox(cb);
+							if (Constants.FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN.equals(cb.getId())) {
+								// it's the initial one; make sure the second
+								// combo box is visible
+								cbNext.setVisible(true);
+							} else {
+								// it's not initial; therefore this combo box
+								// needs to be the final one
+								makeAllFollowingComboBoxesInvisible(cb);
+							}
+						}
+					});
 				} else {
 					Platform.runLater(new Runnable() {
 						@Override
@@ -146,6 +162,15 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	}
 
 	// is public for unit testing
+	public void makeAllFollowingComboBoxesInvisible(ComboBox<CVNaturalClass> cb) {
+		int i = comboBoxList.indexOf(cb);
+		while ((i + 1) < comboBoxList.size() && comboBoxList.get(i + 1).isVisible()) {
+			comboBoxList.get(i + 1).setVisible(false);
+			i++;
+		}
+	}
+
+	// is public for unit testing
 	public String getNaturalClassSequenceFromComboBoxes() {
 		StringBuilder sb = new StringBuilder();
 		if (comboBoxList.get(0).getSelectionModel().getSelectedIndex() < 0) {
@@ -153,7 +178,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 		} else {
 			for (ComboBox<CVNaturalClass> cb : comboBoxList) {
 				if (cb.equals(comboBoxList.get(0))) {
-					sb.append(cb.getSelectionModel().getSelectedItem().getNCName());
+					sb.append(getNaturalClassNameToShow(cb.getSelectionModel().getSelectedItem()));
 				} else {
 					getComboBoxSelectedNaturalClassName(cb, sb);
 				}
@@ -168,8 +193,16 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 			CVNaturalClass selectedNaturalClass = (CVNaturalClass) cb.getSelectionModel()
 					.getSelectedItem();
 			if (selectedNaturalClass != null) {
-				sb.append(selectedNaturalClass.getNCName());
+				sb.append(getNaturalClassNameToShow(selectedNaturalClass));
 			}
+		}
+	}
+
+	private String getNaturalClassNameToShow(CVNaturalClass nc) {
+		if (nc.getSNCRepresentation() == kSpecialWordBoundaryCode) {
+			return Constants.WORD_BOUNDARY_SYMBOL;
+		} else {
+			return nc.getNCName();
 		}
 	}
 
@@ -254,23 +287,34 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	 */
 	@FXML
 	private void handleOk() {
-		syllablePattern.getNCs().clear();
-		for (ComboBox<CVNaturalClass> cb : comboBoxList) {
-			getNaturalClassFromComboBox(cb);
-		}
+		getNaturalClassesFromComboBoxes();
 
 		okClicked = true;
 		dialogStage.close();
 	}
 
-	protected void getNaturalClassFromComboBox(ComboBox<CVNaturalClass> cb) {
-		if (cb.isVisible()) {
-			CVNaturalClass selectedNaturalClass = (CVNaturalClass) cb.getSelectionModel()
-					.getSelectedItem();
-			if (selectedNaturalClass != null) {
-				int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
-						cvApproach.getCVNaturalClasses(), selectedNaturalClass.getID());
-				syllablePattern.getNCs().add(cvApproach.getCVNaturalClasses().get(i));
+	// is public for unit testing
+	public void getNaturalClassesFromComboBoxes() {
+		syllablePattern.getNCs().clear();
+		syllablePattern.setWordInitial(false);
+		syllablePattern.setWordFinal(false);
+		for (ComboBox<CVNaturalClass> cb : comboBoxList) {
+			if (cb.isVisible()) {
+				CVNaturalClass selectedNaturalClass = (CVNaturalClass) cb.getSelectionModel()
+						.getSelectedItem();
+				if (selectedNaturalClass != null) {
+					if (selectedNaturalClass.getSNCRepresentation() == kSpecialWordBoundaryCode) {
+						if (Constants.FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN.equals(cb.getId())) {
+							syllablePattern.setWordInitial(true);
+						} else {
+							syllablePattern.setWordFinal(true);
+						}
+					} else {
+						int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
+								cvApproach.getCVNaturalClasses(), selectedNaturalClass.getID());
+						syllablePattern.getNCs().add(cvApproach.getCVNaturalClasses().get(i));
+					}
+				}
 			}
 		}
 	}
@@ -308,17 +352,31 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 		int iCurrentNaturalClass = 0;
 		if (iNaturalClassesInPattern > 0) {
 			for (ComboBox<CVNaturalClass> cb : comboBoxList) {
-				cb.setValue(currentySetNCs.get(iCurrentNaturalClass++));
-				if (iCurrentNaturalClass < comboBoxList.size()) {
-					comboBoxList.get(iCurrentNaturalClass).setVisible(true);
+				if (syllablePattern.isWordInitial()
+						&& Constants.FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN.equals(cb.getId())) {
+					cb.setValue(wordBoundaryNC);
+					cb.setVisible(true);
+				} else {
+					cb.setValue(currentySetNCs.get(iCurrentNaturalClass++));
+					if (iCurrentNaturalClass < comboBoxList.size()) {
+						comboBoxList.get(iCurrentNaturalClass).setVisible(true);
+					}
+					if (iCurrentNaturalClass >= iNaturalClassesInPattern) {
+						if (syllablePattern.isWordFinal()) {
+							cb = comboBoxList.get(iCurrentNaturalClass + 1);
+							cb.setValue(wordBoundaryNC);
+							cb.setVisible(true);
+						}
+						break;
+					}
 				}
-				if (iCurrentNaturalClass >= iNaturalClassesInPattern) {
-					break;
-				}
-
 			}
 			labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
 		}
+	}
+
+	public void setSyllablePatternForUnitTesting(CVSyllablePattern syllablePattern) {
+		this.syllablePattern = syllablePattern;
 	}
 
 	void setCurrentCVNaturalClass(CVNaturalClass naturalClass) {

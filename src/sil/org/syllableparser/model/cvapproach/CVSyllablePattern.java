@@ -25,6 +25,8 @@ public class CVSyllablePattern extends SylParserObject {
 	private final StringProperty description;
 	private final StringProperty ncsRepresentation;
 	ObservableList<CVNaturalClass> ncs = FXCollections.observableArrayList();
+	private Boolean fWordInitial;
+	private Boolean fWordFinal;
 	
 	public CVSyllablePattern() {
 		super();
@@ -32,6 +34,8 @@ public class CVSyllablePattern extends SylParserObject {
 		this.naturalClasses = new SimpleListProperty<CVNaturalClass>();
 		this.description = new SimpleStringProperty("");
 		this.ncsRepresentation = new SimpleStringProperty("");
+		this.fWordInitial = false;
+		this.fWordFinal = false;
 		createUUID();
 	}
 
@@ -42,6 +46,8 @@ public class CVSyllablePattern extends SylParserObject {
 		this.naturalClasses = new SimpleListProperty<CVNaturalClass>(naturalClasses);
 		this.description = new SimpleStringProperty(description);
 		this.ncsRepresentation = new SimpleStringProperty(ncsRepresentation);
+		this.fWordInitial = false;
+		this.fWordFinal = false;
 		createUUID();
 	}
 
@@ -102,6 +108,22 @@ public class CVSyllablePattern extends SylParserObject {
 		this.ncsRepresentation.set(ncsRepresentation);
 	}
 	
+	public Boolean isWordInitial() {
+		return fWordInitial;
+	}
+
+	public void setWordInitial(Boolean fWordInitial) {
+		this.fWordInitial = fWordInitial;
+	}
+
+	public Boolean isWordFinal() {
+		return fWordFinal;
+	}
+
+	public void setWordFinal(Boolean fWordFinal) {
+		this.fWordFinal = fWordFinal;
+	}
+
 	public static int findIndexInSyllablePatternListByUuid(ObservableList<CVSyllablePattern> list, String uuid) {
 		// TODO: is there a way to do this with lambda expressions?
 		// Is there a way to use SylParserObject somehow?

@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -213,22 +214,34 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		// TODO: can we do this with lambdas?
 		StringBuilder sb = new StringBuilder();
 		ncsTextFlow.getChildren().clear();
+		if (currentSyllablePattern.isWordInitial()) {
+			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL);
+			sb.append(", ");
+		}
 		int i = 1;
 		int iCount = currentSyllablePattern.getNCs().size();
 		for (SylParserObject spo : currentSyllablePattern.getNCs()) {
 			CVNaturalClass nc = (CVNaturalClass) spo;
 			if (nc != null) {
-				Text t = new Text(nc.getNCName());
-				Text tBar = new Text(" | ");
-				tBar.setStyle("-fx-stroke: lightgrey;");
-				ncsTextFlow.getChildren().addAll(t, tBar);
-				sb.append(nc.getNCName());
+				addNameToContent(sb, nc.getNCName());
 				if (i++ < iCount) {
 					sb.append(", ");
 				}
 			}
 		}
+		if (currentSyllablePattern.isWordFinal()) {
+			sb.append(", ");
+			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL);
+		}
 		currentSyllablePattern.setNCSRepresentation(sb.toString());
+	}
+
+	protected void addNameToContent(StringBuilder sb, String sName) {
+		Text t = new Text(sName);
+		Text tBar = new Text(" | ");
+		tBar.setStyle("-fx-stroke: lightgrey;");
+		ncsTextFlow.getChildren().addAll(t, tBar);
+		sb.append(sName);
 	}
 
 	public void setSyllablePattern(CVSyllablePattern syllablePattern) {

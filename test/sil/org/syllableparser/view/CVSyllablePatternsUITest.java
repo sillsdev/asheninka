@@ -31,6 +31,7 @@ import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegment;
 import sil.org.syllableparser.model.cvapproach.CVSegmenter;
+import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 
 /**
  * @author Andy Black
@@ -116,7 +117,31 @@ public class CVSyllablePatternsUITest {
 		controller.clearRemoveOptionFromComboBox(cb);
 		assertEquals("4 items in combo", 4, cb.getItems().size());
 	}
-
+	
+	@Test
+	public void wordBoundaryTest() {
+		createCCVNpattern();
+		ComboBox<CVNaturalClass> cb = controller.getComboBox(0);
+		cb.getSelectionModel().select(3);
+		String sPattern = controller.getNaturalClassSequenceFromComboBoxes();
+		assertEquals("expect # C V N", "# C V N", sPattern);
+		CVSyllablePattern syllablePattern = new CVSyllablePattern();
+		controller.setSyllablePatternForUnitTesting(syllablePattern);
+		controller.getNaturalClassesFromComboBoxes();
+		assertEquals(true, syllablePattern.isWordInitial());
+		assertEquals(false, syllablePattern.isWordFinal());
+		cb = controller.getComboBox(4);
+		cb.setVisible(true);
+		cb.getSelectionModel().select(3);
+		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
+		assertEquals("expect # C V N #", "# C V N #", sPattern);
+		cb = controller.getComboBox(2);
+		cb.setVisible(true);
+		cb.getSelectionModel().select(3);
+		controller.makeAllFollowingComboBoxesInvisible(cb);
+		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
+		assertEquals("expect # C #", "# C #", sPattern);
+	}
 	protected void createCCVNpattern() {
 		// want C C V N
 		ComboBox<CVNaturalClass> cb = controller.getComboBox(0);
