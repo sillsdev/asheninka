@@ -138,7 +138,7 @@ public class RootLayoutController implements Initializable {
 		this.mainApp = mainApp;
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
-		syllableParserFilterDescription = sFileFilterDescription + " (*."
+		syllableParserFilterDescription = sFileFilterDescription + " (*"
 				+ kSyllableParserDataExtension + ")";
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
 		ApproachViewNavigator.setMainController(this);
@@ -166,8 +166,13 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleNew() {
-		mainApp.getLanguageProject().clear();
-		ApplicationPreferences.setLastOpenedFilePath((String) null);
+		//mainApp.getLanguageProject().clear();
+		//ApplicationPreferences.setLastOpenedFilePath((String) null);
+		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
+		File file = new File("src/sil/org/syllableparser/resources/starterFile.sylpdata");
+		mainApp.loadLanguageData(file);
+		ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
+		handleSaveAs();
 	}
 
 	@FXML
@@ -190,29 +195,16 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleOpen() {
-		String sDirectoryPath;
-		FileChooser fileChooser = new FileChooser();
-
-		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-				syllableParserFilterDescription, syllableParserFilterExtensions);
-		fileChooser.getExtensionFilters().add(extFilter);
-		sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
-		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
-			File initialDirectory = new File(sDirectoryPath);
-			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
-				fileChooser.setInitialDirectory(initialDirectory);
-			}
-		}
-
+		FileChooser fileChooser = initFileChooser();
 		// Show open file dialog
 		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 
 		if (file != null) {
 			mainApp.loadLanguageData(file);
-			sDirectoryPath = file.getParent();
+			String sDirectoryPath = file.getParent();
 			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		}
+		mainApp.updateStageTitle(file);
 	}
 
 	/**
@@ -234,12 +226,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleSaveAs() {
-		FileChooser fileChooser = new FileChooser();
-
-		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-				syllableParserFilterDescription, syllableParserFilterExtensions);
-		fileChooser.getExtensionFilters().add(extFilter);
+		FileChooser fileChooser = initFileChooser();
 
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
@@ -250,7 +237,28 @@ public class RootLayoutController implements Initializable {
 				file = new File(file.getPath() + kSyllableParserDataExtension);
 			}
 			mainApp.saveLanguageData(file);
+			String sDirectoryPath = file.getParent();
+			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);		
+			mainApp.updateStageTitle(file);
 		}
+	}
+
+	protected FileChooser initFileChooser() {
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				syllableParserFilterDescription, syllableParserFilterExtensions);
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
+		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
+			File initialDirectory = new File(sDirectoryPath);
+			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
+				fileChooser.setInitialDirectory(initialDirectory);
+			}
+		}
+		return fileChooser;
 	}
 
 	/**

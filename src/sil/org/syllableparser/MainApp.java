@@ -142,7 +142,7 @@ public class MainApp extends Application {
 	    updateStageTitle(file);
 	}
 
-	private void updateStageTitle(File file) {
+	public void updateStageTitle(File file) {
 		if (file != null) {
 	        primaryStage.setTitle(kApplicationTitle + " - " + file.getName());
 	    } else {
