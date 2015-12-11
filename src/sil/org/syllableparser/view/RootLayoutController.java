@@ -30,6 +30,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -293,13 +295,13 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleAbout() {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle(MainApp.kApplicationTitle);
-		alert.setHeaderText(sAboutHeader);
+		alert.setTitle(sAboutHeader);
+		alert.setHeaderText(null);
 		alert.setContentText(sAboutContent);
+		Image silLogo = new Image("file:src/sil/org/syllableparser/resources/images/SILLogo.png");
+		alert.setGraphic(new ImageView(silLogo));
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
-
-
 		alert.showAndWait();
 	}
 
