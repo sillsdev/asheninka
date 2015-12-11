@@ -362,8 +362,11 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 						comboBoxList.get(iCurrentNaturalClass).setVisible(true);
 					}
 					if (iCurrentNaturalClass >= iNaturalClassesInPattern) {
+						if (syllablePattern.isWordInitial()) {
+							comboBoxList.get(++iCurrentNaturalClass).setVisible(true);
+						}
 						if (syllablePattern.isWordFinal()) {
-							cb = comboBoxList.get(iCurrentNaturalClass + 1);
+							cb = comboBoxList.get(iCurrentNaturalClass);
 							cb.setValue(wordBoundaryNC);
 							cb.setVisible(true);
 						}

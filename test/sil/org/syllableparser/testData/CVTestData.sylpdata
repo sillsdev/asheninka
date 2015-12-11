@@ -160,16 +160,43 @@
                 <description>Basic syllable pattern</description>
                 <NCSRepresentation>C, V</NCSRepresentation>
                 <SPName>CV</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
             </cvSyllablePattern>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" id="ef542169-8f0c-45ee-9613-0ca0efcc1ec9">
                 <description>Closed syllable pattern</description>
                 <NCSRepresentation>C, V, C</NCSRepresentation>
                 <SPName>CVC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
             </cvSyllablePattern>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" id="ad516e02-d5ae-4c06-b643-bd3105d3abc2">
                 <description>Nasal coda</description>
                 <NCSRepresentation>C, V, N</NCSRepresentation>
                 <SPName>CVN</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="66875a3c-3852-402d-8028-8e2ffbe5e795">
+                <description>Word initial CCV</description>
+                <NCSRepresentation>#, C, C, V</NCSRepresentation>
+                <SPName>#CCV</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>true</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec" id="42b492a0-13b0-4564-a6d2-603a7b462144">
+                <description>Word final CVCC</description>
+                <NCSRepresentation>C, V, C, C, #</NCSRepresentation>
+                <SPName>CVCC#</SPName>
+                <wordFinal>true</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="751cec60-03a8-4c50-b568-256f911d3f19">
+                <description>Entire word CV</description>
+                <NCSRepresentation>#, C, V, #</NCSRepresentation>
+                <SPName>#CV#</SPName>
+                <wordFinal>true</wordFinal>
+                <wordInitial>true</wordInitial>
             </cvSyllablePattern>
         </cvSyllablePatterns>
         <cvWords>

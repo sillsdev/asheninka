@@ -51,7 +51,7 @@ public class CVSyllabifier {
 		syllablesInCurrentWord.clear();
 
 		// recursively parse into syllables
-		boolean result = parseIntoSyllables(naturalClassesInCurrentWord, cvPatterns);
+		boolean result = parseIntoSyllables(naturalClassesInCurrentWord, cvPatterns, true);
 
 		if (result) {
 			// the list of syllables found is in reverse order; flip them
@@ -61,15 +61,18 @@ public class CVSyllabifier {
 	}
 
 	private boolean parseIntoSyllables(List<CVNaturalClassInSyllable> naturalClassesInWord,
-			List<CVSyllablePattern> patterns) {
+			List<CVSyllablePattern> patterns, Boolean isWordInitial) {
 		if (naturalClassesInWord.size() == 0) {
 			return true;
 		}
 		for (CVSyllablePattern pattern : patterns) {
+			if (pattern.isWordInitial() && !isWordInitial) {
+				continue;
+			}
 			if (naturalClassesMatchSyllablePattern(naturalClassesInWord, pattern)) {
 				List<CVNaturalClassInSyllable> remainingNaturalClassesInWord = naturalClassesInWord
 						.subList(pattern.getNCs().size(), naturalClassesInWord.size());
-				if (parseIntoSyllables(remainingNaturalClassesInWord, patterns)) {
+				if (parseIntoSyllables(remainingNaturalClassesInWord, patterns, false)) {
 					List<CVNaturalClassInSyllable> naturalClassesInSyllable = naturalClassesInWord
 							.subList(0, pattern.getNCs().size());
 					CVSyllable syl = new CVSyllable(naturalClassesInSyllable);
@@ -100,6 +103,9 @@ public class CVSyllabifier {
 			} else {
 				break;
 			}
+		}
+		if (currentCVPattern.isWordFinal() && currentNaturalClass.hasNext()) {
+			return false;
 		}
 		return true;
 	}

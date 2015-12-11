@@ -72,8 +72,8 @@ public class CVSyllabifierTest {
 	// make sure the setup is what we expect
 	@Test
 	public void syllabifierTest() {
-		assertEquals("CV patterns size", 3, patterns.size());
-		assertEquals("CV patterns in syllabifier size", 3, cvPatterns.size());
+		assertEquals("CV patterns size", 6, patterns.size());
+		assertEquals("CV patterns in syllabifier size", 6, cvPatterns.size());
 		String pattern = cvPatterns.get(0).getSPName().trim();
 		assertEquals("First CV pattern is [C][V]", "CV", pattern);
 		pattern = cvPatterns.get(1).getSPName().trim();
@@ -86,7 +86,12 @@ public class CVSyllabifierTest {
 		checkSyllabification("dapbek", true, 2, "CVC, CVC", "dap.bek");
 		checkSyllabification("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
 		checkSyllabification("border", true, 2, "CVC, CVC", "bor.der");
-		checkSyllabification("fuhg", false, 0, "", "");
+		checkSyllabification("fuhgt", false, 0, "", "");  // no CCC possible
+		checkSyllabification("brofugh", true, 2, "CCV, CVCC", "bro.fugh");
+		checkSyllabification("bo", true, 1, "CV", "bo");
+		checkSyllabification("fungro", false, 0, "", "");  // CVCC only word finally; CCV not possible word medially
+		checkSyllabification("fugh", true, 1, "CVCC", "fugh");
+		checkSyllabification("fru", true, 1, "CCV", "fru");
 	}
 
 	protected void checkSyllabification(String word, boolean success, int numberOfSyllables,
