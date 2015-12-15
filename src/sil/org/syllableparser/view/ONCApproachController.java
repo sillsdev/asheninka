@@ -6,6 +6,8 @@ package sil.org.syllableparser.view;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.StatusBar;
+
 import sil.org.syllableparser.model.ApproachView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,7 +71,7 @@ public class ONCApproachController extends ApproachController  {
 	 * @see sil.org.syllableparser.view.ApproachController#handleSyllabifyWords()
 	 */
 	@Override
-	void handleSyllabifyWords() {
+	void handleSyllabifyWords(StatusBar statusBar) {
 		// TODO Auto-generated method stub
 		
 	}

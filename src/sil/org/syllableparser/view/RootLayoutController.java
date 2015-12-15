@@ -23,6 +23,7 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.controlsfx.control.StatusBar;
+import static javafx.geometry.Orientation.VERTICAL;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.fxml.FXML;
@@ -37,6 +38,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -176,7 +178,7 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleSyllabifyWords() {
-		currentApproachController.handleSyllabifyWords();
+		currentApproachController.handleSyllabifyWords(statusBar);
 	}
 
 	/**
@@ -500,10 +502,10 @@ public class RootLayoutController implements Initializable {
 
 		createToolbarButtons(bundle);
 		
+		statusBar.getRightItems().add(new Separator(VERTICAL));
 		statusBar.getRightItems().add(numberOfItems);
 
-		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE.withLocale(bundle.getLocale());
-		statusBar.setText(LocalDate.now().format(formatter));
+		ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 		
 		// set initial approach (TODO: make it be based on user's last choice)
 		handleCVApproach();
