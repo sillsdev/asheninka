@@ -14,6 +14,7 @@ import javafx.beans.property.StringProperty;
 public class Word extends SylParserObject {
 	protected final StringProperty word;
 	protected final StringProperty correctSyllabification;
+	protected StringProperty parserResult;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
 	// case this word represents
@@ -25,13 +26,15 @@ public class Word extends SylParserObject {
 		super();
 		this.word = new SimpleStringProperty("");
 		this.correctSyllabification = new SimpleStringProperty("");
+		this.parserResult = new SimpleStringProperty("");
 		createUUID();
 	}
 
-	public Word(String word, String correctHyphenation) {
+	public Word(String word, String correctHyphenation, String parserResult) {
 		super();
 		this.word = new SimpleStringProperty(word);
 		this.correctSyllabification = new SimpleStringProperty(correctHyphenation);
+		this.parserResult = new SimpleStringProperty(parserResult);
 		createUUID();
 	}
 
@@ -43,8 +46,8 @@ public class Word extends SylParserObject {
 		return word;
 	}
 
-	public void setWord(String cvWord) {
-		this.word.set(cvWord);
+	public void setWord(String word) {
+		this.word.set(word);
 	}
 
 	public String getCorrectSyllabification() {
@@ -57,5 +60,17 @@ public class Word extends SylParserObject {
 
 	public void setCorrectSyllabification(String correctSyllabification) {
 		this.correctSyllabification.set(correctSyllabification);
+	}
+
+	public String getParserResult() {
+		return parserResult.get();
+	}
+
+	public StringProperty parserResultProperty() {
+		return parserResult;
+	}
+
+	public void setParserResult(String parserResult) {
+		this.parserResult.set(parserResult);
 	}
 }

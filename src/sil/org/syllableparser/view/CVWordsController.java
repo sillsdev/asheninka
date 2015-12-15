@@ -49,6 +49,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	private TableColumn<CVWord, String> predictedSyllabificationColumn;
 	@FXML
 	private TableColumn<CVWord, String> correctSyllabificationColumn;
+	@FXML
+	private TableColumn<CVWord, String> parserResultColumn;
 
 	@FXML
 	private TextField wordField;
@@ -56,6 +58,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	private TextField predictedSyllabificationField;
 	@FXML
 	private TextField correctSyllabificationField;
+	@FXML
+	private TextField parserResultField;
 
 	private CVApproach cvApproach;
 	private CVWord currentWord;
@@ -71,6 +75,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// public void initialize() {
+		this.bundle = resources;
 
 		// Initialize the table with the three columns.
 		wordColumn.setCellValueFactory(cellData -> cellData.getValue().cvWordProperty());
@@ -78,6 +83,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				.predictedSyllabificationProperty());
 		correctSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.correctSyllabificationProperty());
+		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue().cvParserResultProperty());
 
 		// Custom rendering of the table cell.
 		wordColumn.setCellFactory(column -> {
@@ -89,11 +95,15 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		correctSyllabificationColumn.setCellFactory(column -> {
 			return new WrappingTableCell();
 		});
-
+		parserResultColumn.setCellFactory(column -> {
+			return new WrappingTableCell();
+		});
+		
 		makeColumnHeaderWrappable(wordColumn);
 		makeColumnHeaderWrappable(predictedSyllabificationColumn);
 		makeColumnHeaderWrappable(correctSyllabificationColumn);
-
+		makeColumnHeaderWrappable(parserResultColumn);
+		
 		// Clear cv word details.
 		showCVWordDetails(null);
 
@@ -122,7 +132,13 @@ public class CVWordsController extends SylParserBaseController implements Initia
 										.getText());
 							}
 						});
-
+		parserResultField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentWord != null) {
+				currentWord.setCVParserResult(parserResultField.getText());
+			}
+		});
+		parserResultColumn.setStyle("-fx-font-size:90%;");
+		parserResultField.setStyle("-fx-font-size:90%;");
 		// Use of Enter move focus to next item.
 		wordField.setOnAction((event) -> {
 			predictedSyllabificationField.requestFocus();
@@ -149,11 +165,13 @@ public class CVWordsController extends SylParserBaseController implements Initia
 			wordField.setText(cvWord.getCVWord());
 			predictedSyllabificationField.setText(cvWord.getPredictedSyllabification());
 			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
+			parserResultField.setText(cvWord.getCVParserResult());
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");
 			predictedSyllabificationField.setText("");
 			correctSyllabificationField.setText("");
+			parserResultField.setText("");
 		}
 
 		if (cvWord != null) {
@@ -168,6 +186,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		wordField.setText(cvWord.getCVWord());
 		predictedSyllabificationField.setText(cvWord.getPredictedSyllabification());
 		correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
+		parserResultField.setText(cvWord.getCVParserResult());
 	}
 
 	/**
@@ -196,6 +215,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	@Override
 	void handleInsertNewItem() {
 		CVWord newCVWord = new CVWord();
+		newCVWord.setCVParserResult(bundle.getString("label.untested"));
 		cvApproach.getCVWords().add(newCVWord);
 		int i = cvApproach.getCVWords().size() - 1;
 		cvWordsTable.requestFocus();

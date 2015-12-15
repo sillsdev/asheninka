@@ -26,8 +26,8 @@ public class CVWord extends Word {
 	}
 
 	public CVWord(String word, String predictedSyllabification,
-			String correctSyllabification) {
-		super(word, correctSyllabification);
+			String correctSyllabification, String parserResult) {
+		super(word, correctSyllabification, parserResult);
 		this.predictedSyllabification = new SimpleStringProperty(
 				predictedSyllabification);
 	}
@@ -55,4 +55,17 @@ public class CVWord extends Word {
 	public void setPredictedSyllabification(String predictedSyllabification) {
 		this.predictedSyllabification.set(predictedSyllabification);
 	}
+
+	public String getCVParserResult() {
+		return parserResult.get();
+	}
+
+	public StringProperty cvParserResultProperty() {
+		return parserResult;
+	}
+
+	public void setCVParserResult(String cvParserResult) {
+		this.parserResult.set(cvParserResult);
+	}
+
 }

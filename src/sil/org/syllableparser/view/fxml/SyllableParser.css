@@ -15,6 +15,9 @@
 .failedsyllabification {
 	-fx-color:red;
 }
+.syllabification-result {
+	-fx-font-size: 90%;
+}
 /* .combo-box-popup .list-cell:disabled  {
     -fx-opacity: 0.4 ;
 }

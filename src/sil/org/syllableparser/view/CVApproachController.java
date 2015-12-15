@@ -128,7 +128,10 @@ public class CVApproachController extends ApproachController {
 
 	@Override
 	void handleSyllabifyWords(StatusBar statusBar) {
-		
+		String sSuccess = bundle.getString("label.success");
+		String sSegmentFailure = bundle.getString("label.cvsegmentfailure");
+		String sNaturalClassFailure = bundle.getString("label.cvnaturalclassfailure");
+		String sSyllabificationFailure = bundle.getString("label.cvsyllabificationfailure");
 		long timeStart = System.currentTimeMillis(); 
 
         Task<Void> task = new Task<Void>() {
@@ -161,13 +164,13 @@ public class CVApproachController extends ApproachController {
 
         			boolean fSuccess = segmenter.segmentWord(word.getCVWord());
         			if (!fSuccess) {
-        				word.setPredictedSyllabification("could not parse into segments");
+        				word.setParserResult(sSegmentFailure);
         				continue;
         			}
         			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
         			fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
         			if (!fSuccess) {
-        				word.setPredictedSyllabification("could not parse into natural classes");
+        				word.setParserResult(sNaturalClassFailure);
         				continue;
         			}
         			List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
@@ -175,11 +178,12 @@ public class CVApproachController extends ApproachController {
         			syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
         			fSuccess = syllabifier.convertNaturalClassesToSyllables();
         			if (!fSuccess) {
-        				word.setPredictedSyllabification("could not parse natural classes into syllables");
+        				word.setParserResult(sSyllabificationFailure);
         				continue;
         			}
         			List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
         			word.setPredictedSyllabification(syllabifier.getSyllabificationOfCurrentWord());
+        			word.setCVParserResult(sSuccess);
         		}
         		long timePassed = System.currentTimeMillis() - timeStart;
         		System.out.println("Syllabification took " + timePassed + " milliseconds");
@@ -213,7 +217,7 @@ public class CVApproachController extends ApproachController {
 	 */
 	@Override
 	void createNewWord(String word) {
-		CVWord newWord = new CVWord(word, "", "");
+		CVWord newWord = new CVWord(word, "", "", bundle.getString("label.untested"));
 		cvApproachData.getCVWords().add(newWord);
 
 	}

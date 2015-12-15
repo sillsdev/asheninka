@@ -16,7 +16,8 @@
                     <columns>
                       <TableColumn fx:id="wordColumn" prefWidth="63.0" text="%label.word" />
                       <TableColumn fx:id="predictedSyllabificationColumn" prefWidth="119.0" text="%label.predictedsyllabification" />
-                        <TableColumn fx:id="correctSyllabificationColumn" prefWidth="-1.0" text="%label.correctsyllabification" />
+                      <TableColumn fx:id="correctSyllabificationColumn" prefWidth="120.0" text="%label.correctsyllabification" />
+                      <TableColumn fx:id="parserResultColumn" prefWidth="-1.0" text="%label.parserresult" editable="false" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -41,9 +42,11 @@
                         <Label text="%label.word" />
                         <Label text="%label.predictedsyllabification" GridPane.rowIndex="1" />
                         <Label text="%label.correctsyllabification" GridPane.rowIndex="2" />
+                        <Label text="%label.parserresult" GridPane.rowIndex="3" />
                         <TextField fx:id="wordField" GridPane.columnIndex="1" />
                         <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="false" />
                      </children>
                   </GridPane>
                </children>
