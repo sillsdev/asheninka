@@ -1,6 +1,7 @@
 package sil.org.syllableparser.view;
 
 import java.awt.Desktop;
+import java.awt.TextField;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,6 +11,8 @@ import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
@@ -18,21 +21,30 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+import org.controlsfx.control.StatusBar;
+
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sil.org.syllableparser.ApplicationPreferences;
@@ -113,6 +125,10 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private StackPane approachViewContent;
 
+	@FXML
+	StatusBar statusBar = new StatusBar();
+	Label numberOfItems = new Label("0/0");
+	
 	private static String kSyllableParserDataExtension = ".sylpdata";
 	private String syllableParserFilterDescription;
 	private String syllableParserFilterExtensions;
@@ -136,6 +152,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	public void setMainApp(MainApp mainApp, Locale locale, LanguageProject languageProject) {
 		this.mainApp = mainApp;
+		cvApproachController.setMainApp(mainApp);
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
 		syllableParserFilterDescription = sFileFilterDescription + " (*"
@@ -143,7 +160,6 @@ public class RootLayoutController implements Initializable {
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
 		ApproachViewNavigator.setMainController(this);
 		cvApproachController.setCVApproachData(languageProject.getCVApproach());
-		cvApproachController.setMainApp(mainApp);
 	}
 
 	@FXML
@@ -477,7 +493,12 @@ public class RootLayoutController implements Initializable {
 		oncApproachController = new ONCApproachController(bundle);
 
 		createToolbarButtons(bundle);
+		
+		statusBar.getRightItems().add(numberOfItems);
 
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE.withLocale(bundle.getLocale());
+		statusBar.setText(LocalDate.now().format(formatter));
+		
 		// set initial approach (TODO: make it be based on user's last choice)
 		handleCVApproach();
 
@@ -574,4 +595,9 @@ public class RootLayoutController implements Initializable {
 	public void setLanguageProject(LanguageProject languageProject) {
 		this.languageProject = languageProject;
 	}
+
+	public void setNumberOfItems(String numberOfItems) {
+		this.numberOfItems.setText(numberOfItems);
+	}
+	
 }

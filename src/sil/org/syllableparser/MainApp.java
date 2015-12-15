@@ -121,6 +121,8 @@ public class MainApp extends Application {
             	loadLanguageData(file);
             }
             
+            updateStatusBarNumberOfItems("");
+            
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -194,5 +196,13 @@ public class MainApp extends Application {
 		return new Image(kApplicationIconResource);
 	}
 
+
+	public void updateStatusBarNumberOfItems(String numberOfItems) {
+		if (numberOfItems != null) {
+	        controller.setNumberOfItems(numberOfItems);
+	    } else {
+	    	controller.setNumberOfItems("");
+	    }
+	}
 
 }

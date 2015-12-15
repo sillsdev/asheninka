@@ -193,6 +193,13 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			buttonMoveDown.setDisable(true);
 			buttonMoveUp.setDisable(true);
 		}
+
+		if (syllablePattern != null) {
+			int currentItem = cvSyllablePatternTable.getItems().indexOf(currentSyllablePattern) + 1;
+			this.mainApp.updateStatusBarNumberOfItems(currentItem + "/"
+					+ cvSyllablePatternTable.getItems().size() + " ");
+		}
+
 	}
 
 	protected void setUpDownButtonDisabled() {

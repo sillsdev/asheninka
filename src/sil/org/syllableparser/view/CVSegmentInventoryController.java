@@ -127,7 +127,6 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		});
 
 		segmentField.requestFocus();
-
 	}
 
 	/**
@@ -149,6 +148,12 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 			segmentField.setText("");
 			graphemesField.setText("");
 			descriptionField.setText("");
+		}
+
+		if (segment != null) {
+			int currentSegmentNumber = cvSegmentTable.getItems().indexOf(currentSegment) + 1;
+			this.mainApp.updateStatusBarNumberOfItems(currentSegmentNumber + "/"
+					+ cvSegmentTable.getItems().size() + " ");
 		}
 	}
 

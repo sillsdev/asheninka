@@ -62,6 +62,8 @@ public class CVApproachController extends ApproachController {
 		ApproachViewNavigator.loadApproachView(loader, "fxml/CVSegmentInventory.fxml", locale);
 		CVSegmentInventoryController controller = loader.getController();
 		currentCVApproachController = controller;
+		controller.setMainApp(mainApp);
+		controller.setLocale(locale);
 
 		controller.setData(cvApproachData);
 	}
@@ -72,9 +74,9 @@ public class CVApproachController extends ApproachController {
 		CVNaturalClassesController controller = loader.getController();
 		currentCVApproachController = controller;
 
-		controller.setData(cvApproachData);
 		controller.setMainApp(mainApp);
 		controller.setLocale(locale);
+		controller.setData(cvApproachData);
 	}
 
 	public void handleCVSyllablePatterns() {
@@ -83,9 +85,9 @@ public class CVApproachController extends ApproachController {
 		CVSyllablePatternsController controller = loader.getController();
 		currentCVApproachController = controller;
 
-		controller.setData(cvApproachData);
 		controller.setMainApp(mainApp);
 		controller.setLocale(locale);
+		controller.setData(cvApproachData);
 	}
 
 	public void handleCVWords() {
@@ -94,8 +96,9 @@ public class CVApproachController extends ApproachController {
 		CVWordsController controller = loader.getController();
 		currentCVApproachController = controller;
 
+		controller.setMainApp(mainApp);
+		controller.setLocale(locale);
 		controller.setData(cvApproachData);
-
 	}
 
 	/*

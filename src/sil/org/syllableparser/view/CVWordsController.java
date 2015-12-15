@@ -155,6 +155,13 @@ public class CVWordsController extends SylParserBaseController implements Initia
 			predictedSyllabificationField.setText("");
 			correctSyllabificationField.setText("");
 		}
+
+		if (cvWord != null) {
+			int currentItem = cvWordsTable.getItems().indexOf(currentWord) + 1;
+			this.mainApp.updateStatusBarNumberOfItems(currentItem + "/"
+					+ cvWordsTable.getItems().size() + " ");
+		}
+
 	}
 
 	public void setWord(CVWord cvWord) {

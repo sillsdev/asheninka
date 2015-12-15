@@ -173,6 +173,12 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			sncTextFlow.getChildren().clear();
 		}
 
+		if (naturalClass != null) {
+			int currentItem = cvNaturalClassTable.getItems().indexOf(currentNaturalClass) + 1;
+			this.mainApp.updateStatusBarNumberOfItems(currentItem + "/"
+					+ cvNaturalClassTable.getItems().size() + " ");
+		}
+
 	}
 
 	private void showSegmentOrNaturalClassContent() {
