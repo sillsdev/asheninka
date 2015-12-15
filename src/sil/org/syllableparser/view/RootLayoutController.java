@@ -11,6 +11,7 @@ import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sil.org.syllableparser.ApplicationPreferences;
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
@@ -318,6 +320,12 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleAbout() {
+		sAboutHeader = bundle.getString("about.header");
+		Object[] args = {Constants.VERSION_NUMBER};
+		MessageFormat msgFormatter = new MessageFormat("");
+		msgFormatter.setLocale(currentLocale);
+		msgFormatter.applyPattern(bundle.getString("about.content"));
+		sAboutContent = msgFormatter.format(args);
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(sAboutHeader);
 		alert.setHeaderText(null);
@@ -482,8 +490,6 @@ public class RootLayoutController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		bundle = resources;
-		sAboutHeader = bundle.getString("about.header");
-		sAboutContent = bundle.getString("about.content");
 		sFileFilterDescription = bundle.getString("file.filterdescription");
 		sChangeInterfaceLanguage = bundle.getString("menu.changeinterfacelanguage");
 		sChooseInterfaceLanguage = bundle.getString("dialog.chooseinterfacelanguage");
