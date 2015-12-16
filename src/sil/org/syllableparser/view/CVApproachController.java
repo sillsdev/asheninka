@@ -165,12 +165,14 @@ public class CVApproachController extends ApproachController {
         			boolean fSuccess = segmenter.segmentWord(word.getCVWord());
         			if (!fSuccess) {
         				word.setParserResult(sSegmentFailure);
+        				word.setPredictedSyllabification("");
         				continue;
         			}
         			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
         			fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
         			if (!fSuccess) {
         				word.setParserResult(sNaturalClassFailure);
+        				word.setPredictedSyllabification("");
         				continue;
         			}
         			List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
@@ -179,6 +181,7 @@ public class CVApproachController extends ApproachController {
         			fSuccess = syllabifier.convertNaturalClassesToSyllables();
         			if (!fSuccess) {
         				word.setParserResult(sSyllabificationFailure);
+        				word.setPredictedSyllabification("");
         				continue;
         			}
         			List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();

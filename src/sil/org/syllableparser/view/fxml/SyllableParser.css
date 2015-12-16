@@ -13,7 +13,7 @@
 }
 
 .failedsyllabification {
-	-fx-color:red;
+	-fx-text-fill:red;
 }
 .syllabification-result {
 	-fx-font-size: 90%;

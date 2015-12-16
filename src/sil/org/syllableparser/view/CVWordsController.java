@@ -137,8 +137,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				currentWord.setCVParserResult(parserResultField.getText());
 			}
 		});
-		parserResultColumn.setStyle("-fx-font-size:90%;");
-		parserResultField.setStyle("-fx-font-size:90%;");
+		parserResultColumn.getStyleClass().add("syllabification-result");
+		parserResultField.getStyleClass().add("syllabification-result");
 		// Use of Enter move focus to next item.
 		wordField.setOnAction((event) -> {
 			predictedSyllabificationField.requestFocus();
