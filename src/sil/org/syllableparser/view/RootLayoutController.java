@@ -379,6 +379,10 @@ public class RootLayoutController implements Initializable {
 		toggleButtonSelectedStatus(buttonCVApproach);
 		approachViews.setItems(cvApproachController.getViews());
 		currentApproachController = cvApproachController;
+		buttonToolbarEditInsert.setDisable(true);
+		buttonToolbarEditRemove.setDisable(true);
+		buttonToolbarSyllabify.setDisable(false);
+		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(false);
 	}
 
 	private void toggleButtonSelectedStatus(Button myButton) {
@@ -404,8 +408,9 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleONCApproach() {
 		toggleButtonSelectedStatus(buttonONCApproach);
-		approachViews.setItems(oncApproachController.getViews());
-		currentApproachController = oncApproachController;
+		mainApp.showNotImplementedYet();
+		//approachViews.setItems(oncApproachController.getViews());
+		//currentApproachController = oncApproachController;
 	}
 
 	/**
@@ -510,6 +515,8 @@ public class RootLayoutController implements Initializable {
 		oncApproachController = new ONCApproachController(bundle);
 
 		createToolbarButtons(bundle);
+		buttonToolbarSyllabify.setDisable(true);
+		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(true);
 		
 		statusBar.getRightItems().add(new Separator(VERTICAL));
 		statusBar.getRightItems().add(numberOfItems);
@@ -575,6 +582,8 @@ public class RootLayoutController implements Initializable {
 							(Class<?>[]) null);
 					method.invoke(currentApproachController, (Object[]) null);// this,
 																				// (Object[])null);
+					buttonToolbarEditInsert.setDisable(false);
+					buttonToolbarEditRemove.setDisable(false);
 				} catch (NoSuchMethodException nsme) {
 					SyllableParserException spe = new SyllableParserException(newValue
 							.getViewHandler()
