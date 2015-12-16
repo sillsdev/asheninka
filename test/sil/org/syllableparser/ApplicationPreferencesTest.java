@@ -15,12 +15,13 @@ public class ApplicationPreferencesTest {
 	File fileLastUsed;
 	String languageLastUsed;
 	String countryLastUsed;
+
 	@Before
 	public void setUp() throws Exception {
-	fileLastUsed = ApplicationPreferences.getLastOpenedFile();
-	countryLastUsed = ApplicationPreferences.getLastLocaleCountry();
-	languageLastUsed = ApplicationPreferences.getLastLocaleLanguage();
-	prefs = new ApplicationPreferences("last opened file",  "en",  "EN");
+		fileLastUsed = ApplicationPreferences.getLastOpenedFile();
+		countryLastUsed = ApplicationPreferences.getLastLocaleCountry();
+		languageLastUsed = ApplicationPreferences.getLastLocaleLanguage();
+		prefs = new ApplicationPreferences("last opened file", "en", "EN");
 	}
 
 	@After
@@ -32,7 +33,8 @@ public class ApplicationPreferencesTest {
 
 	@Test
 	public void lastOpenedFile() {
-		assertEquals("last opened file", "last opened file", ApplicationPreferences.getLastOpenedFilePath());
+		assertEquals("last opened file", "last opened file",
+				ApplicationPreferences.getLastOpenedFilePath());
 		ApplicationPreferences.setLastOpenedFilePath("mimi");
 		assertEquals("last opened file", "mimi", ApplicationPreferences.getLastOpenedFilePath());
 		try {
@@ -44,7 +46,7 @@ public class ApplicationPreferencesTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Test
@@ -55,6 +57,6 @@ public class ApplicationPreferencesTest {
 		assertEquals("locale country", "EN", ApplicationPreferences.getLastLocaleCountry());
 		ApplicationPreferences.setLastLocaleCountry("ES");
 		assertEquals("locale country", "ES", ApplicationPreferences.getLastLocaleCountry());
-		
+
 	}
 }

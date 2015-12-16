@@ -54,7 +54,7 @@ public class CVApproachTest {
 	public void getHyphenatedWordsTest() {
 		assertEquals("CV words size", 10026, cvWords.size());
 		ArrayList<String> hyphenatedWords = cva.getHyphenatedWords();
-		assertEquals("Hyphenated words size", 1822, hyphenatedWords.size());
+		assertEquals("Hyphenated words size", 1902, hyphenatedWords.size());
 		String sHyphenatedWord = hyphenatedWords.get(0);
 		assertEquals("abba = ab=ba", "ab=ba", sHyphenatedWord);
 		sHyphenatedWord = hyphenatedWords.get(1);

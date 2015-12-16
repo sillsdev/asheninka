@@ -129,8 +129,8 @@ public class CVApproach {
 				sSyllabifiedWord = word.getPredictedSyllabification();
 				if (sSyllabifiedWord != null) {
 					// predicted has something
-					if (sSyllabifiedWord.contains("could not") || sSyllabifiedWord.isEmpty()) {
-						// is the error message or empty; skip this one
+					if (sSyllabifiedWord.isEmpty()) {
+						// skip this one
 						continue;
 					}
 				}

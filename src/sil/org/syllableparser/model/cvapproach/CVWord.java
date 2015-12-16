@@ -32,17 +32,17 @@ public class CVWord extends Word {
 				predictedSyllabification);
 	}
 
-	public String getCVWord() {
-		return word.get();
-	}
-
-	public StringProperty cvWordProperty() {
-		return word;
-	}
-
-	public void setCVWord(String cvWord) {
-		this.word.set(cvWord);
-	}
+//	public String getCVWord() {
+//		return word.get();
+//	}
+//
+//	public StringProperty cvWordProperty() {
+//		return word;
+//	}
+//
+//	public void setCVWord(String cvWord) {
+//		this.word.set(cvWord);
+//	}
 
 	public String getPredictedSyllabification() {
 		return predictedSyllabification.get();
@@ -56,16 +56,16 @@ public class CVWord extends Word {
 		this.predictedSyllabification.set(predictedSyllabification);
 	}
 
-	public String getCVParserResult() {
-		return parserResult.get();
-	}
-
-	public StringProperty cvParserResultProperty() {
-		return parserResult;
-	}
-
-	public void setCVParserResult(String cvParserResult) {
-		this.parserResult.set(cvParserResult);
-	}
+//	public String getCVParserResult() {
+//		return parserResult.get();
+//	}
+//
+//	public StringProperty cvParserResultProperty() {
+//		return parserResult;
+//	}
+//
+//	public void setCVParserResult(String cvParserResult) {
+//		this.parserResult.set(cvParserResult);
+//	}
 
 }

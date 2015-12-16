@@ -159,10 +159,10 @@ public class CVApproachController extends ApproachController {
         		int max = cvApproachData.getCVWords().size();
         		int i = 0;
         		for (CVWord word : cvApproachData.getCVWords()) {
-                    updateMessage(bundle.getString("label.syllabifying") + word.getCVWord());
+                    updateMessage(bundle.getString("label.syllabifying") + word.getWord());
                     updateProgress(i++, max);
 
-        			boolean fSuccess = segmenter.segmentWord(word.getCVWord());
+        			boolean fSuccess = segmenter.segmentWord(word.getWord());
         			if (!fSuccess) {
         				word.setParserResult(sSegmentFailure);
         				word.setPredictedSyllabification("");
@@ -186,7 +186,7 @@ public class CVApproachController extends ApproachController {
         			}
         			List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
         			word.setPredictedSyllabification(syllabifier.getSyllabificationOfCurrentWord());
-        			word.setCVParserResult(sSuccess);
+        			word.setParserResult(sSuccess);
         		}
         		long timePassed = System.currentTimeMillis() - timeStart;
         		System.out.println("Syllabification took " + timePassed + " milliseconds");
