@@ -4,8 +4,10 @@
 package sil.org.syllableparser.model;
 
 import sil.org.syllableparser.model.SylParserObject;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black

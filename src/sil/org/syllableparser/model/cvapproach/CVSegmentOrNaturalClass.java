@@ -32,9 +32,6 @@ public class CVSegmentOrNaturalClass {
 		this.isSegment = isSegment;
 		this.uuid = uuid;
 	}
-	public CVSegmentOrNaturalClass(SylParserObject segment) {
-		
-	}
 	
 	/**
 	 * Properties

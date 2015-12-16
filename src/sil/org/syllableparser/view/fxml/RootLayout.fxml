@@ -45,6 +45,7 @@
             <Menu mnemonicParsing="false" text="%menu.tools">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleSyllabifyWords" text="%menu.syllabifywords" />
+                <MenuItem mnemonicParsing="false" onAction="#handleConvertPredictedToCorrectSyllabification" text="%menu.convertpredictedtocorrect" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="%menu.view">
@@ -74,6 +75,7 @@
                <Button fx:id="buttonToolbarEditRemove" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleRemoveItem" prefHeight="23.0" prefWidth="17.0" text="" />
                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
                <Button fx:id="buttonToolbarSyllabify" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleSyllabifyWords" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarConvertPredictedToCorrectSyllabification" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleConvertPredictedToCorrectSyllabification" prefHeight="23.0" prefWidth="17.0" text="" />
         </items>
       </ToolBar>
       </VBox>

@@ -5,6 +5,7 @@ package sil.org.syllableparser.view;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 
 import org.controlsfx.control.StatusBar;
 
+import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.*;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
@@ -28,6 +30,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * @author Andy Black
@@ -209,6 +215,38 @@ public class CVApproachController extends ApproachController {
 
         new Thread(task).start();
 
+	}
+	
+	@Override
+	void handleConvertPredictedToCorrectSyllabification() {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ApproachViewNavigator.class
+					.getResource("fxml/CVPredictedToCorrectSyllabificationChooser.fxml"));
+			loader.setResources(ResourceBundle.getBundle(
+					"sil.org.syllableparser.resources.SyllableParser", locale));
+
+			AnchorPane page = loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(mainApp.getPrimaryStage());
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			// set the icon
+			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
+			dialogStage.setTitle(MainApp.kApplicationTitle);
+
+			CVPredictedToCorrectSyllabificationChooserController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setData(cvApproachData);
+
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*

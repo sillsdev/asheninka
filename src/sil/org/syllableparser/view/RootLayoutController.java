@@ -62,8 +62,9 @@ import sil.org.syllableparser.model.LanguageProject;
  * application layout containing a menu bar and space where other JavaFX
  * elements can be placed.
  * 
- * @author Based on a tutorial by Marco Jakob:
+ * @author Originally based on a tutorial by Marco Jakob:
  *         http://code.makery.ch/library/javafx-8-tutorial/part5/
+ *         but greatly expanded.
  */
 public class RootLayoutController implements Initializable {
 
@@ -100,6 +101,8 @@ public class RootLayoutController implements Initializable {
 	private Button buttonToolbarEditRemove;
 	@FXML
 	private Button buttonToolbarSyllabify;
+	@FXML
+	private Button buttonToolbarConvertPredictedToCorrectSyllabification;
 	private Button currentButtonSelected;
 	@FXML
 	private Tooltip tooltipToolbarFileOpen;
@@ -119,6 +122,8 @@ public class RootLayoutController implements Initializable {
 	private Tooltip tooltipToolbarEditRemove;
 	@FXML
 	private Tooltip tooltipToolbarSyllabify;
+	@FXML
+	private Tooltip tooltipToolbarConvertPredictedToCorrectSyllabification;
 
 	@FXML
 	private ListView<ApproachView> approachViews;
@@ -179,6 +184,10 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleSyllabifyWords() {
 		currentApproachController.handleSyllabifyWords(statusBar);
+	}
+	@FXML
+	private void handleConvertPredictedToCorrectSyllabification() {
+		currentApproachController.handleConvertPredictedToCorrectSyllabification();
 	}
 
 	/**
@@ -533,6 +542,10 @@ public class RootLayoutController implements Initializable {
 				tooltipToolbarEditRemove, bundle.getString("menu.remove"));
 		ControllerUtilities.createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify,
 				tooltipToolbarSyllabify, bundle.getString("menu.syllabifywords"));
+		ControllerUtilities.createToolbarButtonWithImage("predictedToCorrect.png", 
+				buttonToolbarConvertPredictedToCorrectSyllabification,
+				tooltipToolbarConvertPredictedToCorrectSyllabification, 
+				bundle.getString("menu.convertpredictedtocorrect"));
 	}
 
 	private void listenForChangesInApproachViews() {

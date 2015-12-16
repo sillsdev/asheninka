@@ -3,9 +3,11 @@
  */
 package sil.org.syllableparser.model.cvapproach;
 
+import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.Word;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
@@ -32,18 +34,6 @@ public class CVWord extends Word {
 				predictedSyllabification);
 	}
 
-//	public String getCVWord() {
-//		return word.get();
-//	}
-//
-//	public StringProperty cvWordProperty() {
-//		return word;
-//	}
-//
-//	public void setCVWord(String cvWord) {
-//		this.word.set(cvWord);
-//	}
-
 	public String getPredictedSyllabification() {
 		return predictedSyllabification.get();
 	}
@@ -56,16 +46,16 @@ public class CVWord extends Word {
 		this.predictedSyllabification.set(predictedSyllabification);
 	}
 
-//	public String getCVParserResult() {
-//		return parserResult.get();
-//	}
-//
-//	public StringProperty cvParserResultProperty() {
-//		return parserResult;
-//	}
-//
-//	public void setCVParserResult(String cvParserResult) {
-//		this.parserResult.set(cvParserResult);
-//	}
-
+	public static int findIndexInCVWordListByUuid(ObservableList<CVWord> list, String uuid) {
+		// TODO: is there a way to do this with lambda expressions?
+		// Is there a way to use SylParserObject somehow?
+				int index = -1;
+				for (SylParserObject sylParserObject : list) {
+					index++;
+					if (sylParserObject.getID() == uuid) {
+						return index;
+					}
+				}		
+				return -1;
+			}
 }

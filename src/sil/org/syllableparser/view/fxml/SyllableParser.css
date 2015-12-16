@@ -18,6 +18,10 @@
 .syllabification-result {
 	-fx-font-size: 90%;
 }
+.predictedSyllabificationColumn .label {
+	-fx-alignment: center-left ;
+	-fx-text-fill: red;
+}
 /* .combo-box-popup .list-cell:disabled  {
     -fx-opacity: 0.4 ;
 }
