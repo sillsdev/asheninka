@@ -99,4 +99,9 @@ public class ONCApproachController extends ApproachController  {
 		
 	}
 
+	@Override
+	void handleFindWord() {
+		
+	}
+
 }

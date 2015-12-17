@@ -102,7 +102,9 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		makeColumnHeaderWrappable(wordColumn);
 		makeColumnHeaderWrappable(predictedSyllabificationColumn);
 		makeColumnHeaderWrappable(correctSyllabificationColumn);
-		makeColumnHeaderWrappable(parserResultColumn);
+		// for some reason, the following makes the header very high 
+		//   when we also use cvWords.Table.scrollTo(index) in setFocusOnWord(index)
+		//makeColumnHeaderWrappable(parserResultColumn);
 		
 		// Clear cv word details.
 		showCVWordDetails(null);
@@ -137,8 +139,11 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				currentWord.setParserResult(parserResultField.getText());
 			}
 		});
-		parserResultColumn.getStyleClass().add("syllabification-result");
-		parserResultField.getStyleClass().add("syllabification-result");
+		
+		// not so happy with making it smaller
+		//parserResultColumn.getStyleClass().add("syllabification-result");
+		//parserResultField.getStyleClass().add("syllabification-result");
+		
 		// Use of Enter move focus to next item.
 		wordField.setOnAction((event) -> {
 			predictedSyllabificationField.requestFocus();
@@ -199,14 +204,18 @@ public class CVWordsController extends SylParserBaseController implements Initia
 
 		// Add observable list data to the table
 		cvWordsTable.setItems(cvApproachData.getCVWords());
-		if (cvWordsTable.getItems().size() > 0) {
-			// select one
-			cvWordsTable.requestFocus();
-			cvWordsTable.getSelectionModel().select(0);
-			cvWordsTable.getFocusModel().focus(0);
-		}
+		setFocusOnWord(0);
 	}
 
+	public void setFocusOnWord(int index) {
+		if (cvWordsTable.getItems().size() > 0 && index > -1 && index < cvWordsTable.getItems().size()) {
+			cvWordsTable.requestFocus();
+			cvWordsTable.getSelectionModel().select(index);
+			cvWordsTable.getFocusModel().focus(index);
+			cvWordsTable.scrollTo(index);
+		}
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

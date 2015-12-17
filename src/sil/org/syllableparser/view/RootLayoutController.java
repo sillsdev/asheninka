@@ -104,6 +104,8 @@ public class RootLayoutController implements Initializable {
 	private Button buttonToolbarSyllabify;
 	@FXML
 	private Button buttonToolbarConvertPredictedToCorrectSyllabification;
+	@FXML
+	private Button buttonToolbarFindWord;
 	private Button currentButtonSelected;
 	@FXML
 	private Tooltip tooltipToolbarFileOpen;
@@ -126,6 +128,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private Tooltip tooltipToolbarConvertPredictedToCorrectSyllabification;
 	@FXML
+	private Tooltip tooltipToolbarFindWord;
+	@FXML
 	private MenuItem menuItemEditInsert;
 	@FXML
 	private MenuItem menuItemEditRemove;
@@ -133,6 +137,8 @@ public class RootLayoutController implements Initializable {
 	private MenuItem menuItemSyllabify;
 	@FXML
 	private MenuItem menuItemConvertPredictedToCorrectSyllabification;
+	@FXML
+	private MenuItem menuItemFindWord;
 
 	@FXML
 	private ListView<ApproachView> approachViews;
@@ -197,6 +203,10 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleConvertPredictedToCorrectSyllabification() {
 		currentApproachController.handleConvertPredictedToCorrectSyllabification();
+	}
+	@FXML
+	private void handleFindWord() {
+		currentApproachController.handleFindWord();
 	}
 
 	/**
@@ -396,6 +406,8 @@ public class RootLayoutController implements Initializable {
 		menuItemSyllabify.setDisable(false);
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(false);
 		menuItemConvertPredictedToCorrectSyllabification.setDisable(false);
+		buttonToolbarFindWord.setDisable(false);
+		menuItemFindWord.setDisable(false);
 	}
 
 	private void toggleButtonSelectedStatus(Button myButton) {
@@ -529,9 +541,11 @@ public class RootLayoutController implements Initializable {
 
 		createToolbarButtons(bundle);
 		buttonToolbarSyllabify.setDisable(true);
-		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(true);
 		menuItemSyllabify.setDisable(true);
+		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(true);
 		menuItemConvertPredictedToCorrectSyllabification.setDisable(true);
+		buttonToolbarFindWord.setDisable(true);
+		menuItemFindWord.setDisable(true);
 		
 		statusBar.getRightItems().add(new Separator(VERTICAL));
 		statusBar.getRightItems().add(numberOfItems);
@@ -568,6 +582,8 @@ public class RootLayoutController implements Initializable {
 				buttonToolbarConvertPredictedToCorrectSyllabification,
 				tooltipToolbarConvertPredictedToCorrectSyllabification, 
 				bundle.getString("menu.convertpredictedtocorrect"));
+		ControllerUtilities.createToolbarButtonWithImage("FindWord.png", buttonToolbarFindWord,
+				tooltipToolbarFindWord, bundle.getString("menu.findword"));
 	}
 
 	private void listenForChangesInApproachViews() {
