@@ -35,6 +35,8 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -265,9 +267,12 @@ public class CVApproachController extends ApproachController {
 		try {
 			// TextFields wordToFind
 			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle("Find a Word");
+			dialog.setTitle(bundle.getString("program.name"));
 			dialog.setHeaderText("");
-			dialog.setContentText("Word to find: ");
+			dialog.setContentText(bundle.getString("label.wordtofind"));
+			dialog.setGraphic(null);
+			Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+			stage.getIcons().add(mainApp.getNewMainIconImage());
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
 			for (CVWord word : cvApproachData.getCVWords()) {
 				listOfWords.add(word.getWord());
