@@ -23,8 +23,8 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.controlsfx.control.StatusBar;
-import static javafx.geometry.Orientation.VERTICAL;
 
+import static javafx.geometry.Orientation.VERTICAL;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,6 +37,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
@@ -124,6 +125,14 @@ public class RootLayoutController implements Initializable {
 	private Tooltip tooltipToolbarSyllabify;
 	@FXML
 	private Tooltip tooltipToolbarConvertPredictedToCorrectSyllabification;
+	@FXML
+	private MenuItem menuItemEditInsert;
+	@FXML
+	private MenuItem menuItemEditRemove;
+	@FXML
+	private MenuItem menuItemSyllabify;
+	@FXML
+	private MenuItem menuItemConvertPredictedToCorrectSyllabification;
 
 	@FXML
 	private ListView<ApproachView> approachViews;
@@ -380,9 +389,13 @@ public class RootLayoutController implements Initializable {
 		approachViews.setItems(cvApproachController.getViews());
 		currentApproachController = cvApproachController;
 		buttonToolbarEditInsert.setDisable(true);
+		menuItemEditInsert.setDisable(true);
 		buttonToolbarEditRemove.setDisable(true);
+		menuItemEditRemove.setDisable(true);
 		buttonToolbarSyllabify.setDisable(false);
+		menuItemSyllabify.setDisable(false);
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(false);
+		menuItemConvertPredictedToCorrectSyllabification.setDisable(false);
 	}
 
 	private void toggleButtonSelectedStatus(Button myButton) {
@@ -517,6 +530,8 @@ public class RootLayoutController implements Initializable {
 		createToolbarButtons(bundle);
 		buttonToolbarSyllabify.setDisable(true);
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(true);
+		menuItemSyllabify.setDisable(true);
+		menuItemConvertPredictedToCorrectSyllabification.setDisable(true);
 		
 		statusBar.getRightItems().add(new Separator(VERTICAL));
 		statusBar.getRightItems().add(numberOfItems);
@@ -583,7 +598,9 @@ public class RootLayoutController implements Initializable {
 					method.invoke(currentApproachController, (Object[]) null);// this,
 																				// (Object[])null);
 					buttonToolbarEditInsert.setDisable(false);
+					menuItemEditInsert.setDisable(false);
 					buttonToolbarEditRemove.setDisable(false);
+					menuItemEditRemove.setDisable(false);
 				} catch (NoSuchMethodException nsme) {
 					SyllableParserException spe = new SyllableParserException(newValue
 							.getViewHandler()

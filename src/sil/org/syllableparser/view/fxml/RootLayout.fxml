@@ -38,14 +38,14 @@
               <MenuItem mnemonicParsing="false" onAction="#handleCopy" text="%menu.copy" />
               <MenuItem mnemonicParsing="false" onAction="#handlePaste" text="%menu.paste" />
               <SeparatorMenuItem />
-              <MenuItem mnemonicParsing="false" onAction="#handleInsertNewItem" text="%menu.insertnew" />
-              <MenuItem mnemonicParsing="false" onAction="#handleRemoveItem" text="%menu.remove" />
+              <MenuItem mnemonicParsing="false" onAction="#handleInsertNewItem" text="%menu.insertnew" fx:id="menuItemEditInsert" />
+              <MenuItem mnemonicParsing="false" onAction="#handleRemoveItem" text="%menu.remove" fx:id="menuItemEditRemove" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="%menu.tools">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleSyllabifyWords" text="%menu.syllabifywords" />
-                <MenuItem mnemonicParsing="false" onAction="#handleConvertPredictedToCorrectSyllabification" text="%menu.convertpredictedtocorrect" />
+                <MenuItem mnemonicParsing="false" onAction="#handleSyllabifyWords" text="%menu.syllabifywords" fx:id="menuItemSyllabify" />
+                <MenuItem mnemonicParsing="false" onAction="#handleConvertPredictedToCorrectSyllabification" text="%menu.convertpredictedtocorrect" fx:id="menuItemConvertPredictedToCorrectSyllabification" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="%menu.view">

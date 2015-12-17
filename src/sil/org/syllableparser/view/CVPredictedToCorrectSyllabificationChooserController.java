@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,6 +37,8 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 
 	@FXML
 	private TableView<CVPredictedSyllabification> cvPredictedSyllabificationTable;
+	@FXML
+	private Label whenTableIsEmptyMessage;
 	@FXML
 	private TableColumn<CVPredictedSyllabification, Boolean> checkBoxColumn;
 	@FXML
@@ -73,6 +76,9 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
 		checkBoxColumn.setEditable(true);
 		cvPredictedSyllabificationTable.setEditable(true);
+		whenTableIsEmptyMessage = new Label(resources.getString("label.nopredicted") +
+				resources.getString("menu.syllabifywords"));
+		cvPredictedSyllabificationTable.setPlaceholder(whenTableIsEmptyMessage);
 
 		initializeCheckBoxContextMenu(resources);
 	}
