@@ -26,8 +26,15 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleSave" text="%menu.save" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="%menu.saveas" />
                   <SeparatorMenuItem />
-                  <MenuItem mnemonicParsing="false" onAction="#handleImportWords" text="%menu.importwords" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWords" text="%menu.exporthyphenatedwords" />
+                  <Menu mnemonicParsing="false" text="%menu.importwords" >
+                    	<MenuItem mnemonicParsing="false" onAction="#handleImportPlainWordList" text="%menu.importplainwordlist" />
+                    	<MenuItem mnemonicParsing="false" onAction="#handleImportParaTExtWordList" text="%menu.importparatextwordlist" />
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="%menu.exporthyphenatedwords" >
+                  		<MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWordsAsASimpleList" text="%menu.exporthyphenatedwordsforindesign" />
+                  		<MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWordsForParaTExt" text="%menu.exporthyphenatedwordsforparatext" />
+                  		<MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWordsForXLingPaper" text="%menu.exporthyphenatedwordsforxlingpaper" />
+                  </Menu>
                   <SeparatorMenuItem />
                   <MenuItem mnemonicParsing="false" onAction="#handleExit" text="%menu.exit" />
             </items>

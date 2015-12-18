@@ -309,11 +309,8 @@ public class RootLayoutController implements Initializable {
 		return fileChooser;
 	}
 
-	/**
-	 * Opens a FileChooser to let the user select a file to save to.
-	 */
 	@FXML
-	private void handleExportHyphenatedWords() {
+	private void handleExportHyphenatedWordsAsASimpleList() {
 		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
@@ -328,6 +325,70 @@ public class RootLayoutController implements Initializable {
 			// Make sure it has the correct extension
 			if (!file.getPath().endsWith(".hyp")) {
 				file = new File(file.getPath() + ".hyp");
+			}
+			try {
+				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+						file.getPath()), "UTF8"));
+				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords();
+				for (String hyphenatedWord : hyphenatedWords) {
+					fileWriter.write(hyphenatedWord);
+					fileWriter.write("\n");
+				}
+				fileWriter.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	@FXML
+	private void handleExportHyphenatedWordsForParaTExt() {
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				"hyphenatedWords", ".txt");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show save file dialog
+		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+		if (file != null) {
+			// Make sure it has the correct extension
+			if (!file.getPath().endsWith("hyphenatedWords.txt")) {
+				file = new File(file.getPath() + "hyphenatedWords.txt");
+			}
+			try {
+				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+						file.getPath()), "UTF8"));
+				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords();
+				for (String hyphenatedWord : hyphenatedWords) {
+					fileWriter.write(hyphenatedWord);
+					fileWriter.write("\n");
+				}
+				fileWriter.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	@FXML
+	private void handleExportHyphenatedWordsForXLingPaper() {
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				sFileFilterDescription + " (*.xml)", "*.xml");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		// Show save file dialog
+		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+		if (file != null) {
+			// Make sure it has the correct extension
+			if (!file.getPath().endsWith(".xml")) {
+				file = new File(file.getPath() + ".xml");
 			}
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
@@ -498,7 +559,8 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
-	private void handleImportWords() {
+	private void handleImportPlainWordList() {
+		
 		String sDirectoryPath;
 		FileChooser fileChooser = new FileChooser();
 
@@ -525,7 +587,37 @@ public class RootLayoutController implements Initializable {
 				e.printStackTrace();
 			}
 		}
+	}
 
+	@FXML
+	private void handleImportParaTExtWordList() {
+		
+		String sDirectoryPath;
+		FileChooser fileChooser = new FileChooser();
+
+		// Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+				sFileFilterDescription + " (*.xml)", "*.xml");
+		fileChooser.getExtensionFilters().add(extFilter);
+		sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
+		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
+			File initialDirectory = new File(sDirectoryPath);
+			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
+				fileChooser.setInitialDirectory(initialDirectory);
+			}
+		}
+
+		// Show open file dialog
+		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+
+		if (file != null) {
+			try (Stream<String> stream = Files.lines(file.toPath())) {
+				stream.forEach(s -> currentApproachController.createNewWord(s));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
