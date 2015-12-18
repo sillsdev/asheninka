@@ -5,6 +5,7 @@ package sil.org.syllableparser.model.cvapproach;
 
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.Word;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -45,6 +46,15 @@ public class CVWord extends Word {
 	public void setPredictedSyllabification(String predictedSyllabification) {
 		this.predictedSyllabification.set(predictedSyllabification);
 	}
+
+	public StringProperty predictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(predictedSyllabificationProperty(),
+				"\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
 
 	public static int findIndexInCVWordListByUuid(ObservableList<CVWord> list, String uuid) {
 		// TODO: is there a way to do this with lambda expressions?

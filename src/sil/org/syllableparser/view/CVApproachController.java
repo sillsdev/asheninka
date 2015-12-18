@@ -62,6 +62,8 @@ public class CVApproachController extends ApproachController {
 		views.add(new ApproachView(bundle.getString("cv.view.syllablepatterns"),
 				"handleCVSyllablePatterns"));
 		views.add(new ApproachView(bundle.getString("cv.view.words"), "handleCVWords"));
+		views.add(new ApproachView(bundle.getString("cv.view.wordspredictedvscorrect"),
+				"handleCVWordsPredictedVsCorrect"));
 	}
 
 	public ObservableList<ApproachView> getViews() {
@@ -118,6 +120,18 @@ public class CVApproachController extends ApproachController {
 		controller.setLocale(locale);
 		controller.setData(cvApproachData);
 		controller.setFocusOnWord(index);
+	}
+
+	public void handleCVWordsPredictedVsCorrect() {
+		FXMLLoader loader = new FXMLLoader();
+		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWordsPredictedVsCorrect.fxml", locale);
+		CVWordsPredictedVsCorrectController controller = loader.getController();
+		currentCVApproachController = controller;
+
+		controller.setMainApp(mainApp);
+		controller.setLocale(locale);
+		controller.setData(cvApproachData);
+		controller.setFocusOnWord(0);
 	}
 
 	/*
