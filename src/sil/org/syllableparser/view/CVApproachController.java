@@ -110,6 +110,7 @@ public class CVApproachController extends ApproachController {
 	public void handleCVWords() {
 		handleCVWords(0);
 	}
+
 	public void handleCVWords(int index) {
 		FXMLLoader loader = new FXMLLoader();
 		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWords.fxml", locale);
@@ -124,7 +125,8 @@ public class CVApproachController extends ApproachController {
 
 	public void handleCVWordsPredictedVsCorrect() {
 		FXMLLoader loader = new FXMLLoader();
-		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWordsPredictedVsCorrect.fxml", locale);
+		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWordsPredictedVsCorrect.fxml",
+				locale);
 		CVWordsPredictedVsCorrectController controller = loader.getController();
 		currentCVApproachController = controller;
 
@@ -311,10 +313,13 @@ public class CVApproachController extends ApproachController {
 	 * .String)
 	 */
 	@Override
-	void createNewWord(String word) {
+	public void createNewWord(String word) {
 		CVWord newWord = new CVWord(word, "", "", bundle.getString("label.untested"));
-		cvApproachData.getCVWords().add(newWord);
-
+		ObservableList<CVWord> words = cvApproachData.getCVWords();
+		ObservableList<CVWord> matchingWords = words.filtered(extantWord -> extantWord.getWord().equals(word));
+		if (matchingWords.size() == 0) {
+			words.add(newWord);
+		}
 	}
 
 	/*

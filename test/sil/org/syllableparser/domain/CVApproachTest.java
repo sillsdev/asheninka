@@ -49,7 +49,6 @@ public class CVApproachTest {
 	public void tearDown() throws Exception {
 	}
 
-	// make sure the setup is what we expect
 	@Test
 	public void getHyphenatedWordsTest() {
 		assertEquals("CV words size", 10026, cvWords.size());
@@ -65,7 +64,5 @@ public class CVApproachTest {
 		assertEquals("baka = ba=ka", "ba=ka", sHyphenatedWord);
 		
 	}
-
-
 
 }
