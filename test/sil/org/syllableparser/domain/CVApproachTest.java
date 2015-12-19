@@ -8,13 +8,17 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
+
 import javafx.collections.ObservableList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Word;
 
 /**
  * @author Andy Black
@@ -25,7 +29,7 @@ import sil.org.syllableparser.model.LanguageProject;
 public class CVApproachTest {
 
 	CVApproach cva;
-	ObservableList<CVWord> cvWords;
+	ObservableList<Word> words;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -39,7 +43,7 @@ public class CVApproachTest {
 		File file = new File("test/sil/org/syllableparser/testData/CVTestData.sylpdata");
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		cvWords = cva.getCVWords();
+		words = cva.getWords();
 	}
 
 	/**
@@ -51,7 +55,7 @@ public class CVApproachTest {
 
 	@Test
 	public void getHyphenatedWordsTest() {
-		assertEquals("CV words size", 10026, cvWords.size());
+		assertEquals("Words size", 10026, words.size());
 		ArrayList<String> hyphenatedWords = cva.getHyphenatedWords();
 		assertEquals("Hyphenated words size", 1902, hyphenatedWords.size());
 		String sHyphenatedWord = hyphenatedWords.get(0);

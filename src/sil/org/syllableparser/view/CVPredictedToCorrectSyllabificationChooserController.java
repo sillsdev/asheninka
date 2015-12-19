@@ -6,15 +6,6 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import sil.org.syllableparser.MainApp;
-import sil.org.syllableparser.model.SylParserObject;
-import sil.org.syllableparser.model.Word;
-import sil.org.syllableparser.model.cvapproach.CVApproach;
-import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
-import sil.org.syllableparser.model.cvapproach.CVPredictedSyllabification;
-import sil.org.syllableparser.model.cvapproach.CVSegment;
-import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
-import sil.org.syllableparser.model.cvapproach.CVWord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,6 +19,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.stage.Stage;
+import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.Word;
+import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVPredictedSyllabification;
 
 /**
  * @author Andy Black
@@ -58,7 +53,7 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	private CVPredictedSyllabification currentPredictedSyllabification;
 	private ObservableList<CVPredictedSyllabification> cvPredictedSyllabifications = FXCollections
 			.observableArrayList();
-	private CVWord cvWord;
+	private Word cvWord;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -118,10 +113,10 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 
-		for (CVWord cvWord : cvApproach.getCVWords()) {
-			if (!cvWord.predictedSyllabificationProperty().isEmpty().getValue()) {
+		for (Word cvWord : cvApproach.getWords()) {
+			if (!cvWord.cvPredictedSyllabificationProperty().isEmpty().getValue()) {
 				currentPredictedSyllabification = new CVPredictedSyllabification(
-						cvWord.getPredictedSyllabification(), cvWord.getID());
+						cvWord.getCVPredictedSyllabification(), cvWord.getID());
 				cvPredictedSyllabifications.add(currentPredictedSyllabification);
 			}
 		}
@@ -151,9 +146,9 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	private void handleOk() {
 		for (CVPredictedSyllabification predictedSyllabification : cvPredictedSyllabifications) {
 			if (predictedSyllabification.isChecked()) {
-				int i = CVWord.findIndexInCVWordListByUuid(cvApproach.getCVWords(),
+				int i = Word.findIndexInWordListByUuid(cvApproach.getWords(),
 						predictedSyllabification.getUuid());
-				cvWord = cvApproach.getCVWords().get(i);
+				cvWord = cvApproach.getWords().get(i);
 				cvWord.setCorrectSyllabification(predictedSyllabification
 						.getPredictedSyllabification());
 			}

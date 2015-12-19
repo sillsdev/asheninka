@@ -27,12 +27,12 @@ import org.junit.Test;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegment;
 import sil.org.syllableparser.model.cvapproach.CVSegmenter;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
-import sil.org.syllableparser.model.cvapproach.CVWord;
 
 /**
  * @author Andy Black
@@ -93,15 +93,15 @@ public class CVApproachControllerTest {
 
 	@Test
 	public void createNewWordTest() {
-		ObservableList<CVWord> cvWords = cva.getCVWords();
-		assertEquals("CV words size", 10026, cvWords.size());
+		ObservableList<Word> words = cva.getWords();
+		assertEquals("CV words size", 10026, words.size());
 		controller.createNewWord("abel");
 		// 'abel' should already be there so the size should not change
-		assertEquals("CV words size", 10026, cvWords.size());
+		assertEquals("CV words size", 10026, words.size());
 		controller.createNewWord("kinkos");
 		// 'kinkos' should not already be there so the size should change
-		assertEquals("CV words size", 10027, cvWords.size());
-		CVWord lastWordAdded = cvWords.get(cvWords.size()-1);
+		assertEquals("CV words size", 10027, words.size());
+		Word lastWordAdded = words.get(words.size()-1);
 		assertEquals("kinkos", lastWordAdded.getWord());
 	}
 }

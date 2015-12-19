@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
+import sil.org.syllableparser.model.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -21,7 +22,7 @@ public class CVApproach {
 	private ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
 	private ObservableList<CVSyllablePattern> cvSyllablePatterns = FXCollections
 			.observableArrayList();
-	private ObservableList<CVWord> cvWords = FXCollections.observableArrayList();
+	private ObservableList<Word> words = FXCollections.observableArrayList();
 
 	/**
 	 * @return the cvSegmentInventoryData
@@ -68,20 +69,20 @@ public class CVApproach {
 	}
 
 	/**
-	 * @return the cvWord Data
+	 * @return the word Data
 	 */
-	@XmlElementWrapper(name = "cvWords")
-	@XmlElement(name = "cvWord")
-	public ObservableList<CVWord> getCVWords() {
-		return cvWords;
+	@XmlElementWrapper(name = "words")
+	@XmlElement(name = "word")
+	public ObservableList<Word> getWords() {
+		return words;
 	}
 
 	/**
-	 * @param cvWord
+	 * @param word
 	 *            Data to set
 	 */
-	public void setCVWords(ObservableList<CVWord> cvWords) {
-		this.cvWords = cvWords;
+	public void setWords(ObservableList<Word> words) {
+		this.words = words;
 	}
 
 	/**
@@ -91,7 +92,7 @@ public class CVApproach {
 		cvSegmentInventory.clear();
 		cvNaturalClasses.clear();
 		cvSyllablePatterns.clear();
-		cvWords.clear();
+		words.clear();
 	}
 
 	/**
@@ -113,20 +114,20 @@ public class CVApproach {
 		for (CVSyllablePattern cvSyllablePattern : cvSyllablePatternsLoadedData) {
 			cvSyllablePatterns.add(cvSyllablePattern);
 		}
-		ObservableList<CVWord> cvWordsLoadedData = cvApproachLoaded.getCVWords();
-		for (CVWord cvWord : cvWordsLoadedData) {
-			cvWords.add(cvWord);
+		ObservableList<Word> wordsLoadedData = cvApproachLoaded.getWords();
+		for (Word word : wordsLoadedData) {
+			words.add(word);
 		}
 	}
 
 	public ArrayList<String> getHyphenatedWords() {
-		int totalNumberOfWords = cvWords.size();
+		int totalNumberOfWords = words.size();
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
-		for (CVWord word : cvWords) {
+		for (Word word : words) {
 			String sSyllabifiedWord = word.getCorrectSyllabification();
 			if (sSyllabifiedWord == null || sSyllabifiedWord.isEmpty()) {
 				// no overt correct syllabified word present; try predicted
-				sSyllabifiedWord = word.getPredictedSyllabification();
+				sSyllabifiedWord = word.getCVPredictedSyllabification();
 				if (sSyllabifiedWord != null) {
 					// predicted has something
 					if (sSyllabifiedWord.isEmpty()) {

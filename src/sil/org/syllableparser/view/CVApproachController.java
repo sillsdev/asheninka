@@ -27,7 +27,6 @@ import sil.org.syllableparser.model.cvapproach.CVSegmenter;
 import sil.org.syllableparser.model.cvapproach.CVSyllabifier;
 import sil.org.syllableparser.model.cvapproach.CVSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
-import sil.org.syllableparser.model.cvapproach.CVWord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -189,23 +188,23 @@ public class CVApproachController extends ApproachController {
 				syllabifier = new CVSyllabifier(patterns, null);
 				cvPatterns = syllabifier.getCvPatterns();
 
-				int max = cvApproachData.getCVWords().size();
+				int max = cvApproachData.getWords().size();
 				int i = 0;
-				for (CVWord word : cvApproachData.getCVWords()) {
+				for (Word word : cvApproachData.getWords()) {
 					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
 					updateProgress(i++, max);
 
 					boolean fSuccess = segmenter.segmentWord(word.getWord());
 					if (!fSuccess) {
-						word.setParserResult(sSegmentFailure);
-						word.setPredictedSyllabification("");
+						word.setCVParserResult(sSegmentFailure);
+						word.setCVPredictedSyllabification("");
 						continue;
 					}
 					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
 					if (!fSuccess) {
-						word.setParserResult(sNaturalClassFailure);
-						word.setPredictedSyllabification("");
+						word.setCVParserResult(sNaturalClassFailure);
+						word.setCVPredictedSyllabification("");
 						continue;
 					}
 					List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
@@ -213,13 +212,13 @@ public class CVApproachController extends ApproachController {
 					syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
 					fSuccess = syllabifier.convertNaturalClassesToSyllables();
 					if (!fSuccess) {
-						word.setParserResult(sSyllabificationFailure);
-						word.setPredictedSyllabification("");
+						word.setCVParserResult(sSyllabificationFailure);
+						word.setCVPredictedSyllabification("");
 						continue;
 					}
 					List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
-					word.setPredictedSyllabification(syllabifier.getSyllabificationOfCurrentWord());
-					word.setParserResult(sSuccess);
+					word.setCVPredictedSyllabification(syllabifier.getSyllabificationOfCurrentWord());
+					word.setCVParserResult(sSuccess);
 				}
 				long timePassed = System.currentTimeMillis() - timeStart;
 				System.out.println("Syllabification took " + timePassed + " milliseconds");
@@ -290,7 +289,7 @@ public class CVApproachController extends ApproachController {
 			Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 			stage.getIcons().add(mainApp.getNewMainIconImage());
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
-			for (CVWord word : cvApproachData.getCVWords()) {
+			for (Word word : cvApproachData.getWords()) {
 				listOfWords.add(word.getWord());
 			}
 			TextFields.bindAutoCompletion(dialog.getEditor(), listOfWords);
@@ -314,9 +313,9 @@ public class CVApproachController extends ApproachController {
 	 */
 	@Override
 	public void createNewWord(String word) {
-		CVWord newWord = new CVWord(word, "", "", bundle.getString("label.untested"));
-		ObservableList<CVWord> words = cvApproachData.getCVWords();
-		ObservableList<CVWord> matchingWords = words.filtered(extantWord -> extantWord.getWord().equals(word));
+		Word newWord = new Word(word, "", bundle.getString("label.untested"));
+		ObservableList<Word> words = cvApproachData.getWords();
+		ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord().equals(word));
 		if (matchingWords.size() == 0) {
 			words.add(newWord);
 		}

@@ -6,8 +6,8 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
-import sil.org.syllableparser.model.cvapproach.CVWord;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.SimpleStringProperty;
@@ -31,14 +31,14 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 		Initializable {
 
 	@FXML
-	private TableView<CVWord> cvWordsPredictedVsCorrectTable;
+	private TableView<Word> cvWordsPredictedVsCorrectTable;
 	@FXML
 	private Label whenTableIsEmptyMessage;
 	@FXML
-	private TableColumn<CVWord, String> wordPredictedVsCorrectColumn;
+	private TableColumn<Word, String> wordPredictedVsCorrectColumn;
 
 	private CVApproach cvApproach;
-	private CVWord currentWord;
+	private Word currentWord;
 
 	public CVWordsPredictedVsCorrectController() {
 
@@ -59,7 +59,7 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 
 		// Initialize the table with the three columns.
 		wordPredictedVsCorrectColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.predictedVsCorrectSyllabificationProperty());
+				.cvPredictedVsCorrectSyllabificationProperty());
 
 		makeColumnHeaderWrappable(wordPredictedVsCorrectColumn);
 
@@ -72,7 +72,7 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 
 	}
 
-	private void showStatusBarNumberOfItems(CVWord cvWord) {
+	private void showStatusBarNumberOfItems(Word cvWord) {
 		currentWord = cvWord;
 		if (cvWord != null) {
 			int currentItem = cvWordsPredictedVsCorrectTable.getItems().indexOf(currentWord) + 1;
@@ -89,10 +89,10 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 
-		ObservableList<CVWord> wordsToShow = cvApproachData.getCVWords().filtered(
+		ObservableList<Word> wordsToShow = cvApproachData.getWords().filtered(
 				word -> (!word.getCorrectSyllabification().isEmpty()
-						&& !word.getPredictedSyllabification().isEmpty() && word
-						.getPredictedSyllabification() != word.getCorrectSyllabification()));
+						&& !word.getCVPredictedSyllabification().isEmpty() && word
+						.getCVPredictedSyllabification() != word.getCorrectSyllabification()));
 
 		// Add observable list data to the table
 		cvWordsPredictedVsCorrectTable.setItems(wordsToShow.sorted());

@@ -3,8 +3,10 @@
  */
 package sil.org.syllableparser.model;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import sil.org.syllableparser.model.SylParserObject;
-import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -16,7 +18,8 @@ import javafx.collections.ObservableList;
 public class Word extends SylParserObject {
 	protected final StringProperty word;
 	protected final StringProperty correctSyllabification;
-	protected StringProperty parserResult;
+	protected StringProperty cvParserResult;
+	protected StringProperty cvPredictedSyllabification;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
 	// case this word represents
@@ -28,7 +31,8 @@ public class Word extends SylParserObject {
 		super();
 		this.word = new SimpleStringProperty("");
 		this.correctSyllabification = new SimpleStringProperty("");
-		this.parserResult = new SimpleStringProperty("");
+		this.cvParserResult = new SimpleStringProperty("");
+		this.cvPredictedSyllabification =new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -36,7 +40,8 @@ public class Word extends SylParserObject {
 		super();
 		this.word = new SimpleStringProperty(word);
 		this.correctSyllabification = new SimpleStringProperty(correctHyphenation);
-		this.parserResult = new SimpleStringProperty(parserResult);
+		this.cvParserResult = new SimpleStringProperty(parserResult);
+		this.cvPredictedSyllabification =new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -64,15 +69,48 @@ public class Word extends SylParserObject {
 		this.correctSyllabification.set(correctSyllabification);
 	}
 
-	public String getParserResult() {
-		return parserResult.get();
+	public String getCVParserResult() {
+		return cvParserResult.get();
 	}
 
-	public StringProperty parserResultProperty() {
-		return parserResult;
+	public StringProperty cvParserResultProperty() {
+		return cvParserResult;
 	}
 
-	public void setParserResult(String parserResult) {
-		this.parserResult.set(parserResult);
+	public void setCVParserResult(String parserResult) {
+		this.cvParserResult.set(parserResult);
 	}
+
+	public String getCVPredictedSyllabification() {
+		return cvPredictedSyllabification.get();
+	}
+
+	public StringProperty cvPredictedSyllabificationProperty() {
+		return cvPredictedSyllabification;
+	}
+
+	@XmlElement(name = "cvPredictedSyllabification")
+	public void setCVPredictedSyllabification(String predictedSyllabification) {
+		this.cvPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public StringProperty cvPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(cvPredictedSyllabificationProperty(),
+				"\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+	public static int findIndexInWordListByUuid(ObservableList<Word> list, String uuid) {
+		// TODO: is there a way to do this with lambda expressions?
+		// Is there a way to use SylParserObject somehow?
+				int index = -1;
+				for (SylParserObject sylParserObject : list) {
+					index++;
+					if (sylParserObject.getID() == uuid) {
+						return index;
+					}
+				}		
+				return -1;
+			}
 }

@@ -6,8 +6,8 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
-import sil.org.syllableparser.model.cvapproach.CVWord;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 
 public class CVWordsController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends TableCell<CVWord, String> {
+	protected final class WrappingTableCell extends TableCell<Word, String> {
 		private Text text;
 
 		@Override
@@ -42,15 +42,15 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	}
 
 	@FXML
-	private TableView<CVWord> cvWordsTable;
+	private TableView<Word> cvWordsTable;
 	@FXML
-	private TableColumn<CVWord, String> wordColumn;
+	private TableColumn<Word, String> wordColumn;
 	@FXML
-	private TableColumn<CVWord, String> predictedSyllabificationColumn;
+	private TableColumn<Word, String> predictedSyllabificationColumn;
 	@FXML
-	private TableColumn<CVWord, String> correctSyllabificationColumn;
+	private TableColumn<Word, String> correctSyllabificationColumn;
 	@FXML
-	private TableColumn<CVWord, String> parserResultColumn;
+	private TableColumn<Word, String> parserResultColumn;
 
 	@FXML
 	private TextField wordField;
@@ -62,7 +62,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	private TextField parserResultField;
 
 	private CVApproach cvApproach;
-	private CVWord currentWord;
+	private Word currentWord;
 
 	public CVWordsController() {
 
@@ -80,10 +80,10 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		// Initialize the table with the three columns.
 		wordColumn.setCellValueFactory(cellData -> cellData.getValue().wordProperty());
 		predictedSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.predictedSyllabificationProperty());
+				.cvPredictedSyllabificationProperty());
 		correctSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.correctSyllabificationProperty());
-		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue().parserResultProperty());
+		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue().cvParserResultProperty());
 
 		// Custom rendering of the table cell.
 		wordColumn.setCellFactory(column -> {
@@ -122,7 +122,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		predictedSyllabificationField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
 					if (currentWord != null) {
-						currentWord.setPredictedSyllabification(predictedSyllabificationField
+						currentWord.setCVPredictedSyllabification(predictedSyllabificationField
 								.getText());
 					}
 				});
@@ -136,7 +136,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 						});
 		parserResultField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentWord != null) {
-				currentWord.setParserResult(parserResultField.getText());
+				currentWord.setCVParserResult(parserResultField.getText());
 			}
 		});
 		
@@ -163,14 +163,14 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	 * @param cvWord
 	 *            the segment or null
 	 */
-	private void showCVWordDetails(CVWord cvWord) {
+	private void showCVWordDetails(Word cvWord) {
 		currentWord = cvWord;
 		if (cvWord != null) {
 			// Fill the text fields with info from the segment object.
 			wordField.setText(cvWord.getWord());
-			predictedSyllabificationField.setText(cvWord.getPredictedSyllabification());
+			predictedSyllabificationField.setText(cvWord.getCVPredictedSyllabification());
 			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
-			parserResultField.setText(cvWord.getParserResult());
+			parserResultField.setText(cvWord.getCVParserResult());
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");
@@ -187,11 +187,11 @@ public class CVWordsController extends SylParserBaseController implements Initia
 
 	}
 
-	public void setWord(CVWord cvWord) {
+	public void setWord(Word cvWord) {
 		wordField.setText(cvWord.getWord());
-		predictedSyllabificationField.setText(cvWord.getPredictedSyllabification());
+		predictedSyllabificationField.setText(cvWord.getCVPredictedSyllabification());
 		correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
-		parserResultField.setText(cvWord.getParserResult());
+		parserResultField.setText(cvWord.getCVParserResult());
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		cvApproach = cvApproachData;
 
 		// Add observable list data to the table
-		cvWordsTable.setItems(cvApproachData.getCVWords());
+		cvWordsTable.setItems(cvApproachData.getWords());
 		setFocusOnWord(0);
 	}
 
@@ -223,10 +223,10 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	 */
 	@Override
 	void handleInsertNewItem() {
-		CVWord newCVWord = new CVWord();
-		newCVWord.setParserResult(bundle.getString("label.untested"));
-		cvApproach.getCVWords().add(newCVWord);
-		int i = cvApproach.getCVWords().size() - 1;
+		Word newWord = new Word();
+		newWord.setCVParserResult(bundle.getString("label.untested"));
+		cvApproach.getWords().add(newWord);
+		int i = cvApproach.getWords().size() - 1;
 		cvWordsTable.requestFocus();
 		cvWordsTable.getSelectionModel().select(i);
 		cvWordsTable.getFocusModel().focus(i);
@@ -239,10 +239,10 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	 */
 	@Override
 	void handleRemoveItem() {
-		int i = cvApproach.getCVWords().indexOf(currentWord);
+		int i = cvApproach.getWords().indexOf(currentWord);
 		currentWord = null;
 		if (i >= 0) {
-			cvApproach.getCVWords().remove(i);
+			cvApproach.getWords().remove(i);
 		}
 	}
 
