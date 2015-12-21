@@ -79,15 +79,6 @@ public class ONCApproachController extends ApproachController  {
 	}
 
 	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.ApproachController#createNewWord(java.lang.String)
-	 */
-	@Override
-	void createNewWord(String word) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
 	 * @see sil.org.syllableparser.view.ApproachController#getHyphenatedWords()
 	 */
 	@Override

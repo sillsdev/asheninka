@@ -308,15 +308,6 @@ public class CVApproachController extends ApproachController {
 	}
 
 	@Override
-	public void createNewWord(String word) {
-		Word newWord = new Word(word, "", bundle.getString("label.untested"));
-		ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord().equals(word));
-		if (matchingWords.size() == 0) {
-			words.add(newWord);
-		}
-	}
-
-	@Override
 	public ArrayList<String> getHyphenatedWords(ObservableList<Word> words) {
 		return cvApproachData.getHyphenatedWords(words);
 	}

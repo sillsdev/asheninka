@@ -29,7 +29,6 @@ public abstract class ApproachController {
 	abstract void handleSyllabifyWords(StatusBar statusBar);
 	abstract void handleConvertPredictedToCorrectSyllabification();
 	abstract void handleFindWord();
-	abstract void createNewWord(String word);
 	abstract ArrayList<String> getHyphenatedWords(ObservableList<Word> words);
 
 	/**

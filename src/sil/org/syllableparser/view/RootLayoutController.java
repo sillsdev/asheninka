@@ -29,7 +29,9 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -57,6 +59,7 @@ import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.service.ListWordImporter;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -64,8 +67,8 @@ import sil.org.syllableparser.model.LanguageProject;
  * elements can be placed.
  * 
  * @author Originally based on a tutorial by Marco Jakob:
- *         http://code.makery.ch/library/javafx-8-tutorial/part5/
- *         but greatly expanded.
+ *         http://code.makery.ch/library/javafx-8-tutorial/part5/ but greatly
+ *         expanded.
  */
 public class RootLayoutController implements Initializable {
 
@@ -152,7 +155,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	StatusBar statusBar = new StatusBar();
 	Label numberOfItems = new Label("0/0");
-	
+
 	private static String kSyllableParserDataExtension = ".sylpdata";
 	private String syllableParserFilterDescription;
 	private String syllableParserFilterExtensions;
@@ -183,7 +186,7 @@ public class RootLayoutController implements Initializable {
 				+ kSyllableParserDataExtension + ")";
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
 		ApproachViewNavigator.setMainController(this);
-		cvApproachController.setCVApproachData(languageProject.getCVApproach(), 
+		cvApproachController.setCVApproachData(languageProject.getCVApproach(),
 				languageProject.getWords());
 	}
 
@@ -201,10 +204,12 @@ public class RootLayoutController implements Initializable {
 	private void handleSyllabifyWords() {
 		currentApproachController.handleSyllabifyWords(statusBar);
 	}
+
 	@FXML
 	private void handleConvertPredictedToCorrectSyllabification() {
 		currentApproachController.handleConvertPredictedToCorrectSyllabification();
 	}
+
 	@FXML
 	private void handleFindWord() {
 		currentApproachController.handleFindWord();
@@ -215,8 +220,8 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleNew() {
-		//mainApp.getLanguageProject().clear();
-		//ApplicationPreferences.setLastOpenedFilePath((String) null);
+		// mainApp.getLanguageProject().clear();
+		// ApplicationPreferences.setLastOpenedFilePath((String) null);
 		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
 		File file = new File("src/sil/org/syllableparser/resources/starterFile.sylpdata");
 		mainApp.loadLanguageData(file);
@@ -287,7 +292,7 @@ public class RootLayoutController implements Initializable {
 			}
 			mainApp.saveLanguageData(file);
 			String sDirectoryPath = file.getParent();
-			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);		
+			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 			mainApp.updateStageTitle(file);
 		}
 	}
@@ -330,7 +335,8 @@ public class RootLayoutController implements Initializable {
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 						file.getPath()), "UTF8"));
-				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords(languageProject.getWords());
+				ArrayList<String> hyphenatedWords = currentApproachController
+						.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
 					fileWriter.write(hyphenatedWord);
 					fileWriter.write("\n");
@@ -342,13 +348,14 @@ public class RootLayoutController implements Initializable {
 			}
 		}
 	}
+
 	@FXML
 	private void handleExportHyphenatedWordsForParaTExt() {
 		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-				"hyphenatedWords", ".txt");
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("hyphenatedWords",
+				".txt");
 		fileChooser.getExtensionFilters().add(extFilter);
 
 		// Show save file dialog
@@ -362,7 +369,8 @@ public class RootLayoutController implements Initializable {
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 						file.getPath()), "UTF8"));
-				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords(languageProject.getWords());
+				ArrayList<String> hyphenatedWords = currentApproachController
+						.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
 					fileWriter.write(hyphenatedWord);
 					fileWriter.write("\n");
@@ -374,6 +382,7 @@ public class RootLayoutController implements Initializable {
 			}
 		}
 	}
+
 	@FXML
 	private void handleExportHyphenatedWordsForXLingPaper() {
 		FileChooser fileChooser = new FileChooser();
@@ -394,7 +403,8 @@ public class RootLayoutController implements Initializable {
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 						file.getPath()), "UTF8"));
-				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords(languageProject.getWords());
+				ArrayList<String> hyphenatedWords = currentApproachController
+						.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
 					fileWriter.write(hyphenatedWord);
 					fileWriter.write("\n");
@@ -413,7 +423,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleAbout() {
 		sAboutHeader = bundle.getString("about.header");
-		Object[] args = {Constants.VERSION_NUMBER};
+		Object[] args = { Constants.VERSION_NUMBER };
 		MessageFormat msgFormatter = new MessageFormat("");
 		msgFormatter.setLocale(currentLocale);
 		msgFormatter.applyPattern(bundle.getString("about.content"));
@@ -432,13 +442,15 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleHelpIntro() {
 		if (Desktop.isDesktopSupported()) {
-		    try {
-		        File myFile = new File("doc/Overview.pdf");
-		        Desktop.getDesktop().open(myFile);
-		    } catch (IOException ex) {
-		        // no application registered for PDFs
-		    }
-		}	}
+			try {
+				File myFile = new File("doc/Overview.pdf");
+				Desktop.getDesktop().open(myFile);
+			} catch (IOException ex) {
+				// no application registered for PDFs
+			}
+		}
+	}
+
 	/**
 	 * Closes the application.
 	 */
@@ -496,8 +508,8 @@ public class RootLayoutController implements Initializable {
 	private void handleONCApproach() {
 		toggleButtonSelectedStatus(buttonONCApproach);
 		mainApp.showNotImplementedYet();
-		//approachViews.setItems(oncApproachController.getViews());
-		//currentApproachController = oncApproachController;
+		// approachViews.setItems(oncApproachController.getViews());
+		// currentApproachController = oncApproachController;
 	}
 
 	/**
@@ -561,38 +573,15 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleImportPlainWordList() {
-		
-		String sDirectoryPath;
-		FileChooser fileChooser = new FileChooser();
-
-		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+		ListWordImporter importer = new ListWordImporter(mainApp, languageProject,
 				sFileFilterDescription + " (*.txt)", "*.txt");
-		fileChooser.getExtensionFilters().add(extFilter);
-		sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
-		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
-			File initialDirectory = new File(sDirectoryPath);
-			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
-				fileChooser.setInitialDirectory(initialDirectory);
-			}
-		}
-
-		// Show open file dialog
-		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
-
-		if (file != null) {
-			try (Stream<String> stream = Files.lines(file.toPath())) {
-				stream.forEach(s -> currentApproachController.createNewWord(s));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		Scene scene = approachViewContent.getScene();
+		importer.importWords(bundle);
 	}
 
 	@FXML
 	private void handleImportParaTExtWordList() {
-		
+
 		String sDirectoryPath;
 		FileChooser fileChooser = new FileChooser();
 
@@ -613,7 +602,7 @@ public class RootLayoutController implements Initializable {
 
 		if (file != null) {
 			try (Stream<String> stream = Files.lines(file.toPath())) {
-				stream.forEach(s -> currentApproachController.createNewWord(s));
+				stream.forEach(s -> languageProject.createNewWord(s, null));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -639,12 +628,12 @@ public class RootLayoutController implements Initializable {
 		menuItemConvertPredictedToCorrectSyllabification.setDisable(true);
 		buttonToolbarFindWord.setDisable(true);
 		menuItemFindWord.setDisable(true);
-		
+
 		statusBar.getRightItems().add(new Separator(VERTICAL));
 		statusBar.getRightItems().add(numberOfItems);
 
 		ControllerUtilities.setDateInStatusBar(statusBar, bundle);
-		
+
 		// set initial approach (TODO: make it be based on user's last choice)
 		handleCVApproach();
 
@@ -653,27 +642,28 @@ public class RootLayoutController implements Initializable {
 	}
 
 	protected void createToolbarButtons(ResourceBundle bundle) {
-		ControllerUtilities.createToolbarButtonWithImage("newAction.png", buttonToolbarFileNew, tooltipToolbarFileNew,
-				bundle.getString("menu.new"));
+		ControllerUtilities.createToolbarButtonWithImage("newAction.png", buttonToolbarFileNew,
+				tooltipToolbarFileNew, bundle.getString("menu.new"));
 		ControllerUtilities.createToolbarButtonWithImage("openAction.png", buttonToolbarFileOpen,
 				tooltipToolbarFileOpen, bundle.getString("menu.open"));
 		ControllerUtilities.createToolbarButtonWithImage("saveAction.png", buttonToolbarFileSave,
 				tooltipToolbarFileSave, bundle.getString("menu.save"));
-		ControllerUtilities.createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut, tooltipToolbarEditCut,
-				bundle.getString("menu.cut"));
+		ControllerUtilities.createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut,
+				tooltipToolbarEditCut, bundle.getString("menu.cut"));
 		ControllerUtilities.createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy,
 				tooltipToolbarEditCopy, bundle.getString("menu.copy"));
 		ControllerUtilities.createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste,
 				tooltipToolbarEditPaste, bundle.getString("menu.paste"));
-		ControllerUtilities.createToolbarButtonWithImage("insertAction.png", buttonToolbarEditInsert,
-				tooltipToolbarEditInsert, bundle.getString("menu.insertnew"));
-		ControllerUtilities.createToolbarButtonWithImage("deleteAction.png", buttonToolbarEditRemove,
-				tooltipToolbarEditRemove, bundle.getString("menu.remove"));
+		ControllerUtilities.createToolbarButtonWithImage("insertAction.png",
+				buttonToolbarEditInsert, tooltipToolbarEditInsert,
+				bundle.getString("menu.insertnew"));
+		ControllerUtilities.createToolbarButtonWithImage("deleteAction.png",
+				buttonToolbarEditRemove, tooltipToolbarEditRemove, bundle.getString("menu.remove"));
 		ControllerUtilities.createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify,
 				tooltipToolbarSyllabify, bundle.getString("menu.syllabifywords"));
-		ControllerUtilities.createToolbarButtonWithImage("predictedToCorrect.png", 
+		ControllerUtilities.createToolbarButtonWithImage("predictedToCorrect.png",
 				buttonToolbarConvertPredictedToCorrectSyllabification,
-				tooltipToolbarConvertPredictedToCorrectSyllabification, 
+				tooltipToolbarConvertPredictedToCorrectSyllabification,
 				bundle.getString("menu.convertpredictedtocorrect"));
 		ControllerUtilities.createToolbarButtonWithImage("FindWord.png", buttonToolbarFindWord,
 				tooltipToolbarFindWord, bundle.getString("menu.findword"));
@@ -755,5 +745,5 @@ public class RootLayoutController implements Initializable {
 	public void setNumberOfItems(String numberOfItems) {
 		this.numberOfItems.setText(numberOfItems);
 	}
-	
+
 }

@@ -3,6 +3,8 @@
  */
 package sil.org.syllableparser.model;
 
+import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,7 +20,7 @@ import sil.org.syllableparser.model.cvapproach.CVApproach;
  */
 @XmlRootElement(name = "languageProject")
 public class LanguageProject {
-	
+
 	private CVApproach cvApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 
@@ -43,6 +45,7 @@ public class LanguageProject {
 	public void setCVApproach(CVApproach cvApproach) {
 		this.cvApproach = cvApproach;
 	}
+
 	/**
 	 * @return the word Data
 	 */
@@ -60,7 +63,6 @@ public class LanguageProject {
 		this.words = words;
 	}
 
-
 	/**
 	 * @param languageProjectLoaded
 	 */
@@ -72,6 +74,25 @@ public class LanguageProject {
 			words.add(word);
 		}
 
+	}
+
+	public void createNewWord(String word, ResourceBundle bundle) {
+		String wordContentOnly = word.trim();
+		int indexOfHashMark = word.indexOf('#');
+		if (indexOfHashMark > 0) {
+			wordContentOnly = word.substring(0, indexOfHashMark - 1);
+		} else if (indexOfHashMark == 0) {
+			wordContentOnly = "";
+		}
+		if (!wordContentOnly.isEmpty()) {
+			final String wordToCheck = wordContentOnly;
+			Word newWord = new Word(wordToCheck, "", bundle.getString("label.untested"));
+			ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord()
+					.equals(wordToCheck));
+			if (matchingWords.size() == 0) {
+				words.add(newWord);
+			}
+		}
 	}
 
 }
