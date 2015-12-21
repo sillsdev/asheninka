@@ -30,8 +30,8 @@ import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegment;
-import sil.org.syllableparser.model.cvapproach.CVSegmenter;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
+import sil.org.syllableparser.service.CVSegmenter;
 
 /**
  * @author Andy Black

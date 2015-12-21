@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sil.org.syllableparser.model.cvapproach;
+package sil.org.syllableparser.service;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,6 +9,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
+import sil.org.syllableparser.model.cvapproach.CVSyllable;
+import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 import javafx.collections.ObservableList;
 
 /**

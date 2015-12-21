@@ -1,12 +1,17 @@
 /**
  * 
  */
-package sil.org.syllableparser.model.cvapproach;
+package sil.org.syllableparser.service;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
+import sil.org.syllableparser.model.cvapproach.CVSegment;
+import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 
 /**
  * @author Andy Black

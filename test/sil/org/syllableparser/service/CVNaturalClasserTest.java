@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sil.org.syllableparser.domain;
+package sil.org.syllableparser.service;
 
 import static org.junit.Assert.*;
 
@@ -20,6 +20,8 @@ import org.junit.Test;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.service.CVNaturalClasser;
+import sil.org.syllableparser.service.CVSegmenter;
 
 /**
  * @author Andy Black
