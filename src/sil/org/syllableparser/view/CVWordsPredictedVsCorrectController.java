@@ -38,6 +38,8 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 	private TableColumn<Word, String> wordPredictedVsCorrectColumn;
 
 	private CVApproach cvApproach;
+	private ObservableList<Word> words = FXCollections.observableArrayList();
+
 	private Word currentWord;
 
 	public CVWordsPredictedVsCorrectController() {
@@ -83,13 +85,14 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * 
+	 * @param words TODO
 	 * @param cvApproachController
 	 */
-	public void setData(CVApproach cvApproachData) {
+	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
+		this.words = words;
 
-		ObservableList<Word> wordsToShow = cvApproachData.getWords().filtered(
+		ObservableList<Word> wordsToShow = words.filtered(
 				word -> (!word.getCorrectSyllabification().isEmpty()
 						&& !word.getCVPredictedSyllabification().isEmpty() && word
 						.getCVPredictedSyllabification() != word.getCorrectSyllabification()));

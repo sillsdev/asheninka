@@ -183,7 +183,8 @@ public class RootLayoutController implements Initializable {
 				+ kSyllableParserDataExtension + ")";
 		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
 		ApproachViewNavigator.setMainController(this);
-		cvApproachController.setCVApproachData(languageProject.getCVApproach());
+		cvApproachController.setCVApproachData(languageProject.getCVApproach(), 
+				languageProject.getWords());
 	}
 
 	@FXML
@@ -329,7 +330,7 @@ public class RootLayoutController implements Initializable {
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 						file.getPath()), "UTF8"));
-				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords();
+				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
 					fileWriter.write(hyphenatedWord);
 					fileWriter.write("\n");
@@ -361,7 +362,7 @@ public class RootLayoutController implements Initializable {
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 						file.getPath()), "UTF8"));
-				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords();
+				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
 					fileWriter.write(hyphenatedWord);
 					fileWriter.write("\n");
@@ -393,7 +394,7 @@ public class RootLayoutController implements Initializable {
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 						file.getPath()), "UTF8"));
-				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords();
+				ArrayList<String> hyphenatedWords = currentApproachController.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
 					fileWriter.write(hyphenatedWord);
 					fileWriter.write("\n");

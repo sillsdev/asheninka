@@ -81,7 +81,7 @@ public class CVApproachControllerTest {
 //		Scene scene = new Scene(page);
 //		dialogStage.setScene(scene);
 //		controller = loader.getController();
-		controller.setCVApproachData(cva);
+		controller.setCVApproachData(cva, cva.getWords());
 		}
 
 	/**

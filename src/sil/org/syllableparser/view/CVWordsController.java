@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -62,6 +64,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	private TextField parserResultField;
 
 	private CVApproach cvApproach;
+	private ObservableList<Word> words = FXCollections.observableArrayList();
+
 	private Word currentWord;
 
 	public CVWordsController() {
@@ -196,14 +200,15 @@ public class CVWordsController extends SylParserBaseController implements Initia
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * 
+	 * @param words TODO
 	 * @param cvApproachController
 	 */
-	public void setData(CVApproach cvApproachData) {
+	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
+		this.words = words;
 
 		// Add observable list data to the table
-		cvWordsTable.setItems(cvApproachData.getWords());
+		cvWordsTable.setItems(words);
 		setFocusOnWord(0);
 	}
 
@@ -225,8 +230,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	void handleInsertNewItem() {
 		Word newWord = new Word();
 		newWord.setCVParserResult(bundle.getString("label.untested"));
-		cvApproach.getWords().add(newWord);
-		int i = cvApproach.getWords().size() - 1;
+		words.add(newWord);
+		int i = words.size() - 1;
 		cvWordsTable.requestFocus();
 		cvWordsTable.getSelectionModel().select(i);
 		cvWordsTable.getFocusModel().focus(i);
@@ -239,10 +244,10 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	 */
 	@Override
 	void handleRemoveItem() {
-		int i = cvApproach.getWords().indexOf(currentWord);
+		int i = words.indexOf(currentWord);
 		currentWord = null;
 		if (i >= 0) {
-			cvApproach.getWords().remove(i);
+			words.remove(i);
 		}
 	}
 

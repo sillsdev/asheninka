@@ -50,10 +50,11 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	private MainApp mainApp;
 
 	private CVApproach cvApproach;
+	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private CVPredictedSyllabification currentPredictedSyllabification;
 	private ObservableList<CVPredictedSyllabification> cvPredictedSyllabifications = FXCollections
 			.observableArrayList();
-	private Word cvWord;
+	private Word word;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -107,13 +108,14 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * 
+	 * @param words TODO
 	 * @param cvApproachController
 	 */
-	public void setData(CVApproach cvApproachData) {
+	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
+		this.words = words;
 
-		for (Word cvWord : cvApproach.getWords()) {
+		for (Word cvWord : words) {
 			if (!cvWord.cvPredictedSyllabificationProperty().isEmpty().getValue()) {
 				currentPredictedSyllabification = new CVPredictedSyllabification(
 						cvWord.getCVPredictedSyllabification(), cvWord.getID());
@@ -146,10 +148,10 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	private void handleOk() {
 		for (CVPredictedSyllabification predictedSyllabification : cvPredictedSyllabifications) {
 			if (predictedSyllabification.isChecked()) {
-				int i = Word.findIndexInWordListByUuid(cvApproach.getWords(),
+				int i = Word.findIndexInWordListByUuid(words,
 						predictedSyllabification.getUuid());
-				cvWord = cvApproach.getWords().get(i);
-				cvWord.setCorrectSyllabification(predictedSyllabification
+				word = words.get(i);
+				word.setCorrectSyllabification(predictedSyllabification
 						.getPredictedSyllabification());
 			}
 		}

@@ -5,9 +5,14 @@ package sil.org.syllableparser.model.cvapproach;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlTransient;
 
+import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,13 +21,18 @@ import javafx.collections.ObservableList;
  * @author Andy Black
  *
  */
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class CVApproach {
 
+	private LanguageProject languageProject;
 	private ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
 	private ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
 	private ObservableList<CVSyllablePattern> cvSyllablePatterns = FXCollections
 			.observableArrayList();
-	private ObservableList<Word> words = FXCollections.observableArrayList();
+
+	public void afterUnmarshal(Unmarshaller u, Object parent) {
+		this.languageProject = (LanguageProject) parent;
+	}
 
 	/**
 	 * @return the cvSegmentInventoryData
@@ -68,21 +78,17 @@ public class CVApproach {
 		this.cvSyllablePatterns = cvSyllablePatterns;
 	}
 
-	/**
-	 * @return the word Data
-	 */
-	@XmlElementWrapper(name = "words")
-	@XmlElement(name = "word")
-	public ObservableList<Word> getWords() {
-		return words;
+	@XmlTransient
+	public LanguageProject getLanguageProject() {
+		return languageProject;
 	}
 
-	/**
-	 * @param word
-	 *            Data to set
-	 */
-	public void setWords(ObservableList<Word> words) {
-		this.words = words;
+	public void setLanguageProject(LanguageProject languageProject) {
+		this.languageProject = languageProject;
+	}
+
+	public ObservableList<Word> getWords() {
+		return languageProject.getWords();
 	}
 
 	/**
@@ -92,7 +98,6 @@ public class CVApproach {
 		cvSegmentInventory.clear();
 		cvNaturalClasses.clear();
 		cvSyllablePatterns.clear();
-		words.clear();
 	}
 
 	/**
@@ -114,13 +119,9 @@ public class CVApproach {
 		for (CVSyllablePattern cvSyllablePattern : cvSyllablePatternsLoadedData) {
 			cvSyllablePatterns.add(cvSyllablePattern);
 		}
-		ObservableList<Word> wordsLoadedData = cvApproachLoaded.getWords();
-		for (Word word : wordsLoadedData) {
-			words.add(word);
-		}
 	}
 
-	public ArrayList<String> getHyphenatedWords() {
+	public ArrayList<String> getHyphenatedWords(ObservableList<Word> words) {
 		int totalNumberOfWords = words.size();
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
 		for (Word word : words) {

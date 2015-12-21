@@ -48,6 +48,8 @@ public class CVApproachController extends ApproachController {
 
 	private ObservableList<ApproachView> views = FXCollections.observableArrayList();
 	private CVApproach cvApproachData;
+	private ObservableList<Word> words = FXCollections.observableArrayList();
+
 	private ApproachEditorController currentCVApproachController;
 
 	public CVApproachController(ResourceBundle bundle, Locale locale) {
@@ -69,8 +71,9 @@ public class CVApproachController extends ApproachController {
 		return views;
 	}
 
-	public void setCVApproachData(CVApproach cvApproach) {
+	public void setCVApproachData(CVApproach cvApproach, ObservableList<Word> words) {
 		this.cvApproachData = cvApproach;
+		this.words = words;
 	}
 
 	public void handleCVSegmentInventory() {
@@ -118,7 +121,7 @@ public class CVApproachController extends ApproachController {
 
 		controller.setMainApp(mainApp);
 		controller.setLocale(locale);
-		controller.setData(cvApproachData);
+		controller.setData(cvApproachData, words);
 		controller.setFocusOnWord(index);
 	}
 
@@ -131,7 +134,7 @@ public class CVApproachController extends ApproachController {
 
 		controller.setMainApp(mainApp);
 		controller.setLocale(locale);
-		controller.setData(cvApproachData);
+		controller.setData(cvApproachData, words);
 		controller.setFocusOnWord(0);
 	}
 
@@ -188,9 +191,9 @@ public class CVApproachController extends ApproachController {
 				syllabifier = new CVSyllabifier(patterns, null);
 				cvPatterns = syllabifier.getCvPatterns();
 
-				int max = cvApproachData.getWords().size();
+				int max = words.size();
 				int i = 0;
-				for (Word word : cvApproachData.getWords()) {
+				for (Word word : words) {
 					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
 					updateProgress(i++, max);
 
@@ -268,7 +271,7 @@ public class CVApproachController extends ApproachController {
 					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
-			controller.setData(cvApproachData);
+			controller.setData(cvApproachData, words);
 
 			dialogStage.showAndWait();
 
@@ -289,7 +292,7 @@ public class CVApproachController extends ApproachController {
 			Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 			stage.getIcons().add(mainApp.getNewMainIconImage());
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
-			for (Word word : cvApproachData.getWords()) {
+			for (Word word : words) {
 				listOfWords.add(word.getWord());
 			}
 			TextFields.bindAutoCompletion(dialog.getEditor(), listOfWords);
@@ -304,30 +307,21 @@ public class CVApproachController extends ApproachController {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * sil.org.syllableparser.view.ApproachController#createNewWord(java.lang
-	 * .String)
-	 */
 	@Override
 	public void createNewWord(String word) {
 		Word newWord = new Word(word, "", bundle.getString("label.untested"));
-		ObservableList<Word> words = cvApproachData.getWords();
 		ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord().equals(word));
 		if (matchingWords.size() == 0) {
 			words.add(newWord);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachController#getHyphenatedWords()
-	 */
 	@Override
-	public ArrayList<String> getHyphenatedWords() {
-		return cvApproachData.getHyphenatedWords();
+	public ArrayList<String> getHyphenatedWords(ObservableList<Word> words) {
+		return cvApproachData.getHyphenatedWords(words);
 	}
+	public ObservableList<Word> getWords() {
+		return words;
+	}
+
 }

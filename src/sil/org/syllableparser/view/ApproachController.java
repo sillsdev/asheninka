@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javafx.collections.ObservableList;
+
 import org.controlsfx.control.StatusBar;
 
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.Word;
 
 /**
  * @author Andy Black
@@ -27,7 +30,7 @@ public abstract class ApproachController {
 	abstract void handleConvertPredictedToCorrectSyllabification();
 	abstract void handleFindWord();
 	abstract void createNewWord(String word);
-	abstract ArrayList<String> getHyphenatedWords();
+	abstract ArrayList<String> getHyphenatedWords(ObservableList<Word> words);
 
 	/**
 	 * @return the mainApp

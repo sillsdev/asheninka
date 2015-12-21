@@ -43,7 +43,7 @@ public class CVApproachTest {
 		File file = new File("test/sil/org/syllableparser/testData/CVTestData.sylpdata");
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		words = cva.getWords();
+		words = languageProject.getWords();
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class CVApproachTest {
 	@Test
 	public void getHyphenatedWordsTest() {
 		assertEquals("Words size", 10026, words.size());
-		ArrayList<String> hyphenatedWords = cva.getHyphenatedWords();
+		ArrayList<String> hyphenatedWords = cva.getHyphenatedWords(words);
 		assertEquals("Hyphenated words size", 1902, hyphenatedWords.size());
 		String sHyphenatedWord = hyphenatedWords.get(0);
 		assertEquals("abba = ab=ba", "ab=ba", sHyphenatedWord);

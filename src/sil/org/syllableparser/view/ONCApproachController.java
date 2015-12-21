@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.StatusBar;
 
 import sil.org.syllableparser.model.ApproachView;
+import sil.org.syllableparser.model.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -21,7 +22,8 @@ import javafx.collections.ObservableList;
 public class ONCApproachController extends ApproachController  {
 	
 	private ObservableList<ApproachView> views = FXCollections.observableArrayList() ;
-	
+	private ObservableList<Word> words = FXCollections.observableArrayList();
+
 	public ONCApproachController(ResourceBundle bundle) {
 		super();
 		views.add(new ApproachView(bundle.getString("onc.view.segmentinventory"), "handleONCSegmentInventory"));
@@ -89,7 +91,7 @@ public class ONCApproachController extends ApproachController  {
 	 * @see sil.org.syllableparser.view.ApproachController#getHyphenatedWords()
 	 */
 	@Override
-	ArrayList<String> getHyphenatedWords() {
+	ArrayList<String> getHyphenatedWords(ObservableList<Word> words) {
 		// TODO Auto-generated method stub
 		return null;
 	}
