@@ -21,7 +21,14 @@ public class Constants {
 	public static final String PARATEXT_HYPHENATED_WORDS_TEXT_FILE = "hyphenatedWords.txt";
 	public static final String UTF8_ENCODING = "UTF8";
 	public static final String RESOURCE_LOCATION="sil.org.syllableparser.resources.SyllableParser";
-	
+	public static final String PARATEXT_HYPHENATED_WORDS_PREAMBLE = "#Hyphenated Word List v2.0\n" +
+			"#You may edit words and force them to stay as you edit them by putting an * in front of the line.\n" +
+			"#Special equate lines used by Publishing Assistant\n" +
+			"HardHyphen = \"-\"\n" +
+			"SoftHyphen = \"=\"\n" +
+			"SoftHyphenOut = \"­\"\n" +
+			"HyphenatedMarkers = \"cd iex im imi imq ip ipi ipq ipr m mi nb p p1 p2 p3 ph ph1 ph2 ph3 pi pi1 pi2 pi3 pm pmc pmo pmr\"\n"; 
+			
 	// chooser related constants
 	public static final String WORD_BOUNDARY_SYMBOL = "#";
 	public static final String FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN = "cb1";

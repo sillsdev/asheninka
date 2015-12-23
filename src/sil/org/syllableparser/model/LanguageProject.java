@@ -23,6 +23,7 @@ public class LanguageProject {
 
 	private CVApproach cvApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
+	private String sParaTExtHyphenatedWordsPreamble;
 
 	public LanguageProject() {
 		super();
@@ -63,6 +64,14 @@ public class LanguageProject {
 		this.words = words;
 	}
 
+	public String getParaTExtHyphenatedWordsPreamble() {
+		return sParaTExtHyphenatedWordsPreamble;
+	}
+
+	public void setParaTExtHyphenatedWordsPreamble(String sParaTExtHyphenatedWordsPreamble) {
+		this.sParaTExtHyphenatedWordsPreamble = sParaTExtHyphenatedWordsPreamble;
+	}
+
 	/**
 	 * @param languageProjectLoaded
 	 */
@@ -87,6 +96,25 @@ public class LanguageProject {
 		if (!wordContentOnly.isEmpty()) {
 			final String wordToCheck = wordContentOnly;
 			Word newWord = new Word(wordToCheck, "", sUntested);
+			ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord()
+					.equals(wordToCheck));
+			if (matchingWords.size() == 0) {
+				words.add(newWord);
+			}
+		}
+	}
+	
+	public void createNewWordFromParaTExt(String word, String sUntested) {
+		String wordContentOnly = word.trim();
+		String wordWithCorrectSyllabification = "";
+		int indexOfHashMark = word.indexOf('*');
+		if (indexOfHashMark == 0) {
+			wordContentOnly = word.substring(1);
+			wordWithCorrectSyllabification = wordContentOnly.replace("=", ".");
+		}
+		if (!wordContentOnly.isEmpty()) {
+			final String wordToCheck = wordContentOnly.replace("=", "");
+			Word newWord = new Word(wordToCheck, wordWithCorrectSyllabification, sUntested);
 			ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord()
 					.equals(wordToCheck));
 			if (matchingWords.size() == 0) {

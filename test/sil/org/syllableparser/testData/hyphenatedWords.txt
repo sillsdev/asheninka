@@ -1,0 +1,42 @@
+﻿#Hyphenated Word List v2.0
+#You may edit words and force them to stay as you edit them by putting an * in front of the line.
+#Special equate lines used by Publishing Assistant
+HardHyphen = "-"
+SoftHyphen = "="
+SoftHyphenOut = "­"
+HyphenatedMarkers = "cd iex im imi imq ip ipi ipq ipr m mi nb p p1 p2 p3 ph ph1 ph2 ph3 pi pi1 pi2 pi3 pm pmc pmo pmr"
+*an=mo=kwi=tsash=li=tsi=tsin=di
+*an=mon=kwi=tash=li=tshit=hin=di
+*ki=kwah=kwa=man=ti=kat=ká=lo=yá
+*ki=mo='ish=po=lol=ti=lo=skya=ya
+*ki=tsa=kwi=li=ti=kat=ka=lo=ya=ya
+*ma=ya=mish=mo=tan=kwa=ke=tsa=lík
+'
+a
+A
+Aa=rón
+*A=ba=bras=tro
+Ab=ba
+Ab=deel
+Abel
+Abías
+Abi=da
+Abi=lin=ya
+Abi=mael
+Abi=me=lec
+Abi=me=lech
+Abi=me=lek
+Abra=ham
+Abram
+ab=we=lit
+ab=we=lol=me
+ab=we=lo=shi=to
+Ab=ya=tar
+acei=te
+ACU=SA=CION
+Ada
+Adad
+Adan
+Adán
+Adar
+Adí
