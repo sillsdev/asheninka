@@ -14,6 +14,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.LanguageProject;
 
 /**
@@ -37,7 +38,7 @@ public class XMLBackEndProvider extends BackEndProvider {
 	}
 
 	private void setResourceStrings(Locale locale) {
-		ResourceBundle bundle = ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale);
+		ResourceBundle bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale);
 		sFileError = bundle.getString("file.error");
 		sFileErrorLoadHeader = bundle.getString("file.error.load.header");
 		sFileErrorLoadContent = bundle.getString("file.error.load.content");

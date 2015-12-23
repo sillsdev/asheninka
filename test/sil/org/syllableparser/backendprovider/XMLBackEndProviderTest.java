@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -27,7 +28,7 @@ public class XMLBackEndProviderTest {
 
 	XMLBackEndProvider xmlBackEndProvider;
 	LanguageProject languageProject;
-	
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -37,7 +38,7 @@ public class XMLBackEndProviderTest {
 		languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
 		xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
-		File file = new File("test/sil/org/syllableparser/testData/CVTestData.sylpdata");
+		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 	}
 
@@ -57,9 +58,9 @@ public class XMLBackEndProviderTest {
 		languageProject = xmlBackEndProvider.getLanguageProject();
 		assertNotNull(languageProject);
 		CVApproach cva = languageProject.getCVApproach();
-		assertEquals(27,  cva.getCVSegmentInventory().size());
-		assertEquals(3,  cva.getCVNaturalClasses().size());
-		assertEquals(6,  cva.getCVSyllablePatterns().size());
+		assertEquals(27, cva.getCVSegmentInventory().size());
+		assertEquals(3, cva.getCVNaturalClasses().size());
+		assertEquals(6, cva.getCVSyllablePatterns().size());
 		ObservableList<Word> words = languageProject.getWords();
 		assertEquals(10026, words.size());
 	}
@@ -68,15 +69,16 @@ public class XMLBackEndProviderTest {
 	public void saveLanguageDataToFileTest() {
 		File tempSaveFile = null;
 		try {
-			tempSaveFile = File.createTempFile("AsheninkaTestSave", ".sylpdata");
+			tempSaveFile = File.createTempFile("AsheninkaTestSave",
+					".ashedata");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-	    if (tempSaveFile != null) {
-	    	tempSaveFile.deleteOnExit();
-	    }
+		if (tempSaveFile != null) {
+			tempSaveFile.deleteOnExit();
+		}
 		xmlBackEndProvider.saveLanguageDataToFile(tempSaveFile);
 		xmlBackEndProvider.loadLanguageDataFromFile(tempSaveFile);
 		checkLoadedData();

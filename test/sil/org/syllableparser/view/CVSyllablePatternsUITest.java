@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.LanguageProject;
@@ -40,8 +41,9 @@ import sil.org.syllableparser.service.CVSegmenter;
 public class CVSyllablePatternsUITest {
 	CVApproach cva;
 	CVSyllablePatternNaturalClassChooserController controller;
-	@Rule public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
-	
+	@Rule
+	public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -50,15 +52,14 @@ public class CVSyllablePatternsUITest {
 		LanguageProject languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
-		File file = new File("test/sil/org/syllableparser/testData/CVTestData.sylpdata");
+		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		
+
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(ApproachViewNavigator.class
 				.getResource("fxml/CVSyllablePatternNaturalClassChooser.fxml"));
-		loader.setResources(ResourceBundle.getBundle(
-				"sil.org.syllableparser.resources.SyllableParser", locale));
+		loader.setResources(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
 		AnchorPane page = loader.load();
 		Stage dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -66,7 +67,7 @@ public class CVSyllablePatternsUITest {
 		dialogStage.setScene(scene);
 		controller = loader.getController();
 		controller.setData(cva);
-		}
+	}
 
 	/**
 	 * @throws java.lang.Exception
@@ -104,7 +105,7 @@ public class CVSyllablePatternsUITest {
 		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
 		assertEquals("expect C V", "C V", sPattern);
 	}
-	
+
 	@Test
 	public void addClearRemoveFromComboBoxTest() {
 		ComboBox<CVNaturalClass> cb = controller.getComboBox(0);
@@ -117,7 +118,7 @@ public class CVSyllablePatternsUITest {
 		controller.clearRemoveOptionFromComboBox(cb);
 		assertEquals("4 items in combo", 4, cb.getItems().size());
 	}
-	
+
 	@Test
 	public void wordBoundaryTest() {
 		createCCVNpattern();
@@ -142,6 +143,7 @@ public class CVSyllablePatternsUITest {
 		sPattern = controller.getNaturalClassSequenceFromComboBoxes();
 		assertEquals("expect # C #", "# C #", sPattern);
 	}
+
 	protected void createCCVNpattern() {
 		// want C C V N
 		ComboBox<CVNaturalClass> cb = controller.getComboBox(0);

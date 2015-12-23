@@ -17,6 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
 import sil.org.syllableparser.model.LanguageProject;
@@ -47,10 +48,8 @@ public class CVNaturalClasserTest {
 
 		LanguageProject languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
-		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(
-				languageProject, locale);
-		File file = new File(
-				"test/sil/org/syllableparser/testData/CVTestData.sylpdata");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
+		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
 		segmentInventory = cva.getCVSegmentInventory();
@@ -95,14 +94,12 @@ public class CVNaturalClasserTest {
 		boolean fSuccess = segmenter.segmentWord(word);
 		assertEquals("word segmented", true, fSuccess);
 		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-		fSuccess = naturalClasser
-				.convertSegmentsToNaturalClasses(segmentsInWord);
+		fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
 		assertEquals("segments converted to natural classes", success, fSuccess);
 		List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
 				.getNaturalClassesInCurrentWord();
-		assertEquals("Expect " + numberOfNaturalClasses
-				+ " natural classes in word", numberOfNaturalClasses,
-				naturalClassesInWord.size());
+		assertEquals("Expect " + numberOfNaturalClasses + " natural classes in word",
+				numberOfNaturalClasses, naturalClassesInWord.size());
 		String joined = naturalClassesInWord.stream()
 				.map(CVNaturalClassInSyllable::getNaturalClassName)
 				.collect(Collectors.joining(", "));

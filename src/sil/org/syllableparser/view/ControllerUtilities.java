@@ -38,24 +38,35 @@ public class ControllerUtilities {
 		statusBar.setText(LocalDate.now().format(formatter));
 	}
 
-	public static File getFileToOpen(MainApp mainApp, 
-			String sFileChooserFilterDescription,
-			String sFileExtensions) {
-		FileChooser fileChooser = initFileChooser(sFileChooserFilterDescription, sFileExtensions);
+	public static File getFileToOpen(MainApp mainApp, String sInitialFileName,
+			String sFileChooserFilterDescription, String sFileExtensions) {
+		FileChooser fileChooser = initFileChooser(sInitialFileName, sFileChooserFilterDescription,
+				sFileExtensions);
 
 		// Show open file dialog
 		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
 		return file;
 	}
 
+	public static File getFileToOpen(MainApp mainApp, String sFileChooserFilterDescription,
+			String sFileExtensions) {
+		return getFileToOpen(mainApp, "", sFileChooserFilterDescription, sFileExtensions);
+	}
+
 	protected static FileChooser initFileChooser(String sFileChooserFilterDescription,
 			String sFileExtensions) {
+		return initFileChooser("", sFileChooserFilterDescription, sFileExtensions);
+	}
+
+	protected static FileChooser initFileChooser(String sInitialFileName,
+			String sFileChooserFilterDescription, String sFileExtensions) {
 		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
 				sFileChooserFilterDescription, sFileExtensions);
 		fileChooser.getExtensionFilters().add(extFilter);
+		fileChooser.setInitialFileName(sInitialFileName);
 
 		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
 		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {

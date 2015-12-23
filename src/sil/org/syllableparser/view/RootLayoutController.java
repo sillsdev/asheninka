@@ -224,7 +224,8 @@ public class RootLayoutController implements Initializable {
 		// mainApp.getLanguageProject().clear();
 		// ApplicationPreferences.setLastOpenedFilePath((String) null);
 		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
-		File file = new File("src/sil/org/syllableparser/resources/starterFile.sylpdata");
+		File file = new File("src/sil/org/syllableparser/resources/starterFile."
+				+ Constants.ASHENINKA_DATA_FILE_EXTENSION);
 		mainApp.loadLanguageData(file);
 		ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		handleSaveAs();
@@ -299,8 +300,9 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleExportHyphenatedWordsAsASimpleList() {
-		FileChooser fileChooser = ControllerUtilities.initFileChooser(sFileFilterDescription + " ("
-				+ Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION + ")",
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+				bundle.getString("file.exportedhyphenationlistfilterdescription") + " ("
+						+ Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION + ")",
 				Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION);
 
 		// Show save file dialog
@@ -331,6 +333,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleExportHyphenatedWordsForParaTExt() {
 		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+				Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE,
 				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
@@ -359,8 +362,9 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleExportHyphenatedWordsForXLingPaper() {
-		FileChooser fileChooser = ControllerUtilities.initFileChooser(sFileFilterDescription + " ("
-				+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+				bundle.getString("file.xlingpaperhyphenationexceptionfilterdescription") + " ("
+						+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 
@@ -543,8 +547,9 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleImportPlainWordList() {
 		ListWordImporter importer = new ListWordImporter(languageProject);
-		File file = ControllerUtilities.getFileToOpen(mainApp, sFileFilterDescription + " ("
-				+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
+		File file = ControllerUtilities.getFileToOpen(mainApp,
+				bundle.getString("file.plainlistimportfilterdescription") + " ("
+						+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
 			// Scene scene = approachViewContent.getScene();
 			importer.importWords(file, sLabelUntested);
@@ -553,8 +558,9 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleImportParaTExtWordList() {
-		File file = ControllerUtilities.getFileToOpen(mainApp, sFileFilterDescription + " ("
-				+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
+		File file = ControllerUtilities.getFileToOpen(mainApp,
+				bundle.getString("file.paratextexportedwordlistfilterdescription") + " ("
+						+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
 		// TODO: read XML file using SAX
 		if (file != null) {
 			try (Stream<String> stream = Files.lines(file.toPath())) {
@@ -570,7 +576,8 @@ public class RootLayoutController implements Initializable {
 	private void handleImportParaTExtHyphenatedWords() {
 		ListWordImporter importer = new ListWordImporter(languageProject);
 		File file = ControllerUtilities.getFileToOpen(mainApp,
-				Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE, Constants.TEXT_FILE_EXTENSION);
+				Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE,
+				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
 			// Scene scene = approachViewContent.getScene();
 			importer.importWords(file, sLabelUntested);
@@ -585,7 +592,7 @@ public class RootLayoutController implements Initializable {
 		sChooseInterfaceLanguage = bundle.getString("dialog.chooseinterfacelanguage");
 		sChooseLanguage = bundle.getString("dialog.chooselanguage");
 		sLabelUntested = bundle.getString("label.untested");
-		
+
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle);
 

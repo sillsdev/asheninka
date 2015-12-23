@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Word;
@@ -35,9 +36,9 @@ public class ListWordImporterTest {
 		languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
-		File file = new File("src/sil/org/syllableparser/resources/starterFile.sylpdata");
+		File file = new File("src/sil/org/syllableparser/resources/starterFile.ashedata");
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
-		bundle = ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser");
+		bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION);
 	}
 
 	/**

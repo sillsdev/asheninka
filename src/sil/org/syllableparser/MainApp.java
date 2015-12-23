@@ -101,7 +101,7 @@ public class MainApp extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/fxml/RootLayout.fxml"));
-            ResourceBundle bundle = ResourceBundle.getBundle("sil.org.syllableparser.resources.SyllableParser", locale); 
+            ResourceBundle bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale); 
             loader.setResources(bundle);
             rootLayout = (BorderPane) loader.load();
             
