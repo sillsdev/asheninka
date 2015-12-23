@@ -34,7 +34,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 
 	public void importWords(File file, String sUntested) {
 		StringBuilder sb = new StringBuilder();
-		getParaTExtPreamble(file, sb);
+		extractParaTExtPreamble(file, sb);
 		languageProject.setParaTExtHyphenatedWordsPreamble(sb.toString());
 
 		// now add all words
@@ -45,7 +45,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 		}
 	}
 
-	public void getParaTExtPreamble(File file, StringBuilder sb) {
+	public void extractParaTExtPreamble(File file, StringBuilder sb) {
 		// TODO: is there a way to use a stream for this? I did not find
 		// anything online
 		try {

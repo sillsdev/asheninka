@@ -94,8 +94,8 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 
 		ObservableList<Word> wordsToShow = words.filtered(
 				word -> (!word.getCorrectSyllabification().isEmpty()
-						&& !word.getCVPredictedSyllabification().isEmpty() && word
-						.getCVPredictedSyllabification() != word.getCorrectSyllabification()));
+						&& !word.getCVPredictedSyllabification().isEmpty() && !word
+						.getCVPredictedSyllabification().equals(word.getCorrectSyllabification())));
 
 		// Add observable list data to the table
 		cvWordsPredictedVsCorrectTable.setItems(wordsToShow.sorted());

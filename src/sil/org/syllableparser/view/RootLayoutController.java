@@ -60,6 +60,7 @@ import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.service.ListWordImporter;
+import sil.org.syllableparser.service.ParaTExtHyphenatedWordsImporter;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -574,7 +575,7 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleImportParaTExtHyphenatedWords() {
-		ListWordImporter importer = new ListWordImporter(languageProject);
+		ParaTExtHyphenatedWordsImporter importer = new ParaTExtHyphenatedWordsImporter(languageProject);
 		File file = ControllerUtilities.getFileToOpen(mainApp,
 				Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE,
 				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
