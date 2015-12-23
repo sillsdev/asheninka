@@ -29,6 +29,7 @@
                   <Menu mnemonicParsing="false" text="%menu.importwords" >
                     	<MenuItem mnemonicParsing="false" onAction="#handleImportPlainWordList" text="%menu.importplainwordlist" />
                     	<MenuItem mnemonicParsing="false" onAction="#handleImportParaTExtWordList" text="%menu.importparatextwordlist" />
+                    	<MenuItem mnemonicParsing="false" onAction="#handleImportParaTExtHyphenatedWords" text="%menu.importparatexthyphenatedwords" />
                   </Menu>
                   <Menu mnemonicParsing="false" text="%menu.exporthyphenatedwords" >
                   		<MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWordsAsASimpleList" text="%menu.exporthyphenatedwordsforindesign" />

@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import javafx.scene.Cursor;
-import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.LanguageProject;
 
 /**
@@ -23,32 +22,14 @@ public class ListWordImporter extends WordImporter {
 		super();
 	}
 
-	public ListWordImporter(MainApp mainApp, LanguageProject languageProject,
-			String sFileChooserFilterDescription, String sFileExtensions) {
-		super(mainApp, languageProject, sFileChooserFilterDescription, sFileExtensions);
+	public ListWordImporter(LanguageProject languageProject) {
+		super(languageProject);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.service.WordImporter#importWords()
-	 */
-	@Override
-	public void importWords(ResourceBundle bundle) {
-		File file = null;
 
-		file = getFileToOpen();
-
-		if (file != null) {
-			//Scene scene = statusBar.getScene();
-			importWordsFromFile(file, bundle);
-		}
-
-	}
-
-	public void importWordsFromFile(File file, ResourceBundle bundle) {
+	public void importWords(File file, String sUntested) {
 		try (Stream<String> stream = Files.lines(file.toPath())) {
-			stream.forEach(s -> languageProject.createNewWord(s, bundle));
+			stream.forEach(s -> languageProject.createNewWord(s, sUntested));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

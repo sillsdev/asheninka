@@ -49,12 +49,13 @@ public class LanguageProjectTest {
 
 	@Test
 	public void createNewWordTest() {
+		String sUntested = "Untested";
 		ObservableList<Word> words = languageProject.getWords();
 		assertEquals("CV words size", 10026, words.size());
-		languageProject.createNewWord("abel", bundle);
+		languageProject.createNewWord("abel", sUntested);
 		// 'abel' should already be there so the size should not change
 		assertEquals("CV words size", 10026, words.size());
-		languageProject.createNewWord("kinkos", bundle);
+		languageProject.createNewWord("kinkos", sUntested);
 		// 'kinkos' should not already be there so the size should change
 		assertEquals("CV words size", 10027, words.size());
 		Word lastWordAdded = words.get(words.size()-1);

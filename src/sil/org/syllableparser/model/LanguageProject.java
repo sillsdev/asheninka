@@ -76,7 +76,7 @@ public class LanguageProject {
 
 	}
 
-	public void createNewWord(String word, ResourceBundle bundle) {
+	public void createNewWord(String word, String sUntested) {
 		String wordContentOnly = word.trim();
 		int indexOfHashMark = word.indexOf('#');
 		if (indexOfHashMark > 0) {
@@ -86,7 +86,7 @@ public class LanguageProject {
 		}
 		if (!wordContentOnly.isEmpty()) {
 			final String wordToCheck = wordContentOnly;
-			Word newWord = new Word(wordToCheck, "", bundle.getString("label.untested"));
+			Word newWord = new Word(wordToCheck, "", sUntested);
 			ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord()
 					.equals(wordToCheck));
 			if (matchingWords.size() == 0) {

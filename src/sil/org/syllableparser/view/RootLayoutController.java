@@ -156,7 +156,7 @@ public class RootLayoutController implements Initializable {
 	StatusBar statusBar = new StatusBar();
 	Label numberOfItems = new Label("0/0");
 
-	private static String kSyllableParserDataExtension = ".sylpdata";
+	private static String kSyllableParserDataExtension = Constants.ASHENINKA_DATA_FILE_EXTENSION;
 	private String syllableParserFilterDescription;
 	private String syllableParserFilterExtensions;
 
@@ -167,6 +167,7 @@ public class RootLayoutController implements Initializable {
 	private String sChangeInterfaceLanguage;
 	private String sChooseInterfaceLanguage;
 	private String sChooseLanguage;
+	private String sLabelUntested;
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
@@ -249,16 +250,14 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleOpen() {
-		FileChooser fileChooser = initFileChooser();
-		// Show open file dialog
-		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
-
+		File file = ControllerUtilities.getFileToOpen(mainApp, syllableParserFilterDescription,
+				syllableParserFilterExtensions);
 		if (file != null) {
 			mainApp.loadLanguageData(file);
 			String sDirectoryPath = file.getParent();
 			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
+			mainApp.updateStageTitle(file);
 		}
-		mainApp.updateStageTitle(file);
 	}
 
 	/**
@@ -280,7 +279,8 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleSaveAs() {
-		FileChooser fileChooser = initFileChooser();
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+				syllableParserFilterDescription, syllableParserFilterExtensions);
 
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
@@ -297,44 +297,23 @@ public class RootLayoutController implements Initializable {
 		}
 	}
 
-	protected FileChooser initFileChooser() {
-		FileChooser fileChooser = new FileChooser();
-
-		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-				syllableParserFilterDescription, syllableParserFilterExtensions);
-		fileChooser.getExtensionFilters().add(extFilter);
-
-		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
-		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
-			File initialDirectory = new File(sDirectoryPath);
-			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
-				fileChooser.setInitialDirectory(initialDirectory);
-			}
-		}
-		return fileChooser;
-	}
-
 	@FXML
 	private void handleExportHyphenatedWordsAsASimpleList() {
-		FileChooser fileChooser = new FileChooser();
-
-		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-				sFileFilterDescription + " (*.hyp)", "*.hyp");
-		fileChooser.getExtensionFilters().add(extFilter);
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(sFileFilterDescription + " ("
+				+ Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION + ")",
+				Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION);
 
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 
 		if (file != null) {
 			// Make sure it has the correct extension
-			if (!file.getPath().endsWith(".hyp")) {
-				file = new File(file.getPath() + ".hyp");
+			if (!file.getPath().endsWith(Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION)) {
+				file = new File(file.getPath() + Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION);
 			}
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-						file.getPath()), "UTF8"));
+						file.getPath()), Constants.UTF8_ENCODING));
 				ArrayList<String> hyphenatedWords = currentApproachController
 						.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
@@ -351,24 +330,19 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleExportHyphenatedWordsForParaTExt() {
-		FileChooser fileChooser = new FileChooser();
-
-		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("hyphenatedWords",
-				".txt");
-		fileChooser.getExtensionFilters().add(extFilter);
-
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 
 		if (file != null) {
 			// Make sure it has the correct extension
-			if (!file.getPath().endsWith("hyphenatedWords.txt")) {
-				file = new File(file.getPath() + "hyphenatedWords.txt");
+			if (!file.getPath().endsWith(Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE)) {
+				file = new File(file.getPath() + Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE);
 			}
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-						file.getPath()), "UTF8"));
+						file.getPath()), Constants.UTF8_ENCODING));
 				ArrayList<String> hyphenatedWords = currentApproachController
 						.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
@@ -385,24 +359,19 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleExportHyphenatedWordsForXLingPaper() {
-		FileChooser fileChooser = new FileChooser();
-
-		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-				sFileFilterDescription + " (*.xml)", "*.xml");
-		fileChooser.getExtensionFilters().add(extFilter);
-
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(sFileFilterDescription + " ("
+				+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 
 		if (file != null) {
 			// Make sure it has the correct extension
-			if (!file.getPath().endsWith(".xml")) {
-				file = new File(file.getPath() + ".xml");
+			if (!file.getPath().endsWith(Constants.XML_FILE_EXTENSION)) {
+				file = new File(file.getPath() + Constants.XML_FILE_EXTENSION);
 			}
 			try {
 				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-						file.getPath()), "UTF8"));
+						file.getPath()), Constants.UTF8_ENCODING));
 				ArrayList<String> hyphenatedWords = currentApproachController
 						.getHyphenatedWords(languageProject.getWords());
 				for (String hyphenatedWord : hyphenatedWords) {
@@ -573,33 +542,20 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleImportPlainWordList() {
-		ListWordImporter importer = new ListWordImporter(mainApp, languageProject,
-				sFileFilterDescription + " (*.txt)", "*.txt");
-		Scene scene = approachViewContent.getScene();
-		importer.importWords(bundle);
+		ListWordImporter importer = new ListWordImporter(languageProject);
+		File file = ControllerUtilities.getFileToOpen(mainApp, sFileFilterDescription + " ("
+				+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
+		if (file != null) {
+			// Scene scene = approachViewContent.getScene();
+			importer.importWords(file, sLabelUntested);
+		}
 	}
 
 	@FXML
 	private void handleImportParaTExtWordList() {
-
-		String sDirectoryPath;
-		FileChooser fileChooser = new FileChooser();
-
-		// Set extension filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-				sFileFilterDescription + " (*.xml)", "*.xml");
-		fileChooser.getExtensionFilters().add(extFilter);
-		sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
-		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
-			File initialDirectory = new File(sDirectoryPath);
-			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
-				fileChooser.setInitialDirectory(initialDirectory);
-			}
-		}
-
-		// Show open file dialog
-		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
-
+		File file = ControllerUtilities.getFileToOpen(mainApp, sFileFilterDescription + " ("
+				+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
+		// TODO: read XML file using SAX
 		if (file != null) {
 			try (Stream<String> stream = Files.lines(file.toPath())) {
 				stream.forEach(s -> languageProject.createNewWord(s, null));
@@ -610,6 +566,17 @@ public class RootLayoutController implements Initializable {
 		}
 	}
 
+	@FXML
+	private void handleImportParaTExtHyphenatedWords() {
+		ListWordImporter importer = new ListWordImporter(languageProject);
+		File file = ControllerUtilities.getFileToOpen(mainApp,
+				Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE, Constants.TEXT_FILE_EXTENSION);
+		if (file != null) {
+			// Scene scene = approachViewContent.getScene();
+			importer.importWords(file, sLabelUntested);
+		}
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		bundle = resources;
@@ -617,7 +584,8 @@ public class RootLayoutController implements Initializable {
 		sChangeInterfaceLanguage = bundle.getString("menu.changeinterfacelanguage");
 		sChooseInterfaceLanguage = bundle.getString("dialog.chooseinterfacelanguage");
 		sChooseLanguage = bundle.getString("dialog.chooselanguage");
-
+		sLabelUntested = bundle.getString("label.untested");
+		
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle);
 

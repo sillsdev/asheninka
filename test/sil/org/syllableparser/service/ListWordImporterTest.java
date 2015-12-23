@@ -49,11 +49,12 @@ public class ListWordImporterTest {
 
 	@Test
 	public void importWordsTest() {
+		String sUntested = "Untested";
 		assertEquals(0, languageProject.getWords().size());
-		ListWordImporter importer = new ListWordImporter(null, languageProject, "", "");
+		ListWordImporter importer = new ListWordImporter(languageProject);
 		File file = new File("test/sil/org/syllableparser/testData/NLNSP1All20151030.txt");
-		importer.importWordsFromFile(file, bundle);
-		assertEquals(10026, languageProject.getWords().size());
+		importer.importWords(file, sUntested);
+		assertEquals(26, languageProject.getWords().size());
 		ObservableList<Word> words = languageProject.getWords(); 
 		Word word = words.get(0);
 		assertEquals("a", word.getWord());
@@ -63,8 +64,8 @@ public class ListWordImporterTest {
 		assertEquals("aceite", word.getWord());
 		// now load it again: the size should not change
 		file = new File("test/sil/org/syllableparser/testData/NLNSP1All20151030.txt");
-		importer.importWordsFromFile(file, bundle);
-		assertEquals(10026, languageProject.getWords().size());
+		importer.importWords(file, sUntested);
+		assertEquals(26, languageProject.getWords().size());
 	}
 
 }
