@@ -60,6 +60,7 @@ import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.service.ListWordImporter;
+import sil.org.syllableparser.service.ParaTExtExportedWordListImporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsImporter;
 
 /**
@@ -184,9 +185,9 @@ public class RootLayoutController implements Initializable {
 		cvApproachController.setMainApp(mainApp);
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
-		syllableParserFilterDescription = sFileFilterDescription + " (*"
+		syllableParserFilterDescription = sFileFilterDescription + " (*."
 				+ kSyllableParserDataExtension + ")";
-		syllableParserFilterExtensions = "*" + kSyllableParserDataExtension;
+		syllableParserFilterExtensions = "*." + kSyllableParserDataExtension;
 		ApproachViewNavigator.setMainController(this);
 		cvApproachController.setCVApproachData(languageProject.getCVApproach(),
 				languageProject.getWords());
@@ -225,8 +226,7 @@ public class RootLayoutController implements Initializable {
 		// mainApp.getLanguageProject().clear();
 		// ApplicationPreferences.setLastOpenedFilePath((String) null);
 		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
-		File file = new File("src/sil/org/syllableparser/resources/starterFile."
-				+ Constants.ASHENINKA_DATA_FILE_EXTENSION);
+		File file = new File(Constants.ASHENINKA_STARTER_FILE);
 		mainApp.loadLanguageData(file);
 		ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		handleSaveAs();
@@ -562,15 +562,8 @@ public class RootLayoutController implements Initializable {
 		File file = ControllerUtilities.getFileToOpen(mainApp,
 				bundle.getString("file.paratextexportedwordlistfilterdescription") + " ("
 						+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
-		// TODO: read XML file using SAX
-		if (file != null) {
-			try (Stream<String> stream = Files.lines(file.toPath())) {
-				stream.forEach(s -> languageProject.createNewWord(s, null));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		ParaTExtExportedWordListImporter importer = new ParaTExtExportedWordListImporter(languageProject);
+		importer.importWords(file, "Untested");
 	}
 
 	@FXML

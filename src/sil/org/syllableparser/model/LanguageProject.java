@@ -96,11 +96,7 @@ public class LanguageProject {
 		if (!wordContentOnly.isEmpty()) {
 			final String wordToCheck = wordContentOnly;
 			Word newWord = new Word(wordToCheck, "", sUntested);
-			ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord()
-					.equals(wordToCheck));
-			if (matchingWords.size() == 0) {
-				words.add(newWord);
-			}
+			addWordIfDistinct(wordToCheck, newWord);
 		}
 	}
 	
@@ -115,12 +111,25 @@ public class LanguageProject {
 		if (!wordContentOnly.isEmpty()) {
 			final String wordToCheck = wordContentOnly.replace("=", "");
 			Word newWord = new Word(wordToCheck, wordWithCorrectSyllabification, sUntested);
-			ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord()
-					.equals(wordToCheck));
-			if (matchingWords.size() == 0) {
-				words.add(newWord);
-			}
+			addWordIfDistinct(wordToCheck, newWord);
 		}
+	}
+
+	public void addWordIfDistinct(final String wordToCheck, Word newWord) {
+		ObservableList<Word> matchingWords = words.filtered(extantWord -> extantWord.getWord()
+				.equals(wordToCheck));
+		if (matchingWords.size() == 0) {
+			words.add(newWord);
+		}
+	}
+
+	/**
+	 * @param word
+	 * @param sUntested TODO
+	 */
+	public void createNewWordFromParaTExt(Word word, String sUntested) {
+		word.setCVParserResult(sUntested);
+		addWordIfDistinct(word.getWord(), word);
 	}
 
 }

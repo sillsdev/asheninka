@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wordlist>
+  <item word="a" count="13" hyphenation="a" hyphenationApproved="True" morphology="a" morphologyApproved="True" spelling="Correct" />
+  <item word="aarón" count="15" hyphenation="Aa=rón" hyphenationApproved="True" morphology="aarón" morphologyApproved="True" spelling="Correct" specificcase="Aarón" />
+  <item word="abadón" count="1" hyphenation="Aba=dón" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abanalon" count="1" hyphenation="aba=na=lon" hyphenationApproved="True" morphology="a+ banalon" morphologyApproved="False" spelling="Unknown" />
+  <item word="abanobal" count="1" hyphenation="aba=no=bal" hyphenationApproved="True" morphology="a+ bano +bal" morphologyApproved="False" spelling="Unknown" />
+  <item word="abanon" count="8" hyphenation="aba=non" hyphenationApproved="True" morphology="a+ bano +n" morphologyApproved="False" spelling="Unknown" />
+  <item word="abba" count="1" hyphenation="Ab=ba" hyphenationApproved="True" morphology="abba" morphologyApproved="False" spelling="Unknown" />
+  <item word="abej" count="128" hyphenation="abej" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abel" count="7" hyphenation="Abel" hyphenationApproved="True" morphology="abel" morphologyApproved="False" spelling="Unknown" />
+  <item word="abey" count="2" hyphenation="abey" hyphenationApproved="True" morphology="abey" morphologyApproved="True" spelling="Unknown" />
+  <item word="abeyomel" count="4" hyphenation="abeyo=mel" hyphenationApproved="True" morphology="a+ beyomel" morphologyApproved="False" spelling="Unknown" />
+  <item word="abías" count="3" hyphenation="Abías" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abiatar" count="1" hyphenation="Abia=tar" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abihud" count="2" hyphenation="Abi=hud" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abilene" count="3" hyphenation="Abi=le=ne" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abimelec" count="1" hyphenation="Abi=me=lec" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abin" count="3" hyphenation="abin" hyphenationApproved="True" morphology="abin" morphologyApproved="False" spelling="Unknown" />
+  <item word="abiniꞌan" count="1" hyphenation="abi=ni=ꞌan" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abiram" count="1" hyphenation="Abi=ram" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abiꞌ" count="13" hyphenation="abiꞌ" hyphenationApproved="False" spelling="Unknown" />
+  <item word="about" count="1" hyphenation="about" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abraham" count="122" hyphenation="Ab=ra=ham" hyphenationApproved="True" spelling="Unknown" />
+  <item word="absalón" count="1" hyphenation="Ab=sa=lón" hyphenationApproved="True" spelling="Unknown" />
+  <item word="abße" count="21" hyphenation="abße" hyphenationApproved="True" spelling="Unknown" />
+</wordlist>

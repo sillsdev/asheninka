@@ -51,9 +51,10 @@ public class WordImporterTest {
 	@Test
 	public void importWordsTest() {
 		String sUntested = "Untested";
+		String sFileName = "test/sil/org/syllableparser/testData/NLNSP1All20151030.txt";
 		assertEquals(0, languageProject.getWords().size());
 		ListWordImporter importer = new ListWordImporter(languageProject);
-		File file = new File("test/sil/org/syllableparser/testData/NLNSP1All20151030.txt");
+		File file = new File(sFileName);
 		importer.importWords(file, sUntested);
 		assertEquals(26, languageProject.getWords().size());
 		ObservableList<Word> words = languageProject.getWords(); 
@@ -64,7 +65,7 @@ public class WordImporterTest {
 		word = words.get(19);
 		assertEquals("aceite", word.getWord());
 		// now load it again: the size should not change
-		file = new File("test/sil/org/syllableparser/testData/NLNSP1All20151030.txt");
+		file = new File(sFileName);
 		importer.importWords(file, sUntested);
 		assertEquals(26, languageProject.getWords().size());
 	}
@@ -72,14 +73,11 @@ public class WordImporterTest {
 	@Test
 	public void ImportParaTExtHyphenatedWordsTest() {
 		String sUntested = "Untested";
+		String sFileName = "test/sil/org/syllableparser/testData/hyphenatedWords.txt";
 		assertEquals(0, languageProject.getWords().size());
 		ParaTExtHyphenatedWordsImporter importer = new ParaTExtHyphenatedWordsImporter(languageProject);
-		File file = new File("test/sil/org/syllableparser/testData/hyphenatedWords.txt");
+		File file = new File(sFileName);
 		importer.importWords(file, sUntested);
-//		System.out.println("got:");
-//		System.out.print(languageProject.getParaTExtHyphenatedWordsPreamble());
-//		System.out.println("expected:");
-//		System.out.print(Constants.PARATEXT_HYPHENATED_WORDS_PREAMBLE);
 		assertEquals(Constants.PARATEXT_HYPHENATED_WORDS_PREAMBLE,
 				languageProject.getParaTExtHyphenatedWordsPreamble());
 		assertEquals(35, languageProject.getWords().size());
@@ -87,15 +85,76 @@ public class WordImporterTest {
 		Word word = words.get(0);
 		assertEquals("anmokwitsashlitsitsindi", word.getWord());
 		assertEquals("an.mo.kwi.tsash.li.tsi.tsin.di", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
 		word = words.get(1);
 		assertEquals("anmonkwitashlitshithindi", word.getWord());
 		assertEquals("an.mon.kwi.tash.li.tshit.hin.di", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
 		word = words.get(19);
 		assertEquals("Abimelech", word.getWord());
 		assertEquals("", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
 		// now load it again: the size should not change
-		file = new File("test/sil/org/syllableparser/testData/hyphenatedWords.txt");
+		file = new File(sFileName);
 		importer.importWords(file, sUntested);
 		assertEquals(35, languageProject.getWords().size());
+	}
+
+	// For ParaText version 7.5	
+	@Test
+	public void ImportParaTExtExportedWordList75Test() {
+		String sUntested = "Untested";
+		String sFileName = "test/sil/org/syllableparser/testData/ParaTExt7.5ExportedWordList.xml";
+		assertEquals(0, languageProject.getWords().size());
+		ParaTExtExportedWordListImporter importer = new ParaTExtExportedWordListImporter(languageProject);
+		File file = new File(sFileName);
+		importer.importWords(file, sUntested);
+		assertEquals(24, languageProject.getWords().size());
+		ObservableList<Word> words = languageProject.getWords(); 
+		Word word = words.get(0);
+		assertEquals("abel", word.getWord());
+		assertEquals("", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
+		word = words.get(1);
+		assertEquals("abida", word.getWord());
+		assertEquals("", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
+		word = words.get(19);
+		assertEquals("ahwisti", word.getWord());
+		assertEquals("", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
+		// now load it again: the size should not change
+		file = new File(sFileName);
+		importer.importWords(file, sUntested);
+		assertEquals(24, languageProject.getWords().size());
+	}
+
+	// For ParaText version 7.6	
+	@Test
+	public void ImportParaTExtExportedWordList76Test() {
+		String sUntested = "Untested";
+		String sFileName = "test/sil/org/syllableparser/testData/ParaTExt7.6ExportedWordList.xml";
+		assertEquals(0, languageProject.getWords().size());
+		ParaTExtExportedWordListImporter importer = new ParaTExtExportedWordListImporter(languageProject);
+		File file = new File(sFileName);
+		importer.importWords(file, sUntested);
+		assertEquals(24, languageProject.getWords().size());
+		ObservableList<Word> words = languageProject.getWords(); 
+		Word word = words.get(0);
+		assertEquals("a", word.getWord());
+		assertEquals("a", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
+		word = words.get(1);
+		assertEquals("aarón", word.getWord());
+		assertEquals("Aa.rón", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
+		word = words.get(19);
+		assertEquals("abi\ua78c", word.getWord());
+		assertEquals("", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
+		// now load it again: the size should not change
+		file = new File(sFileName);
+		importer.importWords(file, sUntested);
+		assertEquals(24, languageProject.getWords().size());
 	}
 }
