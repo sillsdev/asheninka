@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
 
+import sil.org.syllableparser.model.Approach;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Word;
 import javafx.collections.FXCollections;
@@ -22,7 +23,7 @@ import javafx.collections.ObservableList;
  *
  */
 //@XmlAccessorType(XmlAccessType.FIELD)
-public class CVApproach {
+public class CVApproach extends Approach {
 
 	private LanguageProject languageProject;
 	private ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
@@ -142,5 +143,4 @@ public class CVApproach {
 
 		return hyphenatedWords;
 	}
-
 }

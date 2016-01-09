@@ -82,7 +82,7 @@ public class ONCApproachController extends ApproachController  {
 	 * @see sil.org.syllableparser.view.ApproachController#getHyphenatedWords()
 	 */
 	@Override
-	ArrayList<String> getHyphenatedWords(ObservableList<Word> words) {
+	public ArrayList<String> getHyphenatedWords(ObservableList<Word> words) {
 		// TODO Auto-generated method stub
 		return null;
 	}

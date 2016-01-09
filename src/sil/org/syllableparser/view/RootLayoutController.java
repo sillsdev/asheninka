@@ -59,6 +59,7 @@ import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.service.ListWordExporter;
 import sil.org.syllableparser.service.ListWordImporter;
 import sil.org.syllableparser.service.ParaTExtExportedWordListImporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsImporter;
@@ -314,20 +315,8 @@ public class RootLayoutController implements Initializable {
 			if (!file.getPath().endsWith(Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION)) {
 				file = new File(file.getPath() + Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION);
 			}
-			try {
-				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-						file.getPath()), Constants.UTF8_ENCODING));
-				ArrayList<String> hyphenatedWords = currentApproachController
-						.getHyphenatedWords(languageProject.getWords());
-				for (String hyphenatedWord : hyphenatedWords) {
-					fileWriter.write(hyphenatedWord);
-					fileWriter.write("\n");
-				}
-				fileWriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			ListWordExporter exporter = new ListWordExporter(languageProject);
+			exporter.exportWords(file, currentApproachController);
 		}
 	}
 

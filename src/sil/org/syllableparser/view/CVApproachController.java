@@ -314,5 +314,4 @@ public class CVApproachController extends ApproachController {
 	public ObservableList<Word> getWords() {
 		return words;
 	}
-
 }

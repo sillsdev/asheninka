@@ -29,7 +29,7 @@ public abstract class ApproachController {
 	abstract void handleSyllabifyWords(StatusBar statusBar);
 	abstract void handleConvertPredictedToCorrectSyllabification();
 	abstract void handleFindWord();
-	abstract ArrayList<String> getHyphenatedWords(ObservableList<Word> words);
+	public abstract ArrayList<String> getHyphenatedWords(ObservableList<Word> words);
 
 	/**
 	 * @return the mainApp
