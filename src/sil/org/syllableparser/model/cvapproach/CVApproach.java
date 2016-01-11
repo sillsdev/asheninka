@@ -168,4 +168,27 @@ public class CVApproach extends Approach {
 
 		return hyphenatedWords;
 	}
+	
+	public ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words) {
+		int totalNumberOfWords = words.size();
+		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
+		for (Word word : words) {
+			String sSyllabifiedWord = word.getCorrectSyllabification();
+			if (sSyllabifiedWord == null || sSyllabifiedWord.isEmpty()) {
+				// no overt correct syllabified word present; try predicted
+				sSyllabifiedWord = word.getCVPredictedSyllabification();
+				if (sSyllabifiedWord != null) {
+					// predicted has something
+					if (sSyllabifiedWord.isEmpty()) {
+						// skip this one
+						continue;
+					}
+				}
+			}
+			hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.", "-"));
+		}
+
+		return hyphenatedWords;
+	}
+
 }

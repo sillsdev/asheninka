@@ -31,7 +31,8 @@ public abstract class ApproachController {
 	abstract void handleFindWord();
 	public abstract ArrayList<String> getHyphenatedWords(ObservableList<Word> words);
 	public abstract ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words);
-
+	public abstract ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words);
+	
 	/**
 	 * @return the mainApp
 	 */

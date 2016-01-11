@@ -94,6 +94,12 @@ public class ONCApproachController extends ApproachController  {
 	}
 
 	@Override
+	public ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	void handleConvertPredictedToCorrectSyllabification() {
 		
 	}

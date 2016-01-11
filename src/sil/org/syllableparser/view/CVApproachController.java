@@ -317,6 +317,11 @@ public class CVApproachController extends ApproachController {
 		return cvApproachData.getParaTExtHyphenatedWords(words);
 	}
 	
+	@Override
+	public ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words) {
+		return cvApproachData.getXLingPaperHyphenatedWords(words);
+	}
+
 	public ObservableList<Word> getWords() {
 		return words;
 	}

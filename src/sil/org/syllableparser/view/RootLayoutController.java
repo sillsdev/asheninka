@@ -64,6 +64,7 @@ import sil.org.syllableparser.service.ListWordImporter;
 import sil.org.syllableparser.service.ParaTExtExportedWordListImporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsExporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsImporter;
+import sil.org.syllableparser.service.XLingPaperHyphenatedWordExporter;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -343,8 +344,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleExportHyphenatedWordsForXLingPaper() {
 		FileChooser fileChooser = ControllerUtilities.initFileChooser(
-				bundle.getString("file.xlingpaperhyphenationexceptionfilterdescription") + " ("
-						+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
+				bundle.getString("file.xlingpaperhyphenationexceptionfilterdescription") + " (*"
+						+ Constants.XML_FILE_EXTENSION + ")", "*" + Constants.XML_FILE_EXTENSION);
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 
@@ -353,20 +354,9 @@ public class RootLayoutController implements Initializable {
 			if (!file.getPath().endsWith(Constants.XML_FILE_EXTENSION)) {
 				file = new File(file.getPath() + Constants.XML_FILE_EXTENSION);
 			}
-			try {
-				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-						file.getPath()), Constants.UTF8_ENCODING));
-				ArrayList<String> hyphenatedWords = currentApproachController
-						.getHyphenatedWords(languageProject.getWords());
-				for (String hyphenatedWord : hyphenatedWords) {
-					fileWriter.write(hyphenatedWord);
-					fileWriter.write("\n");
-				}
-				fileWriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			XLingPaperHyphenatedWordExporter exporter = new XLingPaperHyphenatedWordExporter(
+					languageProject);
+			exporter.exportWords(file, currentApproachController);
 		}
 	}
 
@@ -539,8 +529,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleImportParaTExtWordList() {
 		File file = ControllerUtilities.getFileToOpen(mainApp,
-				bundle.getString("file.paratextexportedwordlistfilterdescription") + " ("
-						+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
+				bundle.getString("file.paratextexportedwordlistfilterdescription") + " (*"
+						+ Constants.XML_FILE_EXTENSION + ")", "*" + Constants.XML_FILE_EXTENSION);
 		ParaTExtExportedWordListImporter importer = new ParaTExtExportedWordListImporter(
 				languageProject);
 		importer.importWords(file, "Untested");

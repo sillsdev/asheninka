@@ -161,4 +161,41 @@ public class WordExporterTest {
 		assertEquals("HyphenatedMarkers = \"cd iex im imi imq ip ipi ipq ipr m mi nb p p1 p2 p3 ph ph1 ph2 ph3 pi pi1 pi2 pi3 pm pmc pmo pmr\"", line);
 	}
 
+	@Test
+	public void exportWordsAsXLingPaperHyphenatedWordsTest() {
+		long lineCount = 0;
+		XLingPaperHyphenatedWordExporter exporter = new XLingPaperHyphenatedWordExporter(languageProject);
+		exporter.exportWords(tempSaveFile, cva);
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+			lineCount = stream.count();
+			assertEquals(1904,  lineCount);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			InputStreamReader reader = new InputStreamReader(new FileInputStream(tempSaveFile),
+					Constants.UTF8_ENCODING);
+			BufferedReader bufr = new BufferedReader(reader);
+			String line = bufr.readLine();		
+			assertEquals("<exceptions>", line);
+			line = bufr.readLine();
+			assertEquals("<word>ab-ba</word>", line);
+			line = bufr.readLine();
+			assertEquals("<word>a-ba-bras-tro</word>", line);
+			line = bufr.readLine();
+			assertEquals("<word>ba-bel</word>", line);
+			line = bufr.readLine();
+			assertEquals("<word>ba-ka</word>", line);
+			for (int i = 5; i < 1903; i++) {
+				line = bufr.readLine();
+			}
+			line = bufr.readLine();		
+			assertEquals("</exceptions>", line);
+			bufr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
