@@ -78,7 +78,6 @@ public class WordExporterTest {
 	public void tearDown() throws Exception {
 	}
 
-	// make sure the setup is what we expect
 	@Test
 	public void exportWordsAsSimpleListTest() {
 		long lineCount = 0;
@@ -95,8 +94,7 @@ public class WordExporterTest {
 			InputStreamReader reader = new InputStreamReader(new FileInputStream(tempSaveFile),
 					Constants.UTF8_ENCODING);
 			BufferedReader bufr = new BufferedReader(reader);
-			// not sure why, but are getting something in the first character position
-			String line = bufr.readLine();
+			String line = bufr.readLine();		
 			assertEquals("ab=ba", line);
 			line = bufr.readLine();
 			assertEquals("a=ba=bras=tro", line);
@@ -109,6 +107,58 @@ public class WordExporterTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void exportWordsAsParaTExtHyphenatedWordsTest() {
+		long lineCount = 0;
+		ParaTExtHyphenatedWordsExporter exporter = new ParaTExtHyphenatedWordsExporter(languageProject);
+		exporter.exportWords(tempSaveFile, cva);
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+			lineCount = stream.count();
+			assertEquals(1909,  lineCount);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			InputStreamReader reader = new InputStreamReader(new FileInputStream(tempSaveFile),
+					Constants.UTF8_ENCODING);
+			BufferedReader bufr = new BufferedReader(reader);
+			// not sure why, but are getting something in the first character position
+			String line = bufr.readLine();
+			checkParaTExtPreambleContent(bufr, line);
+			// now check for some words
+			line = bufr.readLine();		
+			assertEquals("*ab=ba", line);
+			line = bufr.readLine();
+			assertEquals("*a=ba=bras=tro", line);
+			line = bufr.readLine();
+			assertEquals("ba=bel", line);
+			line = bufr.readLine();
+			assertEquals("ba=ka", line);
+			bufr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
+	private void checkParaTExtPreambleContent(BufferedReader bufr, String line) throws IOException {
+		assertEquals("#Hyphenated Word List v2.0", line);
+		line = bufr.readLine();		
+		assertEquals("#You may edit words and force them to stay as you edit them by putting an * in front of the line.", line);
+		line = bufr.readLine();		
+		assertEquals("#Special equate lines used by Publishing Assistant", line);
+		line = bufr.readLine();		
+		assertEquals("HardHyphen = \"-\"", line);
+		line = bufr.readLine();		
+		assertEquals("SoftHyphen = \"=\"", line);
+		line = bufr.readLine();		
+		assertEquals("SoftHyphenOut = \"­\"", line);
+		line = bufr.readLine();		
+		assertEquals("HyphenatedMarkers = \"cd iex im imi imq ip ipi ipq ipr m mi nb p p1 p2 p3 ph ph1 ph2 ph3 pi pi1 pi2 pi3 pm pmc pmo pmr\"", line);
 	}
 
 }

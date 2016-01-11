@@ -62,6 +62,7 @@ import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.service.ListWordExporter;
 import sil.org.syllableparser.service.ListWordImporter;
 import sil.org.syllableparser.service.ParaTExtExportedWordListImporter;
+import sil.org.syllableparser.service.ParaTExtHyphenatedWordsExporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsImporter;
 
 /**
@@ -303,9 +304,9 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleExportHyphenatedWordsAsASimpleList() {
 		FileChooser fileChooser = ControllerUtilities.initFileChooser(
-				bundle.getString("file.exportedhyphenationlistfilterdescription") + " ("
-						+ Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION + ")",
-				Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION);
+				bundle.getString("file.exportedhyphenationlistfilterdescription") + " (*"
+						+ Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION + ")", "*"
+						+ Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION);
 
 		// Show save file dialog
 		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
@@ -333,20 +334,9 @@ public class RootLayoutController implements Initializable {
 			if (!file.getPath().endsWith(Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE)) {
 				file = new File(file.getPath() + Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE);
 			}
-			try {
-				Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-						file.getPath()), Constants.UTF8_ENCODING));
-				ArrayList<String> hyphenatedWords = currentApproachController
-						.getHyphenatedWords(languageProject.getWords());
-				for (String hyphenatedWord : hyphenatedWords) {
-					fileWriter.write(hyphenatedWord);
-					fileWriter.write("\n");
-				}
-				fileWriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			ParaTExtHyphenatedWordsExporter exporter = new ParaTExtHyphenatedWordsExporter(
+					languageProject);
+			exporter.exportWords(file, currentApproachController);
 		}
 	}
 
@@ -551,13 +541,15 @@ public class RootLayoutController implements Initializable {
 		File file = ControllerUtilities.getFileToOpen(mainApp,
 				bundle.getString("file.paratextexportedwordlistfilterdescription") + " ("
 						+ Constants.XML_FILE_EXTENSION + ")", Constants.XML_FILE_EXTENSION);
-		ParaTExtExportedWordListImporter importer = new ParaTExtExportedWordListImporter(languageProject);
+		ParaTExtExportedWordListImporter importer = new ParaTExtExportedWordListImporter(
+				languageProject);
 		importer.importWords(file, "Untested");
 	}
 
 	@FXML
 	private void handleImportParaTExtHyphenatedWords() {
-		ParaTExtHyphenatedWordsImporter importer = new ParaTExtHyphenatedWordsImporter(languageProject);
+		ParaTExtHyphenatedWordsImporter importer = new ParaTExtHyphenatedWordsImporter(
+				languageProject);
 		File file = ControllerUtilities.getFileToOpen(mainApp,
 				Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE,
 				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);

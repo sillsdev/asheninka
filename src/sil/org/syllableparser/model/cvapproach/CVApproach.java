@@ -143,4 +143,29 @@ public class CVApproach extends Approach {
 
 		return hyphenatedWords;
 	}
+
+	public ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words) {
+		int totalNumberOfWords = words.size();
+		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
+		for (Word word : words) {
+			String sSyllabifiedWord = word.getCorrectSyllabification();
+			if (sSyllabifiedWord == null || sSyllabifiedWord.isEmpty()) {
+				// no overt correct syllabified word present; try predicted
+				sSyllabifiedWord = word.getCVPredictedSyllabification();
+				if (sSyllabifiedWord != null) {
+					// predicted has something
+					if (sSyllabifiedWord.isEmpty()) {
+						// skip this one
+						continue;
+					}
+				}
+			} else {
+				// is correct so mark it with an initial asterisk
+				sSyllabifiedWord = "*" + sSyllabifiedWord;
+			}
+			hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.", "="));
+		}
+
+		return hyphenatedWords;
+	}
 }

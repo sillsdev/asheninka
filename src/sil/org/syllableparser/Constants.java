@@ -15,7 +15,7 @@ public class Constants {
 	public static final String ASHENINKA_STARTER_FILE = "src/sil/org/syllableparser/resources/starterFile.ashedata";
 	public static final String ASHENINKA_DATA_FILE_EXTENSION = "ashedata";
 	public static final String ASHENINKA_BACKUP_FILE_EXTENSION = "ashebackup";
-	public static final String SIMPLE_LIST_HYPHENATION_FILE_EXTENSION = "*.hyp";
+	public static final String SIMPLE_LIST_HYPHENATION_FILE_EXTENSION = ".hyp";
 	public static final String TEXT_FILE_EXTENSION = "*.txt";
 	public static final String XML_FILE_EXTENSION = "*.xml";
 	public static final String PARATEXT_HYPHENATED_WORDS_FILE = "hyphenatedWords";

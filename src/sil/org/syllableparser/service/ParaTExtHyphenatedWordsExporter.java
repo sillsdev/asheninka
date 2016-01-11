@@ -20,26 +20,26 @@ import sil.org.syllableparser.view.ApproachController;
  * @author Andy Black
  *
  */
-public class ListWordExporter extends WordExporter {
+public class ParaTExtHyphenatedWordsExporter extends WordExporter {
 
-	public ListWordExporter() {
+	public ParaTExtHyphenatedWordsExporter() {
 		super();
 	}
 
-	public ListWordExporter(LanguageProject languageProject) {
+	public ParaTExtHyphenatedWordsExporter(LanguageProject languageProject) {
 		super(languageProject);
 	}
 
 	@Override
 	public void exportWords(File file, Approach approach) {
-		ArrayList<String> hyphenatedWords = approach.getHyphenatedWords(languageProject
+		ArrayList<String> hyphenatedWords = approach.getParaTExtHyphenatedWords(languageProject
 				.getWords());
 		exportWordsToFile(file, hyphenatedWords);
 	}
 	
 	@Override
 	public void exportWords(File file, ApproachController controller) {
-		ArrayList<String> hyphenatedWords = controller.getHyphenatedWords(languageProject
+		ArrayList<String> hyphenatedWords = controller.getParaTExtHyphenatedWords(languageProject
 				.getWords());
 		exportWordsToFile(file, hyphenatedWords);
 	}
@@ -49,6 +49,7 @@ public class ListWordExporter extends WordExporter {
 			Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 					file.getPath()), Constants.UTF8_ENCODING));
 	
+			fileWriter.write(Constants.PARATEXT_HYPHENATED_WORDS_PREAMBLE);
 			for (String hyphenatedWord : hyphenatedWords) {
 				fileWriter.write(hyphenatedWord);
 				fileWriter.write("\n");

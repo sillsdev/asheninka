@@ -88,6 +88,12 @@ public class ONCApproachController extends ApproachController  {
 	}
 	
 	@Override
+	public ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	void handleConvertPredictedToCorrectSyllabification() {
 		
 	}
