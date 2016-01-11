@@ -207,7 +207,7 @@
     </cvApproach>
     <words>
         <word id="1eafe981-ceee-4b6e-a33f-e0a5aa7de728">
-            <correctSyllabification>ab.ba</correctSyllabification>
+            <correctSyllabification>ab.baꞌ</correctSyllabification>
             <cvParserResult>Failure: could not parse natural classes into syllables</cvParserResult>
             <word>abba</word>
             <cvPredictedSyllabification/>
@@ -60327,7 +60327,7 @@
             <cvPredictedSyllabification>yu.di.yo</cvPredictedSyllabification>
         </word>
         <word id="ed26337f-be6d-448e-825d-e17d926a284f">
-            <correctSyllabification/>
+            <correctSyllabification>yu’.di.yo'</correctSyllabification>
             <cvParserResult>Failure: could not parse into segments</cvParserResult>
             <word>yudiyo'</word>
             <cvPredictedSyllabification/>

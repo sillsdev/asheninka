@@ -85,7 +85,7 @@ public class WordExporterTest {
 		exporter.exportWords(tempSaveFile, cva);
 		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
 			lineCount = stream.count();
-			assertEquals(1902,  lineCount);
+			assertEquals(1903,  lineCount);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -95,7 +95,7 @@ public class WordExporterTest {
 					Constants.UTF8_ENCODING);
 			BufferedReader bufr = new BufferedReader(reader);
 			String line = bufr.readLine();		
-			assertEquals("ab=ba", line);
+			assertEquals("ab=ba\ua78c", line);
 			line = bufr.readLine();
 			assertEquals("a=ba=bras=tro", line);
 			line = bufr.readLine();
@@ -116,7 +116,7 @@ public class WordExporterTest {
 		exporter.exportWords(tempSaveFile, cva);
 		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
 			lineCount = stream.count();
-			assertEquals(1909,  lineCount);
+			assertEquals(1910,  lineCount);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -130,7 +130,7 @@ public class WordExporterTest {
 			checkParaTExtPreambleContent(bufr, line);
 			// now check for some words
 			line = bufr.readLine();		
-			assertEquals("*ab=ba", line);
+			assertEquals("*ab=ba\ua78c", line);
 			line = bufr.readLine();
 			assertEquals("*a=ba=bras=tro", line);
 			line = bufr.readLine();
@@ -168,7 +168,7 @@ public class WordExporterTest {
 		exporter.exportWords(tempSaveFile, cva);
 		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
 			lineCount = stream.count();
-			assertEquals(1904,  lineCount);
+			assertEquals(1907,  lineCount);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -180,7 +180,7 @@ public class WordExporterTest {
 			String line = bufr.readLine();		
 			assertEquals("<exceptions>", line);
 			line = bufr.readLine();
-			assertEquals("<word>ab-ba</word>", line);
+			assertEquals("<word>ab-ba\ua78c</word>", line);
 			line = bufr.readLine();
 			assertEquals("<word>a-ba-bras-tro</word>", line);
 			line = bufr.readLine();
@@ -190,7 +190,13 @@ public class WordExporterTest {
 			for (int i = 5; i < 1903; i++) {
 				line = bufr.readLine();
 			}
-			line = bufr.readLine();		
+			line = bufr.readLine();
+			assertEquals("<word>yu\u2019-di-yo'</word>", line);
+			line = bufr.readLine();
+			assertEquals("<wordformingcharacter>'</wordformingcharacter>", line);
+			line = bufr.readLine();
+			assertEquals("<wordformingcharacter>\u2019</wordformingcharacter>", line);
+			line = bufr.readLine();
 			assertEquals("</exceptions>", line);
 			bufr.close();
 		} catch (IOException e) {

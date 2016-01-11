@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.IntStream;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.Approach;
@@ -36,7 +41,7 @@ public class XLingPaperHyphenatedWordExporter extends WordExporter {
 				.getWords());
 		exportWordsToFile(file, hyphenatedWords);
 	}
-	
+
 	@Override
 	public void exportWords(File file, ApproachController controller) {
 		ArrayList<String> hyphenatedWords = controller.getXLingPaperHyphenatedWords(languageProject
@@ -46,15 +51,28 @@ public class XLingPaperHyphenatedWordExporter extends WordExporter {
 
 	protected void exportWordsToFile(File file, ArrayList<String> hyphenatedWords) {
 		try {
+			SortedSet<Character> charsUsed = new TreeSet<Character>();
 			Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 					file.getPath()), Constants.UTF8_ENCODING));
-	
+
 			fileWriter.write("<exceptions>\n");
 			for (String hyphenatedWord : hyphenatedWords) {
 				fileWriter.write("<word>");
 				fileWriter.write(hyphenatedWord);
-				fileWriter.write("</word>");				
-				fileWriter.write("\n");
+				fileWriter.write("</word>\n");
+				char[] chars = hyphenatedWord.toCharArray();
+				for (char c : chars) {
+					charsUsed.add(c);
+				}
+			}
+			Iterator<Character> cIt = charsUsed.iterator();
+			while (cIt.hasNext()) {
+				char c = cIt.next();
+				if (!Character.isLetterOrDigit(c) && c != '-') {
+					fileWriter.write("<wordformingcharacter>");
+					fileWriter.write(c);
+					fileWriter.write("</wordformingcharacter>\n");					
+				}
 			}
 			fileWriter.write("</exceptions>\n");
 			fileWriter.close();
