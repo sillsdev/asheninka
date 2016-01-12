@@ -4,6 +4,9 @@
 package sil.org.syllableparser.service;
 
 import java.io.File;
+import java.util.ResourceBundle;
+
+import org.controlsfx.control.StatusBar;
 
 import sil.org.syllableparser.model.Approach;
 import sil.org.syllableparser.model.LanguageProject;
@@ -18,7 +21,7 @@ public abstract class WordExporter {
 	protected LanguageProject languageProject;
 	
 	abstract public void exportWords(File file, Approach approach);
-	abstract public void exportWords(File file, ApproachController controller);
+	abstract public void exportWords(File file, ApproachController controller, StatusBar statusBar, ResourceBundle bundle);
 
 	public WordExporter() {
 		super();

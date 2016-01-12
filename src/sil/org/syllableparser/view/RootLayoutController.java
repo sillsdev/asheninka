@@ -318,7 +318,7 @@ public class RootLayoutController implements Initializable {
 				file = new File(file.getPath() + Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION);
 			}
 			ListWordExporter exporter = new ListWordExporter(languageProject);
-			exporter.exportWords(file, currentApproachController);
+			exporter.exportWords(file, currentApproachController, statusBar, bundle);
 		}
 	}
 
@@ -337,7 +337,7 @@ public class RootLayoutController implements Initializable {
 			}
 			ParaTExtHyphenatedWordsExporter exporter = new ParaTExtHyphenatedWordsExporter(
 					languageProject);
-			exporter.exportWords(file, currentApproachController);
+			exporter.exportWords(file, currentApproachController, statusBar, bundle);
 		}
 	}
 
@@ -356,7 +356,7 @@ public class RootLayoutController implements Initializable {
 			}
 			XLingPaperHyphenatedWordExporter exporter = new XLingPaperHyphenatedWordExporter(
 					languageProject);
-			exporter.exportWords(file, currentApproachController);
+			exporter.exportWords(file, currentApproachController, statusBar, bundle);
 		}
 	}
 
@@ -532,7 +532,9 @@ public class RootLayoutController implements Initializable {
 						+ Constants.XML_FILE_EXTENSION + ")", "*" + Constants.XML_FILE_EXTENSION);
 		ParaTExtExportedWordListImporter importer = new ParaTExtExportedWordListImporter(
 				languageProject);
-		importer.importWords(file, "Untested");
+		if (file != null) {
+			importer.importWords(file, "Untested", statusBar, bundle);
+		}
 	}
 
 	@FXML
@@ -544,7 +546,7 @@ public class RootLayoutController implements Initializable {
 				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
 			// Scene scene = approachViewContent.getScene();
-			importer.importWords(file, sLabelUntested);
+			importer.importWords(file, sLabelUntested, statusBar, bundle);
 		}
 	}
 

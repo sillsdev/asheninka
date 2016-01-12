@@ -32,6 +32,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -171,6 +172,9 @@ public class CVApproachController extends ApproachController {
 		Task<Void> task = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
+				Scene scene = statusBar.getScene();
+				Cursor currentCursor = scene.getCursor();
+				scene.setCursor(Cursor.WAIT);
 				ObservableList<CVNaturalClass> naturalClasses;
 				CVSegmenter segmenter;
 				ObservableList<CVSegment> segmentInventory;
@@ -223,8 +227,8 @@ public class CVApproachController extends ApproachController {
 					word.setCVPredictedSyllabification(syllabifier.getSyllabificationOfCurrentWord());
 					word.setCVParserResult(sSuccess);
 				}
-				long timePassed = System.currentTimeMillis() - timeStart;
-				System.out.println("Syllabification took " + timePassed + " milliseconds");
+				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
+				scene.setCursor(currentCursor);
 				// sleep for a second since it all happens so quickly
 				Thread.sleep(1000);
 				updateProgress(0, 0);

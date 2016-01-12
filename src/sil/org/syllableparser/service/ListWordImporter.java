@@ -57,6 +57,8 @@ public class ListWordImporter extends WordImporter {
 	//		changing the mouse cursor which has to be in a separate thread, apparently)
 	// TODO: figure out how to get JUnit to deal with a thread so we do
 	// not have two copies of the crucial code.
+	// TODO: is there a way to avoid duplicating this code when just a method call or two 
+	//	     is what is different?
 	public void importWords(File file, String sUntested, StatusBar statusBar, ResourceBundle bundle) {
 		long timeStart = System.currentTimeMillis();
 
@@ -94,16 +96,8 @@ public class ListWordImporter extends WordImporter {
 		task.setOnSucceeded(event -> {
 			statusBar.textProperty().unbind();
 			statusBar.progressProperty().unbind();
-			// Decided not to do this: not really needed
-//			String sTimeItTook = ControllerUtilities.formatTimePassed(timeStart);
-//			Alert alert = new Alert(AlertType.INFORMATION);
-//			alert.setTitle("Import done");
-//			alert.setHeaderText(null);
-//			alert.setContentText("Importing took this long: " + sTimeItTook);
-//			alert.showAndWait();
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 		});
 		new Thread(task).start();
-
 	}
 }

@@ -11,12 +11,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+import org.controlsfx.control.StatusBar;
+
+import javafx.concurrent.Task;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.view.ControllerUtilities;
 
 /**
  * @author Andy Black
@@ -33,9 +40,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 	}
 
 	public void importWords(File file, String sUntested) {
-		StringBuilder sb = new StringBuilder();
-		extractParaTExtPreamble(file, sb);
-		languageProject.setParaTExtHyphenatedWordsPreamble(sb.toString());
+		consumeParaTExtPreamble(file);
 
 		// now add all words
 		try (Stream<String> stream = Files.lines(file.toPath()).skip(7)) {
@@ -43,6 +48,63 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void consumeParaTExtPreamble(File file) {
+		StringBuilder sb = new StringBuilder();
+		extractParaTExtPreamble(file, sb);
+		languageProject.setParaTExtHyphenatedWordsPreamble(sb.toString());
+	}
+
+	// Used by the main application (including progress bar updating and
+	// changing the mouse cursor which has to be in a separate thread,
+	// apparently)
+	// TODO: figure out how to get JUnit to deal with a thread so we do
+	// not have two copies of the crucial code.
+	// TODO: is there a way to avoid duplicating this code when just a method
+	// call or two
+	// is what is different?
+	public void importWords(File file, String sUntested, StatusBar statusBar, ResourceBundle bundle) {
+		long timeStart = System.currentTimeMillis();
+
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				consumeParaTExtPreamble(file);
+				Scene scene = statusBar.getScene();
+				Cursor currentCursor = scene.getCursor();
+				scene.setCursor(Cursor.WAIT);
+				Path path = file.toPath();
+				try (Stream<String> stream = Files.lines(path)) {
+					long max = Files.lines(path).count();
+					AtomicInteger iProgress = new AtomicInteger();
+					stream.forEach(s -> {
+						updateMessage(bundle.getString("label.importing") + s);
+						iProgress.incrementAndGet();
+						updateProgress(iProgress.longValue(), max);
+						languageProject.createNewWordFromParaTExt(s, sUntested);
+					});
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				ControllerUtilities.formatTimePassed(timeStart, "Importing ParaTExt hyphenatedWords.txt file");
+				scene.setCursor(currentCursor);
+				updateProgress(0, 0);
+				done();
+				return null;
+			}
+		};
+
+		statusBar.textProperty().bind(task.messageProperty());
+		statusBar.progressProperty().bind(task.progressProperty());
+
+		// remove bindings again
+		task.setOnSucceeded(event -> {
+			statusBar.textProperty().unbind();
+			statusBar.progressProperty().unbind();
+			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
+		});
+		new Thread(task).start();
 	}
 
 	public void extractParaTExtPreamble(File file, StringBuilder sb) {
@@ -54,7 +116,8 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 			BufferedReader bufr = new BufferedReader(reader);
 
 			int count = 1;
-			// not sure why, but are getting something in the first character position
+			// not sure why, but are getting something in the first character
+			// position
 			String line = bufr.readLine().substring(1);
 			while (line != null && count < 8) {
 				sb.append(line);
