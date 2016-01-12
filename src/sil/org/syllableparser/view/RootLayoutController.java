@@ -521,8 +521,7 @@ public class RootLayoutController implements Initializable {
 				bundle.getString("file.plainlistimportfilterdescription") + " ("
 						+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
-			// Scene scene = approachViewContent.getScene();
-			importer.importWords(file, sLabelUntested);
+			importer.importWords(file, sLabelUntested, statusBar, bundle);
 		}
 	}
 

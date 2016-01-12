@@ -7,6 +7,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import org.controlsfx.control.StatusBar;
 
@@ -78,4 +79,13 @@ public class ControllerUtilities {
 		return fileChooser;
 	}
 
+	public static void formatTimePassed(long timeStart, String sProcessName) {
+		long timePassed = System.currentTimeMillis() - timeStart;
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(timePassed);
+		long timeRemaining = timePassed - (minutes * 60000);
+		long seconds = TimeUnit.MILLISECONDS.toSeconds(timeRemaining);
+		long millis = timeRemaining - (seconds * 1000);
+		String sResult = sProcessName + " took " + minutes + ":" + seconds + "." + millis;
+		System.out.println(sResult);
+	}
 }

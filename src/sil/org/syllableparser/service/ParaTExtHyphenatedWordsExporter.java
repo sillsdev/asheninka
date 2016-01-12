@@ -36,7 +36,7 @@ public class ParaTExtHyphenatedWordsExporter extends WordExporter {
 				.getWords());
 		exportWordsToFile(file, hyphenatedWords);
 	}
-	
+
 	@Override
 	public void exportWords(File file, ApproachController controller) {
 		ArrayList<String> hyphenatedWords = controller.getParaTExtHyphenatedWords(languageProject
@@ -48,8 +48,12 @@ public class ParaTExtHyphenatedWordsExporter extends WordExporter {
 		try {
 			Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 					file.getPath()), Constants.UTF8_ENCODING));
-	
-			fileWriter.write(Constants.PARATEXT_HYPHENATED_WORDS_PREAMBLE);
+
+			String sPreamble = languageProject.getParaTExtHyphenatedWordsPreamble();
+			if (sPreamble == null || sPreamble.isEmpty()) {
+				sPreamble = Constants.PARATEXT_HYPHENATED_WORDS_PREAMBLE;
+			}
+			fileWriter.write(sPreamble);
 			for (String hyphenatedWord : hyphenatedWords) {
 				fileWriter.write(hyphenatedWord);
 				fileWriter.write("\n");
