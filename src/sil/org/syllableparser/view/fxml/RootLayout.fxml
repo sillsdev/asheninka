@@ -30,6 +30,7 @@
                     	<MenuItem mnemonicParsing="false" onAction="#handleImportPlainWordList" text="%menu.importplainwordlist" />
                     	<MenuItem mnemonicParsing="false" onAction="#handleImportParaTExtWordList" text="%menu.importparatextwordlist" />
                     	<MenuItem mnemonicParsing="false" onAction="#handleImportParaTExtHyphenatedWords" text="%menu.importparatexthyphenatedwords" />
+                    	<MenuItem mnemonicParsing="false" onAction="#handleImportFLExExportedWordformsAsTabbedList" text="%menu.importflexwordlist" />
                   </Menu>
                   <Menu mnemonicParsing="false" text="%menu.exporthyphenatedwords" >
                   		<MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWordsAsASimpleList" text="%menu.exporthyphenatedwordsforindesign" />

@@ -99,7 +99,21 @@ public class LanguageProject {
 			addWordIfDistinct(wordToCheck, newWord);
 		}
 	}
-	
+
+	public void createNewWordFromFLExExportedWordformsAsTabbedList(String line, String sUntested) {
+		int iTabIndex = line.indexOf('\t');
+		if (iTabIndex > 0) {
+			String wordContentOnly = line.substring(0, iTabIndex);
+			String[] wordsInLine = wordContentOnly.split(" ");
+			for (String word : wordsInLine) {
+				if (!word.isEmpty()) {
+					Word newWord = new Word(word, "", sUntested);
+					addWordIfDistinct(word, newWord);
+				}
+			}
+		}
+	}
+
 	public void createNewWordFromParaTExt(String word, String sUntested) {
 		String wordContentOnly = word.trim();
 		String wordWithCorrectSyllabification = "";
@@ -125,7 +139,8 @@ public class LanguageProject {
 
 	/**
 	 * @param word
-	 * @param sUntested TODO
+	 * @param sUntested
+	 *            TODO
 	 */
 	public void createNewWordFromParaTExt(Word word, String sUntested) {
 		word.setCVParserResult(sUntested);

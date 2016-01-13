@@ -59,6 +59,7 @@ import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.service.FLExExportedWordformsAsTabbedListImporter;
 import sil.org.syllableparser.service.ListWordExporter;
 import sil.org.syllableparser.service.ListWordImporter;
 import sil.org.syllableparser.service.ParaTExtExportedWordListImporter;
@@ -517,6 +518,17 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleImportPlainWordList() {
 		ListWordImporter importer = new ListWordImporter(languageProject);
+		File file = ControllerUtilities.getFileToOpen(mainApp,
+				bundle.getString("file.plainlistimportfilterdescription") + " ("
+						+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
+		if (file != null) {
+			importer.importWords(file, sLabelUntested, statusBar, bundle);
+		}
+	}
+
+	@FXML
+	private void handleImportFLExExportedWordformsAsTabbedList() {
+		FLExExportedWordformsAsTabbedListImporter importer = new FLExExportedWordformsAsTabbedListImporter(languageProject);
 		File file = ControllerUtilities.getFileToOpen(mainApp,
 				bundle.getString("file.plainlistimportfilterdescription") + " ("
 						+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
