@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
-import sil.org.syllableparser.model.cvapproach.CVSegment;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 
 /**
@@ -40,8 +40,8 @@ public class CVNaturalClasser {
 
 	protected void setSegmentToNaturalClassMapping(CVNaturalClass nc) {
 		for (Object snc : nc.getSegmentsOrNaturalClasses()) {
-			if (snc instanceof CVSegment) {
-				segmentToNaturalClassMapping.put(((CVSegment) snc).getSegment(), nc);
+			if (snc instanceof Segment) {
+				segmentToNaturalClassMapping.put(((Segment) snc).getSegment(), nc);
 			} else if (snc instanceof CVNaturalClass) {
 				setSegmentToNaturalClassMapping(((CVNaturalClass) snc));
 			}

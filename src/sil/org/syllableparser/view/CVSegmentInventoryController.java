@@ -6,8 +6,9 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
-import sil.org.syllableparser.model.cvapproach.CVSegment;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -23,7 +24,7 @@ import javafx.scene.text.Text;
 
 public class CVSegmentInventoryController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends TableCell<CVSegment, String> {
+	protected final class WrappingTableCell extends TableCell<Segment, String> {
 		private Text text;
 
 		@Override
@@ -42,13 +43,13 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	}
 
 	@FXML
-	private TableView<CVSegment> cvSegmentTable;
+	private TableView<Segment> cvSegmentTable;
 	@FXML
-	private TableColumn<CVSegment, String> segmentColumn;
+	private TableColumn<Segment, String> segmentColumn;
 	@FXML
-	private TableColumn<CVSegment, String> graphemesColumn;
+	private TableColumn<Segment, String> graphemesColumn;
 	@FXML
-	private TableColumn<CVSegment, String> descriptionColumn;
+	private TableColumn<Segment, String> descriptionColumn;
 
 	@FXML
 	private TextField segmentField;
@@ -57,8 +58,9 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	@FXML
 	private TextField descriptionField;
 
+	private LanguageProject languageProject;
 	private CVApproach cvApproach;
-	private CVSegment currentSegment;
+	private Segment currentSegment;
 
 	public CVSegmentInventoryController() {
 
@@ -136,7 +138,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	 * @param segment
 	 *            the segment or null
 	 */
-	private void showCVSegmentDetails(CVSegment segment) {
+	private void showCVSegmentDetails(Segment segment) {
 		currentSegment = segment;
 		if (segment != null) {
 			// Fill the text fields with info from the segment object.
@@ -157,7 +159,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		}
 	}
 
-	public void setSegment(CVSegment segment) {
+	public void setSegment(Segment segment) {
 		segmentField.setText(segment.getSegment());
 		graphemesField.setText(segment.getGraphemes());
 		descriptionField.setText(segment.getDescription());
@@ -170,9 +172,10 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
+		languageProject = cvApproach.getLanguageProject();
 
 		// Add observable list data to the table
-		cvSegmentTable.setItems(cvApproachData.getCVSegmentInventory());
+		cvSegmentTable.setItems(languageProject.getSegmentInventory());
 		if (cvSegmentTable.getItems().size() > 0) {
 			// select one
 			cvSegmentTable.requestFocus();
@@ -188,9 +191,9 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	 */
 	@Override
 	void handleInsertNewItem() {
-		CVSegment newSegment = new CVSegment();
-		cvApproach.getCVSegmentInventory().add(newSegment);
-		int i = cvApproach.getCVSegmentInventory().size() - 1;
+		Segment newSegment = new Segment();
+		languageProject.getSegmentInventory().add(newSegment);
+		int i = languageProject.getSegmentInventory().size() - 1;
 		cvSegmentTable.requestFocus();
 		cvSegmentTable.getSelectionModel().select(i);
 		cvSegmentTable.getFocusModel().focus(i);
@@ -203,10 +206,10 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	 */
 	@Override
 	void handleRemoveItem() {
-		int i = cvApproach.getCVSegmentInventory().indexOf(currentSegment);
+		int i = languageProject.getSegmentInventory().indexOf(currentSegment);
 		currentSegment = null;
 		if (i >= 0) {
-			cvApproach.getCVSegmentInventory().remove(i);
+			languageProject.getSegmentInventory().remove(i);
 		}
 
 	}

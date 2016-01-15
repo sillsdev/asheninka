@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import sil.org.syllableparser.model.Approach;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,30 +27,12 @@ import javafx.collections.ObservableList;
 public class CVApproach extends Approach {
 
 	private LanguageProject languageProject;
-	private ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
 	private ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
 	private ObservableList<CVSyllablePattern> cvSyllablePatterns = FXCollections
 			.observableArrayList();
 
 	public void afterUnmarshal(Unmarshaller u, Object parent) {
 		this.languageProject = (LanguageProject) parent;
-	}
-
-	/**
-	 * @return the cvSegmentInventoryData
-	 */
-	@XmlElementWrapper(name = "cvSegments")
-	@XmlElement(name = "cvSegment")
-	public ObservableList<CVSegment> getCVSegmentInventory() {
-		return cvSegmentInventory;
-	}
-
-	/**
-	 * @param cvSegmentInventoryData
-	 *            the cvSegmentInventoryData to set
-	 */
-	public void setCVSegmentInventory(ObservableList<CVSegment> cvSegmentInventoryData) {
-		this.cvSegmentInventory = cvSegmentInventoryData;
 	}
 
 	/**
@@ -96,7 +79,6 @@ public class CVApproach extends Approach {
 	 * Clear out all data in this CV approach
 	 */
 	public void clear() {
-		cvSegmentInventory.clear();
 		cvNaturalClasses.clear();
 		cvSyllablePatterns.clear();
 	}
@@ -105,11 +87,6 @@ public class CVApproach extends Approach {
 	 * @param cvApproach
 	 */
 	public void load(CVApproach cvApproachLoaded) {
-		ObservableList<CVSegment> cvSegmentInventoryLoadedData = cvApproachLoaded
-				.getCVSegmentInventory();
-		for (CVSegment cvSegment : cvSegmentInventoryLoadedData) {
-			cvSegmentInventory.add(cvSegment);
-		}
 		ObservableList<CVNaturalClass> cvNaturalClassesLoadedData = cvApproachLoaded
 				.getCVNaturalClasses();
 		for (CVNaturalClass cvNaturalClass : cvNaturalClassesLoadedData) {

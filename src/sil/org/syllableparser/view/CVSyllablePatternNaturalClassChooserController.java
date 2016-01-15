@@ -88,11 +88,11 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 			if (nc != null) {
 				if (nc.getSNCRepresentation() == kSpecialRemoveCode) {
 					// if we merely invoke the remove and update label code
-					// directly,
-					// we get an IndexOutOfBoundsException. This is because
+					// directly, we get an IndexOutOfBoundsException. This is
+					// because
 					// "In JavaFX, you cannot change the contents of an
-					// ObservableList
-					// while a change is already in progress." See
+					// ObservableList while a change is already in progress."
+					// See
 					// http://stackoverflow.com/questions/32370394/javafx-combobox-change-value-causes-indexoutofboundsexception
 					// To avoid this, we ask the system to run the change later
 					// on the JavaFX platform thread.

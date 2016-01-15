@@ -7,10 +7,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
-import sil.org.syllableparser.model.cvapproach.CVSegment;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,6 +51,7 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	private boolean okClicked = false;
 	private MainApp mainApp;
 
+	private LanguageProject languageProject;
 	private CVApproach cvApproach;
 	private CVSegmentOrNaturalClass currentSegmentOrNaturalClass;
 	private ObservableList<CVSegmentOrNaturalClass> cvSegmentsOrNaturalClasses = FXCollections
@@ -113,8 +115,9 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
+		languageProject = cvApproach.getLanguageProject();
 
-		for (CVSegment cvSegment : cvApproach.getCVSegmentInventory()) {
+		for (Segment cvSegment : languageProject.getSegmentInventory()) {
 			currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
 					cvSegment.getSegment(), cvSegment.getDescription(), true,
 					cvSegment.getID());
@@ -171,11 +174,11 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
 			if (segmentOrNaturalClass.isChecked()) {
 				if (segmentOrNaturalClass.isSegment()) {
-					int i = CVSegment.findIndexInSegmentsListByUuid(
-							cvApproach.getCVSegmentInventory(),
+					int i = Segment.findIndexInSegmentsListByUuid(
+							languageProject.getSegmentInventory(),
 							segmentOrNaturalClass.getUuid());
 					naturalClass.getSegmentsOrNaturalClasses().add(
-							cvApproach.getCVSegmentInventory().get(i));
+							languageProject.getSegmentInventory().get(i));
 				} else {
 					int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
 							cvApproach.getCVNaturalClasses(),

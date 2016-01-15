@@ -1,9 +1,8 @@
 /**
  * 
  */
-package sil.org.syllableparser.model.cvapproach;
+package sil.org.syllableparser.model;
 
-import sil.org.syllableparser.model.SylParserObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -13,11 +12,11 @@ import javafx.collections.ObservableList;
  *
  * an Entity
  */
-public class CVSegment extends SylParserObject {
+public class Segment extends SylParserObject {
 	private final StringProperty segment;
 	private final StringProperty graphemes;
 	private final StringProperty description;
-	public CVSegment() {
+	public Segment() {
 		super();
 		this.segment = new SimpleStringProperty("");
 		this.graphemes = new SimpleStringProperty("");
@@ -25,7 +24,7 @@ public class CVSegment extends SylParserObject {
 		createUUID();
 	}
 
-	public CVSegment(String segment, String graphemes, String comment) {
+	public Segment(String segment, String graphemes, String comment) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
 		this.graphemes = new SimpleStringProperty(graphemes);
@@ -69,7 +68,7 @@ public class CVSegment extends SylParserObject {
 		this.description.set(description);
 	}
 	
-	public static int findIndexInSegmentsListByUuid(ObservableList<CVSegment> list,
+	public static int findIndexInSegmentsListByUuid(ObservableList<Segment> list,
 			String uuid) {
 		// TODO: is there a way to do this with lambda expressions?
 		// Is there a way to use SylParserObject somehow?

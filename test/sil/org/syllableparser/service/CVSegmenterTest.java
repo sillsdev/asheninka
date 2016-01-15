@@ -21,6 +21,7 @@ import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.service.CVSegmenter;
 
 /**
@@ -30,9 +31,9 @@ import sil.org.syllableparser.service.CVSegmenter;
 public class CVSegmenterTest {
 
 	CVApproach cva;
-	ObservableList<CVSegment> segmentInventory;
+	ObservableList<Segment> segmentInventory;
 	CVSegmenter segmenter;
-	List<CVSegment> cvSegmentInventory;
+	List<Segment> cvSegmentInventory;
 
 	/**
 	 * @throws java.lang.Exception
@@ -46,7 +47,7 @@ public class CVSegmenterTest {
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		segmentInventory = cva.getCVSegmentInventory();
+		segmentInventory = languageProject.getSegmentInventory();
 		segmenter = new CVSegmenter(segmentInventory);
 		cvSegmentInventory = segmenter.getSegmentInventory();
 	}
@@ -67,7 +68,7 @@ public class CVSegmenterTest {
 		assertEquals("First segment is /a/", "a", seg);
 		seg = cvSegmentInventory.get(26).getSegment().trim();
 		assertEquals("Last segment is /ɲ/", "ɲ", seg);
-		HashMap<String, CVSegment> graphemes = segmenter.getGraphemeToSegmentMapping();
+		HashMap<String, Segment> graphemes = segmenter.getGraphemeToSegmentMapping();
 		assertEquals("Hash map size is 56", 56, graphemes.size());
 	}
 

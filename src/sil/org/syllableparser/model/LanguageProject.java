@@ -24,10 +24,12 @@ public class LanguageProject {
 	private CVApproach cvApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
+	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
 
 	public LanguageProject() {
 		super();
 		cvApproach = new CVApproach();
+		cvApproach.setLanguageProject(this);
 	}
 
 	/**
@@ -35,6 +37,7 @@ public class LanguageProject {
 	 */
 	public void clear() {
 		cvApproach.clear();
+		segmentInventory.clear();
 		words.clear();
 	}
 
@@ -45,6 +48,23 @@ public class LanguageProject {
 	@XmlElement(name = "cvApproach")
 	public void setCVApproach(CVApproach cvApproach) {
 		this.cvApproach = cvApproach;
+	}
+
+	/**
+	 * @return the cvSegmentInventoryData
+	 */
+	@XmlElementWrapper(name = "segments")
+	@XmlElement(name = "segment")
+	public ObservableList<Segment> getSegmentInventory() {
+		return segmentInventory;
+	}
+
+	/**
+	 * @param cvSegmentInventoryData
+	 *            the cvSegmentInventoryData to set
+	 */
+	public void setSegmentInventory(ObservableList<Segment> cvSegmentInventoryData) {
+		this.segmentInventory = cvSegmentInventoryData;
 	}
 
 	/**
@@ -78,11 +98,15 @@ public class LanguageProject {
 	public void load(LanguageProject languageProjectLoaded) {
 		cvApproach.load(languageProjectLoaded.getCVApproach());
 		cvApproach.setLanguageProject(this);
+		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
+				.getSegmentInventory();
+		for (Segment segment : segmentInventoryLoadedData) {
+			segmentInventory.add(segment);
+		}
 		ObservableList<Word> wordsLoadedData = languageProjectLoaded.getWords();
 		for (Word word : wordsLoadedData) {
 			words.add(word);
 		}
-
 	}
 
 	public void createNewWord(String word, String sUntested) {

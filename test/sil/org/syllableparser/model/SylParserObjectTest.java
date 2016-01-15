@@ -38,11 +38,11 @@ public class SylParserObjectTest {
 
 	@Test
 	public void findIndexInListByUuidTest() {
-		ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
+		ObservableList<Segment> cvSegmentInventory = FXCollections.observableArrayList();
 		ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
-		CVSegment segA = new CVSegment("a", "a A", "low mid unrounded vowel");
-		CVSegment segB = new CVSegment("b", "b B", "voiced bilabial stop");
-		CVSegment segD = new CVSegment("d", "d D", "voiced alveolar stop");
+		Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
+		Segment segB = new Segment("b", "b B", "voiced bilabial stop");
+		Segment segD = new Segment("d", "d D", "voiced alveolar stop");
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);
 		cvSegmentInventory.add(segD);
@@ -51,14 +51,14 @@ public class SylParserObjectTest {
 		cvNaturalClasses.add(ncC);
 		cvNaturalClasses.add(ncV);
 		
-		int index = CVSegment.findIndexInSegmentsListByUuid(cvSegmentInventory, segA.getID());
+		int index = Segment.findIndexInSegmentsListByUuid(cvSegmentInventory, segA.getID());
 		assertEquals("Expected 0", 0, index);
-		index = CVSegment.findIndexInSegmentsListByUuid(cvSegmentInventory, segB.getID());
+		index = Segment.findIndexInSegmentsListByUuid(cvSegmentInventory, segB.getID());
 		assertEquals("Expected 1", 1, index);
-		index = CVSegment.findIndexInSegmentsListByUuid(cvSegmentInventory, segD.getID());
+		index = Segment.findIndexInSegmentsListByUuid(cvSegmentInventory, segD.getID());
 		assertEquals("Expected 2", 2, index);
 		String uuidNew = UUID.randomUUID().toString();
-		index = CVSegment.findIndexInSegmentsListByUuid(cvSegmentInventory, uuidNew);
+		index = Segment.findIndexInSegmentsListByUuid(cvSegmentInventory, uuidNew);
 		assertEquals("Expected -1", -1, index);
 		index = CVNaturalClass.findIndexInNaturaClassListByUuid(cvNaturalClasses, ncC.getID());
 		assertEquals("Expected 0", 0, index);

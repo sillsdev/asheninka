@@ -21,6 +21,7 @@ import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.service.CVNaturalClasser;
 import sil.org.syllableparser.service.CVSegmenter;
 
@@ -35,8 +36,8 @@ public class CVNaturalClasserTest {
 	CVApproach cva;
 	ObservableList<CVNaturalClass> naturalClasses;
 	CVSegmenter segmenter;
-	ObservableList<CVSegment> segmentInventory;
-	List<CVSegment> cvSegmentInventory;
+	ObservableList<Segment> segmentInventory;
+	List<Segment> cvSegmentInventory;
 	CVNaturalClasser naturalClasser;
 	List<CVNaturalClass> cvNaturalClasses;
 
@@ -52,7 +53,7 @@ public class CVNaturalClasserTest {
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		segmentInventory = cva.getCVSegmentInventory();
+		segmentInventory = languageProject.getSegmentInventory();
 		segmenter = new CVSegmenter(segmentInventory);
 		cvSegmentInventory = segmenter.getSegmentInventory();
 		naturalClasses = cva.getCVNaturalClasses();

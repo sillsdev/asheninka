@@ -20,7 +20,6 @@ import sil.org.syllableparser.model.*;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
-import sil.org.syllableparser.model.cvapproach.CVSegment;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
@@ -48,6 +47,7 @@ import javafx.stage.Stage;
 public class CVApproachController extends ApproachController {
 
 	private ObservableList<ApproachView> views = FXCollections.observableArrayList();
+	private LanguageProject languageProject;
 	private CVApproach cvApproachData;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 
@@ -74,6 +74,7 @@ public class CVApproachController extends ApproachController {
 
 	public void setCVApproachData(CVApproach cvApproach, ObservableList<Word> words) {
 		this.cvApproachData = cvApproach;
+		languageProject = cvApproach.getLanguageProject();
 		this.words = words;
 	}
 
@@ -177,15 +178,15 @@ public class CVApproachController extends ApproachController {
 				scene.setCursor(Cursor.WAIT);
 				ObservableList<CVNaturalClass> naturalClasses;
 				CVSegmenter segmenter;
-				ObservableList<CVSegment> segmentInventory;
-				List<CVSegment> cvSegmentInventory;
+				ObservableList<Segment> segmentInventory;
+				List<Segment> cvSegmentInventory;
 				CVNaturalClasser naturalClasser;
 				List<CVNaturalClass> cvNaturalClasses;
 				ObservableList<CVSyllablePattern> patterns;
 				CVSyllabifier syllabifier;
 				List<CVSyllablePattern> cvPatterns;
 
-				segmentInventory = cvApproachData.getCVSegmentInventory();
+				segmentInventory = languageProject.getSegmentInventory();
 				segmenter = new CVSegmenter(segmentInventory);
 				cvSegmentInventory = segmenter.getSegmentInventory();
 				naturalClasses = cvApproachData.getCVNaturalClasses();

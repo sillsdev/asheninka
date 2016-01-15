@@ -3,6 +3,8 @@
  */
 package sil.org.syllableparser.model.cvapproach;
 
+import sil.org.syllableparser.model.Segment;
+
 
 /**
  * @author Andy Black
@@ -13,16 +15,16 @@ package sil.org.syllableparser.model.cvapproach;
  */
 
 public class CVSegmentInSyllable extends Object {
-	private final CVSegment segment;
+	private final Segment segment;
 	private final String grapheme;
 
-	public CVSegmentInSyllable(CVSegment segment, String grapheme) {
+	public CVSegmentInSyllable(Segment segment, String grapheme) {
 		super();
 		this.segment = segment;
 		this.grapheme = grapheme;
 	}
 
-	public CVSegment getSegment() {
+	public Segment getSegment() {
 		return segment;
 	}
 

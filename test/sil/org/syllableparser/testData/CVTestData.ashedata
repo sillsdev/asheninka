@@ -22,143 +22,6 @@
                 <SNCRepresentation>m, n, ɲ</SNCRepresentation>
             </cvNaturalClass>
         </cvNaturalClasses>
-        <cvSegments>
-            <cvSegment id="de664190-dd3c-4bb3-892e-16dc596255ce">
-                <description>low mid unrounded vowel</description>
-                <graphemes>a A</graphemes>
-                <segment>a</segment>
-            </cvSegment>
-            <cvSegment id="000e634b-5e9e-479d-82e6-f44ab9e27879">
-                <description>voiced bilabial stop</description>
-                <graphemes>b B</graphemes>
-                <segment>b</segment>
-            </cvSegment>
-            <cvSegment id="a72f9654-e5ec-45dc-80ba-204abf0ef872">
-                <description>voiceless alveopalatal affricate</description>
-                <graphemes>ch Ch CH</graphemes>
-                <segment>ch</segment>
-            </cvSegment>
-            <cvSegment id="0c349a88-de1d-4bd8-8845-18775f142719">
-                <description>voiced alveolar stop</description>
-                <graphemes>d D</graphemes>
-                <segment>d</segment>
-            </cvSegment>
-            <cvSegment id="92284e25-50b0-4c3a-9043-c5a67c6cfcff">
-                <description>mid front unrounded vowel</description>
-                <graphemes>e E</graphemes>
-                <segment>e</segment>
-            </cvSegment>
-            <cvSegment id="0701fe22-3ac3-43a9-8d0d-78940f0ec514">
-                <description>voiceless interdental fricative</description>
-                <graphemes>f F</graphemes>
-                <segment>f</segment>
-            </cvSegment>
-            <cvSegment id="bad3c040-9306-423c-95d0-58b3678b40ee">
-                <description>voiced velar stop</description>
-                <graphemes>g G</graphemes>
-                <segment>g</segment>
-            </cvSegment>
-            <cvSegment id="60765d81-b40d-42b2-ace5-9d476355270c">
-                <description>voiceless glottal fricative</description>
-                <graphemes>h H</graphemes>
-                <segment>h</segment>
-            </cvSegment>
-            <cvSegment id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf">
-                <description>high front unrounded vowel</description>
-                <graphemes>i I</graphemes>
-                <segment>i</segment>
-            </cvSegment>
-            <cvSegment id="6bc43a79-0aac-42aa-994e-6368a05bc29a">
-                <description>voiceless velar stop</description>
-                <graphemes>k K</graphemes>
-                <segment>k</segment>
-            </cvSegment>
-            <cvSegment id="101d2651-cd84-4671-a286-0d37e22759e4">
-                <description>voiced lateral</description>
-                <graphemes>l L</graphemes>
-                <segment>l</segment>
-            </cvSegment>
-            <cvSegment id="a09371d4-f079-42ff-a2f6-25c2dcab0b95">
-                <description>bilabial nasal</description>
-                <graphemes>m M</graphemes>
-                <segment>m</segment>
-            </cvSegment>
-            <cvSegment id="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
-                <description>alveolar nasal</description>
-                <graphemes>n N</graphemes>
-                <segment>n</segment>
-            </cvSegment>
-            <cvSegment id="008bb81a-5594-45ee-ae2a-457a058cee16">
-                <description>mid back rounded vowel</description>
-                <graphemes>o O</graphemes>
-                <segment>o</segment>
-            </cvSegment>
-            <cvSegment id="91c1f393-497a-4345-9fcd-cd67fbb5575b">
-                <description>voiceless bilabial stop</description>
-                <graphemes>p P</graphemes>
-                <segment>p</segment>
-            </cvSegment>
-            <cvSegment id="0a11acc2-cca2-45c8-a500-b3952aaf9002">
-                <description>voiceless uvular stop</description>
-                <graphemes>q Q</graphemes>
-                <segment>q</segment>
-            </cvSegment>
-            <cvSegment id="76e0b311-b742-4eb5-98f9-8670dfce5149">
-                <description>voiced alveolar flap</description>
-                <graphemes>r R</graphemes>
-                <segment>r</segment>
-            </cvSegment>
-            <cvSegment id="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
-                <description>voiceless alveolar fricative</description>
-                <graphemes>s S</graphemes>
-                <segment>s</segment>
-            </cvSegment>
-            <cvSegment id="373d2f17-d2ca-414a-b12e-ca61c9b821ed">
-                <description>voiceless alveopalatal fricative</description>
-                <graphemes>sh Sh SH</graphemes>
-                <segment>sh</segment>
-            </cvSegment>
-            <cvSegment id="65be3575-5c87-4a7d-8560-d1f32a816b2f">
-                <description>voiceless alveolar stop</description>
-                <graphemes>t T</graphemes>
-                <segment>t</segment>
-            </cvSegment>
-            <cvSegment id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f">
-                <description>high back rounded vowel</description>
-                <graphemes>u U</graphemes>
-                <segment>u</segment>
-            </cvSegment>
-            <cvSegment id="518cf26f-42ab-4555-ac4d-af1667774959">
-                <description>voiced interdental fricative</description>
-                <graphemes>v V</graphemes>
-                <segment>v</segment>
-            </cvSegment>
-            <cvSegment id="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df">
-                <description>labio-velar aproximate</description>
-                <graphemes>w W</graphemes>
-                <segment>w</segment>
-            </cvSegment>
-            <cvSegment id="a606ebec-8ceb-42bd-93ee-2b78f65f9984">
-                <description>voiceless velar fricative</description>
-                <graphemes>x X</graphemes>
-                <segment>x</segment>
-            </cvSegment>
-            <cvSegment id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
-                <description>voiced palatal approximate</description>
-                <graphemes>y Y</graphemes>
-                <segment>y</segment>
-            </cvSegment>
-            <cvSegment id="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422">
-                <description>voiced alveolar fricative</description>
-                <graphemes>z Z</graphemes>
-                <segment>z</segment>
-            </cvSegment>
-            <cvSegment id="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c">
-                <description>palatal nasal</description>
-                <graphemes>ñ Ñ</graphemes>
-                <segment>ɲ</segment>
-            </cvSegment>
-        </cvSegments>
         <cvSyllablePatterns>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="5059b228-2994-4195-a881-e62958bff0c5">
                 <description>Basic syllable pattern</description>
@@ -205,6 +68,143 @@
             </cvSyllablePattern>
         </cvSyllablePatterns>
     </cvApproach>
+    <segments>
+        <segment id="de664190-dd3c-4bb3-892e-16dc596255ce">
+            <description>low mid unrounded vowel</description>
+            <graphemes>a A</graphemes>
+            <segment>a</segment>
+        </segment>
+        <segment id="000e634b-5e9e-479d-82e6-f44ab9e27879">
+            <description>voiced bilabial stop</description>
+            <graphemes>b B</graphemes>
+            <segment>b</segment>
+        </segment>
+        <segment id="a72f9654-e5ec-45dc-80ba-204abf0ef872">
+            <description>voiceless alveopalatal affricate</description>
+            <graphemes>ch Ch CH</graphemes>
+            <segment>ch</segment>
+        </segment>
+        <segment id="0c349a88-de1d-4bd8-8845-18775f142719">
+            <description>voiced alveolar stop</description>
+            <graphemes>d D</graphemes>
+            <segment>d</segment>
+        </segment>
+        <segment id="92284e25-50b0-4c3a-9043-c5a67c6cfcff">
+            <description>mid front unrounded vowel</description>
+            <graphemes>e E</graphemes>
+            <segment>e</segment>
+        </segment>
+        <segment id="0701fe22-3ac3-43a9-8d0d-78940f0ec514">
+            <description>voiceless interdental fricative</description>
+            <graphemes>f F</graphemes>
+            <segment>f</segment>
+        </segment>
+        <segment id="bad3c040-9306-423c-95d0-58b3678b40ee">
+            <description>voiced velar stop</description>
+            <graphemes>g G</graphemes>
+            <segment>g</segment>
+        </segment>
+        <segment id="60765d81-b40d-42b2-ace5-9d476355270c">
+            <description>voiceless glottal fricative</description>
+            <graphemes>h H</graphemes>
+            <segment>h</segment>
+        </segment>
+        <segment id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf">
+            <description>high front unrounded vowel</description>
+            <graphemes>i I</graphemes>
+            <segment>i</segment>
+        </segment>
+        <segment id="6bc43a79-0aac-42aa-994e-6368a05bc29a">
+            <description>voiceless velar stop</description>
+            <graphemes>k K</graphemes>
+            <segment>k</segment>
+        </segment>
+        <segment id="101d2651-cd84-4671-a286-0d37e22759e4">
+            <description>voiced lateral</description>
+            <graphemes>l L</graphemes>
+            <segment>l</segment>
+        </segment>
+        <segment id="a09371d4-f079-42ff-a2f6-25c2dcab0b95">
+            <description>bilabial nasal</description>
+            <graphemes>m M</graphemes>
+            <segment>m</segment>
+        </segment>
+        <segment id="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
+            <description>alveolar nasal</description>
+            <graphemes>n N</graphemes>
+            <segment>n</segment>
+        </segment>
+        <segment id="008bb81a-5594-45ee-ae2a-457a058cee16">
+            <description>mid back rounded vowel</description>
+            <graphemes>o O</graphemes>
+            <segment>o</segment>
+        </segment>
+        <segment id="91c1f393-497a-4345-9fcd-cd67fbb5575b">
+            <description>voiceless bilabial stop</description>
+            <graphemes>p P</graphemes>
+            <segment>p</segment>
+        </segment>
+        <segment id="0a11acc2-cca2-45c8-a500-b3952aaf9002">
+            <description>voiceless uvular stop</description>
+            <graphemes>q Q</graphemes>
+            <segment>q</segment>
+        </segment>
+        <segment id="76e0b311-b742-4eb5-98f9-8670dfce5149">
+            <description>voiced alveolar flap</description>
+            <graphemes>r R</graphemes>
+            <segment>r</segment>
+        </segment>
+        <segment id="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
+            <description>voiceless alveolar fricative</description>
+            <graphemes>s S</graphemes>
+            <segment>s</segment>
+        </segment>
+        <segment id="373d2f17-d2ca-414a-b12e-ca61c9b821ed">
+            <description>voiceless alveopalatal fricative</description>
+            <graphemes>sh Sh SH</graphemes>
+            <segment>sh</segment>
+        </segment>
+        <segment id="65be3575-5c87-4a7d-8560-d1f32a816b2f">
+            <description>voiceless alveolar stop</description>
+            <graphemes>t T</graphemes>
+            <segment>t</segment>
+        </segment>
+        <segment id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f">
+            <description>high back rounded vowel</description>
+            <graphemes>u U</graphemes>
+            <segment>u</segment>
+        </segment>
+        <segment id="518cf26f-42ab-4555-ac4d-af1667774959">
+            <description>voiced interdental fricative</description>
+            <graphemes>v V</graphemes>
+            <segment>v</segment>
+        </segment>
+        <segment id="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df">
+            <description>labio-velar aproximate</description>
+            <graphemes>w W</graphemes>
+            <segment>w</segment>
+        </segment>
+        <segment id="a606ebec-8ceb-42bd-93ee-2b78f65f9984">
+            <description>voiceless velar fricative</description>
+            <graphemes>x X</graphemes>
+            <segment>x</segment>
+        </segment>
+        <segment id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
+            <description>voiced palatal approximate</description>
+            <graphemes>y Y</graphemes>
+            <segment>y</segment>
+        </segment>
+        <segment id="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422">
+            <description>voiced alveolar fricative</description>
+            <graphemes>z Z</graphemes>
+            <segment>z</segment>
+        </segment>
+        <segment id="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c">
+            <description>palatal nasal</description>
+            <graphemes>ñ Ñ</graphemes>
+            <segment>ɲ</segment>
+        </segment>
+    </segments>
     <words>
         <word id="1eafe981-ceee-4b6e-a33f-e0a5aa7de728">
             <correctSyllabification>ab.baꞌ</correctSyllabification>

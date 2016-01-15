@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import sil.org.syllableparser.model.cvapproach.CVSegment;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 
 /**
@@ -19,20 +19,20 @@ import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
  */
 public class CVSegmenter {
 
-	private final List<CVSegment> segmentInventory;
+	private final List<Segment> segmentInventory;
 	List<CVSegmentInSyllable> segmentsInCurrentWord = new LinkedList<CVSegmentInSyllable>(
 			Arrays.asList(new CVSegmentInSyllable(null, null)));
-	HashMap<String, CVSegment> graphemeToSegmentMapping = new HashMap<>();
+	HashMap<String, Segment> graphemeToSegmentMapping = new HashMap<>();
 	int iLongestGrapheme = 0;
 
-	public CVSegmenter(List<CVSegment> segmentInventory) {
+	public CVSegmenter(List<Segment> segmentInventory) {
 		super();
 		this.segmentInventory = segmentInventory;
 		buildGraphemeToCVSegmentMapping();
 	}
 
 	protected void buildGraphemeToCVSegmentMapping() {
-		for (CVSegment seg : segmentInventory) {
+		for (Segment seg : segmentInventory) {
 			String[] orthographemes = seg.getGraphemes().split(" +");
 			for (String orthoform : orthographemes) {
 				if (orthoform.length() > iLongestGrapheme) {
@@ -43,7 +43,7 @@ public class CVSegmenter {
 		}
 	}
 
-	public List<CVSegment> getSegmentInventory() {
+	public List<Segment> getSegmentInventory() {
 		return segmentInventory;
 	}
 
@@ -55,11 +55,11 @@ public class CVSegmenter {
 		this.segmentsInCurrentWord = segments;
 	}
 
-	public HashMap<String, CVSegment> getGraphemeToSegmentMapping() {
+	public HashMap<String, Segment> getGraphemeToSegmentMapping() {
 		return graphemeToSegmentMapping;
 	}
 
-	public void setGraphemeToSegmentMapping(HashMap<String, CVSegment> graphemes) {
+	public void setGraphemeToSegmentMapping(HashMap<String, Segment> graphemes) {
 		this.graphemeToSegmentMapping = graphemes;
 	}
 
@@ -79,7 +79,7 @@ public class CVSegmenter {
 					continue;
 				}
 				String sPotentialGrapheme = word.substring(iStart, iStart + iSegLength);
-				CVSegment seg = graphemeToSegmentMapping.get(sPotentialGrapheme);
+				Segment seg = graphemeToSegmentMapping.get(sPotentialGrapheme);
 				if (seg != null) {
 					CVSegmentInSyllable segmentInSyllable = new CVSegmentInSyllable(seg, sPotentialGrapheme);
 					segmentsInCurrentWord.add(segmentInSyllable);

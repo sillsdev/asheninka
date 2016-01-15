@@ -18,7 +18,7 @@ import sil.org.syllableparser.model.cvapproach.*;;
  *
  */
 public class CVSegmentOrNaturalClassTest {
-	private ObservableList<CVSegment> cvSegmentInventory = FXCollections.observableArrayList();
+	private ObservableList<Segment> cvSegmentInventory = FXCollections.observableArrayList();
 	private ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
 
 	/**
@@ -26,9 +26,9 @@ public class CVSegmentOrNaturalClassTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		CVSegment segA = new CVSegment("a", "a A", "low mid unrounded vowel");
-		CVSegment segB = new CVSegment("b", "b B", "voiced bilabial stop");
-		CVSegment segD = new CVSegment("d", "d D", "voiced alveolar stop");
+		Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
+		Segment segB = new Segment("b", "b B", "voiced bilabial stop");
+		Segment segD = new Segment("d", "d D", "voiced alveolar stop");
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);
 		cvSegmentInventory.add(segD);
@@ -51,7 +51,7 @@ public class CVSegmentOrNaturalClassTest {
 	@Test
 	public void createSegmentOrNaturalClassList() {
 		ObservableList<CVSegmentOrNaturalClass> cvSegmentOrNaturalClass = FXCollections.observableArrayList();
-		for (CVSegment cvSegment : cvSegmentInventory) {
+		for (Segment cvSegment : cvSegmentInventory) {
 			CVSegmentOrNaturalClass segOrNC = new CVSegmentOrNaturalClass(cvSegment.getSegment(), 
 					cvSegment.getDescription(), true, null);
 			cvSegmentOrNaturalClass.add(segOrNC);

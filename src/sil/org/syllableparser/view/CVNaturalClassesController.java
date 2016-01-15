@@ -8,10 +8,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
-import sil.org.syllableparser.model.cvapproach.CVSegment;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -189,8 +189,8 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		for (SylParserObject snc : currentNaturalClass.getSegmentsOrNaturalClasses()) {
 			Text t;
 			String s;
-			if (snc instanceof CVSegment) {
-				s = ((CVSegment) snc).getSegment();
+			if (snc instanceof Segment) {
+				s = ((Segment) snc).getSegment();
 				t = new Text(s);
 				sb.append(s);
 			} else if (snc instanceof CVNaturalClass) {

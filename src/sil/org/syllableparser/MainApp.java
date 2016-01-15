@@ -17,9 +17,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
-import sil.org.syllableparser.model.cvapproach.CVSegment;
 import sil.org.syllableparser.view.RootLayoutController;
 
 public class MainApp extends Application {
@@ -57,13 +57,13 @@ public class MainApp extends Application {
 		final boolean usePrecannedData = false;
 		if (usePrecannedData) {
 			CVApproach cvApproach = languageProject.getCVApproach();
-			ObservableList<CVSegment> cvSegmentInventoryData = cvApproach.getCVSegmentInventory();
-			CVSegment segA = new CVSegment("a", "a A", "low mid unrounded vowel");
-			CVSegment segB = new CVSegment("b", "b B", "voiced bilabial stop");
-			CVSegment segD = new CVSegment("d", "d D", "voiced alveolar stop");
-			cvSegmentInventoryData.add(segA);
-			cvSegmentInventoryData.add(segB);
-			cvSegmentInventoryData.add(segD);
+			ObservableList<Segment> segmentInventoryData = languageProject.getSegmentInventory();
+			Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
+			Segment segB = new Segment("b", "b B", "voiced bilabial stop");
+			Segment segD = new Segment("d", "d D", "voiced alveolar stop");
+			segmentInventoryData.add(segA);
+			segmentInventoryData.add(segB);
+			segmentInventoryData.add(segD);
 			ObservableList<CVNaturalClass> cvNaturalClassData = cvApproach.getCVNaturalClasses();
 			ObservableList<Object> consonants = new SimpleListProperty<Object>();
 			consonants.add(segB);

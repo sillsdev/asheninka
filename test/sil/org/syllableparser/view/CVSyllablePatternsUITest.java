@@ -28,9 +28,9 @@ import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
-import sil.org.syllableparser.model.cvapproach.CVSegment;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 import sil.org.syllableparser.service.CVSegmenter;
 
