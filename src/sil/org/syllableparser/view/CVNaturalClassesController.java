@@ -185,6 +185,7 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 
 	public void displayFieldsPerActiveSetting(CVNaturalClass nc) {
 		nameField.setDisable(!nc.isActive());
+		// Following does not show as grey for some reason...
 		sncTextFlow.setDisable(!nc.isActive());
 		sncButton.setDisable(!nc.isActive());
 		descriptionField.setDisable(!nc.isActive());
@@ -401,31 +402,29 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 
 	}
 
-	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.CheckBoxColumnController#handleCheckBoxSelectAll()
-	 */
-	@Override
 	protected void handleCheckBoxSelectAll() {
-		// TODO Auto-generated method stub
-		
+		for (CVNaturalClass nc : cvApproach.getCVNaturalClasses()) {
+			nc.setActive(true);
+			forceTableRowToRedisplayPerActiveSetting(nc);
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.CheckBoxColumnController#handleCheckBoxClearAll()
-	 */
-	@Override
 	protected void handleCheckBoxClearAll() {
-		// TODO Auto-generated method stub
-		
+		for (CVNaturalClass nc : cvApproach.getCVNaturalClasses()) {
+			nc.setActive(false);
+			forceTableRowToRedisplayPerActiveSetting(nc);
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.CheckBoxColumnController#handleCheckBoxToggle()
-	 */
-	@Override
 	protected void handleCheckBoxToggle() {
-		// TODO Auto-generated method stub
-		
+		for (CVNaturalClass nc : cvApproach.getCVNaturalClasses()) {
+			if (nc.isActive()) {
+				nc.setActive(false);
+			} else {
+				nc.setActive(true);
+			}
+			forceTableRowToRedisplayPerActiveSetting(nc);
+		}
 	}
 
 }
