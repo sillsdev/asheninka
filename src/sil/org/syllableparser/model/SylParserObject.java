@@ -8,7 +8,12 @@ import java.util.UUID;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.scene.control.CheckBox;
 
 /**
  * @author Andy Black
@@ -17,7 +22,27 @@ import javafx.collections.ObservableList;
 public abstract class SylParserObject {
 
 	protected String id;
+	protected boolean active;
+	protected BooleanProperty activeCheckBox;
 	
+	public SylParserObject() {
+		active = true;
+		activeCheckBox = new SimpleBooleanProperty(true);
+	}
+	
+	@XmlAttribute(name="active")
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+		this.activeCheckBox.set(active);
+	}
+	public BooleanProperty activeProperty() {
+		return activeCheckBox;
+	}
+
 	@XmlAttribute(name="id")
 	@XmlID
 	public String getID() {

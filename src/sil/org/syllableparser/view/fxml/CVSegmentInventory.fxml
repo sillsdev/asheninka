@@ -12,19 +12,24 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView fx:id="cvSegmentTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="cvSegmentTable" layoutY="100.0" prefHeight="395.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-25.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="segmentColumn" prefWidth="63.0" text="%label.segment" />
-                      <TableColumn fx:id="graphemesColumn" prefWidth="119.0" text="%label.orthographicforms" />
-                        <TableColumn fx:id="descriptionColumn" prefWidth="-1.0" text="%label.description" />
-                    </columns>
+                      <TableColumn fx:id="checkBoxColumn" prefWidth="26.0">
+                        <graphic>
+                          <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" />
+                        </graphic>
+                      </TableColumn>
+                      <TableColumn fx:id="segmentColumn" prefWidth="76.0" text="%label.segment" />
+                      <TableColumn fx:id="graphemesColumn" prefWidth="75.0" text="%label.orthographicforms" />
+                      <TableColumn fx:id="descriptionColumn" prefWidth="82.0" text="%label.description" />
+                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="383.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="200.0">
                <children>
                   <Label layoutX="1.0" layoutY="7.0" text="%label.segmentinventory" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                   <GridPane layoutX="5.0" layoutY="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="35.0">
@@ -36,6 +41,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="%label.segment" />
@@ -44,6 +50,8 @@
                         <TextField fx:id="segmentField" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="graphemesField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="%label.active" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>

@@ -21,7 +21,8 @@
             <TableColumn fx:id="checkBoxColumn" prefWidth="30.0">
                <graphic>
                   <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" selected="true" onAction="#handleCheckBoxColumnHead"/>
-               </graphic></TableColumn>
+               </graphic>
+            </TableColumn>
             <TableColumn fx:id="segOrNCColumn" prefWidth="100.0" text="%label.segmentsandnaturalclasses" />
             <TableColumn fx:id="descriptionColumn" prefWidth="240.0" text="%label.description" />
         </columns>

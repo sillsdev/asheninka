@@ -9,12 +9,19 @@ import java.util.ResourceBundle;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
@@ -22,7 +29,7 @@ import javafx.scene.text.Text;
  *
  */
 
-public class CVSegmentInventoryController extends SylParserBaseController implements Initializable {
+public class CVSegmentInventoryController extends CheckBoxColumnController implements Initializable {
 
 	protected final class WrappingTableCell extends TableCell<Segment, String> {
 		private Text text;
@@ -34,9 +41,16 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				setText(null);
 				setStyle("");
 			} else {
+				setStyle("");
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				Segment seg = (Segment) this.getTableRow().getItem();
+				if (seg != null && seg.isActive()) {
+					text.setFill(Color.BLACK);
+				} else {
+					text.setFill(Color.GRAY);
+				}
 				setGraphic(text);
 			}
 		}
@@ -50,6 +64,10 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	private TableColumn<Segment, String> graphemesColumn;
 	@FXML
 	private TableColumn<Segment, String> descriptionColumn;
+	@FXML
+	private TableColumn<Segment, Boolean> checkBoxColumn;
+	@FXML
+	private CheckBox checkBoxColumnHead;
 
 	@FXML
 	private TextField segmentField;
@@ -57,6 +75,8 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	private TextField graphemesField;
 	@FXML
 	private TextField descriptionField;
+	@FXML
+	private CheckBox activeCheckBox;
 
 	private LanguageProject languageProject;
 	private CVApproach cvApproach;
@@ -75,6 +95,13 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		// public void initialize() {
 
 		// Initialize the table with the three columns.
+		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
+		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+		checkBoxColumn.setEditable(true);
+		checkBoxColumnHead.setOnAction((event) -> {
+			handleCheckBoxColumnHead();
+		});
+		initializeCheckBoxContextMenu(resources);
 		segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
 		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
 		descriptionColumn
@@ -120,6 +147,13 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 			}
 		});
 
+		activeCheckBox.setOnAction((event) -> {
+			if (currentSegment != null) {
+				currentSegment.setActive(activeCheckBox.isSelected());
+				displayFieldsPerActiveSetting(currentSegment);
+			}
+		});
+
 		// Use of Enter move focus to next item.
 		segmentField.setOnAction((event) -> {
 			graphemesField.requestFocus();
@@ -145,11 +179,14 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 			segmentField.setText(segment.getSegment());
 			graphemesField.setText(segment.getGraphemes());
 			descriptionField.setText(segment.getDescription());
+			activeCheckBox.setSelected(segment.isActive());
+			displayFieldsPerActiveSetting(segment);
 		} else {
 			// Segment is null, remove all the text.
 			segmentField.setText("");
 			graphemesField.setText("");
 			descriptionField.setText("");
+			activeCheckBox.setSelected(true);
 		}
 
 		if (segment != null) {
@@ -157,6 +194,12 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 			this.mainApp.updateStatusBarNumberOfItems(currentSegmentNumber + "/"
 					+ cvSegmentTable.getItems().size() + " ");
 		}
+	}
+
+	public void displayFieldsPerActiveSetting(Segment segment) {
+		segmentField.setDisable(!segment.isActive());
+		graphemesField.setDisable(!segment.isActive());
+		descriptionField.setDisable(!segment.isActive());
 	}
 
 	public void setSegment(Segment segment) {
@@ -245,5 +288,27 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	void handlePaste() {
 		// TODO Auto-generated method stub
 
+	}
+
+	protected void handleCheckBoxSelectAll() {
+		for (Segment segment : languageProject.getSegmentInventory()) {
+			segment.setActive(true);
+		}
+	}
+
+	protected void handleCheckBoxClearAll() {
+		for (Segment segment : languageProject.getSegmentInventory()) {
+			segment.setActive(false);
+		}
+	}
+
+	protected void handleCheckBoxToggle() {
+		for (Segment segment : languageProject.getSegmentInventory()) {
+			if (segment.isActive()) {
+				segment.setActive(false);
+			} else {
+				segment.setActive(true);
+			}
+		}
 	}
 }

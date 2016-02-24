@@ -17,10 +17,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -30,7 +26,7 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class CVSegmentNaturalClassChooserController implements Initializable {
+public class CVSegmentNaturalClassChooserController extends CheckBoxColumnController implements Initializable {
 
 	@FXML
 	private TableView<CVSegmentOrNaturalClass> cvSegmentOrNaturalClassTable;
@@ -40,13 +36,6 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	private TableColumn<CVSegmentOrNaturalClass, String> segOrNCColumn;
 	@FXML
 	private TableColumn<CVSegmentOrNaturalClass, String> descriptionColumn;
-	@FXML
-	private CheckBox checkBoxColumnHead;
-	private ContextMenu checkBoxContextMenu = new ContextMenu();
-	private MenuItem selectAll = new MenuItem("Select All");
-	private MenuItem clearAll = new MenuItem("Clear All");
-	private MenuItem toggle = new MenuItem("Toggle");
-
 	Stage dialogStage;
 	private boolean okClicked = false;
 	private MainApp mainApp;
@@ -64,39 +53,19 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
 		// Initialize the table with the three columns.
-		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.checkedProperty());
+		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
+		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+		checkBoxColumn.setEditable(true);
 		checkBoxColumnHead.setOnAction((event) -> {
 			handleCheckBoxColumnHead();
 		});
 		segOrNCColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.segmentOrNaturalClassProperty());
-		descriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.descriptionProperty());
-		checkBoxColumn.setCellFactory(CheckBoxTableCell
-				.forTableColumn(checkBoxColumn));
-		checkBoxColumn.setEditable(true);
+		descriptionColumn
+				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		cvSegmentOrNaturalClassTable.setEditable(true);
-		
-		initializeCheckBoxContextMenu(resources);
-	}
 
-	private void initializeCheckBoxContextMenu(ResourceBundle bundle) {
-		// set up context menu
-		selectAll.setOnAction((event) -> {
-			handleCheckBoxSelectAll();
-		});
-		clearAll.setOnAction((event) -> {
-			handleCheckBoxClearAll();
-		});
-		toggle.setOnAction((event) -> {
-			handleCheckBoxToggle();
-		});
-		selectAll.setText(bundle.getString("checkbox.context.menu.selectall"));
-		clearAll.setText(bundle.getString("checkbox.context.menu.clearall"));
-		toggle.setText(bundle.getString("checkbox.context.menu.toggle"));
-		checkBoxContextMenu.getItems().addAll(selectAll, clearAll, toggle);
-		checkBoxColumnHead.setContextMenu(checkBoxContextMenu);
+		initializeCheckBoxContextMenu(resources);
 	}
 
 	/**
@@ -114,26 +83,7 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	 * @param cvApproachController
 	 */
 	public void setData(CVApproach cvApproachData) {
-		cvApproach = cvApproachData;
-		languageProject = cvApproach.getLanguageProject();
-
-		for (Segment cvSegment : languageProject.getSegmentInventory()) {
-			currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
-					cvSegment.getSegment(), cvSegment.getDescription(), true,
-					cvSegment.getID());
-			setCheckedStatus(cvSegment);
-			cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
-		}
-		for (CVNaturalClass cvNaturalClass : cvApproach.getCVNaturalClasses()) {
-			if (cvNaturalClass.getID() != naturalClass.getID()) {
-				currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
-						cvNaturalClass.getNCName(),
-						cvNaturalClass.getDescription(), false,
-						cvNaturalClass.getID());
-				cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
-				setCheckedStatus(cvNaturalClass);
-			}
-		}
+		generateCVSegmentsAndNaturalClasses(cvApproachData);
 		// Add observable list data to the table
 		cvSegmentOrNaturalClassTable.setItems(cvSegmentsOrNaturalClasses);
 		if (cvSegmentOrNaturalClassTable.getItems().size() > 0) {
@@ -141,6 +91,31 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 			cvSegmentOrNaturalClassTable.requestFocus();
 			cvSegmentOrNaturalClassTable.getSelectionModel().select(0);
 			cvSegmentOrNaturalClassTable.getFocusModel().focus(0);
+		}
+	}
+
+	public void generateCVSegmentsAndNaturalClasses(CVApproach cvApproachData) {
+		cvApproach = cvApproachData;
+		languageProject = cvApproach.getLanguageProject();
+
+		for (Segment cvSegment : languageProject.getSegmentInventory()) {
+			if (cvSegment.isActive()) {
+				currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(cvSegment.getSegment(),
+						cvSegment.getDescription(), true, cvSegment.getID());
+				setCheckedStatus(cvSegment);
+				cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
+			}
+		}
+		for (CVNaturalClass cvNaturalClass : cvApproach.getCVNaturalClasses()) {
+			if (cvNaturalClass.isActive()) {
+				if (cvNaturalClass.getID() != naturalClass.getID()) {
+					currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
+							cvNaturalClass.getNCName(), cvNaturalClass.getDescription(), false,
+							cvNaturalClass.getID());
+					cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
+					setCheckedStatus(cvNaturalClass);
+				}
+			}
 		}
 	}
 
@@ -175,14 +150,12 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 			if (segmentOrNaturalClass.isChecked()) {
 				if (segmentOrNaturalClass.isSegment()) {
 					int i = Segment.findIndexInSegmentsListByUuid(
-							languageProject.getSegmentInventory(),
-							segmentOrNaturalClass.getUuid());
+							languageProject.getSegmentInventory(), segmentOrNaturalClass.getUuid());
 					naturalClass.getSegmentsOrNaturalClasses().add(
 							languageProject.getSegmentInventory().get(i));
 				} else {
 					int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
-							cvApproach.getCVNaturalClasses(),
-							segmentOrNaturalClass.getUuid());
+							cvApproach.getCVNaturalClasses(), segmentOrNaturalClass.getUuid());
 					naturalClass.getSegmentsOrNaturalClasses().add(
 							cvApproach.getCVNaturalClasses().get(i));
 				}
@@ -213,17 +186,6 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 		mainApp.showNotImplementedYet();
 	}
 
-	/**
-	 * Called when the user clicks on the check box column header
-	 */
-	@FXML
-	private void handleCheckBoxColumnHead() {
-		// make sure the check box stays checked
-		checkBoxColumnHead.setSelected(true);
-		// show the check box context menu
-		checkBoxColumnHead.contextMenuProperty().get().show(checkBoxColumnHead, Side.BOTTOM, 0.0, 0.0);
-	}
-
 	public CVNaturalClass getNaturalClass() {
 		return naturalClass;
 	}
@@ -231,20 +193,20 @@ public class CVSegmentNaturalClassChooserController implements Initializable {
 	public void setNaturalClass(CVNaturalClass naturalClass) {
 		this.naturalClass = naturalClass;
 	}
-	
-	void handleCheckBoxSelectAll() {
+
+	protected void handleCheckBoxSelectAll() {
 		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
 			segmentOrNaturalClass.setChecked(true);
 		}
 	}
-	
-	void handleCheckBoxClearAll() {
+
+	protected void handleCheckBoxClearAll() {
 		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
 			segmentOrNaturalClass.setChecked(false);
 		}
 	}
 
-	void handleCheckBoxToggle() {
+	protected void handleCheckBoxToggle() {
 		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
 			if (segmentOrNaturalClass.isChecked()) {
 				segmentOrNaturalClass.setChecked(false);
