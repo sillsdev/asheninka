@@ -12,9 +12,9 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView fx:id="cvSegmentTable" layoutY="100.0" prefHeight="395.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-25.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="cvSegmentTable" layoutY="100.0" prefHeight="395.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="checkBoxColumn" prefWidth="26.0">
+                      <TableColumn fx:id="checkBoxColumn" prefWidth="4.0">
                         <graphic>
                           <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" />
                         </graphic>

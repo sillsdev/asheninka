@@ -39,9 +39,16 @@ public abstract class SylParserObject {
 		this.active = active;
 		this.activeCheckBox.set(active);
 	}
-	public BooleanProperty activeProperty() {
+	public BooleanProperty activeCheckBoxProperty() {
 		return activeCheckBox;
 	}
+	public boolean isActiveCheckBox() {
+		return activeCheckBox.get();
+	}
+	public void setActiveCheckBox(boolean value) {
+		this.activeCheckBox.set(value);	
+	}
+
 
 	@XmlAttribute(name="id")
 	@XmlID

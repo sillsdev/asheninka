@@ -95,7 +95,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		// public void initialize() {
 
 		// Initialize the table with the three columns.
-		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeProperty());
+		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
 		checkBoxColumn.setEditable(true);
 		checkBoxColumnHead.setOnAction((event) -> {
@@ -150,6 +150,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		activeCheckBox.setOnAction((event) -> {
 			if (currentSegment != null) {
 				currentSegment.setActive(activeCheckBox.isSelected());
+				forceTableRowToRedisplayPerActiveSetting(currentSegment);
 				displayFieldsPerActiveSetting(currentSegment);
 			}
 		});
@@ -163,6 +164,21 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		});
 
 		segmentField.requestFocus();
+	}
+
+	private void forceTableRowToRedisplayPerActiveSetting(Segment segment) {
+		// we need to make the content of the row cells change in order for
+		// the cell factory to fire.
+		// We do this by getting the value, blanking it, and then restoring it.
+		String temp = segment.getSegment();
+		segment.setSegment("");
+		segment.setSegment(temp);
+		temp = segment.getGraphemes();
+		segment.setGraphemes("");
+		segment.setGraphemes(temp);
+		temp = segment.getDescription();
+		segment.setDescription("");
+		segment.setDescription(temp);
 	}
 
 	/**
@@ -293,12 +309,14 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	protected void handleCheckBoxSelectAll() {
 		for (Segment segment : languageProject.getSegmentInventory()) {
 			segment.setActive(true);
+			forceTableRowToRedisplayPerActiveSetting(segment);
 		}
 	}
 
 	protected void handleCheckBoxClearAll() {
 		for (Segment segment : languageProject.getSegmentInventory()) {
 			segment.setActive(false);
+			forceTableRowToRedisplayPerActiveSetting(segment);
 		}
 	}
 
@@ -309,6 +327,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			} else {
 				segment.setActive(true);
 			}
+			forceTableRowToRedisplayPerActiveSetting(segment);
 		}
 	}
 }
