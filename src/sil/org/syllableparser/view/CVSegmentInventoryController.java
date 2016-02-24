@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
+import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import javafx.event.ActionEvent;
@@ -55,7 +56,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			}
 		}
 	}
-
+	
 	@FXML
 	private TableView<Segment> cvSegmentTable;
 	@FXML

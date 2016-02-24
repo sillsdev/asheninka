@@ -47,10 +47,10 @@
                         <Label text="%label.segment" />
                         <Label text="%label.description" GridPane.rowIndex="1" />
                         <Label text="%label.orthographicforms" GridPane.rowIndex="2" />
+                        <Label text="%label.active" GridPane.rowIndex="3" />
                         <TextField fx:id="segmentField" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="graphemesField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="%label.active" GridPane.rowIndex="3" />
                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>

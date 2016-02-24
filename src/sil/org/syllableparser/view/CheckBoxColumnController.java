@@ -6,19 +6,24 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.model.Segment;
+import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableCell;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 /**
  * @author Andy Black
  *
  */
 public abstract class CheckBoxColumnController extends SylParserBaseController {
-
+	
 	@FXML
 	protected CheckBox checkBoxColumnHead;
 	protected ContextMenu checkBoxContextMenu = new ContextMenu();

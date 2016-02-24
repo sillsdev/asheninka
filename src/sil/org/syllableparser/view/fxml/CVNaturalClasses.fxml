@@ -16,6 +16,11 @@
                <children>
                   <TableView fx:id="cvNaturalClassTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
+                      <TableColumn fx:id="checkBoxColumn" prefWidth="4.0">
+                        <graphic>
+                          <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" />
+                        </graphic>
+                      </TableColumn>
                       <TableColumn fx:id="nameColumn" prefWidth="63.0" text="%label.name" />
                       <TableColumn fx:id="segmentOrNaturalClassColumn" prefWidth="119.0" text="%label.segmentornaturalclass"/>
                       <TableColumn fx:id="descriptionColumn" prefWidth="-1.0" text="%label.description" />
@@ -44,7 +49,7 @@
                         <Label text="%label.name" />
                         <Label text="%label.description" GridPane.rowIndex="1" />
                         <Label text="%label.segmentornaturalclass" GridPane.rowIndex="2" />
-<!--                         <Label text="Label" GridPane.rowIndex="3" /> -->
+                        <Label text="%label.active" GridPane.rowIndex="3" />
                         <TextField fx:id="nameField" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 <!--                         <TextField fx:id="segmentOrNaturalClassField" GridPane.columnIndex="1" GridPane.rowIndex="2" /> -->
@@ -57,8 +62,11 @@
                               <Button fx:id="sncButton" mnemonicParsing="false" onAction="#handleLaunchSNCChooser" text="...">
                                  <FlowPane.margin>
                                     <Insets left="3.0" />
-                                 </FlowPane.margin></Button>
-                           </children></FlowPane>
+                                 </FlowPane.margin>
+                              </Button>
+                           </children>
+                        </FlowPane>
+                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>

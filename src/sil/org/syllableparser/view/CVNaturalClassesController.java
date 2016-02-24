@@ -15,14 +15,18 @@ import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -33,7 +37,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends SylParserBaseController implements Initializable {
+public class CVNaturalClassesController extends CheckBoxColumnController implements Initializable {
 
 	protected final class WrappingTableCell extends TableCell<CVNaturalClass, String> {
 		private Text text;
@@ -45,14 +49,21 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				setText(null);
 				setStyle("");
 			} else {
+				setStyle("");
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
+				if (nc != null && nc.isActive()) {
+					text.setFill(Color.BLACK);
+				} else {
+					text.setFill(Color.GRAY);
+				}
 				setGraphic(text);
 			}
 		}
 	}
-
+	
 	@FXML
 	private TableView<CVNaturalClass> cvNaturalClassTable;
 	@FXML
@@ -61,6 +72,10 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	private TableColumn<CVNaturalClass, String> segmentOrNaturalClassColumn;
 	@FXML
 	private TableColumn<CVNaturalClass, String> descriptionColumn;
+	@FXML
+	private TableColumn<CVNaturalClass, Boolean> checkBoxColumn;
+	@FXML
+	private CheckBox checkBoxColumnHead;
 
 	@FXML
 	private TextField nameField;
@@ -74,8 +89,8 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	private TextFlow sncTextFlow;
 	@FXML
 	private Button sncButton;
-	// @FXML
-	// private TextField sncRepresentationField;
+	@FXML
+	private CheckBox activeCheckBox;
 
 	private CVApproach cvApproach;
 	private CVNaturalClass currentNaturalClass;
@@ -93,6 +108,14 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		// public void initialize() {
 
 		// Initialize the table with the three columns.
+		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
+		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+		checkBoxColumn.setEditable(true);
+		checkBoxColumnHead.setOnAction((event) -> {
+			handleCheckBoxColumnHead();
+		});
+		initializeCheckBoxContextMenu(resources);
+
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.sncRepresentationProperty());
@@ -140,6 +163,14 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			}
 		});
 
+		activeCheckBox.setOnAction((event) -> {
+			if (currentNaturalClass != null) {
+				currentNaturalClass.setActive(activeCheckBox.isSelected());
+				forceTableRowToRedisplayPerActiveSetting(currentNaturalClass);
+				displayFieldsPerActiveSetting(currentNaturalClass);
+			}
+		});
+
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
 			descriptionField.requestFocus();
@@ -150,6 +181,28 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 		nameField.requestFocus();
 
+	}
+
+	public void displayFieldsPerActiveSetting(CVNaturalClass nc) {
+		nameField.setDisable(!nc.isActive());
+		sncTextFlow.setDisable(!nc.isActive());
+		sncButton.setDisable(!nc.isActive());
+		descriptionField.setDisable(!nc.isActive());
+	}
+
+	private void forceTableRowToRedisplayPerActiveSetting(CVNaturalClass nc) {
+		// we need to make the content of the row cells change in order for
+		// the cell factory to fire.
+		// We do this by getting the value, blanking it, and then restoring it.
+		String temp = nc.getNCName();
+		nc.setNCName("");
+		nc.setNCName(temp);
+		temp = nc.getSNCRepresentation();
+		nc.setSNCRepresentation("");
+		nc.setSNCRepresentation(temp);
+		temp = nc.getDescription();
+		nc.setDescription("");
+		nc.setDescription(temp);
 	}
 
 	/**
@@ -166,6 +219,8 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			nameField.setText(naturalClass.getNCName());
 			descriptionField.setText(naturalClass.getDescription());
 			showSegmentOrNaturalClassContent();
+			activeCheckBox.setSelected(naturalClass.isActive());
+			displayFieldsPerActiveSetting(naturalClass);
 		} else {
 			// Segment is null, remove all the text.
 			nameField.setText("");
@@ -344,6 +399,33 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	void handlePaste() {
 		// TODO Auto-generated method stub
 
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.CheckBoxColumnController#handleCheckBoxSelectAll()
+	 */
+	@Override
+	protected void handleCheckBoxSelectAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.CheckBoxColumnController#handleCheckBoxClearAll()
+	 */
+	@Override
+	protected void handleCheckBoxClearAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.CheckBoxColumnController#handleCheckBoxToggle()
+	 */
+	@Override
+	protected void handleCheckBoxToggle() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
