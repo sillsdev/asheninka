@@ -6,6 +6,7 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
@@ -48,9 +49,9 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				Segment seg = (Segment) this.getTableRow().getItem();
 				if (seg != null && seg.isActive()) {
-					text.setFill(Color.BLACK);
+					text.setFill(Constants.ACTIVE);
 				} else {
-					text.setFill(Color.GRAY);
+					text.setFill(Constants.INACTIVE);
 				}
 				setGraphic(text);
 			}
@@ -93,16 +94,13 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// public void initialize() {
-
-		// Initialize the table with the three columns.
-		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
-		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-		checkBoxColumn.setEditable(true);
-		checkBoxColumnHead.setOnAction((event) -> {
-			handleCheckBoxColumnHead();
-		});
-		initializeCheckBoxContextMenu(resources);
+//		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
+//		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+//		checkBoxColumn.setEditable(true);
+//		checkBoxColumnHead.setOnAction((event) -> {
+//			handleCheckBoxColumnHead();
+//		});
+//		initializeCheckBoxContextMenu(resources);
 		segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
 		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
 		descriptionColumn

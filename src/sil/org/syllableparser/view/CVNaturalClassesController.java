@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
@@ -55,9 +56,9 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
 				if (nc != null && nc.isActive()) {
-					text.setFill(Color.BLACK);
+					text.setFill(Constants.ACTIVE);
 				} else {
-					text.setFill(Color.GRAY);
+					text.setFill(Constants.INACTIVE);
 				}
 				setGraphic(text);
 			}
@@ -105,16 +106,14 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// public void initialize() {
 
-		// Initialize the table with the three columns.
-		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
-		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-		checkBoxColumn.setEditable(true);
-		checkBoxColumnHead.setOnAction((event) -> {
-			handleCheckBoxColumnHead();
-		});
-		initializeCheckBoxContextMenu(resources);
+//		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
+//		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+//		checkBoxColumn.setEditable(true);
+//		checkBoxColumnHead.setOnAction((event) -> {
+//			handleCheckBoxColumnHead();
+//		});
+//		initializeCheckBoxContextMenu(resources);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -166,6 +165,7 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 		activeCheckBox.setOnAction((event) -> {
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setActive(activeCheckBox.isSelected());
+				showSegmentOrNaturalClassContent();
 				forceTableRowToRedisplayPerActiveSetting(currentNaturalClass);
 				displayFieldsPerActiveSetting(currentNaturalClass);
 			}
@@ -219,8 +219,8 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 			// Fill the text fields with info from the person object.
 			nameField.setText(naturalClass.getNCName());
 			descriptionField.setText(naturalClass.getDescription());
-			showSegmentOrNaturalClassContent();
 			activeCheckBox.setSelected(naturalClass.isActive());
+			showSegmentOrNaturalClassContent();
 			displayFieldsPerActiveSetting(naturalClass);
 		} else {
 			// Segment is null, remove all the text.
@@ -257,6 +257,11 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 				s = "ERROR!";
 				t = new Text(s);
 				sb.append(s);
+			}
+			if (activeCheckBox.isSelected()) {
+				t.setFill(Constants.ACTIVE);
+			} else {
+				t.setFill(Constants.INACTIVE);
 			}
 			Text tBar = new Text(" | ");
 			tBar.setStyle("-fx-stroke: lightgrey;");

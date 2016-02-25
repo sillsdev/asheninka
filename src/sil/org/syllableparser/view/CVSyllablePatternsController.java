@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.SyllableParserException;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
@@ -19,13 +21,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -36,7 +41,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVSyllablePatternsController extends SylParserBaseController implements Initializable {
+public class CVSyllablePatternsController extends CheckBoxColumnController implements Initializable {
 	protected final class WrappingTableCell extends TableCell<CVSyllablePattern, String> {
 		private Text text;
 
@@ -47,9 +52,16 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				setText(null);
 				setStyle("");
 			} else {
+				setStyle("");
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				CVSyllablePattern syllablePattern = (CVSyllablePattern) this.getTableRow().getItem();
+				if (syllablePattern != null && syllablePattern.isActive()) {
+					text.setFill(Constants.ACTIVE);
+				} else {
+					text.setFill(Constants.INACTIVE);
+				}
 				setGraphic(text);
 			}
 		}
@@ -63,6 +75,10 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	private TableColumn<CVSyllablePattern, String> naturalClassColumn;
 	@FXML
 	private TableColumn<CVSyllablePattern, String> descriptionColumn;
+	@FXML
+	private TableColumn<CVSyllablePattern, Boolean> checkBoxColumn;
+	@FXML
+	private CheckBox checkBoxColumnHead;
 
 	@FXML
 	private TextField nameField;
@@ -76,6 +92,8 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	private TextFlow ncsTextFlow;
 	@FXML
 	private Button ncsButton;
+	@FXML
+	private CheckBox activeCheckBox;
 	@FXML
 	private Button buttonMoveUp;
 	@FXML
@@ -107,7 +125,14 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		ControllerUtilities.createToolbarButtonWithImage("DownArrow.png", buttonMoveDown,
 				tooltipMoveDown, bundle.getString("cv.view.syllablepatterns.down"));
 
-		// Initialize the table with the three columns.
+// 		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
+//		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+//		checkBoxColumn.setEditable(true);
+//		checkBoxColumnHead.setOnAction((event) -> {
+//			handleCheckBoxColumnHead();
+//		});
+//		initializeCheckBoxContextMenu(resources);
+
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().spNameProperty());
 		naturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.ncsRepresentationProperty());
@@ -151,6 +176,15 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			}
 		});
 
+		activeCheckBox.setOnAction((event) -> {
+			if (currentSyllablePattern != null) {
+				currentSyllablePattern.setActive(activeCheckBox.isSelected());
+				showNaturalClassesContent();
+				forceTableRowToRedisplayPerActiveSetting(currentSyllablePattern);
+				displayFieldsPerActiveSetting(currentSyllablePattern);
+			}
+		});
+
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
 			descriptionField.requestFocus();
@@ -162,6 +196,29 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		nameField.requestFocus();
 
 	}
+	
+	public void displayFieldsPerActiveSetting(CVSyllablePattern syllablePattern) {
+		nameField.setDisable(!syllablePattern.isActive());
+		ncsTextFlow.setDisable(!syllablePattern.isActive());
+		ncsButton.setDisable(!syllablePattern.isActive());
+		descriptionField.setDisable(!syllablePattern.isActive());
+	}
+
+	private void forceTableRowToRedisplayPerActiveSetting(CVSyllablePattern syllablePattern) {
+		// we need to make the content of the row cells change in order for
+		// the cell factory to fire.
+		// We do this by getting the value, blanking it, and then restoring it.
+		String temp = syllablePattern.getSPName();
+		syllablePattern.setSPName("");
+		syllablePattern.setSPName(temp);
+		temp = syllablePattern.getNCSRepresentation();
+		syllablePattern.setNCSRepresentation("");
+		syllablePattern.setNCSRepresentation(temp);
+		temp = syllablePattern.getDescription();
+		syllablePattern.setDescription("");
+		syllablePattern.setDescription(temp);
+	}
+
 
 	/**
 	 * Fills all text fields to show details about the CV natural class. If the
@@ -176,7 +233,9 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			// Fill the text fields with info from the person object.
 			nameField.setText(syllablePattern.getSPName());
 			descriptionField.setText(syllablePattern.getDescription());
+			activeCheckBox.setSelected(syllablePattern.isActive());
 			showNaturalClassesContent();
+			displayFieldsPerActiveSetting(syllablePattern);
 			setUpDownButtonDisabled();
 
 		} else {
@@ -245,6 +304,11 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 
 	protected void addNameToContent(StringBuilder sb, String sName) {
 		Text t = new Text(sName);
+		if (activeCheckBox.isSelected()) {
+			t.setFill(Constants.ACTIVE);
+		} else {
+			t.setFill(Constants.INACTIVE);
+		}
 		Text tBar = new Text(" | ");
 		tBar.setStyle("-fx-stroke: lightgrey;");
 		ncsTextFlow.getChildren().addAll(t, tBar);
@@ -391,5 +455,30 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	void handlePaste() {
 		// TODO Auto-generated method stub
 
+	}
+
+	protected void handleCheckBoxSelectAll() {
+		for (CVSyllablePattern syllablePattern : cvApproach.getCVSyllablePatterns()) {
+			syllablePattern.setActive(true);
+			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
+		}
+	}
+
+	protected void handleCheckBoxClearAll() {
+		for (CVSyllablePattern syllablePattern : cvApproach.getCVSyllablePatterns()) {
+			syllablePattern.setActive(false);
+			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
+		}
+	}
+
+	protected void handleCheckBoxToggle() {
+		for (CVSyllablePattern syllablePattern : cvApproach.getCVSyllablePatterns()) {
+			if (syllablePattern.isActive()) {
+				syllablePattern.setActive(false);
+			} else {
+				syllablePattern.setActive(true);
+			}
+			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
+		}
 	}
 }

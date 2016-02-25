@@ -14,11 +14,11 @@
                <children>
                   <TableView fx:id="cvSegmentTable" layoutY="100.0" prefHeight="395.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="checkBoxColumn" prefWidth="4.0">
-                        <graphic>
-                          <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" />
-                        </graphic>
-                      </TableColumn>
+<!--                       <TableColumn fx:id="checkBoxColumn" prefWidth="4.0"> -->
+<!--                         <graphic> -->
+<!--                           <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" /> -->
+<!--                         </graphic> -->
+<!--                       </TableColumn> -->
                       <TableColumn fx:id="segmentColumn" prefWidth="76.0" text="%label.segment" />
                       <TableColumn fx:id="graphemesColumn" prefWidth="75.0" text="%label.orthographicforms" />
                       <TableColumn fx:id="descriptionColumn" prefWidth="82.0" text="%label.description" />

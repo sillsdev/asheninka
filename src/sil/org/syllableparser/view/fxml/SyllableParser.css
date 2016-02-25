@@ -1,7 +1,13 @@
-/* custom CSS for SYllable Parser */
+/* custom CSS for Syllable Parser */
 
 .root {
 	-fx-font-size:100%;
+}
+.active {
+	-fx-text-fill:green;
+}
+.inactive {
+	-fx-text-fill:red;
 }
 .button-blue {
 	-fx-background-color: #BFD0FF;

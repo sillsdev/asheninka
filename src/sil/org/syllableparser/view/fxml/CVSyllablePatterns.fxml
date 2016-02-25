@@ -15,6 +15,11 @@
                <children>
                   <TableView fx:id="cvSyllablePatternTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
+<!--                       <TableColumn fx:id="checkBoxColumn" prefWidth="4.0"> -->
+<!--                         <graphic> -->
+<!--                           <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" /> -->
+<!--                         </graphic> -->
+<!--                       </TableColumn>  -->
                       <TableColumn fx:id="nameColumn" prefWidth="63.0" text="%label.name" />
                       <TableColumn fx:id="naturalClassColumn" prefWidth="119.0" text="%label.naturalclasses" />
                         <TableColumn fx:id="descriptionColumn" prefWidth="-1.0" text="%label.description" />
@@ -63,7 +68,9 @@
                                  <FlowPane.margin>
                                     <Insets left="3.0" />
                                  </FlowPane.margin></Button>
-                           </children></FlowPane>
+                           </children>
+                         </FlowPane>
+                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>

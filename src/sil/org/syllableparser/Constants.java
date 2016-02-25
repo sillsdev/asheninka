@@ -3,6 +3,8 @@
  */
 package sil.org.syllableparser;
 
+import javafx.scene.paint.Color;
+
 /**
  * @author Andy Black
  *
@@ -37,4 +39,8 @@ public class Constants {
 	// UnitTesting constants
 	public static final String UNIT_TEST_DATA_FILE_NAME="test/sil/org/syllableparser/testData/CVTestData.";
 	public static final String UNIT_TEST_DATA_FILE="test/sil/org/syllableparser/testData/CVTestData.ashedata";
+	
+	// Active/inactive text colors
+	public static final Color ACTIVE=Color.BLACK;
+	public static final Color INACTIVE=Color.GRAY;
 }

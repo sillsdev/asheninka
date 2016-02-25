@@ -16,11 +16,11 @@
                <children>
                   <TableView fx:id="cvNaturalClassTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="checkBoxColumn" prefWidth="4.0">
-                        <graphic>
-                          <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" />
-                        </graphic>
-                      </TableColumn>
+<!--                       <TableColumn fx:id="checkBoxColumn" prefWidth="4.0"> -->
+<!--                         <graphic> -->
+<!--                           <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" /> -->
+<!--                         </graphic> -->
+<!--                       </TableColumn> -->
                       <TableColumn fx:id="nameColumn" prefWidth="63.0" text="%label.name" />
                       <TableColumn fx:id="segmentOrNaturalClassColumn" prefWidth="119.0" text="%label.segmentornaturalclass"/>
                       <TableColumn fx:id="descriptionColumn" prefWidth="-1.0" text="%label.description" />
