@@ -8,13 +8,12 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
-import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
-import sil.org.syllableparser.view.CVNaturalClassesController.WrappingTableCell;
+import sil.org.syllableparser.view.CVNaturalClassesController.VernacularWrappingTableCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -69,8 +68,6 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 	private boolean okClicked = false;
 	private MainApp mainApp;
 
-	private LanguageProject languageProject;
-	private CVApproach cvApproach;
 	private CVSegmentOrNaturalClass currentSegmentOrNaturalClass;
 	private ObservableList<CVSegmentOrNaturalClass> cvSegmentsOrNaturalClasses = FXCollections
 			.observableArrayList();

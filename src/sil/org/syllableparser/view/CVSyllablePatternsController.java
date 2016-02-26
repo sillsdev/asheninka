@@ -41,7 +41,8 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVSyllablePatternsController extends CheckBoxColumnController implements Initializable {
+public class CVSyllablePatternsController extends SylParserBaseController implements Initializable {
+	
 	protected final class WrappingTableCell extends TableCell<CVSyllablePattern, String> {
 		private Text text;
 
@@ -62,6 +63,7 @@ public class CVSyllablePatternsController extends CheckBoxColumnController imple
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
+				text.setFont(languageProject.getAnalysisFont());
 				setGraphic(text);
 			}
 		}
@@ -105,7 +107,6 @@ public class CVSyllablePatternsController extends CheckBoxColumnController imple
 	// @FXML
 	// private TextField sncRepresentationField;
 
-	private CVApproach cvApproach;
 	private CVSyllablePattern currentSyllablePattern;
 
 	public CVSyllablePatternsController() {
@@ -169,10 +170,16 @@ public class CVSyllablePatternsController extends CheckBoxColumnController imple
 			if (currentSyllablePattern != null) {
 				currentSyllablePattern.setSPName(nameField.getText());
 			}
+			if (languageProject != null) {
+				nameField.setFont(languageProject.getAnalysisFont());
+			}
 		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSyllablePattern != null) {
 				currentSyllablePattern.setDescription(descriptionField.getText());
+			}
+			if (languageProject != null) {
+				descriptionField.setFont(languageProject.getAnalysisFont());
 			}
 		});
 
@@ -304,6 +311,7 @@ public class CVSyllablePatternsController extends CheckBoxColumnController imple
 
 	protected void addNameToContent(StringBuilder sb, String sName, boolean isActive) {
 		Text t = new Text(sName);
+		t.setFont(languageProject.getAnalysisFont());
 		if (isActive && activeCheckBox.isSelected()) {
 			t.setFill(Constants.ACTIVE);
 		} else {
@@ -327,7 +335,8 @@ public class CVSyllablePatternsController extends CheckBoxColumnController imple
 	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
-
+		languageProject = cvApproach.getLanguageProject();
+		
 		// Add observable list data to the table
 		cvSyllablePatternTable.setItems(cvApproachData.getCVSyllablePatterns());
 		if (cvSyllablePatternTable.getItems().size() > 0) {

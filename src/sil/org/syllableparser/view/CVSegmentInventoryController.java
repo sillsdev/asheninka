@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.Constants;
-import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -24,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -31,9 +31,9 @@ import javafx.scene.text.Text;
  *
  */
 
-public class CVSegmentInventoryController extends CheckBoxColumnController implements Initializable {
+public class CVSegmentInventoryController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends TableCell<Segment, String> {
+	protected final class AnalysisWrappingTableCell extends TableCell<Segment, String> {
 		private Text text;
 
 		@Override
@@ -53,6 +53,32 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
+				text.setFont(languageProject.getAnalysisFont());
+				setGraphic(text);
+			}
+		}
+	}
+	protected final class VernacularWrappingTableCell extends TableCell<Segment, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				setStyle("");
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				Segment seg = (Segment) this.getTableRow().getItem();
+				if (seg != null && seg.isActive()) {
+					text.setFill(Constants.ACTIVE);
+				} else {
+					text.setFill(Constants.INACTIVE);
+				}
+				text.setFont(languageProject.getVernacularFont());
 				setGraphic(text);
 			}
 		}
@@ -80,8 +106,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	@FXML
 	private CheckBox activeCheckBox;
 
-	private LanguageProject languageProject;
-	private CVApproach cvApproach;
 	private Segment currentSegment;
 
 	public CVSegmentInventoryController() {
@@ -109,13 +133,13 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 
 		// Custom rendering of the table cell.
 		segmentColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new VernacularWrappingTableCell();
 		});
 		graphemesColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new VernacularWrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(segmentColumn);
@@ -134,15 +158,24 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			if (currentSegment != null) {
 				currentSegment.setSegment(segmentField.getText());
 			}
+			if (languageProject != null) {
+				segmentField.setFont(languageProject.getVernacularFont());
+			}
 		});
 		graphemesField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
 				currentSegment.setGraphemes(graphemesField.getText());
 			}
+			if (languageProject != null) {
+				graphemesField.setFont(languageProject.getVernacularFont());
+			}
 		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
 				currentSegment.setDescription(descriptionField.getText());
+			}
+			if (languageProject != null) {
+				descriptionField.setFont(languageProject.getAnalysisFont());
 			}
 		});
 

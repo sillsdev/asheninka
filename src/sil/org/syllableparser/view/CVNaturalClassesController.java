@@ -38,9 +38,9 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends CheckBoxColumnController implements Initializable {
+public class CVNaturalClassesController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends TableCell<CVNaturalClass, String> {
+	protected final class AnalysisWrappingTableCell extends TableCell<CVNaturalClass, String> {
 		private Text text;
 
 		@Override
@@ -60,6 +60,33 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
+				text.setFont(languageProject.getAnalysisFont());
+				setGraphic(text);
+			}
+		}
+	}
+	
+	protected final class VernacularWrappingTableCell extends TableCell<CVNaturalClass, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				setStyle("");
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
+				if (nc != null && nc.isActive()) {
+					text.setFill(Constants.ACTIVE);
+				} else {
+					text.setFill(Constants.INACTIVE);
+				}
+				text.setFont(languageProject.getVernacularFont());
 				setGraphic(text);
 			}
 		}
@@ -93,7 +120,6 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 	@FXML
 	private CheckBox activeCheckBox;
 
-	private CVApproach cvApproach;
 	private CVNaturalClass currentNaturalClass;
 
 	public CVNaturalClassesController() {
@@ -123,13 +149,13 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 		segmentOrNaturalClassColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new VernacularWrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(nameColumn);
@@ -151,6 +177,9 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setNCName(nameField.getText());
 			}
+			if (languageProject != null) {
+				nameField.setFont(languageProject.getAnalysisFont());
+			}
 		});
 		// segmentOrNaturalClassField.textProperty().addListener(
 		// (observable, oldValue, newValue) -> {
@@ -159,6 +188,9 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setDescription(descriptionField.getText());
+			}
+			if (languageProject != null) {
+				descriptionField.setFont(languageProject.getAnalysisFont());
 			}
 		});
 
@@ -248,10 +280,12 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 			if (snc instanceof Segment) {
 				s = ((Segment) snc).getSegment();
 				t = new Text(s);
+				t.setFont(languageProject.getVernacularFont());
 				sb.append(s);
 			} else if (snc instanceof CVNaturalClass) {
 				s = ((CVNaturalClass) snc).getNCName();
 				t = new Text(s);
+				t.setFont(languageProject.getAnalysisFont());
 				sb.append(s);
 			} else {
 				s = "ERROR!";
@@ -285,7 +319,8 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
-
+		languageProject = cvApproach.getLanguageProject();
+		
 		// Add observable list data to the table
 		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
 		if (cvNaturalClassTable.getItems().size() > 0) {

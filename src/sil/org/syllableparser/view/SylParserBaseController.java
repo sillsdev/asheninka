@@ -3,6 +3,8 @@
  */
 package sil.org.syllableparser.view;
 
+import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.cvapproach.CVApproach;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -17,6 +19,9 @@ import javafx.scene.text.TextAlignment;
 public abstract class SylParserBaseController extends ApproachEditorController implements Initializable {
 
 	
+	protected LanguageProject languageProject;
+	protected CVApproach cvApproach;
+
 	protected void makeColumnHeaderWrappable(@SuppressWarnings("rawtypes") TableColumn col) {
 		Label label = new Label(col.getText());
 		label.setStyle("-fx-padding: 8px;");

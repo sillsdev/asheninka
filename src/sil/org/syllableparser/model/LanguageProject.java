@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.text.Font;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -25,6 +26,8 @@ public class LanguageProject {
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
+	private Font vernacularFont = new Font("Charis SIL", 12);
+	private Font analysisFont = new Font(12);
 
 	public LanguageProject() {
 		super();
@@ -169,6 +172,34 @@ public class LanguageProject {
 	public void createNewWordFromParaTExt(Word word, String sUntested) {
 		word.setCVParserResult(sUntested);
 		addWordIfDistinct(word.getWord(), word);
+	}
+
+	/**
+	 * @return the vernacularFont
+	 */
+	public Font getVernacularFont() {
+		return vernacularFont;
+	}
+
+	/**
+	 * @param vernacularFont the vernacularFont to set
+	 */
+	public void setVernacularFont(Font vernacularFont) {
+		this.vernacularFont = vernacularFont;
+	}
+
+	/**
+	 * @return the analysisFont
+	 */
+	public Font getAnalysisFont() {
+		return analysisFont;
+	}
+
+	/**
+	 * @param analysisFont the analysisFont to set
+	 */
+	public void setAnalysisFont(Font analysisFont) {
+		this.analysisFont = analysisFont;
 	}
 
 }

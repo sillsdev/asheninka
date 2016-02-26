@@ -37,7 +37,6 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 	@FXML
 	private TableColumn<Word, String> wordPredictedVsCorrectColumn;
 
-	private CVApproach cvApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 
 	private Word currentWord;

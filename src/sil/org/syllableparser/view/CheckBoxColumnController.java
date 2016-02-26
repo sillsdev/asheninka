@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 /**
  * @author Andy Black
  *
+ * Use this if you want to add a column of checkboxes for, say, active/inactive
  */
 public abstract class CheckBoxColumnController extends SylParserBaseController {
 	

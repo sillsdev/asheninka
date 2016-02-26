@@ -27,7 +27,7 @@ import javafx.scene.text.Text;
 
 public class CVWordsController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends TableCell<Word, String> {
+	protected final class VernacularWrappingTableCell extends TableCell<Word, String> {
 		private Text text;
 
 		@Override
@@ -40,6 +40,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				text.setFont(languageProject.getVernacularFont());
 				setGraphic(text);
 			}
 		}
@@ -67,6 +68,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				} else {
 					text.setFill(Constants.PARSER_SUCCESS);
 				}
+				text.setFont(languageProject.getAnalysisFont());
 				setGraphic(text);
 			}
 		}
@@ -92,7 +94,6 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	@FXML
 	private TextField parserResultField;
 
-	private CVApproach cvApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 
 	private Word currentWord;
@@ -120,13 +121,13 @@ public class CVWordsController extends SylParserBaseController implements Initia
 
 		// Custom rendering of the table cell.
 		wordColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new VernacularWrappingTableCell();
 		});
 		predictedSyllabificationColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new VernacularWrappingTableCell();
 		});
 		correctSyllabificationColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new VernacularWrappingTableCell();
 		});
 		parserResultColumn.setCellFactory(column -> {
 			return new ParserResultWrappingTableCell();
@@ -151,12 +152,18 @@ public class CVWordsController extends SylParserBaseController implements Initia
 			if (currentWord != null) {
 				currentWord.setWord(wordField.getText());
 			}
+			if (languageProject != null) {
+				wordField.setFont(languageProject.getVernacularFont());
+			}
 		});
 		predictedSyllabificationField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
 					if (currentWord != null) {
 						currentWord.setCVPredictedSyllabification(predictedSyllabificationField
 								.getText());
+					}
+					if (languageProject != null) {
+						predictedSyllabificationField.setFont(languageProject.getVernacularFont());
 					}
 				});
 		correctSyllabificationField.textProperty()
@@ -166,10 +173,16 @@ public class CVWordsController extends SylParserBaseController implements Initia
 								currentWord.setCorrectSyllabification(correctSyllabificationField
 										.getText());
 							}
+							if (languageProject != null) {
+								correctSyllabificationField.setFont(languageProject.getVernacularFont());
+							}
 						});
 		parserResultField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentWord != null) {
 				currentWord.setCVParserResult(parserResultField.getText());
+			}
+			if (languageProject != null) {
+				parserResultField.setFont(languageProject.getAnalysisFont());
 			}
 		});
 		
@@ -241,6 +254,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	 */
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
+		languageProject = cvApproach.getLanguageProject();
 		this.words = words;
 
 		// Add observable list data to the table
