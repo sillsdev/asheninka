@@ -33,6 +33,9 @@ public class CVSegmenter {
 
 	protected void buildGraphemeToCVSegmentMapping() {
 		for (Segment seg : segmentInventory) {
+			if (!seg.isActive()) {
+				continue;
+			}
 			String[] orthographemes = seg.getGraphemes().split(" +");
 			for (String orthoform : orthographemes) {
 				if (orthoform.length() > iLongestGrapheme) {

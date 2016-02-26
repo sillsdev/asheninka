@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlTransient;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -42,6 +43,7 @@ public abstract class SylParserObject {
 	public BooleanProperty activeCheckBoxProperty() {
 		return activeCheckBox;
 	}
+	@XmlTransient
 	public boolean isActiveCheckBox() {
 		return activeCheckBox.get();
 	}

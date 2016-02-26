@@ -32,12 +32,7 @@ public class CVSegmentOrNaturalClassTest {
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);
 		cvSegmentInventory.add(segD);
-//		ObservableList<Object> consonants = new SimpleListProperty<Object>();
-//		consonants.add(segB);
-//		consonants.add(segD);
 		cvNaturalClasses.add(new CVNaturalClass("C", null, "Consonants", "bd"));
-//		ObservableList<Object> vowels = new SimpleListProperty<Object>();
-//		vowels.add(segA);
 		cvNaturalClasses.add(new CVNaturalClass("V", null, "Vowels", "a"));
 	}
 

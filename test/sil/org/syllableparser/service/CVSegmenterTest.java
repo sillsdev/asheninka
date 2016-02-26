@@ -69,7 +69,7 @@ public class CVSegmenterTest {
 		seg = cvSegmentInventory.get(26).getSegment().trim();
 		assertEquals("Last segment is /ɲ/", "ɲ", seg);
 		HashMap<String, Segment> graphemes = segmenter.getGraphemeToSegmentMapping();
-		assertEquals("Hash map size is 56", 56, graphemes.size());
+		assertEquals("Hash map size is 54", 54, graphemes.size());
 	}
 
 	@Test
@@ -81,6 +81,7 @@ public class CVSegmenterTest {
 		checkSegmentation("Chiko", "Expect graphemes to be /Ch,ch/, /i/, /k/, and /o/", "ch, i, k, o", "Ch, i, k, o",
 				4, true);
 		checkSegmentation("SHiju", "Expect graphemes to be /SH,sh/, /i/, missing", "sh, i", "SH, i", 2, false);
+		checkSegmentation("aqba", "Expect graphemes to be /a/, missing", "a", "a", 1, false);
 	}
 
 	protected void checkSegmentation(String word, String comment, String expectedSegments, String expectedGraphemes,

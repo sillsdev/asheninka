@@ -71,7 +71,7 @@ public class CVNaturalClasserTest {
 	// make sure the setup is what we expect
 	@Test
 	public void naturalClassesTest() {
-		assertEquals("Natural Classes size", 3, naturalClasses.size());
+		assertEquals("Natural Classes size", 4, naturalClasses.size());
 		assertEquals("Natural Classes in natural classer size", 3, cvNaturalClasses.size());
 		String nc = cvNaturalClasses.get(0).getNCName().trim();
 		assertEquals("First natural class is [C]", "C", nc);
@@ -79,7 +79,7 @@ public class CVNaturalClasserTest {
 		assertEquals("Last natural class is [V]", "V", nc);
 		HashMap<String, CVNaturalClass> segmentToNaturalClass = naturalClasser
 				.getSegmentToNaturalClass();
-		assertEquals("Hash map size is 26", 26, segmentToNaturalClass.size());
+		assertEquals("Hash map size is 25", 25, segmentToNaturalClass.size());
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class CVNaturalClasserTest {
 
 		checkNaturalClassParsing("Chiko", true, 4, "C, V, C, V");
 		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, V, V, N");
-		checkNaturalClassParsing("kaqui", false, 2, "C, V"); // there is no /q/
+		checkNaturalClassParsing("karui", false, 2, "C, V"); // there is no /q/
 	}
 
 	protected void checkNaturalClassParsing(String word, boolean success,

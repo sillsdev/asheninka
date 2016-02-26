@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
@@ -48,7 +49,7 @@ public class CVSyllabifier {
 	}
 
 	public List<CVSyllablePattern> getCvPatterns() {
-		return cvPatterns;
+		return cvPatterns.stream().filter(pattern -> pattern.isActive()).collect(Collectors.toList());
 	}
 
 	public boolean convertNaturalClassesToSyllables() {

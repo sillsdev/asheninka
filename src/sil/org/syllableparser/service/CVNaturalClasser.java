@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
@@ -28,7 +29,8 @@ public class CVNaturalClasser {
 
 	public CVNaturalClasser(List<CVNaturalClass> naturalClasses) {
 		super();
-		this.naturalClasses = naturalClasses;
+		this.naturalClasses = naturalClasses.stream().filter(nc -> nc.isActive())
+				.collect(Collectors.toList());
 		buildSegmentToNaturalClassMapping();
 	}
 
