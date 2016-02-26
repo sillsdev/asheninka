@@ -25,7 +25,10 @@
 }
 
 .failedsyllabification {
-	-fx-text-fill:red;
+	-fx-background-color:red;
+}
+.successfullsyllabification {
+	-fx-background-color:white;
 }
 .syllabification-result {
 	-fx-font-size: 90%;

@@ -40,7 +40,9 @@ public class Constants {
 	public static final String UNIT_TEST_DATA_FILE_NAME="test/sil/org/syllableparser/testData/CVTestData.";
 	public static final String UNIT_TEST_DATA_FILE="test/sil/org/syllableparser/testData/CVTestData.ashedata";
 	
-	// Active/inactive text colors
+	// Text colors
 	public static final Color ACTIVE=Color.BLACK;
 	public static final Color INACTIVE=Color.GRAY;
+	public static final Color PARSER_SUCCESS=Color.GREEN;
+	public static final Color PARSER_FAILURE=Color.RED;
 }

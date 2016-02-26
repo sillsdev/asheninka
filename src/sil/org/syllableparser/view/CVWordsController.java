@@ -6,8 +6,10 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,6 +40,33 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				setGraphic(text);
+			}
+		}
+	}
+
+	protected final class ParserResultWrappingTableCell extends TableCell<Word, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				setStyle("");
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				Word word = (Word) this.getTableRow().getItem();
+				if (word != null && 
+						word.getCVParserResult().length() > 0 && 
+						word.getCVPredictedSyllabification().length() == 0) {
+					text.setFill(Constants.PARSER_FAILURE);
+				} else {
+					text.setFill(Constants.PARSER_SUCCESS);
+				}
 				setGraphic(text);
 			}
 		}
@@ -100,7 +129,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 			return new WrappingTableCell();
 		});
 		parserResultColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new ParserResultWrappingTableCell();
 		});
 		
 		makeColumnHeaderWrappable(wordColumn);
@@ -175,6 +204,13 @@ public class CVWordsController extends SylParserBaseController implements Initia
 			predictedSyllabificationField.setText(cvWord.getCVPredictedSyllabification());
 			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
 			parserResultField.setText(cvWord.getCVParserResult());
+			parserResultField.getStyleClass().clear();
+			if (cvWord.getCVPredictedSyllabification().length() == 0 &&
+					cvWord.getCVParserResult().length() > 0) {
+				parserResultField.getStyleClass().add("failedsyllabification");
+			} else {
+				parserResultField.getStyleClass().add("successfullsyllabification");
+			}
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");
