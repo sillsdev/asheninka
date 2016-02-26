@@ -20,16 +20,18 @@ public class CVSegmentOrNaturalClass {
 	private BooleanProperty checked;
 	private String uuid;
 	private boolean isSegment = true;
+	private boolean isActive = true;
 
 	public CVSegmentOrNaturalClass() {
-		this(null, null, true, null);
+		this(null, null, true, null, true);
 	}
 
-	public CVSegmentOrNaturalClass(String segmentOrNaturalClass, String description, boolean isSegment, String uuid) {
+	public CVSegmentOrNaturalClass(String segmentOrNaturalClass, String description, boolean isSegment, String uuid, boolean isActive) {
 		this.segmentOrNaturalClass = new SimpleStringProperty(segmentOrNaturalClass);
 		this.description = new SimpleStringProperty(description);
 		this.checked = new SimpleBooleanProperty(false);
 		this.isSegment = isSegment;
+		this.isActive = isActive;
 		this.uuid = uuid;
 	}
 	
@@ -80,5 +82,19 @@ public class CVSegmentOrNaturalClass {
 	}
 	public BooleanProperty checkedProperty() {
 		return checked;
+	}
+
+	/**
+	 * @return the isActive
+	 */
+	public boolean isActive() {
+		return isActive;
+	}
+
+	/**
+	 * @param isActive the isActive to set
+	 */
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 }

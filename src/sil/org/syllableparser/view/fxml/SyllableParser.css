@@ -3,6 +3,9 @@
 .root {
 	-fx-font-size:100%;
 }
+/* not using because -fx-text-fill does not work for Text items
+ * we are using code (t.setFill(Color)) which does work
+ */
 .active {
 	-fx-text-fill:green;
 }

@@ -281,7 +281,7 @@ public class CVSyllablePatternsController extends CheckBoxColumnController imple
 		StringBuilder sb = new StringBuilder();
 		ncsTextFlow.getChildren().clear();
 		if (currentSyllablePattern.isWordInitial()) {
-			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL);
+			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL, true);
 			sb.append(", ");
 		}
 		int i = 1;
@@ -289,7 +289,7 @@ public class CVSyllablePatternsController extends CheckBoxColumnController imple
 		for (SylParserObject spo : currentSyllablePattern.getNCs()) {
 			CVNaturalClass nc = (CVNaturalClass) spo;
 			if (nc != null) {
-				addNameToContent(sb, nc.getNCName());
+				addNameToContent(sb, nc.getNCName(), spo.isActive());
 				if (i++ < iCount) {
 					sb.append(", ");
 				}
@@ -297,14 +297,14 @@ public class CVSyllablePatternsController extends CheckBoxColumnController imple
 		}
 		if (currentSyllablePattern.isWordFinal()) {
 			sb.append(", ");
-			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL);
+			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL, true);
 		}
 		currentSyllablePattern.setNCSRepresentation(sb.toString());
 	}
 
-	protected void addNameToContent(StringBuilder sb, String sName) {
+	protected void addNameToContent(StringBuilder sb, String sName, boolean isActive) {
 		Text t = new Text(sName);
-		if (activeCheckBox.isSelected()) {
+		if (isActive && activeCheckBox.isSelected()) {
 			t.setFill(Constants.ACTIVE);
 		} else {
 			t.setFill(Constants.INACTIVE);

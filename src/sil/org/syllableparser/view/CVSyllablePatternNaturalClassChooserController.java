@@ -223,6 +223,13 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 						} else {
 							setText(item.getNCName());
 						}
+						if (item.isActive()) {
+							this.setDisable(false);
+							this.setTextFill(Constants.ACTIVE);
+						} else {
+							this.setDisable(true);
+							this.setTextFill(Constants.INACTIVE);
+						}
 					}
 				}
 			};

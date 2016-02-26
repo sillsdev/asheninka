@@ -258,7 +258,7 @@ public class CVNaturalClassesController extends CheckBoxColumnController impleme
 				t = new Text(s);
 				sb.append(s);
 			}
-			if (activeCheckBox.isSelected()) {
+			if (snc.isActive() && activeCheckBox.isSelected()) {
 				t.setFill(Constants.ACTIVE);
 			} else {
 				t.setFill(Constants.INACTIVE);

@@ -53,12 +53,12 @@ public class CVSegmentOrNaturalClassTest {
 		ObservableList<CVSegmentOrNaturalClass> cvSegmentOrNaturalClass = FXCollections.observableArrayList();
 		for (Segment cvSegment : cvSegmentInventory) {
 			CVSegmentOrNaturalClass segOrNC = new CVSegmentOrNaturalClass(cvSegment.getSegment(), 
-					cvSegment.getDescription(), true, null);
+					cvSegment.getDescription(), true, null, true);
 			cvSegmentOrNaturalClass.add(segOrNC);
 		}
 		for (CVNaturalClass cvNaturalClass : cvNaturalClasses) {
 			CVSegmentOrNaturalClass segOrNC = new CVSegmentOrNaturalClass(cvNaturalClass.getNCName(), 
-					cvNaturalClass.getDescription(), true, null);
+					cvNaturalClass.getDescription(), true, null, true);
 			cvSegmentOrNaturalClass.add(segOrNC);
 		}
 		assertEquals("Expected count to be 5", 5, cvSegmentOrNaturalClass.size());

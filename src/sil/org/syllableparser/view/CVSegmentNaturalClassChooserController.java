@@ -6,6 +6,7 @@ package sil.org.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
@@ -13,13 +14,16 @@ import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import sil.org.syllableparser.view.CVNaturalClassesController.WrappingTableCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -28,6 +32,31 @@ import javafx.stage.Stage;
  */
 public class CVSegmentNaturalClassChooserController extends CheckBoxColumnController implements Initializable {
 
+	protected final class WrappingTableCell extends TableCell<CVSegmentOrNaturalClass, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				setStyle("");
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				CVSegmentOrNaturalClass snc = (CVSegmentOrNaturalClass) this.getTableRow().getItem();
+				if (snc != null && snc.isActive()) {
+					text.setFill(Constants.ACTIVE);
+				} else {
+					text.setFill(Constants.INACTIVE);
+				}
+				setGraphic(text);
+			}
+		}
+	}
+	
 	@FXML
 	private TableView<CVSegmentOrNaturalClass> cvSegmentOrNaturalClassTable;
 	@FXML
@@ -64,6 +93,13 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		cvSegmentOrNaturalClassTable.setEditable(true);
+		// Custom rendering of the table cell.
+		segOrNCColumn.setCellFactory(column -> {
+			return new WrappingTableCell();
+		});
+		descriptionColumn.setCellFactory(column -> {
+			return new WrappingTableCell();
+		});
 
 		initializeCheckBoxContextMenu(resources);
 	}
@@ -101,9 +137,9 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		for (Segment cvSegment : languageProject.getSegmentInventory()) {
 			if (cvSegment.isActive()) {
 				currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(cvSegment.getSegment(),
-						cvSegment.getDescription(), true, cvSegment.getID());
-				setCheckedStatus(cvSegment);
+						cvSegment.getDescription(), true, cvSegment.getID(), true);
 				cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
+				setCheckedStatus(cvSegment);
 			}
 		}
 		for (CVNaturalClass cvNaturalClass : cvApproach.getCVNaturalClasses()) {
@@ -111,7 +147,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 				if (cvNaturalClass.getID() != naturalClass.getID()) {
 					currentSegmentOrNaturalClass = new CVSegmentOrNaturalClass(
 							cvNaturalClass.getNCName(), cvNaturalClass.getDescription(), false,
-							cvNaturalClass.getID());
+							cvNaturalClass.getID(), true);
 					cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
 					setCheckedStatus(cvNaturalClass);
 				}
