@@ -23,6 +23,7 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.controlsfx.control.StatusBar;
+import org.controlsfx.dialog.FontSelectorDialog;
 
 import static javafx.geometry.Orientation.VERTICAL;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -50,6 +51,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -148,6 +150,10 @@ public class RootLayoutController implements Initializable {
 	private MenuItem menuItemConvertPredictedToCorrectSyllabification;
 	@FXML
 	private MenuItem menuItemFindWord;
+	@FXML
+	private MenuItem menuItemVernacularFont;
+	@FXML
+	private MenuItem menuItemAnalysisFont;
 
 	@FXML
 	private ListView<ApproachView> approachViews;
@@ -220,6 +226,16 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleFindWord() {
 		currentApproachController.handleFindWord();
+	}
+
+	@FXML
+	private void handleVernacularFont() {
+		languageProject.getVernacularLanguage().handleFont(mainApp.getPrimaryStage());
+	}
+
+	@FXML
+	private void handleAnalysisFont() {
+		languageProject.getAnalysisLanguage().handleFont(mainApp.getPrimaryStage());
 	}
 
 	/**

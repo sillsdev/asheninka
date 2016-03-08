@@ -51,6 +51,12 @@
               <MenuItem mnemonicParsing="false" onAction="#handleRemoveItem" text="%menu.remove" fx:id="menuItemEditRemove" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="%menu.language">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleVernacularFont" text="%menu.vernacularfont" fx:id="menuItemVernacularFont" />
+                <MenuItem mnemonicParsing="false" onAction="#handleAnalysisFont" text="%menu.analysisfont" fx:id="menuItemAnalysisFont" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="%menu.tools">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#handleSyllabifyWords" text="%menu.syllabifywords" fx:id="menuItemSyllabify" />

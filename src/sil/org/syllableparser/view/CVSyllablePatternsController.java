@@ -63,7 +63,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
-				text.setFont(languageProject.getAnalysisFont());
+				text.setFont(languageProject.getAnalysisLanguage().getFont());
 				setGraphic(text);
 			}
 		}
@@ -171,7 +171,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				currentSyllablePattern.setSPName(nameField.getText());
 			}
 			if (languageProject != null) {
-				nameField.setFont(languageProject.getAnalysisFont());
+				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -179,7 +179,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				currentSyllablePattern.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
-				descriptionField.setFont(languageProject.getAnalysisFont());
+				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
 
@@ -311,7 +311,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 
 	protected void addNameToContent(StringBuilder sb, String sName, boolean isActive) {
 		Text t = new Text(sName);
-		t.setFont(languageProject.getAnalysisFont());
+		t.setFont(languageProject.getAnalysisLanguage().getFont());
 		if (isActive && activeCheckBox.isSelected()) {
 			t.setFill(Constants.ACTIVE);
 		} else {

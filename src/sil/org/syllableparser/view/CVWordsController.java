@@ -40,7 +40,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				text.setFont(languageProject.getVernacularFont());
+				text.setFont(languageProject.getVernacularLanguage().getFont());
 				setGraphic(text);
 			}
 		}
@@ -68,7 +68,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				} else {
 					text.setFill(Constants.PARSER_SUCCESS);
 				}
-				text.setFont(languageProject.getAnalysisFont());
+				text.setFont(languageProject.getAnalysisLanguage().getFont());
 				setGraphic(text);
 			}
 		}
@@ -153,7 +153,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				currentWord.setWord(wordField.getText());
 			}
 			if (languageProject != null) {
-				wordField.setFont(languageProject.getVernacularFont());
+				wordField.setFont(languageProject.getVernacularLanguage().getFont());
 			}
 		});
 		predictedSyllabificationField.textProperty().addListener(
@@ -163,7 +163,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 								.getText());
 					}
 					if (languageProject != null) {
-						predictedSyllabificationField.setFont(languageProject.getVernacularFont());
+						predictedSyllabificationField.setFont(languageProject.getVernacularLanguage().getFont());
 					}
 				});
 		correctSyllabificationField.textProperty()
@@ -174,7 +174,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 										.getText());
 							}
 							if (languageProject != null) {
-								correctSyllabificationField.setFont(languageProject.getVernacularFont());
+								correctSyllabificationField.setFont(languageProject.getVernacularLanguage().getFont());
 							}
 						});
 		parserResultField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -182,7 +182,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				currentWord.setCVParserResult(parserResultField.getText());
 			}
 			if (languageProject != null) {
-				parserResultField.setFont(languageProject.getAnalysisFont());
+				parserResultField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
 		

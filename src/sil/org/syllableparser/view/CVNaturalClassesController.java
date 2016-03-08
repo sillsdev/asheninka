@@ -60,7 +60,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
-				text.setFont(languageProject.getAnalysisFont());
+				text.setFont(languageProject.getAnalysisLanguage().getFont());
 				setGraphic(text);
 			}
 		}
@@ -86,7 +86,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
-				text.setFont(languageProject.getVernacularFont());
+				text.setFont(languageProject.getVernacularLanguage().getFont());
 				setGraphic(text);
 			}
 		}
@@ -178,7 +178,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				currentNaturalClass.setNCName(nameField.getText());
 			}
 			if (languageProject != null) {
-				nameField.setFont(languageProject.getAnalysisFont());
+				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
 		// segmentOrNaturalClassField.textProperty().addListener(
@@ -190,7 +190,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				currentNaturalClass.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
-				descriptionField.setFont(languageProject.getAnalysisFont());
+				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
 
@@ -280,12 +280,12 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			if (snc instanceof Segment) {
 				s = ((Segment) snc).getSegment();
 				t = new Text(s);
-				t.setFont(languageProject.getVernacularFont());
+				t.setFont(languageProject.getVernacularLanguage().getFont());
 				sb.append(s);
 			} else if (snc instanceof CVNaturalClass) {
 				s = ((CVNaturalClass) snc).getNCName();
 				t = new Text(s);
-				t.setFont(languageProject.getAnalysisFont());
+				t.setFont(languageProject.getAnalysisLanguage().getFont());
 				sb.append(s);
 			} else {
 				s = "ERROR!";

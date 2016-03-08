@@ -8,11 +8,15 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 
 /**
@@ -26,13 +30,15 @@ public class LanguageProject {
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
-	private Font vernacularFont = new Font("Charis SIL", 12);
-	private Font analysisFont = new Font(12);
+	private Language vernacularLanguage;
+	private Language analysisLanguage;
 
 	public LanguageProject() {
 		super();
 		cvApproach = new CVApproach();
 		cvApproach.setLanguageProject(this);
+		vernacularLanguage = new Language();
+		analysisLanguage = new Language();
 	}
 
 	/**
@@ -99,6 +105,15 @@ public class LanguageProject {
 	 * @param languageProjectLoaded
 	 */
 	public void load(LanguageProject languageProjectLoaded) {
+//		String fontFamily = languageProjectLoaded.getVernacularFontFamily();
+//		Font font = vernacularFont;
+//		double fontSize = languageProjectLoaded.getVernacularFontSize();
+//		String fontType = languageProjectLoaded.getVernacularFontType();
+//		String defaultFont = "Charis SIL";
+//		setFontInfo(fontFamily, fontSize, fontType, defaultFont);
+//		setVernacularFontFamily(fontFamily);
+//		vernacularFont = new Font("Charis SIL", 12);
+		
 		cvApproach.load(languageProjectLoaded.getCVApproach());
 		cvApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
@@ -110,6 +125,8 @@ public class LanguageProject {
 		for (Word word : wordsLoadedData) {
 			words.add(word);
 		}
+		analysisLanguage = languageProjectLoaded.getAnalysisLanguage();
+		vernacularLanguage = languageProjectLoaded.getVernacularLanguage();
 	}
 
 	public void createNewWord(String word, String sUntested) {
@@ -175,31 +192,31 @@ public class LanguageProject {
 	}
 
 	/**
-	 * @return the vernacularFont
+	 * @return the vernacular language
 	 */
-	public Font getVernacularFont() {
-		return vernacularFont;
+	public Language getVernacularLanguage() {
+		return vernacularLanguage;
 	}
 
 	/**
-	 * @param vernacularFont the vernacularFont to set
+	 * @param language the vernacular language to set
 	 */
-	public void setVernacularFont(Font vernacularFont) {
-		this.vernacularFont = vernacularFont;
+	public void setVernacularLanguage(Language language) {
+		this.vernacularLanguage = language;
 	}
 
 	/**
-	 * @return the analysisFont
+	 * @return the analysis language
 	 */
-	public Font getAnalysisFont() {
-		return analysisFont;
+	public Language getAnalysisLanguage() {
+		return analysisLanguage;
 	}
 
 	/**
-	 * @param analysisFont the analysisFont to set
+	 * @param language the analysis language to set
 	 */
-	public void setAnalysisFont(Font analysisFont) {
-		this.analysisFont = analysisFont;
+	public void setAnalysisLanguage(Language language) {
+		this.analysisLanguage = language;
 	}
 
 }

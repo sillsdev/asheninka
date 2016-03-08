@@ -53,7 +53,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
-				text.setFont(languageProject.getAnalysisFont());
+				text.setFont(languageProject.getAnalysisLanguage().getFont());
 				setGraphic(text);
 			}
 		}
@@ -78,7 +78,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
-				text.setFont(languageProject.getVernacularFont());
+				text.setFont(languageProject.getVernacularLanguage().getFont());
 				setGraphic(text);
 			}
 		}
@@ -159,7 +159,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				currentSegment.setSegment(segmentField.getText());
 			}
 			if (languageProject != null) {
-				segmentField.setFont(languageProject.getVernacularFont());
+				segmentField.setFont(languageProject.getVernacularLanguage().getFont());
 			}
 		});
 		graphemesField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -167,7 +167,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				currentSegment.setGraphemes(graphemesField.getText());
 			}
 			if (languageProject != null) {
-				graphemesField.setFont(languageProject.getVernacularFont());
+				graphemesField.setFont(languageProject.getVernacularLanguage().getFont());
 			}
 		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -175,7 +175,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				currentSegment.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
-				descriptionField.setFont(languageProject.getAnalysisFont());
+				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
 
