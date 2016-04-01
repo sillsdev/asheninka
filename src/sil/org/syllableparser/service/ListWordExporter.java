@@ -88,6 +88,11 @@ public class ListWordExporter extends WordExporter {
 					long max = hyphenatedWords.size();
 					AtomicInteger iProgress = new AtomicInteger();
 					for (String hyphenatedWord : hyphenatedWords) {
+						// sample of handling cancellation (see https://docs.oracle.com/javase/8/javafx/interoperability-tutorial/concurrency.htm)
+						if (isCancelled()) {
+							updateMessage(bundle.getString("label.exportingcanceled"));
+							break;
+						}
 						updateMessage(bundle.getString("label.exporting") + hyphenatedWord);
 						iProgress.incrementAndGet();
 						updateProgress(iProgress.longValue(), max);
