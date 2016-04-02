@@ -1,0 +1,65 @@
+/**
+ * 
+ */
+package sil.org.syllableparser.service;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+/**
+ * @author Andy Black
+ *
+ */
+public class BackupFileCreator {
+
+	File dataFile;
+	String backupFileName;
+	
+	public BackupFileCreator(File dataFile, String backupFileName) {
+		this.dataFile = dataFile;
+		this.backupFileName = backupFileName;
+	}
+
+	public File getDataFile() {
+		return dataFile;
+	}
+
+	public void setDataFile(File dataFile) {
+		this.dataFile = dataFile;
+	}
+
+	public String getBackupFileName() {
+		return backupFileName;
+	}
+
+	public void setBackupFileName(String backupFileName) {
+		this.backupFileName = backupFileName;
+	}
+
+	public void doBackup() {
+		try {
+			FileOutputStream fos = new FileOutputStream(backupFileName);
+			ZipOutputStream zippedFile = new ZipOutputStream(fos);
+			String filename = dataFile.getName();
+            ZipEntry zipEntry = new ZipEntry(filename);
+            zipEntry.setTime(dataFile.lastModified());
+            zippedFile.putNextEntry(zipEntry);
+            FileInputStream ins = new FileInputStream(dataFile);
+            byte[] buf = new byte[1024];
+            int len;
+            while((len=ins.read(buf))>0){
+                zippedFile.write(buf, 0, len);
+            }
+            zippedFile.closeEntry();
+            ins.close();
+            zippedFile.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

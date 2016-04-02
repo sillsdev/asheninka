@@ -39,6 +39,8 @@ public class Constants {
 	// UnitTesting constants
 	public static final String UNIT_TEST_DATA_FILE_NAME="test/sil/org/syllableparser/testData/CVTestData.";
 	public static final String UNIT_TEST_DATA_FILE="test/sil/org/syllableparser/testData/CVTestData.ashedata";
+	public static final String UNIT_TEST_BACKUP_FILE_NAME="test/sil/org/syllableparser/testData/CVTestData.ashebackup";
+	public static final String UNIT_TEST_BACKUP_ZIP_ENTRY_NAME="CVTestData.ashedata";
 	
 	// Text colors
 	public static final Color ACTIVE=Color.BLACK;
