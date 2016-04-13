@@ -4,8 +4,10 @@
 package sil.org.syllableparser.view;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -13,11 +15,17 @@ import org.controlsfx.control.StatusBar;
 
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.MainApp;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * @author Andy Black
@@ -78,6 +86,17 @@ public class ControllerUtilities {
 		}
 		return fileChooser;
 	}
+	
+	public static TextInputDialog getTextInputDialog(MainApp mainApp, String title, String contentText) {
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle(title);
+		dialog.setHeaderText("");
+		dialog.setGraphic(null);
+		dialog.setContentText(contentText);
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(mainApp.getNewMainIconImage());
+		return dialog;
+	}
 
 	public static void formatTimePassed(long timeStart, String sProcessName) {
 		long timePassed = System.currentTimeMillis() - timeStart;
@@ -88,4 +107,24 @@ public class ControllerUtilities {
 		String sResult = sProcessName + " took " + minutes + ":" + seconds + "." + millis;
 		System.out.println(sResult);
 	}
+	
+	public static FXMLLoader getLoader(MainApp mainApp, Locale locale, Stage dialogStage, String resource, String title) throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(ApproachViewNavigator.class
+				.getResource(resource));
+		loader.setResources(ResourceBundle.getBundle(
+				"sil.org.syllableparser.resources.SyllableParser", locale));
+
+		AnchorPane page = loader.load();
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(mainApp.getPrimaryStage());
+		Scene scene = new Scene(page);
+		dialogStage.setScene(scene);
+		// set the icon
+		dialogStage.getIcons().add(mainApp.getNewMainIconImage());
+		dialogStage.setTitle(title);
+		return loader;
+	}
+
+
 }

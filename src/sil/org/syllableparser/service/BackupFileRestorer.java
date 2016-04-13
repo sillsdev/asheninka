@@ -43,6 +43,7 @@ public class BackupFileRestorer {
 		try {
 			File temp = unzipFileToRestore();
 			loadData(languageProject, locale, temp);
+			temp.delete();
 		} catch (ZipException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -18,10 +18,12 @@ public class BackupFileCreator {
 
 	File dataFile;
 	String backupFileName;
+	String comment;
 	
-	public BackupFileCreator(File dataFile, String backupFileName) {
+	public BackupFileCreator(File dataFile, String backupFileName, String comment) {
 		this.dataFile = dataFile;
 		this.backupFileName = backupFileName;
+		this.comment = comment;
 	}
 
 	public File getDataFile() {
@@ -40,6 +42,14 @@ public class BackupFileCreator {
 		this.backupFileName = backupFileName;
 	}
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	public void doBackup() {
 		try {
 			FileOutputStream fos = new FileOutputStream(backupFileName);
@@ -54,8 +64,9 @@ public class BackupFileCreator {
             while((len=ins.read(buf))>0){
                 zippedFile.write(buf, 0, len);
             }
-            zippedFile.closeEntry();
             ins.close();
+            zippedFile.closeEntry();
+            zippedFile.setComment(comment);
             zippedFile.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

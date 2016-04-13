@@ -26,6 +26,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleSave" text="%menu.save" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="%menu.saveas" />
                   <SeparatorMenuItem />
+                  <Menu mnemonicParsing="false" text="%menu.projectmanagement" >
+                    	<MenuItem mnemonicParsing="false" onAction="#handleBackUpProject" text="%menu.projectmanagementbackup" />
+                    	<MenuItem mnemonicParsing="false" onAction="#handleRestoreProject" text="%menu.projectmanagementrestore" />
+                  </Menu>
+                  <SeparatorMenuItem />
                   <Menu mnemonicParsing="false" text="%menu.importwords" >
                     	<MenuItem mnemonicParsing="false" onAction="#handleImportPlainWordList" text="%menu.importplainwordlist" />
                     	<MenuItem mnemonicParsing="false" onAction="#handleImportParaTExtWordList" text="%menu.importparatextwordlist" />

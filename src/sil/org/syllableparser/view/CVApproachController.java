@@ -225,7 +225,8 @@ public class CVApproachController extends ApproachController {
 						continue;
 					}
 					List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
-					word.setCVPredictedSyllabification(syllabifier.getSyllabificationOfCurrentWord());
+					word.setCVPredictedSyllabification(syllabifier
+							.getSyllabificationOfCurrentWord());
 					word.setCVParserResult(sSuccess);
 				}
 				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
@@ -256,21 +257,10 @@ public class CVApproachController extends ApproachController {
 	void handleConvertPredictedToCorrectSyllabification() {
 		try {
 			// Load the fxml file and create a new stage for the popup.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(ApproachViewNavigator.class
-					.getResource("fxml/CVPredictedToCorrectSyllabificationChooser.fxml"));
-			loader.setResources(ResourceBundle.getBundle(
-					"sil.org.syllableparser.resources.SyllableParser", locale));
-
-			AnchorPane page = loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(mainApp.getPrimaryStage());
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			// set the icon
-			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
-			dialogStage.setTitle(MainApp.kApplicationTitle);
+			String resource = "fxml/CVPredictedToCorrectSyllabificationChooser.fxml";
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
+					resource, MainApp.kApplicationTitle);
 
 			CVPredictedToCorrectSyllabificationChooserController controller = loader
 					.getController();
@@ -289,13 +279,11 @@ public class CVApproachController extends ApproachController {
 	void handleFindWord() {
 		try {
 			// TextFields wordToFind
-			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle(bundle.getString("program.name"));
-			dialog.setHeaderText("");
-			dialog.setContentText(bundle.getString("label.wordtofind"));
-			dialog.setGraphic(null);
-			Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(mainApp.getNewMainIconImage());
+			String title = bundle.getString("program.name");
+			String contentText = bundle.getString("label.wordtofind");
+			TextInputDialog dialog = ControllerUtilities.getTextInputDialog(mainApp, title,
+					contentText);
+
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
 			for (Word word : words) {
 				listOfWords.add(word.getWord());
@@ -321,7 +309,7 @@ public class CVApproachController extends ApproachController {
 	public ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words) {
 		return cvApproachData.getParaTExtHyphenatedWords(words);
 	}
-	
+
 	@Override
 	public ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words) {
 		return cvApproachData.getXLingPaperHyphenatedWords(words);

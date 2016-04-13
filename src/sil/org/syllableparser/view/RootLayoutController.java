@@ -11,8 +11,10 @@ import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -27,7 +29,10 @@ import org.controlsfx.dialog.FontSelectorDialog;
 
 import static javafx.geometry.Orientation.VERTICAL;
 import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -43,6 +48,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -60,7 +66,9 @@ import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
+import sil.org.syllableparser.model.BackupFile;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.service.BackupFileCreator;
 import sil.org.syllableparser.service.FLExExportedWordformsAsTabbedListImporter;
 import sil.org.syllableparser.service.ListWordExporter;
 import sil.org.syllableparser.service.ListWordImporter;
@@ -68,6 +76,7 @@ import sil.org.syllableparser.service.ParaTExtExportedWordListImporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsExporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsImporter;
 import sil.org.syllableparser.service.XLingPaperHyphenatedWordExporter;
+import sil.org.utility.DateTimeNormalizer;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -320,6 +329,66 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
+	private void handleBackUpProject() {
+		String title = bundle.getString("menu.projectmanagementbackup");
+		String contentText = bundle.getString("label.backupcomment");
+		TextInputDialog dialog = ControllerUtilities
+				.getTextInputDialog(mainApp, title, contentText);
+		dialog.setResizable(true);
+
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			String dateTimeTag = DateTimeNormalizer.normalizeDateTime(LocalDateTime.now());
+			String backupDirectoryPath = getBackupDirectoryPath();
+			if (!Files.exists(Paths.get(backupDirectoryPath))) {
+				try {
+					Files.createDirectory(Paths.get(backupDirectoryPath));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			String nameWithoutExtension = mainApp.getLanguageProjectFilePath().getName()
+					.replace("." + Constants.ASHENINKA_DATA_FILE_EXTENSION, "");
+			String backupFileName = backupDirectoryPath + File.separator + nameWithoutExtension
+					+ dateTimeTag + "." + Constants.ASHENINKA_BACKUP_FILE_EXTENSION;
+			BackupFileCreator backupCreator = new BackupFileCreator(
+					mainApp.getLanguageProjectFilePath(), backupFileName, result.get());
+			backupCreator.doBackup();
+		}
+	}
+
+	public String getBackupDirectoryPath() {
+		String parentPath = mainApp.getLanguageProjectFilePath().getParent();
+		String backupDirectoryPath = parentPath + File.separator + Constants.BACKUP_DIRECTORY_NAME;
+		return backupDirectoryPath;
+	}
+
+	@FXML
+	private void handleRestoreProject() {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/RestoreBackupChooser.fxml";
+			String title = bundle.getString("label.restoreproject");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
+					resource, title);
+
+			RestoreBackupChooserController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setLocale(currentLocale);
+			String backupDirectoryPath = getBackupDirectoryPath();
+			controller.setData(backupDirectoryPath);
+
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@FXML
 	private void handleExportHyphenatedWordsAsASimpleList() {
 		FileChooser fileChooser = ControllerUtilities.initFileChooser(
 				bundle.getString("file.exportedhyphenationlistfilterdescription") + " (*"
@@ -544,7 +613,8 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleImportFLExExportedWordformsAsTabbedList() {
-		FLExExportedWordformsAsTabbedListImporter importer = new FLExExportedWordformsAsTabbedListImporter(languageProject);
+		FLExExportedWordformsAsTabbedListImporter importer = new FLExExportedWordformsAsTabbedListImporter(
+				languageProject);
 		File file = ControllerUtilities.getFileToOpen(mainApp,
 				bundle.getString("file.plainlistimportfilterdescription") + " ("
 						+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
