@@ -16,6 +16,7 @@ public class Constants {
 	// file-related constants
 	public static final String ASHENINKA_BACKUP_FILE_EXTENSION = "ashebackup";
 	public static final String ASHENINKA_DATA_FILE_EXTENSION = "ashedata";
+	public static final String ASHENINKA_DATA_FILE_EXTENSIONS = "*." + ASHENINKA_DATA_FILE_EXTENSION;
 	public static final String ASHENINKA_STARTER_FILE = "src/sil/org/syllableparser/resources/starterFile.ashedata";
 	public static final String BACKUP_DIRECTORY_NAME = "Backups";
 	public static final String PARATEXT_HYPHENATED_WORDS_FILE = "hyphenatedWords";

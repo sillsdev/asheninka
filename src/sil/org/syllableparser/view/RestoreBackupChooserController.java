@@ -89,12 +89,14 @@ public class RestoreBackupChooserController extends SylParserBaseController impl
 
 	private BackupFile currentBackupFile;
 	private String backupDirectory;
+	private ResourceBundle bundle;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		bundle = resources;
 		// Initialize the table with the three columns.
 		fileNameColumn.setCellValueFactory(cellData -> cellData.getValue().fileNameProperty());
 		dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
@@ -202,7 +204,13 @@ public class RestoreBackupChooserController extends SylParserBaseController impl
 		File backupFile = new File(backupFileToUse);
 		BackupFileRestorer restorer = new BackupFileRestorer(backupFile);
 		restorer.doRestore(languageProject, locale);
-		mainApp.updateStageTitle(backupFile);
+
+		// Force user to do a file save as so they do not overwrite the current data file
+		// with the restored data (unless they so choose).
+		String sFileFilterDescription = bundle.getString("file.filterdescription");
+		String syllableParserFilterDescription = sFileFilterDescription + " ("
+				+ Constants.ASHENINKA_DATA_FILE_EXTENSIONS + ")";
+		ControllerUtilities.doFileSaveAs(mainApp, true, syllableParserFilterDescription);
 
 		okClicked = true;
 		dialogStage.close();

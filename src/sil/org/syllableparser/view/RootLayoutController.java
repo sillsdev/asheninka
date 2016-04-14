@@ -177,9 +177,7 @@ public class RootLayoutController implements Initializable {
 	StatusBar statusBar = new StatusBar();
 	Label numberOfItems = new Label("0/0");
 
-	private static String kSyllableParserDataExtension = Constants.ASHENINKA_DATA_FILE_EXTENSION;
 	private String syllableParserFilterDescription;
-	private String syllableParserFilterExtensions;
 
 	private ResourceBundle bundle;
 	private String sAboutHeader;
@@ -204,9 +202,8 @@ public class RootLayoutController implements Initializable {
 		cvApproachController.setMainApp(mainApp);
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
-		syllableParserFilterDescription = sFileFilterDescription + " (*."
-				+ kSyllableParserDataExtension + ")";
-		syllableParserFilterExtensions = "*." + kSyllableParserDataExtension;
+		syllableParserFilterDescription = sFileFilterDescription + " ("
+				+ Constants.ASHENINKA_DATA_FILE_EXTENSIONS + ")";
 		ApproachViewNavigator.setMainController(this);
 		cvApproachController.setCVApproachData(languageProject.getCVApproach(),
 				languageProject.getWords());
@@ -282,7 +279,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleOpen() {
 		File file = ControllerUtilities.getFileToOpen(mainApp, syllableParserFilterDescription,
-				syllableParserFilterExtensions);
+				Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
 		if (file != null) {
 			mainApp.loadLanguageData(file);
 			String sDirectoryPath = file.getParent();
@@ -310,22 +307,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleSaveAs() {
-		FileChooser fileChooser = ControllerUtilities.initFileChooser(
-				syllableParserFilterDescription, syllableParserFilterExtensions);
-
-		// Show save file dialog
-		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
-
-		if (file != null) {
-			// Make sure it has the correct extension
-			if (!file.getPath().endsWith(kSyllableParserDataExtension)) {
-				file = new File(file.getPath() + kSyllableParserDataExtension);
-			}
-			mainApp.saveLanguageData(file);
-			String sDirectoryPath = file.getParent();
-			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
-			mainApp.updateStageTitle(file);
-		}
+		ControllerUtilities.doFileSaveAs(mainApp, false, syllableParserFilterDescription);
 	}
 
 	@FXML

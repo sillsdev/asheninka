@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import org.controlsfx.control.StatusBar;
 
 import sil.org.syllableparser.ApplicationPreferences;
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -86,8 +87,40 @@ public class ControllerUtilities {
 		}
 		return fileChooser;
 	}
-	
-	public static TextInputDialog getTextInputDialog(MainApp mainApp, String title, String contentText) {
+
+	public static void doFileSaveAs(MainApp mainApp, Boolean fForceSave,
+			String syllableParserFilterDescription) {
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+				syllableParserFilterDescription, Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
+
+		File file = null;
+		if (fForceSave) {
+			while (file == null) {
+				file = askUserToSaveFile(mainApp, fileChooser);				
+			}
+		} else {
+			file = askUserToSaveFile(mainApp, fileChooser);
+		}
+	}
+
+	public static File askUserToSaveFile(MainApp mainApp, FileChooser fileChooser) {
+		File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+		if (file != null) {
+			// Make sure it has the correct extension
+			if (!file.getPath().endsWith(Constants.ASHENINKA_DATA_FILE_EXTENSION)) {
+				file = new File(file.getPath() + Constants.ASHENINKA_DATA_FILE_EXTENSION);
+			}
+			mainApp.saveLanguageData(file);
+			String sDirectoryPath = file.getParent();
+			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
+			mainApp.updateStageTitle(file);
+		}
+		return file;
+	}
+
+	public static TextInputDialog getTextInputDialog(MainApp mainApp, String title,
+			String contentText) {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle(title);
 		dialog.setHeaderText("");
@@ -107,11 +140,11 @@ public class ControllerUtilities {
 		String sResult = sProcessName + " took " + minutes + ":" + seconds + "." + millis;
 		System.out.println(sResult);
 	}
-	
-	public static FXMLLoader getLoader(MainApp mainApp, Locale locale, Stage dialogStage, String resource, String title) throws IOException {
+
+	public static FXMLLoader getLoader(MainApp mainApp, Locale locale, Stage dialogStage,
+			String resource, String title) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(ApproachViewNavigator.class
-				.getResource(resource));
+		loader.setLocation(ApproachViewNavigator.class.getResource(resource));
 		loader.setResources(ResourceBundle.getBundle(
 				"sil.org.syllableparser.resources.SyllableParser", locale));
 
@@ -125,6 +158,5 @@ public class ControllerUtilities {
 		dialogStage.setTitle(title);
 		return loader;
 	}
-
 
 }
