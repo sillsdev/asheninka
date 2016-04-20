@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
  */
 public class Constants {
 	// program wide constants
-	public static final String VERSION_NUMBER = "0.1.0.0";
+	public static final String VERSION_NUMBER = "0.1.0.0 Alpha";
 	
 	// file-related constants
 	public static final String ASHENINKA_BACKUP_FILE_EXTENSION = "ashebackup";
