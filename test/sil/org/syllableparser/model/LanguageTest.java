@@ -5,7 +5,6 @@ package sil.org.syllableparser.model;
 
 import static org.junit.Assert.*;
 import javafx.scene.text.Font;
-import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;

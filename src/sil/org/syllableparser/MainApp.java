@@ -37,7 +37,7 @@ public class MainApp extends Application {
 	/**
 	 * 
 	 */
-	private static final String kApplicationIconResource = "file:src/sil/org/syllableparser/resources/images/CushmaSmall128x128.png";
+	private static final String kApplicationIconResource = "file:resources/images/CushmaSmall128x128.png";
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 	private Locale locale;

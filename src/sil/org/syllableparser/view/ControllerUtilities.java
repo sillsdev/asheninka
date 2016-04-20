@@ -36,7 +36,7 @@ public class ControllerUtilities {
 	public static void createToolbarButtonWithImage(String sUrl, Button buttonToolbar,
 			Tooltip buttonTooltip, String sTooltip) {
 		ImageView imageView = new ImageView();
-		Image icon = new Image("file:src/sil/org/syllableparser/resources/images/" + sUrl);
+		Image icon = new Image("file:resources/images/" + sUrl);
 		imageView.setImage(icon);
 		buttonToolbar.setGraphic(imageView);
 		buttonTooltip = new Tooltip(sTooltip);
