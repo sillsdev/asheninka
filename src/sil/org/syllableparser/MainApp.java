@@ -50,21 +50,30 @@ public class MainApp extends Application {
 	private RootLayoutController controller;
 	private String sNotImplementedYetHeader;
 	private String sNotImplementedYetContent;
+	private ApplicationPreferences applicationPreferences;
 
 	// private Image mainIconImage;
 
 	@Override
 	public void start(Stage primaryStage) {
-		locale = new Locale(ApplicationPreferences.getLastLocaleLanguage());
+		System.out.println("Before creating new locale");
+//		try {
+//			String sLocale = ApplicationPreferences.getLastLocaleLanguage();
+//
+//		} catch (Exception e) {
+//			ApplicationPreferences prefs = new ApplicationPreferences("", "en", "EN");
+//		}
+		applicationPreferences = new ApplicationPreferences(this);
+		locale = new Locale(applicationPreferences.getLastLocaleLanguage());
+		System.out.println("After creating new locale; locale = " + locale.getDisplayLanguage());
+		System.out.println("After getting application preferences");
 
 		languageProject = new LanguageProject();
 		xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
+		System.out.println("After creating xmlBackEndProvider");
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(kApplicationTitle);
 		this.primaryStage.getIcons().add(getNewMainIconImage());
-
-		ApplicationPreferences.getLastLocaleLanguage();
-		ApplicationPreferences.getLastLocaleCountry();
 
 		final boolean usePrecannedData = false;
 		if (usePrecannedData) {
@@ -89,8 +98,9 @@ public class MainApp extends Application {
 		}
 
 		initRootLayout();
+		System.out.println("After initRootLayout");
 
-		//saveDataPeriodically(30);
+		// saveDataPeriodically(30);
 
 	}
 
@@ -116,7 +126,7 @@ public class MainApp extends Application {
 		protected Task<Void> createTask() {
 			return new Task<Void>() {
 				protected Void call() {
-					//System.out.println("in TimerService");
+					// System.out.println("in TimerService");
 					return null;
 				}
 			};
@@ -125,7 +135,7 @@ public class MainApp extends Application {
 
 	@Override
 	public void stop() {
-		ApplicationPreferences.setLastLocaleLanguage(locale.getLanguage());
+		applicationPreferences.setLastLocaleLanguage(locale.getLanguage());
 		// TODO: add last file opened
 	}
 
@@ -161,7 +171,7 @@ public class MainApp extends Application {
 			controller.setMainApp(this, locale, languageProject);
 
 			// Try to load last opened file.
-			File file = ApplicationPreferences.getLastOpenedFile();
+			File file = applicationPreferences.getLastOpenedFile();
 			if (file != null) {
 				loadLanguageData(file);
 			}
@@ -184,9 +194,11 @@ public class MainApp extends Application {
 	}
 
 	public void loadLanguageData(File file) {
+		System.out.println("In loadLanguageData ");
+
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
-		ApplicationPreferences.setLastOpenedFilePath(file);
-		ApplicationPreferences.setLastOpenedDirectoryPath(file.getParent());
+		applicationPreferences.setLastOpenedFilePath(file);
+		applicationPreferences.setLastOpenedDirectoryPath(file.getParent());
 		updateStageTitle(file);
 	}
 
@@ -200,8 +212,8 @@ public class MainApp extends Application {
 
 	public void saveLanguageData(File file) {
 		xmlBackEndProvider.saveLanguageDataToFile(file);
-		ApplicationPreferences.setLastOpenedFilePath(file);
-		ApplicationPreferences.setLastOpenedDirectoryPath(file.getParent());
+		applicationPreferences.setLastOpenedFilePath(file);
+		applicationPreferences.setLastOpenedDirectoryPath(file.getParent());
 	}
 
 	public LanguageProject getLanguageProject() {
@@ -216,9 +228,7 @@ public class MainApp extends Application {
 	 * @return
 	 */
 	public File getLanguageProjectFilePath() {
-		// Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-		String filePath = ApplicationPreferences.getLastOpenedFilePath(); // prefs.get(kLanguageProjectFilePath,
-																			// null);
+		String filePath = applicationPreferences.getLastOpenedFilePath();
 		if (filePath != null) {
 			return new File(filePath);
 		} else {
@@ -243,6 +253,10 @@ public class MainApp extends Application {
 	 */
 	public Image getNewMainIconImage() {
 		return new Image(kApplicationIconResource);
+	}
+
+	public ApplicationPreferences getApplicationPreferences() {
+		return applicationPreferences;
 	}
 
 	public void updateStatusBarNumberOfItems(String numberOfItems) {

@@ -50,8 +50,8 @@ public class ControllerUtilities {
 
 	public static File getFileToOpen(MainApp mainApp, String sInitialFileName,
 			String sFileChooserFilterDescription, String sFileExtensions) {
-		FileChooser fileChooser = initFileChooser(sInitialFileName, sFileChooserFilterDescription,
-				sFileExtensions);
+		FileChooser fileChooser = initFileChooser(mainApp, sInitialFileName,
+				sFileChooserFilterDescription, sFileExtensions);
 
 		// Show open file dialog
 		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
@@ -63,13 +63,13 @@ public class ControllerUtilities {
 		return getFileToOpen(mainApp, "", sFileChooserFilterDescription, sFileExtensions);
 	}
 
-	protected static FileChooser initFileChooser(String sFileChooserFilterDescription,
-			String sFileExtensions) {
-		return initFileChooser("", sFileChooserFilterDescription, sFileExtensions);
+	protected static FileChooser initFileChooser(MainApp mainApp,
+			String sFileChooserFilterDescription, String sFileExtensions) {
+		return initFileChooser(mainApp, "", sFileChooserFilterDescription, sFileExtensions);
 	}
 
-	protected static FileChooser initFileChooser(String sInitialFileName,
-			String sFileChooserFilterDescription, String sFileExtensions) {
+	protected static FileChooser initFileChooser(MainApp mainApp,
+			String sInitialFileName, String sFileChooserFilterDescription, String sFileExtensions) {
 		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
@@ -78,7 +78,8 @@ public class ControllerUtilities {
 		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setInitialFileName(sInitialFileName);
 
-		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
+		ApplicationPreferences applicationPreferences = mainApp.getApplicationPreferences();
+		String sDirectoryPath = applicationPreferences.getLastOpenedDirectoryPath();
 		if (sDirectoryPath != null && !sDirectoryPath.isEmpty()) {
 			File initialDirectory = new File(sDirectoryPath);
 			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
@@ -91,7 +92,7 @@ public class ControllerUtilities {
 	public static void doFileSaveAs(MainApp mainApp, Boolean fForceSave,
 			String syllableParserFilterDescription) {
 		FileChooser fileChooser = ControllerUtilities.initFileChooser(
-				syllableParserFilterDescription, Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
+				mainApp, syllableParserFilterDescription, Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
 
 		File file = null;
 		if (fForceSave) {
@@ -113,7 +114,8 @@ public class ControllerUtilities {
 			}
 			mainApp.saveLanguageData(file);
 			String sDirectoryPath = file.getParent();
-			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
+			ApplicationPreferences applicationPreferences = mainApp.getApplicationPreferences();
+			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 			mainApp.updateStageTitle(file);
 		}
 		return file;

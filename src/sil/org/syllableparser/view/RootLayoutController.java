@@ -188,6 +188,8 @@ public class RootLayoutController implements Initializable {
 	private String sChooseLanguage;
 	private String sLabelUntested;
 
+	ApplicationPreferences applicationPreferences;
+
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
@@ -200,6 +202,7 @@ public class RootLayoutController implements Initializable {
 	public void setMainApp(MainApp mainApp, Locale locale, LanguageProject languageProject) {
 		this.mainApp = mainApp;
 		cvApproachController.setMainApp(mainApp);
+		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
 		syllableParserFilterDescription = sFileFilterDescription + " ("
@@ -251,10 +254,10 @@ public class RootLayoutController implements Initializable {
 	private void handleNew() {
 		// mainApp.getLanguageProject().clear();
 		// ApplicationPreferences.setLastOpenedFilePath((String) null);
-		String sDirectoryPath = ApplicationPreferences.getLastOpenedDirectoryPath();
+		String sDirectoryPath = applicationPreferences.getLastOpenedDirectoryPath();
 		File file = new File(Constants.ASHENINKA_STARTER_FILE);
 		mainApp.loadLanguageData(file);
-		ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
+		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		handleSaveAs();
 	}
 
@@ -283,7 +286,7 @@ public class RootLayoutController implements Initializable {
 		if (file != null) {
 			mainApp.loadLanguageData(file);
 			String sDirectoryPath = file.getParent();
-			ApplicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
+			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 			mainApp.updateStageTitle(file);
 		}
 	}
@@ -372,7 +375,7 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleExportHyphenatedWordsAsASimpleList() {
-		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(mainApp,
 				bundle.getString("file.exportedhyphenationlistfilterdescription") + " (*"
 						+ Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION + ")", "*"
 						+ Constants.SIMPLE_LIST_HYPHENATION_FILE_EXTENSION);
@@ -392,7 +395,7 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleExportHyphenatedWordsForParaTExt() {
-		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(mainApp,
 				Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE,
 				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
 		// Show save file dialog
@@ -411,7 +414,7 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleExportHyphenatedWordsForXLingPaper() {
-		FileChooser fileChooser = ControllerUtilities.initFileChooser(
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(mainApp,
 				bundle.getString("file.xlingpaperhyphenationexceptionfilterdescription") + " (*"
 						+ Constants.XML_FILE_EXTENSION + ")", "*" + Constants.XML_FILE_EXTENSION);
 		// Show save file dialog

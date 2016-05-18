@@ -3,8 +3,6 @@
  */
 package sil.org.syllableparser.view;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

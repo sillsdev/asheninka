@@ -1,104 +1,72 @@
 package sil.org.syllableparser;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 public class ApplicationPreferences {
-	
+
 	final static String kLastOpenedFilePath = "lastOpenedFilePath";
 	final static String kLastOpenedDirectoryPath = "lastOpenedDirectoryPath";
 	final static String kLastLocaleLanguage = "lastLocaleLanguage";
-	final static String kLastLocaleCountry = "lastLocaleCountry";
-	
-	public ApplicationPreferences() {
-	}
-	
-	public ApplicationPreferences(String lastOpenedFilePath,
-			String lastLocaleLanguage, String lastLocaleCountry) {
-		super();
-		setPreferencesKey(kLastOpenedFilePath, lastOpenedFilePath);
-		setPreferencesKey(kLastLocaleLanguage, lastLocaleLanguage);
-		setPreferencesKey(kLastLocaleCountry, lastLocaleCountry);
+	// Not trying to be anglo-centric, but we have to start with something...
+	final static String kDefaultLocaleLanguage = "en";
+
+	Preferences prefs;
+
+	public ApplicationPreferences(Object app) {
+		prefs = Preferences.userNodeForPackage(app.getClass());
 	}
 
-	public static String getLastOpenedFilePath() {
-		return getPreferencesKey(kLastOpenedFilePath);
+	public String getLastOpenedFilePath() {
+		return prefs.get(kLastOpenedFilePath, null);
 	}
 
-	public static void setLastOpenedFilePath(String lastOpenedFile) {
+	public void setLastOpenedFilePath(String lastOpenedFile) {
 		setPreferencesKey(kLastOpenedFilePath, lastOpenedFile);
 	}
 
-	public static String getLastLocaleLanguage() {
-		return getPreferencesKey(kLastLocaleLanguage);
+	public String getLastLocaleLanguage() {
+		return prefs.get(kLastLocaleLanguage, kDefaultLocaleLanguage);
 	}
 
-	public static void setLastLocaleLanguage(String lastLocaleLanguage) {
+	public void setLastLocaleLanguage(String lastLocaleLanguage) {
 		setPreferencesKey(kLastLocaleLanguage, lastLocaleLanguage);
 	}
 
-	public static String getLastLocaleCountry() {
-		return getPreferencesKey(kLastLocaleCountry);
+	public File getLastOpenedFile() {
+		String filePath = prefs.get(kLastOpenedFilePath, null);
+		if (filePath != null) {
+			return new File(filePath);
+		} else {
+			return null;
+		}
 	}
 
-	public static void setLastLocaleCountry(String lastLocaleCountry) {
-		setPreferencesKey(kLastLocaleCountry, lastLocaleCountry);;
+	public void setLastOpenedFilePath(File file) {
+		if (file != null) {
+			setPreferencesKey(kLastOpenedFilePath, file.getPath());
+
+		} else {
+			prefs.remove(kLastOpenedFilePath);
+		}
 	}
 
-	public static File getLastOpenedFile() {
-	    String filePath = getPreferencesKey(kLastOpenedFilePath);
-	    if (filePath != null) {
-	        return new File(filePath);
-	    } else {
-	        return null;
-	    }
+	public String getLastOpenedDirectoryPath() {
+		return prefs.get(kLastOpenedDirectoryPath, "");
 	}
 
-	public static void setLastOpenedFilePath(File file) {
-	    Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-	    if (file != null) {
-	    	setPreferencesKey(kLastOpenedFilePath, file.getPath());
-
-	    } else {
-	        prefs.remove(kLastOpenedFilePath);
-	    }
+	public void setLastOpenedDirectoryPath(String directoryPath) {
+		setPreferencesKey(kLastOpenedDirectoryPath, directoryPath);
 	}
 
-	public static String getLastOpenedDirectoryPath() {
-		String directoryPath = getPreferencesKey(kLastOpenedDirectoryPath);
-	    if (directoryPath != null) {
-	        return directoryPath;
-	    } else {
-	        return null;
-	    }
-	}
+	private void setPreferencesKey(String key, String value) {
+		if (key != null && value != null && !value.isEmpty()) {
+			prefs.put(key, value);
 
-	public static void setLastOpenedDirectoryPath(String directoryPath) {
-		Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-	    if (directoryPath != null) {
-	    	setPreferencesKey(kLastOpenedDirectoryPath, directoryPath);
-
-	    } else {
-	        prefs.remove(kLastOpenedDirectoryPath);
-	    }
-	}
-
-	private static String getPreferencesKey(String key) {
-	    Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-	    String value = prefs.get(key, null);
-	    if (key != null && !key.isEmpty()) {
-	        return prefs.get(key, value);
-	    }
-	    return null;
-	}
-	
-	private static void setPreferencesKey(String key, String value) {
-	    Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
-	    if (value != null && !value.isEmpty()) {
-	        prefs.put(key, value);
-
-	    } else {
-	        prefs.remove(key);
-	    }
+		} else {
+			prefs.remove(key);
+		}
 	}
 }

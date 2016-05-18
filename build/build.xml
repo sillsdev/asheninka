@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 	<project name="SyllableParser" default="do-deploy" basedir="."  xmlns:fx="javafx:com.sun.javafx.tools.ant">
-	<target name="init-fx-tasks">
+		<target name="init-fx-tasks">
 		<path id="fxant">
 			<filelist>
+				<file name="."/>
 				<file name="${java.home}\..\lib\ant-javafx.jar"/>
 				<file name="${java.home}\lib\jfxrt.jar"/>
 				<file name="${basedir}"/>
 			</filelist>
 		</path>
 	
+
 		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
 			uri="javafx:com.sun.javafx.tools.ant"
 			classpathref="fxant"/>
+<!--			<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+				uri="javafx:com.sun.javafx.tools.ant"
+				classpath=".:${java.home}\..\lib\ant-javafx.jar:${java.home}\lib\jfxrt.jar:${basedir}"/> -->
 	</target>
 	<target name="setup-staging-area">
 		<delete dir="externalLibs" />
@@ -20,16 +25,6 @@
 	
 		<mkdir dir="externalLibs" />
 	
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\Andy Black\Favorites\Downloads\Eclipse\Eclipse4.4\eclipse\plugins">
-				<filename name="org.hamcrest.core_1.3.0.v201303031735.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\Andy Black\Favorites\Downloads\Eclipse\Eclipse4.4\eclipse\plugins\org.junit_4.11.0.v201303080030">
-				<filename name="junit.jar"/>
-			</fileset>
-		</copy>
 		<copy todir="externalLibs">
 			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser\ControlsFX">
 				<filename name="controlsfx-8.40.9.jar"/>
@@ -40,16 +35,6 @@
 		<copy todir="project">
 			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser">
 				<include name="src/**" />
-			</fileset>
-		</copy>
-		<copy todir="project">
-			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser">
-				<include name="test/**" />
-			</fileset>
-		</copy>
-		<copy todir="project">
-			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser">
-				<include name="xtend-gen/**" />
 			</fileset>
 		</copy>
 	
@@ -64,8 +49,6 @@
 		<!-- Copy project-libs references -->
 		<copy todir="build/libs">
 			<fileset dir="externalLibs">
-				<include name="org.hamcrest.core_1.3.0.v201303031735.jar"/>
-				<include name="junit.jar"/>
 				<include name="controlsfx-8.40.9.jar"/>
 			</fileset>
 		</copy>
@@ -74,17 +57,7 @@
 	
 		<!-- Copy project sources itself -->
 		<copy todir="build/src">
-			<fileset dir="project/test">
-				<include name="**/*"/>
-			</fileset>
-		</copy>
-		<copy todir="build/src">
 			<fileset dir="project/src">
-				<include name="**/*"/>
-			</fileset>
-		</copy>
-		<copy todir="build/src">
-			<fileset dir="project/xtend-gen">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
@@ -99,13 +72,7 @@
 	
 		<!-- Copy over none Java-Files -->
 		<copy todir="build/classes">
-		<fileset dir="project/test">
-			<exclude name="**/*.java"/>
-		</fileset>
 		<fileset dir="project/src">
-			<exclude name="**/*.java"/>
-		</fileset>
-		<fileset dir="project/xtend-gen">
 			<exclude name="**/*.java"/>
 		</fileset>
 		</copy>
@@ -133,7 +100,7 @@
 		</fx:resources>
 	
 		<fx:application id="fxApplication"
-			name="SyllableParser"
+			name="Asheninka Syllable Parser"
 			mainClass="sil.org.syllableparser.MainApp"
 			version="0.1.0"
 		/>
@@ -150,7 +117,7 @@
 	
 			<manifest>
 				<attribute name="Implementation-Vendor" value="sil.org"/>
-				<attribute name="Implementation-Title" value="Asheninka Syllable Parser"/>
+				<attribute name="Implementation-Title" value="SyllableParser"/>
 				<attribute name="Implementation-Version" value="0.1.0"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
@@ -161,6 +128,7 @@
 		<!-- Need to use ${basedir} because somehow the ant task is calculating the directory differently -->
 		<fx:deploy
 			embedJNLP="false"
+			verbose="true"
 			extension="false"
 			includeDT="false"
 			offlineAllowed="true"
@@ -168,11 +136,25 @@
 			outfile="AsheninkaSyllableParser" nativeBundles="exe"
 			updatemode="background" >
 	
-			<fx:platform basedir="${java.home}"/>
-			<fx:info title="Asheninka Syllable Parser" vendor="sil.org"/>
+			<fx:platform basedir="${java.home}">
+				<fx:jvmarg value="-Xmx1024m"/>
+			</fx:platform>
+			<fx:info
+				title="Asheninka (a Syllable Parser)"
+				vendor="SIL International"
+				license="MIT License"
+				copyright="© 2016 SIL International"
+				description="A tool for exploring syllabification algorithms and for inserting discretionay hyphens in word lists."
+			/>
 	
 			<fx:application refId="fxApplication"/>
 			<fx:resources refid="appRes"/>
+			<fx:preferences
+				shortcut="true"
+				menu="true"
+				install="true"
+				/>
+				
 		</fx:deploy>
 	
 	

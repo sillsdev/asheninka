@@ -11,38 +11,37 @@ import org.junit.Test;
 
 public class ApplicationPreferencesTest {
 
-	ApplicationPreferences prefs;
+	ApplicationPreferences applicationPreferences;
 	File fileLastUsed;
 	String languageLastUsed;
-	String countryLastUsed;
 
 	@Before
 	public void setUp() throws Exception {
-		fileLastUsed = ApplicationPreferences.getLastOpenedFile();
-		countryLastUsed = ApplicationPreferences.getLastLocaleCountry();
-		languageLastUsed = ApplicationPreferences.getLastLocaleLanguage();
-		prefs = new ApplicationPreferences("last opened file", "en", "EN");
+		applicationPreferences = new ApplicationPreferences(this);
+		fileLastUsed = applicationPreferences.getLastOpenedFile();
+		languageLastUsed = applicationPreferences.getLastLocaleLanguage();
+		applicationPreferences.setLastOpenedFilePath("last opened file");
+		applicationPreferences.setLastLocaleLanguage("en");
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		ApplicationPreferences.setLastOpenedFilePath(fileLastUsed);
-		ApplicationPreferences.setLastLocaleCountry(countryLastUsed);
-		ApplicationPreferences.setLastLocaleLanguage(languageLastUsed);
+		applicationPreferences.setLastOpenedFilePath(fileLastUsed);
+		applicationPreferences.setLastLocaleLanguage(languageLastUsed);
 	}
 
 	@Test
 	public void lastOpenedFile() {
 		assertEquals("last opened file", "last opened file",
-				ApplicationPreferences.getLastOpenedFilePath());
-		ApplicationPreferences.setLastOpenedFilePath("mimi");
-		assertEquals("last opened file", "mimi", ApplicationPreferences.getLastOpenedFilePath());
+				applicationPreferences.getLastOpenedFilePath());
+		applicationPreferences.setLastOpenedFilePath("mimi");
+		assertEquals("last opened file", "mimi", applicationPreferences.getLastOpenedFilePath());
 		try {
 			File f = File.createTempFile("ApplicationPreferencesTest", null);
-			ApplicationPreferences.setLastOpenedFilePath(f);
+			applicationPreferences.setLastOpenedFilePath(f);
 			String fPath = f.getPath();
 			f.delete();
-			assertEquals("file path", fPath, ApplicationPreferences.getLastOpenedFilePath());
+			assertEquals("file path", fPath, applicationPreferences.getLastOpenedFilePath());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,13 +49,9 @@ public class ApplicationPreferencesTest {
 	}
 
 	@Test
-	public void lastLanguageAndCountry() {
-		assertEquals("locale language", "en", ApplicationPreferences.getLastLocaleLanguage());
-		ApplicationPreferences.setLastLocaleLanguage("es");
-		assertEquals("locale language", "es", ApplicationPreferences.getLastLocaleLanguage());
-		assertEquals("locale country", "EN", ApplicationPreferences.getLastLocaleCountry());
-		ApplicationPreferences.setLastLocaleCountry("ES");
-		assertEquals("locale country", "ES", ApplicationPreferences.getLastLocaleCountry());
-
+	public void lastLanguage() {
+		assertEquals("locale language", "en", applicationPreferences.getLastLocaleLanguage());
+		applicationPreferences.setLastLocaleLanguage("es");
+		assertEquals("locale language", "es", applicationPreferences.getLastLocaleLanguage());
 	}
 }
