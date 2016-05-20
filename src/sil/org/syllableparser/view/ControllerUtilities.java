@@ -37,6 +37,10 @@ public class ControllerUtilities {
 			Tooltip buttonTooltip, String sTooltip) {
 		ImageView imageView = new ImageView();
 		Image icon = new Image("file:resources/images/" + sUrl);
+		if (icon.getHeight() == 0) {
+			// normal location failed; try this one
+			icon = new Image("file:src/sil/org/syllableparser/resources/images/" + sUrl);
+		}
 		imageView.setImage(icon);
 		buttonToolbar.setGraphic(imageView);
 		buttonTooltip = new Tooltip(sTooltip);
@@ -68,8 +72,8 @@ public class ControllerUtilities {
 		return initFileChooser(mainApp, "", sFileChooserFilterDescription, sFileExtensions);
 	}
 
-	protected static FileChooser initFileChooser(MainApp mainApp,
-			String sInitialFileName, String sFileChooserFilterDescription, String sFileExtensions) {
+	protected static FileChooser initFileChooser(MainApp mainApp, String sInitialFileName,
+			String sFileChooserFilterDescription, String sFileExtensions) {
 		FileChooser fileChooser = new FileChooser();
 
 		// Set extension filter
@@ -91,13 +95,13 @@ public class ControllerUtilities {
 
 	public static void doFileSaveAs(MainApp mainApp, Boolean fForceSave,
 			String syllableParserFilterDescription) {
-		FileChooser fileChooser = ControllerUtilities.initFileChooser(
-				mainApp, syllableParserFilterDescription, Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
+		FileChooser fileChooser = ControllerUtilities.initFileChooser(mainApp,
+				syllableParserFilterDescription, Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
 
 		File file = null;
 		if (fForceSave) {
 			while (file == null) {
-				file = askUserToSaveFile(mainApp, fileChooser);				
+				file = askUserToSaveFile(mainApp, fileChooser);
 			}
 		} else {
 			file = askUserToSaveFile(mainApp, fileChooser);
