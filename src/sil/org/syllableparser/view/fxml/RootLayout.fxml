@@ -103,7 +103,7 @@
       </VBox>
    </top>
    <left>
-      <SplitPane dividerPositions="0.6777003484320557" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.6777003484320557" orientation="VERTICAL" prefHeight="200.0" prefWidth="178.0" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
