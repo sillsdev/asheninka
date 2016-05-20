@@ -56,21 +56,11 @@ public class MainApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		System.out.println("Before creating new locale");
-//		try {
-//			String sLocale = ApplicationPreferences.getLastLocaleLanguage();
-//
-//		} catch (Exception e) {
-//			ApplicationPreferences prefs = new ApplicationPreferences("", "en", "EN");
-//		}
 		applicationPreferences = new ApplicationPreferences(this);
 		locale = new Locale(applicationPreferences.getLastLocaleLanguage());
-		System.out.println("After creating new locale; locale = " + locale.getDisplayLanguage());
-		System.out.println("After getting application preferences");
 
 		languageProject = new LanguageProject();
 		xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
-		System.out.println("After creating xmlBackEndProvider");
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(kApplicationTitle);
 		this.primaryStage.getIcons().add(getNewMainIconImage());
@@ -98,7 +88,6 @@ public class MainApp extends Application {
 		}
 
 		initRootLayout();
-		System.out.println("After initRootLayout");
 
 		// saveDataPeriodically(30);
 
@@ -194,8 +183,6 @@ public class MainApp extends Application {
 	}
 
 	public void loadLanguageData(File file) {
-		System.out.println("In loadLanguageData ");
-
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		applicationPreferences.setLastOpenedFilePath(file);
 		applicationPreferences.setLastOpenedDirectoryPath(file.getParent());
