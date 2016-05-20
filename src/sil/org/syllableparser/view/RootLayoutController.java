@@ -296,7 +296,7 @@ public class RootLayoutController implements Initializable {
 	 * there is no open file, the "save as" dialog is shown.
 	 */
 	@FXML
-	private void handleSave() {
+	public void handleSave() {
 		File file = mainApp.getLanguageProjectFilePath();
 		if (file != null) {
 			mainApp.saveLanguageData(file);
@@ -470,6 +470,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleExit() {
+		handleSave();
 		System.exit(0);
 	}
 

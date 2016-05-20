@@ -89,7 +89,7 @@ public class MainApp extends Application {
 
 		initRootLayout();
 
-		// saveDataPeriodically(30);
+		saveDataPeriodically(30);
 
 	}
 
@@ -125,6 +125,7 @@ public class MainApp extends Application {
 	@Override
 	public void stop() {
 		applicationPreferences.setLastLocaleLanguage(locale.getLanguage());
+		controller.handleSave();
 		// TODO: add last file opened
 	}
 
