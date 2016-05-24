@@ -30,6 +30,7 @@ import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.view.ControllerUtilities;
 import sil.org.syllableparser.view.RootLayoutController;
 
 public class MainApp extends Application {
@@ -100,7 +101,6 @@ public class MainApp extends Application {
 
 			@Override
 			public void handle(WorkerStateEvent t) {
-				System.out.println("Save the file");
 				File file = getLanguageProjectFilePath();
 				if (file != null) {
 					saveLanguageData(file);
@@ -240,7 +240,8 @@ public class MainApp extends Application {
 	 * @return the mainIconImage
 	 */
 	public Image getNewMainIconImage() {
-		return new Image(kApplicationIconResource);
+		Image img = ControllerUtilities.getIconImageFromURL(kApplicationIconResource);
+		return img;
 	}
 
 	public ApplicationPreferences getApplicationPreferences() {
@@ -253,6 +254,10 @@ public class MainApp extends Application {
 		} else {
 			controller.setNumberOfItems("");
 		}
+	}
+
+	public RootLayoutController getController() {
+		return controller;
 	}
 
 }

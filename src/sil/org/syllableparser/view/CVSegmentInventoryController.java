@@ -305,39 +305,6 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
-	 */
-	@Override
-	void handleCut() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
-	 */
-	@Override
-	void handleCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
-	 */
-	@Override
-	void handlePaste() {
-		// TODO Auto-generated method stub
-
-	}
-
 	protected void handleCheckBoxSelectAll() {
 		for (Segment segment : languageProject.getSegmentInventory()) {
 			segment.setActive(true);
@@ -362,4 +329,11 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 			forceTableRowToRedisplayPerActiveSetting(segment);
 		}
 	}
+
+	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	@Override
+	TextField[] createTextFields() {
+		return new TextField[] { segmentField, graphemesField, descriptionField };
+	}
+
 }

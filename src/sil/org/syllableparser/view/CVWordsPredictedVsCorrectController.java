@@ -54,8 +54,8 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 		// public void initialize() {
 		this.bundle = resources;
 
-		whenTableIsEmptyMessage = new Label(resources.getString("label.nopredictedvscorrect") +
-				resources.getString("menu.syllabifywords"));
+		whenTableIsEmptyMessage = new Label(resources.getString("label.nopredictedvscorrect")
+				+ resources.getString("menu.syllabifywords"));
 		cvWordsPredictedVsCorrectTable.setPlaceholder(whenTableIsEmptyMessage);
 
 		// Initialize the table with the three columns.
@@ -84,17 +84,19 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * @param words TODO
+	 * 
+	 * @param words
+	 *            TODO
 	 * @param cvApproachController
 	 */
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
 		this.words = words;
 
-		ObservableList<Word> wordsToShow = words.filtered(
-				word -> (!word.getCorrectSyllabification().isEmpty()
-						&& !word.getCVPredictedSyllabification().isEmpty() && !word
-						.getCVPredictedSyllabification().equals(word.getCorrectSyllabification())));
+		ObservableList<Word> wordsToShow = words.filtered(word -> (!word
+				.getCorrectSyllabification().isEmpty()
+				&& !word.getCVPredictedSyllabification().isEmpty() && !word
+				.getCVPredictedSyllabification().equals(word.getCorrectSyllabification())));
 
 		// Add observable list data to the table
 		cvWordsPredictedVsCorrectTable.setItems(wordsToShow.sorted());
@@ -109,39 +111,6 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 			cvWordsPredictedVsCorrectTable.getFocusModel().focus(index);
 			cvWordsPredictedVsCorrectTable.scrollTo(index);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
-	 */
-	@Override
-	void handleCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
-	 */
-	@Override
-	void handlePaste() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
-	 */
-	@Override
-	void handleCut() {
-		// TODO Auto-generated method stub
-
 	}
 
 	/*
@@ -165,5 +134,12 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 	@Override
 	void handleRemoveItem() {
 		// nothing to do in this case
+	}
+
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	@Override
+	TextField[] createTextFields() {
+		return null;
 	}
 }

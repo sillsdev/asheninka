@@ -23,12 +23,17 @@ public abstract class ApproachController {
 	protected MainApp mainApp;
 	protected ResourceBundle bundle;
 	protected Locale locale;
+	protected RootLayoutController rootController;
 	
+	public abstract void handleCopy();
+	public abstract void handleCut();
+	public abstract void handlePaste();
 	abstract void handleInsertNewItem();
 	abstract void handleRemoveItem();
 	abstract void handleSyllabifyWords(StatusBar statusBar);
 	abstract void handleConvertPredictedToCorrectSyllabification();
 	abstract void handleFindWord();
+	abstract boolean anythingSelected();
 	public abstract ArrayList<String> getHyphenatedWords(ObservableList<Word> words);
 	public abstract ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words);
 	public abstract ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words);
@@ -45,6 +50,9 @@ public abstract class ApproachController {
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+	}
+	public void setRootLayout(RootLayoutController controller) {
+		rootController = controller;
 	}
 	public ResourceBundle getBundle() {
 		return bundle;

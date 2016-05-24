@@ -61,9 +61,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				Word word = (Word) this.getTableRow().getItem();
-				if (word != null && 
-						word.getCVParserResult().length() > 0 && 
-						word.getCVPredictedSyllabification().length() == 0) {
+				if (word != null && word.getCVParserResult().length() > 0
+						&& word.getCVPredictedSyllabification().length() == 0) {
 					text.setFill(Constants.PARSER_FAILURE);
 				} else {
 					text.setFill(Constants.PARSER_SUCCESS);
@@ -117,7 +116,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				.cvPredictedSyllabificationProperty());
 		correctSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.correctSyllabificationProperty());
-		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue().cvParserResultProperty());
+		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.cvParserResultProperty());
 
 		// Custom rendering of the table cell.
 		wordColumn.setCellFactory(column -> {
@@ -132,14 +132,15 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		parserResultColumn.setCellFactory(column -> {
 			return new ParserResultWrappingTableCell();
 		});
-		
+
 		makeColumnHeaderWrappable(wordColumn);
 		makeColumnHeaderWrappable(predictedSyllabificationColumn);
 		makeColumnHeaderWrappable(correctSyllabificationColumn);
-		// for some reason, the following makes the header very high 
-		//   when we also use cvWords.Table.scrollTo(index) in setFocusOnWord(index)
-		//makeColumnHeaderWrappable(parserResultColumn);
-		
+		// for some reason, the following makes the header very high
+		// when we also use cvWords.Table.scrollTo(index) in
+		// setFocusOnWord(index)
+		// makeColumnHeaderWrappable(parserResultColumn);
+
 		// Clear cv word details.
 		showCVWordDetails(null);
 
@@ -163,7 +164,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 								.getText());
 					}
 					if (languageProject != null) {
-						predictedSyllabificationField.setFont(languageProject.getVernacularLanguage().getFont());
+						predictedSyllabificationField.setFont(languageProject
+								.getVernacularLanguage().getFont());
 					}
 				});
 		correctSyllabificationField.textProperty()
@@ -174,7 +176,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 										.getText());
 							}
 							if (languageProject != null) {
-								correctSyllabificationField.setFont(languageProject.getVernacularLanguage().getFont());
+								correctSyllabificationField.setFont(languageProject
+										.getVernacularLanguage().getFont());
 							}
 						});
 		parserResultField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -185,11 +188,11 @@ public class CVWordsController extends SylParserBaseController implements Initia
 				parserResultField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-		
+
 		// not so happy with making it smaller
-		//parserResultColumn.getStyleClass().add("syllabification-result");
-		//parserResultField.getStyleClass().add("syllabification-result");
-		
+		// parserResultColumn.getStyleClass().add("syllabification-result");
+		// parserResultField.getStyleClass().add("syllabification-result");
+
 		// Use of Enter move focus to next item.
 		wordField.setOnAction((event) -> {
 			predictedSyllabificationField.requestFocus();
@@ -218,8 +221,8 @@ public class CVWordsController extends SylParserBaseController implements Initia
 			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
 			parserResultField.setText(cvWord.getCVParserResult());
 			parserResultField.getStyleClass().clear();
-			if (cvWord.getCVPredictedSyllabification().length() == 0 &&
-					cvWord.getCVParserResult().length() > 0) {
+			if (cvWord.getCVPredictedSyllabification().length() == 0
+					&& cvWord.getCVParserResult().length() > 0) {
 				parserResultField.getStyleClass().add("failedsyllabification");
 			} else {
 				parserResultField.getStyleClass().add("successfullsyllabification");
@@ -249,7 +252,9 @@ public class CVWordsController extends SylParserBaseController implements Initia
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * @param words TODO
+	 * 
+	 * @param words
+	 *            TODO
 	 * @param cvApproachController
 	 */
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
@@ -263,14 +268,15 @@ public class CVWordsController extends SylParserBaseController implements Initia
 	}
 
 	public void setFocusOnWord(int index) {
-		if (cvWordsTable.getItems().size() > 0 && index > -1 && index < cvWordsTable.getItems().size()) {
+		if (cvWordsTable.getItems().size() > 0 && index > -1
+				&& index < cvWordsTable.getItems().size()) {
 			cvWordsTable.requestFocus();
 			cvWordsTable.getSelectionModel().select(index);
 			cvWordsTable.getFocusModel().focus(index);
 			cvWordsTable.scrollTo(index);
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -301,36 +307,11 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
-	 */
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
-	void handleCut() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
-	 */
-	@Override
-	void handleCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
-	 */
-	@Override
-	void handlePaste() {
-		// TODO Auto-generated method stub
-
+	TextField[] createTextFields() {
+		return new TextField[] { wordField, predictedSyllabificationField,
+				correctSyllabificationField, parserResultField };
 	}
 }

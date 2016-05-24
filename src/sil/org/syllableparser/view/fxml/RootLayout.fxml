@@ -46,11 +46,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleExit" text="%menu.exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="%menu.edit">
+          <Menu mnemonicParsing="false" text="%menu.edit" onShown="#handleShowingEditMenu">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleCut" text="%menu.cut" />
-              <MenuItem mnemonicParsing="false" onAction="#handleCopy" text="%menu.copy" />
-              <MenuItem mnemonicParsing="false" onAction="#handlePaste" text="%menu.paste" />
+              <MenuItem mnemonicParsing="false" onAction="#handleCut" text="%menu.cut" fx:id="menuItemEditCut"/>
+              <MenuItem mnemonicParsing="false" onAction="#handleCopy" text="%menu.copy" fx:id="menuItemEditCopy"/>
+              <MenuItem mnemonicParsing="false" onAction="#handlePaste" text="%menu.paste" fx:id="menuItemEditPaste"/>
               <SeparatorMenuItem />
               <MenuItem mnemonicParsing="false" onAction="#handleInsertNewItem" text="%menu.insertnew" fx:id="menuItemEditInsert" />
               <MenuItem mnemonicParsing="false" onAction="#handleRemoveItem" text="%menu.remove" fx:id="menuItemEditRemove" />

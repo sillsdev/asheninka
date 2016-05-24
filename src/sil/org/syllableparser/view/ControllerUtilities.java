@@ -36,15 +36,23 @@ public class ControllerUtilities {
 	public static void createToolbarButtonWithImage(String sUrl, Button buttonToolbar,
 			Tooltip buttonTooltip, String sTooltip) {
 		ImageView imageView = new ImageView();
-		Image icon = new Image("file:resources/images/" + sUrl);
-		if (icon.getHeight() == 0) {
-			// normal location failed; try this one
-			icon = new Image("file:src/sil/org/syllableparser/resources/images/" + sUrl);
-		}
+		String sStandardIconURL = "file:resources/images/" + sUrl;
+		Image icon = getIconImageFromURL(sStandardIconURL);
 		imageView.setImage(icon);
 		buttonToolbar.setGraphic(imageView);
 		buttonTooltip = new Tooltip(sTooltip);
 		buttonToolbar.setTooltip(buttonTooltip);
+	}
+
+	public static Image getIconImageFromURL(String sStandardIconURL) {
+		Image icon = new Image(sStandardIconURL);
+		if (icon.getHeight() == 0) {
+			// normal location failed; try this one
+			String sSourcePath = sStandardIconURL.substring(0, 5) + "src/sil/org/syllableparser/"
+					+ sStandardIconURL.substring(5);
+			icon = new Image(sSourcePath);
+		}
+		return icon;
 	}
 
 	public static void setDateInStatusBar(StatusBar statusBar, ResourceBundle bundle) {

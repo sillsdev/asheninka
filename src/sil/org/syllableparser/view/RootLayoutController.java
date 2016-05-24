@@ -52,6 +52,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -150,6 +151,12 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private Tooltip tooltipToolbarFindWord;
 	@FXML
+	private MenuItem menuItemEditCopy;
+	@FXML
+	private MenuItem menuItemEditCut;
+	@FXML
+	private MenuItem menuItemEditPaste;
+	@FXML
 	private MenuItem menuItemEditInsert;
 	@FXML
 	private MenuItem menuItemEditRemove;
@@ -190,6 +197,8 @@ public class RootLayoutController implements Initializable {
 
 	ApplicationPreferences applicationPreferences;
 
+	Clipboard systemClipboard = Clipboard.getSystemClipboard();
+
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
@@ -202,6 +211,7 @@ public class RootLayoutController implements Initializable {
 	public void setMainApp(MainApp mainApp, Locale locale, LanguageProject languageProject) {
 		this.mainApp = mainApp;
 		cvApproachController.setMainApp(mainApp);
+		cvApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -263,17 +273,17 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleCut() {
-		// TODO
+		currentApproachController.handleCut();
 	}
 
 	@FXML
 	private void handleCopy() {
-		// TODO
+		currentApproachController.handleCopy();
 	}
 
 	@FXML
 	private void handlePaste() {
-		// TODO
+		currentApproachController.handlePaste();
 	}
 
 	/**
@@ -647,6 +657,11 @@ public class RootLayoutController implements Initializable {
 		oncApproachController = new ONCApproachController(bundle);
 
 		createToolbarButtons(bundle);
+		// until we get them working...
+		buttonToolbarEditCut.setDisable(true);
+		buttonToolbarEditCopy.setDisable(true);
+		buttonToolbarEditPaste.setDisable(true);
+		
 		buttonToolbarSyllabify.setDisable(true);
 		menuItemSyllabify.setDisable(true);
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(true);
@@ -769,6 +784,54 @@ public class RootLayoutController implements Initializable {
 
 	public void setNumberOfItems(String numberOfItems) {
 		this.numberOfItems.setText(numberOfItems);
+	}
+
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	@FXML
+	public void handleShowingEditMenu() {
+		if (systemClipboard == null) {
+			systemClipboard = Clipboard.getSystemClipboard();
+		}
+
+		if (systemClipboard.hasString()) {
+			adjustForClipboardContents();
+		} else {
+			adjustForEmptyClipboard();
+		}
+
+		if (currentApproachController.anythingSelected()) {
+			adjustForSelection();
+
+		} else {
+			adjustForDeselection();
+		}
+	}
+
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	public void adjustForEmptyClipboard() {
+		menuItemEditPaste.setDisable(true); // nothing to paste
+	}
+
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	private void adjustForClipboardContents() {
+		menuItemEditPaste.setDisable(false); // something to paste
+	}
+
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	private void adjustForSelection() {
+		menuItemEditCut.setDisable(false);
+		menuItemEditCopy.setDisable(false);
+	}
+
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	private void adjustForDeselection() {
+		menuItemEditCut.setDisable(true);
+		menuItemEditCopy.setDisable(true);
 	}
 
 }

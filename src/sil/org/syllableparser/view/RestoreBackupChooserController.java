@@ -253,33 +253,6 @@ public class RestoreBackupChooserController extends SylParserBaseController impl
 	}
 
 	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
-	 */
-	@Override
-	void handleCut() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
-	 */
-	@Override
-	void handleCopy() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
-	 */
-	@Override
-	void handlePaste() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
 	 * @see sil.org.syllableparser.view.ApproachEditorController#handleInsertNewItem()
 	 */
 	@Override
@@ -295,5 +268,12 @@ public class RestoreBackupChooserController extends SylParserBaseController impl
 	void handleRemoveItem() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	@Override
+	TextField[] createTextFields() {
+		return new TextField[] { directoryField };
 	}
 }

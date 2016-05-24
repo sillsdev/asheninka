@@ -77,36 +77,66 @@ public class CVApproachController extends ApproachController {
 	}
 
 	public void handleCVSegmentInventory() {
-		FXMLLoader loader = new FXMLLoader();
-		ApproachViewNavigator.loadApproachView(loader, "fxml/CVSegmentInventory.fxml", locale);
+		FXMLLoader loader = createFXMLLoader("fxml/CVSegmentInventory.fxml");
 		CVSegmentInventoryController controller = loader.getController();
-		currentCVApproachController = controller;
-		controller.setMainApp(mainApp);
-		controller.setLocale(locale);
-
+		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		
+//		FXMLLoader loader = new FXMLLoader();
+//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVSegmentInventory.fxml", locale);
+//		CVSegmentInventoryController controller = loader.getController();
+//		currentCVApproachController = controller;
+//		controller.setMainApp(mainApp);
+//		controller.setRootLayout(rootController);
+//		controller.setLocale(locale);
+//
+//		controller.setData(cvApproachData);
+	}
+	
+	private FXMLLoader createFXMLLoader(String sFxml) {
+		FXMLLoader loader = new FXMLLoader();
+		ApproachViewNavigator.loadApproachView(loader, sFxml, locale);
+		return loader;
 	}
 
-	public void handleCVNaturalClasses() {
-		FXMLLoader loader = new FXMLLoader();
-		ApproachViewNavigator.loadApproachView(loader, "fxml/CVNaturalClasses.fxml", locale);
-		CVNaturalClassesController controller = loader.getController();
+	private void initializeApproachEditorController(ApproachEditorController controller) {
 		currentCVApproachController = controller;
-
 		controller.setMainApp(mainApp);
+		controller.setRootLayout(rootController);
 		controller.setLocale(locale);
+	}
+	public void handleCVNaturalClasses() {
+		FXMLLoader loader = createFXMLLoader("fxml/CVNaturalClasses.fxml");
+		CVNaturalClassesController controller = loader.getController();
+		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		
+//		FXMLLoader loader = new FXMLLoader();
+//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVNaturalClasses.fxml", locale);
+//		CVNaturalClassesController controller = loader.getController();
+//		currentCVApproachController = controller;
+//
+//		controller.setMainApp(mainApp);
+//		controller.setRootLayout(rootController);
+//		controller.setLocale(locale);
+//		controller.setData(cvApproachData);
 	}
 
 	public void handleCVSyllablePatterns() {
-		FXMLLoader loader = new FXMLLoader();
-		ApproachViewNavigator.loadApproachView(loader, "fxml/CVSyllablePatterns.fxml", locale);
+		FXMLLoader loader = createFXMLLoader("fxml/CVSyllablePatterns.fxml");
 		CVSyllablePatternsController controller = loader.getController();
-		currentCVApproachController = controller;
-
-		controller.setMainApp(mainApp);
-		controller.setLocale(locale);
+		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		
+//		FXMLLoader loader = new FXMLLoader();
+//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVSyllablePatterns.fxml", locale);
+//		CVSyllablePatternsController controller = loader.getController();
+//		currentCVApproachController = controller;
+//
+//		controller.setMainApp(mainApp);
+//		controller.setRootLayout(rootController);
+//		controller.setLocale(locale);
+//		controller.setData(cvApproachData);
 	}
 
 	public void handleCVWords() {
@@ -114,26 +144,34 @@ public class CVApproachController extends ApproachController {
 	}
 
 	public void handleCVWords(int index) {
-		FXMLLoader loader = new FXMLLoader();
-		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWords.fxml", locale);
+		FXMLLoader loader = createFXMLLoader("fxml/CVWords.fxml");
 		CVWordsController controller = loader.getController();
-		currentCVApproachController = controller;
-
-		controller.setMainApp(mainApp);
-		controller.setLocale(locale);
+		initializeApproachEditorController(controller);
+		
+//		FXMLLoader loader = new FXMLLoader();
+//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWords.fxml", locale);
+//		CVWordsController controller = loader.getController();
+//		currentCVApproachController = controller;
+//
+//		controller.setMainApp(mainApp);
+//		controller.setLocale(locale);
 		controller.setData(cvApproachData, words);
 		controller.setFocusOnWord(index);
 	}
 
 	public void handleCVWordsPredictedVsCorrect() {
-		FXMLLoader loader = new FXMLLoader();
-		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWordsPredictedVsCorrect.fxml",
-				locale);
+		FXMLLoader loader = createFXMLLoader("fxml/CVWordsPredictedVsCorrect.fxml");
 		CVWordsPredictedVsCorrectController controller = loader.getController();
-		currentCVApproachController = controller;
-
-		controller.setMainApp(mainApp);
-		controller.setLocale(locale);
+		initializeApproachEditorController(controller);
+		
+//		FXMLLoader loader = new FXMLLoader();
+//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWordsPredictedVsCorrect.fxml",
+//				locale);
+//		CVWordsPredictedVsCorrectController controller = loader.getController();
+//		currentCVApproachController = controller;
+//
+//		controller.setMainApp(mainApp);
+//		controller.setLocale(locale);
 		controller.setData(cvApproachData, words);
 		controller.setFocusOnWord(0);
 	}
@@ -315,5 +353,48 @@ public class CVApproachController extends ApproachController {
 
 	public ObservableList<Word> getWords() {
 		return words;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#handleCopy()
+	 */
+	@Override
+	public void handleCopy() {
+		currentCVApproachController.handleCopy();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#handleCut()
+	 */
+	@Override
+	public void handleCut() {
+		currentCVApproachController.handleCut();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#handlePaste()
+	 */
+	@Override
+	public void handlePaste() {
+		currentCVApproachController.handlePaste();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see sil.org.syllableparser.view.ApproachController#anythingSelected()
+	 */
+	@Override
+	boolean anythingSelected() {
+		if (currentCVApproachController != null) {
+			return currentCVApproachController.anythingSelected();
+		}
+		return false;
 	}
 }

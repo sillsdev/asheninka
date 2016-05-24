@@ -433,39 +433,6 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
-	 */
-	@Override
-	void handleCut() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
-	 */
-	@Override
-	void handleCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
-	 */
-	@Override
-	void handlePaste() {
-		// TODO Auto-generated method stub
-
-	}
-
 	protected void handleCheckBoxSelectAll() {
 		for (CVSyllablePattern syllablePattern : cvApproach.getCVSyllablePatterns()) {
 			syllablePattern.setActive(true);
@@ -489,5 +456,11 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			}
 			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
 		}
+	}
+
+	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	@Override
+	TextField[] createTextFields() {
+		return new TextField[] { nameField, descriptionField };
 	}
 }

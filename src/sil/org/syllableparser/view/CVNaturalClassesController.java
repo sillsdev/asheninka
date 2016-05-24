@@ -65,7 +65,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			}
 		}
 	}
-	
+
 	protected final class VernacularWrappingTableCell extends TableCell<CVNaturalClass, String> {
 		private Text text;
 
@@ -91,7 +91,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			}
 		}
 	}
-	
+
 	@FXML
 	private TableView<CVNaturalClass> cvNaturalClassTable;
 	@FXML
@@ -121,7 +121,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	private CheckBox activeCheckBox;
 
 	private CVNaturalClass currentNaturalClass;
-
+	
 	public CVNaturalClassesController() {
 
 	}
@@ -133,13 +133,14 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-//		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
-//		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-//		checkBoxColumn.setEditable(true);
-//		checkBoxColumnHead.setOnAction((event) -> {
-//			handleCheckBoxColumnHead();
-//		});
-//		initializeCheckBoxContextMenu(resources);
+		// checkBoxColumn.setCellValueFactory(cellData ->
+		// cellData.getValue().activeCheckBoxProperty());
+		// checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+		// checkBoxColumn.setEditable(true);
+		// checkBoxColumnHead.setOnAction((event) -> {
+		// handleCheckBoxColumnHead();
+		// });
+		// initializeCheckBoxContextMenu(resources);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -320,7 +321,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
-		
+
 		// Add observable list data to the table
 		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
 		if (cvNaturalClassTable.getItems().size() > 0) {
@@ -409,37 +410,10 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCut()
-	 */
+	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
-	void handleCut() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleCopy()
-	 */
-	@Override
-	void handleCopy() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handlePaste()
-	 */
-	@Override
-	void handlePaste() {
-		// TODO Auto-generated method stub
-
+	TextField[] createTextFields() {
+		return new TextField[] { nameField, descriptionField };
 	}
 
 	protected void handleCheckBoxSelectAll() {

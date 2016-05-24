@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -247,5 +248,11 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 				segmentOrNaturalClass.setChecked(true);
 			}
 		}
+	}
+
+	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	@Override
+	TextField[] createTextFields() {
+		return null;
 	}
 }
