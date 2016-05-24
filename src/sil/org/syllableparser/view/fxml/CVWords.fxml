@@ -43,10 +43,10 @@
                         <Label text="%label.predictedsyllabification" GridPane.rowIndex="1" />
                         <Label text="%label.correctsyllabification" GridPane.rowIndex="2" />
                         <Label text="%label.parserresult" GridPane.rowIndex="3" />
-                        <TextField fx:id="wordField" GridPane.columnIndex="1" />
-                        <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="false" />
+                        <TextField fx:id="wordField" GridPane.columnIndex="1" onMouseReleased="#toolBarMouseReleased" />
+                        <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="1" onMouseReleased="#toolBarMouseReleased" />
+                        <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseReleased="#toolBarMouseReleased" />
+                        <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="false" onMouseReleased="#toolBarMouseReleased" />
                      </children>
                   </GridPane>
                </children>

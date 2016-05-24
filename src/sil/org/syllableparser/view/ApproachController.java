@@ -26,8 +26,11 @@ public abstract class ApproachController {
 	protected RootLayoutController rootController;
 	
 	public abstract void handleCopy();
+	public abstract void handleToolBarCopy();
 	public abstract void handleCut();
+	public abstract void handleToolBarCut();
 	public abstract void handlePaste();
+	public abstract void handleToolBarPaste();
 	abstract void handleInsertNewItem();
 	abstract void handleRemoveItem();
 	abstract void handleSyllabifyWords(StatusBar statusBar);

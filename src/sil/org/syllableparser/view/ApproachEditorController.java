@@ -6,11 +6,13 @@ package sil.org.syllableparser.view;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.IndexRange;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
+import javafx.scene.input.MouseEvent;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Approach;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -18,6 +20,9 @@ import sil.org.syllableparser.model.cvapproach.CVApproach;
 /**
  * @author Andy Black
  *
+ * Code for cut, copy, and paste based on
+ *   http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html and
+ *   http://bekwam.blogspot.com/2014/11/javafx-cut-copy-and-paste-from-toolbar.html
  */
 public abstract class ApproachEditorController {
 
@@ -26,6 +31,7 @@ public abstract class ApproachEditorController {
 	protected Locale locale;
 	protected RootLayoutController rootController;
 	protected Clipboard systemClipboard = Clipboard.getSystemClipboard();
+	protected ToolBarCutCopyPasteDelegate toolBarDelegate;
 
 	abstract void handleInsertNewItem();
 
@@ -68,8 +74,14 @@ public abstract class ApproachEditorController {
 		this.locale = locale;
 	}
 
-	// code taken from
-	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	public ToolBarCutCopyPasteDelegate getToolBarDelegate() {
+		return toolBarDelegate;
+	}
+
+	public void setToolBarDelegate(ToolBarCutCopyPasteDelegate toolBarDelegate) {
+		this.toolBarDelegate = toolBarDelegate;
+	}
+
 	private String getSelectedText(TextField[] textFields) {
 		for (TextField tf : textFields) {
 			String text = tf.getSelectedText();
@@ -80,8 +92,6 @@ public abstract class ApproachEditorController {
 		return null;
 	}
 
-	// code taken from
-	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	protected TextField findFocusedTextField(TextField[] textFields) {
 		if (textFields != null && textFields.length > 0) {
 			for (TextField tf : textFields) {
@@ -93,15 +103,11 @@ public abstract class ApproachEditorController {
 		return null;
 	}
 
-	// code taken from
-	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	protected TextField getFocusedTextField() {
 		TextField[] textFields = createTextFields();
 		return findFocusedTextField(textFields);
 	}
 
-	// code taken from
-	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	void handleCopy() {
 		TextField[] textFields = createTextFields();
 		String text = getSelectedText(textFields);
@@ -110,18 +116,26 @@ public abstract class ApproachEditorController {
 		systemClipboard.setContent(content);
 	}
 
-	// code taken from
-	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	void handleCut() {
 		TextField focusedTF = getFocusedTextField();
-		if (focusedTF != null) {
-			String text = focusedTF.getSelectedText();
+		processCut(focusedTF, false);
+	}
 
+	protected void processCut(TextField focusedTF, boolean bUseToolBarDelegate) {
+		if (focusedTF != null) {
+			String text;
+			IndexRange range;
+
+			if (bUseToolBarDelegate) {
+				text = toolBarDelegate.getLastSelectedText();
+				range = toolBarDelegate.getLastSelectedRange();
+			} else {
+				text = focusedTF.getSelectedText();
+				range = focusedTF.getSelection();
+			}
 			ClipboardContent content = new ClipboardContent();
 			content.putString(text);
 			systemClipboard.setContent(content);
-
-			IndexRange range = focusedTF.getSelection();
 			String origText = focusedTF.getText();
 			String firstPart = origText.substring(0, range.getStart());
 			String lastPart = origText.substring(range.getEnd(), origText.length());
@@ -131,8 +145,6 @@ public abstract class ApproachEditorController {
 		}
 	}
 
-	// code taken from
-	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	void handlePaste() {
 		if (!systemClipboard.hasContent(DataFormat.PLAIN_TEXT)) {
 			rootController.adjustForEmptyClipboard();
@@ -151,6 +163,11 @@ public abstract class ApproachEditorController {
 		IndexRange range = focusedTF.getSelection();
 
 		String origText = focusedTF.getText();
+		processPaste(clipboardText, focusedTF, range, origText);
+	}
+
+	protected void processPaste(String clipboardText, TextField focusedTF, IndexRange range,
+			String origText) {
 		if (origText != null) {
 			int endPos = 0;
 			String updatedText = "";
@@ -170,8 +187,6 @@ public abstract class ApproachEditorController {
 		}
 	}
 
-	// code taken from
-	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	boolean anythingSelected() {
 		TextField[] textFields = createTextFields();
 		if (textFields != null && textFields.length > 0) {
@@ -183,5 +198,38 @@ public abstract class ApproachEditorController {
 			}
 		}
 		return false;
+	}
+
+	public void handleToolBarCut() {
+		TextField focusedTF = toolBarDelegate.getLastFocusedTF();
+		processCut(focusedTF, true);
+	}
+
+	public void handleToolBarCopy() {
+		ClipboardContent content = new ClipboardContent();
+		content.putString(toolBarDelegate.getLastSelectedText());
+		systemClipboard.setContent(content);
+	}
+
+	public void handleToolBarPaste() {
+		if (!systemClipboard.hasContent(DataFormat.PLAIN_TEXT)) {
+			toolBarDelegate.adjustForEmptyClipboard();
+			return;
+		}
+		String clipboardText = systemClipboard.getString();
+		TextField lastFocusedTF = toolBarDelegate.getLastFocusedTF();
+		IndexRange lastSelectedRange = toolBarDelegate.getLastSelectedRange();
+		String origText = lastFocusedTF.getText();
+		processPaste(clipboardText, lastFocusedTF, lastSelectedRange, origText);
+	}
+
+	@FXML
+	public void toolBarMouseReleased(MouseEvent evt) {
+
+		TextField tf = (TextField) evt.getSource();
+		String selectedText = tf.getSelectedText();
+		IndexRange selectedRange = tf.getSelection();
+
+		toolBarDelegate.updateToolBarForClipboard(tf, selectedText, selectedRange);
 	}
 }

@@ -88,9 +88,9 @@
                <Button fx:id="buttonToolbarFileOpen" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleOpen" prefHeight="23.0" prefWidth="17.0" text="" />
                <Button fx:id="buttonToolbarFileSave" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="23.0" prefWidth="17.0" text="" />
                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
-               <Button fx:id="buttonToolbarEditCut" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleCut" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarEditCopy" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleCopy" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarEditPaste" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handlePaste" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarEditCut" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleToolBarCut" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarEditCopy" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleToolBarCopy" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarEditPaste" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleToolBarPaste" prefHeight="23.0" prefWidth="17.0" text="" />
                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
                <Button fx:id="buttonToolbarEditInsert" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleInsertNewItem" prefHeight="23.0" prefWidth="17.0" text="" />
                <Button fx:id="buttonToolbarEditRemove" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleRemoveItem" prefHeight="23.0" prefWidth="17.0" text="" />

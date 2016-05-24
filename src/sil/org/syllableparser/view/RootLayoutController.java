@@ -1,7 +1,6 @@
 package sil.org.syllableparser.view;
 
 import java.awt.Desktop;
-import java.awt.TextField;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,17 +41,20 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.IndexRange;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -198,6 +200,12 @@ public class RootLayoutController implements Initializable {
 	ApplicationPreferences applicationPreferences;
 
 	Clipboard systemClipboard = Clipboard.getSystemClipboard();
+	
+	public ToolBarCutCopyPasteDelegate toolBarDelegate;
+	
+	public RootLayoutController() {
+		toolBarDelegate = new ToolBarCutCopyPasteDelegate();
+	}
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
@@ -277,13 +285,28 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
+	private void handleToolBarCut() {
+		currentApproachController.handleToolBarCut();
+	}
+
+	@FXML
 	private void handleCopy() {
 		currentApproachController.handleCopy();
 	}
 
 	@FXML
+	private void handleToolBarCopy() {
+		currentApproachController.handleToolBarCopy();
+	}
+
+	@FXML
 	private void handlePaste() {
 		currentApproachController.handlePaste();
+	}
+
+	@FXML
+	private void handleToolBarPaste() {
+		currentApproachController.handleToolBarPaste();
 	}
 
 	/**
@@ -657,10 +680,10 @@ public class RootLayoutController implements Initializable {
 		oncApproachController = new ONCApproachController(bundle);
 
 		createToolbarButtons(bundle);
-		// until we get them working...
-		buttonToolbarEditCut.setDisable(true);
-		buttonToolbarEditCopy.setDisable(true);
-		buttonToolbarEditPaste.setDisable(true);
+		
+		toolBarDelegate.buttonToolbarEditCut = buttonToolbarEditCut;
+		toolBarDelegate.buttonToolbarEditCopy = buttonToolbarEditCopy;
+		toolBarDelegate.buttonToolbarEditPaste = buttonToolbarEditPaste;
 		
 		buttonToolbarSyllabify.setDisable(true);
 		menuItemSyllabify.setDisable(true);
@@ -678,6 +701,8 @@ public class RootLayoutController implements Initializable {
 		handleCVApproach();
 
 		listenForChangesInApproachViews();
+		
+		// do we need this? toolBarDelegate.init();
 
 	}
 

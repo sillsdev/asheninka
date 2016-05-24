@@ -81,16 +81,6 @@ public class CVApproachController extends ApproachController {
 		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		
-//		FXMLLoader loader = new FXMLLoader();
-//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVSegmentInventory.fxml", locale);
-//		CVSegmentInventoryController controller = loader.getController();
-//		currentCVApproachController = controller;
-//		controller.setMainApp(mainApp);
-//		controller.setRootLayout(rootController);
-//		controller.setLocale(locale);
-//
-//		controller.setData(cvApproachData);
 	}
 	
 	private FXMLLoader createFXMLLoader(String sFxml) {
@@ -104,22 +94,13 @@ public class CVApproachController extends ApproachController {
 		controller.setMainApp(mainApp);
 		controller.setRootLayout(rootController);
 		controller.setLocale(locale);
+		controller.setToolBarDelegate(rootController.toolBarDelegate);
 	}
 	public void handleCVNaturalClasses() {
 		FXMLLoader loader = createFXMLLoader("fxml/CVNaturalClasses.fxml");
 		CVNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		
-//		FXMLLoader loader = new FXMLLoader();
-//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVNaturalClasses.fxml", locale);
-//		CVNaturalClassesController controller = loader.getController();
-//		currentCVApproachController = controller;
-//
-//		controller.setMainApp(mainApp);
-//		controller.setRootLayout(rootController);
-//		controller.setLocale(locale);
-//		controller.setData(cvApproachData);
 	}
 
 	public void handleCVSyllablePatterns() {
@@ -127,16 +108,6 @@ public class CVApproachController extends ApproachController {
 		CVSyllablePatternsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		
-//		FXMLLoader loader = new FXMLLoader();
-//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVSyllablePatterns.fxml", locale);
-//		CVSyllablePatternsController controller = loader.getController();
-//		currentCVApproachController = controller;
-//
-//		controller.setMainApp(mainApp);
-//		controller.setRootLayout(rootController);
-//		controller.setLocale(locale);
-//		controller.setData(cvApproachData);
 	}
 
 	public void handleCVWords() {
@@ -147,14 +118,6 @@ public class CVApproachController extends ApproachController {
 		FXMLLoader loader = createFXMLLoader("fxml/CVWords.fxml");
 		CVWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		
-//		FXMLLoader loader = new FXMLLoader();
-//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWords.fxml", locale);
-//		CVWordsController controller = loader.getController();
-//		currentCVApproachController = controller;
-//
-//		controller.setMainApp(mainApp);
-//		controller.setLocale(locale);
 		controller.setData(cvApproachData, words);
 		controller.setFocusOnWord(index);
 	}
@@ -163,15 +126,6 @@ public class CVApproachController extends ApproachController {
 		FXMLLoader loader = createFXMLLoader("fxml/CVWordsPredictedVsCorrect.fxml");
 		CVWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		
-//		FXMLLoader loader = new FXMLLoader();
-//		ApproachViewNavigator.loadApproachView(loader, "fxml/CVWordsPredictedVsCorrect.fxml",
-//				locale);
-//		CVWordsPredictedVsCorrectController controller = loader.getController();
-//		currentCVApproachController = controller;
-//
-//		controller.setMainApp(mainApp);
-//		controller.setLocale(locale);
 		controller.setData(cvApproachData, words);
 		controller.setFocusOnWord(0);
 	}
@@ -396,5 +350,29 @@ public class CVApproachController extends ApproachController {
 			return currentCVApproachController.anythingSelected();
 		}
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCopy()
+	 */
+	@Override
+	public void handleToolBarCopy() {
+		currentCVApproachController.handleToolBarCopy();
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarPaste()
+	 */
+	@Override
+	public void handleToolBarPaste() {
+		currentCVApproachController.handleToolBarPaste();
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCut()
+	 */
+	@Override
+	public void handleToolBarCut() {
+		currentCVApproachController.handleToolBarCut();
 	}
 }

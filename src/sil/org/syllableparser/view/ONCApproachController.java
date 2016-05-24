@@ -145,4 +145,31 @@ public class ONCApproachController extends ApproachController  {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCopy()
+	 */
+	@Override
+	public void handleToolBarCopy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarPaste()
+	 */
+	@Override
+	public void handleToolBarPaste() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCut()
+	 */
+	@Override
+	public void handleToolBarCut() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

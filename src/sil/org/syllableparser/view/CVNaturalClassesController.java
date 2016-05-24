@@ -121,7 +121,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	private CheckBox activeCheckBox;
 
 	private CVNaturalClass currentNaturalClass;
-	
+
 	public CVNaturalClassesController() {
 
 	}
@@ -410,7 +410,8 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		}
 	}
 
-	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };
