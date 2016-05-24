@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Approach;
@@ -20,9 +22,11 @@ import sil.org.syllableparser.model.cvapproach.CVApproach;
 /**
  * @author Andy Black
  *
- * Code for cut, copy, and paste based on
- *   http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html and
- *   http://bekwam.blogspot.com/2014/11/javafx-cut-copy-and-paste-from-toolbar.html
+ *         Code for cut, copy, and paste based on
+ *         http://bekwam.blogspot.com/2014
+ *         /10/cut-copy-and-paste-from-javafx-menubar.html and
+ *         http://bekwam.blogspot
+ *         .com/2014/11/javafx-cut-copy-and-paste-from-toolbar.html
  */
 public abstract class ApproachEditorController {
 
@@ -225,11 +229,32 @@ public abstract class ApproachEditorController {
 
 	@FXML
 	public void toolBarMouseReleased(MouseEvent evt) {
-
 		TextField tf = (TextField) evt.getSource();
 		String selectedText = tf.getSelectedText();
 		IndexRange selectedRange = tf.getSelection();
-
 		toolBarDelegate.updateToolBarForClipboard(tf, selectedText, selectedRange);
+	}
+
+	@FXML
+	public void keyboardReleased(KeyEvent evt) {
+		KeyCode code = evt.getCode();
+		if (evt.isShiftDown()) {
+			if (code == KeyCode.LEFT || code == KeyCode.KP_LEFT || code == KeyCode.RIGHT
+					|| code == KeyCode.KP_RIGHT || code == KeyCode.HOME || code == KeyCode.END) {
+				TextField tf = (TextField) evt.getSource();
+				String selectedText = tf.getSelectedText();
+				IndexRange selectedRange = tf.getSelection();
+				toolBarDelegate.updateToolBarForClipboard(tf, selectedText, selectedRange);
+			}
+		} else { // attempt at trying to fix odd case where using toolbar with
+					// keyboard may paste in unexpected location
+			if (code == KeyCode.LEFT || code == KeyCode.KP_LEFT || code == KeyCode.RIGHT
+					|| code == KeyCode.KP_RIGHT || code == KeyCode.HOME || code == KeyCode.END) {
+				TextField tf = (TextField) evt.getSource();
+				String selectedText = tf.getSelectedText();
+				IndexRange selectedRange = tf.getSelection();
+				toolBarDelegate.updateToolBarForClipboard(tf, selectedText, selectedRange);
+			}
+		}
 	}
 }
