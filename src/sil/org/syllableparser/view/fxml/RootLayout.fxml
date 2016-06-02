@@ -19,85 +19,85 @@
    <VBox>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="%menu.file">
+          <Menu mnemonicParsing="true" text="%menu.file">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleNew" text="%menu.new" />
-              <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="%menu.open" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleSave" text="%menu.save" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="%menu.saveas" />
+                  <MenuItem mnemonicParsing="true" onAction="#handleNew" text="%menu.new" accelerator="Ctrl+n" />
+              <MenuItem mnemonicParsing="true" onAction="#handleOpen" text="%menu.open" accelerator="Ctrl+o" />
+                  <MenuItem mnemonicParsing="true" onAction="#handleSave" text="%menu.save" accelerator="Ctrl+s" />
+                  <MenuItem mnemonicParsing="true" onAction="#handleSaveAs" text="%menu.saveas" />
                   <SeparatorMenuItem />
-                  <Menu mnemonicParsing="false" text="%menu.projectmanagement" >
-                    	<MenuItem mnemonicParsing="false" onAction="#handleBackUpProject" text="%menu.projectmanagementbackup" />
-                    	<MenuItem mnemonicParsing="false" onAction="#handleRestoreProject" text="%menu.projectmanagementrestore" />
+                  <Menu mnemonicParsing="true" text="%menu.projectmanagement" >
+                    	<MenuItem mnemonicParsing="true" onAction="#handleBackUpProject" text="%menu.projectmanagementbackup" />
+                    	<MenuItem mnemonicParsing="true" onAction="#handleRestoreProject" text="%menu.projectmanagementrestore" />
                   </Menu>
                   <SeparatorMenuItem />
-                  <Menu mnemonicParsing="false" text="%menu.importwords" >
-                    	<MenuItem mnemonicParsing="false" onAction="#handleImportPlainWordList" text="%menu.importplainwordlist" />
-                    	<MenuItem mnemonicParsing="false" onAction="#handleImportParaTExtWordList" text="%menu.importparatextwordlist" />
-                    	<MenuItem mnemonicParsing="false" onAction="#handleImportParaTExtHyphenatedWords" text="%menu.importparatexthyphenatedwords" />
-                    	<MenuItem mnemonicParsing="false" onAction="#handleImportFLExExportedWordformsAsTabbedList" text="%menu.importflexwordlist" />
+                  <Menu mnemonicParsing="true" text="%menu.importwords" >
+                    	<MenuItem mnemonicParsing="true" onAction="#handleImportPlainWordList" text="%menu.importplainwordlist" />
+                    	<MenuItem mnemonicParsing="true" onAction="#handleImportParaTExtWordList" text="%menu.importparatextwordlist" />
+                    	<MenuItem mnemonicParsing="true" onAction="#handleImportParaTExtHyphenatedWords" text="%menu.importparatexthyphenatedwords" />
+                    	<MenuItem mnemonicParsing="true" onAction="#handleImportFLExExportedWordformsAsTabbedList" text="%menu.importflexwordlist" />
                   </Menu>
-                  <Menu mnemonicParsing="false" text="%menu.exporthyphenatedwords" >
-                  		<MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWordsAsASimpleList" text="%menu.exporthyphenatedwordsforindesign" />
-                  		<MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWordsForParaTExt" text="%menu.exporthyphenatedwordsforparatext" />
-                  		<MenuItem mnemonicParsing="false" onAction="#handleExportHyphenatedWordsForXLingPaper" text="%menu.exporthyphenatedwordsforxlingpaper" />
+                  <Menu mnemonicParsing="true" text="%menu.exporthyphenatedwords" >
+                  		<MenuItem mnemonicParsing="true" onAction="#handleExportHyphenatedWordsAsASimpleList" text="%menu.exporthyphenatedwordsforindesign" />
+                  		<MenuItem mnemonicParsing="true" onAction="#handleExportHyphenatedWordsForParaTExt" text="%menu.exporthyphenatedwordsforparatext" />
+                  		<MenuItem mnemonicParsing="true" onAction="#handleExportHyphenatedWordsForXLingPaper" text="%menu.exporthyphenatedwordsforxlingpaper" />
                   </Menu>
                   <SeparatorMenuItem />
-                  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="%menu.exit" />
+                  <MenuItem mnemonicParsing="true" onAction="#handleExit" text="%menu.exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="%menu.edit" onShown="#handleShowingEditMenu">
+          <Menu mnemonicParsing="true" text="%menu.edit" onShown="#handleShowingEditMenu">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleCut" text="%menu.cut" fx:id="menuItemEditCut"/>
-              <MenuItem mnemonicParsing="false" onAction="#handleCopy" text="%menu.copy" fx:id="menuItemEditCopy"/>
-              <MenuItem mnemonicParsing="false" onAction="#handlePaste" text="%menu.paste" fx:id="menuItemEditPaste"/>
+              <MenuItem mnemonicParsing="true" onAction="#handleCut" text="%menu.cut" fx:id="menuItemEditCut" accelerator="ctrl+x" />
+              <MenuItem mnemonicParsing="true" onAction="#handleCopy" text="%menu.copy" fx:id="menuItemEditCopy" accelerator="ctrl+c"/>
+              <MenuItem mnemonicParsing="true" onAction="#handlePaste" text="%menu.paste" fx:id="menuItemEditPaste" accelerator="ctrl+v"/>
               <SeparatorMenuItem />
-              <MenuItem mnemonicParsing="false" onAction="#handleInsertNewItem" text="%menu.insertnew" fx:id="menuItemEditInsert" />
-              <MenuItem mnemonicParsing="false" onAction="#handleRemoveItem" text="%menu.remove" fx:id="menuItemEditRemove" />
+              <MenuItem mnemonicParsing="true" onAction="#handleInsertNewItem" text="%menu.insertnew" fx:id="menuItemEditInsert" accelerator="ctrl+i" />
+              <MenuItem mnemonicParsing="true" onAction="#handleRemoveItem" text="%menu.remove" fx:id="menuItemEditRemove" accelerator="ctrl+d" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="%menu.language">
+            <Menu mnemonicParsing="true" text="%menu.language">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleVernacularFont" text="%menu.vernacularfont" fx:id="menuItemVernacularFont" />
-                <MenuItem mnemonicParsing="false" onAction="#handleAnalysisFont" text="%menu.analysisfont" fx:id="menuItemAnalysisFont" />
+                <MenuItem mnemonicParsing="true" onAction="#handleVernacularFont" text="%menu.vernacularfont" fx:id="menuItemVernacularFont" />
+                <MenuItem mnemonicParsing="true" onAction="#handleAnalysisFont" text="%menu.analysisfont" fx:id="menuItemAnalysisFont" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="%menu.tools">
+            <Menu mnemonicParsing="true" text="%menu.tools">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleSyllabifyWords" text="%menu.syllabifywords" fx:id="menuItemSyllabify" />
-                <MenuItem mnemonicParsing="false" onAction="#handleConvertPredictedToCorrectSyllabification" text="%menu.convertpredictedtocorrect" fx:id="menuItemConvertPredictedToCorrectSyllabification" />
-                <MenuItem mnemonicParsing="false" onAction="#handleFindWord" text="%menu.findword" fx:id="menuItemFindWord" />
+                <MenuItem mnemonicParsing="true" onAction="#handleSyllabifyWords" text="%menu.syllabifywords" fx:id="menuItemSyllabify" accelerator="ctrl+w" />
+                <MenuItem mnemonicParsing="true" onAction="#handleConvertPredictedToCorrectSyllabification" text="%menu.convertpredictedtocorrect" fx:id="menuItemConvertPredictedToCorrectSyllabification" />
+                <MenuItem mnemonicParsing="true" onAction="#handleFindWord" text="%menu.findword" fx:id="menuItemFindWord" accelerator="ctrl+f" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="%menu.view">
+            <Menu mnemonicParsing="true" text="%menu.view">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleChangeInterfaceLanguage" text="%menu.changeinterfacelanguage" />
+                <MenuItem mnemonicParsing="true" onAction="#handleChangeInterfaceLanguage" text="%menu.changeinterfacelanguage" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="%menu.help">
+            <Menu mnemonicParsing="true" text="%menu.help">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleHelpIntro" text="%menu.helpintro" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="%menu.about" />
+                  <MenuItem mnemonicParsing="true" onAction="#handleHelpIntro" text="%menu.helpintro" />
+                  <MenuItem mnemonicParsing="true" onAction="#handleAbout" text="%menu.about" />
                </items>
             </Menu>
         </menus>
       </MenuBar>
       <ToolBar prefHeight="25.0" prefWidth="800.0" styleClass="toolbarbutton" BorderPane.alignment="CENTER">
         <items>
-               <Button fx:id="buttonToolbarFileNew" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarFileOpen" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleOpen" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarFileSave" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarFileNew" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleNew" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarFileOpen" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleOpen" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarFileSave" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleSave" prefHeight="23.0" prefWidth="17.0" text="" />
                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
-               <Button fx:id="buttonToolbarEditCut" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleToolBarCut" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarEditCopy" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleToolBarCopy" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarEditPaste" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleToolBarPaste" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarEditCut" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleToolBarCut" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarEditCopy" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleToolBarCopy" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarEditPaste" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleToolBarPaste" prefHeight="23.0" prefWidth="17.0" text="" />
                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
-               <Button fx:id="buttonToolbarEditInsert" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleInsertNewItem" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarEditRemove" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleRemoveItem" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarEditInsert" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleInsertNewItem" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarEditRemove" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleRemoveItem" prefHeight="23.0" prefWidth="17.0" text="" />
                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
-               <Button fx:id="buttonToolbarSyllabify" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleSyllabifyWords" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarConvertPredictedToCorrectSyllabification" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleConvertPredictedToCorrectSyllabification" prefHeight="23.0" prefWidth="17.0" text="" />
-               <Button fx:id="buttonToolbarFindWord" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="false" onAction="#handleFindWord" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarSyllabify" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleSyllabifyWords" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarConvertPredictedToCorrectSyllabification" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleConvertPredictedToCorrectSyllabification" prefHeight="23.0" prefWidth="17.0" text="" />
+               <Button fx:id="buttonToolbarFindWord" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true" onAction="#handleFindWord" prefHeight="23.0" prefWidth="17.0" text="" />
         </items>
       </ToolBar>
       </VBox>
@@ -112,12 +112,12 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="190.0" prefWidth="158.0" SplitPane.resizableWithParent="false" >
                <children>
-                <Button fx:id="buttonCVApproach" alignment="CENTER" layoutX="-13.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleCVApproach" onMouseClicked="#handleCVApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.cv" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="buttonSonorityHierarchyApproach" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleSonorityHierarchyApproach" onMouseClicked="#handleSonorityHierarchyApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.sonorityhierarchy" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
-                  <Button fx:id="buttonONCApproach" alignment="CENTER" mnemonicParsing="false" onAction="#handleONCApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.onc" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
-                  <Button fx:id="buttonMoraicApproach" alignment="CENTER" mnemonicParsing="false" onAction="#handleMoraicApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.moraic" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
-                  <Button fx:id="buttonNuclearProjectionApproach" alignment="CENTER" mnemonicParsing="false" onAction="#handleNuclearProjectionApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.nuclearprojection" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
-                  <Button fx:id="buttonOTApproach" alignment="CENTER" mnemonicParsing="false" onAction="#handleOTApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.ot" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0" />
+                <Button fx:id="buttonCVApproach" alignment="CENTER" layoutX="-13.0" layoutY="30.0" mnemonicParsing="true" onAction="#handleCVApproach" onMouseClicked="#handleCVApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.cv" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="buttonSonorityHierarchyApproach" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="34.0" mnemonicParsing="true" onAction="#handleSonorityHierarchyApproach" onMouseClicked="#handleSonorityHierarchyApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.sonorityhierarchy" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                  <Button fx:id="buttonONCApproach" alignment="CENTER" mnemonicParsing="true" onAction="#handleONCApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.onc" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                  <Button fx:id="buttonMoraicApproach" alignment="CENTER" mnemonicParsing="true" onAction="#handleMoraicApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.moraic" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
+                  <Button fx:id="buttonNuclearProjectionApproach" alignment="CENTER" mnemonicParsing="true" onAction="#handleNuclearProjectionApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.nuclearprojection" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
+                  <Button fx:id="buttonOTApproach" alignment="CENTER" mnemonicParsing="true" onAction="#handleOTApproach" prefHeight="30.0" styleClass="button-blue" text="%approach.ot" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0" />
                </children>
             </AnchorPane>
         </items>

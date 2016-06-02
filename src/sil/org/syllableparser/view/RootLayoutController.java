@@ -708,30 +708,30 @@ public class RootLayoutController implements Initializable {
 
 	protected void createToolbarButtons(ResourceBundle bundle) {
 		ControllerUtilities.createToolbarButtonWithImage("newAction.png", buttonToolbarFileNew,
-				tooltipToolbarFileNew, bundle.getString("menu.new"));
+				tooltipToolbarFileNew, bundle.getString("tooltip.new"));
 		ControllerUtilities.createToolbarButtonWithImage("openAction.png", buttonToolbarFileOpen,
-				tooltipToolbarFileOpen, bundle.getString("menu.open"));
+				tooltipToolbarFileOpen, bundle.getString("tooltip.open"));
 		ControllerUtilities.createToolbarButtonWithImage("saveAction.png", buttonToolbarFileSave,
-				tooltipToolbarFileSave, bundle.getString("menu.save"));
+				tooltipToolbarFileSave, bundle.getString("tooltip.save"));
 		ControllerUtilities.createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut,
-				tooltipToolbarEditCut, bundle.getString("menu.cut"));
+				tooltipToolbarEditCut, bundle.getString("tooltip.cut"));
 		ControllerUtilities.createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy,
-				tooltipToolbarEditCopy, bundle.getString("menu.copy"));
+				tooltipToolbarEditCopy, bundle.getString("tooltip.copy"));
 		ControllerUtilities.createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste,
-				tooltipToolbarEditPaste, bundle.getString("menu.paste"));
+				tooltipToolbarEditPaste, bundle.getString("tooltip.paste"));
 		ControllerUtilities.createToolbarButtonWithImage("insertAction.png",
 				buttonToolbarEditInsert, tooltipToolbarEditInsert,
-				bundle.getString("menu.insertnew"));
+				bundle.getString("tooltip.insertnew"));
 		ControllerUtilities.createToolbarButtonWithImage("deleteAction.png",
-				buttonToolbarEditRemove, tooltipToolbarEditRemove, bundle.getString("menu.remove"));
+				buttonToolbarEditRemove, tooltipToolbarEditRemove, bundle.getString("tooltip.remove"));
 		ControllerUtilities.createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify,
-				tooltipToolbarSyllabify, bundle.getString("menu.syllabifywords"));
+				tooltipToolbarSyllabify, bundle.getString("tooltip.syllabifywords"));
 		ControllerUtilities.createToolbarButtonWithImage("predictedToCorrect.png",
 				buttonToolbarConvertPredictedToCorrectSyllabification,
 				tooltipToolbarConvertPredictedToCorrectSyllabification,
-				bundle.getString("menu.convertpredictedtocorrect"));
+				bundle.getString("tooltip.convertpredictedtocorrect"));
 		ControllerUtilities.createToolbarButtonWithImage("FindWord.png", buttonToolbarFindWord,
-				tooltipToolbarFindWord, bundle.getString("menu.findword"));
+				tooltipToolbarFindWord, bundle.getString("tooltip.findword"));
 	}
 
 	private void listenForChangesInApproachViews() {
