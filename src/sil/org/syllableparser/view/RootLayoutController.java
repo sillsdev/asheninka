@@ -269,7 +269,7 @@ public class RootLayoutController implements Initializable {
 	 * Creates an empty language project.
 	 */
 	@FXML
-	private void handleNew() {
+	public void handleNew() {
 		// mainApp.getLanguageProject().clear();
 		// ApplicationPreferences.setLastOpenedFilePath((String) null);
 		String sDirectoryPath = applicationPreferences.getLastOpenedDirectoryPath();
@@ -313,7 +313,7 @@ public class RootLayoutController implements Initializable {
 	 * Opens a FileChooser to let the user select a language project to load.
 	 */
 	@FXML
-	private void handleOpen() {
+	public void handleOpen() {
 		File file = ControllerUtilities.getFileToOpen(mainApp, syllableParserFilterDescription,
 				Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
 		if (file != null) {

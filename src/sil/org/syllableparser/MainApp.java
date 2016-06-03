@@ -3,6 +3,7 @@ package sil.org.syllableparser;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,6 +22,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -65,28 +68,6 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(kApplicationTitle);
 		this.primaryStage.getIcons().add(getNewMainIconImage());
-
-		final boolean usePrecannedData = false;
-		if (usePrecannedData) {
-			CVApproach cvApproach = languageProject.getCVApproach();
-			ObservableList<Segment> segmentInventoryData = languageProject.getSegmentInventory();
-			Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
-			Segment segB = new Segment("b", "b B", "voiced bilabial stop");
-			Segment segD = new Segment("d", "d D", "voiced alveolar stop");
-			segmentInventoryData.add(segA);
-			segmentInventoryData.add(segB);
-			segmentInventoryData.add(segD);
-			ObservableList<CVNaturalClass> cvNaturalClassData = cvApproach.getCVNaturalClasses();
-			ObservableList<Object> consonants = new SimpleListProperty<Object>();
-			consonants.add(segB);
-			consonants.add(segD);
-			cvNaturalClassData.add(new CVNaturalClass("C", (SimpleListProperty<Object>) consonants,
-					"Consonants", "bd"));
-			ObservableList<Object> vowels = new SimpleListProperty<Object>();
-			vowels.add(segA);
-			cvNaturalClassData.add(new CVNaturalClass("V", (SimpleListProperty<Object>) vowels,
-					"Vowels", "a"));
-		}
 
 		initRootLayout();
 
@@ -164,6 +145,8 @@ public class MainApp extends Application {
 			File file = applicationPreferences.getLastOpenedFile();
 			if (file != null) {
 				loadLanguageData(file);
+			} else {
+				askUserForNewOrToOpenExisingFile(bundle, controller);
 			}
 
 			updateStatusBarNumberOfItems("");
@@ -171,6 +154,36 @@ public class MainApp extends Application {
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	protected void askUserForNewOrToOpenExisingFile(ResourceBundle bundle,
+			RootLayoutController controller) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(bundle.getString("program.name"));
+		alert.setHeaderText(bundle.getString("file.initiallynotfound"));
+		alert.setContentText(bundle.getString("file.chooseanoption"));
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(getNewMainIconImage());
+
+		ButtonType buttonCreateNewProject = new ButtonType(
+				bundle.getString("label.createnewproject"));
+		ButtonType buttonOpenExistingProject = new ButtonType(
+				bundle.getString("label.openexistingproject"));
+		ButtonType buttonCancel = new ButtonType(bundle.getString("label.cancel"),
+				ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonCreateNewProject, buttonOpenExistingProject,
+				buttonCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonCreateNewProject) {
+			controller.handleNew();
+		} else if (result.get() == buttonOpenExistingProject) {
+			controller.handleOpen();
+		} else {
+			// ... user chose CANCEL or closed the dialog
+			System.exit(0);
 		}
 	}
 
