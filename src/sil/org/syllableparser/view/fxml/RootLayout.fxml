@@ -67,6 +67,7 @@
                 <MenuItem mnemonicParsing="true" onAction="#handleSyllabifyWords" text="%menu.syllabifywords" fx:id="menuItemSyllabify" accelerator="ctrl+w" />
                 <MenuItem mnemonicParsing="true" onAction="#handleConvertPredictedToCorrectSyllabification" text="%menu.convertpredictedtocorrect" fx:id="menuItemConvertPredictedToCorrectSyllabification" />
                 <MenuItem mnemonicParsing="true" onAction="#handleFindWord" text="%menu.findword" fx:id="menuItemFindWord" accelerator="ctrl+f" />
+                <MenuItem mnemonicParsing="true" onAction="#handleClearWords" text="%menu.clearwords" fx:id="menuItemClearWords" />
               </items>
             </Menu>
             <Menu mnemonicParsing="true" text="%menu.view">

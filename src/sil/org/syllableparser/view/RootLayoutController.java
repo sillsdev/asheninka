@@ -39,7 +39,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.IndexRange;
 import javafx.scene.control.Label;
@@ -169,6 +171,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private MenuItem menuItemFindWord;
 	@FXML
+	private MenuItem menuItemClearWords;
+	@FXML
 	private MenuItem menuItemVernacularFont;
 	@FXML
 	private MenuItem menuItemAnalysisFont;
@@ -253,6 +257,29 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleFindWord() {
 		currentApproachController.handleFindWord();
+	}
+
+	@FXML
+	private void handleClearWords() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(bundle.getString("program.name"));
+		alert.setHeaderText(bundle.getString("label.clearwords"));
+		alert.setContentText(bundle.getString("label.areyousure"));
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(mainApp.getNewMainIconImage());
+
+		ButtonType buttonYes = ButtonType.YES;
+		ButtonType buttonNo = ButtonType.NO;
+		ButtonType buttonCancel = ButtonType.CANCEL;
+
+		alert.getButtonTypes().setAll(buttonYes, buttonNo,
+				buttonCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonYes) {
+			languageProject.getWords().clear();
+		}
+
 	}
 
 	@FXML
