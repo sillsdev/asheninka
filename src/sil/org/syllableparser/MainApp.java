@@ -205,7 +205,8 @@ public class MainApp extends Application {
 
 	public void updateStageTitle(File file) {
 		if (file != null) {
-			primaryStage.setTitle(kApplicationTitle + " - " + file.getName());
+			String sFileNameToUse = file.getName().replace("." + Constants.ASHENINKA_DATA_FILE_EXTENSION, "");
+			primaryStage.setTitle(kApplicationTitle + " - " + sFileNameToUse);
 		} else {
 			primaryStage.setTitle(kApplicationTitle);
 		}
