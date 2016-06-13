@@ -506,7 +506,8 @@ public class RootLayoutController implements Initializable {
 		alert.setTitle(sAboutHeader);
 		alert.setHeaderText(null);
 		alert.setContentText(sAboutContent);
-		Image silLogo = new Image("file:src/sil/org/syllableparser/resources/images/SILLogo.png");
+		Image silLogo = ControllerUtilities.getIconImageFromURL("file:resources/images/SILLogo.png");
+		//Image silLogo = new Image("file:src/sil/org/syllableparser/resources/images/SILLogo.png");
 		alert.setGraphic(new ImageView(silLogo));
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());

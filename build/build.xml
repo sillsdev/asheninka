@@ -24,13 +24,19 @@
 		<delete dir="projectRefs" />
 	
 		<mkdir dir="externalLibs" />
-	
 		<copy todir="externalLibs">
 			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser\ControlsFX">
 				<filename name="controlsfx-8.40.9.jar"/>
 			</fileset>
 		</copy>
 	
+		<mkdir dir="doc" />
+		<copy todir="doc">
+			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser\doc">
+				<filename name="Overview.pdf"/>
+			</fileset>
+		</copy>
+
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser">
@@ -85,16 +91,22 @@
 	
 		<mkdir dir="dist" />
 		<mkdir dir="dist/libs" />
-	
 		<copy todir="dist/libs">
 			<fileset dir="externalLibs">
 				<include name="*" />
 			</fileset>
 		</copy>
 	
+		<mkdir dir="dist/doc" />
+		<copy todir="dist/doc">
+			<fileset dir="doc">
+				<include name="*" />
+			</fileset>
+		</copy>
 	
 		<fx:resources id="appRes">
 			<fx:fileset dir="dist" includes="SyllableParser.jar"/>
+			<fx:fileset dir="dist" includes="doc/**"/>
 			<fx:fileset dir="dist" includes="libs/*"/>
 			<fx:fileset dir="dist" includes="resources/**"/>
 		</fx:resources>
