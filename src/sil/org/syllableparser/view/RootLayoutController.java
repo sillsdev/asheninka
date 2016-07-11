@@ -26,6 +26,9 @@ import java.util.stream.Stream;
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.dialog.FontSelectorDialog;
 
+import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
+import com.sun.javafx.application.HostServicesDelegate;
+
 import static javafx.geometry.Orientation.VERTICAL;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
@@ -516,14 +519,16 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleHelpIntro() {
-		if (Desktop.isDesktopSupported()) {
-			try {
-				File myFile = new File("doc/Overview.pdf");
-				Desktop.getDesktop().open(myFile);
-			} catch (IOException ex) {
-				// no application registered for PDFs
-			}
-		}
+		HostServicesDelegate hostServices = HostServicesFactory.getInstance(mainApp);
+		hostServices.showDocument("file:doc/Overview.pdf");
+//		if (Desktop.isDesktopSupported()) {
+//			try {
+//				File myFile = new File("doc/Overview.pdf");
+//				Desktop.getDesktop().open(myFile);
+//			} catch (IOException ex) {
+//				// no application registered for PDFs
+//			}
+//		}
 	}
 
 	/**

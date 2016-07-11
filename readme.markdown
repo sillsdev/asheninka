@@ -2,7 +2,7 @@ Asheninka Syllable Parser
 -------------------------
 
 ### Version 0.1.1.0 Alpha
-13-June-2016
+11-July-2016
 
 The first released version.  We expect it to have bugs and it is incomplete. Therefore, be sure to use the File / Project Management / Back up this project capability.  Note that you can insert a comment when backing up and thereby remember what was special about that backup. 
 
@@ -12,3 +12,4 @@ The first released version.  We expect it to have bugs and it is incomplete. The
 * When first starting a view/tool and there are no items, still shows the fields in the right pane.
 * When delete an item from CV Patterns, still shows one that should not be there.
 * The Spanish user interface probably has many errors in it.  Any corrections are welcome.
+* In the Linux version, "Help menu item / Introduction to syllabification" causes the program to hang.
