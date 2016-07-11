@@ -3,6 +3,7 @@
 	<target name="init-fx-tasks">
 		<path id="fxant">
 			<filelist>
+				<file name="."/>
 				<file name="${java.home}\..\lib\ant-javafx.jar"/>
 				<file name="${java.home}\lib\jfxrt.jar"/>
 				<file name="${basedir}"/>
@@ -19,31 +20,21 @@
 		<delete dir="projectRefs" />
 	
 		<mkdir dir="externalLibs" />
-	
 		<copy todir="externalLibs">
-			<fileset dir="/home/parallels/workspace4.4/SyllableParser/mercurial/ControlsFX">
+			<fileset dir="../ControlsFX">
 				<filename name="controlsfx-8.40.9.jar"/>
 			</fileset>
 		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/parallels/Downloads/eclipse/plugins">
-				<filename name="org.hamcrest.core_1.3.0.v201303031735.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="/home/parallels/Downloads/eclipse/plugins/org.junit_4.11.0.v201303080030">
-				<filename name="junit.jar"/>
-			</fileset>
-		</copy>
-	
+
+		<mkdir dir="doc" />
+	    <copy todir="doc">
+	      <fileset dir="doc">
+	        <filename name="dist/doc/Overview.pdf" />
+	      </fileset>
+	    </copy>
 		<mkdir dir="project" />
 		<copy todir="project">
-			<fileset dir="/home/parallels/workspace4.4/SyllableParser/mercurial">
-				<include name="test/**" />
-			</fileset>
-		</copy>
-		<copy todir="project">
-			<fileset dir="/home/parallels/workspace4.4/SyllableParser/mercurial">
+			<fileset dir="..">
 				<include name="src/**" />
 			</fileset>
 		</copy>
@@ -59,8 +50,6 @@
 		<!-- Copy project-libs references -->
 		<copy todir="build/libs">
 			<fileset dir="externalLibs">
-				<include name="org.hamcrest.core_1.3.0.v201303031735.jar"/>
-				<include name="junit.jar"/>
 				<include name="controlsfx-8.40.9.jar"/>
 			</fileset>
 		</copy>
@@ -69,17 +58,12 @@
 	
 		<!-- Copy project sources itself -->
 		<copy todir="build/src">
-			<fileset dir="project/test">
-				<include name="**/*"/>
-			</fileset>
-		</copy>
-		<copy todir="build/src">
 			<fileset dir="project/src">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
 	
-		<javac includeantruntime="false" source="1.8" target="1.8" srcdir="build/src" destdir="build/classes" encoding="ISO-8859-1">
+		<javac includeantruntime="false" source="1.8" target="1.8" srcdir="build/src" destdir="build/classes" encoding="Cp1252">
 			<classpath>
 				<fileset dir="build/libs">
 					<include name="*"/>
@@ -89,9 +73,6 @@
 	
 		<!-- Copy over none Java-Files -->
 		<copy todir="build/classes">
-		<fileset dir="project/test">
-			<exclude name="**/*.java"/>
-		</fileset>
 		<fileset dir="project/src">
 			<exclude name="**/*.java"/>
 		</fileset>
@@ -112,9 +93,16 @@
 			</fileset>
 		</copy>
 	
+	    <mkdir dir="dist/doc" />
+	    <copy todir="dist/doc">
+	      <fileset dir="doc">
+	        <include name="*" />
+	      </fileset>
+	    </copy>
 	
 		<fx:resources id="appRes">
 			<fx:fileset dir="dist" includes="SyllableParser.jar"/>
+			<fx:fileset dir="dist" includes="doc/**" />
 			<fx:fileset dir="dist" includes="libs/*"/>
 			<fx:fileset dir="dist" includes="resources/**"/>
 		</fx:resources>
@@ -138,7 +126,7 @@
 			<manifest>
 				<attribute name="Implementation-Vendor" value="sil.org"/>
 				<attribute name="Implementation-Title" value="SyllableParser"/>
-				<attribute name="Implementation-Version" value="0.1.0"/>
+				<attribute name="Implementation-Version" value="0.1.1"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
 		</fx:jar>
@@ -159,7 +147,7 @@
 			<fx:info
 				title="Asheninka (a Syllable Parser)"
 				vendor="SIL International"
-				license="MIT License"
+				license="LGPL"
 				copyright="© 2016 SIL International"
 				description="A tool for exploring syllabification algorithms and for inserting discretionay hyphens in word lists."
 			/>

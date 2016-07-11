@@ -14,9 +14,6 @@
 		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
 			uri="javafx:com.sun.javafx.tools.ant"
 			classpathref="fxant"/>
-<!--			<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
-				uri="javafx:com.sun.javafx.tools.ant"
-				classpath=".:${java.home}\..\lib\ant-javafx.jar:${java.home}\lib\jfxrt.jar:${basedir}"/> -->
 	</target>
 	<target name="setup-staging-area">
 		<delete dir="externalLibs" />
@@ -25,21 +22,21 @@
 	
 		<mkdir dir="externalLibs" />
 		<copy todir="externalLibs">
-			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser\ControlsFX">
+			<fileset dir="../ControlsFX">
 				<filename name="controlsfx-8.40.9.jar"/>
 			</fileset>
 		</copy>
 	
 		<mkdir dir="doc" />
 		<copy todir="doc">
-			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser\doc">
-				<filename name="Overview.pdf"/>
+			<fileset dir="doc">
+				<filename name="dist/doc/Overview.pdf"/>
 			</fileset>
 		</copy>
 
 		<mkdir dir="project" />
 		<copy todir="project">
-			<fileset dir="C:\Users\Andy Black\Documents\Eclipse4.4Workspace\SyllableParser">
+			<fileset dir="..">
 				<include name="src/**" />
 			</fileset>
 		</copy>
@@ -140,7 +137,6 @@
 		<!-- Need to use ${basedir} because somehow the ant task is calculating the directory differently -->
 		<fx:deploy
 			embedJNLP="false"
-			verbose="true"
 			extension="false"
 			includeDT="false"
 			offlineAllowed="true"
@@ -154,7 +150,7 @@
 			<fx:info
 				title="Asheninka (a Syllable Parser)"
 				vendor="SIL International"
-				license="MIT License"
+				license="LGPL"
 				copyright="© 2016 SIL International"
 				description="A tool for exploring syllabification algorithms and for inserting discretionay hyphens in word lists."
 			/>
