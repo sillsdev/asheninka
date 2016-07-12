@@ -519,16 +519,20 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleHelpIntro() {
-		HostServicesDelegate hostServices = HostServicesFactory.getInstance(mainApp);
-		hostServices.showDocument("file:doc/Overview.pdf");
-//		if (Desktop.isDesktopSupported()) {
-//			try {
-//				File myFile = new File("doc/Overview.pdf");
-//				Desktop.getDesktop().open(myFile);
-//			} catch (IOException ex) {
-//				// no application registered for PDFs
-//			}
-//		}
+		String sOS = System.getProperty("os.name");
+		if (!sOS.equals("Mac OS X")) {
+			HostServicesDelegate hostServices = HostServicesFactory.getInstance(mainApp);
+			hostServices.showDocument("file:doc/Overview.pdf");
+		} else {
+			if (Desktop.isDesktopSupported()) {
+				try {
+					File myFile = new File("doc/Overview.pdf");
+					Desktop.getDesktop().open(myFile);
+				} catch (IOException ex) {
+					// no application registered for PDFs
+				}
+			}
+		}
 	}
 
 	/**
