@@ -18,6 +18,7 @@ public class Constants {
 	public static final String ASHENINKA_DATA_FILE_EXTENSION = "ashedata";
 	public static final String ASHENINKA_DATA_FILE_EXTENSIONS = "*." + ASHENINKA_DATA_FILE_EXTENSION;
 	public static final String ASHENINKA_STARTER_FILE = "resources/starterFile.ashedata";
+	public static final String DEFAULT_DIRECTORY_NAME = "My Asheninka";
 	public static final String BACKUP_DIRECTORY_NAME = "Backups";
 	public static final String PARATEXT_HYPHENATED_WORDS_FILE = "hyphenatedWords";
 	public static final String PARATEXT_HYPHENATED_WORDS_PREAMBLE = "#Hyphenated Word List v2.0\n" +

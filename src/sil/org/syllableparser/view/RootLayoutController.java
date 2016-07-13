@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.stream.Stream;
@@ -207,9 +208,9 @@ public class RootLayoutController implements Initializable {
 	ApplicationPreferences applicationPreferences;
 
 	Clipboard systemClipboard = Clipboard.getSystemClipboard();
-	
+
 	public ToolBarCutCopyPasteDelegate toolBarDelegate;
-	
+
 	public RootLayoutController() {
 		toolBarDelegate = new ToolBarCutCopyPasteDelegate();
 	}
@@ -275,8 +276,7 @@ public class RootLayoutController implements Initializable {
 		ButtonType buttonNo = ButtonType.NO;
 		ButtonType buttonCancel = ButtonType.CANCEL;
 
-		alert.getButtonTypes().setAll(buttonYes, buttonNo,
-				buttonCancel);
+		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonYes) {
@@ -303,10 +303,45 @@ public class RootLayoutController implements Initializable {
 		// mainApp.getLanguageProject().clear();
 		// ApplicationPreferences.setLastOpenedFilePath((String) null);
 		String sDirectoryPath = applicationPreferences.getLastOpenedDirectoryPath();
+		if (sDirectoryPath == "") {
+			// probably creating a new file the first time the program is run;
+			// set the directory to the closest we can to a reasonable default
+			sDirectoryPath = tryToGetDefaultDirectoryPath();
+			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
+		}
 		File file = new File(Constants.ASHENINKA_STARTER_FILE);
 		mainApp.loadLanguageData(file);
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		handleSaveAs();
+	}
+
+	protected String tryToGetDefaultDirectoryPath() {
+		String sDirectoryPath = System.getProperty("user.home") + File.separator;
+		File dir = new File(sDirectoryPath);
+		if (dir.exists()) {
+			// See if there is a "Documents" directory as Windows, Linux, and Mac OS X tend to have
+			String sDocumentsDirectoryPath = sDirectoryPath + "Documents" + File.separator;
+			dir = new File(sDocumentsDirectoryPath);
+			if (dir.exists()) {
+				// Try and find or make the "My Asheninka" subdirectory of Documents
+				String sMyAsheninkaDirectoryPath = sDocumentsDirectoryPath
+						+ Constants.DEFAULT_DIRECTORY_NAME + File.separator;
+				dir = new File(sMyAsheninkaDirectoryPath);
+				if (dir.exists()) {
+					sDirectoryPath = sMyAsheninkaDirectoryPath;
+				} else {
+					boolean success = (dir.mkdir());
+					if (success) {
+						sDirectoryPath = sMyAsheninkaDirectoryPath;
+					} else {
+						sDirectoryPath = sDocumentsDirectoryPath;
+					}
+				}
+			}
+		} else { // give up; let user set it
+			sDirectoryPath = "";
+		}
+		return sDirectoryPath;
 	}
 
 	@FXML
@@ -509,8 +544,10 @@ public class RootLayoutController implements Initializable {
 		alert.setTitle(sAboutHeader);
 		alert.setHeaderText(null);
 		alert.setContentText(sAboutContent);
-		Image silLogo = ControllerUtilities.getIconImageFromURL("file:resources/images/SILLogo.png");
-		//Image silLogo = new Image("file:src/sil/org/syllableparser/resources/images/SILLogo.png");
+		Image silLogo = ControllerUtilities
+				.getIconImageFromURL("file:resources/images/SILLogo.png");
+		// Image silLogo = new
+		// Image("file:src/sil/org/syllableparser/resources/images/SILLogo.png");
 		alert.setGraphic(new ImageView(silLogo));
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
@@ -717,11 +754,11 @@ public class RootLayoutController implements Initializable {
 		oncApproachController = new ONCApproachController(bundle);
 
 		createToolbarButtons(bundle);
-		
+
 		toolBarDelegate.buttonToolbarEditCut = buttonToolbarEditCut;
 		toolBarDelegate.buttonToolbarEditCopy = buttonToolbarEditCopy;
 		toolBarDelegate.buttonToolbarEditPaste = buttonToolbarEditPaste;
-		
+
 		buttonToolbarSyllabify.setDisable(true);
 		menuItemSyllabify.setDisable(true);
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(true);
@@ -738,7 +775,7 @@ public class RootLayoutController implements Initializable {
 		handleCVApproach();
 
 		listenForChangesInApproachViews();
-		
+
 		// do we need this? toolBarDelegate.init();
 
 	}
@@ -760,7 +797,8 @@ public class RootLayoutController implements Initializable {
 				buttonToolbarEditInsert, tooltipToolbarEditInsert,
 				bundle.getString("tooltip.insertnew"));
 		ControllerUtilities.createToolbarButtonWithImage("deleteAction.png",
-				buttonToolbarEditRemove, tooltipToolbarEditRemove, bundle.getString("tooltip.remove"));
+				buttonToolbarEditRemove, tooltipToolbarEditRemove,
+				bundle.getString("tooltip.remove"));
 		ControllerUtilities.createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify,
 				tooltipToolbarSyllabify, bundle.getString("tooltip.syllabifywords"));
 		ControllerUtilities.createToolbarButtonWithImage("predictedToCorrect.png",
