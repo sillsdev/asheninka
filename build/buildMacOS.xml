@@ -111,9 +111,9 @@
 		</fx:resources>
 	
 		<fx:application id="fxApplication"
-			name="AsheninkaSyllableParser"
+			name="Asheninka Syllable Parser"
 			mainClass="sil.org.syllableparser.MainApp"
-			version="0.1.2"
+			version="0.1.2.1"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />
@@ -129,7 +129,7 @@
 			<manifest>
 				<attribute name="Implementation-Vendor" value="sil.org"/>
 				<attribute name="Implementation-Title" value="SyllableParser"/>
-				<attribute name="Implementation-Version" value="0.1.2"/>
+				<attribute name="Implementation-Version" value="0.1.2.1"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
 		</fx:jar>
