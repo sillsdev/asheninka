@@ -556,8 +556,7 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleHelpIntro() {
-		String sOS = System.getProperty("os.name");
-		if (!sOS.equals("Mac OS X")) {
+		if (!mainApp.getOperatingSystem().equals("Mac OS X")) {
 			HostServicesDelegate hostServices = HostServicesFactory.getInstance(mainApp);
 			hostServices.showDocument("file:doc/Overview.pdf");
 		} else {

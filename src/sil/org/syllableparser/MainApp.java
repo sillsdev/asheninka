@@ -24,8 +24,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
@@ -47,6 +49,8 @@ public class MainApp extends Application {
 	private Locale locale;
 	private XMLBackEndProvider xmlBackEndProvider;
 	private LanguageProject languageProject;
+	private String sOperatingSystem = System.getProperty("os.name");
+
 
 	public static String kApplicationTitle = "Asheninka";
 	// private static String kLanguageProjectFilePath =
@@ -131,6 +135,9 @@ public class MainApp extends Application {
 			ResourceBundle bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale);
 			loader.setResources(bundle);
 			rootLayout = (BorderPane) loader.load();
+			if (getOperatingSystem().equals("Mac OS X")) {
+				adjustMenusForMacOSX();
+			}
 
 			sNotImplementedYetHeader = bundle.getString("misc.niyheader");
 			sNotImplementedYetContent = bundle.getString("misc.niycontent");
@@ -155,6 +162,12 @@ public class MainApp extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	protected void adjustMenusForMacOSX() {
+		VBox vbox = (VBox)rootLayout.getChildren().get(0);
+		MenuBar menuBar = (MenuBar) vbox.getChildren().get(0);
+		menuBar.useSystemMenuBarProperty().set(true);
 	}
 
 	protected void askUserForNewOrToOpenExisingFile(ResourceBundle bundle,
@@ -260,6 +273,10 @@ public class MainApp extends Application {
 
 	public ApplicationPreferences getApplicationPreferences() {
 		return applicationPreferences;
+	}
+
+	public String getOperatingSystem() {
+		return sOperatingSystem;
 	}
 
 	public void updateStatusBarNumberOfItems(String numberOfItems) {
