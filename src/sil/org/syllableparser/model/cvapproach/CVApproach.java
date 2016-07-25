@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.cedarsoftware.util.StringUtilities;
+
 import sil.org.syllableparser.model.Approach;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
@@ -104,15 +106,12 @@ public class CVApproach extends Approach {
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
 		for (Word word : words) {
 			String sSyllabifiedWord = word.getCorrectSyllabification();
-			if (sSyllabifiedWord == null || sSyllabifiedWord.isEmpty()) {
+			if (StringUtilities.isEmpty(sSyllabifiedWord)) {
 				// no overt correct syllabified word present; try predicted
 				sSyllabifiedWord = word.getCVPredictedSyllabification();
-				if (sSyllabifiedWord != null) {
-					// predicted has something
-					if (sSyllabifiedWord.isEmpty()) {
-						// skip this one
-						continue;
-					}
+				if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+					// skip this one
+					continue;
 				}
 			}
 			hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.", "="));
@@ -126,15 +125,12 @@ public class CVApproach extends Approach {
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
 		for (Word word : words) {
 			String sSyllabifiedWord = word.getCorrectSyllabification();
-			if (sSyllabifiedWord == null || sSyllabifiedWord.isEmpty()) {
+			if (StringUtilities.isEmpty(sSyllabifiedWord)) {
 				// no overt correct syllabified word present; try predicted
 				sSyllabifiedWord = word.getCVPredictedSyllabification();
-				if (sSyllabifiedWord != null) {
-					// predicted has something
-					if (sSyllabifiedWord.isEmpty()) {
-						// skip this one
-						continue;
-					}
+				if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+					// skip this one
+					continue;
 				}
 			} else {
 				// is correct so mark it with an initial asterisk
@@ -151,15 +147,12 @@ public class CVApproach extends Approach {
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
 		for (Word word : words) {
 			String sSyllabifiedWord = word.getCorrectSyllabification();
-			if (sSyllabifiedWord == null || sSyllabifiedWord.isEmpty()) {
+			if (StringUtilities.isEmpty(sSyllabifiedWord)) {
 				// no overt correct syllabified word present; try predicted
 				sSyllabifiedWord = word.getCVPredictedSyllabification();
-				if (sSyllabifiedWord != null) {
-					// predicted has something
-					if (sSyllabifiedWord.isEmpty()) {
-						// skip this one
-						continue;
-					}
+				if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+					// skip this one
+					continue;
 				}
 			}
 			hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.", "-"));

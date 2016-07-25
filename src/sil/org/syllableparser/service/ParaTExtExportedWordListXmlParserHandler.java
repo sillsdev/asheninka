@@ -10,6 +10,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.cedarsoftware.util.StringUtilities;
+
 import sil.org.syllableparser.model.Word;
 
 /**
@@ -43,9 +45,9 @@ public class ParaTExtExportedWordListXmlParserHandler extends DefaultHandler {
 	            myWord = new Word();
 	            myWord.setWord(wordAttribute);
 	            String hyphenationApproved = attributes.getValue("hyphenationApproved");
-	            if (hyphenationApproved != null && "True".equalsIgnoreCase(hyphenationApproved)) {
+	            if (!StringUtilities.isEmpty(hyphenationApproved) && "True".equalsIgnoreCase(hyphenationApproved)) {
 	            	String correctHyphenation = attributes.getValue("hyphenation");
-	            	if (correctHyphenation != null) {
+	            	if (!StringUtilities.isEmpty(correctHyphenation)) {
 	            		myWord.setCorrectSyllabification(correctHyphenation.replaceAll("=", "."));
 	            	}
 	            }

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import com.cedarsoftware.util.StringUtilities;
+
 public class ApplicationPreferences {
 
 	final static String kLastOpenedFilePath = "lastOpenedFilePath";
@@ -62,7 +64,8 @@ public class ApplicationPreferences {
 	}
 
 	private void setPreferencesKey(String key, String value) {
-		if (key != null && value != null && !value.isEmpty()) {
+		if (!StringUtilities.isEmpty(key) && !StringUtilities.isEmpty(value)) {
+		//if (key != null && value != null && !value.isEmpty()) {
 			prefs.put(key, value);
 
 		} else {
