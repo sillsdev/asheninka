@@ -11,8 +11,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
-
-import com.cedarsoftware.util.StringUtilities;
+import sil.org.utilities.*;
 
 import sil.org.syllableparser.model.Approach;
 import sil.org.syllableparser.model.LanguageProject;
@@ -106,10 +105,10 @@ public class CVApproach extends Approach {
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
 		for (Word word : words) {
 			String sSyllabifiedWord = word.getCorrectSyllabification();
-			if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+			if (StringUtilities.isNullOrEmpty(sSyllabifiedWord)) {
 				// no overt correct syllabified word present; try predicted
 				sSyllabifiedWord = word.getCVPredictedSyllabification();
-				if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+				if (StringUtilities.isNullOrEmpty(sSyllabifiedWord)) {
 					// skip this one
 					continue;
 				}
@@ -125,10 +124,10 @@ public class CVApproach extends Approach {
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
 		for (Word word : words) {
 			String sSyllabifiedWord = word.getCorrectSyllabification();
-			if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+			if (StringUtilities.isNullOrEmpty(sSyllabifiedWord)) {
 				// no overt correct syllabified word present; try predicted
 				sSyllabifiedWord = word.getCVPredictedSyllabification();
-				if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+				if (StringUtilities.isNullOrEmpty(sSyllabifiedWord)) {
 					// skip this one
 					continue;
 				}
@@ -147,10 +146,10 @@ public class CVApproach extends Approach {
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
 		for (Word word : words) {
 			String sSyllabifiedWord = word.getCorrectSyllabification();
-			if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+			if (StringUtilities.isNullOrEmpty(sSyllabifiedWord)) {
 				// no overt correct syllabified word present; try predicted
 				sSyllabifiedWord = word.getCVPredictedSyllabification();
-				if (StringUtilities.isEmpty(sSyllabifiedWord)) {
+				if (StringUtilities.isNullOrEmpty(sSyllabifiedWord)) {
 					// skip this one
 					continue;
 				}

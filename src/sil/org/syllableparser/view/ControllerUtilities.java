@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.controlsfx.control.StatusBar;
 
-import com.cedarsoftware.util.StringUtilities;
+import sil.org.utilities.*;
 
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
@@ -94,7 +94,7 @@ public class ControllerUtilities {
 
 		ApplicationPreferences applicationPreferences = mainApp.getApplicationPreferences();
 		String sDirectoryPath = applicationPreferences.getLastOpenedDirectoryPath();
-		if (!StringUtilities.isEmpty(sDirectoryPath)) {
+		if (!StringUtilities.isNullOrEmpty(sDirectoryPath)) {
 			File initialDirectory = new File(sDirectoryPath);
 			if (initialDirectory.exists() && initialDirectory.isDirectory()) {
 				fileChooser.setInitialDirectory(initialDirectory);

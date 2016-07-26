@@ -3,8 +3,7 @@
  */
 package sil.org.syllableparser.view;
 
-import com.cedarsoftware.util.StringUtilities;
-
+import sil.org.utilities.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.IndexRange;
@@ -47,7 +46,7 @@ public class ToolBarCutCopyPasteDelegate {
 		}
 
 		String sSelected = focusedTF.getSelectedText();
-		if (!StringUtilities.isEmpty(sSelected)) {
+		if (!StringUtilities.isNullOrEmpty(sSelected)) {
 			adjustForSelection();
 
 		} else {

@@ -6,7 +6,7 @@ package sil.org.syllableparser.view;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import com.cedarsoftware.util.StringUtilities;
+import sil.org.utilities.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.IndexRange;
@@ -91,7 +91,7 @@ public abstract class ApproachEditorController {
 	private String getSelectedText(TextField[] textFields) {
 		for (TextField tf : textFields) {
 			String text = tf.getSelectedText();
-			if (!StringUtilities.isEmpty(text)) {
+			if (!StringUtilities.isNullOrEmpty(text)) {
 				return text;
 			}
 		}
@@ -198,7 +198,7 @@ public abstract class ApproachEditorController {
 		if (textFields != null && textFields.length > 0) {
 			for (TextField tf : textFields) {
 				String sSelected = tf.getSelectedText();
-				if (!StringUtilities.isEmpty(sSelected)) {
+				if (!StringUtilities.isNullOrEmpty(sSelected)) {
 					return true;
 				}
 			}

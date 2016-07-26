@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import com.cedarsoftware.util.StringUtilities;
+import sil.org.utilities.*;
 
 public class ApplicationPreferences {
 
@@ -64,7 +64,7 @@ public class ApplicationPreferences {
 	}
 
 	private void setPreferencesKey(String key, String value) {
-		if (!StringUtilities.isEmpty(key) && !StringUtilities.isEmpty(value)) {
+		if (!StringUtilities.isNullOrEmpty(key) && !StringUtilities.isNullOrEmpty(value)) {
 		//if (key != null && value != null && !value.isEmpty()) {
 			prefs.put(key, value);
 

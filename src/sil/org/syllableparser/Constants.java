@@ -45,6 +45,8 @@ public class Constants {
 	public static final String UNIT_TEST_BACKUP_FILE_NAME="test/sil/org/syllableparser/testData/CVTestData.ashebackup";
 	public static final String UNIT_TEST_BACKUP_ZIP_ENTRY_NAME="CVTestData.ashedata";
 	public static final String UNIT_TEST_BACKUP_ZIP_ENTRY_COMMENT="Comment included in zipped file: m\u00e1s o menos.";
+	public static final String UNIT_TEST_DATA_FILE_2_NAME="test/sil/org/syllableparser/testData/CVTestData2.";
+	public static final String UNIT_TEST_DATA_FILE_2="test/sil/org/syllableparser/testData/CVTestData2.ashedata";
 	
 	// Text colors
 	public static final Color ACTIVE=Color.BLACK;
