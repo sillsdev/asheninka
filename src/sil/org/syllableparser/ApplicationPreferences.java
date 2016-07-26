@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import sil.org.utilities.*;
+import sil.org.utility.*;
 
 public class ApplicationPreferences {
 

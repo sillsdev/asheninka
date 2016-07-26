@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.controlsfx.control.StatusBar;
 
-import sil.org.utilities.*;
+import sil.org.utility.*;
 
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;

@@ -10,7 +10,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import sil.org.utilities.*;
+import sil.org.utility.*;
 
 import sil.org.syllableparser.model.Word;
 

@@ -6,7 +6,7 @@ package sil.org.syllableparser.view;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import sil.org.utilities.*;
+import sil.org.utility.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.IndexRange;

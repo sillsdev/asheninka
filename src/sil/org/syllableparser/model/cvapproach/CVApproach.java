@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
-import sil.org.utilities.*;
+import sil.org.utility.*;
 
 import sil.org.syllableparser.model.Approach;
 import sil.org.syllableparser.model.LanguageProject;

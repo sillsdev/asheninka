@@ -3,7 +3,7 @@
  */
 package sil.org.syllableparser.view;
 
-import sil.org.utilities.*;
+import sil.org.utility.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.IndexRange;
