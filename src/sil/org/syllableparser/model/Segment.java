@@ -6,6 +6,8 @@ package sil.org.syllableparser.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 /**
  * @author Andy Black
@@ -24,11 +26,11 @@ public class Segment extends SylParserObject {
 		createUUID();
 	}
 
-	public Segment(String segment, String graphemes, String comment) {
+	public Segment(String segment, String graphemes, String description) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
 		this.graphemes = new SimpleStringProperty(graphemes);
-		this.description = new SimpleStringProperty(comment);
+		this.description = new SimpleStringProperty(description);
 		createUUID();
 	}
 
@@ -80,5 +82,25 @@ public class Segment extends SylParserObject {
 			}
 		}
 		return -1;
+	}
+
+	@Override
+	public int hashCode() {
+		String sCombo = segment.getValueSafe() + graphemes.getValueSafe();
+		return sCombo.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean result = true;
+		Segment seg = (Segment) obj;
+		if (!getSegment().equals(seg.getSegment())) {
+			result = false;
+		} else {
+			if (!getGraphemes().equals(seg.getGraphemes())) {
+				result = false;
+			}
+		}
+		return result;
 	}
 }
