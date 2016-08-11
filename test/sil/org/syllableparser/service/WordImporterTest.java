@@ -138,6 +138,33 @@ public class WordImporterTest {
 		assertEquals(35, languageProject.getWords().size());
 	}
 
+	@Test
+	public void ImportParaTExtHyphenatedWordsNHSTest() {
+		String sUntested = "Untested";
+		String sFileName = "test/sil/org/syllableparser/testData/hyphenatedWordsNHS.txt";
+		assertEquals(0, languageProject.getWords().size());
+		ParaTExtHyphenatedWordsImporter importer = new ParaTExtHyphenatedWordsImporter(
+				languageProject);
+		File file = new File(sFileName);
+		importer.importWords(file, sUntested);
+		assertEquals(Constants.PARATEXT_HYPHENATED_WORDS_PREAMBLE,
+				languageProject.getParaTExtHyphenatedWordsPreamble());
+		assertEquals(2098, languageProject.getWords().size());
+		ObservableList<Word> words = languageProject.getWords();
+		Word word = words.get(36);
+		assertEquals("ajkotzikuintiv", word.getWord());
+		assertEquals("aj.ko.tzi.kuin.tiv", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
+		word = words.get(19);
+		assertEquals("achto", word.getWord());
+		assertEquals("", word.getCorrectSyllabification());
+		assertEquals(sUntested, word.getCVParserResult());
+		// now load it again: the size should not change
+		file = new File(sFileName);
+		importer.importWords(file, sUntested);
+		assertEquals(2098, languageProject.getWords().size());
+	}
+
 	// For ParaText version 7.5
 	@Test
 	public void ImportParaTExtExportedWordList75Test() {
