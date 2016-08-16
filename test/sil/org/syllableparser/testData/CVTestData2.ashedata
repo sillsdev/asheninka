@@ -234,12 +234,12 @@
             <correctSyllabification>aaah</correctSyllabification>
             <word>aaah</word>
         </word>
-        <word active="true" id="0a51a1d6-6412-425f-9524-d8d98fb5cfe7">
+       <!-- <word active="true" id="0a51a1d6-6412-425f-9524-d8d98fb5cfe7">
             <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <correctSyllabification></correctSyllabification>
             <word>ababrastro</word>
-        </word>
+        </word>-->
         <word active="true" id="1cd83f48-50cc-42ee-9e1f-8986980fe190">
             <CVParserResult>Success</CVParserResult>
             <cvPredictedSyllabification>ab.ba</cvPredictedSyllabification>

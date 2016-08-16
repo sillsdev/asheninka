@@ -19,23 +19,21 @@ import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
  */
 public class CVSegmenter {
 
-	private final List<Segment> segmentInventory;
+	private final List<Segment> activeSegmentInventory;
 	List<CVSegmentInSyllable> segmentsInCurrentWord = new LinkedList<CVSegmentInSyllable>(
 			Arrays.asList(new CVSegmentInSyllable(null, null)));
 	HashMap<String, Segment> graphemeToSegmentMapping = new HashMap<>();
 	int iLongestGrapheme = 0;
 
-	public CVSegmenter(List<Segment> segmentInventory) {
+	public CVSegmenter(List<Segment> activeSegmentInventory) {
 		super();
-		this.segmentInventory = segmentInventory;
+		this.activeSegmentInventory = activeSegmentInventory;
 		buildGraphemeToCVSegmentMapping();
 	}
 
 	protected void buildGraphemeToCVSegmentMapping() {
-		for (Segment seg : segmentInventory) {
-			if (!seg.isActive()) {
-				continue;
-			}
+		// TODO: use lambda expressions for this
+		for (Segment seg : activeSegmentInventory) {
 			String[] orthographemes = seg.getGraphemes().split(" +");
 			for (String orthoform : orthographemes) {
 				if (orthoform.length() > iLongestGrapheme) {
@@ -46,8 +44,8 @@ public class CVSegmenter {
 		}
 	}
 
-	public List<Segment> getSegmentInventory() {
-		return segmentInventory;
+	public List<Segment> getActiveSegmentInventory() {
+		return activeSegmentInventory;
 	}
 
 	public List<CVSegmentInSyllable> getSegmentsInWord() {

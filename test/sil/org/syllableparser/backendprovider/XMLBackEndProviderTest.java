@@ -62,7 +62,7 @@ public class XMLBackEndProviderTest {
 		assertEquals(4, cva.getCVNaturalClasses().size());
 		assertEquals(7, cva.getCVSyllablePatterns().size());
 		ObservableList<Word> words = languageProject.getWords();
-		assertEquals(10026, words.size());
+		assertEquals(10025, words.size());
 	}
 
 	@Test

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sil.org.syllableparser.model.Segment;
+import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 
 /**
@@ -27,9 +28,9 @@ public class CVApproachLanguageComparer {
 
 	CVApproach cva1;
 	CVApproach cva2;
-	Set<Segment> difference;
 
 	Set<DifferentSegment> segmentsWhichDiffer = new HashSet<DifferentSegment>();
+	Set<DifferentWord> wordsWhichDiffer = new HashSet<DifferentWord>();
 
 	public CVApproachLanguageComparer(CVApproach cva1, CVApproach cva2) {
 		super();
@@ -57,8 +58,8 @@ public class CVApproachLanguageComparer {
 		return segmentsWhichDiffer;
 	}
 
-	public Set<Segment> getDifference() {
-		return difference;
+	public Set<DifferentWord> getWordsWhichDiffer() {
+		return wordsWhichDiffer;
 	}
 
 	public void compareSegmentInventory() {
@@ -79,15 +80,76 @@ public class CVApproachLanguageComparer {
 	protected void mergeSimilarSegments(Segment segment) {
 		List<DifferentSegment> sameSegmentsName = segmentsWhichDiffer
 				.stream()
-				.filter(ds -> ds.getSegmentFrom1() != null
-						&& ds.getSegmentFrom1().getSegment().equals(segment.getSegment()))
-				.collect(Collectors.toList());
+				.filter(ds -> ds.getObjectFrom1() != null
+						&& ((Segment) ds.getObjectFrom1()).getSegment()
+								.equals(segment.getSegment())).collect(Collectors.toList());
 		if (sameSegmentsName.size() > 0) {
 			DifferentSegment diffSeg = sameSegmentsName.get(0);
-			diffSeg.setSegmentFrom2(segment);
+			diffSeg.setObjectFrom2(segment);
 		} else {
 			DifferentSegment diffSegment = new DifferentSegment(null, segment);
 			segmentsWhichDiffer.add(diffSegment);
+		}
+	}
+
+	//
+	// protected void mergeSimilarSegments(Segment segment) {
+	// List<DifferentSegment> sameSegmentsName = segmentsWhichDiffer
+	// .stream()
+	// .filter(ds -> ds.getSegmentFrom1() != null
+	// && ds.getSegmentFrom1().getSegment().equals(segment.getSegment()))
+	// .collect(Collectors.toList());
+	// if (sameSegmentsName.size() > 0) {
+	// DifferentSegment diffSeg = sameSegmentsName.get(0);
+	// diffSeg.setSegmentFrom2(segment);
+	// } else {
+	// DifferentSegment diffSegment = new DifferentSegment(null, segment);
+	// segmentsWhichDiffer.add(diffSegment);
+	// }
+	// }
+
+	public void compareWords() {
+		// make sure both sets have been syllabified
+		List<Word> words1 = cva1.getLanguageProject().getWords();
+		List<Word> words2 = cva2.getLanguageProject().getWords();
+		// TODO: are there side-effects from this?  If so, do we want them to be there?
+		syllabifyWords(cva1, words1);
+		syllabifyWords(cva2, words2);
+
+		Set<Word> difference1from2 = new HashSet<Word>(words1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(words2);
+		difference1from2.stream().forEach(
+				word -> wordsWhichDiffer.add(new DifferentWord(word, null)));
+
+		Set<Word> difference2from1 = new HashSet<Word>(words2);
+		difference2from1.removeAll(words1);
+		difference2from1.stream().forEach(word -> mergeSimilarWords(word));
+	}
+
+	protected void syllabifyWords(CVApproach cva, List<Word> words) {
+		CVSyllabifier stringSyllabifier = new CVSyllabifier(cva);
+		for (Word word : words) {
+			boolean fSuccess = stringSyllabifier.convertStringToSyllables(word.getWord());
+			if (fSuccess) {
+				word.setCVPredictedSyllabification(word.getCVPredictedSyllabification());
+			}
+		}
+
+	}
+
+	protected void mergeSimilarWords(Word word) {
+		List<DifferentWord> sameWordsName = wordsWhichDiffer
+				.stream()
+				.filter(dw -> dw.getObjectFrom1() != null
+						&& ((Word) dw.getObjectFrom1()).getWord().equals(word.getWord()))
+				.collect(Collectors.toList());
+		if (sameWordsName.size() > 0) {
+			DifferentWord diffWord = sameWordsName.get(0);
+			diffWord.setObjectFrom2(word);
+		} else {
+			DifferentWord diffWord = new DifferentWord(null, word);
+			wordsWhichDiffer.add(diffWord);
 		}
 	}
 

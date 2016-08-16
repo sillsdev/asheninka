@@ -53,12 +53,10 @@ public class CVNaturalClasserTest {
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		segmentInventory = languageProject.getSegmentInventory();
-		segmenter = new CVSegmenter(segmentInventory);
-		cvSegmentInventory = segmenter.getSegmentInventory();
-		naturalClasses = cva.getCVNaturalClasses();
-		naturalClasser = new CVNaturalClasser(naturalClasses);
-		cvNaturalClasses = naturalClasser.getNaturalClasses();
+		cvSegmentInventory = languageProject.getActiveSegmentsInInventory();
+		segmenter = new CVSegmenter(cvSegmentInventory);
+		cvNaturalClasses = cva.getActiveCVNaturalClasses();
+		naturalClasser = new CVNaturalClasser(cvNaturalClasses);
 	}
 
 	/**
@@ -71,8 +69,7 @@ public class CVNaturalClasserTest {
 	// make sure the setup is what we expect
 	@Test
 	public void naturalClassesTest() {
-		assertEquals("Natural Classes size", 4, naturalClasses.size());
-		assertEquals("Natural Classes in natural classer size", 3, cvNaturalClasses.size());
+		assertEquals("Active natural Classes in natural classer size", 3, cvNaturalClasses.size());
 		String nc = cvNaturalClasses.get(0).getNCName().trim();
 		assertEquals("First natural class is [C]", "C", nc);
 		nc = cvNaturalClasses.get(1).getNCName().trim();

@@ -32,7 +32,7 @@ public class Word extends SylParserObject {
 		this.word = new SimpleStringProperty("");
 		this.correctSyllabification = new SimpleStringProperty("");
 		this.cvParserResult = new SimpleStringProperty("");
-		this.cvPredictedSyllabification =new SimpleStringProperty("");
+		this.cvPredictedSyllabification = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -41,7 +41,7 @@ public class Word extends SylParserObject {
 		this.word = new SimpleStringProperty(word);
 		this.correctSyllabification = new SimpleStringProperty(correctHyphenation);
 		this.cvParserResult = new SimpleStringProperty(parserResult);
-		this.cvPredictedSyllabification =new SimpleStringProperty("");
+		this.cvPredictedSyllabification = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -96,21 +96,52 @@ public class Word extends SylParserObject {
 
 	public StringProperty cvPredictedVsCorrectSyllabificationProperty() {
 		SimpleStringProperty s = new SimpleStringProperty();
-		s.bind(Bindings.concat(cvPredictedSyllabificationProperty(),
-				"\n",
+		s.bind(Bindings.concat(cvPredictedSyllabificationProperty(), "\n",
 				correctSyllabificationProperty()));
 		return s;
 	}
+
 	public static int findIndexInWordListByUuid(ObservableList<Word> list, String uuid) {
 		// TODO: is there a way to do this with lambda expressions?
 		// Is there a way to use SylParserObject somehow?
-				int index = -1;
-				for (SylParserObject sylParserObject : list) {
-					index++;
-					if (sylParserObject.getID() == uuid) {
-						return index;
-					}
-				}		
-				return -1;
+		int index = -1;
+		for (SylParserObject sylParserObject : list) {
+			index++;
+			if (sylParserObject.getID() == uuid) {
+				return index;
 			}
+		}
+		return -1;
+	}
+
+	@Override
+	public int hashCode() {
+		String sCombo = word.getValueSafe() + cvPredictedSyllabification.getValueSafe()
+				+ correctSyllabification.getValueSafe();
+		return sCombo.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		boolean result = true;
+		Word otherWord = (Word) obj;
+		if (!getWord().equals(otherWord.getWord())) {
+			result = false;
+		} else {
+			if (!getCVPredictedSyllabification().equals(otherWord.getCVPredictedSyllabification())) {
+				result = false;
+			} else {
+				if (!getCorrectSyllabification().equals(otherWord.getCorrectSyllabification())) {
+					result = false;
+				}
+			}
+		}
+		return result;
+	}
 }

@@ -22,20 +22,19 @@ import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
  */
 public class CVNaturalClasser {
 
-	private final List<CVNaturalClass> naturalClasses;
+	private final List<CVNaturalClass> activeNaturalClasses;
 	List<CVNaturalClassInSyllable> naturalClassesInCurrentWord = new LinkedList<CVNaturalClassInSyllable>(
 			Arrays.asList(new CVNaturalClassInSyllable(null, null)));
 	HashMap<String, CVNaturalClass> segmentToNaturalClassMapping = new HashMap<>();
 
-	public CVNaturalClasser(List<CVNaturalClass> naturalClasses) {
+	public CVNaturalClasser(List<CVNaturalClass> activeNaturalClasses) {
 		super();
-		this.naturalClasses = naturalClasses.stream().filter(nc -> nc.isActive())
-				.collect(Collectors.toList());
+		this.activeNaturalClasses = activeNaturalClasses;
 		buildSegmentToNaturalClassMapping();
 	}
 
 	protected void buildSegmentToNaturalClassMapping() {
-		for (CVNaturalClass nc : naturalClasses) {
+		for (CVNaturalClass nc : activeNaturalClasses) {
 			setSegmentToNaturalClassMapping(nc);
 		}
 	}
@@ -50,8 +49,8 @@ public class CVNaturalClasser {
 		}
 	}
 
-	public List<CVNaturalClass> getNaturalClasses() {
-		return naturalClasses;
+	public List<CVNaturalClass> getActiveNaturalClasses() {
+		return activeNaturalClasses;
 	}
 
 	public List<CVNaturalClassInSyllable> getNaturalClassesInCurrentWord() {

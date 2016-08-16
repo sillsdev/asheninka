@@ -52,14 +52,20 @@ public class LanguageProjectTest {
 	public void createNewWordTest() {
 		String sUntested = "Untested";
 		ObservableList<Word> words = languageProject.getWords();
-		assertEquals("CV words size", 10026, words.size());
+		assertEquals("CV words size", 10025, words.size());
 		languageProject.createNewWord("abel", sUntested);
 		// 'abel' should already be there so the size should not change
-		assertEquals("CV words size", 10026, words.size());
+		assertEquals("CV words size", 10025, words.size());
 		languageProject.createNewWord("kinkos", sUntested);
 		// 'kinkos' should not already be there so the size should change
-		assertEquals("CV words size", 10027, words.size());
+		assertEquals("CV words size", 10026, words.size());
 		Word lastWordAdded = words.get(words.size()-1);
 		assertEquals("kinkos", lastWordAdded.getWord());
+	}
+	
+	@Test
+	public void getActiveSegmentsTest() {
+		assertEquals("Segment inventory size", 27, languageProject.getSegmentInventory().size());
+		assertEquals("Active segment inventory size", 26, languageProject.getActiveSegmentsInInventory().size());
 	}
 }

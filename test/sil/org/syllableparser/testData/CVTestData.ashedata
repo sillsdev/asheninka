@@ -231,12 +231,12 @@
             <correctSyllabification></correctSyllabification>
             <word>a</word>
         </word>
-        <word active="true" id="b28ac626-e17f-41a7-9565-4eff40bbe564">
+        <!--<word active="true" id="b28ac626-e17f-41a7-9565-4eff40bbe564">
             <CVParserResult></CVParserResult>
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <correctSyllabification></correctSyllabification>
             <word>aaah</word>
-        </word>
+        </word>-->
         <word active="true" id="011a1e8a-33bd-4d05-9cc3-340566faf4c4">
             <CVParserResult></CVParserResult>
             <cvPredictedSyllabification></cvPredictedSyllabification>

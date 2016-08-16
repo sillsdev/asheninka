@@ -41,7 +41,8 @@ public class CVSyllabifierTest {
 	CVNaturalClasser naturalClasser;
 	List<CVNaturalClass> cvNaturalClasses;
 	ObservableList<CVSyllablePattern> patterns;
-	CVSyllabifier syllabifier;
+	CVSyllabifier patternSyllabifier;
+	CVSyllabifier stringSyllabifier;
 	List<CVSyllablePattern> cvPatterns;
 
 	/**
@@ -56,15 +57,13 @@ public class CVSyllabifierTest {
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		segmentInventory = languageProject.getSegmentInventory();
-		segmenter = new CVSegmenter(segmentInventory);
-		cvSegmentInventory = segmenter.getSegmentInventory();
-		naturalClasses = cva.getCVNaturalClasses();
-		naturalClasser = new CVNaturalClasser(naturalClasses);
-		cvNaturalClasses = naturalClasser.getNaturalClasses();
-		patterns = cva.getCVSyllablePatterns();
-		syllabifier = new CVSyllabifier(patterns, null);
-		cvPatterns = syllabifier.getCvPatterns();
+		cvSegmentInventory = languageProject.getActiveSegmentsInInventory();
+		segmenter = new CVSegmenter(cvSegmentInventory);
+		cvNaturalClasses = cva.getActiveCVNaturalClasses();
+		naturalClasser = new CVNaturalClasser(cvNaturalClasses);
+		cvPatterns = cva.getActiveCVSyllablePatterns();
+		patternSyllabifier = new CVSyllabifier(cvPatterns, null);
+		stringSyllabifier = new CVSyllabifier(cva);
 	}
 
 	/**
@@ -77,8 +76,7 @@ public class CVSyllabifierTest {
 	// make sure the setup is what we expect
 	@Test
 	public void syllabifierTest() {
-		assertEquals("CV patterns size", 7, patterns.size());
-		assertEquals("CV patterns in syllabifier size", 6, cvPatterns.size());
+		assertEquals("CV patterns size", 6, cvPatterns.size());
 		String pattern = cvPatterns.get(0).getSPName().trim();
 		assertEquals("First CV pattern is [C][V]", "CV", pattern);
 		pattern = cvPatterns.get(1).getSPName().trim();
@@ -106,17 +104,47 @@ public class CVSyllabifierTest {
 		fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
 		List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
 				.getNaturalClassesInCurrentWord();
-		syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
-		fSuccess = syllabifier.convertNaturalClassesToSyllables();
+		patternSyllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
+		fSuccess = patternSyllabifier.convertNaturalClassesToSyllables();
 		assertEquals("word syllabified", success, fSuccess);
-		List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
+		List<CVSyllable> syllablesInWord = patternSyllabifier.getSyllablesInCurrentWord();
 		assertEquals("Expect " + numberOfSyllables + " syllables in word", numberOfSyllables,
 				syllablesInWord.size());
 		String joined = syllablesInWord.stream().map(CVSyllable::getNaturalClassNamesInSyllable)
 				.collect(Collectors.joining(", "));
 		assertEquals("Expected Syllable CV Pattern", expectedCVPatternsUsed, joined);
 		assertEquals("Expected Syllabification of word", expectedSyllabification,
-				syllabifier.getSyllabificationOfCurrentWord());
+				patternSyllabifier.getSyllabificationOfCurrentWord());
 	}
+
+	@Test
+	public void syllabifyWordTest() {
+		checkSyllabifyWord("Chiko", true, 2, "CV, CV", "Chi.ko");
+		checkSyllabifyWord("dapbek", true, 2, "CVC, CVC", "dap.bek");
+		checkSyllabifyWord("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
+		checkSyllabifyWord("bovdek", true, 2, "CVC, CVC", "bov.dek");
+		checkSyllabifyWord("fuhgt", false, 0, "", "");  // no CCC possible
+		checkSyllabifyWord("blofugh", true, 2, "CCV, CVCC", "blo.fugh");
+		checkSyllabifyWord("bo", true, 1, "CV", "bo");
+		checkSyllabifyWord("funglo", false, 0, "", "");  // CVCC only word finally; CCV not possible word medially
+		checkSyllabifyWord("fugh", true, 1, "CVCC", "fugh");
+		checkSyllabifyWord("flu", true, 1, "CCV", "flu");
+		checkSyllabifyWord("cat", false, 0, "", ""); // no c segment
+	}
+
+	protected void checkSyllabifyWord(String word, boolean success, int numberOfSyllables,
+			String expectedCVPatternsUsed, String expectedSyllabification) {
+		boolean fSuccess = stringSyllabifier.convertStringToSyllables(word);
+		assertEquals("word syllabified", success, fSuccess);
+		List<CVSyllable> syllablesInWord = stringSyllabifier.getSyllablesInCurrentWord();
+		assertEquals("Expect " + numberOfSyllables + " syllables in word", numberOfSyllables,
+				syllablesInWord.size());
+		String joined = syllablesInWord.stream().map(CVSyllable::getNaturalClassNamesInSyllable)
+				.collect(Collectors.joining(", "));
+		assertEquals("Expected Syllable CV Pattern", expectedCVPatternsUsed, joined);
+		assertEquals("Expected Syllabification of word", expectedSyllabification,
+				stringSyllabifier.getSyllabificationOfCurrentWord());
+	}
+
 
 }

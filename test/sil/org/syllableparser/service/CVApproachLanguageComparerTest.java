@@ -6,6 +6,8 @@ package sil.org.syllableparser.service;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -90,32 +92,57 @@ public class CVApproachLanguageComparerTest {
 		// words
 		ObservableList<Word> words;
 		words = cva1.getWords();
-		assertEquals("CV words size", 10026, words.size());
+		assertEquals("CV words size", 10025, words.size());
 		words = cva2.getWords();
-		assertEquals("CV words size", 10026, words.size());
+		assertEquals("CV words size", 10025, words.size());
 	}
 
 	@Test
 	public void compareLanguagesTest() {
 		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva1, cva2);
+		compareSegments(comparer);
+		compareWords(comparer);
+	}
+
+	protected void compareSegments(CVApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
 		Set<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
 		assertEquals("number of different segments", 13, diffs.size());
 		List<DifferentSegment> listOfDiffs = new ArrayList<DifferentSegment>();
 		listOfDiffs.addAll(diffs);
 		DifferentSegment diffSeg = listOfDiffs.get(0);
-		assertEquals("first's 1 is an /e/", "e", diffSeg.getSegmentFrom1().getSegment());
-		assertEquals("first's 2 is an /e/", "e", diffSeg.getSegmentFrom2().getSegment());
-		assertEquals("first's 1's graphemes are 'e E'", "e E", diffSeg.getSegmentFrom1().getGraphemes());
-		assertEquals("first's 2's graphemes are 'e E é É'", "e E é É", diffSeg.getSegmentFrom2().getGraphemes());
+		assertEquals("first's 1 is an /e/", "e", ((Segment) diffSeg.getObjectFrom1()).getSegment());
+		assertEquals("first's 2 is an /e/", "e", ((Segment) diffSeg.getObjectFrom2()).getSegment());
+		assertEquals("first's 1's graphemes are 'e E'", "e E", ((Segment) diffSeg.getObjectFrom1()).getGraphemes());
+		assertEquals("first's 2's graphemes are 'e E é É'", "e E é É", ((Segment) diffSeg.getObjectFrom2()).getGraphemes());
 		diffSeg = listOfDiffs.get(3);
-		assertNull("fourth's 1 is null", diffSeg.getSegmentFrom1());
-		assertEquals("fourth's 2 is an /ñ/", "ñ", diffSeg.getSegmentFrom2().getSegment());
-		assertEquals("fourth's 2's graphemes are 'ñ Ñ'", "ñ Ñ", diffSeg.getSegmentFrom2().getGraphemes());
+		assertNull("fourth's 1 is null", diffSeg.getObjectFrom1());
+		assertEquals("fourth's 2 is an /ñ/", "ñ", ((Segment) diffSeg.getObjectFrom2()).getSegment());
+		assertEquals("fourth's 2's graphemes are 'ñ Ñ'", "ñ Ñ", ((Segment) diffSeg.getObjectFrom2()).getGraphemes());
 		diffSeg = listOfDiffs.get(9);
-		assertEquals("first's 1 is a /ɲ/", "ɲ", diffSeg.getSegmentFrom1().getSegment());
-		assertNull("first's 2 is null", diffSeg.getSegmentFrom2());
-		assertEquals("fourth's 1's graphemes are 'ñ Ñ'", "ñ Ñ", diffSeg.getSegmentFrom1().getGraphemes());
+		assertEquals("first's 1 is a /ɲ/", "ɲ", ((Segment) diffSeg.getObjectFrom1()).getSegment());
+		assertNull("first's 2 is null", diffSeg.getObjectFrom2());
+		assertEquals("fourth's 1's graphemes are 'ñ Ñ'", "ñ Ñ", ((Segment) diffSeg.getObjectFrom1()).getGraphemes());
 	}
 	
+	protected void compareWords(CVApproachLanguageComparer comparer) {
+		comparer.compareWords();
+		Set<DifferentWord> diffs = comparer.getWordsWhichDiffer();
+		assertEquals("number of different words", 8140, diffs.size());
+		List<DifferentWord> listOfDiffs = new ArrayList<DifferentWord>();
+		listOfDiffs.addAll(diffs);
+		DifferentWord diffWord = listOfDiffs.get(0);
+		assertEquals("first's 1 is motankwakwetsak", "motankwakwetsak", ((Word) diffWord.getObjectFrom1()).getWord());
+		assertEquals("first's 2 is motankwakwetsak", "motankwakwetsak", ((Word) diffWord.getObjectFrom2()).getWord());
+		assertEquals("first's 1's parse is ''", "", ((Word)diffWord.getObjectFrom1()).getCVPredictedSyllabification());
+		assertEquals("first's 2's parse is 'mo.tan.kwa.kwe.tsak'", "mo.tan.kwa.kwe.tsak", ((Word)diffWord.getObjectFrom2()).getCVPredictedSyllabification());
+		diffWord = listOfDiffs.get(2596);
+		assertEquals("first's 1 is null", null, ((Word) diffWord.getObjectFrom1()));
+		assertEquals("first's 2 is aaah", "aaah", ((Word) diffWord.getObjectFrom2()).getWord());
+		assertEquals("first's 2's parse is 'aaah'", "a.a.ah", ((Word)diffWord.getObjectFrom2()).getCVPredictedSyllabification());
+		diffWord = listOfDiffs.get(5357);
+		assertEquals("first's 1 is ababrastro", "ababrastro", ((Word) diffWord.getObjectFrom1()).getWord());
+		assertEquals("first's 2 is null", null, ((Word) diffWord.getObjectFrom2()));
+		assertEquals("first's 1's parse is ''", "", ((Word)diffWord.getObjectFrom1()).getCVPredictedSyllabification());
+	}
 }

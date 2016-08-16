@@ -178,13 +178,13 @@ public class CVApproachController extends ApproachController {
 
 				segmentInventory = languageProject.getSegmentInventory();
 				segmenter = new CVSegmenter(segmentInventory);
-				cvSegmentInventory = segmenter.getSegmentInventory();
+				cvSegmentInventory = segmenter.getActiveSegmentInventory();
 				naturalClasses = cvApproachData.getCVNaturalClasses();
 				naturalClasser = new CVNaturalClasser(naturalClasses);
-				cvNaturalClasses = naturalClasser.getNaturalClasses();
+				cvNaturalClasses = naturalClasser.getActiveNaturalClasses();
 				patterns = cvApproachData.getCVSyllablePatterns();
 				syllabifier = new CVSyllabifier(patterns, null);
-				cvPatterns = syllabifier.getCvPatterns();
+				cvPatterns = syllabifier.getActiveCVPatterns();
 
 				int max = words.size();
 				int i = 0;
@@ -214,7 +214,7 @@ public class CVApproachController extends ApproachController {
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
-					List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
+					//List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
 					word.setCVPredictedSyllabification(syllabifier
 							.getSyllabificationOfCurrentWord());
 					word.setCVParserResult(sSuccess);

@@ -4,6 +4,8 @@
 package sil.org.syllableparser.model.cvapproach;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,8 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
-import sil.org.utility.*;
 
+import sil.org.utility.*;
 import sil.org.syllableparser.model.Approach;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
@@ -52,6 +54,10 @@ public class CVApproach extends Approach {
 	public void setCVNaturalClasses(ObservableList<CVNaturalClass> cvNaturalClassesData) {
 		this.cvNaturalClasses = cvNaturalClassesData;
 	}
+	
+	public List<CVNaturalClass> getActiveCVNaturalClasses() {
+		return cvNaturalClasses.stream().filter(naturalClass -> naturalClass.isActive()).collect(Collectors.toList());
+	}
 
 	@XmlElementWrapper(name = "cvSyllablePatterns")
 	@XmlElement(name = "cvSyllablePattern")
@@ -61,6 +67,10 @@ public class CVApproach extends Approach {
 
 	public void setCVSyllablePatterns(ObservableList<CVSyllablePattern> cvSyllablePatterns) {
 		this.cvSyllablePatterns = cvSyllablePatterns;
+	}
+
+	public List<CVSyllablePattern> getActiveCVSyllablePatterns() {
+		return cvSyllablePatterns.stream().filter(pattern -> pattern.isActive()).collect(Collectors.toList());
 	}
 
 	@XmlTransient

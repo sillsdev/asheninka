@@ -3,7 +3,9 @@
  */
 package sil.org.syllableparser.model;
 
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,6 +68,10 @@ public class LanguageProject {
 	@XmlElement(name = "segment")
 	public ObservableList<Segment> getSegmentInventory() {
 		return segmentInventory;
+	}
+	
+	public List<Segment> getActiveSegmentsInInventory() {
+		return segmentInventory.stream().filter(segment -> segment.isActive()).collect(Collectors.toList());
 	}
 
 	/**
