@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 
 /**
  * @author Andy Black
@@ -30,6 +31,7 @@ public class CVApproachLanguageComparer {
 	CVApproach cva2;
 
 	Set<DifferentSegment> segmentsWhichDiffer = new HashSet<DifferentSegment>();
+	Set<DifferentCVNaturalClass> naturalClassesWhichDiffer = new HashSet<DifferentCVNaturalClass>();
 	Set<DifferentWord> wordsWhichDiffer = new HashSet<DifferentWord>();
 
 	public CVApproachLanguageComparer(CVApproach cva1, CVApproach cva2) {
@@ -56,6 +58,10 @@ public class CVApproachLanguageComparer {
 
 	public Set<DifferentSegment> getSegmentsWhichDiffer() {
 		return segmentsWhichDiffer;
+	}
+
+	public Set<DifferentCVNaturalClass> getNaturalClassesWhichDiffer() {
+		return naturalClassesWhichDiffer;
 	}
 
 	public Set<DifferentWord> getWordsWhichDiffer() {
@@ -92,21 +98,35 @@ public class CVApproachLanguageComparer {
 		}
 	}
 
-	//
-	// protected void mergeSimilarSegments(Segment segment) {
-	// List<DifferentSegment> sameSegmentsName = segmentsWhichDiffer
-	// .stream()
-	// .filter(ds -> ds.getSegmentFrom1() != null
-	// && ds.getSegmentFrom1().getSegment().equals(segment.getSegment()))
-	// .collect(Collectors.toList());
-	// if (sameSegmentsName.size() > 0) {
-	// DifferentSegment diffSeg = sameSegmentsName.get(0);
-	// diffSeg.setSegmentFrom2(segment);
-	// } else {
-	// DifferentSegment diffSegment = new DifferentSegment(null, segment);
-	// segmentsWhichDiffer.add(diffSegment);
-	// }
-	// }
+	public void compareNaturalClasses() {
+		ObservableList<CVNaturalClass> naturalClasses1 = cva1.getCVNaturalClasses();
+		ObservableList<CVNaturalClass> naturalClasses2 = cva2.getCVNaturalClasses();
+
+		Set<CVNaturalClass> difference1from2 = new HashSet<CVNaturalClass>(naturalClasses1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(naturalClasses2);
+		difference1from2.stream().forEach(
+				naturalClass -> naturalClassesWhichDiffer.add(new DifferentCVNaturalClass(naturalClass, null)));
+
+		Set<CVNaturalClass> difference2from1 = new HashSet<CVNaturalClass>(naturalClasses2);
+		difference2from1.removeAll(naturalClasses1);
+		difference2from1.stream().forEach(naturalClass -> mergeSimilarCVNaturalClasses(naturalClass));
+	}
+
+	protected void mergeSimilarCVNaturalClasses(CVNaturalClass naturalClass) {
+		List<DifferentCVNaturalClass> sameNaturalClassesName = naturalClassesWhichDiffer
+				.stream()
+				.filter(dnc -> dnc.getObjectFrom1() != null
+						&& ((CVNaturalClass) dnc.getObjectFrom1()).getNCName()
+								.equals(naturalClass.getNCName())).collect(Collectors.toList());
+		if (sameNaturalClassesName.size() > 0) {
+			DifferentCVNaturalClass diffNaturalClass = sameNaturalClassesName.get(0);
+			diffNaturalClass.setObjectFrom2(naturalClass);
+		} else {
+			DifferentCVNaturalClass diffNaturalClass = new DifferentCVNaturalClass(null, naturalClass);
+			naturalClassesWhichDiffer.add(diffNaturalClass);
+		}
+	}
 
 	public void compareWords() {
 		// make sure both sets have been syllabified

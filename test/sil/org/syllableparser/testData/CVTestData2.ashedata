@@ -17,6 +17,11 @@
                 <NCName>V</NCName>
                 <SNCRepresentation>a, e, i, o, u</SNCRepresentation>
             </cvNaturalClass>
+            <cvNaturalClass snc="a72f9654-e5ec-45dc-80ba-204abf0ef872 373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="false" id="f67aab03-a0d6-452f-afa3-b808d1d0e185">
+                <description>Glottal consonant</description>
+                <NCName>Gl</NCName>
+                <SNCRepresentation>', h</SNCRepresentation>
+            </cvNaturalClass>
         </cvNaturalClasses>
         <cvSyllablePatterns>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="5059b228-2994-4195-a881-e62958bff0c5">

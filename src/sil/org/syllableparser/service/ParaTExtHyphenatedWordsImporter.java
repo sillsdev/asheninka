@@ -78,6 +78,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 				try (Stream<String> stream = Files.lines(path)) {
 					long max = Files.lines(path).count();
 					AtomicInteger iProgress = new AtomicInteger();
+					stream.skip(7);
 					stream.forEach(s -> {
 						updateMessage(bundle.getString("label.importing") + s);
 						iProgress.incrementAndGet();

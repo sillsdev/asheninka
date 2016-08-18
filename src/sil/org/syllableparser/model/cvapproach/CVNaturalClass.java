@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -117,6 +118,31 @@ public class CVNaturalClass extends SylParserObject {
 	 */
 	public StringProperty naturalClassProperty() {
 		return this.ncName;
+	}
+	@Override
+	public int hashCode() {
+		String sCombo = ncName.getValueSafe() + sncRepresentation.getValueSafe();
+		return sCombo.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		boolean result = true;
+		CVNaturalClass natClass = (CVNaturalClass) obj;
+		if (!getNCName().equals(natClass.getNCName())) {
+			result = false;
+		} else {
+			if (!getSNCRepresentation().equals(natClass.getSNCRepresentation())) {
+				result = false;
+			}
+		}
+		return result;
 	}
 
 }
