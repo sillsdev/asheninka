@@ -41,19 +41,19 @@ public class CVApproachLanguageComparer {
 		this.cva2 = cva2;
 	}
 
-	public CVApproach getCVAa1() {
+	public CVApproach getCva1() {
 		return cva1;
 	}
 
-	public void setCVA1(CVApproach cva1) {
+	public void setCva1(CVApproach cva1) {
 		this.cva1 = cva1;
 	}
 
-	public CVApproach getCVA2() {
+	public CVApproach getCva2() {
 		return cva2;
 	}
 
-	public void setCVA2(CVApproach cva2) {
+	public void setCva2(CVApproach cva2) {
 		this.cva2 = cva2;
 	}
 
@@ -217,7 +217,6 @@ public class CVApproachLanguageComparer {
 		String syllablePatterns1 = createTextFromSyllablePattern(cva1);
 		String syllablePatterns2 = createTextFromSyllablePattern(cva2);
 		syllablePatternOrderDifferences = dmp.diff_main(syllablePatterns1, syllablePatterns2);
-		String html = dmp.diff_prettyHtml(syllablePatternOrderDifferences);
 	}
 
 	protected String createTextFromSyllablePattern(CVApproach cva) {
