@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<languageProject>
+    <analysisLanguage>
+        <fontFamily>Times New Roman</fontFamily>
+        <fontSize>12.0</fontSize>
+        <fontType>Regular</fontType>
+    </analysisLanguage>
+    <cvApproach>
+        <cvNaturalClasses>
+            <cvNaturalClass snc="28f82d15-cd1a-462d-8f24-045ab0f163b6 000e634b-5e9e-479d-82e6-f44ab9e27879 45eba5fa-70b8-4212-aaa0-5de154377ba5 a72f9654-e5ec-45dc-80ba-204abf0ef872 0c349a88-de1d-4bd8-8845-18775f142719 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 40829dfd-925c-4b59-9a7f-25de2119d8d9 6bc43a79-0aac-42aa-994e-6368a05bc29a bece0c84-063e-4b8f-93b5-46b58b5335b7 40279c4e-d982-4439-b4ea-1a807ad33edf 101d2651-cd84-4671-a286-0d37e22759e4 a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a 8ba0dff9-4b45-4c13-9e51-2598d8924950 91c1f393-497a-4345-9fcd-cd67fbb5575b 0a11acc2-cca2-45c8-a500-b3952aaf9002 76e0b311-b742-4eb5-98f9-8670dfce5149 25bdfcdf-242a-49d8-94d2-74e2f666f88b 373d2f17-d2ca-414a-b12e-ca61c9b821ed 65be3575-5c87-4a7d-8560-d1f32a816b2f fc98c3e4-c13b-4371-821c-cf1d61ef443a 518cf26f-42ab-4555-ac4d-af1667774959 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df a606ebec-8ceb-42bd-93ee-2b78f65f9984 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" active="true" id="b500749a-9617-444c-ae28-7552cb3236ec">
+                <description>consonants</description>
+                <NCName>C</NCName>
+                <SNCRepresentation>', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="de664190-dd3c-4bb3-892e-16dc596255ce 92284e25-50b0-4c3a-9043-c5a67c6cfcff 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 008bb81a-5594-45ee-ae2a-457a058cee16 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                <description>vowels</description>
+                <NCName>V</NCName>
+                <SNCRepresentation>a, e, i, o, u</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="a72f9654-e5ec-45dc-80ba-204abf0ef872 373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="false" id="f67aab03-a0d6-452f-afa3-b808d1d0e185">
+                <description>Glottal consonant</description>
+                <NCName>Gl</NCName>
+                <SNCRepresentation>', h</SNCRepresentation>
+            </cvNaturalClass>
+        </cvNaturalClasses>
+        <cvSyllablePatterns>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="5059b228-2994-4195-a881-e62958bff0c5">
+                <description>Basic syllable pattern</description>
+                <NCSRepresentation>C, V</NCSRepresentation>
+                <SPName>CV</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" active="true" id="ef542169-8f0c-45ee-9613-0ca0efcc1ec9">
+                <description>Closed syllable pattern</description>
+                <NCSRepresentation>C, V, C</NCSRepresentation>
+                <SPName>CVC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="5bd3a6bb-bbd2-40de-b7f2-36b8b5cfbb08">
+                <description>Vowel only</description>
+                <NCSRepresentation>V</NCSRepresentation>
+                <SPName>V</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" active="true" id="c8cc5c7c-fa81-49bc-8146-ea8085cccd29">
+                <description>Vowel with coda</description>
+                <NCSRepresentation>V, C</NCSRepresentation>
+                <SPName>VC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+        </cvSyllablePatterns>
+    </cvApproach>
+    <segments>
+        <segment active="true" id="28f82d15-cd1a-462d-8f24-045ab0f163b6">
+            <description>glottal stop (used between vowels)</description>
+            <graphemes>'</graphemes>
+            <segment>'</segment>
+        </segment>
+        <segment active="true" id="de664190-dd3c-4bb3-892e-16dc596255ce">
+            <description>low central unrounded vowel</description>
+            <graphemes>a A á Á</graphemes>
+            <segment>a</segment>
+        </segment>
+        <segment active="true" id="000e634b-5e9e-479d-82e6-f44ab9e27879">
+            <description>voiced bilabial stop</description>
+            <graphemes>b B</graphemes>
+            <segment>b</segment>
+        </segment>
+        <segment active="true" id="45eba5fa-70b8-4212-aaa0-5de154377ba5">
+            <description>voiceless velar stop</description>
+            <graphemes>c C</graphemes>
+            <segment>c</segment>
+        </segment>
+        <segment active="true" id="a72f9654-e5ec-45dc-80ba-204abf0ef872">
+            <description>voiceless alveopalatal affricate</description>
+            <graphemes>ch Ch CH</graphemes>
+            <segment>ch</segment>
+        </segment>
+        <segment active="true" id="0c349a88-de1d-4bd8-8845-18775f142719">
+            <description>voiced alveolar stop</description>
+            <graphemes>d D</graphemes>
+            <segment>d</segment>
+        </segment>
+        <segment active="true" id="92284e25-50b0-4c3a-9043-c5a67c6cfcff">
+            <description>mid front unrounded vowel</description>
+            <graphemes>e E é É</graphemes>
+            <segment>e</segment>
+        </segment>
+        <segment active="true" id="0701fe22-3ac3-43a9-8d0d-78940f0ec514">
+            <description>voiceless interdental fricative</description>
+            <graphemes>f F</graphemes>
+            <segment>f</segment>
+        </segment>
+        <segment active="true" id="bad3c040-9306-423c-95d0-58b3678b40ee">
+            <description>voiced velar stop</description>
+            <graphemes>g G</graphemes>
+            <segment>g</segment>
+        </segment>
+        <segment active="true" id="60765d81-b40d-42b2-ace5-9d476355270c">
+            <description>voiceless glottal fricative</description>
+            <graphemes>h H</graphemes>
+            <segment>h</segment>
+        </segment>
+        <segment active="true" id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf">
+            <description>high front unrounded vowel</description>
+            <graphemes>i I í Í</graphemes>
+            <segment>i</segment>
+        </segment>
+        <segment active="true" id="40829dfd-925c-4b59-9a7f-25de2119d8d9">
+            <description>voiceless glottal fricative </description>
+            <graphemes>j J</graphemes>
+            <segment>j</segment>
+        </segment>
+        <segment active="true" id="6bc43a79-0aac-42aa-994e-6368a05bc29a">
+            <description>voiceless velar stop</description>
+            <graphemes>k K</graphemes>
+            <segment>k</segment>
+        </segment>
+        <segment active="true" id="bece0c84-063e-4b8f-93b5-46b58b5335b7">
+            <description>labialized voiceless velar stop</description>
+            <graphemes>kw Kw KW</graphemes>
+            <segment>kw</segment>
+        </segment>
+        <segment active="true" id="40279c4e-d982-4439-b4ea-1a807ad33edf">
+            <description>palatalized voiceless velar stop</description>
+            <graphemes>ky Ky KY</graphemes>
+            <segment>ky</segment>
+        </segment>
+        <segment active="true" id="101d2651-cd84-4671-a286-0d37e22759e4">
+            <description>voiced lateral</description>
+            <graphemes>l L</graphemes>
+            <segment>l</segment>
+        </segment>
+        <segment active="true" id="a09371d4-f079-42ff-a2f6-25c2dcab0b95">
+            <description>bilabial nasal</description>
+            <graphemes>m M</graphemes>
+            <segment>m</segment>
+        </segment>
+        <segment active="true" id="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
+            <description>alveolar nasal</description>
+            <graphemes>n N</graphemes>
+            <segment>n</segment>
+        </segment>
+        <segment active="true" id="8ba0dff9-4b45-4c13-9e51-2598d8924950">
+            <description>palatal nasal</description>
+            <graphemes>ñ Ñ</graphemes>
+            <segment>ñ</segment>
+        </segment>
+        <segment active="true" id="008bb81a-5594-45ee-ae2a-457a058cee16">
+            <description>mid back rounded vowel</description>
+            <graphemes>o O ó Ó</graphemes>
+            <segment>o</segment>
+        </segment>
+        <segment active="true" id="91c1f393-497a-4345-9fcd-cd67fbb5575b">
+            <description>voiceless bilabial stop</description>
+            <graphemes>p P</graphemes>
+            <segment>p</segment>
+        </segment>
+        <segment active="true" id="0a11acc2-cca2-45c8-a500-b3952aaf9002">
+            <description>voiceless uvular stop</description>
+            <graphemes>q Q</graphemes>
+            <segment>q</segment>
+        </segment>
+        <segment active="true" id="76e0b311-b742-4eb5-98f9-8670dfce5149">
+            <description>voiced alveolar flap</description>
+            <graphemes>r R</graphemes>
+            <segment>r</segment>
+        </segment>
+        <segment active="true" id="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
+            <description>voiceless alveolar fricative</description>
+            <graphemes>s S</graphemes>
+            <segment>s</segment>
+        </segment>
+        <segment active="true" id="373d2f17-d2ca-414a-b12e-ca61c9b821ed">
+            <description>voiceless alveopalatal fricative</description>
+            <graphemes>sh Sh SH</graphemes>
+            <segment>sh</segment>
+        </segment>
+        <segment active="true" id="65be3575-5c87-4a7d-8560-d1f32a816b2f">
+            <description>voiceless alveolar stop</description>
+            <graphemes>t T</graphemes>
+            <segment>t</segment>
+        </segment>
+        <segment active="true" id="fc98c3e4-c13b-4371-821c-cf1d61ef443a">
+            <description>voiceless alveolar affricate</description>
+            <graphemes>ts Ts TS</graphemes>
+            <segment>ts</segment>
+        </segment>
+        <segment active="true" id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f">
+            <description>high back rounded vowel</description>
+            <graphemes>u U ú Ú</graphemes>
+            <segment>u</segment>
+        </segment>
+        <segment active="true" id="518cf26f-42ab-4555-ac4d-af1667774959">
+            <description>voiced interdental fricative</description>
+            <graphemes>v V</graphemes>
+            <segment>v</segment>
+        </segment>
+        <segment active="true" id="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df">
+            <description>labio-velar aproximate</description>
+            <graphemes>w W</graphemes>
+            <segment>w</segment>
+        </segment>
+        <segment active="true" id="a606ebec-8ceb-42bd-93ee-2b78f65f9984">
+            <description>voiceless velar fricative</description>
+            <graphemes>x X</graphemes>
+            <segment>x</segment>
+        </segment>
+        <segment active="true" id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
+            <description>voiced palatal approximate</description>
+            <graphemes>y Y</graphemes>
+            <segment>y</segment>
+        </segment>
+        <segment active="true" id="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422">
+            <description>voiced alveolar fricative</description>
+            <graphemes>z Z</graphemes>
+            <segment>z</segment>
+        </segment>
+    </segments>
+    <vernacularLanguage>
+        <fontFamily>Charis SIL</fontFamily>
+        <fontSize>12.0</fontSize>
+        <fontType>Regular</fontType>
+    </vernacularLanguage>
+    <words>
+    </words>
+</languageProject>

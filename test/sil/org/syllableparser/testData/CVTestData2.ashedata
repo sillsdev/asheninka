@@ -26,7 +26,7 @@
         <cvSyllablePatterns>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="5059b228-2994-4195-a881-e62958bff0c5">
                 <description>Basic syllable pattern</description>
-                <NCSRepresentation>C, V</NCSRepresentation>
+                <NCSRepresentation>C, v</NCSRepresentation>
                 <SPName>CV</SPName>
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>

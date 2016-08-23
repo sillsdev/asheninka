@@ -62,8 +62,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 	// TODO: figure out how to get JUnit to deal with a thread so we do
 	// not have two copies of the crucial code.
 	// TODO: is there a way to avoid duplicating this code when just a method
-	// call or two
-	// is what is different?
+	// call or two is what is different?
 	public void importWords(File file, String sUntested, StatusBar statusBar, ResourceBundle bundle) {
 		long timeStart = System.currentTimeMillis();
 

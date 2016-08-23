@@ -144,5 +144,30 @@ public class CVSyllablePattern extends SylParserObject {
 		return this.spName;
 	}
 
+	@Override
+	public int hashCode() {
+		String sCombo = spName.getValueSafe() + ncsRepresentation.getValueSafe();
+		return sCombo.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		boolean result = true;
+		CVSyllablePattern sylPattern = (CVSyllablePattern) obj;
+		if (!getSPName().equals(sylPattern.getSPName())) {
+			result = false;
+		} else {
+			if (!getNCSRepresentation().equals(sylPattern.getNCSRepresentation())) {
+				result = false;
+			}
+		}
+		return result;
+	}
 
 }

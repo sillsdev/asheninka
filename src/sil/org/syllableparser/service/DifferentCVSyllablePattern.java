@@ -4,15 +4,15 @@
 package sil.org.syllableparser.service;
 
 import sil.org.syllableparser.model.SylParserObject;
-import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 
 /**
  * @author Andy Black
  *
  */
-public class DifferentCVNaturalClass extends DifferentSylParserObject {
+public class DifferentCVSyllablePattern extends DifferentSylParserObject {
 
-	public DifferentCVNaturalClass(CVNaturalClass naturalClassFrom1, CVNaturalClass naturalClassFrom2) {
+	public DifferentCVSyllablePattern(CVSyllablePattern naturalClassFrom1, CVSyllablePattern naturalClassFrom2) {
 		super((SylParserObject)naturalClassFrom1, (SylParserObject)naturalClassFrom2);
 	}
 
@@ -24,16 +24,16 @@ public class DifferentCVNaturalClass extends DifferentSylParserObject {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DifferentCVSyllablePattern other = (DifferentCVSyllablePattern) obj;
+		DifferentCVNaturalClass other = (DifferentCVNaturalClass) obj;
 		if (objectFrom1 == null) {
 			if (other.objectFrom1 != null)
 				return false;
-		} else if (!((CVNaturalClass) objectFrom1).getNCName().equals(((CVNaturalClass) other.objectFrom1).getNCName()))
+		} else if (!((CVSyllablePattern) objectFrom1).getSPName().equals(((CVSyllablePattern) other.objectFrom1).getSPName()))
 			return false;
 		if (objectFrom2 == null) {
 			if (other.objectFrom2 != null)
 				return false;
-		} else if (!((CVNaturalClass) objectFrom2).getNCName().equals(((CVNaturalClass) other.objectFrom2).getNCName()))
+		} else if (!((CVSyllablePattern) objectFrom2).getSPName().equals(((CVSyllablePattern) other.objectFrom2).getSPName()))
 			return false;
 		return true;
 	}

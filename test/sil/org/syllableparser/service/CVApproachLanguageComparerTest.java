@@ -7,11 +7,13 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,8 +34,8 @@ import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
  */
 public class CVApproachLanguageComparerTest {
 
-	LanguageProject languageProject1;
-	LanguageProject languageProject2;
+	LanguageProject languageProject3;
+	LanguageProject languageProject4;
 	CVApproach cva1;
 	CVApproach cva2;
 
@@ -42,17 +44,17 @@ public class CVApproachLanguageComparerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		languageProject1 = new LanguageProject();
+		languageProject3 = new LanguageProject();
 		Locale locale = new Locale("en");
-		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
-		cva1 = languageProject1.getCVApproach();
-		languageProject2 = new LanguageProject();
-		xmlBackEndProvider = new XMLBackEndProvider(languageProject2, locale);
+		cva1 = languageProject3.getCVApproach();
+		languageProject4 = new LanguageProject();
+		xmlBackEndProvider = new XMLBackEndProvider(languageProject4, locale);
 		file = new File(Constants.UNIT_TEST_DATA_FILE_2);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
-		cva2 = languageProject2.getCVApproach();
+		cva2 = languageProject4.getCVApproach();
 	}
 
 	/**
@@ -67,9 +69,9 @@ public class CVApproachLanguageComparerTest {
 	public void languagesContentsTest() {
 		// Segments
 		ObservableList<Segment> segmentInventory;
-		segmentInventory = languageProject1.getSegmentInventory();
+		segmentInventory = languageProject3.getSegmentInventory();
 		assertEquals("Segment inventory size", 27, segmentInventory.size());
-		segmentInventory = languageProject2.getSegmentInventory();
+		segmentInventory = languageProject4.getSegmentInventory();
 		assertEquals("Segment inventory size", 33, segmentInventory.size());
 		// natural classes
 		ObservableList<CVNaturalClass> naturalClasses;
@@ -96,6 +98,7 @@ public class CVApproachLanguageComparerTest {
 		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva1, cva2);
 		compareSegments(comparer);
 		compareNaturalClasses(comparer);
+		compareSyllablePatterns(comparer);
 		compareWords(comparer);
 	}
 
@@ -157,6 +160,30 @@ public class CVApproachLanguageComparerTest {
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getSNCRepresentation());
 	}
 
+	protected void compareSyllablePatterns(CVApproachLanguageComparer comparer) {
+		comparer.compareSyllablePatterns();
+		Set<DifferentCVSyllablePattern> diffs = comparer.getSyllablePatternsWhichDiffer();
+		assertEquals("number of different syllable patterns", 8, diffs.size());
+		List<DifferentCVSyllablePattern> listOfDiffs = new ArrayList<DifferentCVSyllablePattern>();
+		listOfDiffs.addAll(diffs);
+		DifferentCVSyllablePattern diffSyllablePattern = listOfDiffs.get(3);
+		assertEquals("fourth's 1 is 'CV", "CV", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
+		assertEquals("fourth's 2 is 'CV'", "CV", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
+		assertEquals("fourth's 1's natural classes are 'C, V'", "C, V",
+				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getNCSRepresentation());
+		assertEquals("fourth's 2's natural classes are 'C, v'", "C, v",
+				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getNCSRepresentation());
+		diffSyllablePattern = listOfDiffs.get(0);
+		assertNull("first's 1 is null", diffSyllablePattern.getObjectFrom1());
+		assertEquals("first's 2 is 'V'", "V", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
+		assertEquals("first's 2's natural classesare 'V'", "V",
+				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getNCSRepresentation());
+		diffSyllablePattern = listOfDiffs.get(1);
+		assertEquals("second's 1 is 'CVCC#'", "CVCC#", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
+		assertNull("second's 2 is null", diffSyllablePattern.getObjectFrom2());
+		assertEquals("second's 1's natural classes are 'C, V, C, C,#'", "C, V, C, C, #",
+				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getNCSRepresentation());
+	}
 	protected void compareWords(CVApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		Set<DifferentWord> diffs = comparer.getWordsWhichDiffer();
@@ -183,5 +210,26 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("5358's 2 is null", null, ((Word) diffWord.getObjectFrom2()));
 		assertEquals("5358's 1's parse is ''", "",
 				((Word) diffWord.getObjectFrom1()).getCVPredictedSyllabification());
+	}
+	
+	@Test
+	public void compareSyllablePatternOrderTest() {
+		// setup
+		languageProject3 = new LanguageProject();
+		Locale locale = new Locale("en");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
+		File file = new File(Constants.UNIT_TEST_DATA_FILE_3);
+		xmlBackEndProvider.loadLanguageDataFromFile(file);
+		CVApproach cva3 = languageProject3.getCVApproach();
+		languageProject4 = new LanguageProject();
+		xmlBackEndProvider = new XMLBackEndProvider(languageProject4, locale);
+		file = new File(Constants.UNIT_TEST_DATA_FILE_4);
+		xmlBackEndProvider.loadLanguageDataFromFile(file);
+		CVApproach cva4 = languageProject4.getCVApproach();
+		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva3, cva4);
+		// test (we only use this as a way to tell if the the two orders are the same or not)
+		comparer.compareSyllablePatternOrder();
+		LinkedList<Diff> differences = comparer.getSyllablePatternOrderDifferences();
+		assertEquals(7, differences.size());
 	}
 }
