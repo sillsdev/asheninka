@@ -207,7 +207,7 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		SortedSet<DifferentCVSyllablePattern> diffSyllablePatterns = comparer
 				.getSyllablePatternsWhichDiffer();
 		if (diffSyllablePatterns.size() == 0) {
-			sb.append("<p>" + bundle.getString("report.samecvsyllablepattern") + "</p>\n");
+			sb.append("<p>" + bundle.getString("report.samecvsyllablepatterns") + "</p>\n");
 		} else {
 			sb.append("<p>" + bundle.getString("report.cvsyllablepatternswhichdiffer") + "</p>\n");
 			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");

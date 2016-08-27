@@ -35,6 +35,7 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 	CVApproach cva1;
 	CVApproach cva2;
 	CVApproachLanguageComparer comparer;
+	CVApproachLanguageComparer comparerSame;
 	private Locale locale;
 	private LocalDateTime dateTime;
 
@@ -55,6 +56,13 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 		xmlBackEndProvider.loadLanguageDataFromFile(file2);
 		cva2 = languageProject2.getCVApproach();
 		comparer = new CVApproachLanguageComparer(cva1, cva2);
+		invokeComparison(comparer, file1, file2);
+		comparerSame = new CVApproachLanguageComparer(cva1, cva1);
+		invokeComparison(comparerSame, file1, file1);
+		dateTime = LocalDateTime.of(2016, Month.APRIL, 9, 8, 7, 3);
+	}
+
+	protected void invokeComparison(CVApproachLanguageComparer comparer, File file1, File file2) {
 		comparer.setDataSet1Info(file1.getPath());
 		comparer.setDataSet2Info(file2.getPath());
 		comparer.compareSegmentInventory();
@@ -62,7 +70,6 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 		comparer.compareSyllablePatterns();
 		comparer.compareSyllablePatternOrder();
 		comparer.compareWords();
-		dateTime = LocalDateTime.of(2016, Month.APRIL, 9, 8, 7, 3);
 	}
 
 	/**
@@ -90,11 +97,45 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 	}
 
 	@Test
+	public void formattingSameEnglishTest() {
+		CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
+				comparerSame, locale, dateTime);
+		String result = formatter.format();
+		File file = new File("test/sil/org/syllableparser/testData/CVApproachLanguageComparisonSameHTMLEnglish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
 	public void formattingSpanishTest() {
 		CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/sil/org/syllableparser/testData/CVApproachLanguageComparisonHTMLSpanish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void formattingSameSpanishTest() {
+		CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
+				comparerSame, new Locale("es"), dateTime);
+		String result = formatter.format();
+		File file = new File("test/sil/org/syllableparser/testData/CVApproachLanguageComparisonSameHTMLSpanish.html");
 		try {
 			Stream<String> contents = Files.lines(file.toPath());
 			String scontents = contents.collect(Collectors.joining("\n"));
