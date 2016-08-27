@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,11 +36,17 @@ public class DateTimeNormalizerTest {
 	@Test
 	public void test() {
 		LocalDateTime dateTime = LocalDateTime.of(2016, Month.APRIL, 9, 8, 7, 3);
-		String normalizedDateTime = DateTimeNormalizer.normalizeDateTime(dateTime);
+		String normalizedDateTime = DateTimeNormalizer.normalizeDateTimeWithDigits(dateTime);
 		assertEquals("20160409-080703", normalizedDateTime);
 		dateTime = LocalDateTime.of(2016, Month.APRIL, 9, 14, 17, 13);
-		normalizedDateTime = DateTimeNormalizer.normalizeDateTime(dateTime);
+		normalizedDateTime = DateTimeNormalizer.normalizeDateTimeWithDigits(dateTime);
 		assertEquals("20160409-141713", normalizedDateTime);
+		Locale locale = new Locale("en");
+		String asWords = DateTimeNormalizer.normalizeDateTimeWithWords(dateTime, locale);
+		assertEquals("April 9, 2016 2:17 PM", asWords);
+		locale = new Locale("es");
+		asWords = DateTimeNormalizer.normalizeDateTimeWithWords(dateTime, locale);
+		assertEquals("9 de abril de 2016 14:17", asWords);
 	}
 
 }

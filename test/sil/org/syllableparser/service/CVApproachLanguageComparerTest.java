@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.SortedSet;
 
 import javafx.collections.ObservableList;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
@@ -34,8 +35,8 @@ import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
  */
 public class CVApproachLanguageComparerTest {
 
-	LanguageProject languageProject3;
-	LanguageProject languageProject4;
+	LanguageProject languageProject1;
+	LanguageProject languageProject2;
 	CVApproach cva1;
 	CVApproach cva2;
 
@@ -44,17 +45,17 @@ public class CVApproachLanguageComparerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		languageProject3 = new LanguageProject();
+		languageProject1 = new LanguageProject();
 		Locale locale = new Locale("en");
-		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
-		cva1 = languageProject3.getCVApproach();
-		languageProject4 = new LanguageProject();
-		xmlBackEndProvider = new XMLBackEndProvider(languageProject4, locale);
+		cva1 = languageProject1.getCVApproach();
+		languageProject2 = new LanguageProject();
+		xmlBackEndProvider = new XMLBackEndProvider(languageProject2, locale);
 		file = new File(Constants.UNIT_TEST_DATA_FILE_2);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
-		cva2 = languageProject4.getCVApproach();
+		cva2 = languageProject2.getCVApproach();
 	}
 
 	/**
@@ -69,9 +70,9 @@ public class CVApproachLanguageComparerTest {
 	public void languagesContentsTest() {
 		// Segments
 		ObservableList<Segment> segmentInventory;
-		segmentInventory = languageProject3.getSegmentInventory();
+		segmentInventory = languageProject1.getSegmentInventory();
 		assertEquals("Segment inventory size", 27, segmentInventory.size());
-		segmentInventory = languageProject4.getSegmentInventory();
+		segmentInventory = languageProject2.getSegmentInventory();
 		assertEquals("Segment inventory size", 33, segmentInventory.size());
 		// natural classes
 		ObservableList<CVNaturalClass> naturalClasses;
@@ -104,23 +105,23 @@ public class CVApproachLanguageComparerTest {
 
 	protected void compareSegments(CVApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
-		Set<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
+		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
 		assertEquals("number of different segments", 13, diffs.size());
 		List<DifferentSegment> listOfDiffs = new ArrayList<DifferentSegment>();
 		listOfDiffs.addAll(diffs);
-		DifferentSegment diffSeg = listOfDiffs.get(0);
-		assertEquals("first's 1 is an /e/", "e", ((Segment) diffSeg.getObjectFrom1()).getSegment());
-		assertEquals("first's 2 is an /e/", "e", ((Segment) diffSeg.getObjectFrom2()).getSegment());
-		assertEquals("first's 1's graphemes are 'e E'", "e E",
+		DifferentSegment diffSeg = listOfDiffs.get(1);
+		assertEquals("second's 1 is an /a/", "a", ((Segment) diffSeg.getObjectFrom1()).getSegment());
+		assertEquals("second's 2 is an /a/", "a", ((Segment) diffSeg.getObjectFrom2()).getSegment());
+		assertEquals("second's 1's graphemes are 'a A'", "a A",
 				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
-		assertEquals("first's 2's graphemes are 'e E é É'", "e E é É",
+		assertEquals("second's 2's graphemes are 'a A á Á'", "a A á Á",
 				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
-		diffSeg = listOfDiffs.get(3);
-		assertNull("fourth's 1 is null", diffSeg.getObjectFrom1());
-		assertEquals("fourth's 2 is an /ñ/", "ñ", ((Segment) diffSeg.getObjectFrom2()).getSegment());
-		assertEquals("fourth's 2's graphemes are 'ñ Ñ'", "ñ Ñ",
+		diffSeg = listOfDiffs.get(0);
+		assertNull("first's 1 is null", diffSeg.getObjectFrom1());
+		assertEquals("first's 2 is a /\'/", "'", ((Segment) diffSeg.getObjectFrom2()).getSegment());
+		assertEquals("first's 2's graphemes are '\''", "'",
 				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
-		diffSeg = listOfDiffs.get(9);
+		diffSeg = listOfDiffs.get(12);
 		assertEquals("tenth's 1 is a /ɲ/", "ɲ", ((Segment) diffSeg.getObjectFrom1()).getSegment());
 		assertNull("tenth's 2 is null", diffSeg.getObjectFrom2());
 		assertEquals("tenth's 1's graphemes are 'ñ Ñ'", "ñ Ñ",
@@ -129,99 +130,99 @@ public class CVApproachLanguageComparerTest {
 
 	protected void compareNaturalClasses(CVApproachLanguageComparer comparer) {
 		comparer.compareNaturalClasses();
-		Set<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
+		SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
 		assertEquals("number of different natural classes", 4, diffs.size());
 		List<DifferentCVNaturalClass> listOfDiffs = new ArrayList<DifferentCVNaturalClass>();
 		listOfDiffs.addAll(diffs);
-		DifferentCVNaturalClass diffNaturalClass = listOfDiffs.get(0);
-		assertEquals("first's 1 is [C]", "C",
+		DifferentCVNaturalClass diffNaturalClass = listOfDiffs.get(1);
+		assertEquals("second's 1 is [C]", "C",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getNCName());
-		assertEquals("first's 2 is [C]", "C",
+		assertEquals("second's 2 is [C]", "C",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getNCName());
 		assertEquals(
-				"first's 1's reps are 'b, ch, d, f, g, h, k, l, p, s, sh, t, v, w, x, y, z, N'",
+				"second's 1's reps are 'b, ch, d, f, g, h, k, l, p, s, sh, t, v, w, x, y, z, N'",
 				"b, ch, d, f, g, h, k, l, p, s, sh, t, v, w, x, y, z, N",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getSNCRepresentation());
 		assertEquals(
-				"first's 2's reps are '', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z'",
+				"second's 2's reps are '', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z'",
 				"', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getSNCRepresentation());
-		diffNaturalClass = listOfDiffs.get(3);
-		assertNull("fourth's 1 is null", diffNaturalClass.getObjectFrom1());
-		assertEquals("fourth's 2 is [Gl]", "Gl",
+		diffNaturalClass = listOfDiffs.get(2);
+		assertNull("third's 1 is null", diffNaturalClass.getObjectFrom1());
+		assertEquals("third's 2 is [Gl]", "Gl",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getNCName());
-		assertEquals("fourth's 2's reps are '\', h'", "', h",
+		assertEquals("third's 2's reps are '\', h'", "', h",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getSNCRepresentation());
-		diffNaturalClass = listOfDiffs.get(1);
-		assertEquals("first's 1 is [N]", "N",
+		diffNaturalClass = listOfDiffs.get(3);
+		assertEquals("fourth's 1 is [N]", "N",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getNCName());
-		assertNull("first's 2 is null", diffNaturalClass.getObjectFrom2());
+		assertNull("fourth's 2 is null", diffNaturalClass.getObjectFrom2());
 		assertEquals("fourth's 1's reps are 'm, n, ɲ'", "m, n, ɲ",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getSNCRepresentation());
 	}
 
 	protected void compareSyllablePatterns(CVApproachLanguageComparer comparer) {
 		comparer.compareSyllablePatterns();
-		Set<DifferentCVSyllablePattern> diffs = comparer.getSyllablePatternsWhichDiffer();
+		SortedSet<DifferentCVSyllablePattern> diffs = comparer.getSyllablePatternsWhichDiffer();
 		assertEquals("number of different syllable patterns", 8, diffs.size());
 		List<DifferentCVSyllablePattern> listOfDiffs = new ArrayList<DifferentCVSyllablePattern>();
 		listOfDiffs.addAll(diffs);
-		DifferentCVSyllablePattern diffSyllablePattern = listOfDiffs.get(3);
-		assertEquals("fourth's 1 is 'CV", "CV", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
-		assertEquals("fourth's 2 is 'CV'", "CV", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
-		assertEquals("fourth's 1's natural classes are 'C, V'", "C, V",
+		DifferentCVSyllablePattern diffSyllablePattern = listOfDiffs.get(2);
+		assertEquals("third's 1 is 'CV", "CV", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
+		assertEquals("third's 2 is 'CV'", "CV", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
+		assertEquals("third's 1's natural classes are 'C, V'", "C, V",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getNCSRepresentation());
-		assertEquals("fourth's 2's natural classes are 'C, v'", "C, v",
+		assertEquals("fouthird'srth's 2's natural classes are 'C, v'", "C, v",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getNCSRepresentation());
-		diffSyllablePattern = listOfDiffs.get(0);
-		assertNull("first's 1 is null", diffSyllablePattern.getObjectFrom1());
-		assertEquals("first's 2 is 'V'", "V", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
-		assertEquals("first's 2's natural classesare 'V'", "V",
+		diffSyllablePattern = listOfDiffs.get(6);
+		assertNull("seventh's 1 is null", diffSyllablePattern.getObjectFrom1());
+		assertEquals("seventh's 2 is 'V'", "V", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
+		assertEquals("seventh's 2's natural classesare 'V'", "V",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getNCSRepresentation());
-		diffSyllablePattern = listOfDiffs.get(1);
-		assertEquals("second's 1 is 'CVCC#'", "CVCC#", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
-		assertNull("second's 2 is null", diffSyllablePattern.getObjectFrom2());
-		assertEquals("second's 1's natural classes are 'C, V, C, C,#'", "C, V, C, C, #",
+		diffSyllablePattern = listOfDiffs.get(3);
+		assertEquals("fourth's 1 is 'CVCC#'", "CVCC#", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
+		assertNull("fourth's 2 is null", diffSyllablePattern.getObjectFrom2());
+		assertEquals("fourth's 1's natural classes are 'C, V, C, C,#'", "C, V, C, C, #",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getNCSRepresentation());
 	}
 	protected void compareWords(CVApproachLanguageComparer comparer) {
 		comparer.compareWords();
-		Set<DifferentWord> diffs = comparer.getWordsWhichDiffer();
+		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
 		assertEquals("number of different words", 8140, diffs.size());
 		List<DifferentWord> listOfDiffs = new ArrayList<DifferentWord>();
 		listOfDiffs.addAll(diffs);
-		DifferentWord diffWord = listOfDiffs.get(0);
-		assertEquals("first's 1 is motankwakwetsak", "motankwakwetsak",
+		DifferentWord diffWord = listOfDiffs.get(3804);
+		assertEquals("3804's 1 is motankwakwetsak", "motankwakwetsak",
 				((Word) diffWord.getObjectFrom1()).getWord());
-		assertEquals("first's 2 is motankwakwetsak", "motankwakwetsak",
+		assertEquals("3804's 2 is motankwakwetsak", "motankwakwetsak",
 				((Word) diffWord.getObjectFrom2()).getWord());
-		assertEquals("first's 1's parse is ''", "",
+		assertEquals("3804's 1's parse is ''", "",
 				((Word) diffWord.getObjectFrom1()).getCVPredictedSyllabification());
-		assertEquals("first's 2's parse is 'mo.tan.kwa.kwe.tsak'", "mo.tan.kwa.kwe.tsak",
+		assertEquals("3804's 2's parse is 'mo.tan.kwa.kwe.tsak'", "mo.tan.kwa.kwe.tsak",
 				((Word) diffWord.getObjectFrom2()).getCVPredictedSyllabification());
-		diffWord = listOfDiffs.get(2596);
-		assertEquals("2597's 1 is null", null, ((Word) diffWord.getObjectFrom1()));
-		assertEquals("2597's 2 is aaah", "aaah", ((Word) diffWord.getObjectFrom2()).getWord());
-		assertEquals("2597's 2's parse is 'aaah'", "a.a.ah",
+		diffWord = listOfDiffs.get(1);
+		assertEquals("second's 1 is null", null, ((Word) diffWord.getObjectFrom1()));
+		assertEquals("second's 2 is aaah", "aaah", ((Word) diffWord.getObjectFrom2()).getWord());
+		assertEquals("second's 2's parse is 'aaah'", "a.a.ah",
 				((Word) diffWord.getObjectFrom2()).getCVPredictedSyllabification());
-		diffWord = listOfDiffs.get(5357);
-		assertEquals("5358's 1 is ababrastro", "ababrastro",
+		diffWord = listOfDiffs.get(2);
+		assertEquals("third's 1 is ababrastro", "ababrastro",
 				((Word) diffWord.getObjectFrom1()).getWord());
-		assertEquals("5358's 2 is null", null, ((Word) diffWord.getObjectFrom2()));
-		assertEquals("5358's 1's parse is ''", "",
+		assertEquals("third's 2 is null", null, ((Word) diffWord.getObjectFrom2()));
+		assertEquals("third's 1's parse is ''", "",
 				((Word) diffWord.getObjectFrom1()).getCVPredictedSyllabification());
 	}
 	
 	@Test
 	public void compareSyllablePatternOrderTest() {
 		// setup
-		languageProject3 = new LanguageProject();
+		LanguageProject languageProject3 = new LanguageProject();
 		Locale locale = new Locale("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE_3);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		CVApproach cva3 = languageProject3.getCVApproach();
-		languageProject4 = new LanguageProject();
+		LanguageProject languageProject4 = new LanguageProject();
 		xmlBackEndProvider = new XMLBackEndProvider(languageProject4, locale);
 		file = new File(Constants.UNIT_TEST_DATA_FILE_4);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);

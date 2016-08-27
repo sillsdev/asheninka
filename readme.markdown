@@ -1,5 +1,5 @@
-Asheninka Syllable Parser
--------------------------
+Asheninka (a Syllable Parser)
+-----------------------------
 
 ### Version 0.1.2.0 Alpha
 14-July-2016

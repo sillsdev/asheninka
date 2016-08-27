@@ -3,6 +3,8 @@
  */
 package sil.org.syllableparser.service;
 
+import sil.org.syllableparser.Constants;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 
@@ -14,6 +16,15 @@ public class DifferentCVSyllablePattern extends DifferentSylParserObject {
 
 	public DifferentCVSyllablePattern(CVSyllablePattern naturalClassFrom1, CVSyllablePattern naturalClassFrom2) {
 		super((SylParserObject)naturalClassFrom1, (SylParserObject)naturalClassFrom2);
+	}
+
+	public String getSortingValue() {
+		if (objectFrom1 != null) {
+			return ((CVSyllablePattern) objectFrom1).getSPName();
+		} else if (objectFrom2 != null) {
+			return ((CVSyllablePattern) objectFrom2).getSPName();
+		}
+		return Constants.NULL_AS_STRING;
 	}
 
 	@Override

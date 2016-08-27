@@ -3,6 +3,7 @@
  */
 package sil.org.syllableparser.service;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 
@@ -14,6 +15,15 @@ public class DifferentSegment extends DifferentSylParserObject {
 
 	public DifferentSegment(Segment segmentFrom1, Segment segmentFrom2) {
 		super((SylParserObject)segmentFrom1, (SylParserObject)segmentFrom2);
+	}
+	
+	public String getSortingValue() {
+		if (objectFrom1 != null) {
+			return ((Segment) objectFrom1).getSegment();
+		} else if (objectFrom2 != null) {
+			return ((Segment) objectFrom2).getSegment();
+		}
+		return Constants.NULL_AS_STRING;
 	}
 
 	@Override

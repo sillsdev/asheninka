@@ -3,8 +3,10 @@
  */
 package sil.org.syllableparser.service;
 
+import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.Word;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 
 /**
  * @author Andy Black
@@ -14,6 +16,15 @@ public class DifferentWord extends DifferentSylParserObject {
 
 	public DifferentWord(Word wordFrom1, Word wordFrom2) {
 		super((SylParserObject)wordFrom1, (SylParserObject)wordFrom2);
+	}
+
+	public String getSortingValue() {
+		if (objectFrom1 != null) {
+			return ((Word) objectFrom1).getWord();
+		} else if (objectFrom2 != null) {
+			return ((Word) objectFrom2).getWord();
+		}
+		return Constants.NULL_AS_STRING;
 	}
 
 	@Override

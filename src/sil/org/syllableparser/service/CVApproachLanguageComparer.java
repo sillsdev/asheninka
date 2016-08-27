@@ -3,10 +3,13 @@
  */
 package sil.org.syllableparser.service;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import name.fraser.neil.plaintext.diff_match_patch;
@@ -29,10 +32,17 @@ public class CVApproachLanguageComparer {
 	CVApproach cva1;
 	CVApproach cva2;
 
-	Set<DifferentSegment> segmentsWhichDiffer = new HashSet<DifferentSegment>();
-	Set<DifferentCVNaturalClass> naturalClassesWhichDiffer = new HashSet<DifferentCVNaturalClass>();
-	Set<DifferentCVSyllablePattern> syllablePatternsWhichDiffer = new HashSet<DifferentCVSyllablePattern>();
-	Set<DifferentWord> wordsWhichDiffer = new HashSet<DifferentWord>();
+	String dataSet1Info;
+	String dataSet2Info;
+
+	SortedSet<DifferentSegment> segmentsWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentSegment::getSortingValue));
+	SortedSet<DifferentCVNaturalClass> naturalClassesWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
+	SortedSet<DifferentCVSyllablePattern> syllablePatternsWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentCVSyllablePattern::getSortingValue));
+	SortedSet<DifferentWord> wordsWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentWord::getSortingValue));
 	LinkedList<Diff> syllablePatternOrderDifferences = new LinkedList<>();
 
 	public CVApproachLanguageComparer(CVApproach cva1, CVApproach cva2) {
@@ -57,15 +67,31 @@ public class CVApproachLanguageComparer {
 		this.cva2 = cva2;
 	}
 
-	public Set<DifferentSegment> getSegmentsWhichDiffer() {
+	public String getDataSet1Info() {
+		return dataSet1Info;
+	}
+
+	public void setDataSet1Info(String dataSet1Info) {
+		this.dataSet1Info = dataSet1Info;
+	}
+
+	public String getDataSet2Info() {
+		return dataSet2Info;
+	}
+
+	public void setDataSet2Info(String dataSet2Info) {
+		this.dataSet2Info = dataSet2Info;
+	}
+
+	public SortedSet<DifferentSegment> getSegmentsWhichDiffer() {
 		return segmentsWhichDiffer;
 	}
 
-	public Set<DifferentCVNaturalClass> getNaturalClassesWhichDiffer() {
+	public SortedSet<DifferentCVNaturalClass> getNaturalClassesWhichDiffer() {
 		return naturalClassesWhichDiffer;
 	}
 
-	public Set<DifferentCVSyllablePattern> getSyllablePatternsWhichDiffer() {
+	public SortedSet<DifferentCVSyllablePattern> getSyllablePatternsWhichDiffer() {
 		return syllablePatternsWhichDiffer;
 	}
 
@@ -73,7 +99,7 @@ public class CVApproachLanguageComparer {
 		return syllablePatternOrderDifferences;
 	}
 
-	public Set<DifferentWord> getWordsWhichDiffer() {
+	public SortedSet<DifferentWord> getWordsWhichDiffer() {
 		return wordsWhichDiffer;
 	}
 
@@ -115,24 +141,27 @@ public class CVApproachLanguageComparer {
 		// use set difference (removeAll)
 		difference1from2.removeAll(naturalClasses2);
 		difference1from2.stream().forEach(
-				naturalClass -> naturalClassesWhichDiffer.add(new DifferentCVNaturalClass(naturalClass, null)));
+				naturalClass -> naturalClassesWhichDiffer.add(new DifferentCVNaturalClass(
+						naturalClass, null)));
 
 		Set<CVNaturalClass> difference2from1 = new HashSet<CVNaturalClass>(naturalClasses2);
 		difference2from1.removeAll(naturalClasses1);
-		difference2from1.stream().forEach(naturalClass -> mergeSimilarCVNaturalClasses(naturalClass));
+		difference2from1.stream().forEach(
+				naturalClass -> mergeSimilarCVNaturalClasses(naturalClass));
 	}
 
 	protected void mergeSimilarCVNaturalClasses(CVNaturalClass naturalClass) {
 		List<DifferentCVNaturalClass> sameNaturalClassesName = naturalClassesWhichDiffer
 				.stream()
 				.filter(dnc -> dnc.getObjectFrom1() != null
-						&& ((CVNaturalClass) dnc.getObjectFrom1()).getNCName()
-								.equals(naturalClass.getNCName())).collect(Collectors.toList());
+						&& ((CVNaturalClass) dnc.getObjectFrom1()).getNCName().equals(
+								naturalClass.getNCName())).collect(Collectors.toList());
 		if (sameNaturalClassesName.size() > 0) {
 			DifferentCVNaturalClass diffNaturalClass = sameNaturalClassesName.get(0);
 			diffNaturalClass.setObjectFrom2(naturalClass);
 		} else {
-			DifferentCVNaturalClass diffNaturalClass = new DifferentCVNaturalClass(null, naturalClass);
+			DifferentCVNaturalClass diffNaturalClass = new DifferentCVNaturalClass(null,
+					naturalClass);
 			naturalClassesWhichDiffer.add(diffNaturalClass);
 		}
 	}
@@ -145,24 +174,27 @@ public class CVApproachLanguageComparer {
 		// use set difference (removeAll)
 		difference1from2.removeAll(syllablePatterns2);
 		difference1from2.stream().forEach(
-				syllablePattern -> syllablePatternsWhichDiffer.add(new DifferentCVSyllablePattern(syllablePattern, null)));
+				syllablePattern -> syllablePatternsWhichDiffer.add(new DifferentCVSyllablePattern(
+						syllablePattern, null)));
 
 		Set<CVSyllablePattern> difference2from1 = new HashSet<CVSyllablePattern>(syllablePatterns2);
 		difference2from1.removeAll(syllablePatterns1);
-		difference2from1.stream().forEach(syllablePattern -> mergeSimilarCVSyllablePatterns(syllablePattern));
+		difference2from1.stream().forEach(
+				syllablePattern -> mergeSimilarCVSyllablePatterns(syllablePattern));
 	}
 
 	protected void mergeSimilarCVSyllablePatterns(CVSyllablePattern syllablePattern) {
 		List<DifferentCVSyllablePattern> sameSyllablePatternName = syllablePatternsWhichDiffer
 				.stream()
 				.filter(dsp -> dsp.getObjectFrom1() != null
-						&& ((CVSyllablePattern) dsp.getObjectFrom1()).getSPName()
-								.equals(syllablePattern.getSPName())).collect(Collectors.toList());
+						&& ((CVSyllablePattern) dsp.getObjectFrom1()).getSPName().equals(
+								syllablePattern.getSPName())).collect(Collectors.toList());
 		if (sameSyllablePatternName.size() > 0) {
 			DifferentCVSyllablePattern diffSyllablePattern = sameSyllablePatternName.get(0);
 			diffSyllablePattern.setObjectFrom2(syllablePattern);
 		} else {
-			DifferentCVSyllablePattern diffSyllablePattern = new DifferentCVSyllablePattern(null, syllablePattern);
+			DifferentCVSyllablePattern diffSyllablePattern = new DifferentCVSyllablePattern(null,
+					syllablePattern);
 			syllablePatternsWhichDiffer.add(diffSyllablePattern);
 		}
 	}
@@ -171,7 +203,8 @@ public class CVApproachLanguageComparer {
 		// make sure both sets have been syllabified
 		List<Word> words1 = cva1.getLanguageProject().getWords();
 		List<Word> words2 = cva2.getLanguageProject().getWords();
-		// TODO: are there side-effects from this?  If so, do we want them to be there?
+		// TODO: are there side-effects from this? If so, do we want them to be
+		// there?
 		syllabifyWords(cva1, words1);
 		syllabifyWords(cva2, words2);
 
@@ -211,7 +244,7 @@ public class CVApproachLanguageComparer {
 			wordsWhichDiffer.add(diffWord);
 		}
 	}
-	
+
 	public void compareSyllablePatternOrder() {
 		diff_match_patch dmp = new diff_match_patch();
 		String syllablePatterns1 = createTextFromSyllablePattern(cva1);
@@ -229,5 +262,4 @@ public class CVApproachLanguageComparer {
 		});
 		return sb.toString();
 	}
-
 }

@@ -39,6 +39,9 @@ public class Constants {
 	public static final String WORD_BOUNDARY_SYMBOL = "#";
 	public static final String FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN = "cb1";
 	
+	// Miscellaneous constants
+	public static final String NULL_AS_STRING = "null";
+	
 	// UnitTesting constants
 	public static final String UNIT_TEST_DATA_FILE_NAME="test/sil/org/syllableparser/testData/CVTestData.";
 	public static final String UNIT_TEST_DATA_FILE="test/sil/org/syllableparser/testData/CVTestData.ashedata";

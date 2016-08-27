@@ -34,6 +34,8 @@ public abstract class DifferentSylParserObject {
 	public void setObjectFrom2(SylParserObject objectFrom2) {
 		this.objectFrom2 = objectFrom2;
 	}
+	
+	public abstract String getSortingValue();
 
 	@Override
 	public int hashCode() {

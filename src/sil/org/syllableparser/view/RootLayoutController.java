@@ -421,7 +421,7 @@ public class RootLayoutController implements Initializable {
 
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			String dateTimeTag = DateTimeNormalizer.normalizeDateTime(LocalDateTime.now());
+			String dateTimeTag = DateTimeNormalizer.normalizeDateTimeWithDigits(LocalDateTime.now());
 			String backupDirectoryPath = getBackupDirectoryPath();
 			if (!Files.exists(Paths.get(backupDirectoryPath))) {
 				try {
