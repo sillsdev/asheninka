@@ -3,11 +3,15 @@
  */
 package sil.org.syllableparser.view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 
 import org.controlsfx.control.StatusBar;
 
@@ -25,6 +29,7 @@ public abstract class ApproachController {
 	protected Locale locale;
 	protected RootLayoutController rootController;
 	
+	public abstract void handleCompareImplementations(String backupDirectoryPath);
 	public abstract void handleCopy();
 	public abstract void handleToolBarCopy();
 	public abstract void handleCut();

@@ -172,4 +172,13 @@ public class ONCApproachController extends ApproachController  {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see sil.org.syllableparser.view.ApproachController#handleCompareImplementations()
+	 */
+	@Override
+	public void handleCompareImplementations(String backupDirectoryPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

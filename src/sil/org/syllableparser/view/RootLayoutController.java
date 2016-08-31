@@ -472,6 +472,11 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
+	private void handleCompareImplementations() {
+		currentApproachController.handleCompareImplementations(getBackupDirectoryPath());
+	}
+
+	@FXML
 	private void handleExportHyphenatedWordsAsASimpleList() {
 		FileChooser fileChooser = ControllerUtilities.initFileChooser(mainApp,
 				bundle.getString("file.exportedhyphenationlistfilterdescription") + " (*"

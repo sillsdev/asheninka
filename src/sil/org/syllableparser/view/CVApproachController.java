@@ -28,6 +28,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -263,6 +264,29 @@ public class CVApproachController extends ApproachController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	public void handleCompareImplementations(String backupDirectoryPath) {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/RestoreBackupChooser.fxml";
+			String title = bundle.getString("label.restoreproject");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
+					resource, title);
+
+			RestoreBackupChooserController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setLocale(locale);
+			controller.setData(backupDirectoryPath);
+
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
