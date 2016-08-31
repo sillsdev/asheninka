@@ -31,7 +31,7 @@
       <Label layoutX="22.0" layoutY="110.0" text="%label.secondimplementation" />
       <ButtonBar layoutX="352.0" layoutY="488.0" prefHeight="40.0" prefWidth="272.0">
          <buttons>
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="%label.ok" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleCompare" fx:id="compareButton" text="%label.compare" />
             <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="%label.cancel" />
             <Button mnemonicParsing="false" onAction="#handleHelp" text="%label.help" />
          </buttons>

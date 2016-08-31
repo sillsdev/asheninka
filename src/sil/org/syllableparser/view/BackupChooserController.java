@@ -50,7 +50,7 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class RestoreBackupChooserController extends SylParserBaseController implements Initializable {
+public class BackupChooserController extends SylParserBaseController implements Initializable {
 
 	protected final class WrappingTableCell extends TableCell<BackupFile, String> {
 		private Text text;
@@ -197,7 +197,7 @@ public class RestoreBackupChooserController extends SylParserBaseController impl
 	 * Called when the user clicks OK.
 	 */
 	@FXML
-	private void handleOk() {
+	protected void handleOk() {
 		int i = restoreBackupTable.getSelectionModel().getSelectedIndex();
 		BackupFile bup = backupFiles.get(i);
 		String backupFileToUse = backupDirectory + File.separator + bup.getFilePath();

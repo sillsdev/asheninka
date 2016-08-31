@@ -177,6 +177,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private MenuItem menuItemClearWords;
 	@FXML
+	private MenuItem menuItemCompareImplementations;
+	@FXML
 	private MenuItem menuItemVernacularFont;
 	@FXML
 	private MenuItem menuItemAnalysisFont;
@@ -452,12 +454,12 @@ public class RootLayoutController implements Initializable {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
-			String resource = "fxml/RestoreBackupChooser.fxml";
+			String resource = "fxml/BackupChooser.fxml";
 			String title = bundle.getString("label.restoreproject");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
 					resource, title);
 
-			RestoreBackupChooserController controller = loader.getController();
+			BackupChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setLocale(currentLocale);

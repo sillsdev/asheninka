@@ -271,18 +271,18 @@ public class CVApproachController extends ApproachController {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
-			String resource = "fxml/RestoreBackupChooser.fxml";
-			String title = bundle.getString("label.restoreproject");
+			String resource = "fxml/CVComparison.fxml";
+			String title = bundle.getString("label.compareimplementations");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
 					resource, title);
 
-			RestoreBackupChooserController controller = loader.getController();
+			CVComparisonController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setLocale(locale);
 			controller.setData(backupDirectoryPath);
 
-			dialogStage.showAndWait();
+			dialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

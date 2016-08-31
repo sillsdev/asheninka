@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.RestoreBackupChooserController">
+<AnchorPane prefHeight="400.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.BackupChooserController">
    <children>
       <ButtonBar layoutX="440.0" layoutY="355.0" prefHeight="40.0" prefWidth="272.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="20.0">
         <buttons>
