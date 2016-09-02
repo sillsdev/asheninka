@@ -29,7 +29,7 @@ public abstract class ApproachController {
 	protected Locale locale;
 	protected RootLayoutController rootController;
 	
-	public abstract void handleCompareImplementations(String backupDirectoryPath);
+	public abstract void handleCompareImplementations();
 	public abstract void handleCopy();
 	public abstract void handleToolBarCopy();
 	public abstract void handleCut();

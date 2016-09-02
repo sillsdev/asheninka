@@ -71,7 +71,7 @@ public class BackupChooserController extends SylParserBaseController implements 
 	}
 
 	@FXML
-	private TableView<BackupFile> restoreBackupTable;
+	protected TableView<BackupFile> restoreBackupTable;
 	@FXML
 	private TableColumn<BackupFile, String> fileNameColumn;
 	@FXML
@@ -84,12 +84,13 @@ public class BackupChooserController extends SylParserBaseController implements 
 	ObservableList<BackupFile> backupFiles = FXCollections.observableArrayList();
 
 	Stage dialogStage;
-	private boolean okClicked = false;
-	private MainApp mainApp;
+	protected boolean okClicked = false;
+	protected MainApp mainApp;
 
 	private BackupFile currentBackupFile;
-	private String backupDirectory;
-	private ResourceBundle bundle;
+	protected String backupDirectory;
+	protected ResourceBundle bundle;
+	protected String backupFileToUse;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -109,10 +110,7 @@ public class BackupChooserController extends SylParserBaseController implements 
 		});
 		makeColumnHeaderWrappable(descriptionColumn);
 		restoreBackupTable.setEditable(true);
-		// Listen for selection changes and show the details when changed.
-		// restoreBackupTable.getSelectionModel().selectedItemProperty().addListener(
-		// (observable, oldValue, newValue) ->
-		// setCurrentCVNaturalClass(newValue));
+		backupFileToUse = "";
 	}
 
 	/**
@@ -200,18 +198,8 @@ public class BackupChooserController extends SylParserBaseController implements 
 	protected void handleOk() {
 		int i = restoreBackupTable.getSelectionModel().getSelectedIndex();
 		BackupFile bup = backupFiles.get(i);
-		String backupFileToUse = backupDirectory + File.separator + bup.getFilePath();
-		File backupFile = new File(backupFileToUse);
-		BackupFileRestorer restorer = new BackupFileRestorer(backupFile);
-		restorer.doRestore(languageProject, locale);
-
-		// Force user to do a file save as so they do not overwrite the current data file
-		// with the restored data (unless they so choose).
-		String sFileFilterDescription = bundle.getString("file.filterdescription");
-		String syllableParserFilterDescription = sFileFilterDescription + " ("
-				+ Constants.ASHENINKA_DATA_FILE_EXTENSIONS + ")";
-		ControllerUtilities.doFileSaveAs(mainApp, true, syllableParserFilterDescription);
-
+		backupFileToUse = backupDirectory + File.separator + bup.getFilePath();
+		
 		okClicked = true;
 		dialogStage.close();
 	}
@@ -232,6 +220,11 @@ public class BackupChooserController extends SylParserBaseController implements 
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
+
+	public String getBackupFileToUse() {
+		return backupFileToUse;
+	}
+
 	/**
 	 * Called when the user clicks help.
 	 */
@@ -252,22 +245,29 @@ public class BackupChooserController extends SylParserBaseController implements 
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleInsertNewItem()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * sil.org.syllableparser.view.ApproachEditorController#handleInsertNewItem
+	 * ()
 	 */
 	@Override
 	void handleInsertNewItem() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see sil.org.syllableparser.view.ApproachEditorController#handleRemoveItem()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * sil.org.syllableparser.view.ApproachEditorController#handleRemoveItem()
 	 */
 	@Override
 	void handleRemoveItem() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	// code taken from

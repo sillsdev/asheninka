@@ -238,6 +238,7 @@ public class RootLayoutController implements Initializable {
 		ApproachViewNavigator.setMainController(this);
 		cvApproachController.setCVApproachData(languageProject.getCVApproach(),
 				languageProject.getWords());
+		cvApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -459,7 +460,7 @@ public class RootLayoutController implements Initializable {
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
 					resource, title);
 
-			BackupChooserController controller = loader.getController();
+			RestoreBackupChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setLocale(currentLocale);
@@ -470,12 +471,11 @@ public class RootLayoutController implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@FXML
 	private void handleCompareImplementations() {
-		currentApproachController.handleCompareImplementations(getBackupDirectoryPath());
+		currentApproachController.handleCompareImplementations();
 	}
 
 	@FXML

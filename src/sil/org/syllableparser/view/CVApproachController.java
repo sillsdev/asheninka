@@ -49,7 +49,7 @@ public class CVApproachController extends ApproachController {
 	private LanguageProject languageProject;
 	private CVApproach cvApproachData;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
-
+	private String backupDirectoryPath;
 	private ApproachEditorController currentCVApproachController;
 
 	public CVApproachController(ResourceBundle bundle, Locale locale) {
@@ -267,7 +267,7 @@ public class CVApproachController extends ApproachController {
 	}
 
 	@FXML
-	public void handleCompareImplementations(String backupDirectoryPath) {
+	public void handleCompareImplementations() {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
@@ -280,7 +280,8 @@ public class CVApproachController extends ApproachController {
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setLocale(locale);
-			controller.setData(backupDirectoryPath);
+			controller.setData(cvApproachData);
+			controller.setBackupDirectoryPath(backupDirectoryPath);
 
 			dialogStage.show();
 		} catch (IOException e) {
@@ -398,5 +399,17 @@ public class CVApproachController extends ApproachController {
 	@Override
 	public void handleToolBarCut() {
 		currentCVApproachController.handleToolBarCut();
+	}
+
+	public String getBackupDirectoryPath() {
+		return backupDirectoryPath;
+	}
+
+	/**
+	 * @param backupDirectoryPath
+	 */
+	public void setBackupDirectoryPath(String backupDirectoryPath) {
+		this.backupDirectoryPath = backupDirectoryPath; 
+		
 	}
 }
