@@ -136,10 +136,6 @@ public class Word extends SylParserObject {
 		} else {
 			if (!getCVPredictedSyllabification().equals(otherWord.getCVPredictedSyllabification())) {
 				result = false;
-			} else {
-				if (!getCorrectSyllabification().equals(otherWord.getCorrectSyllabification())) {
-					result = false;
-				}
 			}
 		}
 		return result;

@@ -103,6 +103,14 @@ public class CVApproachLanguageComparer {
 		return wordsWhichDiffer;
 	}
 
+	public void compare() {
+		compareSegmentInventory();
+		compareNaturalClasses();
+		compareSyllablePatterns();
+		compareSyllablePatternOrder();
+		compareWords();
+	}
+	
 	public void compareSegmentInventory() {
 		ObservableList<Segment> segments1 = cva1.getLanguageProject().getSegmentInventory();
 		ObservableList<Segment> segments2 = cva2.getLanguageProject().getSegmentInventory();

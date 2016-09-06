@@ -103,6 +103,14 @@ public class CVApproachLanguageComparerTest {
 		compareWords(comparer);
 	}
 
+	@Test
+	public void compareSameLanguagesTest() {
+		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva1, cva1);
+		compareSameSegments(comparer);
+		compareSameNaturalClasses(comparer);
+		compareSameSyllablePatterns(comparer);
+		compareSameWords(comparer);
+	}
 	protected void compareSegments(CVApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
 		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
@@ -232,5 +240,43 @@ public class CVApproachLanguageComparerTest {
 		comparer.compareSyllablePatternOrder();
 		LinkedList<Diff> differences = comparer.getSyllablePatternOrderDifferences();
 		assertEquals(7, differences.size());
+	}
+	protected void compareSameSegments(CVApproachLanguageComparer comparer) {
+		comparer.compareSegmentInventory();
+		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
+		assertEquals("number of different segments", 0, diffs.size());
+	}
+
+	protected void compareSameNaturalClasses(CVApproachLanguageComparer comparer) {
+		comparer.compareNaturalClasses();
+		SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
+		assertEquals("number of different natural classes", 0, diffs.size());
+	}
+
+	protected void compareSameSyllablePatterns(CVApproachLanguageComparer comparer) {
+		comparer.compareSyllablePatterns();
+		SortedSet<DifferentCVSyllablePattern> diffs = comparer.getSyllablePatternsWhichDiffer();
+		assertEquals("number of different syllable patterns", 0, diffs.size());
+	}
+	protected void compareSameWords(CVApproachLanguageComparer comparer) {
+		comparer.compareWords();
+		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
+		assertEquals("number of different words", 0, diffs.size());
+	}
+	
+	@Test
+	public void compareSameSyllablePatternOrderTest() {
+		// setup
+		LanguageProject languageProject3 = new LanguageProject();
+		Locale locale = new Locale("en");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
+		File file = new File(Constants.UNIT_TEST_DATA_FILE_3);
+		xmlBackEndProvider.loadLanguageDataFromFile(file);
+		CVApproach cva3 = languageProject3.getCVApproach();
+		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva3, cva3);
+		// test (we only use this as a way to tell if the the two orders are the same or not)
+		comparer.compareSyllablePatternOrder();
+		LinkedList<Diff> differences = comparer.getSyllablePatternOrderDifferences();
+		assertEquals(1, differences.size());
 	}
 }
