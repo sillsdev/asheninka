@@ -4,6 +4,7 @@
 package sil.org.syllableparser.view;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -83,6 +84,9 @@ public class CVComparisonController implements Initializable {
 	private CVApproach currentCva;
 	private CVApproach cva1;
 	private CVApproach cva2;
+	private String sDataSet1Info;
+	private String sDataSet2Info;
+	private final String sCurrentImplementationResourceLabel = "radio.current";
 
 	/*
 	 * (non-Javadoc)
@@ -94,7 +98,7 @@ public class CVComparisonController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		bundle = resources;
 		firstButton.setText(bundle.getString("label.browse"));
-		currentImplementation.setText(bundle.getString("radio.current"));
+		currentImplementation.setText(bundle.getString(sCurrentImplementationResourceLabel));
 		chosenImplementation.setText(bundle.getString("radio.choosebackup"));
 		setFirstBrowseButtonAndText();
 		setCompareButtonDisable();
@@ -193,7 +197,7 @@ public class CVComparisonController implements Initializable {
 
 	protected void setFirstBrowseButtonAndText() {
 		if (currentImplementation.isSelected()) {
-			directory1Field.setText(bundle.getString("radio.current"));
+			directory1Field.setText(bundle.getString(sCurrentImplementationResourceLabel));
 			firstButton.setDisable(true);
 		} else {
 			directory1Field.setText("");
@@ -296,7 +300,8 @@ public class CVComparisonController implements Initializable {
 
 		// sleeper code is from
 		// http://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code
-		// We do this so the "Please wait..." message loads and shows in the web view
+		// We do this so the "Please wait..." message loads and shows in the web
+		// view
 		Task<Void> sleeper = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -311,7 +316,10 @@ public class CVComparisonController implements Initializable {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				setCVApproachesToUse();
+				setCVApproachDataSetInfoToUse();
 				CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva1, cva2);
+				comparer.setDataSet1Info(sDataSet1Info);
+				comparer.setDataSet2Info(sDataSet2Info);
 				comparer.compare();
 				CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
 						comparer, locale, LocalDateTime.now());
@@ -336,6 +344,33 @@ public class CVComparisonController implements Initializable {
 			cva1 = getCVApproachFromBackup(backupDirectory1);
 		}
 		cva2 = getCVApproachFromBackup(backupDirectory2);
+	}
+
+	protected void setCVApproachDataSetInfoToUse() {
+		try {
+			String backupComment;
+			if (currentImplementation.isSelected()) {
+				this.sDataSet1Info = bundle.getString(sCurrentImplementationResourceLabel);
+			} else {
+				backupComment = getBackupComment(backupDirectory1);
+				sDataSet1Info = backupDirectory1 + " (" + backupComment + ")";
+			}
+			backupComment = getBackupComment(backupDirectory2);
+			sDataSet2Info = backupDirectory2 + " (" + backupComment + ")";
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	protected String getBackupComment(String sBackupDirectory) throws FileNotFoundException,
+			IOException {
+		File file = new File(sBackupDirectory);
+		String backupComment = BackupChooserController.getCommentInBackupFile(file.toPath());
+		return backupComment;
 	}
 
 	private CVApproach getCVApproachFromBackup(String backupDirectory) {

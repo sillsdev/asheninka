@@ -283,6 +283,7 @@ public class CVApproachController extends ApproachController {
 			controller.setData(cvApproachData);
 			controller.setBackupDirectoryPath(backupDirectoryPath);
 
+			dialogStage.initModality(Modality.NONE);
 			dialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

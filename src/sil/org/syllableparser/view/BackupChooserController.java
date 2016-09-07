@@ -175,7 +175,7 @@ public class BackupChooserController extends SylParserBaseController implements 
 		}
 	}
 
-	public String getCommentInBackupFile(Path fileName) throws FileNotFoundException, IOException {
+	public static String getCommentInBackupFile(Path fileName) throws FileNotFoundException, IOException {
 		ZipFile zipFile = new ZipFile(fileName.toFile());
 		String backupComment = zipFile.getComment();
 		zipFile.close();
