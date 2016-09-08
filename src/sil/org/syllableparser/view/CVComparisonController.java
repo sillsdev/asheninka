@@ -1,3 +1,6 @@
+// Copyright (c) 2016 SIL International 
+// This software is licensed under the LGPL, version 2.1 or later 
+// (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
  * 
  */
@@ -281,12 +284,14 @@ public class CVComparisonController implements Initializable {
 
 	@FXML
 	public void handleCurrentImplementation() {
+		currentImplementation.setSelected(true); // needed by test for some reason...
 		firstButton.setDisable(true);
 		setFirstBrowseButtonAndText();
 	}
 
 	@FXML
 	public void handleChosenImplementation() {
+		chosenImplementation.setSelected(true); // needed by test for some reason...
 		firstButton.setDisable(false);
 		setFirstBrowseButtonAndText();
 		setCompareButtonDisable();
