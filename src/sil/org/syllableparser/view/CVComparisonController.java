@@ -39,10 +39,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.DirectoryChooser;
@@ -284,14 +286,16 @@ public class CVComparisonController implements Initializable {
 
 	@FXML
 	public void handleCurrentImplementation() {
-		currentImplementation.setSelected(true); // needed by test for some reason...
+		currentImplementation.setSelected(true); // needed by test for some
+													// reason...
 		firstButton.setDisable(true);
 		setFirstBrowseButtonAndText();
 	}
 
 	@FXML
 	public void handleChosenImplementation() {
-		chosenImplementation.setSelected(true); // needed by test for some reason...
+		chosenImplementation.setSelected(true); // needed by test for some
+												// reason...
 		firstButton.setDisable(false);
 		setFirstBrowseButtonAndText();
 		setCompareButtonDisable();
@@ -302,6 +306,19 @@ public class CVComparisonController implements Initializable {
 	 */
 	@FXML
 	private void handleCompare() {
+		setCVApproachesToUse();
+		setCVApproachDataSetInfoToUse();
+		
+		if (sDataSet1Info.equals(sDataSet2Info)) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle(MainApp.kApplicationTitle);
+			alert.setHeaderText(bundle.getString("label.sameimplementationsheader"));
+			alert.setContentText(bundle.getString("label.sameimplementationscontent"));
+			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+			stage.getIcons().add(mainApp.getNewMainIconImage());
+			alert.showAndWait();
+			return;
+		}
 
 		// sleeper code is from
 		// http://stackoverflow.com/questions/26454149/make-javafx-wait-and-continue-with-code
@@ -320,8 +337,6 @@ public class CVComparisonController implements Initializable {
 		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				setCVApproachesToUse();
-				setCVApproachDataSetInfoToUse();
 				CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva1, cva2);
 				comparer.setDataSet1Info(sDataSet1Info);
 				comparer.setDataSet2Info(sDataSet2Info);
@@ -335,7 +350,9 @@ public class CVComparisonController implements Initializable {
 		new Thread(sleeper).start();
 
 		String sPleaseWaitMessage = Constants.PLEASE_WAIT_HTML_BEGINNING
-				+ bundle.getString("label.pleasewait") + Constants.PLEASE_WAIT_HTML_ENDING;
+				+ bundle.getString("label.pleasewait") + Constants.PLEASE_WAIT_HTML_MIDDLE
+				+ bundle.getString("label.pleasewaitexplanation")
+				+ Constants.PLEASE_WAIT_HTML_ENDING;
 		webEngine.loadContent(sPleaseWaitMessage);
 
 		// okClicked = true;

@@ -27,6 +27,8 @@ import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 import sil.org.syllableparser.service.CVNaturalClasser;
 import sil.org.syllableparser.service.CVSegmenter;
 import sil.org.syllableparser.service.CVSyllabifier;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -41,6 +43,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * @author Andy Black

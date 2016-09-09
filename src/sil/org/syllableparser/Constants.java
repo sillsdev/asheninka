@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 public class Constants {
 	// program wide constants
-	public static final String VERSION_NUMBER = "0.1.2.1 Alpha";
+	public static final String VERSION_NUMBER = "0.2.0.0 Alpha";
 
 	// file-related constants
 	public static final String ASHENINKA_BACKUP_FILE_EXTENSION = "ashebackup";
@@ -49,7 +49,8 @@ public class Constants {
 	public static final String PLEASE_WAIT_HTML_BEGINNING = "<html>\n<head>\n"
 			+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n"
 			+ "<title>" + Constants.PLEASE_WAIT_HTML_TITLE + "</title>\n</head>\n<body><h2>";
-	public static final String PLEASE_WAIT_HTML_ENDING = "</h2>\n</body>\n</html>\n";
+	public static final String PLEASE_WAIT_HTML_MIDDLE = "</h2>\n<p>";
+	public static final String PLEASE_WAIT_HTML_ENDING = "</p>\n</body>\n</html>\n";
 
 	// UnitTesting constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/sil/org/syllableparser/testData/CVTestData.";
