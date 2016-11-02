@@ -6,15 +6,11 @@
  */
 package sil.org.syllableparser.model;
 
-import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.XmlTransient;
-
-import org.controlsfx.dialog.FontSelectorDialog;
 
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 
 /**
  * @author Andy Black
@@ -129,14 +125,4 @@ public class Language {
 		return Font.font(fontFamily, weight, posture, fontSize);
 	}
 
-	public void handleFont(Stage stage) {
-		 FontSelectorDialog dlg = new FontSelectorDialog(getFont());
-         dlg.initOwner(stage);
-         //dlg.setResult(languageProject.getVernacularFont());
-         dlg.showAndWait();
-         Font chosenFont = dlg.getResult();
-         if (chosenFont != null) {
-        	 this.font = createFont(chosenFont.getFamily(), chosenFont.getSize(), chosenFont.getStyle());
-         }
-	}
 }

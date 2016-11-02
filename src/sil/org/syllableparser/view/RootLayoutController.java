@@ -79,6 +79,7 @@ import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.BackupFile;
+import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.service.BackupFileCreator;
 import sil.org.syllableparser.service.FLExExportedWordformsAsTabbedListImporter;
@@ -293,12 +294,24 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleVernacularFont() {
-		languageProject.getVernacularLanguage().handleFont(mainApp.getPrimaryStage());
+		handleFont(mainApp.getPrimaryStage(), languageProject.getVernacularLanguage()); 
 	}
 
 	@FXML
 	private void handleAnalysisFont() {
-		languageProject.getAnalysisLanguage().handleFont(mainApp.getPrimaryStage());
+		handleFont(mainApp.getPrimaryStage(), languageProject.getAnalysisLanguage()); 
+	}
+
+	public void handleFont(Stage stage, Language lang) {
+		 FontSelectorDialog dlg = new FontSelectorDialog(lang.getFont());
+        dlg.initOwner(stage);
+        //dlg.setResult(languageProject.getVernacularFont());
+        dlg.showAndWait();
+        Font chosenFont = dlg.getResult();
+        if (chosenFont != null) {
+        	Font font =lang.createFont(chosenFont.getFamily(), chosenFont.getSize(), chosenFont.getStyle()); 
+        	lang.setFont(font);
+        }
 	}
 
 	/**
