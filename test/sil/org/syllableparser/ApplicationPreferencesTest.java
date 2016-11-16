@@ -17,12 +17,22 @@ public class ApplicationPreferencesTest {
 	ApplicationPreferences applicationPreferences;
 	File fileLastUsed;
 	String languageLastUsed;
+	Double windowXLastUsed;
+	Double windowYLastUsed;
+	Double windowHeightLastUsed;
+	Double windowWidthLastUsed;
+	boolean windowLastMaximized;
 
 	@Before
 	public void setUp() throws Exception {
 		applicationPreferences = new ApplicationPreferences(this);
 		fileLastUsed = applicationPreferences.getLastOpenedFile();
 		languageLastUsed = applicationPreferences.getLastLocaleLanguage();
+		windowHeightLastUsed = applicationPreferences.getLastWindowHeight();
+		windowWidthLastUsed = applicationPreferences.getLastWindowWidth();
+		windowXLastUsed = applicationPreferences.getLastWindowPositionX();
+		windowYLastUsed = applicationPreferences.getLastWindowPositionY();
+		windowLastMaximized = applicationPreferences.getLastWindowMaximized();
 		applicationPreferences.setLastOpenedFilePath("last opened file");
 		applicationPreferences.setLastLocaleLanguage("en");
 	}
@@ -31,6 +41,11 @@ public class ApplicationPreferencesTest {
 	public void tearDown() throws Exception {
 		applicationPreferences.setLastOpenedFilePath(fileLastUsed);
 		applicationPreferences.setLastLocaleLanguage(languageLastUsed);
+		applicationPreferences.setLastWindowHeight(windowHeightLastUsed);
+		applicationPreferences.setLastWindowWidth(windowWidthLastUsed);
+		applicationPreferences.setLastWindowPositionX(windowXLastUsed);
+		applicationPreferences.setLastWindowPositionY(windowYLastUsed);
+		applicationPreferences.setLastWindowMaximized(windowLastMaximized);
 	}
 
 	@Test
@@ -57,4 +72,21 @@ public class ApplicationPreferencesTest {
 		applicationPreferences.setLastLocaleLanguage("es");
 		assertEquals("locale language", "es", applicationPreferences.getLastLocaleLanguage());
 	}
+	
+	@Test
+	public void lastMainWindow() {
+		applicationPreferences.setLastWindowHeight(560.);
+		assertEquals("main window height", 560., applicationPreferences.getLastWindowHeight(), 0);
+		applicationPreferences.setLastWindowWidth(860.);
+		assertEquals("main window width", 860., applicationPreferences.getLastWindowWidth(), 0);
+		applicationPreferences.setLastWindowPositionX(20.);
+		assertEquals("main window X position", 20., applicationPreferences.getLastWindowPositionX(), 0);
+		applicationPreferences.setLastWindowPositionY(20.);
+		assertEquals("main window Y position", 20., applicationPreferences.getLastWindowPositionY(), 0);
+		applicationPreferences.setLastWindowMaximized(true);
+		assertEquals("main window maximized", true, applicationPreferences.getLastWindowMaximized());
+		applicationPreferences.setLastWindowMaximized(false);
+		assertEquals("main window minimized", false, applicationPreferences.getLastWindowMaximized());
+	}
+
 }

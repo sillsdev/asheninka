@@ -638,6 +638,7 @@ public class RootLayoutController implements Initializable {
 		toggleButtonSelectedStatus(buttonCVApproach);
 		approachViews.setItems(cvApproachController.getViews());
 		currentApproachController = cvApproachController;
+		selectApproachViewItem(0);
 		buttonToolbarEditInsert.setDisable(true);
 		menuItemEditInsert.setDisable(true);
 		buttonToolbarEditRemove.setDisable(true);

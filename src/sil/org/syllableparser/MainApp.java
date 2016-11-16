@@ -75,11 +75,20 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle(kApplicationTitle);
 		this.primaryStage.getIcons().add(getNewMainIconImage());
+		restoreWindowSettings();
 
 		initRootLayout();
 
 		saveDataPeriodically(30);
 
+	}
+	
+	private void restoreWindowSettings() {
+		primaryStage.setX(applicationPreferences.getLastWindowPositionX());
+		primaryStage.setY(applicationPreferences.getLastWindowPositionY());
+		primaryStage.setHeight(applicationPreferences.getLastWindowHeight());
+		primaryStage.setWidth(applicationPreferences.getLastWindowWidth());
+		primaryStage.setMaximized(applicationPreferences.getLastWindowMaximized());
 	}
 
 	public void saveDataPeriodically(int duration) {
@@ -112,9 +121,21 @@ public class MainApp extends Application {
 
 	@Override
 	public void stop() {
+		rememberWindowSettings();
 		applicationPreferences.setLastLocaleLanguage(locale.getLanguage());
 		controller.handleSave();
 		// TODO: add last file opened
+	}
+
+	protected void rememberWindowSettings() {
+		boolean isMaximized = primaryStage.isMaximized();
+		if (!isMaximized) {
+			applicationPreferences.setLastWindowPositionX(primaryStage.getX());
+			applicationPreferences.setLastWindowPositionY(primaryStage.getY());
+			applicationPreferences.setLastWindowHeight(primaryStage.getHeight());
+			applicationPreferences.setLastWindowWidth(primaryStage.getWidth());
+		}
+		applicationPreferences.setLastWindowMaximized(isMaximized);
 	}
 
 	public void setLocale(Locale locale) {
