@@ -1,13 +1,11 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
- * 
+ * Copyright (c) 2016 SIL International 
+ * This software is licensed under the LGPL, version 2.1 or later 
+ * (http://www.gnu.org/licenses/lgpl-2.1.html) 
  */
 package sil.org.syllableparser.view;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -16,28 +14,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
-import sil.org.syllableparser.ApplicationPreferences;
-import sil.org.syllableparser.Constants;
-import sil.org.syllableparser.MainApp;
-import sil.org.syllableparser.model.BackupFile;
-import sil.org.syllableparser.model.Word;
-import sil.org.syllableparser.model.cvapproach.CVApproach;
-import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
-import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
-import sil.org.syllableparser.service.BackupFileRestorer;
-import sil.org.syllableparser.view.CVWordsController.VernacularWrappingTableCell;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -46,15 +28,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sil.org.syllableparser.Constants;
+import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.BackupFile;
 
 /**
  * @author Andy Black
  *
  */
-public class BackupChooserController extends SylParserBaseController implements Initializable {
-
+public class BackupChooserController extends SylParserBaseController implements Initializable{
 	protected final class WrappingTableCell extends TableCell<BackupFile, String> {
 		private Text text;
 
@@ -206,7 +189,7 @@ public class BackupChooserController extends SylParserBaseController implements 
 		okClicked = true;
 		dialogStage.close();
 	}
-
+	
 	/**
 	 * Called when the user clicks cancel.
 	 */
@@ -279,4 +262,5 @@ public class BackupChooserController extends SylParserBaseController implements 
 	TextField[] createTextFields() {
 		return new TextField[] { directoryField };
 	}
+
 }

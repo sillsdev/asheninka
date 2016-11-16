@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016 SIL International 
+    This software is licensed under the LGPL, version 2.1 or later 
+
+    (http://www.gnu.org/licenses/lgpl-2.1.html) --> 
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.RestoreBackupChooserController">
+   <children>
+      <ButtonBar layoutX="440.0" layoutY="355.0" prefHeight="40.0" prefWidth="272.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="20.0">
+        <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="%label.ok" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="%label.cancel" />
+            <Button mnemonicParsing="false" onAction="#handleHelp" text="%label.help" />
+        </buttons>
+      </ButtonBar>
+      <Label layoutX="11.0" layoutY="80.0" text="%label.choosebackup" />
+      <TableView fx:id="restoreBackupTable" layoutX="11.0" layoutY="113.0" prefHeight="242.0" prefWidth="711.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="113.0">
+        <columns>
+            <TableColumn fx:id="fileNameColumn" prefWidth="182.0" text="%label.filename" />
+            <TableColumn fx:id="dateColumn" prefWidth="182.0" text="%label.date" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="345.0" text="%label.description" />
+        </columns>
+      </TableView>
+      <Label layoutX="14.0" layoutY="21.0" text="%label.backupdirectory" />
+      <TextField fx:id="directoryField" layoutX="12.0" layoutY="42.0" prefHeight="25.0" prefWidth="599.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="121.0" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+      <Button layoutX="627.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleBrowse" text="%label.browse" AnchorPane.rightAnchor="13.0" />
+   </children>
+</AnchorPane>

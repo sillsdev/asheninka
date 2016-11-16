@@ -34,6 +34,7 @@ import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
 
 import static javafx.geometry.Orientation.VERTICAL;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -186,6 +187,18 @@ public class RootLayoutController implements Initializable {
 	private MenuItem menuItemVernacularFont;
 	@FXML
 	private MenuItem menuItemAnalysisFont;
+	@FXML
+	private MenuItem menuItemCVApproach;
+	@FXML
+	private MenuItem menuItemSonorityHierarchyApproach;
+	@FXML
+	private MenuItem menuItemONCApproach;
+	@FXML
+	private MenuItem menuItemMoraicApproach;
+	@FXML
+	private MenuItem menuItemNuclearProjectionApproach;
+	@FXML
+	private MenuItem menuItemOTApproach;
 
 	@FXML
 	private ListView<ApproachView> approachViews;
@@ -471,7 +484,7 @@ public class RootLayoutController implements Initializable {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
-			String resource = "fxml/BackupChooser.fxml";
+			String resource = "fxml/RestoreBackupChooser.fxml";
 			String title = bundle.getString("label.restoreproject");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
 					resource, title);
@@ -578,20 +591,29 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
-	private void handleHelpIntro() {
+	private void handleUserDocumentation() {
+		showFileToUser("doc/UserDocumentation.pdf");
+	}
+
+	protected void showFileToUser(String sFileToShow) {
 		if (!mainApp.getOperatingSystem().equals("Mac OS X")) {
 			HostServicesDelegate hostServices = HostServicesFactory.getInstance(mainApp);
-			hostServices.showDocument("file:doc/Overview.pdf");
+			hostServices.showDocument("file:" + sFileToShow);
 		} else {
 			if (Desktop.isDesktopSupported()) {
 				try {
-					File myFile = new File("doc/Overview.pdf");
+					File myFile = new File(sFileToShow);
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
 					// no application registered for PDFs
 				}
 			}
 		}
+	}
+
+	@FXML
+	private void handleHelpIntro() {
+		showFileToUser("doc/Overview.pdf");
 	}
 
 	/**
@@ -626,6 +648,57 @@ public class RootLayoutController implements Initializable {
 		menuItemConvertPredictedToCorrectSyllabification.setDisable(false);
 		buttonToolbarFindWord.setDisable(false);
 		menuItemFindWord.setDisable(false);
+	}
+
+	@FXML
+	private void handleCVSegmentInventory() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		cvApproachController.handleCVSegmentInventory();
+		selectApproachViewItem(0);
+	}
+
+	@FXML
+	private void handleCVNaturalClasses() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		cvApproachController.handleCVNaturalClasses();
+		selectApproachViewItem(1);
+	}
+
+	@FXML
+	private void handleCVSyllablePatterns() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		cvApproachController.handleCVSyllablePatterns();;
+		selectApproachViewItem(2);
+	}
+
+	@FXML
+	private void handleCVWords() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		cvApproachController.handleCVWords();
+		selectApproachViewItem(3);
+	}
+
+	@FXML
+	private void handleCVWordsPredictedVsCorrect() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		cvApproachController.handleCVWordsPredictedVsCorrect();
+		selectApproachViewItem(4);
+	}
+
+	protected void selectApproachViewItem(int iItem) {
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		        approachViews.scrollTo(iItem);
+		        approachViews.getSelectionModel().select(iItem);
+		        approachViews.getFocusModel().focus(iItem);
+		    }
+		});
 	}
 
 	private void toggleButtonSelectedStatus(Button myButton) {
@@ -795,11 +868,11 @@ public class RootLayoutController implements Initializable {
 
 		// set initial approach (TODO: make it be based on user's last choice)
 		handleCVApproach();
-
+		//handleCVSegmentInventory(); causes crash when do load of fxml file at this point
+		
 		listenForChangesInApproachViews();
 
 		// do we need this? toolBarDelegate.init();
-
 	}
 
 	protected void createToolbarButtons(ResourceBundle bundle) {

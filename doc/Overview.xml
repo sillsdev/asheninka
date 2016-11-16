@@ -19,8 +19,10 @@ type="tAsheninka"
 >H. Andrew Black</author
 ><affiliation
 >SIL International</affiliation
+><emailAddress
+>andy_black@sil.orgl</emailAddress
 ><date
->12 November 2015</date
+>11 November 2016</date
 ><contents
 ></contents
 ></frontMatter
@@ -71,7 +73,7 @@ id="nSymbolsUsed"
 >Throughout this document, the following symbols are used: <object
 type="tSyllable"
 ></object
-> = syllable, I<object
+> = syllable, <object
 type="tOnset"
 ></object
 > = onset, <object

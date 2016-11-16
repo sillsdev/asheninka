@@ -34,4 +34,5 @@ build/externalLibs
 build/project
 #diff-match-patch
 Copy of RootLayout.fxml
-
+UserDocumentation.css
+UserDocumentation.htm
