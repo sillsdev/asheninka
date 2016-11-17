@@ -12,6 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sil.org.syllableparser.model.ApproachType;
+import sil.org.syllableparser.model.cvapproach.CVApproachView;
+
 public class ApplicationPreferencesTest {
 
 	ApplicationPreferences applicationPreferences;
@@ -22,6 +25,8 @@ public class ApplicationPreferencesTest {
 	Double windowHeightLastUsed;
 	Double windowWidthLastUsed;
 	boolean windowLastMaximized;
+	String approachLastUsed;
+	String approachViewLastUsed;
 
 	@Before
 	public void setUp() throws Exception {
@@ -33,6 +38,8 @@ public class ApplicationPreferencesTest {
 		windowXLastUsed = applicationPreferences.getLastWindowPositionX();
 		windowYLastUsed = applicationPreferences.getLastWindowPositionY();
 		windowLastMaximized = applicationPreferences.getLastWindowMaximized();
+		approachLastUsed = applicationPreferences.getLastApproachUsed();
+		approachViewLastUsed = applicationPreferences.getLastApproachViewUsed();
 		applicationPreferences.setLastOpenedFilePath("last opened file");
 		applicationPreferences.setLastLocaleLanguage("en");
 	}
@@ -66,6 +73,17 @@ public class ApplicationPreferencesTest {
 
 	}
 
+	@Test
+	public void lastApproach() {
+		String sMoraic = ApproachType.MORAIC.toString();
+		applicationPreferences.setLastApproachUsed(sMoraic);
+		assertEquals("last approach used", sMoraic, applicationPreferences.getLastApproachUsed());
+		String sWords = CVApproachView.WORDS.toString();
+		applicationPreferences.setLastApproachViewUsed(sWords);
+		assertEquals("last approach view used", sWords, applicationPreferences.getLastApproachViewUsed());
+		
+	}
+	
 	@Test
 	public void lastLanguage() {
 		assertEquals("locale language", "en", applicationPreferences.getLastLocaleLanguage());

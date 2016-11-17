@@ -19,6 +19,7 @@ import org.controlsfx.control.textfield.TextFields;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.*;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.model.cvapproach.CVApproachView;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
@@ -75,6 +76,36 @@ public class CVApproachController extends ApproachController {
 
 	public ObservableList<ApproachView> getViews() {
 		return views;
+	}
+
+	public String getViewUsed() {
+		String sView = "unknown";
+		String sClass = currentCVApproachController.getClass().getName();
+		switch (sClass) {
+		case "sil.org.syllableparser.view.CVSegmentInventoryController":
+			sView = CVApproachView.SEGMENT_INVENTORY.toString();
+			break;
+		
+		case "sil.org.syllableparser.view.CVNaturalClassesController":
+			sView = CVApproachView.NATURAL_CLASSES.toString();
+			break;
+
+		case "sil.org.syllableparser.view.CVSyllablePatternsController":
+			sView = CVApproachView.SYLLABLE_PATTERNS.toString();
+			break;
+
+		case "sil.org.syllableparser.view.CVWordsController":
+			sView = CVApproachView.WORDS.toString();
+			break;
+
+		case "sil.org.syllableparser.view.CVWordsPredictedVsCorrectController":
+			sView = CVApproachView.PREDICTED_VS_CORRECT_WORDS.toString();
+			break;
+
+		default:
+			break;
+		}
+		return sView;
 	}
 
 	public void setCVApproachData(CVApproach cvApproach, ObservableList<Word> words) {

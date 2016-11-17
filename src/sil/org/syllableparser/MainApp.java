@@ -123,6 +123,8 @@ public class MainApp extends Application {
 	public void stop() {
 		rememberWindowSettings();
 		applicationPreferences.setLastLocaleLanguage(locale.getLanguage());
+		applicationPreferences.setLastApproachUsed(controller.getApproachUsed());
+		applicationPreferences.setLastApproachViewUsed(controller.getViewUsed());
 		controller.handleSave();
 		// TODO: add last file opened
 	}

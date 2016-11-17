@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import sil.org.syllableparser.model.ApproachType;
+import sil.org.syllableparser.model.cvapproach.CVApproachView;
 import sil.org.utility.*;
 
 public class ApplicationPreferences {
@@ -23,6 +25,7 @@ public class ApplicationPreferences {
 	static final String LAST_WINDOW_HEIGHT = "lastWindowHeight";
 	static final String LAST_WINDOW_MAXIMIZED = "lastWindowMaximized";
 	static final String LAST_APPROACH_USED = "lastApproachUsed";
+	static final String LAST_APPROACH_VIEW_USED = "lastApproachViewUsed";
 	
 	Preferences prefs;
 
@@ -110,6 +113,22 @@ public class ApplicationPreferences {
 
 	public void setLastWindowMaximized(boolean value) {
 		setPreferencesKey(LAST_WINDOW_MAXIMIZED, value);
+	}
+
+	public String getLastApproachUsed() {
+		return prefs.get(LAST_APPROACH_USED, ApproachType.CV.toString());
+	}
+
+	public void setLastApproachUsed(String lastApproachUsed) {
+		setPreferencesKey(LAST_APPROACH_USED, lastApproachUsed);
+	}
+
+	public String getLastApproachViewUsed() {
+		return prefs.get(LAST_APPROACH_VIEW_USED, CVApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_APPROACH_VIEW_USED, lastApproachViewUsed);
 	}
 
 	private void setPreferencesKey(String key, boolean value) {

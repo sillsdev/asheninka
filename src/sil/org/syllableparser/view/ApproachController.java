@@ -48,6 +48,7 @@ public abstract class ApproachController {
 	public abstract ArrayList<String> getHyphenatedWords(ObservableList<Word> words);
 	public abstract ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words);
 	public abstract ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words);
+	public abstract String getViewUsed();
 	
 	/**
 	 * @return the mainApp

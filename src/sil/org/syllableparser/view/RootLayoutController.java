@@ -78,6 +78,7 @@ import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.SyllableParserException;
+import sil.org.syllableparser.model.ApproachType;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.BackupFile;
 import sil.org.syllableparser.model.Language;
@@ -307,24 +308,25 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleVernacularFont() {
-		handleFont(mainApp.getPrimaryStage(), languageProject.getVernacularLanguage()); 
+		handleFont(mainApp.getPrimaryStage(), languageProject.getVernacularLanguage());
 	}
 
 	@FXML
 	private void handleAnalysisFont() {
-		handleFont(mainApp.getPrimaryStage(), languageProject.getAnalysisLanguage()); 
+		handleFont(mainApp.getPrimaryStage(), languageProject.getAnalysisLanguage());
 	}
 
 	public void handleFont(Stage stage, Language lang) {
-		 FontSelectorDialog dlg = new FontSelectorDialog(lang.getFont());
-        dlg.initOwner(stage);
-        //dlg.setResult(languageProject.getVernacularFont());
-        dlg.showAndWait();
-        Font chosenFont = dlg.getResult();
-        if (chosenFont != null) {
-        	Font font =lang.createFont(chosenFont.getFamily(), chosenFont.getSize(), chosenFont.getStyle()); 
-        	lang.setFont(font);
-        }
+		FontSelectorDialog dlg = new FontSelectorDialog(lang.getFont());
+		dlg.initOwner(stage);
+		// dlg.setResult(languageProject.getVernacularFont());
+		dlg.showAndWait();
+		Font chosenFont = dlg.getResult();
+		if (chosenFont != null) {
+			Font font = lang.createFont(chosenFont.getFamily(), chosenFont.getSize(),
+					chosenFont.getStyle());
+			lang.setFont(font);
+		}
 	}
 
 	/**
@@ -351,11 +353,13 @@ public class RootLayoutController implements Initializable {
 		String sDirectoryPath = System.getProperty("user.home") + File.separator;
 		File dir = new File(sDirectoryPath);
 		if (dir.exists()) {
-			// See if there is a "Documents" directory as Windows, Linux, and Mac OS X tend to have
+			// See if there is a "Documents" directory as Windows, Linux, and
+			// Mac OS X tend to have
 			String sDocumentsDirectoryPath = sDirectoryPath + "Documents" + File.separator;
 			dir = new File(sDocumentsDirectoryPath);
 			if (dir.exists()) {
-				// Try and find or make the "My Asheninka" subdirectory of Documents
+				// Try and find or make the "My Asheninka" subdirectory of
+				// Documents
 				String sMyAsheninkaDirectoryPath = sDocumentsDirectoryPath
 						+ Constants.DEFAULT_DIRECTORY_NAME + File.separator;
 				dir = new File(sMyAsheninkaDirectoryPath);
@@ -453,7 +457,8 @@ public class RootLayoutController implements Initializable {
 
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
-			String dateTimeTag = DateTimeNormalizer.normalizeDateTimeWithDigits(LocalDateTime.now());
+			String dateTimeTag = DateTimeNormalizer
+					.normalizeDateTimeWithDigits(LocalDateTime.now());
 			String backupDirectoryPath = getBackupDirectoryPath();
 			if (!Files.exists(Paths.get(backupDirectoryPath))) {
 				try {
@@ -639,6 +644,10 @@ public class RootLayoutController implements Initializable {
 		approachViews.setItems(cvApproachController.getViews());
 		currentApproachController = cvApproachController;
 		selectApproachViewItem(0);
+		setDisableForSomeMenuAndToolbarItems();
+	}
+
+	protected void setDisableForSomeMenuAndToolbarItems() {
 		buttonToolbarEditInsert.setDisable(true);
 		menuItemEditInsert.setDisable(true);
 		buttonToolbarEditRemove.setDisable(true);
@@ -654,7 +663,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleCVSegmentInventory() {
 		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
 		cvApproachController.handleCVSegmentInventory();
 		selectApproachViewItem(0);
 	}
@@ -662,7 +671,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleCVNaturalClasses() {
 		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
 		cvApproachController.handleCVNaturalClasses();
 		selectApproachViewItem(1);
 	}
@@ -670,15 +679,16 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleCVSyllablePatterns() {
 		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
-		cvApproachController.handleCVSyllablePatterns();;
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		cvApproachController.handleCVSyllablePatterns();
+		;
 		selectApproachViewItem(2);
 	}
 
 	@FXML
 	private void handleCVWords() {
 		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
 		cvApproachController.handleCVWords();
 		selectApproachViewItem(3);
 	}
@@ -686,19 +696,19 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleCVWordsPredictedVsCorrect() {
 		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController)currentApproachController;
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
 		cvApproachController.handleCVWordsPredictedVsCorrect();
 		selectApproachViewItem(4);
 	}
 
 	protected void selectApproachViewItem(int iItem) {
 		Platform.runLater(new Runnable() {
-		    @Override
-		    public void run() {
-		        approachViews.scrollTo(iItem);
-		        approachViews.getSelectionModel().select(iItem);
-		        approachViews.getFocusModel().focus(iItem);
-		    }
+			@Override
+			public void run() {
+				approachViews.scrollTo(iItem);
+				approachViews.getSelectionModel().select(iItem);
+				approachViews.getFocusModel().focus(iItem);
+			}
 		});
 	}
 
@@ -867,13 +877,79 @@ public class RootLayoutController implements Initializable {
 
 		ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 
-		// set initial approach (TODO: make it be based on user's last choice)
-		handleCVApproach();
-		//handleCVSegmentInventory(); causes crash when do load of fxml file at this point
-		
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				setInitialApproachAndView();
+			}
+		});	
+
 		listenForChangesInApproachViews();
 
 		// do we need this? toolBarDelegate.init();
+	}
+
+	protected void setInitialApproachAndView() {
+		String sLastApproachUsed = applicationPreferences.getLastApproachUsed();
+		switch (sLastApproachUsed) {
+		case "CV":
+			setCVApproachAndInitialCVView();
+			break;
+
+		case "MORAIC":
+			handleMoraicApproach();
+			break;
+
+		case "NUCLEAR_PROJECTION":
+			handleNuclearProjectionApproach();
+			break;
+
+		case "ONSET_NUCLEUS_CODA":
+			handleONCApproach();
+			break;
+
+		case "OPTIMALITY_THEORY":
+			handleOTApproach();
+			break;
+
+		case "SONORITY_HIERARCHY":
+			handleSonorityHierarchyApproach();
+			break;
+
+		default:
+			setCVApproachAndInitialCVView();
+			break;
+		}
+	}
+
+	protected void setCVApproachAndInitialCVView() {
+		handleCVApproach();
+		String sLastApproachViewUsed = applicationPreferences.getLastApproachViewUsed();
+		switch (sLastApproachViewUsed) {
+		case "NATURAL_CLASSES":
+			selectApproachViewItem(1);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(4);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(0);
+			break;
+
+		case "SYLLABLE_PATTERNS":
+			selectApproachViewItem(2);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(3);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
 	}
 
 	protected void createToolbarButtons(ResourceBundle bundle) {
@@ -968,6 +1044,28 @@ public class RootLayoutController implements Initializable {
 	 */
 	public LanguageProject getLanguageProject() {
 		return languageProject;
+	}
+
+	public String getApproachUsed() {
+		String sApproach = "unknown";
+		String sClass = currentApproachController.getClass().getName();
+		switch (sClass) {
+		case "sil.org.syllableparser.view.CVApproachController":
+			sApproach = ApproachType.CV.toString();
+			break;
+
+		case "sil.org.syllableparser.view.ONCApproachController":
+			sApproach = ApproachType.ONSET_NUCLEUS_CODA.toString();
+			break;
+
+		default:
+			break;
+		}
+		return sApproach;
+	}
+
+	public String getViewUsed() {
+		return currentApproachController.getViewUsed();
 	}
 
 	/**

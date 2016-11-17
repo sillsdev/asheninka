@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import org.controlsfx.control.StatusBar;
 
+import sil.org.syllableparser.model.ApproachType;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.Word;
 import javafx.collections.FXCollections;
@@ -38,6 +39,23 @@ public class ONCApproachController extends ApproachController  {
 		return views;
 	}
 	
+	public String getViewUsed() {
+		String sView = "unknown";
+//		String sClass = currentCVApproachController.getClass().getName();
+//		switch (sClass) {
+//		case "sil.org.syllableparser.view.CVApproachController":
+//			sView = ApproachType.CV.toString();
+//			break;
+//
+//		case "sil.org.syllableparser.view.ONCApproachController":
+//			sView = ApproachType.ONSET_NUCLEUS_CODA.toString();
+//			break;
+//		
+//		default:
+//			break;
+//		}
+	return sView;
+	}
 	public void handleONCSegmentInventory() {
 		System.out.println("handleONCSegmentInventory reached");
 	}
