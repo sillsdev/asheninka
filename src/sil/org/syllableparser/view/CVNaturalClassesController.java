@@ -16,6 +16,7 @@ import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -136,15 +137,6 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// checkBoxColumn.setCellValueFactory(cellData ->
-		// cellData.getValue().activeCheckBoxProperty());
-		// checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-		// checkBoxColumn.setEditable(true);
-		// checkBoxColumnHead.setOnAction((event) -> {
-		// handleCheckBoxColumnHead();
-		// });
-		// initializeCheckBoxContextMenu(resources);
-
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.sncRepresentationProperty());
@@ -242,6 +234,13 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		nc.setDescription(temp);
 	}
 
+	@Override
+	public void setViewItemUsed(int value) {
+		int max = cvNaturalClassTable.getItems().size();
+		value = adjustIndexValue(value, max);
+		cvNaturalClassTable.getSelectionModel().clearAndSelect(value);
+	}
+
 	/**
 	 * Fills all text fields to show details about the CV natural class. If the
 	 * specified segment is null, all text fields are cleared.
@@ -266,9 +265,11 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		}
 
 		if (naturalClass != null) {
-			int currentItem = cvNaturalClassTable.getItems().indexOf(currentNaturalClass) + 1;
-			this.mainApp.updateStatusBarNumberOfItems(currentItem + "/"
+			int iCurrentIndex = cvNaturalClassTable.getItems().indexOf(currentNaturalClass);
+			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ cvNaturalClassTable.getItems().size() + " ");
+			// remember the selection
+			mainApp.getApplicationPreferences().setLastCVNaturalClassesViewItemUsed(iCurrentIndex);
 		}
 
 	}
@@ -327,11 +328,21 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 		// Add observable list data to the table
 		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
-		if (cvNaturalClassTable.getItems().size() > 0) {
-			// select first one
-			cvNaturalClassTable.requestFocus();
-			cvNaturalClassTable.getSelectionModel().select(0);
-			cvNaturalClassTable.getFocusModel().focus(0);
+		int max = cvNaturalClassTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastCVNaturalClassesViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					// select the last one used
+					cvNaturalClassTable.requestFocus();
+					cvNaturalClassTable.getSelectionModel().select(iLastIndex);
+					cvNaturalClassTable.getFocusModel().focus(iLastIndex);
+					cvNaturalClassTable.scrollTo(iLastIndex);
+				}
+			});
 		}
 	}
 
@@ -348,6 +359,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		cvNaturalClassTable.requestFocus();
 		cvNaturalClassTable.getSelectionModel().select(i);
 		cvNaturalClassTable.getFocusModel().focus(i);
+		cvNaturalClassTable.scrollTo(i);
 	}
 
 	/*
@@ -362,6 +374,13 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		currentNaturalClass = null;
 		if (i >= 0) {
 			cvApproach.getCVNaturalClasses().remove(i);
+			int max = cvNaturalClassTable.getItems().size();
+			i = adjustIndexValue(i, max);
+			// select the last one used
+			cvNaturalClassTable.requestFocus();
+			cvNaturalClassTable.getSelectionModel().select(i);
+			cvNaturalClassTable.getFocusModel().focus(i);
+			cvNaturalClassTable.scrollTo(i);
 		}
 		// the last item in the middle pane will be repeated if we delete an
 		// earlier one

@@ -26,6 +26,15 @@ public class ApplicationPreferences {
 	static final String LAST_WINDOW_MAXIMIZED = "lastWindowMaximized";
 	static final String LAST_APPROACH_USED = "lastApproachUsed";
 	static final String LAST_APPROACH_VIEW_USED = "lastApproachViewUsed";
+	static final String LAST_APPROACH_VIEW_ITEM_USED = "lastApproachViewItemUsed";
+	
+	static final String LAST_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastCVNaturalClassesViewItemUsed";
+	static final String LAST_CV_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastCVSegemntInventoryViewItemUsed";
+	static final String LAST_CV_SYLLABLE_PATTERNS_VIEW_ITEM_USED = "lastCVSyllablePatternsViewItemUsed";
+	static final String LAST_CV_WORDS_VIEW_ITEM_USED = "lastCVWordsViewItemUsed";
+	// We have one for predicted vs. correct words, but we're not setting it
+	// because it is not clear why it would be useful.
+	static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastCVWordPredictedVsCorrectViewItemUsed";
 	
 	Preferences prefs;
 
@@ -131,10 +140,61 @@ public class ApplicationPreferences {
 		setPreferencesKey(LAST_APPROACH_VIEW_USED, lastApproachViewUsed);
 	}
 
+	public int getLastCVNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_CV_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastCVNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_CV_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastCVSegmentInventoryViewItemUsed() {
+		return prefs.getInt(LAST_CV_SEGMENT_INVENTORY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastCVSegmentInventoryViewItemUsed(int value) {
+		setPreferencesKey(LAST_CV_SEGMENT_INVENTORY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastCVSyllablePatternsViewItemUsed() {
+		return prefs.getInt(LAST_CV_SYLLABLE_PATTERNS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastCVSyllablePatternsViewItemUsed(int value) {
+		setPreferencesKey(LAST_CV_SYLLABLE_PATTERNS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastCVWordsViewItemUsed() {
+		return prefs.getInt(LAST_CV_WORDS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastCVWordsViewItemUsed(int value) {
+		setPreferencesKey(LAST_CV_WORDS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastCVWordsPredictedVsCorrectViewItemUsed() {
+		return prefs.getInt(LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastCVWordsPredictedVsCorrectViewItemUsed(int value) {
+		setPreferencesKey(LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
+	}
+
 	private void setPreferencesKey(String key, boolean value) {
 		if (!StringUtilities.isNullOrEmpty(key)) {
 			if (key != null) {
 				prefs.putBoolean(key, value);
+
+			} else {
+				prefs.remove(key);
+			}
+		}
+	}
+
+	private void setPreferencesKey(String key, int value) {
+		if (!StringUtilities.isNullOrEmpty(key)) {
+			if (key != null) {
+				prefs.putInt(key, value);
 
 			} else {
 				prefs.remove(key);

@@ -39,4 +39,13 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 		col.setGraphic(stack);
 	}
 
+	protected int adjustIndexValue(int value, int max) {
+		if (value >= max) {
+			value = max-1;
+		} else if (value < 0) {
+			value = 0;
+		}
+		return value;
+	}
+
 }

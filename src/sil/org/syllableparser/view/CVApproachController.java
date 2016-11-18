@@ -85,7 +85,7 @@ public class CVApproachController extends ApproachController {
 		case "sil.org.syllableparser.view.CVSegmentInventoryController":
 			sView = CVApproachView.SEGMENT_INVENTORY.toString();
 			break;
-		
+
 		case "sil.org.syllableparser.view.CVNaturalClassesController":
 			sView = CVApproachView.NATURAL_CLASSES.toString();
 			break;
@@ -119,8 +119,10 @@ public class CVApproachController extends ApproachController {
 		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		controller.setViewItemUsed(mainApp.getApplicationPreferences()
+				.getLastCVSegmentInventoryViewItemUsed());
 	}
-	
+
 	private FXMLLoader createFXMLLoader(String sFxml) {
 		FXMLLoader loader = new FXMLLoader();
 		ApproachViewNavigator.loadApproachView(loader, sFxml, locale);
@@ -134,11 +136,14 @@ public class CVApproachController extends ApproachController {
 		controller.setLocale(locale);
 		controller.setToolBarDelegate(rootController.toolBarDelegate);
 	}
+
 	public void handleCVNaturalClasses() {
 		FXMLLoader loader = createFXMLLoader("fxml/CVNaturalClasses.fxml");
 		CVNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		int i = mainApp.getApplicationPreferences().getLastCVNaturalClassesViewItemUsed();
+		controller.setViewItemUsed(i);
 	}
 
 	public void handleCVSyllablePatterns() {
@@ -149,15 +154,17 @@ public class CVApproachController extends ApproachController {
 	}
 
 	public void handleCVWords() {
-		handleCVWords(0);
+		handleCVWords(0, false);
 	}
 
-	public void handleCVWords(int index) {
+	public void handleCVWords(int index, boolean fResetIndex) {
 		FXMLLoader loader = createFXMLLoader("fxml/CVWords.fxml");
 		CVWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
-		controller.setFocusOnWord(index);
+		if (fResetIndex) {
+			controller.setFocusOnWord(index);
+		}
 	}
 
 	public void handleCVWordsPredictedVsCorrect() {
@@ -252,7 +259,8 @@ public class CVApproachController extends ApproachController {
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
-					//List<CVSyllable> syllablesInWord = syllabifier.getSyllablesInCurrentWord();
+					// List<CVSyllable> syllablesInWord =
+					// syllabifier.getSyllablesInCurrentWord();
 					word.setCVPredictedSyllabification(syllabifier
 							.getSyllabificationOfCurrentWord());
 					word.setCVParserResult(sSuccess);
@@ -345,7 +353,7 @@ public class CVApproachController extends ApproachController {
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(word -> {
 				int index = listOfWords.indexOf(result.get());
-				handleCVWords(index);
+				handleCVWords(index, true);
 			});
 
 		} catch (Exception e) {
@@ -415,7 +423,9 @@ public class CVApproachController extends ApproachController {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCopy()
 	 */
 	@Override
@@ -423,7 +433,9 @@ public class CVApproachController extends ApproachController {
 		currentCVApproachController.handleToolBarCopy();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarPaste()
 	 */
 	@Override
@@ -431,7 +443,9 @@ public class CVApproachController extends ApproachController {
 		currentCVApproachController.handleToolBarPaste();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCut()
 	 */
 	@Override
@@ -447,7 +461,7 @@ public class CVApproachController extends ApproachController {
 	 * @param backupDirectoryPath
 	 */
 	public void setBackupDirectoryPath(String backupDirectoryPath) {
-		this.backupDirectoryPath = backupDirectoryPath; 
-		
+		this.backupDirectoryPath = backupDirectoryPath;
+
 	}
 }

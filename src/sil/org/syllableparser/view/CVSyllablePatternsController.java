@@ -19,6 +19,7 @@ import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -45,7 +46,7 @@ import javafx.stage.Stage;
  */
 
 public class CVSyllablePatternsController extends SylParserBaseController implements Initializable {
-	
+
 	protected final class WrappingTableCell extends TableCell<CVSyllablePattern, String> {
 		private Text text;
 
@@ -60,7 +61,8 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVSyllablePattern syllablePattern = (CVSyllablePattern) this.getTableRow().getItem();
+				CVSyllablePattern syllablePattern = (CVSyllablePattern) this.getTableRow()
+						.getItem();
 				if (syllablePattern != null && syllablePattern.isActive()) {
 					text.setFill(Constants.ACTIVE);
 				} else {
@@ -129,13 +131,14 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		ControllerUtilities.createToolbarButtonWithImage("DownArrow.png", buttonMoveDown,
 				tooltipMoveDown, bundle.getString("cv.view.syllablepatterns.down"));
 
-// 		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
-//		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-//		checkBoxColumn.setEditable(true);
-//		checkBoxColumnHead.setOnAction((event) -> {
-//			handleCheckBoxColumnHead();
-//		});
-//		initializeCheckBoxContextMenu(resources);
+		// checkBoxColumn.setCellValueFactory(cellData ->
+		// cellData.getValue().activeCheckBoxProperty());
+		// checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+		// checkBoxColumn.setEditable(true);
+		// checkBoxColumnHead.setOnAction((event) -> {
+		// handleCheckBoxColumnHead();
+		// });
+		// initializeCheckBoxContextMenu(resources);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().spNameProperty());
 		naturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -206,7 +209,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		nameField.requestFocus();
 
 	}
-	
+
 	public void displayFieldsPerActiveSetting(CVSyllablePattern syllablePattern) {
 		nameField.setDisable(!syllablePattern.isActive());
 		ncsTextFlow.setDisable(!syllablePattern.isActive());
@@ -228,7 +231,6 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		syllablePattern.setDescription("");
 		syllablePattern.setDescription(temp);
 	}
-
 
 	/**
 	 * Fills all text fields to show details about the CV natural class. If the
@@ -264,11 +266,18 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		}
 
 		if (syllablePattern != null) {
-			int currentItem = cvSyllablePatternTable.getItems().indexOf(currentSyllablePattern) + 1;
-			this.mainApp.updateStatusBarNumberOfItems(currentItem + "/"
+			int currentItem = cvSyllablePatternTable.getItems().indexOf(currentSyllablePattern);
+			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
 					+ cvSyllablePatternTable.getItems().size() + " ");
+			mainApp.getApplicationPreferences().setLastCVSyllablePatternsViewItemUsed(currentItem);
 		}
+	}
 
+	@Override
+	public void setViewItemUsed(int value) {
+		int max = cvSyllablePatternTable.getItems().size();
+		value = adjustIndexValue(value, max);
+		cvSyllablePatternTable.getSelectionModel().clearAndSelect(value);
 	}
 
 	protected void setUpDownButtonDisabled() {
@@ -339,14 +348,26 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
-		
+
 		// Add observable list data to the table
 		cvSyllablePatternTable.setItems(cvApproachData.getCVSyllablePatterns());
-		if (cvSyllablePatternTable.getItems().size() > 0) {
-			// select first one
-			cvSyllablePatternTable.requestFocus();
-			cvSyllablePatternTable.getSelectionModel().select(0);
-			cvSyllablePatternTable.getFocusModel().focus(0);
+		int max = cvSyllablePatternTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastCVSyllablePatternsViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					cvSyllablePatternTable.requestFocus();
+					cvSyllablePatternTable.getSelectionModel().select(iLastIndex);
+					cvSyllablePatternTable.getFocusModel().focus(iLastIndex);
+					// want to do following only if the selected item is not
+					// visible
+					// cvSyllablePatternTable.isVisible();
+					cvSyllablePatternTable.scrollTo(iLastIndex);
+				}
+			});
 		}
 	}
 
@@ -363,6 +384,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		cvSyllablePatternTable.requestFocus();
 		cvSyllablePatternTable.getSelectionModel().select(i);
 		cvSyllablePatternTable.getFocusModel().focus(i);
+		cvSyllablePatternTable.scrollTo(i);
 	}
 
 	/*
@@ -461,7 +483,8 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		}
 	}
 
-	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };

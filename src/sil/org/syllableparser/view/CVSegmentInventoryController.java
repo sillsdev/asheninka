@@ -14,6 +14,7 @@ import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,6 +62,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 			}
 		}
 	}
+
 	protected final class VernacularWrappingTableCell extends TableCell<Segment, String> {
 		private Text text;
 
@@ -86,7 +88,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 			}
 		}
 	}
-	
+
 	@FXML
 	private TableView<Segment> cvSegmentTable;
 	@FXML
@@ -121,13 +123,14 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
-//		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-//		checkBoxColumn.setEditable(true);
-//		checkBoxColumnHead.setOnAction((event) -> {
-//			handleCheckBoxColumnHead();
-//		});
-//		initializeCheckBoxContextMenu(resources);
+		// checkBoxColumn.setCellValueFactory(cellData ->
+		// cellData.getValue().activeCheckBoxProperty());
+		// checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+		// checkBoxColumn.setEditable(true);
+		// checkBoxColumnHead.setOnAction((event) -> {
+		// handleCheckBoxColumnHead();
+		// });
+		// initializeCheckBoxContextMenu(resources);
 		segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
 		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
 		descriptionColumn
@@ -241,10 +244,19 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		}
 
 		if (segment != null) {
-			int currentSegmentNumber = cvSegmentTable.getItems().indexOf(currentSegment) + 1;
-			this.mainApp.updateStatusBarNumberOfItems(currentSegmentNumber + "/"
+			int currentSegmentNumber = cvSegmentTable.getItems().indexOf(currentSegment);
+			this.mainApp.updateStatusBarNumberOfItems((currentSegmentNumber + 1) + "/"
 					+ cvSegmentTable.getItems().size() + " ");
+			mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
+					currentSegmentNumber);
 		}
+	}
+
+	@Override
+	public void setViewItemUsed(int value) {
+		int max = cvSegmentTable.getItems().size();
+		value = adjustIndexValue(value, max);
+		cvSegmentTable.getSelectionModel().clearAndSelect(value);
 	}
 
 	public void displayFieldsPerActiveSetting(Segment segment) {
@@ -270,11 +282,20 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 
 		// Add observable list data to the table
 		cvSegmentTable.setItems(languageProject.getSegmentInventory());
-		if (cvSegmentTable.getItems().size() > 0) {
-			// select one
-			cvSegmentTable.requestFocus();
-			cvSegmentTable.getSelectionModel().select(0);
-			cvSegmentTable.getFocusModel().focus(0);
+		int max = cvSegmentTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastCVSegmentInventoryViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					cvSegmentTable.requestFocus();
+					cvSegmentTable.getSelectionModel().select(iLastIndex);
+					cvSegmentTable.getFocusModel().focus(iLastIndex);
+					cvSegmentTable.scrollTo(iLastIndex);
+				}
+			});
 		}
 	}
 
@@ -291,6 +312,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		cvSegmentTable.requestFocus();
 		cvSegmentTable.getSelectionModel().select(i);
 		cvSegmentTable.getFocusModel().focus(i);
+		cvSegmentTable.scrollTo(i);
 	}
 
 	/*
@@ -333,7 +355,8 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		}
 	}
 
-	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { segmentField, graphemesField, descriptionField };

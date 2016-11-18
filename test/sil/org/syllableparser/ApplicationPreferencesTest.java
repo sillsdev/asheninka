@@ -27,6 +27,7 @@ public class ApplicationPreferencesTest {
 	boolean windowLastMaximized;
 	String approachLastUsed;
 	String approachViewLastUsed;
+	int approachViewItemLastUsed;
 
 	@Before
 	public void setUp() throws Exception {
@@ -53,6 +54,8 @@ public class ApplicationPreferencesTest {
 		applicationPreferences.setLastWindowPositionX(windowXLastUsed);
 		applicationPreferences.setLastWindowPositionY(windowYLastUsed);
 		applicationPreferences.setLastWindowMaximized(windowLastMaximized);
+		applicationPreferences.setLastApproachUsed(approachLastUsed);
+		applicationPreferences.setLastApproachViewUsed(approachViewLastUsed);
 	}
 
 	@Test
@@ -81,7 +84,6 @@ public class ApplicationPreferencesTest {
 		String sWords = CVApproachView.WORDS.toString();
 		applicationPreferences.setLastApproachViewUsed(sWords);
 		assertEquals("last approach view used", sWords, applicationPreferences.getLastApproachViewUsed());
-		
 	}
 	
 	@Test

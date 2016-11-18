@@ -13,6 +13,7 @@ import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -239,11 +240,18 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		}
 
 		if (cvWord != null) {
-			int currentItem = cvWordsTable.getItems().indexOf(currentWord) + 1;
-			this.mainApp.updateStatusBarNumberOfItems(currentItem + "/"
+			int currentItem = cvWordsTable.getItems().indexOf(currentWord);
+			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
 					+ cvWordsTable.getItems().size() + " ");
+			mainApp.getApplicationPreferences().setLastCVWordsViewItemUsed(currentItem);
 		}
+	}
 
+	@Override
+	public void setViewItemUsed(int value) {
+		int max = cvWordsTable.getItems().size();
+		value = adjustIndexValue(value, max);
+		cvWordsTable.getSelectionModel().clearAndSelect(value);
 	}
 
 	public void setWord(Word cvWord) {
@@ -267,16 +275,26 @@ public class CVWordsController extends SylParserBaseController implements Initia
 
 		// Add observable list data to the table
 		cvWordsTable.setItems(words);
-		setFocusOnWord(0);
+		int max = cvWordsTable.getItems().size();
+		if (max > 0) {
+			int iLastIndex = mainApp.getApplicationPreferences().getLastCVWordsViewItemUsed();
+			iLastIndex = adjustIndexValue(iLastIndex, max);
+			setFocusOnWord(iLastIndex);
+		}
 	}
 
 	public void setFocusOnWord(int index) {
 		if (cvWordsTable.getItems().size() > 0 && index > -1
 				&& index < cvWordsTable.getItems().size()) {
-			cvWordsTable.requestFocus();
-			cvWordsTable.getSelectionModel().select(index);
-			cvWordsTable.getFocusModel().focus(index);
-			cvWordsTable.scrollTo(index);
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					cvWordsTable.requestFocus();
+					cvWordsTable.getSelectionModel().select(index);
+					cvWordsTable.getFocusModel().focus(index);
+					cvWordsTable.scrollTo(index);
+				}
+			});
 		}
 	}
 
@@ -294,6 +312,7 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		cvWordsTable.requestFocus();
 		cvWordsTable.getSelectionModel().select(i);
 		cvWordsTable.getFocusModel().focus(i);
+		cvWordsTable.scrollTo(i);
 	}
 
 	/*

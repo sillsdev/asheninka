@@ -10,9 +10,9 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import sil.org.utility.*;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.IndexRange;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -22,6 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Approach;
+import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 
 /**
@@ -117,6 +118,10 @@ public abstract class ApproachEditorController {
 		return findFocusedTextField(textFields);
 	}
 
+	public void setViewItemUsed(int value) {
+		// default is to do nothing
+	}
+	
 	void handleCopy() {
 		TextField[] textFields = createTextFields();
 		String text = getSelectedText(textFields);

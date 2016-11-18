@@ -56,6 +56,10 @@ public class ONCApproachController extends ApproachController  {
 //		}
 	return sView;
 	}
+	
+	public int getViewItemUsed() {
+		return 0;
+	}
 	public void handleONCSegmentInventory() {
 		System.out.println("handleONCSegmentInventory reached");
 	}
