@@ -345,7 +345,7 @@ public class RootLayoutController implements Initializable {
 		File file = new File(Constants.ASHENINKA_STARTER_FILE);
 		mainApp.loadLanguageData(file);
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
-		handleSaveAs();
+		ControllerUtilities.doFileSaveAs(mainApp, true, syllableParserFilterDescription);
 		mainApp.getSaveDataPeriodicallyService().restart();
 	}
 

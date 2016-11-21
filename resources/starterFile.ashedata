@@ -45,6 +45,20 @@
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" active="true" id="ed8f00a6-81a8-4390-9b0d-dd7086cc2faf">
+                <description>Onsetless closed syllable</description>
+                <NCSRepresentation>V, C</NCSRepresentation>
+                <SPName>VC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="e9126200-ddc4-41fc-b5ef-33cbe3dccc9d">
+                <description>Onsetless open syllable</description>
+                <NCSRepresentation>V</NCSRepresentation>
+                <SPName>V</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
         </cvSyllablePatterns>
     </cvApproach>
     <segments>
