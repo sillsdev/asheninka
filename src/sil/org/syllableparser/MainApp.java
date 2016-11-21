@@ -100,12 +100,11 @@ public class MainApp extends Application {
 		saveDataPeriodicallyService = new TimerService();
 		saveDataPeriodicallyService.setPeriod(Duration.seconds(duration));
 		saveDataPeriodicallyService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-int i = 0;
+
 			@Override
 			public void handle(WorkerStateEvent t) {
 				File file = getLanguageProjectFilePath();
 				if (file != null && saveDataPeriodicallyService.isRunning()) {
-					System.out.println("saving data: " + i++);
 					saveLanguageData(file);
 				}
 			}
