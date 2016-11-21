@@ -62,6 +62,7 @@ public class MainApp extends Application {
 	private String sNotImplementedYetHeader;
 	private String sNotImplementedYetContent;
 	private ApplicationPreferences applicationPreferences;
+	private TimerService saveDataPeriodicallyService;
 
 	// private Image mainIconImage;
 
@@ -79,7 +80,7 @@ public class MainApp extends Application {
 
 		initRootLayout();
 
-		saveDataPeriodically(30);
+		saveDataPeriodically(Constants.SAVE_DATA_PERIODICITY);
 
 	}
 	
@@ -91,23 +92,28 @@ public class MainApp extends Application {
 		primaryStage.setMaximized(applicationPreferences.getLastWindowMaximized());
 	}
 
-	public void saveDataPeriodically(int duration) {
-		TimerService service = new TimerService();
-		service.setPeriod(Duration.seconds(duration));
-		service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+	public TimerService getSaveDataPeriodicallyService() {
+		return saveDataPeriodicallyService;
+	}
 
+	public void saveDataPeriodically(int duration) {
+		saveDataPeriodicallyService = new TimerService();
+		saveDataPeriodicallyService.setPeriod(Duration.seconds(duration));
+		saveDataPeriodicallyService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+int i = 0;
 			@Override
 			public void handle(WorkerStateEvent t) {
 				File file = getLanguageProjectFilePath();
-				if (file != null) {
+				if (file != null && saveDataPeriodicallyService.isRunning()) {
+					System.out.println("saving data: " + i++);
 					saveLanguageData(file);
 				}
 			}
 		});
-		service.start();
+		saveDataPeriodicallyService.start();
 	}
 
-	private static class TimerService extends ScheduledService<Void> {
+	public static class TimerService extends ScheduledService<Void> {
 
 		protected Task<Void> createTask() {
 			return new Task<Void>() {

@@ -334,8 +334,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	public void handleNew() {
-		// mainApp.getLanguageProject().clear();
-		// ApplicationPreferences.setLastOpenedFilePath((String) null);
+		mainApp.getSaveDataPeriodicallyService().cancel();
 		String sDirectoryPath = applicationPreferences.getLastOpenedDirectoryPath();
 		if (sDirectoryPath == "") {
 			// probably creating a new file the first time the program is run;
@@ -347,6 +346,7 @@ public class RootLayoutController implements Initializable {
 		mainApp.loadLanguageData(file);
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		handleSaveAs();
+		mainApp.getSaveDataPeriodicallyService().restart();
 	}
 
 	protected String tryToGetDefaultDirectoryPath() {
@@ -806,7 +806,7 @@ public class RootLayoutController implements Initializable {
 				bundle.getString("file.plainlistimportfilterdescription") + " ("
 						+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
-			importer.importWords(file, sLabelUntested, statusBar, bundle);
+			importer.importWords(file, sLabelUntested, statusBar, bundle, mainApp);
 		}
 	}
 
@@ -818,7 +818,7 @@ public class RootLayoutController implements Initializable {
 				bundle.getString("file.plainlistimportfilterdescription") + " ("
 						+ Constants.TEXT_FILE_EXTENSION + ")", Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
-			importer.importWords(file, sLabelUntested, statusBar, bundle);
+			importer.importWords(file, sLabelUntested, statusBar, bundle, mainApp);
 		}
 	}
 
@@ -830,7 +830,7 @@ public class RootLayoutController implements Initializable {
 		ParaTExtExportedWordListImporter importer = new ParaTExtExportedWordListImporter(
 				languageProject);
 		if (file != null) {
-			importer.importWords(file, "Untested", statusBar, bundle);
+			importer.importWords(file, "Untested", statusBar, bundle, mainApp);
 		}
 	}
 
@@ -842,8 +842,7 @@ public class RootLayoutController implements Initializable {
 				Constants.PARATEXT_HYPHENATED_WORDS_TEXT_FILE,
 				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
-			// Scene scene = approachViewContent.getScene();
-			importer.importWords(file, sLabelUntested, statusBar, bundle);
+			importer.importWords(file, sLabelUntested, statusBar, bundle, mainApp);
 		}
 	}
 
@@ -882,7 +881,7 @@ public class RootLayoutController implements Initializable {
 			public void run() {
 				setInitialApproachAndView();
 			}
-		});	
+		});
 
 		listenForChangesInApproachViews();
 

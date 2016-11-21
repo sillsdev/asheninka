@@ -25,6 +25,7 @@ import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import sil.org.syllableparser.Constants;
+import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.view.ControllerUtilities;
 
@@ -66,9 +67,10 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 	// not have two copies of the crucial code.
 	// TODO: is there a way to avoid duplicating this code when just a method
 	// call or two is what is different?
-	public void importWords(File file, String sUntested, StatusBar statusBar, ResourceBundle bundle) {
+	public void importWords(File file, String sUntested, StatusBar statusBar, ResourceBundle bundle, MainApp mainApp) {
+		mainApp.getSaveDataPeriodicallyService().cancel();
 		long timeStart = System.currentTimeMillis();
-
+		
 		Task<Void> task = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -105,6 +107,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 			statusBar.textProperty().unbind();
 			statusBar.progressProperty().unbind();
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
+			mainApp.getSaveDataPeriodicallyService().restart();
 		});
 		new Thread(task).start();
 	}

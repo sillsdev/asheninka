@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >andy_black@sil.orgl</emailAddress
 ><date
->16 November 2016</date
+>18 November 2016</date
 ><version
 >0.3.0 Alpha</version
 ><contents
@@ -506,7 +506,7 @@ type="tField"
 >The <object
 type="tField"
 >Natural Classes</object
-> field shows the sequence of any natural classes this pattern consists of.  It has a chooser button on the far right which looks like <img
+> field shows the sequence of any natural classes this pattern consists of. It has a chooser button on the far right which looks like <img
 src="resources/ChooserButton.png"
 ></img
 >. Click on it to bring up a dialog box which lets you select natural classes which constitute this syllable pattern. This chooser consists of one or more drop-down boxes. Click on the drop-down arrow in the box. It will show you the list of possible natural classes to choose from. In addition, if this is the very first drop-down box or the last one currently being shown, it will also include “Word boundary”. When you choose “Word boundary”, the patten shown above the drop-down box(es), will show “#” to indicate a word boundary.</p
@@ -584,10 +584,10 @@ type="tParserResult"
 ></object
 > column/field should have “Success” (in green).</p
 ><p
->Remember that you can click on a column header to sort the contents of the column.  If you click on the <object
+>Remember that you can click on a column header to sort the contents of the column. If you click on the <object
 type="tParserResult"
 ></object
-> header, then any error messages should show at the top.  You might find this useful when figuring out how to set the set of segments, natural classes, and syllable patterns to get a desired result.</p
+> header, then any error messages should show at the top. You might find this useful when figuring out how to set the set of segments, natural classes, and syllable patterns to get a desired result.</p
 ><p
 >The <object
 type="tCorrectSyllableBreaks"
@@ -742,7 +742,7 @@ type="tMenuItem"
 > menu item. You can give it a descriptive label. You won't see the label on the file name, though. Rather, you'll see it when you go to <object
 type="tMenuItem"
 >File / Project Management / Restore a project</object
-> menu item. </p
+> menu item.</p
 ><p
 >You can make a backup, try something else (e.g., add a segment or class; or re-order the syllable patterns or add a new one), and see how it goes. If it's worse, just restore to the previous state. If it's better, make a backup of that and go on.</p
 ></section1
@@ -754,10 +754,10 @@ id="sWords"
 >When using <object
 type="tAsheninka"
 ></object
->, of course, you need words to parse.  Once they are parsed and you have set the set of correct syllabification for them (see <sectionRef
+>, of course, you need words to parse. Once they are parsed and you have set the set of correct syllabification for them (see <sectionRef
 sec="sConvertPredictedToCorrect"
 ></sectionRef
->), you may want to export the set of words to be used by a typesetting tool.  Such a tool can use the syllabified words as a list of words with discretionary hyphens so that it can know when to hyphenate long words at ends of lines.</p
+>), you may want to export the set of words to be used by a typesetting tool. Such a tool can use the syllabified words as a list of words with discretionary hyphens so that it can know when to hyphenate long words at ends of lines.</p
 ><section2
 id="sWordsImport"
 ><secTitle
@@ -805,7 +805,7 @@ type="tTool"
 >You can use any or all of these to add words to <object
 type="tAsheninka"
 ></object
->'s list of words.  A given word form will only be inserted once.  By “word form” we mean that word pairs such as <langData
+>'s list of words. A given word form will only be inserted once. By “word form” we mean that word pairs such as <langData
 lang="lVernacular"
 >achto</langData
 > and <langData
@@ -816,18 +816,29 @@ lang="lVernacular"
 >To import a word list, use <object
 type="tMenuItem"
 >File / Import Words</object
-> menu item and then choose the type of import to use.  In each case, a standard file open dialog will appear.  Find the file that has the format you need, choose it, and click on “Open”.  Depending on the number of words in the imported file, this may take a while to complete.</p
+> menu item and then choose the type of import to use. In each case, a standard file open dialog will appear. Find the file that has the format you need, choose it, and click on “Open”. Depending on the number of words in the imported file, this may take a while to complete.</p
 ><p
 >If you are working on a word list found in <object
 type="tParatext"
 ></object
->, we recommend using the hyphenatedWords.txt file method.  This file includes both upper and lower case forms of words and also will include any hyphenation the <object
+>, we recommend using the hyphenatedWords.txt file method. This file includes both upper and lower case forms of words and also will include any hyphenation the <object
 type="tParatext"
 ></object
-> user has manually approved.  At least with some versions of <object
+> user has manually approved. At least with some versions of <object
 type="tParatext"
 ></object
 >, this file can be found in the “My Paratext Projects” folder and then in the folder of your project name.</p
+><p
+>Newly added words will appear in the <object
+type="tCVWords"
+></object
+> view with a <object
+type="tParserResult"
+></object
+> showing <object
+type="tErrorMessage"
+>Untested</object
+>.  This means that the parser has not yet been run on the word.</p
 ></section2
 ><section2
 id="sWordsExport"
@@ -843,7 +854,7 @@ type="tAsheninka"
 > to some kind of typesetting tool, use the <object
 type="tMenuItem"
 >File / Export Hyphenated Words</object
-> menu item.  The list of hyphenated words can be exported in three formats:</p
+> menu item. The list of hyphenated words can be exported in three formats:</p
 ><ol
 ><li
 ><indexedItem
@@ -902,7 +913,7 @@ type="tParatext"
 > and <object
 type="tTool"
 >InDesign</object
->.  It replaces the periods with a hyphen for the <object
+>. It replaces the periods with a hyphen for the <object
 type="tTool"
 >XLingPaper</object
 > output.</pc
@@ -1017,7 +1028,7 @@ type="tField"
 >Restore a Project</object
 > dialog. Choose the backup you want and click OK.</p
 ><p
->When you have chosen the two implementations to compare, click on the “Compare” button. Depending on how many differences there are, the comparison process can take quite a long time so please be patient. When it is done, a report is shown in the bottom part of the dialog.  When I did this for one project, I got what is shown in example <exampleRef
+>When you have chosen the two implementations to compare, click on the “Compare” button. Depending on how many differences there are, the comparison process can take quite a long time so please be patient. When it is done, a report is shown in the bottom part of the dialog. When I did this for one project, I got what is shown in example <exampleRef
 letter="xCompareImplementationsResult"
 num="xCompareImplementationsResult"
 ></exampleRef
@@ -1031,7 +1042,7 @@ src="resources/CompareImplementationsResult.png"
 ></chart
 ></example
 ><p
->The dialog box will stay visible until you close it (e.g., by clicking on the “Cancel” button).  This lets you examine the report while still being able to make changes to the data in the user interface.</p
+>The dialog box will stay visible until you close it (e.g., by clicking on the “Cancel” button). This lets you examine the report while still being able to make changes to the data in the user interface.</p
 ></section2
 ></section1
 ><backMatter
