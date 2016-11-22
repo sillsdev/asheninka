@@ -185,12 +185,17 @@ public class CVWordsController extends SylParserBaseController implements Initia
 							}
 						});
 		parserResultField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (currentWord != null) {
-				currentWord.setCVParserResult(parserResultField.getText());
-			}
-			if (languageProject != null) {
-				parserResultField.setFont(languageProject.getAnalysisLanguage().getFont());
-			}
+			Platform.runLater(() -> {
+				if (currentWord != null) {
+					currentWord.setCVParserResult(parserResultField.getText());
+				}
+				if (languageProject != null) {
+					parserResultField.setFont(languageProject.getAnalysisLanguage().getFont());
+				}
+				parserResultField.setEditable(true);
+				parserResultField.positionCaret(newValue.length());
+				parserResultField.setEditable(false);
+			});
 		});
 
 		// not so happy with making it smaller

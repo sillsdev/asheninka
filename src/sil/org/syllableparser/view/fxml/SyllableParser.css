@@ -30,7 +30,7 @@
 }
 
 .failedsyllabification {
-	-fx-background-color:red;
+	-fx-background-color:white; /* used to be red, but was hard to read */
 }
 .successfullsyllabification {
 	-fx-background-color:white;

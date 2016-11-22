@@ -49,7 +49,7 @@
                         <TextField fx:id="wordField" GridPane.columnIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
                         <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
                         <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
-                        <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="false" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="true" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
                      </children>
                   </GridPane>
                </children>

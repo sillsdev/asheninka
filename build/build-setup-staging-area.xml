@@ -9,8 +9,8 @@
 		<mkdir dir="externalLibs" />
 		<copy todir="externalLibs">
 			<fileset dir="../ControlsFX">
-				<include name="controlsfx-8.40.9.jar" />
-				<include name="controlsfxLicense.txt" />
+				<include name="controlsfx-8.40.12.jar" />
+				<include name="controlsfx-8.40.12license.txt" />
 			</fileset>
 			<fileset dir="../diff-match-patch">
 				<include name="diff-match-patch.jar" />
@@ -23,6 +23,7 @@
 		<copy todir="doc">
 			<fileset dir="../doc">
 				<include name="Overview.pdf" />
+				<include name="UserDocumentation.pdf" />
 			</fileset>
 		</copy>
 
