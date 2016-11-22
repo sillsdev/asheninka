@@ -94,10 +94,12 @@ public class CVSyllabifier {
 	public boolean convertStringToSyllables(String word) {
 		syllablesInCurrentWord.clear();	
 		boolean fSuccess = false;
-		fSuccess = segmenter.segmentWord(word);
+		CVSegmenterResult segResult = segmenter.segmentWord(word); 
+		fSuccess = segResult.success;
 		if (fSuccess) {
 			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-			fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+			CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+			fSuccess = ncResult.success;
 			if (fSuccess) {
 				naturalClassesInCurrentWord = naturalClasser
 						.getNaturalClassesInCurrentWord();

@@ -26,7 +26,9 @@ import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 import sil.org.syllableparser.service.CVNaturalClasser;
+import sil.org.syllableparser.service.CVNaturalClasserResult;
 import sil.org.syllableparser.service.CVSegmenter;
+import sil.org.syllableparser.service.CVSegmenterResult;
 import sil.org.syllableparser.service.CVSyllabifier;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -237,16 +239,21 @@ public class CVApproachController extends ApproachController {
 					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
 					updateProgress(i++, max);
 
-					boolean fSuccess = segmenter.segmentWord(word.getWord());
+					String sWord = word.getWord();
+					CVSegmenterResult result = segmenter.segmentWord(sWord);
+					boolean fSuccess = result.success;
 					if (!fSuccess) {
-						word.setCVParserResult(sSegmentFailure);
+						word.setCVParserResult(sSegmentFailure.replace("{0}", sWord.substring(result.iPositionOfFailure)));
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
 					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-					fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+					CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+					fSuccess = ncResult.success;
 					if (!fSuccess) {
-						word.setCVParserResult(sNaturalClassFailure);
+						String sFailureMessage0 = sNaturalClassFailure.replace("{0}", ncResult.sClassesSoFar);
+						String sFailureMessage1 = sFailureMessage0.replace("{1}", ncResult.sGraphemesSoFar);
+						word.setCVParserResult(sFailureMessage1);
 						word.setCVPredictedSyllabification("");
 						continue;
 					}

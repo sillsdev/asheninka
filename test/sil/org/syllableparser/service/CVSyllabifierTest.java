@@ -102,9 +102,11 @@ public class CVSyllabifierTest {
 
 	protected void checkSyllabification(String word, boolean success, int numberOfSyllables,
 			String expectedCVPatternsUsed, String expectedSyllabification) {
-		boolean fSuccess = segmenter.segmentWord(word);
+		CVSegmenterResult segResult =  segmenter.segmentWord(word);
+		boolean fSuccess = segResult.success;
 		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-		fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+		CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+		fSuccess = ncResult.success;
 		List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
 				.getNaturalClassesInCurrentWord();
 		patternSyllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);

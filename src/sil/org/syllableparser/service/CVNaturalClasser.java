@@ -20,8 +20,8 @@ import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 /**
  * @author Andy Black
  *
- * a Service
- * Takes a sequence of segments and parses them into a sequence of natural classes
+ *         a Service Takes a sequence of segments and parses them into a
+ *         sequence of natural classes
  */
 public class CVNaturalClasser {
 
@@ -73,19 +73,29 @@ public class CVNaturalClasser {
 		this.segmentToNaturalClassMapping = segmentToNaturalClass;
 	}
 
-	public boolean convertSegmentsToNaturalClasses(List<CVSegmentInSyllable> segmentsInCurrentWord) {
+	public CVNaturalClasserResult convertSegmentsToNaturalClasses(List<CVSegmentInSyllable> segmentsInCurrentWord) {
 		naturalClassesInCurrentWord.clear();
-
+		CVNaturalClasserResult result = new CVNaturalClasserResult();
 		for (CVSegmentInSyllable segInSyllable : segmentsInCurrentWord) {
 			String sSegmentName = segInSyllable.getSegmentName();
 			CVNaturalClass nc = segmentToNaturalClassMapping.get(sSegmentName);
 			if (nc == null) {
-				return false;
+				result.success = false;
+				String joined = naturalClassesInCurrentWord.stream()
+						.map(CVNaturalClassInSyllable::getNaturalClassName)
+						.collect(Collectors.joining(", "));
+				result.sClassesSoFar = joined;
+				joined = naturalClassesInCurrentWord.stream()
+						.map(CVNaturalClassInSyllable::getSegmentInSyllable)
+						.map(CVSegmentInSyllable::getGrapheme)
+						.collect(Collectors.joining(""));
+				result.sGraphemesSoFar = joined;
+				return result;
 			}
 			CVNaturalClassInSyllable natClassInSyllable = new CVNaturalClassInSyllable(nc,
 					segInSyllable);
 			naturalClassesInCurrentWord.add(natClassInSyllable);
 		}
-		return true;
+		return result;
 	}
 }

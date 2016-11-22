@@ -23,9 +23,9 @@ type="tAsheninka"
 ><affiliation
 >SIL International</affiliation
 ><emailAddress
->andy_black@sil.orgl</emailAddress
+>andy_black@sil.org</emailAddress
 ><date
->18 November 2016</date
+>21 November 2016</date
 ><version
 >0.3.0 Alpha</version
 ><contents
@@ -103,7 +103,10 @@ type="tField"
 ><indexedItem
 term="iSorting"
 ></indexedItem
->When the view contains a pane with rows and columns, you can click on a column header to sort by that column (it currently only sorts by Unicode code point). You can even hold the Shift key down and click on another column header to get a secondary sort (or on a third column to get a tertiary sort).</p
+>When the view contains a pane with rows and columns, you can click on a column header to sort by that column (it currently only sorts by Unicode code point). You can even hold the Shift key down and click on another column header to get a secondary sort (or on a third column to get a tertiary sort).  There are some tables which cannot be sorted because the user controls the order manually.  In such cases (such as <object
+type="tCVSyllablePatterns"
+></object
+>), the sorting is disabled.</p
 ><section2
 id="sNewProject"
 ><secTitle
@@ -344,15 +347,39 @@ term="iParsingResult"
 >The main algorithm is as follows:</p
 ><ol
 ><li
->It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. If it cannot find a sequence that covers the whole word, it reports an error of <object
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
 type="tErrorMessage"
->Failure: could not parse into segments</object
-> and quits.</li
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
+></object
+> and quits.  The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments.  Most likely, either there was a typo in the word or a grapheme is missing from some segment.</li
 ><li
->If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited, trying to find a sequence of natural classes that covers the entire sequence of segments. It uses the set of segments or natural (sub-)classes defined within a natural class to determine a match with a natural class. If it cannot find a sequence of natural classes that covers the entire sequence of posited segments, it reports an error of <object
+>If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited, trying to find a sequence of natural classes that covers the entire sequence of segments. It uses the set of segments or natural (sub-)classes defined within a natural class to determine a match with a natural class. <indexedItem
+term="iFailureCVNaturalClasser"
+></indexedItem
+>If it cannot find a sequence of natural classes that covers the entire sequence of posited segments, it reports an error of <object
 type="tErrorMessage"
->Failure: could not parse into natural classes</object
-> and quits.</li
+>Failure: could not parse into natural classes; did find classes '<object
+type="tItalic"
+>some classes</object
+>' covering graphemes '<object
+type="tItalic"
+>some graphemes</object
+>'</object
+> and quits.  The '<object
+type="tItalic"
+>some classes</object
+>' part indicates the sequence of natural classes that were found and the '<object
+type="tItalic"
+>some graphemes</object
+>' part indicates which graphemes were included in those natural classes.  Hopefully this will help you figure out why other natural classes were not found for this word.</li
 ><li
 >If it succeeded in finding a sequence of natural classes, it performs a left-to-right sweep of the sequence of the natural classes it posited, trying to find a sequence of syllable patterns that covers the entire sequence. It tries the syllable patterns in the order they are arranged in the <object
 type="tCVSyllablePatterns"
@@ -360,7 +387,10 @@ type="tCVSyllablePatterns"
 > view (see <sectionRef
 sec="sCVSyllablePatterns"
 ></sectionRef
-> below). If it cannot find a sequence of syllable patterns that covers the entire sequence of posited natural classes, it reports an error of <object
+> below). <indexedItem
+term="iFailureCVSyllables"
+></indexedItem
+>If it cannot find a sequence of syllable patterns that covers the entire sequence of posited natural classes, it reports an error of <object
 type="tErrorMessage"
 >Failure: could not parse natural classes into syllables</object
 > and quits.</li
@@ -520,15 +550,7 @@ type="tCVPatternApproach"
 >, as <object
 type="tAsheninka"
 ></object
-> parses a word, it tries to match the patterns in the order in which they appear. You control the order of the syllable patterns by clicking on a pattern in the middle pane and then using the up and down arrows to change its order.</p
-><p
->The current version of <object
-type="tAsheninka"
-></object
-> has a bug which lets you click on a column header in this view and it will sort by that column's contents. Since the syllable patterns are to be ordered manually, <object
-type="tAsheninka"
-></object
-> should not let you do that in this view. So please be careful...</p
+> parses a word, it tries to match the patterns in the order in which they appear. You control the order of the syllable patterns by clicking on a pattern in the middle pane and then using the up and down arrows to change its order.  Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
 ></section3
 ><section3
 id="sCVWords"
@@ -1342,6 +1364,40 @@ id="iCVWords"
 id="iDeleteDataItem"
 ><term
 >Delete data item</term
+></indexTerm
+><indexTerm
+id="iFailureMessages"
+><term
+>Failure messages</term
+><indexTerms
+><indexTerm
+id="iCVFailures"
+><term
+>CV Pattern approach</term
+><indexTerms
+><indexTerm
+id="iFailureCVNaturalClasser"
+><term
+>Parse into natural classes</term
+></indexTerm
+><indexTerm
+id="iFailureCVSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+><indexTerm
+id="iFailureCVSyllables"
+><term
+>Parse into syllables</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iONCFailures"
+><term
+>ONC approach</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iFonts"

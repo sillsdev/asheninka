@@ -67,11 +67,13 @@ public class CVSegmenter {
 		this.graphemeToSegmentMapping = graphemes;
 	}
 
-	public boolean segmentWord(String word) {
+	public CVSegmenterResult segmentWord(String word) {
 		segmentsInCurrentWord.clear();
+		
+		CVSegmenterResult result = new CVSegmenterResult();
 
 		if (word == null || word.isEmpty()) {
-			return true;
+			return result;
 		}
 
 		int iSegLength;
@@ -91,10 +93,11 @@ public class CVSegmenter {
 				}
 			}
 			if (iSegLength == 0) {
-				// TODO: give report of how far we got or some such so user knows
-				return false;
+				result.iPositionOfFailure = iStart;
+				result.success = false;
+				return result;
 			}
 		}
-		return true;
+		return result;
 	}
 }

@@ -85,17 +85,23 @@ public class CVNaturalClasserTest {
 	@Test
 	public void wordToSegmentToNaturalClassesTest() {
 
-		checkNaturalClassParsing("Chiko", true, 4, "C, V, C, V");
-		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, V, V, N");
-		checkNaturalClassParsing("karui", false, 2, "C, V"); // there is no /q/
+		checkNaturalClassParsing("Chiko", true, 4, "C, V, C, V", "C, V, C, V", "abc");
+		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, V, V, N", "C, V, N, C, V, V, N",
+				"abc");
+		// next one fails because /r/ is not in any class
+		checkNaturalClassParsing("karui", false, 2, "C, V", "C, V", "ka");
 	}
 
 	protected void checkNaturalClassParsing(String word, boolean success,
-			int numberOfNaturalClasses, String expectedCVPattern) {
-		boolean fSuccess = segmenter.segmentWord(word);
+			int numberOfNaturalClasses, String expectedCVPattern, String sClasesSoFar,
+			String sGraphemesSoFar) {
+		CVSegmenterResult segResult = segmenter.segmentWord(word);
+		boolean fSuccess = segResult.success;
 		assertEquals("word segmented", true, fSuccess);
 		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-		fSuccess = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+		CVNaturalClasserResult ncResult = naturalClasser
+				.convertSegmentsToNaturalClasses(segmentsInWord);
+		fSuccess = ncResult.success;
 		assertEquals("segments converted to natural classes", success, fSuccess);
 		List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
 				.getNaturalClassesInCurrentWord();
@@ -105,6 +111,10 @@ public class CVNaturalClasserTest {
 				.map(CVNaturalClassInSyllable::getNaturalClassName)
 				.collect(Collectors.joining(", "));
 		assertEquals("Expected CV Pattern", expectedCVPattern, joined);
+		if (!fSuccess) {
+			assertEquals("Expected classes so far", sClasesSoFar, ncResult.sClassesSoFar);
+			assertEquals("Expected graphemes so far", sGraphemesSoFar, ncResult.sGraphemesSoFar);
+		}
 	}
 
 }
