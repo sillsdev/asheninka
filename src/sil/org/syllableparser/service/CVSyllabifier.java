@@ -40,17 +40,17 @@ public class CVSyllabifier {
 	private CVNaturalClasser naturalClasser;
 	
 	private final List<CVSyllablePattern> activeCVPatterns;
-	private List<CVNaturalClassInSyllable> naturalClassesInCurrentWord;
+	private List<List<CVNaturalClassInSyllable>> naturalClassListsInCurrentWord;
 
 	LinkedList<CVSyllable> syllablesInCurrentWord = new LinkedList<CVSyllable>(
 			Arrays.asList(new CVSyllable(null)));
 	String sSyllabifiedWord;
 
 	public CVSyllabifier(List<CVSyllablePattern> activeCVPatterns,
-			List<CVNaturalClassInSyllable> naturalClassesInCurrentWord) {
+			List<List<CVNaturalClassInSyllable>> naturalClassesInWord) {
 		super();
 		this.activeCVPatterns = activeCVPatterns;
-		this.naturalClassesInCurrentWord = naturalClassesInCurrentWord;
+		this.naturalClassListsInCurrentWord = naturalClassesInWord;
 		sSyllabifiedWord = "";
 	}
 
@@ -82,7 +82,7 @@ public class CVSyllabifier {
 		syllablesInCurrentWord.clear();
 
 		// recursively parse into syllables
-		boolean result = parseIntoSyllables(naturalClassesInCurrentWord, activeCVPatterns, true);
+		boolean result = parseIntoSyllables(naturalClassListsInCurrentWord, activeCVPatterns, true);
 
 		if (result) {
 			// the list of syllables found is in reverse order; flip them
@@ -101,9 +101,9 @@ public class CVSyllabifier {
 			CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
 			fSuccess = ncResult.success;
 			if (fSuccess) {
-				naturalClassesInCurrentWord = naturalClasser
-						.getNaturalClassesInCurrentWord();
-				fSuccess = parseIntoSyllables(naturalClassesInCurrentWord, activeCVPatterns, true);
+				naturalClassListsInCurrentWord = naturalClasser
+						.getNaturalClassListsInCurrentWord();
+				fSuccess = parseIntoSyllables(naturalClassListsInCurrentWord, activeCVPatterns, true);
 
 				if (fSuccess) {
 					// the list of syllables found is in reverse order; flip them
@@ -114,7 +114,7 @@ public class CVSyllabifier {
 		return fSuccess;
 	}
 
-	private boolean parseIntoSyllables(List<CVNaturalClassInSyllable> naturalClassesInWord,
+	private boolean parseIntoSyllables(List<List<CVNaturalClassInSyllable>> naturalClassesInWord,
 			List<CVSyllablePattern> activePatterns, Boolean isWordInitial) {
 		if (naturalClassesInWord.size() == 0) {
 			return true;
@@ -123,13 +123,12 @@ public class CVSyllabifier {
 			if (pattern.isWordInitial() && !isWordInitial) {
 				continue;
 			}
-			if (naturalClassesMatchSyllablePattern(naturalClassesInWord, pattern)) {
-				List<CVNaturalClassInSyllable> remainingNaturalClassesInWord = naturalClassesInWord
+			CVSyllabifierResult result = naturalClassesMatchSyllablePattern(naturalClassesInWord, pattern); 
+			if (result.success) {
+				List<List<CVNaturalClassInSyllable>> remainingNaturalClassesInWord = naturalClassesInWord
 						.subList(pattern.getNCs().size(), naturalClassesInWord.size());
 				if (parseIntoSyllables(remainingNaturalClassesInWord, activePatterns, false)) {
-					List<CVNaturalClassInSyllable> naturalClassesInSyllable = naturalClassesInWord
-							.subList(0, pattern.getNCs().size());
-					CVSyllable syl = new CVSyllable(naturalClassesInSyllable);
+					CVSyllable syl = new CVSyllable(result.getNaturalClassesInSyllable());
 					syllablesInCurrentWord.add(syl);
 					return true;
 				}
@@ -138,19 +137,29 @@ public class CVSyllabifier {
 		return false;
 	}
 
-	private boolean naturalClassesMatchSyllablePattern(
-			List<CVNaturalClassInSyllable> naturalClassesInWord, CVSyllablePattern currentCVPattern) {
+	private CVSyllabifierResult naturalClassesMatchSyllablePattern(
+			List<List<CVNaturalClassInSyllable>> naturalClassesInWord, CVSyllablePattern currentCVPattern) {
+		CVSyllabifierResult result = new CVSyllabifierResult();
+		result.success = false;
 		// TODO: is there another, better way to compare the contents of two
 		// lists?
 		ObservableList<CVNaturalClass> naturalClassesInCVPattern = currentCVPattern.getNCs();
 		if (naturalClassesInCVPattern.size() > naturalClassesInWord.size()) {
-			return false;
+			return result;
 		}
-		Iterator<CVNaturalClassInSyllable> currentNaturalClass = naturalClassesInWord.iterator();
-		CVNaturalClassInSyllable ncInSyllable = currentNaturalClass.next();
+		Iterator<List<CVNaturalClassInSyllable>> currentNaturalClass = naturalClassesInWord.iterator();
+		List<CVNaturalClassInSyllable> ncInSyllable = currentNaturalClass.next();
 		for (CVNaturalClass ncInPattern : naturalClassesInCVPattern) {
-			if (!ncInSyllable.getNaturalClass().equals(ncInPattern)) {
-				return false;
+			boolean fClassInPatternMatchesClassInList = false;
+			for (CVNaturalClassInSyllable ncPossibility : ncInSyllable) {
+				if (ncPossibility.getNaturalClass().equals(ncInPattern)) {
+					fClassInPatternMatchesClassInList = true;
+					result.getNaturalClassesInSyllable().add(ncPossibility);
+					break;
+				}
+			}
+			if (!fClassInPatternMatchesClassInList) {
+				return result;
 			}
 			if (currentNaturalClass.hasNext()) {
 				ncInSyllable = currentNaturalClass.next();
@@ -159,9 +168,10 @@ public class CVSyllabifier {
 			}
 		}
 		if (currentCVPattern.isWordFinal() && currentNaturalClass.hasNext()) {
-			return false;
+			return result;
 		}
-		return true;
+		result.success = true;
+		return result;
 	}
 
 	public String getSyllabificationOfCurrentWord() {

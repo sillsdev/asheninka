@@ -167,7 +167,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		naturalClassColumn.setSortable(false);
 		descriptionColumn.setSortable(false);
 		
-		// Clear cv natural class details.
+		// Clear cv syllable pattern details.
 		showCVSyllablePatternDetails(null);
 
 		// Listen for selection changes and show the details when changed.
@@ -194,7 +194,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-
+		
 		activeCheckBox.setOnAction((event) -> {
 			if (currentSyllablePattern != null) {
 				currentSyllablePattern.setActive(activeCheckBox.isSelected());

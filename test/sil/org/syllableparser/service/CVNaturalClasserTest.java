@@ -9,6 +9,7 @@ package sil.org.syllableparser.service;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -72,24 +73,28 @@ public class CVNaturalClasserTest {
 	// make sure the setup is what we expect
 	@Test
 	public void naturalClassesTest() {
-		assertEquals("Active natural Classes in natural classer size", 3, cvNaturalClasses.size());
+		assertEquals("Active natural Classes in natural classer size", 4, cvNaturalClasses.size());
 		String nc = cvNaturalClasses.get(0).getNCName().trim();
 		assertEquals("First natural class is [C]", "C", nc);
 		nc = cvNaturalClasses.get(1).getNCName().trim();
-		assertEquals("Last natural class is [V]", "V", nc);
-		HashMap<String, CVNaturalClass> segmentToNaturalClass = naturalClasser
-				.getSegmentToNaturalClass();
-		assertEquals("Hash map size is 25", 25, segmentToNaturalClass.size());
+		assertEquals("Second natural class is [V]", "V", nc);
+		nc = cvNaturalClasses.get(2).getNCName().trim();
+		assertEquals("Third natural class is [N]", "N", nc);
+		HashMap<String, List<CVNaturalClass>> segmentToNaturalClasses = naturalClasser
+				.getSegmentToNaturalClasses();
+		assertEquals("Hash map size is 25", 25, segmentToNaturalClasses.size());
 	}
 
 	@Test
 	public void wordToSegmentToNaturalClassesTest() {
 
-		checkNaturalClassParsing("Chiko", true, 4, "C, V, C, V", "C, V, C, V", "abc");
-		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, V, V, N", "C, V, N, C, V, V, N",
+		checkNaturalClassParsing("Chiko", true, 4, "C, {V,V+hi}, C, V", "C, V, C, V", "abc");
+		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, {V,V+hi}, V, N", "C, V, N, C, V, V, N",
 				"abc");
-		// next one fails because /r/ is not in any class
+		// next three fail because /r/ is not in any class
 		checkNaturalClassParsing("karui", false, 2, "C, V", "C, V", "ka");
+		checkNaturalClassParsing("kiro", false, 2, "C, {V,V+hi}", "C, {V,V+hi}", "ki");
+		checkNaturalClassParsing("riko", false, 0, "", "", "");
 	}
 
 	protected void checkNaturalClassParsing(String word, boolean success,
@@ -103,13 +108,11 @@ public class CVNaturalClasserTest {
 				.convertSegmentsToNaturalClasses(segmentsInWord);
 		fSuccess = ncResult.success;
 		assertEquals("segments converted to natural classes", success, fSuccess);
-		List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
-				.getNaturalClassesInCurrentWord();
+		List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
+				.getNaturalClassListsInCurrentWord();
 		assertEquals("Expect " + numberOfNaturalClasses + " natural classes in word",
 				numberOfNaturalClasses, naturalClassesInWord.size());
-		String joined = naturalClassesInWord.stream()
-				.map(CVNaturalClassInSyllable::getNaturalClassName)
-				.collect(Collectors.joining(", "));
+		String joined = naturalClasser.getNaturalClassListsInCurrentWordAsString();
 		assertEquals("Expected CV Pattern", expectedCVPattern, joined);
 		if (!fSuccess) {
 			assertEquals("Expected classes so far", sClasesSoFar, ncResult.sClassesSoFar);

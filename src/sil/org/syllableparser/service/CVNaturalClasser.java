@@ -26,9 +26,10 @@ import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 public class CVNaturalClasser {
 
 	private final List<CVNaturalClass> activeNaturalClasses;
-	List<CVNaturalClassInSyllable> naturalClassesInCurrentWord = new LinkedList<CVNaturalClassInSyllable>(
-			Arrays.asList(new CVNaturalClassInSyllable(null, null)));
-	HashMap<String, CVNaturalClass> segmentToNaturalClassMapping = new HashMap<>();
+	List<List<CVNaturalClassInSyllable>> naturalClassListsInCurrentWord = new LinkedList<List<CVNaturalClassInSyllable>>(
+			Arrays.asList(new LinkedList<CVNaturalClassInSyllable>(Arrays
+					.asList(new CVNaturalClassInSyllable(null, null)))));
+	HashMap<String, List<CVNaturalClass>> segmentToNaturalClassesMapping = new HashMap<>();
 
 	public CVNaturalClasser(List<CVNaturalClass> activeNaturalClasses) {
 		super();
@@ -38,16 +39,21 @@ public class CVNaturalClasser {
 
 	protected void buildSegmentToNaturalClassMapping() {
 		for (CVNaturalClass nc : activeNaturalClasses) {
-			setSegmentToNaturalClassMapping(nc);
+			setSegmentToNaturalClassesMapping(nc);
 		}
 	}
 
-	protected void setSegmentToNaturalClassMapping(CVNaturalClass nc) {
+	protected void setSegmentToNaturalClassesMapping(CVNaturalClass nc) {
 		for (Object snc : nc.getSegmentsOrNaturalClasses()) {
 			if (snc instanceof Segment) {
-				segmentToNaturalClassMapping.put(((Segment) snc).getSegment(), nc);
-			} else if (snc instanceof CVNaturalClass) {
-				setSegmentToNaturalClassMapping(((CVNaturalClass) snc));
+				String sId = ((Segment) snc).getID();
+				List<CVNaturalClass> naturalClasses = segmentToNaturalClassesMapping.get(sId);
+				if (naturalClasses == null) {
+					naturalClasses = new LinkedList<CVNaturalClass>(Arrays.asList(nc));
+					segmentToNaturalClassesMapping.put(sId, naturalClasses);
+				} else {
+					naturalClasses.add(nc);
+				}
 			}
 		}
 	}
@@ -56,45 +62,98 @@ public class CVNaturalClasser {
 		return activeNaturalClasses;
 	}
 
-	public List<CVNaturalClassInSyllable> getNaturalClassesInCurrentWord() {
-		return naturalClassesInCurrentWord;
+	public List<List<CVNaturalClassInSyllable>> getNaturalClassListsInCurrentWord() {
+		return naturalClassListsInCurrentWord;
 	}
 
-	public void setNaturalClassesInCurrentWord(
-			List<CVNaturalClassInSyllable> naturalClassesInCurrentWord) {
-		this.naturalClassesInCurrentWord = naturalClassesInCurrentWord;
+	public void setNaturalClassListsInCurrentWord(
+			List<List<CVNaturalClassInSyllable>> naturalClassListsInCurrentWord) {
+		this.naturalClassListsInCurrentWord = naturalClassListsInCurrentWord;
 	}
 
-	public HashMap<String, CVNaturalClass> getSegmentToNaturalClass() {
-		return segmentToNaturalClassMapping;
+	public String getNaturalClassListsInCurrentWordAsString() {
+		// TODO: is there a way to do this with lambdas?
+		StringBuilder sb = new StringBuilder();
+		int iSize = naturalClassListsInCurrentWord.size();
+		int i = 0;
+		for (List<CVNaturalClassInSyllable> listOfNCS : naturalClassListsInCurrentWord) {
+			i++;
+			if (listOfNCS.size() > 1) {
+				sb.append("{");
+			}
+			String s = listOfNCS.stream().map(CVNaturalClassInSyllable::getNaturalClassName)
+					.collect(Collectors.joining(","));
+			sb.append(s);
+			if (listOfNCS.size() > 1) {
+				sb.append("}");
+			}
+			if (i < iSize) {
+				sb.append(", ");
+			}
+		}
+		return sb.toString();
 	}
 
-	public void setSegmentToNaturalClass(HashMap<String, CVNaturalClass> segmentToNaturalClass) {
-		this.segmentToNaturalClassMapping = segmentToNaturalClass;
+	public String getSegmentsInCurrentWordAsString() {
+		// TODO: is there a way to do this with lambdas?
+		StringBuilder sb = new StringBuilder();
+		int iSize = naturalClassListsInCurrentWord.size();
+		int i = 0;
+		for (List<CVNaturalClassInSyllable> listOfNCS : naturalClassListsInCurrentWord) {
+			i++;
+			if (listOfNCS.size() > 1) {
+				sb.append("{");
+			}
+			String s = listOfNCS.stream().map(CVNaturalClassInSyllable::getNaturalClassName)
+					.collect(Collectors.joining(","));
+			sb.append(s);
+			if (listOfNCS.size() > 1) {
+				sb.append("}");
+			}
+			if (i < iSize) {
+				sb.append(", ");
+			}
+		}
+		return sb.toString();
 	}
 
-	public CVNaturalClasserResult convertSegmentsToNaturalClasses(List<CVSegmentInSyllable> segmentsInCurrentWord) {
-		naturalClassesInCurrentWord.clear();
+	public HashMap<String, List<CVNaturalClass>> getSegmentToNaturalClasses() {
+		return segmentToNaturalClassesMapping;
+	}
+
+	public void setSegmentToNaturalClasses(
+			HashMap<String, List<CVNaturalClass>> segmentToNaturalClasses) {
+		this.segmentToNaturalClassesMapping = segmentToNaturalClasses;
+	}
+
+	public CVNaturalClasserResult convertSegmentsToNaturalClasses(
+			List<CVSegmentInSyllable> segmentsInCurrentWord) {
+		naturalClassListsInCurrentWord.clear();
 		CVNaturalClasserResult result = new CVNaturalClasserResult();
 		for (CVSegmentInSyllable segInSyllable : segmentsInCurrentWord) {
-			String sSegmentName = segInSyllable.getSegmentName();
-			CVNaturalClass nc = segmentToNaturalClassMapping.get(sSegmentName);
-			if (nc == null) {
+			String sId = segInSyllable.getSegmentId();
+			List<CVNaturalClassInSyllable> naturalClassesList = null;
+			List<CVNaturalClass> listOfNatClasses = segmentToNaturalClassesMapping.get(sId);
+			if (listOfNatClasses == null) {
 				result.success = false;
-				String joined = naturalClassesInCurrentWord.stream()
-						.map(CVNaturalClassInSyllable::getNaturalClassName)
-						.collect(Collectors.joining(", "));
-				result.sClassesSoFar = joined;
-				joined = naturalClassesInCurrentWord.stream()
-						.map(CVNaturalClassInSyllable::getSegmentInSyllable)
-						.map(CVSegmentInSyllable::getGrapheme)
-						.collect(Collectors.joining(""));
+				result.sClassesSoFar = getNaturalClassListsInCurrentWordAsString();
+				int iCurrentSegment = segmentsInCurrentWord.indexOf(segInSyllable);
+				String joined = segmentsInCurrentWord.subList(0, iCurrentSegment).stream()
+						.map(CVSegmentInSyllable::getGrapheme).collect(Collectors.joining(""));
 				result.sGraphemesSoFar = joined;
 				return result;
 			}
-			CVNaturalClassInSyllable natClassInSyllable = new CVNaturalClassInSyllable(nc,
-					segInSyllable);
-			naturalClassesInCurrentWord.add(natClassInSyllable);
+			for (CVNaturalClass nc : segmentToNaturalClassesMapping.get(sId)) {
+				CVNaturalClassInSyllable natClassInSyllable = new CVNaturalClassInSyllable(nc,
+						segInSyllable);
+				if (naturalClassesList == null) {
+					naturalClassesList = new LinkedList<CVNaturalClassInSyllable>(
+							Arrays.asList(natClassInSyllable));
+					naturalClassListsInCurrentWord.add(naturalClassesList);
+				} else {
+					naturalClassesList.add(natClassInSyllable);
+				}
+			}
 		}
 		return result;
 	}

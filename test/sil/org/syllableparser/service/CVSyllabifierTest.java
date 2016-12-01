@@ -79,7 +79,7 @@ public class CVSyllabifierTest {
 	// make sure the setup is what we expect
 	@Test
 	public void syllabifierTest() {
-		assertEquals("CV patterns size", 6, cvPatterns.size());
+		assertEquals("CV patterns size", 7, cvPatterns.size());
 		String pattern = cvPatterns.get(0).getSPName().trim();
 		assertEquals("First CV pattern is [C][V]", "CV", pattern);
 		pattern = cvPatterns.get(1).getSPName().trim();
@@ -98,6 +98,7 @@ public class CVSyllabifierTest {
 		checkSyllabification("funglo", false, 0, "", "");  // CVCC only word finally; CCV not possible word medially
 		checkSyllabification("fugh", true, 1, "CVCC", "fugh");
 		checkSyllabification("flu", true, 1, "CCV", "flu");
+		checkSyllabification("fluk", true, 1, "CCV+hiC", "fluk");
 	}
 
 	protected void checkSyllabification(String word, boolean success, int numberOfSyllables,
@@ -107,8 +108,8 @@ public class CVSyllabifierTest {
 		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
 		fSuccess = ncResult.success;
-		List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
-				.getNaturalClassesInCurrentWord();
+		List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
+				.getNaturalClassListsInCurrentWord();
 		patternSyllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
 		fSuccess = patternSyllabifier.convertNaturalClassesToSyllables();
 		assertEquals("word syllabified", success, fSuccess);

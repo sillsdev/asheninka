@@ -257,8 +257,8 @@ public class CVApproachController extends ApproachController {
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
-					List<CVNaturalClassInSyllable> naturalClassesInWord = naturalClasser
-							.getNaturalClassesInCurrentWord();
+					List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
+							.getNaturalClassListsInCurrentWord();
 					syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
 					fSuccess = syllabifier.convertNaturalClassesToSyllables();
 					if (!fSuccess) {
@@ -266,8 +266,6 @@ public class CVApproachController extends ApproachController {
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
-					// List<CVSyllable> syllablesInWord =
-					// syllabifier.getSyllablesInCurrentWord();
 					word.setCVPredictedSyllabification(syllabifier
 							.getSyllabificationOfCurrentWord());
 					word.setCVParserResult(sSuccess);

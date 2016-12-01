@@ -35,6 +35,10 @@ public class CVSegmentInSyllable extends Object {
 		return grapheme;
 	}
 
+	public String getSegmentId() {
+		return segment.getID();
+	}
+
 	public String getSegmentName() {
 		return segment.getSegment();
 	}

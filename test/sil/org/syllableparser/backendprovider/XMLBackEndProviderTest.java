@@ -62,8 +62,8 @@ public class XMLBackEndProviderTest {
 		assertNotNull(languageProject);
 		CVApproach cva = languageProject.getCVApproach();
 		assertEquals(27, languageProject.getSegmentInventory().size());
-		assertEquals(4, cva.getCVNaturalClasses().size());
-		assertEquals(7, cva.getCVSyllablePatterns().size());
+		assertEquals(5, cva.getCVNaturalClasses().size());
+		assertEquals(8, cva.getCVSyllablePatterns().size());
 		ObservableList<Word> words = languageProject.getWords();
 		assertEquals(10025, words.size());
 	}

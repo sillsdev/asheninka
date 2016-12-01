@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >andy_black@sil.org</emailAddress
 ><date
->21 November 2016</date
+>1 December 2016</date
 ><version
 >0.3.0 Alpha</version
 ><contents
@@ -489,7 +489,7 @@ term="iCVNaturalClasses"
 >Make sure that in the <object
 type="tCVNaturalClasses"
 ></object
-> view, every segment is in a natural class. With the current version, a given segment should only be in one class. We do plan to allow a given segment to be in more than one class in a later version.</p
+> view, every segment is in a natural class. A given segment may be in more than one class.</p
 ><p
 >The <object
 type="tField"
