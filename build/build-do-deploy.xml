@@ -3,7 +3,10 @@
 	<include file="${basedir}/build-init-fx-tasks.xml" as="nested"/>
 	<include file="${basedir}/build-setup-staging-area.xml" as="nested"/>
 	<include file="${basedir}/build-do-compile.xml" as="nested"/>
-
+	
+	<property name="mainFileName" value="Asheninka Syllable Parser"/>
+	<property name="version" value="0.3.0.0"/>
+	
 	<target name="do-deploy" depends="nested.setup-staging-area, nested.do-compile, nested.init-fx-tasks">
 		<delete file="dist" />
 		<delete file="deploy" />
@@ -37,8 +40,7 @@
 			<fx:fileset dir="dist" includes="resources/**" />
 		</fx:resources>
 
-		<echo message="Passing processorType as:${processorType}"/>
-		<fx:application id="fxApplication" name="Asheninka Syllable Parser${processorType}" mainClass="sil.org.syllableparser.MainApp" version="0.2.0.0" />
+		<fx:application id="fxApplication" name="${mainFileName}" mainClass="sil.org.syllableparser.MainApp" version="${version}" />
 
 		<mkdir dir="build/classes/META-INF" />
 
@@ -52,8 +54,8 @@
 
 			<manifest>
 				<attribute name="Implementation-Vendor" value="sil.org" />
-				<attribute name="Implementation-Title" value="SyllableParser" />
-				<attribute name="Implementation-Version" value="0.2.0.0" />
+				<attribute name="Implementation-Title" value="${mainFileName}" />
+				<attribute name="Implementation-Version" value="${version}" />
 				<attribute name="JavaFX-Feature-Proxy" value="None" />
 			</manifest>
 		</fx:jar>
@@ -75,6 +77,11 @@
 			<fx:preferences shortcut="true" menu="true" install="true" />
 
 		</fx:deploy>
+		
+		<echo message="Renaming from '${basedir}/deploy/bundles/${mainFileName}-${version}.${nativeBundles}' to '${basedir}/deploy/bundles/${mainFileName}${processorType}-${version}.${nativeBundles}'"/>
+		<!-- Note: at least on Windows 10, we have to overtly delete the target file or the move operation fails if it already exists. -->
+		<delete file="${basedir}/deploy/bundles/${mainFileName}${processorType}-${version}.${nativeBundles}"/>
+		<move file="${basedir}/deploy/bundles/${mainFileName}-${version}.${nativeBundles}" toFile="${basedir}/deploy/bundles/${mainFileName}${processorType}-${version}.${nativeBundles}"/>
 
 		</target>
 </project>
