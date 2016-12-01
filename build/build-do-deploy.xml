@@ -4,7 +4,6 @@
 	<include file="${basedir}/build-setup-staging-area.xml" as="nested"/>
 	<include file="${basedir}/build-do-compile.xml" as="nested"/>
 	
-	<property name="mainFileName" value="Asheninka Syllable Parser"/>
 	<property name="version" value="0.3.0.0"/>
 	
 	<target name="do-deploy" depends="nested.setup-staging-area, nested.do-compile, nested.init-fx-tasks">

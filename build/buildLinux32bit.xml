@@ -3,6 +3,8 @@
 
 	<property name="nativeBundles" value="deb"/>
 	<property name="processorType" value="-32bit"/>
+	<property name="mainFileName" value="asheninka-syllable-parser"/>
+	
 	<include file="${basedir}/build-do-deploy.xml" as="nested"/>
 	<target name="do-deploy" depends="nested.do-deploy"/>
 </project>
