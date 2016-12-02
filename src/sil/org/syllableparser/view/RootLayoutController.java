@@ -77,6 +77,7 @@ import javafx.stage.Stage;
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.MainApp.TimerService;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachType;
 import sil.org.syllableparser.model.ApproachView;
@@ -334,7 +335,10 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	public void handleNew() {
-		mainApp.getSaveDataPeriodicallyService().cancel();
+		TimerService timer = mainApp.getSaveDataPeriodicallyService();
+		if (timer != null) {
+			mainApp.getSaveDataPeriodicallyService().cancel();
+		}
 		String sDirectoryPath = applicationPreferences.getLastOpenedDirectoryPath();
 		if (sDirectoryPath == "") {
 			// probably creating a new file the first time the program is run;
@@ -346,7 +350,9 @@ public class RootLayoutController implements Initializable {
 		mainApp.loadLanguageData(file);
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		ControllerUtilities.doFileSaveAs(mainApp, true, syllableParserFilterDescription);
-		mainApp.getSaveDataPeriodicallyService().restart();
+		if (timer != null) {
+			mainApp.getSaveDataPeriodicallyService().restart();
+		}
 	}
 
 	protected String tryToGetDefaultDirectoryPath() {
@@ -422,6 +428,10 @@ public class RootLayoutController implements Initializable {
 			String sDirectoryPath = file.getParent();
 			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 			mainApp.updateStageTitle(file);
+		} else {
+			// probably first time running and user choose to open a file
+			// but then canceled.  We quit.
+			System.exit(0);
 		}
 	}
 
@@ -479,7 +489,11 @@ public class RootLayoutController implements Initializable {
 	}
 
 	public String getBackupDirectoryPath() {
-		String parentPath = mainApp.getLanguageProjectFilePath().getParent();
+		File projectFile = mainApp.getLanguageProjectFilePath();
+		if (projectFile == null) { // hasn't been set yet
+			return null;
+		}
+		String parentPath = projectFile.getParent();
 		String backupDirectoryPath = parentPath + File.separator + Constants.BACKUP_DIRECTORY_NAME;
 		return backupDirectoryPath;
 	}
