@@ -101,7 +101,7 @@ public class ApplicationPreferences {
 	}
 
 	public Double getLastWindowHeight() {
-		return prefs.getDouble(LAST_WINDOW_HEIGHT, 10);
+		return prefs.getDouble(LAST_WINDOW_HEIGHT, 660);
 	}
 
 	public void setLastWindowHeight(Double value) {
@@ -109,7 +109,7 @@ public class ApplicationPreferences {
 	}
 
 	public Double getLastWindowWidth() {
-		return prefs.getDouble(LAST_WINDOW_WIDTH, 10);
+		return prefs.getDouble(LAST_WINDOW_WIDTH, 1000);
 	}
 
 	public void setLastWindowWidth(Double value) {

@@ -4,6 +4,7 @@
 	<include file="${basedir}/build-setup-staging-area.xml" as="nested"/>
 	<include file="${basedir}/build-do-compile.xml" as="nested"/>
 	
+	<property name="appName" value="Asheninka Syllable Parser"/>
 	<property name="version" value="0.3.0.0"/>
 	
 	<target name="do-deploy" depends="nested.setup-staging-area, nested.do-compile, nested.init-fx-tasks">
@@ -39,7 +40,7 @@
 			<fx:fileset dir="dist" includes="resources/**" />
 		</fx:resources>
 
-		<fx:application id="fxApplication" name="${mainFileName}" mainClass="sil.org.syllableparser.MainApp" version="${version}" />
+		<fx:application id="fxApplication" name="${appName}" mainClass="sil.org.syllableparser.MainApp" version="${version}" />
 
 		<mkdir dir="build/classes/META-INF" />
 
@@ -53,7 +54,7 @@
 
 			<manifest>
 				<attribute name="Implementation-Vendor" value="sil.org" />
-				<attribute name="Implementation-Title" value="${mainFileName}" />
+				<attribute name="Implementation-Title" value="${appName}" />
 				<attribute name="Implementation-Version" value="${version}" />
 				<attribute name="JavaFX-Feature-Proxy" value="None" />
 			</manifest>
