@@ -45,9 +45,9 @@ public abstract class ApproachController {
 	abstract void handleConvertPredictedToCorrectSyllabification();
 	abstract void handleFindWord();
 	abstract boolean anythingSelected();
-	public abstract ArrayList<String> getHyphenatedWords(ObservableList<Word> words);
-	public abstract ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words);
-	public abstract ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words);
+	public abstract ArrayList<String> getHyphenatedWordsListWord(ObservableList<Word> words);
+	public abstract ArrayList<String> getHyphenatedWordsParaTExt(ObservableList<Word> words);
+	public abstract ArrayList<String> getHyphenatedWordsXLingPaper(ObservableList<Word> words);
 	public abstract String getViewUsed();
 	
 	/**

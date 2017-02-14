@@ -46,7 +46,7 @@ public class ParaTExtHyphenatedWordsExporter extends WordExporter {
 	// for unit testing
 	@Override
 	public void exportWords(File file, Approach approach) {
-		ArrayList<String> hyphenatedWords = approach.getParaTExtHyphenatedWords(languageProject
+		ArrayList<String> hyphenatedWords = approach.getHyphenatedWordsParaTExt(languageProject
 				.getWords());
 		try {
 			Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
@@ -77,7 +77,7 @@ public class ParaTExtHyphenatedWordsExporter extends WordExporter {
 	// call or two is what is different?
 	@Override
 	public void exportWords(File file, ApproachController controller, StatusBar statusBar, ResourceBundle bundle) {
-		ArrayList<String> hyphenatedWords = controller.getParaTExtHyphenatedWords(languageProject
+		ArrayList<String> hyphenatedWords = controller.getHyphenatedWordsParaTExt(languageProject
 				.getWords());
 		long timeStart = System.currentTimeMillis();
 

@@ -367,18 +367,18 @@ public class CVApproachController extends ApproachController {
 	}
 
 	@Override
-	public ArrayList<String> getHyphenatedWords(ObservableList<Word> words) {
-		return cvApproachData.getHyphenatedWords(words);
+	public ArrayList<String> getHyphenatedWordsListWord(ObservableList<Word> words) {
+		return cvApproachData.getHyphenatedWordsListWord(words);
 	}
 
 	@Override
-	public ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words) {
-		return cvApproachData.getParaTExtHyphenatedWords(words);
+	public ArrayList<String> getHyphenatedWordsParaTExt(ObservableList<Word> words) {
+		return cvApproachData.getHyphenatedWordsParaTExt(words);
 	}
 
 	@Override
-	public ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words) {
-		return cvApproachData.getXLingPaperHyphenatedWords(words);
+	public ArrayList<String> getHyphenatedWordsXLingPaper(ObservableList<Word> words) {
+		return cvApproachData.getHyphenatedWordsXLingPaper(words);
 	}
 
 	public ObservableList<Word> getWords() {

@@ -37,6 +37,9 @@ public class LanguageProject {
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
 	private Language vernacularLanguage;
 	private Language analysisLanguage;
+	private HyphenationParametersListWord hyphenationParametersListWord;
+	private HyphenationParametersParaTExt hyphenationParametersParaTExt;
+	private HyphenationParametersXLingPaper hyphenationParametersXLingPaper;
 
 	public LanguageProject() {
 		super();
@@ -44,6 +47,9 @@ public class LanguageProject {
 		cvApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
+		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
+		hyphenationParametersParaTExt = new HyphenationParametersParaTExt("=", 2, 2);
+		hyphenationParametersXLingPaper = new HyphenationParametersXLingPaper("-", 2, 2);
 	}
 
 	/**
@@ -226,6 +232,33 @@ public class LanguageProject {
 	 */
 	public void setAnalysisLanguage(Language language) {
 		this.analysisLanguage = language;
+	}
+
+	public HyphenationParametersListWord getHyphenationParametersListWord() {
+		return hyphenationParametersListWord;
+	}
+
+	public void setHyphenationParametersListWord(
+			HyphenationParametersListWord hyphenationParametersListWord) {
+		this.hyphenationParametersListWord = hyphenationParametersListWord;
+	}
+
+	public HyphenationParametersParaTExt getHyphenationParametersParaTExt() {
+		return hyphenationParametersParaTExt;
+	}
+
+	public void setHyphenationParametersParaTExt(
+			HyphenationParametersParaTExt hyphenationParametersParaTExt) {
+		this.hyphenationParametersParaTExt = hyphenationParametersParaTExt;
+	}
+
+	public HyphenationParametersXLingPaper getHyphenationParametersXLingPaper() {
+		return hyphenationParametersXLingPaper;
+	}
+
+	public void setHyphenationParametersXLingPaper(
+			HyphenationParametersXLingPaper hyphenationParametersXLingPaper) {
+		this.hyphenationParametersXLingPaper = hyphenationParametersXLingPaper;
 	}
 
 }

@@ -50,7 +50,7 @@ public class XLingPaperHyphenatedWordExporter extends WordExporter {
 
 	@Override
 	public void exportWords(File file, Approach approach) {
-		ArrayList<String> hyphenatedWords = approach.getXLingPaperHyphenatedWords(languageProject
+		ArrayList<String> hyphenatedWords = approach.getHyphenatedWordsXLingPaper(languageProject
 				.getWords());
 		try {
 			SortedSet<Character> charsUsed = new TreeSet<Character>();
@@ -94,7 +94,7 @@ public class XLingPaperHyphenatedWordExporter extends WordExporter {
 	@Override
 	public void exportWords(File file, ApproachController controller, StatusBar statusBar,
 			ResourceBundle bundle) {
-		ArrayList<String> hyphenatedWords = controller.getXLingPaperHyphenatedWords(languageProject
+		ArrayList<String> hyphenatedWords = controller.getHyphenatedWordsXLingPaper(languageProject
 				.getWords());
 		long timeStart = System.currentTimeMillis();
 

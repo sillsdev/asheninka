@@ -107,19 +107,19 @@ public class ONCApproachController extends ApproachController  {
 	 * @see sil.org.syllableparser.view.ApproachController#getHyphenatedWords()
 	 */
 	@Override
-	public ArrayList<String> getHyphenatedWords(ObservableList<Word> words) {
+	public ArrayList<String> getHyphenatedWordsListWord(ObservableList<Word> words) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public ArrayList<String> getParaTExtHyphenatedWords(ObservableList<Word> words) {
+	public ArrayList<String> getHyphenatedWordsParaTExt(ObservableList<Word> words) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<String> getXLingPaperHyphenatedWords(ObservableList<Word> words) {
+	public ArrayList<String> getHyphenatedWordsXLingPaper(ObservableList<Word> words) {
 		// TODO Auto-generated method stub
 		return null;
 	}

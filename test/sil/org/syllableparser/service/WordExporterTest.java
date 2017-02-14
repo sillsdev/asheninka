@@ -113,6 +113,40 @@ public class WordExporterTest {
 	}
 
 	@Test
+	public void exportWordsAsSimpleListHyphenationParametersTest() {
+		long lineCount = 0;
+		languageProject.getHyphenationParametersListWord().setDiscretionaryHyphen("-");
+		languageProject.getHyphenationParametersListWord().setStartAfterCharactersFromBeginning(3);
+		languageProject.getHyphenationParametersListWord().setStopBeforeCharactersFromEnd(3);
+		ListWordExporter exporter = new ListWordExporter(languageProject);
+		exporter.exportWords(tempSaveFile, cva);
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+			lineCount = stream.count();
+			assertEquals(1903,  lineCount);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			InputStreamReader reader = new InputStreamReader(new FileInputStream(tempSaveFile),
+					Constants.UTF8_ENCODING);
+			BufferedReader bufr = new BufferedReader(reader);
+			String line = bufr.readLine();		
+			assertEquals("abba\ua78c", line);
+			line = bufr.readLine();
+			assertEquals("aba-bras-tro", line);
+			line = bufr.readLine();
+			assertEquals("babel", line);
+			line = bufr.readLine();
+			assertEquals("baka", line);
+			bufr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
 	public void exportWordsAsParaTExtHyphenatedWordsTest() {
 		long lineCount = 0;
 		ParaTExtHyphenatedWordsExporter exporter = new ParaTExtHyphenatedWordsExporter(languageProject);
@@ -135,7 +169,7 @@ public class WordExporterTest {
 			line = bufr.readLine();		
 			assertEquals("*ab=ba\ua78c", line);
 			line = bufr.readLine();
-			assertEquals("*a=ba=bras=tro", line);
+			assertEquals("*aba=bras=tro", line);
 			line = bufr.readLine();
 			assertEquals("ba=bel", line);
 			line = bufr.readLine();
@@ -148,6 +182,44 @@ public class WordExporterTest {
 	}
 	
 
+	@Test
+	public void exportWordsAsParaTExtHyphenatedWordsHyphenationParametersTest() {
+		long lineCount = 0;
+		languageProject.getHyphenationParametersParaTExt().setDiscretionaryHyphen("-");
+		languageProject.getHyphenationParametersParaTExt().setStartAfterCharactersFromBeginning(3);
+		languageProject.getHyphenationParametersParaTExt().setStopBeforeCharactersFromEnd(3);
+		ParaTExtHyphenatedWordsExporter exporter = new ParaTExtHyphenatedWordsExporter(languageProject);
+		exporter.exportWords(tempSaveFile, cva);
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+			lineCount = stream.count();
+			assertEquals(1910,  lineCount);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			InputStreamReader reader = new InputStreamReader(new FileInputStream(tempSaveFile),
+					Constants.UTF8_ENCODING);
+			BufferedReader bufr = new BufferedReader(reader);
+			// not sure why, but are getting something in the first character position
+			String line = bufr.readLine();
+			checkParaTExtPreambleContent(bufr, line);
+			// now check for some words
+			line = bufr.readLine();		
+			assertEquals("*abba\ua78c", line);
+			line = bufr.readLine();
+			assertEquals("*aba-bras-tro", line);
+			line = bufr.readLine();
+			assertEquals("babel", line);
+			line = bufr.readLine();
+			assertEquals("baka", line);
+			bufr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private void checkParaTExtPreambleContent(BufferedReader bufr, String line) throws IOException {
 		assertEquals("#Hyphenated Word List v2.0", line);
 		line = bufr.readLine();		
@@ -167,6 +239,53 @@ public class WordExporterTest {
 	@Test
 	public void exportWordsAsXLingPaperHyphenatedWordsTest() {
 		long lineCount = 0;
+		XLingPaperHyphenatedWordExporter exporter = new XLingPaperHyphenatedWordExporter(languageProject);
+		exporter.exportWords(tempSaveFile, cva);
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+			lineCount = stream.count();
+			assertEquals(1907,  lineCount);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			InputStreamReader reader = new InputStreamReader(new FileInputStream(tempSaveFile),
+					Constants.UTF8_ENCODING);
+			BufferedReader bufr = new BufferedReader(reader);
+			String line = bufr.readLine();		
+			assertEquals("<exceptions>", line);
+			line = bufr.readLine();
+			assertEquals("<word>ab-ba\ua78c</word>", line);
+			line = bufr.readLine();
+			assertEquals("<word>aba-bras-tro</word>", line);
+			line = bufr.readLine();
+			assertEquals("<word>ba-bel</word>", line);
+			line = bufr.readLine();
+			assertEquals("<word>ba-ka</word>", line);
+			for (int i = 5; i < 1903; i++) {
+				line = bufr.readLine();
+			}
+			line = bufr.readLine();
+			assertEquals("<word>yu\u2019-di-yo'</word>", line);
+			line = bufr.readLine();
+			assertEquals("<wordformingcharacter>'</wordformingcharacter>", line);
+			line = bufr.readLine();
+			assertEquals("<wordformingcharacter>\u2019</wordformingcharacter>", line);
+			line = bufr.readLine();
+			assertEquals("</exceptions>", line);
+			bufr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void exportWordsAsXLingPaperHyphenatedWordsHyphenationParametersTest() {
+		long lineCount = 0;
+		languageProject.getHyphenationParametersXLingPaper().setDiscretionaryHyphen("-");
+		languageProject.getHyphenationParametersXLingPaper().setStartAfterCharactersFromBeginning(0);
+		languageProject.getHyphenationParametersXLingPaper().setStopBeforeCharactersFromEnd(0);
 		XLingPaperHyphenatedWordExporter exporter = new XLingPaperHyphenatedWordExporter(languageProject);
 		exporter.exportWords(tempSaveFile, cva);
 		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {

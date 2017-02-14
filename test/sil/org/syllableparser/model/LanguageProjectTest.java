@@ -71,4 +71,19 @@ public class LanguageProjectTest {
 		assertEquals("Segment inventory size", 27, languageProject.getSegmentInventory().size());
 		assertEquals("Active segment inventory size", 26, languageProject.getActiveSegmentsInInventory().size());
 	}
+	
+	@Test
+	public void getHyphenationParametersTest() {
+		assertEquals("list word hyphenation string", "=", languageProject.getHyphenationParametersListWord().getDiscretionaryHyphen());
+		assertEquals("list word start", 0, languageProject.getHyphenationParametersListWord().getStartAfterCharactersFromBeginning());
+		assertEquals("list word stop", 0, languageProject.getHyphenationParametersListWord().getStopBeforeCharactersFromEnd());
+		
+		assertEquals("ParaTExt hyphenation string", "=", languageProject.getHyphenationParametersParaTExt().getDiscretionaryHyphen());
+		assertEquals("ParaTExt start", 2, languageProject.getHyphenationParametersParaTExt().getStartAfterCharactersFromBeginning());
+		assertEquals("ParaTExt stop", 2, languageProject.getHyphenationParametersParaTExt().getStopBeforeCharactersFromEnd());
+		
+		assertEquals("XLingPaper hyphenation string", "-", languageProject.getHyphenationParametersXLingPaper().getDiscretionaryHyphen());
+		assertEquals("XLingPaper start", 2, languageProject.getHyphenationParametersXLingPaper().getStartAfterCharactersFromBeginning());
+		assertEquals("XLingPaper stop", 2, languageProject.getHyphenationParametersXLingPaper().getStopBeforeCharactersFromEnd());
+	}
 }

@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >andy_black@sil.org</emailAddress
 ><date
->1 December 2016</date
+>3 January 2017</date
 ><version
->0.3.0 Alpha</version
+>0.3.1 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -581,8 +581,13 @@ type="tParserResult"
 ></object
 ></li
 ></ol
+><pc
+>When you click on a word in the middle pane, the same fields are shown on the right where you can edit them.</pc
 ><p
->When you click on a word in the middle pane, the same fields are shown on the right where you can edit them.</p
+>Please note that untl you either manually add words to the project or until you import a set of words, the list will be empty.  See <sectionRef
+sec="sWordsImport"
+></sectionRef
+> for how to import a set of words.</p
 ><p
 >The <object
 type="tPredictedSyllableBreaks"

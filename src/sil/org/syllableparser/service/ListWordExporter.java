@@ -48,7 +48,7 @@ public class ListWordExporter extends WordExporter {
 	// Used by unit test
 	@Override
 	public void exportWords(File file, Approach approach) {
-		ArrayList<String> hyphenatedWords = approach.getHyphenatedWords(languageProject.getWords());
+		ArrayList<String> hyphenatedWords = approach.getHyphenatedWordsListWord(languageProject.getWords());
 		try {
 			Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 					file.getPath()), Constants.UTF8_ENCODING));
@@ -75,7 +75,7 @@ public class ListWordExporter extends WordExporter {
 	@Override
 	public void exportWords(File file, ApproachController controller, StatusBar statusBar,
 			ResourceBundle bundle) {
-		ArrayList<String> hyphenatedWords = controller.getHyphenatedWords(languageProject
+		ArrayList<String> hyphenatedWords = controller.getHyphenatedWordsListWord(languageProject
 				.getWords());
 		long timeStart = System.currentTimeMillis();
 

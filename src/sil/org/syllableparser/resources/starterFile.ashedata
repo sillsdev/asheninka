@@ -49,6 +49,21 @@
             </cvSyllablePattern>
         </cvSyllablePatterns>
     </cvApproach>
+    <hyphenationParametersListWord>
+        <discretionaryHyphen>=</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>0</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>0</stopBeforeCharactersFromEnd>
+    </hyphenationParametersListWord>
+    <hyphenationParametersParaTExt>
+        <discretionaryHyphen>=</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
+    </hyphenationParametersParaTExt>
+    <hyphenationParametersXLingPaper>
+        <discretionaryHyphen>-</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
+    </hyphenationParametersXLingPaper>
     <segments>
         <segment id="de664190-dd3c-4bb3-892e-16dc596255ce">
             <description>low central unrounded vowel</description>

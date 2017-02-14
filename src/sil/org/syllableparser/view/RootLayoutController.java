@@ -82,6 +82,7 @@ import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachType;
 import sil.org.syllableparser.model.ApproachView;
 import sil.org.syllableparser.model.BackupFile;
+import sil.org.syllableparser.model.HyphenationParameters;
 import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.service.BackupFileCreator;
@@ -430,7 +431,7 @@ public class RootLayoutController implements Initializable {
 			mainApp.updateStageTitle(file);
 		} else {
 			// probably first time running and user choose to open a file
-			// but then canceled.  We quit.
+			// but then canceled. We quit.
 			System.exit(0);
 		}
 	}
@@ -582,6 +583,54 @@ public class RootLayoutController implements Initializable {
 					languageProject);
 			exporter.exportWords(file, currentApproachController, statusBar, bundle);
 		}
+	}
+
+	@FXML
+	private void handleHyphenationParametersSimpleList() {
+		System.out.println("Simple list hyphenation parameters");
+		launchHyphenationParametersController("label.hyphenationparametersindesign",
+				languageProject.getHyphenationParametersListWord());
+	}
+
+	protected void launchHyphenationParametersController(String sHyphenationParametersType,
+			HyphenationParameters hyphenationParamaters) {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/HyphenationParametersChooser.fxml";
+			String title = bundle.getString("label.sethyphenationparameters");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
+					resource, title);
+
+			Object[] args = { bundle.getString(sHyphenationParametersType) };
+			MessageFormat msgFormatter = new MessageFormat("");
+			msgFormatter.setLocale(currentLocale);
+			msgFormatter.applyPattern(bundle.getString("label.hyphenationparameters"));
+			String sParametersForMessage = msgFormatter.format(args);
+
+			HyphenationParametersController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setData(hyphenationParamaters);
+			controller.setHyphenationParametersFor(sParametersForMessage);
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void handleHyphenationParametersParaTExt() {
+		System.out.println("Paratext hyphenation parameters");
+		launchHyphenationParametersController("label.hyphenationparametersparatext",
+				languageProject.getHyphenationParametersParaTExt());
+	}
+
+	@FXML
+	private void handleHyphenationParametersXLingPaper() {
+		System.out.println("XLingPaper hyphenation parameters");
+		launchHyphenationParametersController("label.hyphenationparametersxlingpaper",
+				languageProject.getHyphenationParametersXLingPaper());
 	}
 
 	/**
