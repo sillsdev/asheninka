@@ -32,7 +32,7 @@ public class RestoreBackupChooserController extends BackupChooserController {
 		String sFileFilterDescription = bundle.getString("file.filterdescription");
 		String syllableParserFilterDescription = sFileFilterDescription + " ("
 				+ Constants.ASHENINKA_DATA_FILE_EXTENSIONS + ")";
-		ControllerUtilities.doFileSaveAs(mainApp, true, syllableParserFilterDescription);
+		ControllerUtilities.doFileSaveAs(mainApp, locale, true, syllableParserFilterDescription);
 
 		okClicked = true;
 		dialogStage.close();

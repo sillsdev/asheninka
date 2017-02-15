@@ -8,6 +8,7 @@ package sil.org.syllableparser.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -17,15 +18,16 @@ import java.util.concurrent.TimeUnit;
 import org.controlsfx.control.StatusBar;
 
 import sil.org.utility.*;
-
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -106,8 +108,8 @@ public class ControllerUtilities {
 		return fileChooser;
 	}
 
-	public static void doFileSaveAs(MainApp mainApp, Boolean fForceSave,
-			String syllableParserFilterDescription) {
+	public static void doFileSaveAs(MainApp mainApp, Locale locale,
+			Boolean fForceSave, String syllableParserFilterDescription) {
 		FileChooser fileChooser = ControllerUtilities.initFileChooser(mainApp,
 				syllableParserFilterDescription, Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
 
@@ -115,6 +117,19 @@ public class ControllerUtilities {
 		if (fForceSave) {
 			while (file == null) {
 				file = askUserToSaveFile(mainApp, fileChooser);
+				if (file == null) {
+					ResourceBundle bundle = ResourceBundle.getBundle(
+							"sil.org.syllableparser.resources.SyllableParser", locale);
+					String sHeader = bundle.getString("file.requiresaveheader");
+					String sContent = bundle.getString("file.requiresavecontent");
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle(sHeader);
+					alert.setHeaderText(null);
+					alert.setContentText(sContent);
+					Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+					stage.getIcons().add(mainApp.getNewMainIconImage());
+					alert.showAndWait();
+				}
 			}
 		} else {
 			file = askUserToSaveFile(mainApp, fileChooser);
