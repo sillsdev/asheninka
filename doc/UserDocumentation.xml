@@ -25,14 +25,14 @@ type="tAsheninka"
 ><emailAddress
 >andy_black@sil.org</emailAddress
 ><date
->3 January 2017</date
+>15 February 2017</date
 ><version
->0.3.1 Alpha</version
+>0.4.0 Alpha</version
 ><contents
 ></contents
 ></frontMatter
 ><section1
-id="s1"
+id="sIntroduction"
 ><secTitle
 >Introduction</secTitle
 ><p
@@ -54,7 +54,7 @@ ref="rIPA"
 >) for the first, the second should be done using the practical orthography.</p
 ></section1
 ><section1
-id="s2"
+id="sGeneralUserInterfaceItems"
 ><secTitle
 >General user interface items</secTitle
 ><p
@@ -63,10 +63,7 @@ type="tMenuItem"
 >File</object
 >, <object
 type="tMenuItem"
->Language</object
->, <object
-type="tMenuItem"
->View</object
+>Settings</object
 >, and <object
 type="tMenuItem"
 >Help</object
@@ -196,8 +193,53 @@ term="iLanguageVernacular"
 ></indexedItem
 >Use the <object
 type="tMenuItem"
->Language</object
+>Settings</object
 > menu item to set the font information for displaying the vernacular and/or the analysis languages. Currently, only font family, font size, and font style can be set. We do plan to include color and sorting information in a later version.</p
+></section2
+><section2
+id="sHyphenationParameters"
+><secTitle
+>Setting hyphenation parameters</secTitle
+><p
+><indexedItem
+main="yes"
+term="iHyphenationParameters"
+></indexedItem
+>When one <indexedItem
+term="iExport"
+></indexedItem
+>exports syllabified words in one of three possible formats (as explained in <sectionRef
+sec="sWordsExport"
+></sectionRef
+>), one can also control three variables for each of the three formats:</p
+><ol
+><li
+><indexedItem
+main="yes"
+term="iHPDiscretionaryHyphen"
+></indexedItem
+>The discretionary hyphen character sequence used</li
+><li
+><indexedItem
+main="yes"
+term="iHPStart"
+></indexedItem
+>The number of printable characters from the beginning of the word after which hyphenation starts</li
+><li
+><indexedItem
+main="yes"
+term="iHPStop"
+></indexedItem
+>The number of printable characters from the end of the word where hyphenation stops</li
+></ol
+><p
+>The default values for these can be changed by using  the <object
+type="tMenuItem"
+>Settings / Hyphenation Parameters</object
+> menu item. This then shows the three export options.  Choosing one brings up a dialog box showing the current hyphenation parameter settings for this export method.  You can change the values and then click on the <object
+type="tMenuItem"
+>OK</object
+> button.</p
 ></section2
 ><section2
 id="sUserInterfaceLanguage"
@@ -209,7 +251,7 @@ term="iLanguageUI"
 ></indexedItem
 >You can set the user interface language by using the <object
 type="tMenuItem"
->View / Change the interface language</object
+>Settings / Change the interface language</object
 > menu item. This brings up a dialog box showing the current interface language in a drop down chooser. Click on the chooser's drop down button to see other interface language choices. The choices given use the name of the language in the current interface language (so if the current interface language is English, then it will show “Spanish” as an option; if the current interface language is Spanish, it will show English as “inglés”).</p
 ><p
 >The current version has English and a rough, most likely often inaccurate version of Spanish. Any corrections to the Spanish are welcome.</p
@@ -265,7 +307,18 @@ id="sApproaches"
 ><object
 type="tAsheninka"
 ></object
-> will eventually offer six different syllabification algorithms or approaches. Only one is implemented in the current version.</p
+> will eventually offer six different syllabification algorithms or approaches. These are coverd in <sectionRef
+sec="sCVApproach"
+textBefore="plural"
+></sectionRef
+>–<sectionRef
+sec="sOTApproach"
+textBefore="none"
+></sectionRef
+>.  Only one is implemented in the current version. See <sectionRef
+sec="sCVApproach"
+></sectionRef
+>.</p
 ><p
 ><indexedItem
 term="iIntroduction"
@@ -277,7 +330,8 @@ href="Overview.pdf"
 type="tMenuItem"
 >Help / Introduction to syllabification</object
 > menu item.</p
-><section2
+></section1
+><section1
 id="sCVApproach"
 ><secTitle
 ><object
@@ -315,7 +369,7 @@ sec="sWords"
 ></sectionRef
 >) or enter a list of words by hand. Then you use the <object
 type="tMenuItem"
->Tools / Syllabify Words </object
+>Parser / Syllabify Words </object
 > menu item or click on the <img
 src="resources/SyllabifyWords.png"
 ></img
@@ -408,7 +462,7 @@ type="tSuccessMessage"
 type="tCVPatternApproach"
 ></object
 >.</p
-><section3
+><section2
 id="sCVSegmentInventory"
 ><secTitle
 >CV segment inventory</secTitle
@@ -477,8 +531,8 @@ type="tField"
 type="tField"
 >Graphemes</object
 > field, key all the ways the particular segment appears in your orthography, including any upper case forms. Separate each one by a space.</p
-></section3
-><section3
+></section2
+><section2
 id="sCVNaturalClasses"
 ><secTitle
 >CV natural classes</secTitle
@@ -511,8 +565,8 @@ type="tField"
 src="resources/ChooserButton.png"
 ></img
 >. Click on it to bring up a dialog box which lets you select segments and/or natural classes which belong to this natural class. Note that it is possible to insert one entire natural class within another natural class. For example, if you have a class of nasal consonants, you can include that class within another class that has all consonants.</p
-></section3
-><section3
+></section2
+><section2
 id="sCVSyllablePatterns"
 ><secTitle
 >CV syllable patterns</secTitle
@@ -551,8 +605,8 @@ type="tCVPatternApproach"
 type="tAsheninka"
 ></object
 > parses a word, it tries to match the patterns in the order in which they appear. You control the order of the syllable patterns by clicking on a pattern in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
-></section3
-><section3
+></section2
+><section2
 id="sCVWords"
 ><secTitle
 >CV words</secTitle
@@ -584,7 +638,7 @@ type="tParserResult"
 ><pc
 >When you click on a word in the middle pane, the same fields are shown on the right where you can edit them.</pc
 ><p
->Please note that untl you either manually add words to the project or until you import a set of words, the list will be empty.  See <sectionRef
+>Please note that until you either manually add words to the project or until you import a set of words, the list will be empty. See <sectionRef
 sec="sWordsImport"
 ></sectionRef
 > for how to import a set of words.</p
@@ -621,7 +675,7 @@ type="tCorrectSyllableBreaks"
 ></object
 > column/field contains what you have indicated to be the correct syllabification for this word. It may be filled in if you imported words from a <object
 type="tParatext"
-></object
+>e</object
 > hyphenatedWords.txt file and that file indicated that this word's hyphenation had been approved. Otherwise, this column/field is expected to be blank until you either manually enter the correct syllabification or run the <object
 type="tConvertPredictedToCorrectSyllabifcation"
 ></object
@@ -643,8 +697,8 @@ type="tPredictedSyllableBreaks"
 sec="sConvertPredictedToCorrect"
 ></sectionRef
 > for more on this.</p
-></section3
-><section3
+></section2
+><section2
 id="sCVPredicitedVsCorrect"
 ><secTitle
 >Predicted vs.​ correct CV words</secTitle
@@ -659,9 +713,9 @@ term="iCVPredictedSyllabificationCompare"
 type="tCVPredictedVsCorrectWords"
 ></object
 > view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the predictions of the current set of segments, natural classes, and syllable patterns differ from the expected results. In this view, by the way, the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
-></section3
 ></section2
-><section2
+></section1
+><section1
 id="sSonorityHiearchyApproach"
 ><secTitle
 >Sonority hierarchy approach</secTitle
@@ -670,8 +724,8 @@ id="sSonorityHiearchyApproach"
 term="iSonorityHierarchyApproach"
 ></indexedItem
 >This approach has not been implemented yet.</p
-></section2
-><section2
+></section1
+><section1
 id="sONCApproach"
 ><secTitle
 >Onset-nucleus-coda approach</secTitle
@@ -680,8 +734,8 @@ id="sONCApproach"
 term="iONCApproach"
 ></indexedItem
 >This approach has not been implemented yet.</p
-></section2
-><section2
+></section1
+><section1
 id="sMoriacApproach"
 ><secTitle
 >Moraic approach</secTitle
@@ -690,8 +744,8 @@ id="sMoriacApproach"
 term="iMoraicApproach"
 ></indexedItem
 >This approach has not been implemented yet.</p
-></section2
-><section2
+></section1
+><section1
 id="sNuclearProjectionApproach"
 ><secTitle
 >Nuclear projection approach</secTitle
@@ -700,8 +754,8 @@ id="sNuclearProjectionApproach"
 term="iNuclearProjectionApproach"
 ></indexedItem
 >This approach has not been implemented yet.</p
-></section2
-><section2
+></section1
+><section1
 id="sOTApproach"
 ><secTitle
 >Optimality theory approach</secTitle
@@ -710,7 +764,6 @@ id="sOTApproach"
 term="iOTApproach"
 ></indexedItem
 >This approach has not been implemented yet.</p
-></section2
 ></section1
 ><section1
 id="sConvertPredictedToCorrect"
@@ -723,7 +776,13 @@ term="iCVPredictedSyllabificationConvert"
 >When you run the <object
 type="tConvertPredictedToCorrectSyllabifcation"
 ></object
-> tool, it brings up a dialog box listing all the words which have a non-empty <object
+> tool either by using the <object
+type="tMenuItem"
+>Tools / Convert predicted to correct syllabification</object
+> menu item or by clicking on the <img
+src="resources/ConvertPredictedToCorrect.png"
+></img
+> tool bar button, it brings up a dialog box listing all the words which have a non-empty <object
 type="tPredictedSyllableBreaks"
 ></object
 > field. You can select which words should be converted by manually checking the box before them<endnote
@@ -873,6 +932,7 @@ id="sWordsExport"
 >Export words</secTitle
 ><p
 ><indexedItem
+main="yes"
 term="iExport"
 ></indexedItem
 >When you want to export the word list in <object
@@ -885,17 +945,20 @@ type="tMenuItem"
 ><ol
 ><li
 ><indexedItem
+main="yes"
 term="iExportInDesign"
 ></indexedItem
 ><indexedItem
+main="yes"
 term="iExportTextFile"
 ></indexedItem
 >Export for <object
-type="tTool"
->InDesign</object
+type="tInDesign"
+></object
 > (simple list)</li
 ><li
 ><indexedItem
+main="yes"
 term="iExportParaTExt"
 ></indexedItem
 >Export for <object
@@ -904,11 +967,12 @@ type="tParatext"
 > (hyphenatedWords.txt)</li
 ><li
 ><indexedItem
+main="yes"
 term="iExportXLingPaper"
 ></indexedItem
 >Export for <object
-type="tTool"
->XLingPaper</object
+type="tXLingPaper"
+></object
 > (hyphenations exception file)</li
 ></ol
 ><p
@@ -934,16 +998,53 @@ type="tPredictedSyllableBreaks"
 >Otherwise, it does not export the word.</li
 ></ol
 ><pc
->It also will replace the periods used to demarcate syllables with an equals sign for both <object
+><indexedItem
+term="iHPDiscretionaryHyphen"
+></indexedItem
+>It also will replace the periods used to demarcate syllables with whatever you have set as the discretionary hyphen character(s) in the hyphenation parameters (see <sectionRef
+sec="sHyphenationParameters"
+></sectionRef
+>).  By default, <object
+type="tAsheninka"
+></object
+> uses an equals sign for both <object
 type="tParatext"
 ></object
 > and <object
-type="tTool"
->InDesign</object
->. It replaces the periods with a hyphen for the <object
-type="tTool"
->XLingPaper</object
+type="tInDesign"
+></object
+> and a hyphen for the <object
+type="tXLingPaper"
+></object
 > output.</pc
+><p
+><indexedItem
+term="iHPStart"
+></indexedItem
+><indexedItem
+term="iHPStop"
+></indexedItem
+>Further, <object
+type="tAsheninka"
+></object
+> will not insert a discretionary hyphen if it appears too close to the front or too close to the end of a word, depending on the hyphenation parameters set.  By default, the <object
+type="tInDesign"
+></object
+> export uses zero characters from the front and zero characters from the end (i.e., every potential discretionary hyphen position is used).<endnote
+id="nInDesign"
+><p
+>This is because the <object
+type="tInDesign"
+></object
+> program has its own way of letting the typesetter control where discretionary hyphens will be used.</p
+></endnote
+>  By default, both the <object
+type="tParatext"
+></object
+> and <object
+type="tXLingPaper"
+></object
+> export methods limit discretionary hyphens from two characters from front and two characters from the back.</p
 ></section2
 ></section1
 ><section1
@@ -1255,6 +1356,12 @@ before="“"
 id="tField"
 ></type
 ><type
+before="InDesign"
+color="navy"
+font-weight="bold"
+id="tInDesign"
+></type
+><type
 color="maroon"
 id="tInstruction"
 ></type
@@ -1270,8 +1377,9 @@ id="tMenuItem"
 ></type
 ><type
 before="ParaTExt"
+color="navy"
+font-weight="bold"
 id="tParatext"
-types="tTool"
 ></type
 ><type
 before="Parser Result"
@@ -1303,6 +1411,12 @@ id="tTool"
 color="purple"
 font-weight="bold"
 id="tView"
+></type
+><type
+before="XLingPaper"
+color="navy"
+font-weight="bold"
+id="tXLingPaper"
 ></type
 ></types
 ><indexTerms
@@ -1371,6 +1485,18 @@ id="iDeleteDataItem"
 >Delete data item</term
 ></indexTerm
 ><indexTerm
+id="iDiscretionaryHyphen"
+see="iHPDiscretionaryHyphen"
+><term
+>Discretionary hyphen character(s)</term
+></indexTerm
+><indexTerm
+id="iExportWords"
+see="iExport"
+><term
+>Export words</term
+></indexTerm
+><indexTerm
 id="iFailureMessages"
 ><term
 >Failure messages</term
@@ -1426,6 +1552,40 @@ id="iUserDoc"
 >User documentation</term
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iHyphenationParameters"
+><term
+>Hyphenation parameters</term
+><indexTerms
+><indexTerm
+id="iHPDiscretionaryHyphen"
+><term
+>Discretionary hyphen character(s)</term
+></indexTerm
+><indexTerm
+id="iHPStart"
+><term
+>Start hyphenating at <object
+type="tItalic"
+>i</object
+> characters from the front</term
+></indexTerm
+><indexTerm
+id="iHPStop"
+><term
+>Stop hyphenating at <object
+type="tItalic"
+>j</object
+> characters from the end</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iImportWords"
+see="iImport"
+><term
+>Import words</term
 ></indexTerm
 ><indexTerm
 id="iInsertDataItem"
@@ -1606,6 +1766,24 @@ id="iSorting"
 >Sorting data in display</term
 ></indexTerm
 ><indexTerm
+id="iStartHyphenation"
+see="iHPStart"
+><term
+>Start hyphenating at <object
+type="tItalic"
+>i</object
+> characters from the front</term
+></indexTerm
+><indexTerm
+id="iStopHyphenation"
+see="iHPStop"
+><term
+>Stop hyphenating at <object
+type="tItalic"
+>j</object
+> characters from the end</term
+></indexTerm
+><indexTerm
 id="iSyllabification"
 see="iIntroduction"
 ><term
@@ -1643,8 +1821,8 @@ id="iExport"
 id="iExportInDesign"
 ><term
 >To <object
-type="tTool"
->InDesign</object
+type="tInDesign"
+></object
 ></term
 ></indexTerm
 ><indexTerm
@@ -1664,8 +1842,8 @@ id="iExportTextFile"
 id="iExportXLingPaper"
 ><term
 >To <object
-type="tTool"
->XLingPaper</object
+type="tXLingPaper"
+></object
 ></term
 ></indexTerm
 ></indexTerms
@@ -1685,7 +1863,7 @@ id="iImportFLEx"
 ><term
 >From <object
 type="tTool"
->FLEx</object
+>FieldWorks Language Explorer</object
 ></term
 ></indexTerm
 ><indexTerm

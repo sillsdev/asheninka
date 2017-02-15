@@ -66,36 +66,16 @@ public class HyphenationParametersController implements Initializable {
 			@Override
 			public TextFormatter.Change apply(TextFormatter.Change change) {
 				String text = change.getText();
-				for (int i = 0; i < text.length(); i++)
+				for (int i = 0; i < text.length(); i++) {
 					if (!Character.isDigit(text.charAt(i)))
 						return null;
+				}
 				return change;
 			}
 		};
-		
+
 		startIndex.setTextFormatter(new TextFormatter<String>(filter));
 		endIndex.setTextFormatter(new TextFormatter<String>(filter));
-
-		// Initialize the table with the three columns.
-		// checkBoxColumn.setCellValueFactory(cellData ->
-		// cellData.getValue().checkedProperty());
-		// checkBoxColumnHead.setOnAction((event) -> {
-		// handleCheckBoxColumnHead();
-		// });
-		// predictedSyllabificationColumn.setCellValueFactory(cellData ->
-		// cellData.getValue()
-		// .predictedSyllabificationProperty());
-		// // not working...
-		// predictedSyllabificationColumn.getStyleClass().add("predictedSyllabificationColumn");
-		// checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-		// checkBoxColumn.setEditable(true);
-		// cvPredictedSyllabificationTable.setEditable(true);
-		// whenTableIsEmptyMessage = new
-		// Label(resources.getString("label.nopredicted") +
-		// resources.getString("menu.syllabifywords"));
-		// cvPredictedSyllabificationTable.setPlaceholder(whenTableIsEmptyMessage);
-		//
-		// initializeCheckBoxContextMenu(resources);
 	}
 
 	/**
@@ -117,8 +97,7 @@ public class HyphenationParametersController implements Initializable {
 	public void setData(HyphenationParameters parameters) {
 		hyphenationParameters = parameters;
 		discretionaryHyphen.setText(parameters.getDiscretionaryHyphen());
-		startIndex.setText(String.valueOf(parameters
-				.getStartAfterCharactersFromBeginning()));
+		startIndex.setText(String.valueOf(parameters.getStartAfterCharactersFromBeginning()));
 		endIndex.setText(String.valueOf(parameters.getStopBeforeCharactersFromEnd()));
 	}
 
@@ -140,11 +119,17 @@ public class HyphenationParametersController implements Initializable {
 	 */
 	@FXML
 	private void handleOk() {
-		hyphenationParameters.setDiscretionaryHyphen(discretionaryHyphen.getText());
-		int startValue = Integer.valueOf(startIndex.getText());
-		hyphenationParameters.setStartAfterCharactersFromBeginning(startValue);
-		int endValue = Integer.valueOf(endIndex.getText());
-		hyphenationParameters.setStopBeforeCharactersFromEnd(endValue);
+		if (discretionaryHyphen.getText().length() > 0) {
+			hyphenationParameters.setDiscretionaryHyphen(discretionaryHyphen.getText());
+		}
+		if (startIndex.getText().length() > 0) {
+			int startValue = Integer.valueOf(startIndex.getText());
+			hyphenationParameters.setStartAfterCharactersFromBeginning(startValue);
+		}
+		if (endIndex.getText().length() > 0) {
+			int endValue = Integer.valueOf(endIndex.getText());
+			hyphenationParameters.setStopBeforeCharactersFromEnd(endValue);
+		}
 		okClicked = true;
 		dialogStage.close();
 	}

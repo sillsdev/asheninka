@@ -613,6 +613,7 @@ public class RootLayoutController implements Initializable {
 			controller.setMainApp(mainApp);
 			controller.setData(hyphenationParamaters);
 			controller.setHyphenationParametersFor(sParametersForMessage);
+			dialogStage.setResizable(false);
 			dialogStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
