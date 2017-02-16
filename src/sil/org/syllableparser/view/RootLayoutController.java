@@ -422,6 +422,10 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	public void handleOpen() {
+		doFileOpen(false);
+	}
+
+	public void doFileOpen(Boolean fCloseIfCanceled) {
 		File file = ControllerUtilities.getFileToOpen(mainApp, syllableParserFilterDescription,
 				Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
 		if (file != null) {
@@ -429,8 +433,8 @@ public class RootLayoutController implements Initializable {
 			String sDirectoryPath = file.getParent();
 			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 			mainApp.updateStageTitle(file);
-		} else {
-			// probably first time running and user choose to open a file
+		} else if (fCloseIfCanceled){
+			// probably first time running and user chose to open a file
 			// but then canceled. We quit.
 			System.exit(0);
 		}

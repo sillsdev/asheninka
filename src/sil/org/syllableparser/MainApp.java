@@ -224,7 +224,7 @@ public class MainApp extends Application {
 		if (result.get() == buttonCreateNewProject) {
 			controller.handleNew();
 		} else if (result.get() == buttonOpenExistingProject) {
-			controller.handleOpen();
+			controller.doFileOpen(true);
 		} else {
 			// ... user chose CANCEL or closed the dialog
 			System.exit(0);

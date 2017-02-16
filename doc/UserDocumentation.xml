@@ -112,13 +112,21 @@ id="sNewProject"
 ><indexedItem
 term="iProjectNew"
 ></indexedItem
+><object
+type="tAsheninka"
+></object
+> comes with a stock set of segments, etc.  That is, when you create a new project, <object
+type="tAsheninka"
+></object
+> will fill this new project with this stock set of segments, etc.  You can then edit them, delete them, and add any needed items.</p
+><p
 >When you want to create a new project, use <object
 type="tMenuItem"
 >File / New</object
 > menu item or click on the <img
 src="resources/FileNew.png"
 ></img
-> toolbar button. This brings up a standard “Save as...” dialog box. The expected file extension to use with all <object
+> toolbar button. This brings up a standard “Save as...” dialog box so you can save this stock set of data as your new project. The expected file extension to use with all <object
 type="tAsheninka"
 ></object
 > files is “.ashedata” (for <object
@@ -178,7 +186,7 @@ term="iProjectSaveAs"
 >When you decide to save the current project with a different name, use the <object
 type="tMenuItem"
 >File / Save As...</object
-> menu item.</p
+> menu item.  The resulting file will have all the data that the original project did except it will have a new name.</p
 ></section2
 ><section2
 id="sLanguages"
