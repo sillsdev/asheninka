@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >andy_black@sil.org</emailAddress
 ><date
->15 February 2017</date
+>17 February 2017</date
 ><version
 >0.4.0 Alpha</version
 ><contents
@@ -115,10 +115,10 @@ term="iProjectNew"
 ><object
 type="tAsheninka"
 ></object
-> comes with a stock set of segments, etc.  That is, when you create a new project, <object
+> comes with a stock set of segments, etc. That is, when you create a new project, <object
 type="tAsheninka"
 ></object
-> will fill this new project with this stock set of segments, etc.  You can then edit them, delete them, and add any needed items.</p
+> will fill this new project with this stock set of segments, etc. You can then edit them, delete them, and add any needed items.</p
 ><p
 >When you want to create a new project, use <object
 type="tMenuItem"
@@ -186,7 +186,7 @@ term="iProjectSaveAs"
 >When you decide to save the current project with a different name, use the <object
 type="tMenuItem"
 >File / Save As...</object
-> menu item.  The resulting file will have all the data that the original project did except it will have a new name.</p
+> menu item. The resulting file will have all the data that the original project did except it will have a new name.</p
 ></section2
 ><section2
 id="sLanguages"
@@ -241,10 +241,10 @@ term="iHPStop"
 >The number of printable characters from the end of the word where hyphenation stops</li
 ></ol
 ><p
->The default values for these can be changed by using  the <object
+>The default values for these can be changed by using the <object
 type="tMenuItem"
 >Settings / Hyphenation Parameters</object
-> menu item. This then shows the three export options.  Choosing one brings up a dialog box showing the current hyphenation parameter settings for this export method.  You can change the values and then click on the <object
+> menu item. This then shows the three export options. Choosing one brings up a dialog box showing the current hyphenation parameter settings for this export method. You can change the values and then click on the <object
 type="tMenuItem"
 >OK</object
 > button.</p
@@ -323,7 +323,7 @@ textBefore="plural"
 sec="sOTApproach"
 textBefore="none"
 ></sectionRef
->.  Only one is implemented in the current version. See <sectionRef
+>. Only one is implemented in the current version. See <sectionRef
 sec="sCVApproach"
 ></sectionRef
 >.</p
@@ -1012,7 +1012,7 @@ term="iHPDiscretionaryHyphen"
 >It also will replace the periods used to demarcate syllables with whatever you have set as the discretionary hyphen character(s) in the hyphenation parameters (see <sectionRef
 sec="sHyphenationParameters"
 ></sectionRef
->).  By default, <object
+>). By default, <object
 type="tAsheninka"
 ></object
 > uses an equals sign for both <object
@@ -1035,7 +1035,7 @@ term="iHPStop"
 >Further, <object
 type="tAsheninka"
 ></object
-> will not insert a discretionary hyphen if it appears too close to the front or too close to the end of a word, depending on the hyphenation parameters set.  By default, the <object
+> will not insert a discretionary hyphen if it appears too close to the front or too close to the end of a word, depending on the hyphenation parameters set. By default, the <object
 type="tInDesign"
 ></object
 > export uses zero characters from the front and zero characters from the end (i.e., every potential discretionary hyphen position is used).<endnote
@@ -1046,7 +1046,7 @@ type="tInDesign"
 ></object
 > program has its own way of letting the typesetter control where discretionary hyphens will be used.</p
 ></endnote
->  By default, both the <object
+> By default, both the <object
 type="tParatext"
 ></object
 > and <object
