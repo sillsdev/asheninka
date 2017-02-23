@@ -124,6 +124,8 @@
 								text="%menu.findword" fx:id="menuItemFindWord" accelerator="ctrl+f" />
 							<MenuItem mnemonicParsing="true" onAction="#handleClearWords"
 								text="%menu.clearwords" fx:id="menuItemClearWords" />
+							<MenuItem mnemonicParsing="true" onAction="#handleClearCorrectSyllabificationInWords"
+								text="%menu.clearcorrectsyllabificationinwords" fx:id="menuItemClearCorrectSyllabificationInWords" />
 							<MenuItem mnemonicParsing="true"
 								onAction="#handleCompareImplementations" text="%menu.compareimplementations"
 								fx:id="menuItemCompareImplementations" />

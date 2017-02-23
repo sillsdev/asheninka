@@ -101,7 +101,7 @@ public class WordImporterTest {
 		assertEquals("", word.getCorrectSyllabification());
 		assertEquals(sUntested, word.getCVParserResult());
 		word = words.get(21);
-		assertEquals("ñio\uf26aki", word.getWord());
+		assertEquals("Ã±io\uf26aki", word.getWord());
 		assertEquals("", word.getCorrectSyllabification());
 		assertEquals(sUntested, word.getCVParserResult());
 		// now load it again: the size should not change
@@ -215,8 +215,8 @@ public class WordImporterTest {
 		assertEquals("a", word.getCorrectSyllabification());
 		assertEquals(sUntested, word.getCVParserResult());
 		word = words.get(1);
-		assertEquals("aarón", word.getWord());
-		assertEquals("Aa.rón", word.getCorrectSyllabification());
+		assertEquals("aarÃ³n", word.getWord());
+		assertEquals("Aa.rÃ³n", word.getCorrectSyllabification());
 		assertEquals(sUntested, word.getCVParserResult());
 		word = words.get(19);
 		assertEquals("abi\ua78c", word.getWord());

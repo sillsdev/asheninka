@@ -86,6 +86,7 @@ import sil.org.syllableparser.model.HyphenationParameters;
 import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.service.BackupFileCreator;
+import sil.org.syllableparser.service.CorrectSyllabificationCleaner;
 import sil.org.syllableparser.service.FLExExportedWordformsAsTabbedListImporter;
 import sil.org.syllableparser.service.ListWordExporter;
 import sil.org.syllableparser.service.ListWordImporter;
@@ -184,6 +185,8 @@ public class RootLayoutController implements Initializable {
 	private MenuItem menuItemFindWord;
 	@FXML
 	private MenuItem menuItemClearWords;
+	@FXML
+	private MenuItem menuItemClearCorrectSyllabificationInWords;
 	@FXML
 	private MenuItem menuItemCompareImplementations;
 	@FXML
@@ -304,6 +307,29 @@ public class RootLayoutController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonYes) {
 			languageProject.getWords().clear();
+		}
+
+	}
+
+	@FXML
+	private void handleClearCorrectSyllabificationInWords() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(bundle.getString("program.name"));
+		alert.setHeaderText(bundle.getString("label.clearcorrectsyllabificationinwords"));
+		alert.setContentText(bundle.getString("label.areyousure"));
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(mainApp.getNewMainIconImage());
+
+		ButtonType buttonYes = ButtonType.YES;
+		ButtonType buttonNo = ButtonType.NO;
+		ButtonType buttonCancel = ButtonType.CANCEL;
+
+		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonYes) {
+			CorrectSyllabificationCleaner cleaner = new CorrectSyllabificationCleaner(languageProject.getWords());
+			cleaner.ClearAllCorrectSyllabificationFromWords();
 		}
 
 	}

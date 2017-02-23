@@ -31,7 +31,7 @@ public class Constants {
 			+ "#Special equate lines used by Publishing Assistant\n"
 			+ "HardHyphen = \"-\"\n"
 			+ "SoftHyphen = \"=\"\n"
-			+ "SoftHyphenOut = \"­\"\n"
+			+ "SoftHyphenOut = \"Â­\"\n"
 			+ "HyphenatedMarkers = \"cd iex im imi imq ip ipi ipq ipr m mi nb p p1 p2 p3 ph ph1 ph2 ph3 pi pi1 pi2 pi3 pm pmc pmo pmr\"\n";
 	public static final String PARATEXT_HYPHENATED_WORDS_TEXT_FILE = "hyphenatedWords.txt";
 	public static final String RESOURCE_LOCATION = "sil.org.syllableparser.resources.SyllableParser";
