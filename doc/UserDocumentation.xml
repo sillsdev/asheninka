@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >andy_black@sil.org</emailAddress
 ><date
->17 February 2017</date
+>24 February 2017</date
 ><version
 >0.4.0 Alpha</version
 ><contents
@@ -1182,27 +1182,79 @@ src="resources/CompareImplementationsResult.png"
 ></section2
 ></section1
 ><backMatter
+><appendix
+id="aAsheninka"
+><secTitle
+>Why is it called <object
+type="tAsheninka"
+></object
+>?</secTitle
+><p
+>This syllable parsing program is called <object
+type="tAsheninka"
+></object
+> for historic reasons.</p
+><p
+>In late 1983 my family and I were living in the jungles of Peru and David Payne came and asked me if I would create a <object
+type="tTool"
+>Consistent Changes</object
+> table for him that would insert discretionary hyphens in Asheninka text.<endnote
+id="nCC"
+><p
+>A more current version of this program is <citation
+ref="rCC"
+></citation
+>.</p
+></endnote
+> The algorithm he suggested was the CV Patterns approach (see <sectionRef
+sec="sCVApproach"
+></sectionRef
+>). Asheninka has long words and typesetting material in that language would improve readability with such a table. In 1984 I wrote such a table.</p
+><p
+>While it was functional, it ran slowly. I then wrote the <object
+type="tTool"
+>Hyphen</object
+> program (<citation
+paren="none"
+ref="rDocPrepAids"
+></citation
+>) to improve the efficiency. It implemented the same basic approach. Amazingly, the <object
+type="tTool"
+>Hyphen</object
+> program is still being used (albeit occasionally) today.</p
+><p
+>Because of this beginning, I chose to call this tool <object
+type="tAsheninka"
+></object
+>. The program icon (shown in example <exampleRef
+letter="xCushma"
+num="xCushma"
+></exampleRef
+> below) is the kind of material used for clothing by Asheninka people.<endnote
+id="nCushmaImage"
+><p
+>This image was gratefully taken from <link
+href="http://www.ecotribal.com/en/shop/ashaninka-cushma-8"
+>here</link
+> on 12 November, 2015.</p
+></endnote
+></p
+><example
+num="xCushma"
+><chart
+><img
+src="CushmaSmall.jpg"
+></img
+></chart
+></example
+></appendix
 ><endnotes
 ></endnotes
-><references
-><refAuthor
-citename="IPA"
-name="IPA"
-><refWork
-id="rIPA"
-><refDate
->2016</refDate
-><refTitle
->International Phonetic Association</refTitle
-><webPage
-><url
->https://www.internationalphoneticassociation.org/</url
-><dateAccessed
->9 November 2016</dateAccessed
-></webPage
-></refWork
-></refAuthor
-></references
+><xi:include
+href="CommonReferences.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
 ><index
 ></index
 ></backMatter

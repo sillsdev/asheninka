@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE references PUBLIC "-//XMLmind//DTD XLingPap//EN"
+"XLingPap.dtd">
+<references
+version="2.28.0"
+><refAuthor
+citename="Black et al."
+name="Black, H. Andrew, Fred Kuhl, Kathy Kuhl, and David J. Weber"
+><refWork
+id="rDocPrepAids"
+><refDate
+>1987</refDate
+><refTitle
+>Document preparation aids for non-major languages</refTitle
+><book
+><series
+>Occasional publications in academic computing Issue 7</series
+><location
+>Dallas, TX</location
+><publisher
+>Summer Institute of Linguistics</publisher
+><url
+>http://www.sil.org/resources/publications/entry/29601</url
+><dateAccessed
+>24 Feb. 2017</dateAccessed
+></book
+></refWork
+></refAuthor
+><refAuthor
+citename="Clements &amp; Keyser"
+name="Clements, George N. and Samuel J. Keyser"
+><refWork
+id="rClementsKeyser"
+><refDate
+>1983</refDate
+><refTitle
+>CV phonology: A generative theory of the syllable</refTitle
+><book
+><location
+>Cambridge, Mass</location
+><publisher
+>MIT Press</publisher
+></book
+></refWork
+></refAuthor
+><refAuthor
+citename="Hammond"
+name="Hammond, Michael"
+><refWork
+id="rHammond"
+><refDate
+>1997</refDate
+><refTitle
+>Parsing in OT</refTitle
+><ms
+><institution
+>University of Arizona</institution
+><url
+>ftp://ruccs.rutgers.edu/pub/OT/TEXTS/archive/222-1097/222-10972.rtf</url
+></ms
+></refWork
+></refAuthor
+><refAuthor
+citename="Hayes"
+name="Hayes, Bruce"
+><refWork
+id="rHayes"
+><refDate
+>1989</refDate
+><refTitle
+>Compensatory lengthening in moraic phonology</refTitle
+><article
+><jTitle
+>Linguistic Inquiry</jTitle
+><jVol
+>20</jVol
+><jPages
+>253-306</jPages
+></article
+></refWork
+></refAuthor
+><refAuthor
+citename="IPA"
+name="IPA"
+><refWork
+id="rIPA"
+><refDate
+>2016</refDate
+><refTitle
+>International Phonetic Association</refTitle
+><webPage
+><url
+>https://www.internationalphoneticassociation.org/</url
+><dateAccessed
+>9 November 2016</dateAccessed
+></webPage
+></refWork
+></refAuthor
+><refAuthor
+citename="Itô"
+name="Itô, Junko"
+><refWork
+id="rIto"
+><refDate
+>1989</refDate
+><refTitle
+>prosodic theory of epenthesis</refTitle
+><article
+><jTitle
+>Natural Language and Linguistic Theory</jTitle
+><jVol
+>7</jVol
+><jPages
+>217-259</jPages
+></article
+></refWork
+></refAuthor
+><refAuthor
+citename="Kenstowicz"
+name="Kenstowicz, Michael"
+><refWork
+id="rKenstowicz"
+><refDate
+>1994</refDate
+><refTitle
+>Phonology in Generative Grammar</refTitle
+><book
+><location
+>Cambridge, Mass</location
+><publisher
+>Basil Blackwell</publisher
+></book
+></refWork
+></refAuthor
+><refAuthor
+citename="Levin"
+name="Levin, Juliette"
+><refWork
+id="rLevin"
+><refDate
+>1985</refDate
+><refTitle
+>metrical theory of syllabicity</refTitle
+><dissertation
+><location
+>Cambridge, Mass</location
+><institution
+>MIT</institution
+></dissertation
+></refWork
+></refAuthor
+><refAuthor
+citename="McCarthy &amp; Prince"
+name="McCarthy, John and Alan Prince"
+><refWork
+id="rMcCarthyPrince"
+><refDate
+>1986</refDate
+><refTitle
+>Prosodic morphology</refTitle
+><ms
+><location
+>Waltham, Mass</location
+><institution
+>Brandeis University</institution
+></ms
+></refWork
+></refAuthor
+><refAuthor
+citename="Pike &amp; Pike"
+name="Pike, Kenneth L. and Eunice Pike"
+><refWork
+id="rPikePike"
+><refDate
+>1947</refDate
+><refTitle
+>Immediate constituents of Mazateco syllables</refTitle
+><article
+><jTitle
+>International Journal of American Linguistics</jTitle
+><jVol
+>13</jVol
+><jPages
+>78-91</jPages
+></article
+></refWork
+></refAuthor
+><refAuthor
+citename="Prince &amp; Smolensky"
+name="Prince, Alan and Paul Smolensky"
+><refWork
+id="rPrinceSmolensky"
+><refDate
+>1993</refDate
+><refTitle
+>Optimality theory: Constraint interaction in generative grammar</refTitle
+><ms
+><institution
+>Rutgers University</institution
+></ms
+></refWork
+></refAuthor
+><refAuthor
+citename="Rensch"
+name="Rensch, Carolyn M."
+><refWork
+id="rRensch"
+><refDate
+>n.d</refDate
+><refTitle
+>Problems for introduction to phonology, Part II – Handouts</refTitle
+><book
+><location
+>Dallas, TX</location
+><publisher
+>Summer Institute of Linguistics</publisher
+></book
+></refWork
+></refAuthor
+><refAuthor
+citename="SIL International"
+name="SIL International"
+><refWork
+id="rCC"
+><refDate
+>2005</refDate
+><refTitle
+>Consistent Changes Program</refTitle
+><webPage
+><url
+>http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=cc-grkuni</url
+><dateAccessed
+>24 Feb. 2017</dateAccessed
+></webPage
+></refWork
+></refAuthor
+></references
+>
