@@ -90,6 +90,13 @@
                 <wordFinal>true</wordFinal>
                 <wordInitial>true</wordInitial>
             </cvSyllablePattern>
+            <cvSyllablePattern ncs="" active="true" id="66875a3c-3852-402d-8028-8e2ffbe5e796">
+                <description>empty</description>
+                <NCSRepresentation></NCSRepresentation>
+                <SPName>empty</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
         </cvSyllablePatterns>
     </cvApproach>
     <hyphenationParametersListWord>
