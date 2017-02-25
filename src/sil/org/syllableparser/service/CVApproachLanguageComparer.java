@@ -76,10 +76,10 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void setDataSet1Info(String dataSet1Info) {
-		this.dataSet1Info = handleFileSeparator(dataSet1Info);
+		this.dataSet1Info = adjustForWindowsFileSeparator(dataSet1Info);
 	}
 
-	protected String handleFileSeparator(String sPath) {
+	protected String adjustForWindowsFileSeparator(String sPath) {
 		if (File.separator.equals("\\")) {
 			sPath = sPath.replaceAll("\\\\", "/");
 		}
@@ -91,7 +91,7 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void setDataSet2Info(String dataSet2Info) {
-		this.dataSet2Info = handleFileSeparator(dataSet2Info);
+		this.dataSet2Info = adjustForWindowsFileSeparator(dataSet2Info);
 	}
 
 	public SortedSet<DifferentSegment> getSegmentsWhichDiffer() {
