@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.model.cvapproach;
 
@@ -33,7 +33,7 @@ import javafx.collections.ObservableList;
  * @author Andy Black
  *
  */
-//@XmlAccessorType(XmlAccessType.FIELD)
+// @XmlAccessorType(XmlAccessType.FIELD)
 public class CVApproach extends Approach {
 
 	private LanguageProject languageProject;
@@ -61,9 +61,10 @@ public class CVApproach extends Approach {
 	public void setCVNaturalClasses(ObservableList<CVNaturalClass> cvNaturalClassesData) {
 		this.cvNaturalClasses = cvNaturalClassesData;
 	}
-	
+
 	public List<CVNaturalClass> getActiveCVNaturalClasses() {
-		return cvNaturalClasses.stream().filter(naturalClass -> naturalClass.isActive()).collect(Collectors.toList());
+		return cvNaturalClasses.stream().filter(naturalClass -> naturalClass.isActive())
+				.collect(Collectors.toList());
 	}
 
 	@XmlElementWrapper(name = "cvSyllablePatterns")
@@ -77,7 +78,9 @@ public class CVApproach extends Approach {
 	}
 
 	public List<CVSyllablePattern> getActiveCVSyllablePatterns() {
-		return cvSyllablePatterns.stream().filter(pattern -> pattern.isActive()).collect(Collectors.toList());
+		return cvSyllablePatterns.stream()
+				.filter(pattern -> pattern.isActive() && pattern.ncs.size() != 0)
+				.collect(Collectors.toList());
 	}
 
 	@XmlTransient
@@ -130,23 +133,31 @@ public class CVApproach extends Approach {
 					continue;
 				}
 			}
-			HyphenationParametersListWord hyphenationParameters = languageProject.getHyphenationParametersListWord();
+			HyphenationParametersListWord hyphenationParameters = languageProject
+					.getHyphenationParametersListWord();
 			String sHyphenatedWord = getHyphenatedWord(hyphenationParameters, sSyllabifiedWord);
-//			int positionFromStart = hyphenationParameters.getStartAfterCharactersFromBeginning();
-//			int positionFromEnd = hyphenationParameters.getStopBeforeCharactersFromEnd();
-//			String sHyphenatedWord = StringUtilities.removeFromStart(sSyllabifiedWord, ".", positionFromStart);
-//			sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord, ".", positionFromEnd);
+			// int positionFromStart =
+			// hyphenationParameters.getStartAfterCharactersFromBeginning();
+			// int positionFromEnd =
+			// hyphenationParameters.getStopBeforeCharactersFromEnd();
+			// String sHyphenatedWord =
+			// StringUtilities.removeFromStart(sSyllabifiedWord, ".",
+			// positionFromStart);
+			// sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord,
+			// ".", positionFromEnd);
 			String sDiscretionaryHyphen = hyphenationParameters.getDiscretionaryHyphen();
 			hyphenatedWords.add(sHyphenatedWord.replaceAll("\\.", sDiscretionaryHyphen));
 		}
 
 		return hyphenatedWords;
 	}
-	
-	protected String getHyphenatedWord(HyphenationParameters hyphenationParameters, String sSyllabifiedWord) {
+
+	protected String getHyphenatedWord(HyphenationParameters hyphenationParameters,
+			String sSyllabifiedWord) {
 		int positionFromStart = hyphenationParameters.getStartAfterCharactersFromBeginning();
 		int positionFromEnd = hyphenationParameters.getStopBeforeCharactersFromEnd();
-		String sHyphenatedWord = StringUtilities.removeFromStart(sSyllabifiedWord, ".", positionFromStart);
+		String sHyphenatedWord = StringUtilities.removeFromStart(sSyllabifiedWord, ".",
+				positionFromStart);
 		sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord, ".", positionFromEnd);
 		return sHyphenatedWord;
 	}
@@ -168,7 +179,8 @@ public class CVApproach extends Approach {
 				// is correct so mark it with an initial asterisk
 				sSyllabifiedWord = kAsterisk + sSyllabifiedWord;
 			}
-			HyphenationParametersParaTExt hyphenationParameters = languageProject.getHyphenationParametersParaTExt();
+			HyphenationParametersParaTExt hyphenationParameters = languageProject
+					.getHyphenationParametersParaTExt();
 			// do not count initial asterisk for removing hyphens from beginning
 			String sWordToCheck = sSyllabifiedWord;
 			if (sWordToCheck.startsWith(kAsterisk)) {
@@ -178,18 +190,24 @@ public class CVApproach extends Approach {
 			if (sSyllabifiedWord.startsWith(kAsterisk)) {
 				sHyphenatedWord = kAsterisk + sHyphenatedWord;
 			}
-//			int positionFromStart = hyphenationParameters.getStartAfterCharactersFromBeginning();
-//			int positionFromEnd = hyphenationParameters.getStopBeforeCharactersFromEnd();
-//			String sHyphenatedWord = StringUtilities.removeFromStart(sSyllabifiedWord, ".", positionFromStart);
-//			sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord, ".", positionFromEnd);
+			// int positionFromStart =
+			// hyphenationParameters.getStartAfterCharactersFromBeginning();
+			// int positionFromEnd =
+			// hyphenationParameters.getStopBeforeCharactersFromEnd();
+			// String sHyphenatedWord =
+			// StringUtilities.removeFromStart(sSyllabifiedWord, ".",
+			// positionFromStart);
+			// sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord,
+			// ".", positionFromEnd);
 			String sDiscretionaryHyphen = hyphenationParameters.getDiscretionaryHyphen();
 			hyphenatedWords.add(sHyphenatedWord.replaceAll("\\.", sDiscretionaryHyphen));
-			//hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.", sDiscretionaryHyphen));
+			// hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.",
+			// sDiscretionaryHyphen));
 		}
 
 		return hyphenatedWords;
 	}
-	
+
 	public ArrayList<String> getHyphenatedWordsXLingPaper(ObservableList<Word> words) {
 		int totalNumberOfWords = words.size();
 		ArrayList<String> hyphenatedWords = new ArrayList<String>(totalNumberOfWords);
@@ -203,16 +221,23 @@ public class CVApproach extends Approach {
 					continue;
 				}
 			}
-			HyphenationParametersXLingPaper hyphenationParameters = languageProject.getHyphenationParametersXLingPaper();
+			HyphenationParametersXLingPaper hyphenationParameters = languageProject
+					.getHyphenationParametersXLingPaper();
 			String sHyphenatedWord = getHyphenatedWord(hyphenationParameters, sSyllabifiedWord);
-//			int positionFromStart = hyphenationParameters.getStartAfterCharactersFromBeginning();
-//			int positionFromEnd = hyphenationParameters.getStopBeforeCharactersFromEnd();
-//			String sHyphenatedWord = StringUtilities.removeFromStart(sSyllabifiedWord, ".", positionFromStart);
-//			sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord, ".", positionFromEnd);
+			// int positionFromStart =
+			// hyphenationParameters.getStartAfterCharactersFromBeginning();
+			// int positionFromEnd =
+			// hyphenationParameters.getStopBeforeCharactersFromEnd();
+			// String sHyphenatedWord =
+			// StringUtilities.removeFromStart(sSyllabifiedWord, ".",
+			// positionFromStart);
+			// sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord,
+			// ".", positionFromEnd);
 			String sDiscretionaryHyphen = hyphenationParameters.getDiscretionaryHyphen();
 			hyphenatedWords.add(sHyphenatedWord.replaceAll("\\.", sDiscretionaryHyphen));
 
-			//hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.", sDiscretionaryHyphen));
+			// hyphenatedWords.add(sSyllabifiedWord.replaceAll("\\.",
+			// sDiscretionaryHyphen));
 		}
 
 		return hyphenatedWords;

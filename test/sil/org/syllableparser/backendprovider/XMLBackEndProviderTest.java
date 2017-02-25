@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.backendprovider;
 
@@ -63,7 +63,7 @@ public class XMLBackEndProviderTest {
 		CVApproach cva = languageProject.getCVApproach();
 		assertEquals(27, languageProject.getSegmentInventory().size());
 		assertEquals(5, cva.getCVNaturalClasses().size());
-		assertEquals(8, cva.getCVSyllablePatterns().size());
+		assertEquals(9, cva.getCVSyllablePatterns().size());
 		ObservableList<Word> words = languageProject.getWords();
 		assertEquals(10025, words.size());
 	}
@@ -72,8 +72,7 @@ public class XMLBackEndProviderTest {
 	public void saveLanguageDataToFileTest() {
 		File tempSaveFile = null;
 		try {
-			tempSaveFile = File.createTempFile("AsheninkaTestSave",
-					".ashedata");
+			tempSaveFile = File.createTempFile("AsheninkaTestSave", ".ashedata");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
