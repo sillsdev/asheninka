@@ -1,11 +1,12 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.service;
 
+import java.io.File;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -75,7 +76,14 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void setDataSet1Info(String dataSet1Info) {
-		this.dataSet1Info = dataSet1Info;
+		this.dataSet1Info = handleFileSeparator(dataSet1Info);
+	}
+
+	protected String handleFileSeparator(String sPath) {
+		if (File.separator.equals("\\")) {
+			sPath = sPath.replaceAll("\\\\", "/");
+		}
+		return sPath;
 	}
 
 	public String getDataSet2Info() {
@@ -83,7 +91,7 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void setDataSet2Info(String dataSet2Info) {
-		this.dataSet2Info = dataSet2Info;
+		this.dataSet2Info = handleFileSeparator(dataSet2Info);
 	}
 
 	public SortedSet<DifferentSegment> getSegmentsWhichDiffer() {
@@ -113,7 +121,7 @@ public class CVApproachLanguageComparer {
 		compareSyllablePatternOrder();
 		compareWords();
 	}
-	
+
 	public void compareSegmentInventory() {
 		ObservableList<Segment> segments1 = cva1.getLanguageProject().getSegmentInventory();
 		ObservableList<Segment> segments2 = cva2.getLanguageProject().getSegmentInventory();
