@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.control.textfield.TextFields;
 
+import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.*;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -468,5 +469,27 @@ public class CVApproachController extends ApproachController {
 	public void setBackupDirectoryPath(String backupDirectoryPath) {
 		this.backupDirectoryPath = backupDirectoryPath;
 
+	}
+
+	@Override
+	void handleTryAWord() {
+		try {
+			Stage dialogStage = new Stage();
+			String resource = "fxml/CVTryAWord.fxml";
+			String title = bundle.getString("label.tryaword");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
+					resource, title);
+
+			CVTryAWordController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setLocale(locale);
+			controller.setData(cvApproachData);
+			
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

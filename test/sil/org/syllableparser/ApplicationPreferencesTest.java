@@ -27,6 +27,7 @@ public class ApplicationPreferencesTest {
 	boolean windowLastMaximized;
 	String approachLastUsed;
 	String approachViewLastUsed;
+	String cvTryAWordLastUsed;
 	int approachViewItemLastUsed;
 
 	@Before
@@ -41,8 +42,10 @@ public class ApplicationPreferencesTest {
 		windowLastMaximized = applicationPreferences.getLastWindowMaximized();
 		approachLastUsed = applicationPreferences.getLastApproachUsed();
 		approachViewLastUsed = applicationPreferences.getLastApproachViewUsed();
+		cvTryAWordLastUsed = applicationPreferences.getLastCVTryAWordUsed();
 		applicationPreferences.setLastOpenedFilePath("last opened file");
 		applicationPreferences.setLastLocaleLanguage("en");
+		applicationPreferences.setLastCVTryAWordUsed("abcdef");
 	}
 
 	@After
@@ -56,6 +59,7 @@ public class ApplicationPreferencesTest {
 		applicationPreferences.setLastWindowMaximized(windowLastMaximized);
 		applicationPreferences.setLastApproachUsed(approachLastUsed);
 		applicationPreferences.setLastApproachViewUsed(approachViewLastUsed);
+		applicationPreferences.setLastCVTryAWordUsed(cvTryAWordLastUsed);
 	}
 
 	@Test
@@ -109,4 +113,11 @@ public class ApplicationPreferencesTest {
 		assertEquals("main window minimized", false, applicationPreferences.getLastWindowMaximized());
 	}
 
+	@Test
+	public void lastCVTryAWordUsed() {
+		assertEquals("CV Try a Word", "abcdef", applicationPreferences.getLastCVTryAWordUsed());
+		applicationPreferences.setLastCVTryAWordUsed("xyz");
+		assertEquals("CV Try a Word", "xyz", applicationPreferences.getLastCVTryAWordUsed());
+	}
+	
 }

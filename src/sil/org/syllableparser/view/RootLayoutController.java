@@ -180,6 +180,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private MenuItem menuItemSyllabify;
 	@FXML
+	private MenuItem menuItemTryAWord;
+	@FXML
 	private MenuItem menuItemConvertPredictedToCorrectSyllabification;
 	@FXML
 	private MenuItem menuItemFindWord;
@@ -277,6 +279,11 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleSyllabifyWords() {
 		currentApproachController.handleSyllabifyWords(statusBar);
+	}
+
+	@FXML
+	private void handleTryAWord() {
+		currentApproachController.handleTryAWord();
 	}
 
 	@FXML

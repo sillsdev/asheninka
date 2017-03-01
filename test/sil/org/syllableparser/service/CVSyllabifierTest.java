@@ -152,5 +152,88 @@ public class CVSyllabifierTest {
 				stringSyllabifier.getSyllabificationOfCurrentWord());
 	}
 
+	@Test
+	public void traceSyllabifyWordTest() {
+		stringSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("Chiko", true, 2, "CV, CV", "Chi.ko");
+		List<CVTraceSyllabifierInfo> traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(1, traceInfo.size());
+		CVTraceSyllabifierInfo sylInfo = traceInfo.get(0);
+		assertNotNull(sylInfo);
+		assertEquals("C, V", sylInfo.sCVSyllablePattern);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(1, traceInfo.size());
+		sylInfo = traceInfo.get(0);
+		assertNotNull(sylInfo);
+		assertEquals("C, V", sylInfo.sCVSyllablePattern);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(0, traceInfo.size());
+		
+		checkSyllabifyWord("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
+		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(3, traceInfo.size());
+		sylInfo = traceInfo.get(0);
+		assertNotNull(sylInfo);
+		assertEquals("C, V", sylInfo.sCVSyllablePattern);
+		assertEquals(false,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(7, traceInfo.size());
+		sylInfo = traceInfo.get(0);
+		assertNotNull(sylInfo);
+		assertEquals("C, V", sylInfo.sCVSyllablePattern);
+		assertEquals(false,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(0, traceInfo.size());
+		
+		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
+		sylInfo = traceInfo.get(2);
+		assertNotNull(sylInfo);
+		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
+		assertEquals(true,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(1, traceInfo.size());
+		sylInfo = traceInfo.get(0);
+		assertNotNull(sylInfo);
+		assertEquals("C, V", sylInfo.sCVSyllablePattern);
+		assertEquals(true,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(3, traceInfo.size());
+		sylInfo = traceInfo.get(2);
+		assertNotNull(sylInfo);
+		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
+		assertEquals(true,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(0, traceInfo.size());
+		
+		checkSyllabifyWord("funglo", false, 0, "", "");  // CVCC only word finally; CCV not possible word medially
+		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(7, traceInfo.size());
+		sylInfo = traceInfo.get(0);
+		assertNotNull(sylInfo);
+		assertEquals("C, V", sylInfo.sCVSyllablePattern);
+		assertEquals(false,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(7, traceInfo.size());
+		sylInfo = traceInfo.get(0);
+		assertNotNull(sylInfo);
+		assertEquals("C, V", sylInfo.sCVSyllablePattern);
+		assertEquals(false,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(0, traceInfo.size());
+		
+		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
+		sylInfo = traceInfo.get(2);
+		assertNotNull(sylInfo);
+		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
+		assertEquals(false,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(7, traceInfo.size());
+		sylInfo = traceInfo.get(0);
+		assertNotNull(sylInfo);
+		assertEquals("C, V", sylInfo.sCVSyllablePattern);
+		assertEquals(false,sylInfo.parseWasSuccessful);
+		traceInfo = sylInfo.daughterInfo;
+		assertEquals(0, traceInfo.size());
 
+	}
 }

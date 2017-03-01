@@ -351,7 +351,7 @@ public class CVComparisonController implements Initializable {
 
 		String sPleaseWaitMessage = Constants.PLEASE_WAIT_HTML_BEGINNING
 				+ bundle.getString("label.pleasewait") + Constants.PLEASE_WAIT_HTML_MIDDLE
-				+ bundle.getString("label.pleasewaitexplanation")
+				+ bundle.getString("label.pleasewaitcomparer")
 				+ Constants.PLEASE_WAIT_HTML_ENDING;
 		webEngine.loadContent(sPleaseWaitMessage);
 

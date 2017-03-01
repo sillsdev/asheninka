@@ -42,6 +42,7 @@ public abstract class ApproachController {
 	abstract void handleInsertNewItem();
 	abstract void handleRemoveItem();
 	abstract void handleSyllabifyWords(StatusBar statusBar);
+	abstract void handleTryAWord();
 	abstract void handleConvertPredictedToCorrectSyllabification();
 	abstract void handleFindWord();
 	abstract boolean anythingSelected();

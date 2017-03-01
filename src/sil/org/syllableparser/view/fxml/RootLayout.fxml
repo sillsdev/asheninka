@@ -113,6 +113,8 @@
 							<MenuItem mnemonicParsing="true" onAction="#handleSyllabifyWords"
 								text="%menu.syllabifywords" fx:id="menuItemSyllabify"
 								accelerator="ctrl+w" />
+								<MenuItem mnemonicParsing="true" onAction="#handleTryAWord"
+								text="%menu.tryaword" fx:id="menuItemTryAWord" />
 						</items>
 					</Menu>
 					<Menu mnemonicParsing="true" text="%menu.tools">

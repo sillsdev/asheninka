@@ -3,6 +3,7 @@
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package sil.org.utility;
 
+import java.io.File;
 import java.text.BreakIterator;
 
 /**
@@ -79,5 +80,13 @@ public class StringUtilities {
 		return sResult;
 
 	}
+
+	public static String adjustForWindowsFileSeparator(String sPath) {
+		if (File.separator.equals("\\")) {
+			sPath = sPath.replaceAll("\\\\", "/");
+		}
+		return sPath;
+	}
+
 
 }

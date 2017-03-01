@@ -36,6 +36,9 @@ public class ApplicationPreferences {
 	// because it is not clear why it would be useful.
 	static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastCVWordPredictedVsCorrectViewItemUsed";
 	
+	static final String LAST_CV_TRY_A_WORD_USED = "lastCVTryAWordUsed";
+	
+	
 	Preferences prefs;
 
 	public ApplicationPreferences(Object app) {
@@ -179,6 +182,15 @@ public class ApplicationPreferences {
 	public void setLastCVWordsPredictedVsCorrectViewItemUsed(int value) {
 		setPreferencesKey(LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
 	}
+
+	public String getLastCVTryAWordUsed() {
+		return prefs.get(LAST_CV_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastCVTryAWordUsed(String lastCVTryAWordUsed) {
+		setPreferencesKey(LAST_CV_TRY_A_WORD_USED, lastCVTryAWordUsed);
+	}
+
 
 	private void setPreferencesKey(String key, boolean value) {
 		if (!StringUtilities.isNullOrEmpty(key)) {
