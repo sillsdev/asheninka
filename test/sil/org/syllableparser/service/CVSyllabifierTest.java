@@ -82,8 +82,8 @@ public class CVSyllabifierTest {
 		assertEquals("CV patterns size", 7, cvPatterns.size());
 		String pattern = cvPatterns.get(0).getSPName().trim();
 		assertEquals("First CV pattern is [C][V]", "CV", pattern);
-		pattern = cvPatterns.get(1).getSPName().trim();
-		assertEquals("Last pattern is [CVC]", "CVC", pattern);
+		pattern = cvPatterns.get(2).getSPName().trim();
+		assertEquals("Third pattern is [CVC]", "CVC", pattern);
 	}
 
 	@Test
@@ -171,7 +171,7 @@ public class CVSyllabifierTest {
 		
 		checkSyllabifyWord("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
 		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(3, traceInfo.size());
+		assertEquals(2, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertNotNull(sylInfo);
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
@@ -186,7 +186,7 @@ public class CVSyllabifierTest {
 		assertEquals(0, traceInfo.size());
 		
 		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
-		sylInfo = traceInfo.get(2);
+		sylInfo = traceInfo.get(1);
 		assertNotNull(sylInfo);
 		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
 		assertEquals(true,sylInfo.parseWasSuccessful);
@@ -197,8 +197,8 @@ public class CVSyllabifierTest {
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
 		assertEquals(true,sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
-		assertEquals(3, traceInfo.size());
-		sylInfo = traceInfo.get(2);
+		assertEquals(2, traceInfo.size());
+		sylInfo = traceInfo.get(1);
 		assertNotNull(sylInfo);
 		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
 		assertEquals(true,sylInfo.parseWasSuccessful);
@@ -222,7 +222,7 @@ public class CVSyllabifierTest {
 		assertEquals(0, traceInfo.size());
 		
 		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
-		sylInfo = traceInfo.get(2);
+		sylInfo = traceInfo.get(1);
 		assertNotNull(sylInfo);
 		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
 		assertEquals(false,sylInfo.parseWasSuccessful);

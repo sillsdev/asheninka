@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+import com.sun.glass.events.WindowEvent;
+
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
@@ -155,6 +157,10 @@ public class CVTryAWordController implements Initializable {
 	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
+
+		this.dialogStage.setOnCloseRequest(event -> {
+			handleClose();
+		});
 	}
 
 	public void setMainApp(MainApp mainApp) {
@@ -254,7 +260,7 @@ public class CVTryAWordController implements Initializable {
 	}
 
 	/**
-	 * Called when the user clicks cancel.
+	 * Called when the user clicks Close.
 	 */
 	@FXML
 	private void handleClose() {

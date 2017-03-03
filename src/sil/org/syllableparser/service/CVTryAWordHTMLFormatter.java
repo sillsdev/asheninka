@@ -52,6 +52,7 @@ public class CVTryAWordHTMLFormatter {
 	Language analysis;
 	Language vernacular;
 	String imagesURI;
+	String sSuccess;
 	final String ANALYSIS = "analysis";
 	final String VERNACULAR = "vernacular";
 	final String SUCCESS = "success";
@@ -60,6 +61,9 @@ public class CVTryAWordHTMLFormatter {
 	final String FAILURE_COLOR = "red";
 	final String MATCHED = "matched";
 	final String MATCHED_COLOR = "blue";
+	final String COLOR_WORD_BEGINNING = "<span class='";
+	final String COLOR_WORD_MIDDLE = "'>";
+	final String COLOR_WORD_ENDING = "</span>";
 
 	public CVTryAWordHTMLFormatter(CVTraceInfo traceInfo, LanguageProject language, Locale locale) {
 		super();
@@ -69,12 +73,18 @@ public class CVTryAWordHTMLFormatter {
 		bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale);
 		getAnalysisAndVernacularLanguages();
 		sNaturalClassFailure = bundle.getString("label.cvnaturalclassfailure");
+		sSuccess = bundle.getString("report.tawsuccess");
 		try {
 			setJAR_URI();
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	protected String createColorWord(String sClassName, String sColorWord) {
+		return COLOR_WORD_BEGINNING + sClassName + COLOR_WORD_MIDDLE + sColorWord
+				+ COLOR_WORD_ENDING;
 	}
 
 	protected void setJAR_URI() throws URISyntaxException {
@@ -94,9 +104,13 @@ public class CVTryAWordHTMLFormatter {
 		StringBuilder sb = new StringBuilder();
 		formatHTMLBeginning(sb);
 		formatOverview(sb);
-		formatSegmentParsing(sb);
-		formatNaturalClasses(sb);
-		formatSyllablification(sb);
+		boolean fSuccess = formatSegmentParsing(sb);
+		if (fSuccess) {
+			fSuccess = formatNaturalClasses(sb);
+			if (fSuccess) {
+				formatSyllablification(sb);
+			}
+		}
 		formatHTMLEnding(sb);
 		return sb.toString();
 	}
@@ -142,12 +156,12 @@ public class CVTryAWordHTMLFormatter {
 		sb.append("<h2>" + getAddedArgument("report.tawtitle", sFormattedWord) + "</h2>\n");
 	}
 
-	protected void formatSegmentParsing(StringBuilder sb) {
+	protected boolean formatSegmentParsing(StringBuilder sb) {
 		sb.append("<h3>" + bundle.getString("report.tawsegments") + "</h3>\n");
 		CVSegmenterResult segResult = traceInfo.getSegmenterResult();
 		boolean fSuccess = segResult.success;
 		if (fSuccess) {
-			sb.append("<p/>\n");
+			appendSuccessMessage(sb);
 			sb.append("<table class='" + SUCCESS + "' border='1' cellpadding='4pt'><tbody><tr>");
 			sb.append("<th align='left'>" + bundle.getString("report.tawgrapheme") + "</th>");
 			for (CVSegmentInSyllable seg : traceInfo.getSegmenter().segmentsInCurrentWord) {
@@ -164,6 +178,7 @@ public class CVTryAWordHTMLFormatter {
 			sb.append(segResult.getFailureMessage(traceInfo.getWord(), bundle));
 			sb.append("</p>\n");
 		}
+		return fSuccess;
 	}
 
 	protected void formatSegmentInfo(StringBuilder sb, CVSegmentInSyllable seg,
@@ -181,10 +196,11 @@ public class CVTryAWordHTMLFormatter {
 		sb.append("</td>");
 	}
 
-	protected void formatNaturalClasses(StringBuilder sb) {
+	protected boolean formatNaturalClasses(StringBuilder sb) {
 		sb.append("<h3>" + bundle.getString("report.tawnaturalclasses") + "</h3>\n");
 		CVNaturalClasserResult ncResult = traceInfo.getNaturalClasserResult();
 		if (ncResult.success) {
+			appendSuccessMessage(sb);
 			sb.append("<p class='" + SUCCESS + "'>"
 					+ traceInfo.getNaturalClasser().getNaturalClassListsInCurrentWordAsString()
 					+ "</p>\n");
@@ -193,20 +209,11 @@ public class CVTryAWordHTMLFormatter {
 			String sFailureMessage1 = sFailureMessage0.replace("{1}", ncResult.sGraphemesSoFar);
 			sb.append("<p class='" + FAILURE + "'>" + sFailureMessage1 + "</p>\n");
 		}
+		return ncResult.success;
 	}
 
-	private void formatNaturalClassInfo(StringBuilder sb, CVNaturalClass naturalClass,
-			String vernacularCSS) {
-		if (naturalClass == null) {
-			sb.append("&#xa0;");
-		} else {
-			sb.append(naturalClass.getNCName());
-			sb.append(" (<span class=\"");
-			sb.append(vernacularCSS);
-			sb.append("\">");
-			sb.append(naturalClass.getSNCRepresentation());
-			sb.append("</span>)");
-		}
+	protected void appendSuccessMessage(StringBuilder sb) {
+		sb.append("<p class='" + SUCCESS + "'>" + sSuccess + "</p>\n");
 	}
 
 	protected void formatSyllablification(StringBuilder sb) {
@@ -216,23 +223,35 @@ public class CVTryAWordHTMLFormatter {
 		List<CVTraceSyllabifierInfo> syllabifierInfo = syllabifier.getSyllabifierTraceInfo();
 		CVSyllabifierResult sylResult = traceInfo.getSyllabifierResult();
 		if (sylResult != null) {
-			sb.append("<p class='");
 			if (sylResult.success) {
-				sb.append(SUCCESS + "'>");
+				appendSuccessMessage(sb);
+				sb.append("<p class='" + SUCCESS + "'>");
 				sb.append(traceInfo.getSyllabifier().getSyllabificationOfCurrentWord());
 			} else {
-				sb.append(FAILURE + "'>");
+				sb.append("<p class='" + FAILURE + "'>");
 				sb.append(bundle.getString("label.cvsyllabificationfailure"));
+				sb.append("</p>\n");
 			}
-			sb.append("</p>\n");
 		}
-		sb.append("<p>" + bundle.getString("report.tawdetails") + "</p>\n");
+		
+		sb.append("<p>" + formatDetailsStringWithColorWords() + "</p>\n");
 		sb.append("<div>");
 		List<CVTraceSyllabifierInfo> traceList = syllabifier.getSyllabifierTraceInfo();
 		formatSyllablePatternDetails(sb, traceList);
 		sb.append("</div>");
 	}
 
+	protected String formatDetailsStringWithColorWords() {
+		String sFailureColorWord = createColorWord(FAILURE, bundle.getString("report.failurecolorword"));
+		String sMatchedColorWord = createColorWord(MATCHED, bundle.getString("report.matchedcolorword"));
+		String sSuccessColorWord = createColorWord(SUCCESS, bundle.getString("report.successcolorword"));
+		Object[] args = { sFailureColorWord, sMatchedColorWord, sSuccessColorWord};
+		MessageFormat msgFormatter = new MessageFormat("");
+		msgFormatter.setLocale(locale);
+		msgFormatter.applyPattern(bundle.getString("report.tawdetails"));
+		return msgFormatter.format(args);
+	}
+	
 	protected void formatSyllablePatternDetails(StringBuilder sb,
 			List<CVTraceSyllabifierInfo> traceList) {
 		if (traceList.size() == 0) {
@@ -263,11 +282,12 @@ public class CVTryAWordHTMLFormatter {
 					sb.append("lastplus.gif\"");
 				}
 			}
-			sb.append(" onclick=\"Toggle(this.parentNode, &quot;file:///" + imagesURI + "&quot;, 0)\"/>");
+			sb.append(" onclick=\"Toggle(this.parentNode, &quot;file:///" + imagesURI
+					+ "&quot;, 0)\"/>");
 			sb.append("<span class='");
 			if (sylInfo.syllablePatternMatched) {
 				if (sylInfo.parseWasSuccessful) {
-				sb.append(SUCCESS);
+					sb.append(SUCCESS);
 				} else {
 					sb.append(MATCHED);
 				}
@@ -277,7 +297,7 @@ public class CVTryAWordHTMLFormatter {
 			sb.append("'>");
 			sb.append(sylInfo.sCVSyllablePattern);
 			if (sylInfo.parseWasSuccessful && sylInfo.daughterInfo.size() == 0) {
-				sb.append(" " + bundle.getString("report.tawsuccess"));
+				sb.append(" " + sSuccess);
 			}
 			sb.append("</span></a>\n");
 			sb.append("<div style=\"display:none;\">");

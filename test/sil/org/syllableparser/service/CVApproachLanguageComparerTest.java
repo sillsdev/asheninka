@@ -80,7 +80,7 @@ public class CVApproachLanguageComparerTest {
 		// natural classes
 		ObservableList<CVNaturalClass> naturalClasses;
 		naturalClasses = cva1.getCVNaturalClasses();
-		assertEquals("Natural Classes size", 5, naturalClasses.size());
+		assertEquals("Natural Classes size", 6, naturalClasses.size());
 		naturalClasses = cva2.getCVNaturalClasses();
 		assertEquals("Natural Classes size", 3, naturalClasses.size());
 		// syllable patterns
@@ -143,7 +143,7 @@ public class CVApproachLanguageComparerTest {
 	protected void compareNaturalClasses(CVApproachLanguageComparer comparer) {
 		comparer.compareNaturalClasses();
 		SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
-		assertEquals("number of different natural classes", 5, diffs.size());
+		assertEquals("number of different natural classes", 6, diffs.size());
 		List<DifferentCVNaturalClass> listOfDiffs = new ArrayList<DifferentCVNaturalClass>();
 		listOfDiffs.addAll(diffs);
 		DifferentCVNaturalClass diffNaturalClass = listOfDiffs.get(1);
@@ -152,8 +152,8 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("second's 2 is [C]", "C",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getNCName());
 		assertEquals(
-				"second's 1's reps are 'b, ch, d, f, g, h, k, l, p, s, sh, t, v, w, x, y, z, N'",
-				"b, ch, d, f, g, h, k, l, p, s, sh, t, v, w, x, y, z, N",
+				"second's 1's reps are 'b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, S'",
+				"b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, S",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getSNCRepresentation());
 		assertEquals(
 				"second's 2's reps are '', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z'",
