@@ -41,6 +41,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -485,6 +487,16 @@ public class CVApproachController extends ApproachController {
 			controller.setMainApp(mainApp);
 			controller.setLocale(locale);
 			controller.setData(cvApproachData);
+			
+			if (currentCVApproachController instanceof CVWordsController) {
+				CVWordsController cvWordsController = (CVWordsController) currentCVApproachController;
+				TableView<Word> cvWordsTable = cvWordsController.getCVWordsTable();
+				Word cvWord = (Word)cvWordsTable.getSelectionModel().getSelectedItem();
+				if (cvWord != null) {
+					String sCurrentWord = cvWord.getWord();
+					controller.getWordToTry().setText(sCurrentWord);
+				}
+			}
 			
 			dialogStage.initModality(Modality.NONE);
 			dialogStage.show();

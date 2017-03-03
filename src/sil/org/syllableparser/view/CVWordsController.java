@@ -303,6 +303,10 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		}
 	}
 
+	public TableView<Word> getCVWordsTable() {
+		return cvWordsTable;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
