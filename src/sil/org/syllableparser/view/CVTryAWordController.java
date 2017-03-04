@@ -195,7 +195,7 @@ public class CVTryAWordController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(1); // probably not needed, but we do it anyway in case its needed on slower machines...
 				} catch (InterruptedException e) {
 				}
 				return null;
