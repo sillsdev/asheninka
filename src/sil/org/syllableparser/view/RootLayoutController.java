@@ -34,10 +34,12 @@ import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
 
 import static javafx.geometry.Orientation.VERTICAL;
+import static org.junit.Assert.assertEquals;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -93,8 +95,12 @@ import sil.org.syllableparser.service.ListWordImporter;
 import sil.org.syllableparser.service.ParaTExtExportedWordListImporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsExporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsImporter;
+import sil.org.syllableparser.service.ParaTExt7SegmentImporter;
+import sil.org.syllableparser.service.ParaTExtSegmentImporterNoCharactersException;
+import sil.org.syllableparser.service.SegmentImporterException;
 import sil.org.syllableparser.service.XLingPaperHyphenatedWordExporter;
 import sil.org.utility.DateTimeNormalizer;
+import sil.org.utility.StringUtilities;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -301,7 +307,7 @@ public class RootLayoutController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(bundle.getString("program.name"));
 		alert.setHeaderText(bundle.getString("label.clearwords"));
-		alert.setContentText(bundle.getString("label.areyousure"));
+		alert.setContentText(bundle.getString("label.backupnowbeforeclearwords"));
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 
@@ -313,9 +319,23 @@ public class RootLayoutController implements Initializable {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonYes) {
-			languageProject.getWords().clear();
+			handleBackUpProject();
+			clearAllWords();
+		} else if (result.get() == buttonNo) {
+			clearAllWords();
 		}
 
+	}
+
+	private void clearAllWords() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				languageProject.getWords().clear();
+				return null;
+			}
+		};
+		Platform.runLater(task);
 	}
 
 	@FXML
@@ -323,7 +343,7 @@ public class RootLayoutController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(bundle.getString("program.name"));
 		alert.setHeaderText(bundle.getString("label.clearcorrectsyllabificationinwords"));
-		alert.setContentText(bundle.getString("label.areyousure"));
+		alert.setContentText(bundle.getString("label.backupnowbeforeclearcorrectsyllabification"));
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 
@@ -335,10 +355,25 @@ public class RootLayoutController implements Initializable {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonYes) {
-			CorrectSyllabificationCleaner cleaner = new CorrectSyllabificationCleaner(languageProject.getWords());
-			cleaner.ClearAllCorrectSyllabificationFromWords();
+			handleBackUpProject();
+			clearAllCorrectSyllabifications();
+		} else if (result.get() == buttonNo) {
+			clearAllCorrectSyllabifications();
 		}
 
+	}
+
+	public void clearAllCorrectSyllabifications() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				CorrectSyllabificationCleaner cleaner = new CorrectSyllabificationCleaner(
+						languageProject.getWords());
+				cleaner.ClearAllCorrectSyllabificationFromWords();
+				return null;
+			}
+		};
+		Platform.runLater(task);
 	}
 
 	@FXML
@@ -383,7 +418,8 @@ public class RootLayoutController implements Initializable {
 		File file = new File(Constants.ASHENINKA_STARTER_FILE);
 		mainApp.loadLanguageData(file);
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
-		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, true, syllableParserFilterDescription);
+		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, true,
+				syllableParserFilterDescription);
 		if (timer != null) {
 			mainApp.getSaveDataPeriodicallyService().restart();
 		}
@@ -466,7 +502,7 @@ public class RootLayoutController implements Initializable {
 			String sDirectoryPath = file.getParent();
 			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 			mainApp.updateStageTitle(file);
-		} else if (fCloseIfCanceled){
+		} else if (fCloseIfCanceled) {
 			// probably first time running and user chose to open a file
 			// but then canceled. We quit.
 			System.exit(0);
@@ -492,7 +528,8 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleSaveAs() {
-		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false, syllableParserFilterDescription);
+		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false,
+				syllableParserFilterDescription);
 	}
 
 	@FXML
@@ -944,6 +981,58 @@ public class RootLayoutController implements Initializable {
 				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
 			importer.importWords(file, sLabelUntested, statusBar, bundle, mainApp);
+		}
+	}
+
+	@FXML
+	private void handleImportFLExPhonemes() {
+		mainApp.showNotImplementedYet();
+	}
+
+	@FXML
+	private void handleImportParaTExtCharacters() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(bundle.getString("program.name"));
+		alert.setHeaderText(bundle.getString("label.importparatextcharacters"));
+		alert.setContentText(bundle.getString("label.backupnowbeforeimport"));
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(mainApp.getNewMainIconImage());
+
+		ButtonType buttonYes = ButtonType.YES;
+		ButtonType buttonNo = ButtonType.NO;
+		ButtonType buttonCancel = ButtonType.CANCEL;
+
+		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonYes) {
+			handleBackUpProject();
+			importParaTExtCharacters();
+		} else if (result.get() == buttonNo) {
+			importParaTExtCharacters();
+		}
+	}
+
+	public void importParaTExtCharacters() {
+		Stage stage;
+		ParaTExt7SegmentImporter importer = new ParaTExt7SegmentImporter(languageProject);
+		File file = ControllerUtilities.getFileToOpen(mainApp, "*.lds", "ParaTExt Parameters", "*.lds");
+		if (file != null) {
+			try {
+				importer.importSegments(file);
+			} catch (SegmentImporterException e) {
+				if (e instanceof ParaTExtSegmentImporterNoCharactersException) {
+					ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
+					// ptex.getsFileName()
+					Alert errorAlert = new Alert(AlertType.ERROR);
+					errorAlert.setTitle(bundle.getString("program.name"));
+					errorAlert.setHeaderText(bundle
+							.getString("label.importparatextcharacterserror"));
+					stage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
+					stage.getIcons().add(mainApp.getNewMainIconImage());
+					errorAlert.showAndWait();
+				}
+			}
 		}
 	}
 

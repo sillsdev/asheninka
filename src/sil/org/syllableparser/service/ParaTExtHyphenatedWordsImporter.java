@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.service;
 
@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 
 import org.controlsfx.control.StatusBar;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -70,7 +71,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 	public void importWords(File file, String sUntested, StatusBar statusBar, ResourceBundle bundle, MainApp mainApp) {
 		mainApp.getSaveDataPeriodicallyService().cancel();
 		long timeStart = System.currentTimeMillis();
-		
+
 		Task<Void> task = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -109,7 +110,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 			mainApp.getSaveDataPeriodicallyService().restart();
 		});
-		new Thread(task).start();
+		Platform.runLater(task);
 	}
 
 	public void extractParaTExtPreamble(File file, StringBuilder sb) {

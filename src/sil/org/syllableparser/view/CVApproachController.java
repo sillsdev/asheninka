@@ -31,6 +31,7 @@ import sil.org.syllableparser.service.CVNaturalClasserResult;
 import sil.org.syllableparser.service.CVSegmenter;
 import sil.org.syllableparser.service.CVSegmenterResult;
 import sil.org.syllableparser.service.CVSyllabifier;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -293,7 +294,7 @@ public class CVApproachController extends ApproachController {
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 		});
 
-		new Thread(task).start();
+		Platform.runLater(task);
 
 	}
 

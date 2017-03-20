@@ -34,7 +34,7 @@ public class SegmentImporterTest {
 	LanguageProject languageProject;
 	ResourceBundle bundle;
 
-	final String sParaTExtParametersNoCharactersFileName = "test/sil/org/syllableparser/testData/ParaTextParametersNoChars.lds";
+	final String sParaTExt7ParametersNoCharactersFileName = "test/sil/org/syllableparser/testData/ParaTextParametersNoChars.lds";
 
 	/**
 	 * @throws java.lang.Exception
@@ -57,11 +57,11 @@ public class SegmentImporterTest {
 	}
 
 	@Test
-	public void ImportParaTExtSegmentsFullTest() throws SegmentImporterException {
+	public void importParaTExt7SegmentsFullTest() throws SegmentImporterException {
 		String sFileName = "test/sil/org/syllableparser/testData/ParaTextParametersFull.lds";
 		assertEquals(25, languageProject.getSegmentInventory().size());
 		assertEquals(3, languageProject.getCVApproach().getCVNaturalClasses().size());
-		ParaTExtSegmentImporter importer = new ParaTExtSegmentImporter(languageProject);
+		ParaTExt7SegmentImporter importer = new ParaTExt7SegmentImporter(languageProject);
 		File file = new File(sFileName);
 		importer.importSegments(file);
 		assertEquals(33, languageProject.getSegmentInventory().size());
@@ -94,11 +94,11 @@ public class SegmentImporterTest {
 	}
 
 	@Test
-	public void ImportParaTExtSegmentsAtStartTest() throws SegmentImporterException {
+	public void importParaTExt7SegmentsAtStartTest() throws SegmentImporterException {
 		String sFileName = "test/sil/org/syllableparser/testData/ParaTextParametersCharsAtStart.lds";
 		assertEquals(25, languageProject.getSegmentInventory().size());
 		assertEquals(3, languageProject.getCVApproach().getCVNaturalClasses().size());
-		ParaTExtSegmentImporter importer = new ParaTExtSegmentImporter(languageProject);
+		ParaTExt7SegmentImporter importer = new ParaTExt7SegmentImporter(languageProject);
 		File file = new File(sFileName);
 		importer.importSegments(file);
 		assertEquals(33, languageProject.getSegmentInventory().size());
@@ -131,11 +131,11 @@ public class SegmentImporterTest {
 	}
 
 	@Test
-	public void ImportParaTExtSegmentsAtEndTest() throws SegmentImporterException {
+	public void importParaTExt7SegmentsAtEndTest() throws SegmentImporterException {
 		String sFileName = "test/sil/org/syllableparser/testData/ParaTextParametersCharsAtEnd.lds";
 		assertEquals(25, languageProject.getSegmentInventory().size());
 		assertEquals(3, languageProject.getCVApproach().getCVNaturalClasses().size());
-		ParaTExtSegmentImporter importer = new ParaTExtSegmentImporter(languageProject);
+		ParaTExt7SegmentImporter importer = new ParaTExt7SegmentImporter(languageProject);
 		File file = new File(sFileName);
 		importer.importSegments(file);
 		assertEquals(33, languageProject.getSegmentInventory().size());
@@ -168,17 +168,17 @@ public class SegmentImporterTest {
 	}
 
 	@Test
-	public void ImportParaTExtSegmentsNoCharsTest() {
+	public void importParaTExt7SegmentsNoCharsTest() {
 		try {
 			// the ParaTExt parameters file has no character definitions
-			File file = new File(sParaTExtParametersNoCharactersFileName);
-			ParaTExtSegmentImporter importer = new ParaTExtSegmentImporter(languageProject);
+			File file = new File(sParaTExt7ParametersNoCharactersFileName);
+			ParaTExt7SegmentImporter importer = new ParaTExt7SegmentImporter(languageProject);
 			importer.importSegments(file);
 			assertEquals(25, languageProject.getSegmentInventory().size());
 		} catch (SegmentImporterException e) {
 			if (e instanceof ParaTExtSegmentImporterNoCharactersException) {
 				ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
-				assertEquals(sParaTExtParametersNoCharactersFileName,
+				assertEquals(sParaTExt7ParametersNoCharactersFileName,
 						StringUtilities.adjustForWindowsFileSeparator(ptex.getsFileName()));
 				assertEquals(25, languageProject.getSegmentInventory().size());
 			}

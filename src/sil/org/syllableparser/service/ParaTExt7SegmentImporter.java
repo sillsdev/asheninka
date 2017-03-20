@@ -40,15 +40,15 @@ import sil.org.syllableparser.view.ControllerUtilities;
  * @author Andy Black
  *
  */
-public class ParaTExtSegmentImporter extends SegmentImporter {
+public class ParaTExt7SegmentImporter extends SegmentImporter {
 
 	final String PARATEXT_CHARACTERS_PARAMETER_SECTION_MARKER = "[Characters]";
 
-	public ParaTExtSegmentImporter() {
+	public ParaTExt7SegmentImporter() {
 		super();
 	}
 
-	public ParaTExtSegmentImporter(LanguageProject languageProject) {
+	public ParaTExt7SegmentImporter(LanguageProject languageProject) {
 		super(languageProject);
 	}
 

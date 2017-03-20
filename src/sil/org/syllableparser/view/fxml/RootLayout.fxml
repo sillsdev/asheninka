@@ -41,6 +41,13 @@
 									text="%menu.projectmanagementrestore" />
 							</Menu>
 							<SeparatorMenuItem />
+							<Menu mnemonicParsing="true" text="%menu.importsegments">
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleImportParaTExtCharacters" text="%menu.importparatextcharacters" />
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleImportFLExPhonemes" text="%menu.importflexphonemes" />
+							</Menu>
+							<SeparatorMenuItem />
 							<Menu mnemonicParsing="true" text="%menu.importwords">
 								<MenuItem mnemonicParsing="true" onAction="#handleImportPlainWordList"
 									text="%menu.importplainwordlist" />
