@@ -85,11 +85,7 @@ public class MainApp extends Application {
 	}
 
 	private void restoreWindowSettings() {
-		primaryStage.setX(applicationPreferences.getLastWindowPositionX());
-		primaryStage.setY(applicationPreferences.getLastWindowPositionY());
-		primaryStage.setHeight(applicationPreferences.getLastWindowHeight());
-		primaryStage.setWidth(applicationPreferences.getLastWindowWidth());
-		primaryStage.setMaximized(applicationPreferences.getLastWindowMaximized());
+		primaryStage = applicationPreferences.getLastWindowParameters(ApplicationPreferences.LAST_WINDOW, primaryStage, 660.0, 1000.);
 	}
 
 	public TimerService getSaveDataPeriodicallyService() {
@@ -126,23 +122,12 @@ public class MainApp extends Application {
 
 	@Override
 	public void stop() {
-		rememberWindowSettings();
+		applicationPreferences.setLastWindowParameters(ApplicationPreferences.LAST_WINDOW, primaryStage);
 		applicationPreferences.setLastLocaleLanguage(locale.getLanguage());
 		applicationPreferences.setLastApproachUsed(controller.getApproachUsed());
 		applicationPreferences.setLastApproachViewUsed(controller.getViewUsed());
 		controller.handleSave();
 		// TODO: add last file opened
-	}
-
-	protected void rememberWindowSettings() {
-		boolean isMaximized = primaryStage.isMaximized();
-		if (!isMaximized) {
-			applicationPreferences.setLastWindowPositionX(primaryStage.getX());
-			applicationPreferences.setLastWindowPositionY(primaryStage.getY());
-			applicationPreferences.setLastWindowHeight(primaryStage.getHeight());
-			applicationPreferences.setLastWindowWidth(primaryStage.getWidth());
-		}
-		applicationPreferences.setLastWindowMaximized(isMaximized);
 	}
 
 	public void setLocale(Locale locale) {

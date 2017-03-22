@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.view;
 
@@ -244,7 +244,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	/**
 	 * Fills all text fields to show details about the CV natural class. If the
 	 * specified segment is null, all text fields are cleared.
-	 * 
+	 *
 	 * @param naturalClass
 	 *            the segment or null
 	 */
@@ -319,7 +319,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * 
+	 *
 	 * @param cvApproachController
 	 */
 	public void setData(CVApproach cvApproachData) {
@@ -348,7 +348,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleInsertNewItem()
 	 */
 	@Override
@@ -364,7 +364,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
 	 */
 	@Override
@@ -398,27 +398,14 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	}
 
 	/**
-	 * Opens a dialog to show birthday statistics.
+	 * Opens a dialog to show the chooser.
 	 */
 	public void showSNCChooser() {
 		try {
-			// Load the fxml file and create a new stage for the popup.
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(ApproachViewNavigator.class
-					.getResource("fxml/CVSegmentNaturalClassChooser.fxml"));
-			loader.setResources(ResourceBundle.getBundle(
-					"sil.org.syllableparser.resources.SyllableParser", locale));
-
-			AnchorPane page = loader.load();
 			Stage dialogStage = new Stage();
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(mainApp.getPrimaryStage());
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-			// set the icon
-			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
-			dialogStage.setTitle(MainApp.kApplicationTitle);
-
+			String resource = "fxml/CVSegmentNaturalClassChooser.fxml";
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
+					resource, MainApp.kApplicationTitle);
 			CVSegmentNaturalClassChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);

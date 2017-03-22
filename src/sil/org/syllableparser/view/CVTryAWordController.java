@@ -87,7 +87,7 @@ public class CVTryAWordController implements Initializable {
 
 	Stage dialogStage;
 	private MainApp mainApp;
-
+	private ApplicationPreferences preferences;
 	private String sWordToTry;
 	private ResourceBundle bundle;
 	private Locale locale;
@@ -165,9 +165,10 @@ public class CVTryAWordController implements Initializable {
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-		ApplicationPreferences preferences = mainApp.getApplicationPreferences();
+		preferences = mainApp.getApplicationPreferences();
 		String lastWordTried = preferences.getLastCVTryAWordUsed();
 		wordToTry.setText(lastWordTried);
+		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_CV_TRY_A_WORD, dialogStage, 533., 637.);
 	}
 
 	public void setLocale(Locale locale) {
@@ -266,6 +267,7 @@ public class CVTryAWordController implements Initializable {
 	private void handleClose() {
 		String lastWordTried = wordToTry.getText();
 		mainApp.getApplicationPreferences().setLastCVTryAWordUsed(lastWordTried);
+		preferences.setLastWindowParameters(ApplicationPreferences.LAST_CV_TRY_A_WORD, dialogStage);
 		dialogStage.close();
 	}
 

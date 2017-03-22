@@ -1,6 +1,6 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
  * 
  */
@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.BackupFile;
@@ -78,6 +79,7 @@ public class CVComparisonController implements Initializable {
 	Stage dialogStage;
 	private boolean okClicked = false;
 	private MainApp mainApp;
+	private ApplicationPreferences preferences;
 
 	private String backupDirectory;
 	private BackupFile backupFile1;
@@ -217,11 +219,15 @@ public class CVComparisonController implements Initializable {
 	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
+		this.dialogStage.setOnCloseRequest(event -> {
+			handleCancel();
+		});
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-		// languageProject = mainApp.getLanguageProject();
+		preferences = mainApp.getApplicationPreferences();
+		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_CV_COMPARISON, dialogStage, 533.0, 637.0);
 	}
 
 	public void setLocale(Locale locale) {
@@ -408,6 +414,7 @@ public class CVComparisonController implements Initializable {
 	 */
 	@FXML
 	private void handleCancel() {
+		preferences.setLastWindowParameters(ApplicationPreferences.LAST_CV_COMPARISON, dialogStage);
 		dialogStage.close();
 	}
 
