@@ -192,7 +192,6 @@ textalign="center"
 ><subtitleLayout
 font-size="14pt"
 font-weight="bold"
-spacebefore=".25in"
 textalign="center"
 ></subtitleLayout
 ><authorLayout

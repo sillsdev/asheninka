@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE languages PUBLIC "-//XMLmind//DTD XLingPap//EN"
+"XLingPap.dtd">
+<languages
+><language
+color="blue"
+font-family="Charis SIL"
+id="lVernacular"
+name="vernacular"
+></language
+><language
+color="green"
+id="lGloss"
+name="gloss"
+></language
+><language
+id="en"
+></language
+></languages
+>

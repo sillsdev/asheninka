@@ -114,6 +114,7 @@ public class CVTryAWordController implements Initializable {
 				setTryItButtonDisable();
 			}
 		});
+		
 
 		Platform.runLater(new Runnable() {
 			@Override

@@ -534,7 +534,7 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleBackUpProject() {
-		String title = bundle.getString("menu.projectmanagementbackup");
+		String title = bundle.getString("label.backupproject");
 		String contentText = bundle.getString("label.backupcomment");
 		TextInputDialog dialog = ControllerUtilities
 				.getTextInputDialog(mainApp, title, contentText);
@@ -753,6 +753,12 @@ public class RootLayoutController implements Initializable {
 			}
 		}
 	}
+	
+	@FXML
+	private void handleSuggestedSteps() {
+		showFileToUser("doc/SuggestedSteps.pdf");
+	}
+
 
 	@FXML
 	private void handleHelpIntro() {

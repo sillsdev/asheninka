@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE indexTerms PUBLIC "-//XMLmind//DTD XLingPap//EN"
+"XLingPap.dtd">
+<indexTerms
+version="2.28.0"
+><indexTerm
+id="iActiveField"
+><term
+>Active field</term
+></indexTerm
+><indexTerm
+id="iAddDataItem"
+see="iInsertDataItem"
+><term
+>Add data item</term
+></indexTerm
+><indexTerm
+id="iAnalysisLanguage"
+see="iLanguageAnalysis"
+><term
+>Analysis language</term
+></indexTerm
+><indexTerm
+id="iCompare2Implementations"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iCVPatternApproach"
+><term
+>CV pattern approach</term
+><indexTerms
+><indexTerm
+id="iCVPatternAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iCVNaturalClasses"
+><term
+>Natural classes</term
+></indexTerm
+><indexTerm
+id="iCVPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="iCVSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iCVSyllablePatterns"
+><term
+>Syllable Patterns</term
+></indexTerm
+><indexTerm
+id="iCVTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iCVWords"
+><term
+>Words</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iDeleteDataItem"
+><term
+>Delete data item</term
+></indexTerm
+><indexTerm
+id="iDiscretionaryHyphen"
+see="iHPDiscretionaryHyphen"
+><term
+>Discretionary hyphen character(s)</term
+></indexTerm
+><indexTerm
+id="iExportWords"
+see="iExport"
+><term
+>Export words</term
+></indexTerm
+><indexTerm
+id="iFailureMessages"
+><term
+>Failure messages</term
+><indexTerms
+><indexTerm
+id="iCVFailures"
+><term
+>CV Pattern approach</term
+><indexTerms
+><indexTerm
+id="iFailureCVNaturalClasser"
+><term
+>Parse into natural classes</term
+></indexTerm
+><indexTerm
+id="iFailureCVSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+><indexTerm
+id="iFailureCVSyllables"
+><term
+>Parse into syllables</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iONCFailures"
+><term
+>ONC approach</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iFonts"
+see="iLanguage"
+><term
+>Fonts</term
+></indexTerm
+><indexTerm
+id="iHelp"
+><term
+>Help</term
+><indexTerms
+><indexTerm
+id="iIntroduction"
+><term
+>Introduction to syllabification</term
+></indexTerm
+><indexTerm
+id="iTutorial"
+><term
+>Tutorial</term
+></indexTerm
+><indexTerm
+id="iUserDoc"
+><term
+>User documentation</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iHyphenationParameters"
+><term
+>Hyphenation parameters</term
+><indexTerms
+><indexTerm
+id="iHPDiscretionaryHyphen"
+><term
+>Discretionary hyphen character(s)</term
+></indexTerm
+><indexTerm
+id="iHPStart"
+><term
+>Start hyphenating at <object
+type="tItalic"
+>i</object
+> characters from the front</term
+></indexTerm
+><indexTerm
+id="iHPStop"
+><term
+>Stop hyphenating at <object
+type="tItalic"
+>j</object
+> characters from the end</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iImportWords"
+see="iImport"
+><term
+>Import words</term
+></indexTerm
+><indexTerm
+id="iInsertDataItem"
+see="iAddDataItem"
+><term
+>Insert data item</term
+></indexTerm
+><indexTerm
+id="iLanguage"
+><term
+>Language</term
+><indexTerms
+><indexTerm
+id="iLanguageAnalysis"
+><term
+>Analysis</term
+></indexTerm
+><indexTerm
+id="iLanguageUI"
+><term
+>User interface</term
+></indexTerm
+><indexTerm
+id="iLanguageVernacular"
+><term
+>Vernacular</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iMoraicApproach"
+><term
+>Moraic approach</term
+></indexTerm
+><indexTerm
+id="iNewProject"
+see="iProjectNew"
+><term
+>New project</term
+></indexTerm
+><indexTerm
+id="iNuclearProjectionApproach"
+><term
+>Nuclear projection approach</term
+></indexTerm
+><indexTerm
+id="iONCApproach"
+><term
+>Onset-nucleus-coda approach</term
+></indexTerm
+><indexTerm
+id="iOpenProject"
+see="iProjectOpen"
+><term
+>Open a project</term
+></indexTerm
+><indexTerm
+id="iOTApproach"
+><term
+>Optimality Theory approach</term
+></indexTerm
+><indexTerm
+id="iOrdering"
+see="iSorting"
+><term
+>Ordering data in display</term
+></indexTerm
+><indexTerm
+id="iParsing"
+><term
+>Parsing</term
+><indexTerms
+><indexTerm
+id="iAlgorithmSegment"
+><term
+>Characters into segments</term
+></indexTerm
+><indexTerm
+id="iAlgorithmCV"
+see="iCVPatternAlgorithm"
+><term
+>CV algorithm</term
+></indexTerm
+><indexTerm
+id="iParsingResult"
+><term
+>Parsing result failure messages</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iCVPredictedSyllabification"
+><term
+>Predicted syllabification</term
+><indexTerms
+><indexTerm
+id="iCVPredictedSyllabificationCompare"
+><term
+>Comparing with correct</term
+></indexTerm
+><indexTerm
+id="iCVPredictedSyllabificationConvert"
+><term
+>Converting to correct</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iProject"
+><term
+>Project</term
+><indexTerms
+><indexTerm
+id="iProjectManagement"
+><term
+>Management</term
+><indexTerms
+><indexTerm
+id="iPMBackup"
+><term
+>Backup</term
+></indexTerm
+><indexTerm
+id="iPMRestore"
+><term
+>Restore</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iProjectNew"
+><term
+>New</term
+></indexTerm
+><indexTerm
+id="iProjectOpen"
+><term
+>Open</term
+></indexTerm
+><indexTerm
+id="iProjectSave"
+><term
+>Save</term
+></indexTerm
+><indexTerm
+id="iProjectSaveAs"
+><term
+>Save project as a new project</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iRemoveDataItem"
+see="iDeleteDataItem"
+><term
+>Remove data item</term
+></indexTerm
+><indexTerm
+id="iSaveProject"
+see="iProjectSave"
+><term
+>Save a project</term
+></indexTerm
+><indexTerm
+id="iSaveProjectAs"
+see="iProjectSaveAs"
+><term
+>Save a project as a new project</term
+></indexTerm
+><indexTerm
+id="iSonorityHierarchyApproach"
+><term
+>Sonority hierarchy approach</term
+></indexTerm
+><indexTerm
+id="iSorting"
+><term
+>Sorting data in display</term
+></indexTerm
+><indexTerm
+id="iStartHyphenation"
+see="iHPStart"
+><term
+>Start hyphenating at <object
+type="tItalic"
+>i</object
+> characters from the front</term
+></indexTerm
+><indexTerm
+id="iStopHyphenation"
+see="iHPStop"
+><term
+>Stop hyphenating at <object
+type="tItalic"
+>j</object
+> characters from the end</term
+></indexTerm
+><indexTerm
+id="iSyllabification"
+see="iIntroduction"
+><term
+>Syllabification</term
+></indexTerm
+><indexTerm
+id="iTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iTutorialSA"
+see="iTutorial"
+><term
+>Tutorial</term
+></indexTerm
+><indexTerm
+id="iUserDocumentation"
+see="iUserDoc"
+><term
+>User documentation</term
+></indexTerm
+><indexTerm
+id="iUILanguage"
+see="iLanguageUI"
+><term
+>User interface language</term
+></indexTerm
+><indexTerm
+id="iVernacularLanguage"
+see="iLanguageVernacular"
+><term
+>Vernacular language</term
+></indexTerm
+><indexTerm
+id="iWords"
+><term
+>Words</term
+><indexTerms
+><indexTerm
+id="iExport"
+><term
+>Export</term
+><indexTerms
+><indexTerm
+id="iExportInDesign"
+><term
+>To <object
+type="tInDesign"
+></object
+></term
+></indexTerm
+><indexTerm
+id="iExportParaTExt"
+><term
+>To <object
+type="tParatext"
+></object
+></term
+></indexTerm
+><indexTerm
+id="iExportTextFile"
+><term
+>To a text file (plain text)</term
+></indexTerm
+><indexTerm
+id="iExportXLingPaper"
+><term
+>To <object
+type="tXLingPaper"
+></object
+></term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iFindAWord"
+><term
+>Find a word</term
+></indexTerm
+><indexTerm
+id="iImport"
+><term
+>Import</term
+><indexTerms
+><indexTerm
+id="iImportFLEx"
+><term
+>From <object
+type="tTool"
+>FieldWorks Language Explorer</object
+></term
+></indexTerm
+><indexTerm
+id="iImportParaTExt"
+><term
+>From <object
+type="tParatext"
+></object
+></term
+></indexTerm
+><indexTerm
+id="iImportTextFile"
+><term
+>From a text file (plain text)</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iRemoveCorrectSyllabificationAllWords"
+><term
+>Remove correct syllable breaks in all words</term
+></indexTerm
+><indexTerm
+id="iRemoveWords"
+><term
+>Remove all words</term
+></indexTerm
+></indexTerms
+></indexTerm
+></indexTerms
+>

@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >andy_black@sil.org</emailAddress
 ><date
->24 February 2017</date
+>27 March 2017</date
 ><version
 >0.4.0 Alpha</version
 ><contents
@@ -104,6 +104,11 @@ term="iSorting"
 type="tCVSyllablePatterns"
 ></object
 >), the sorting is disabled.</p
+><p
+><object
+type="tAsheninka"
+></object
+> will attempt to remember the location and size of the main window and most dialog boxes. So if you find that a dialog box is too small or too large, try resizing it (by dragging the edges of the window). Usually the next time you use that dialog box, it will be at the location and size you changed it to.</p
 ><section2
 id="sNewProject"
 ><secTitle
@@ -133,6 +138,11 @@ type="tAsheninka"
 type="tAsheninka"
 ></object
 > data). Key the file name you want and press OK.</p
+><p
+>We suggest you create a directory called “My Asheninka” in your normal documents directory and put all your <object
+type="tAsheninka"
+></object
+> projects in it.</p
 ></section2
 ><section2
 id="sOpen"
@@ -226,19 +236,19 @@ sec="sWordsExport"
 main="yes"
 term="iHPDiscretionaryHyphen"
 ></indexedItem
->The discretionary hyphen character sequence used</li
+>The discretionary hyphen character sequence used.</li
 ><li
 ><indexedItem
 main="yes"
 term="iHPStart"
 ></indexedItem
->The number of printable characters from the beginning of the word after which hyphenation starts</li
+>The number of printable characters from the beginning of the word after which hyphenation starts.</li
 ><li
 ><indexedItem
 main="yes"
 term="iHPStop"
 ></indexedItem
->The number of printable characters from the end of the word where hyphenation stops</li
+>The number of printable characters from the end of the word where hyphenation stops.</li
 ></ol
 ><p
 >The default values for these can be changed by using the <object
@@ -275,7 +285,7 @@ type="tMenuItem"
 ><indexedItem
 term="iHelp"
 ></indexedItem
->Currently, there are three <object
+>Currently, there are four <object
 type="tMenuItem"
 >Help</object
 > menu items:</p
@@ -288,6 +298,17 @@ term="iUserDoc"
 type="tMenuItem"
 >User Documentation</object
 > which shows this document.</li
+><li
+><indexedItem
+term="iTutorial"
+></indexedItem
+><object
+type="tMenuItem"
+>Suggested Stepsl</object
+> which has some suggestions on how to be effective when using <object
+type="tAsheninka"
+></object
+>.</li
 ><li
 ><indexedItem
 term="iIntroduction"
@@ -315,7 +336,7 @@ id="sApproaches"
 ><object
 type="tAsheninka"
 ></object
-> will eventually offer six different syllabification algorithms or approaches. These are coverd in <sectionRef
+> will eventually offer six different syllabification algorithms or approaches. These are covered in <sectionRef
 sec="sCVApproach"
 textBefore="plural"
 ></sectionRef
@@ -389,6 +410,11 @@ type="tCVWords"
 ></object
 > view. See <sectionRef
 sec="sCVWords"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sCVTryAWord"
+textBefore="none"
 ></sectionRef
 > for ideas on how to check the results, among other things.</p
 ><p
@@ -409,7 +435,10 @@ term="iParsingResult"
 >The main algorithm is as follows:</p
 ><ol
 ><li
->It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. <indexedItem
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. Currently, it uses a longest match algorithm; that is, when two or more graphemes match, it uses the longest one. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
 term="iFailureCVSegmenter"
 ></indexedItem
 >If it cannot find a sequence that covers the whole word, it reports an error of <object
@@ -423,7 +452,7 @@ type="tItalic"
 >some characters</object
 >' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment.</li
 ><li
->If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited, trying to find a sequence of natural classes that covers the entire sequence of segments. It uses the set of segments or natural (sub-)classes defined within a natural class to determine a match with a natural class. <indexedItem
+>If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited, trying to find a sequence of natural classes that covers the entire sequence of segments. It uses the set of segments or natural (sub-)classes defined within a natural class to determine a match with a natural class. If two or more natural classes match, it tries each of them in turn. <indexedItem
 term="iFailureCVNaturalClasser"
 ></indexedItem
 >If it cannot find a sequence of natural classes that covers the entire sequence of posited segments, it reports an error of <object
@@ -556,7 +585,7 @@ type="tCVNaturalClasses"
 >The <object
 type="tField"
 >Name</object
-> field is for you to define how this natural class will appear in syllable patterns. We suggest using something short and if there are more than one character in it, make the first one be capitalized and the rest be in lower case.<endnote
+> field is for you to define how this natural class will appear in syllable patterns. We suggest using something short and if there is more than one character in it, make the first one be capitalized and the rest be in lower case.<endnote
 id="nCVClassName"
 ><p
 >This is not required, it is just a suggestion.</p
@@ -601,7 +630,7 @@ type="tField"
 > field shows the sequence of any natural classes this pattern consists of. It has a chooser button on the far right which looks like <img
 src="resources/ChooserButton.png"
 ></img
->. Click on it to bring up a dialog box which lets you select natural classes which constitute this syllable pattern. This chooser consists of one or more drop-down boxes. Click on the drop-down arrow in the box. It will show you the list of possible natural classes to choose from. In addition, if this is the very first drop-down box or the last one currently being shown, it will also include “Word boundary”. When you choose “Word boundary”, the patten shown above the drop-down box(es), will show “#” to indicate a word boundary.</p
+>. Click on it to bring up a dialog box which lets you select natural classes which constitute this syllable pattern. This chooser consists of one or more drop-down boxes. Click on the drop-down arrow in the box. It will show you the list of possible natural classes to choose from. In addition, if this is the very first drop-down box or the last one currently being shown, it will also include “Word boundary”. When you choose “Word boundary”, the pattern shown above the drop-down box(es), will show “#” to indicate a word boundary.</p
 ><p
 >Finally, the order in which the syllable patterns occur is important, as mentioned in <sectionRef
 sec="sCVApproach"
@@ -683,8 +712,14 @@ type="tCorrectSyllableBreaks"
 ></object
 > column/field contains what you have indicated to be the correct syllabification for this word. It may be filled in if you imported words from a <object
 type="tParatext"
->e</object
-> hyphenatedWords.txt file and that file indicated that this word's hyphenation had been approved. Otherwise, this column/field is expected to be blank until you either manually enter the correct syllabification or run the <object
+></object
+> hyphenatedWords.txt file and that file indicated that this word's hyphenation had been approved. See <sectionRef
+sec="sRemoveCorrectSyllabifcation"
+></sectionRef
+> for how to clear the set of <object
+type="tCorrectSyllableBreaks"
+></object
+>. Otherwise, this column/field is expected to be blank until you either manually enter the correct syllabification or run the <object
 type="tConvertPredictedToCorrectSyllabifcation"
 ></object
 > tool by using <object
@@ -705,6 +740,280 @@ type="tPredictedSyllableBreaks"
 sec="sConvertPredictedToCorrect"
 ></sectionRef
 > for more on this.</p
+></section2
+><section2
+id="sCVTryAWord"
+><secTitle
+>CV Try a Word</secTitle
+><p
+><indexedItem
+term="iCVTryAWord"
+></indexedItem
+><indexedItem
+term="iTryAWord"
+></indexedItem
+>There are times when it may be difficult to know just why a given word is not syllabifying correctly. That's where the <object
+type="tTryAWord"
+></object
+> dialog box can be useful. To see it, use the <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> menu item. This brings up a dialog box like the one shown in example <exampleRef
+letter="xCVTryAWord"
+num="xCVTryAWord"
+></exampleRef
+>. (Note: unlike most dialog boxes, you can keep the <object
+type="tTryAWord"
+></object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it.)</p
+><example
+num="xCVTryAWord"
+><chart
+><img
+src="resources/CVTryAWord1.png"
+width="500"
+></img
+></chart
+></example
+><p
+>You can key a word to try in the text box. By default, <object
+type="tAsheninka"
+></object
+> shows the current word selected in the <object
+type="tCVWords"
+></object
+> view (if you are showing that view) or the last word you used (or nothing if you've never used <object
+type="tTryAWord"
+></object
+> before and are not showing the <object
+type="tCVWords"
+></object
+> view).</p
+><p
+>When you either press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>Try it</object
+> button, <object
+type="tAsheninka"
+></object
+> will try to parse the word in the text box and report the result in the Results portion of the dialog box.</p
+><p
+>For the <object
+type="tCVPatternApproach"
+></object
+>, there are at most three steps that are tried:</p
+><ol
+><li
+>Parsing into segments.</li
+><li
+>Parsing segments into natural classes.</li
+><li
+>Parsing natural classes into syllables.</li
+></ol
+><p
+>The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into natural classes. If this succeeded, it shows the result of parsing natural classes into syllables. Successful steps are shown in <object
+type="tGreen"
+></object
+> while unsuccessful ones are shown in <object
+type="tRed"
+></object
+>. An example of a successful parse is shown in example <exampleRef
+letter="xCVTryAWordachinmeh1"
+num="xCVTryAWordachinmeh1"
+></exampleRef
+>.</p
+><example
+num="xCVTryAWordachinmeh1"
+><chart
+><img
+src="resources/CVTryAWord2.png"
+width="500"
+></img
+></chart
+></example
+><p
+>The parsing into segments part shows which grapheme was matched with what segment, Example <exampleRef
+letter="xCVTryAWordGraphemeDiffererent"
+num="xCVTryAWordGraphemeDiffererent"
+></exampleRef
+> shows a case where the grapheme differs from the segment in shape.</p
+><example
+num="xCVTryAWordGraphemeDiffererent"
+><chart
+><img
+src="resources/CVTryAWordGraphemeDifferent.png"
+></img
+></chart
+></example
+><p
+>The parsing segments into natural classes part shows which natural classes were matched. Sometimes a given segment may be in more than one natural class. In that case, the possible natural classes are shown inside of curly braces as shown in example <exampleRef
+letter="xCVTryAWordMultipleNaturalClasses"
+num="xCVTryAWordMultipleNaturalClasses"
+></exampleRef
+>.</p
+><example
+num="xCVTryAWordMultipleNaturalClasses"
+><chart
+><img
+src="resources/CVTryAWordMultipleNaturalClasses.png"
+></img
+></chart
+></example
+><p
+>Scrolling the results window down shows the last part:</p
+><example
+num="xCVTryAWordachinmeh2"
+><chart
+><img
+src="resources/CVTryAWord3.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>In the last part, it shows which syllable patterns were tried in the order they were tried. Successful ones are shown in <object
+type="tGreen"
+></object
+> (and begin with a small box with a plus sign in it). These will always be the last one shown because <object
+type="tAsheninka"
+></object
+> stops looking whenever it finds a successful match. Failed ones are shown in <object
+type="tRed"
+></object
+> (and begin with a small box with a minus sign in it). Whenever a particular pattern matched the word at a particular point in the parsing process but it did not ultimately lead to a successful parse, it is shown in <object
+type="tBlue"
+></object
+> (and begins with a small box with a plus sign in it).</pc
+><p
+>To examine a particular path, click on the small box with a plus sign in it. This will expand that path and show the next set of syllable patterns tried, in the order they were tried.</p
+><p
+>As mentioned above, whenever one of the three steps fails, there is an error message shown for that step (and no following steps will be tried).</p
+><p
+><indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>For example, if a word contains a grapheme that is not defined in any segment, when trying to parse the word into segments, it will show a message such as what is in example <exampleRef
+letter="xCVTryAWordGraphemeError"
+num="xCVTryAWordGraphemeError"
+></exampleRef
+>.</p
+><example
+num="xCVTryAWordGraphemeError"
+><chart
+><object
+type="tErrorMessageText"
+>Failure: could not parse into segments beginning at 'qap'.</object
+></chart
+></example
+><pc
+>In this case, the word was <langData
+lang="lVernacular"
+>aanguqap</langData
+> but the <langData
+lang="lVernacular"
+>q</langData
+> was not defined in any segment. Note that it shows where the problem was initially found.</pc
+><p
+><indexedItem
+term="iFailureCVNaturalClasser"
+></indexedItem
+>As another example, if a word contains a segment that is not in any natural class, it will display a message such as what is shown in example <exampleRef
+letter="xCVTryAWordNCFailure"
+num="xCVTryAWordNCFailure"
+></exampleRef
+>.</p
+><example
+num="xCVTryAWordNCFailure"
+><chart
+><object
+type="tErrorMessageText"
+>Failure: could not parse into natural classes; did find classes 'V, C' covering graphemes 'am'.</object
+></chart
+></example
+><pc
+>In this case, the word was <langData
+lang="lVernacular"
+>ambu</langData
+>, but no natural class has the segment <langData
+lang="lVernacular"
+>b</langData
+> in it. So when it tried to find a natural class for <langData
+lang="lVernacular"
+>b</langData
+>, it failed. Notice that is does show what was found. (If the segment is the first item in the word, the found classes will be <object
+type="tErrorMessageText"
+>''</object
+> and the covered graphemes will be <object
+type="tErrorMessageText"
+>''</object
+>.)</pc
+><p
+><indexedItem
+term="iFailureCVSyllables"
+></indexedItem
+>For the final step, if the sequence of natural classes could not be parsed into syllables per the ordered syllable patterns, then the following message is reported:</p
+><example
+num="xCVTryAWordSylFailure"
+><chart
+><object
+type="tErrorMessageText"
+>Failure: could not parse natural classes into syllables</object
+></chart
+></example
+><pc
+>What follows this is an explanatory paragraph as noted above for example <exampleRef
+letter="xCVTryAWordachinmeh2"
+num="xCVTryAWordachinmeh2"
+></exampleRef
+> and then the list of syllable patterns tried. In one project, this looked liked what is in example <exampleRef
+letter="xCVTryAWordFailedSyl1"
+num="xCVTryAWordFailedSyl1"
+></exampleRef
+> for the word <langData
+lang="lVernacular"
+>yanjkuik</langData
+>.</pc
+><example
+num="xCVTryAWordFailedSyl1"
+><chart
+><img
+height="200"
+src="resources/CVTryAWordFailedSyl1.png"
+></img
+></chart
+></example
+><pc
+>Notice that none of the patterns are in green. Four are in red and two are in blue. Recall from above that this means that none of the red patterns matched the beginning of the sequence of natural classes (which was <object
+type="tGreenText"
+>C, V, C, C, K, C</object
+>). The two blue ones did match the beginning of the sequence, but did not ultimately lead to a successful parse. Example <exampleRef
+letter="xCVTryAWordFailedSyl2"
+num="xCVTryAWordFailedSyl2"
+></exampleRef
+> shows what it looked like when opening the second blue pattern (<object
+type="tBlueText"
+>C, V, C</object
+>).</pc
+><example
+num="xCVTryAWordFailedSyl2"
+><chart
+><img
+height="200"
+src="resources/CVTryAWordFailedSyl2.png"
+></img
+></chart
+></example
+><pc
+>Notice that all the embedded patterns are in red: none of them matched the beginning of the natural class sequence after removing the initial <object
+type="tBlueText"
+>C, V, C</object
+> part that had matched (i.e., with <object
+type="tGreenText"
+>C, K, C</object
+>).</pc
 ></section2
 ><section2
 id="sCVPredicitedVsCorrect"
@@ -820,7 +1129,7 @@ type="tCorrectSyllableBreaks"
 > field.</p
 ></section1
 ><section1
-id="sPrjectManagement"
+id="sProjectManagement"
 ><secTitle
 >Project management</secTitle
 ><p
@@ -830,15 +1139,45 @@ term="iPMBackup"
 ><indexedItem
 term="iPMRestore"
 ></indexedItem
->Feel free to make frequent (labeled) backups via <object
+>Feel free to make frequent (labeled) backups via the <object
 type="tMenuItem"
 >File / Project Management / Back up this project</object
-> menu item. You can give it a descriptive label. You won't see the label on the file name, though. Rather, you'll see it when you go to <object
+> menu item. It will bring up a dialog box like the one shown in example <exampleRef
+letter="xBackUpProject"
+num="xBackUpProject"
+></exampleRef
+>. Please give it a descriptive label so you can later identify the state of your project when you made the backup. (You can key language data if you wish.) You won't see the label on the file name, though. Rather, you'll see it when you go to the <object
 type="tMenuItem"
 >File / Project Management / Restore a project</object
 > menu item.</p
+><example
+num="xBackUpProject"
+><chart
+><img
+src="resources/BackupProject.png"
+width="400"
+></img
+></chart
+></example
 ><p
->You can make a backup, try something else (e.g., add a segment or class; or re-order the syllable patterns or add a new one), and see how it goes. If it's worse, just restore to the previous state. If it's better, make a backup of that and go on.</p
+>When you restore a project, you will see a dialog box something like the one shown in example <exampleRef
+letter="xRestoreAProject"
+num="xRestoreAProject"
+></exampleRef
+>.</p
+><example
+num="xRestoreAProject"
+><chart
+><img
+src="resources/RestoreAProject.png"
+width="600"
+></img
+></chart
+></example
+><p
+>The backups you have made for this project will be shown in the list. The content in the Description column is the description you keyed while making the backup.</p
+><p
+>The idea here is that you can make a backup, try something else (e.g., add a segment or class; or re-order the syllable patterns or add a new one), and see how it goes. If it's worse, just restore to the previous state. If it's better, make a backup of that and go on.</p
 ></section1
 ><section1
 id="sWords"
@@ -848,7 +1187,7 @@ id="sWords"
 >When using <object
 type="tAsheninka"
 ></object
->, of course, you need words to parse. Once they are parsed and you have set the set of correct syllabification for them (see <sectionRef
+>, of course, you need words to parse. Once they are parsed and you have set the correct syllabifications for them (see <sectionRef
 sec="sConvertPredictedToCorrect"
 ></sectionRef
 >), you may want to export the set of words to be used by a typesetting tool. Such a tool can use the syllabified words as a list of words with discretionary hyphens so that it can know when to hyphenate long words at ends of lines.</p
@@ -1114,7 +1453,128 @@ type="tMenuItem"
 > menu item to completely clear the list of words in the <object
 type="tCVWords"
 ></object
-> view. When you invoke this menu item, it will ask you if you are sure you want to do this before performing it.</p
+> view. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
+letter="xRemoveAllWords"
+num="xRemoveAllWords"
+></exampleRef
+>.</p
+><example
+num="xRemoveAllWords"
+><chart
+><img
+height="200"
+src="resources/RemoveAllWords.png"
+></img
+></chart
+></example
+><p
+>When you click on the <object
+type="tButton"
+>Yes</object
+> button, <object
+type="tAsheninka"
+></object
+> will then show you the backup dialog box (see <sectionRef
+sec="sProjectManagement"
+></sectionRef
+>). When you have done the backup, <object
+type="tAsheninka"
+></object
+> will immediately remove all the words from the list of words.</p
+><p
+>If, instead, you click on the <object
+type="tButton"
+>No</object
+> button, <object
+type="tAsheninka"
+></object
+> will immediately remove all the words from the list of words.</p
+><p
+>Note that when the words are removed, it will happen whether or not the <object
+type="tCVWords"
+></object
+> view is currently being shown. It usually happens very quickly.</p
+><p
+>If you click on the <object
+type="tButton"
+>Cancel</object
+> button (or close the dialog box using the X in the red area), the dialog box will exit and nothing will change.</p
+></section2
+><section2
+id="sRemoveCorrectSyllabifcation"
+><secTitle
+>Remove correct syllable breaks in all words</secTitle
+><p
+><indexedItem
+term="iRemoveCorrectSyllabificationAllWords"
+></indexedItem
+>Use the <object
+type="tMenuItem"
+>Tools / Remove correct syllable breaks in all words</object
+> menu item to completely clear the <object
+type="tCorrectSyllableBreaks"
+></object
+> column in the <object
+type="tCVWords"
+></object
+> view. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
+letter="xRemoveCorrectSyllabification"
+num="xRemoveCorrectSyllabification"
+></exampleRef
+>.</p
+><example
+num="xRemoveCorrectSyllabification"
+><chart
+><img
+height="200"
+src="resources/RemoveCorrectSyllabification.png"
+></img
+></chart
+></example
+><p
+>Like the dialog box for removing all words in <sectionRef
+sec="sRemoveAllWords"
+></sectionRef
+>, you are asked whether or not to make a backup. When you click on the <object
+type="tButton"
+>Yes</object
+> button, <object
+type="tAsheninka"
+></object
+> will then show you the backup dialog box (see <sectionRef
+sec="sProjectManagement"
+></sectionRef
+>). When you have done the backup, <object
+type="tAsheninka"
+></object
+> will immediately remove all the <object
+type="tCorrectSyllableBreaks"
+></object
+> forms from the list of words.</p
+><p
+>If, instead, you click on the <object
+type="tButton"
+>No</object
+> button, <object
+type="tAsheninka"
+></object
+> will immediately remove all the <object
+type="tCorrectSyllableBreaks"
+></object
+> forms from the list of words.</p
+><p
+>Note that when the <object
+type="tCorrectSyllableBreaks"
+></object
+> forms are removed, it will happen whether or not the <object
+type="tCVWords"
+></object
+> view is currently being shown. It usually happens very quickly.</p
+><p
+>If you click on the <object
+type="tButton"
+>Cancel</object
+> button (or close the dialog box using the X in the red area), the dialog box will exit and nothing will change.</p
 ></section2
 ><section2
 id="sCompareImplementations"
@@ -1145,7 +1605,7 @@ src="resources/CompareImplementationsInitial.png"
 ></example
 ><p
 >You can compare the current implementation (i.e., what is showing in the user interface right now) with what is in a backup file (see <sectionRef
-sec="sPrjectManagement"
+sec="sProjectManagement"
 ></sectionRef
 >) or you can compare two different backups. As you can see in example <exampleRef
 letter="xCompareImplementationsInitial"
@@ -1258,697 +1718,21 @@ xmlns:xi="http://www.w3.org/2001/XInclude"
 ><index
 ></index
 ></backMatter
-><languages
-><language
-color="blue"
-font-family="Charis SIL"
-id="lVernacular"
-name="vernacular"
-></language
-><language
-color="green"
-id="lGloss"
-name="gloss"
-></language
-><language
-id="en"
-></language
-></languages
-><types
-><comment
->The following types are provided as pre-set examples. You may well want to create your own types that refer to one or more of these. You do that by typing in the names of the types in the types attribute of your type.</comment
-><type
-font-weight="bold"
-id="tBold"
-></type
-><type
-font-style="italic"
-font-weight="bold"
-id="tBoldItalic"
-></type
-><type
-font-weight="bold"
-id="tEmphasis"
-></type
-><type
-id="tGrammaticalGloss"
-types="tSmallCaps"
-></type
-><type
-font-style="italic"
-id="tItalic"
-></type
-><type
-cssSpecial="text-decoration:none"
-id="tNoOverline"
-xsl-foSpecial="text-decoration=&quot;no-overline&quot;"
-></type
-><type
-font-variant="normal"
-id="tNoSmallCaps"
-></type
-><type
-cssSpecial="text-decoration:none"
-id="tNoStrikethrough"
-xsl-foSpecial="text-decoration=&quot;no-line-through&quot;"
-></type
-><type
-cssSpecial="text-decoration:none"
-id="tNoUnderline"
-xsl-foSpecial="text-decoration=&quot;no-underline&quot;"
-></type
-><type
-cssSpecial="text-decoration:overline"
-id="tOverline"
-xsl-foSpecial="text-decoration=&quot;overline&quot;"
-></type
-><type
-font-style="normal"
-font-variant="normal"
-font-weight="normal"
-id="tRegular"
-></type
-><type
-font-family="Charis SIL Small Caps"
-id="tSmallCaps"
-></type
-><type
-XeLaTeXSpecial="line-through"
-cssSpecial="text-decoration:line-through"
-id="tStrikethrough"
-xsl-foSpecial="text-decoration=&quot;line-through&quot;"
-></type
-><type
-XeLaTeXSpecial="subscript"
-cssSpecial="vertical-align:sub;"
-font-size="65%"
-id="tSubscript"
-xsl-foSpecial="baseline-shift='sub'"
-></type
-><type
-XeLaTeXSpecial="superscript"
-cssSpecial="vertical-align:super;"
-font-size="65%"
-id="tSuperscript"
-xsl-foSpecial="baseline-shift='super'"
-></type
-><type
-XeLaTeXSpecial="underline"
-cssSpecial="text-decoration:underline"
-id="tUnderline"
-xsl-foSpecial="text-decoration=&quot;underline&quot;"
-></type
-><comment
->Add your custom types here.</comment
-><type
-before="Asheninka"
-id="tAsheninka"
-types="tTool"
-></type
-><type
-before="Convert Predicted to Correct Syllabifcation"
-id="tConvertPredictedToCorrectSyllabifcation"
-types="tView"
-></type
-><type
-before="Correct Syllable Breaks"
-id="tCorrectSyllableBreaks"
-types="tView"
-></type
-><type
-before="CV Natural Classes"
-id="tCVNaturalClasses"
-types="tView"
-></type
-><type
-before="CV pattern approach"
-id="tCVPatternApproach"
-></type
-><type
-before="Predicted vs. Correct CV Words"
-id="tCVPredictedVsCorrectWords"
-types="tView"
-></type
-><type
-before="CV Segment Inventory"
-id="tCVSegmentInventory"
-types="tView"
-></type
-><type
-before="CV Syllable Patterns"
-id="tCVSyllablePatterns"
-types="tView"
-></type
-><type
-before="CV Words"
-id="tCVWords"
-types="tView"
-></type
-><type
-after="”"
-before="“"
-color="red"
-id="tErrorMessage"
-></type
-><type
-after="”"
-before="“"
-id="tField"
-></type
-><type
-before="InDesign"
-color="navy"
-font-weight="bold"
-id="tInDesign"
-></type
-><type
-color="maroon"
-id="tInstruction"
-></type
-><type
-color="#009900"
-font-family="Charis SIL"
-font-weight="bold"
-id="tKey"
-></type
-><type
-color="maroon"
-id="tMenuItem"
-></type
-><type
-before="ParaTExt"
-color="navy"
-font-weight="bold"
-id="tParatext"
-></type
-><type
-before="Parser Result"
-id="tParserResult"
-types="tView"
-></type
-><type
-before="Predicted Syllable Breaks"
-id="tPredictedSyllableBreaks"
-types="tView"
-></type
-><type
-after="”"
-before="“Success"
-color="green"
-id="tSuccessMessage"
-></type
-><type
-before="Syllabify Words"
-id="tSyllabifyWords"
-types="tView"
-></type
-><type
-color="navy"
-font-weight="bold"
-id="tTool"
-></type
-><type
-color="purple"
-font-weight="bold"
-id="tView"
-></type
-><type
-before="XLingPaper"
-color="navy"
-font-weight="bold"
-id="tXLingPaper"
-></type
-></types
-><indexTerms
-><indexTerm
-id="iActiveField"
-><term
->Active field</term
-></indexTerm
-><indexTerm
-id="iAddDataItem"
-see="iInsertDataItem"
-><term
->Add data item</term
-></indexTerm
-><indexTerm
-id="iAnalysisLanguage"
-see="iLanguageAnalysis"
-><term
->Analysis language</term
-></indexTerm
-><indexTerm
-id="iCompare2Implementations"
-><term
->Compare two implementations</term
-></indexTerm
-><indexTerm
-id="iCVPatternApproach"
-><term
->CV pattern approach</term
-><indexTerms
-><indexTerm
-id="iCVPatternAlgorithm"
-><term
->Algorithm</term
-></indexTerm
-><indexTerm
-id="iCVNaturalClasses"
-><term
->Natural classes</term
-></indexTerm
-><indexTerm
-id="iCVPredictedVsCorrect"
-><term
->Predicted vs. correct syllabification</term
-></indexTerm
-><indexTerm
-id="iCVSegments"
-><term
->Segments</term
-></indexTerm
-><indexTerm
-id="iCVSyllablePatterns"
-><term
->Syllable Patterns</term
-></indexTerm
-><indexTerm
-id="iCVWords"
-><term
->Words</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iDeleteDataItem"
-><term
->Delete data item</term
-></indexTerm
-><indexTerm
-id="iDiscretionaryHyphen"
-see="iHPDiscretionaryHyphen"
-><term
->Discretionary hyphen character(s)</term
-></indexTerm
-><indexTerm
-id="iExportWords"
-see="iExport"
-><term
->Export words</term
-></indexTerm
-><indexTerm
-id="iFailureMessages"
-><term
->Failure messages</term
-><indexTerms
-><indexTerm
-id="iCVFailures"
-><term
->CV Pattern approach</term
-><indexTerms
-><indexTerm
-id="iFailureCVNaturalClasser"
-><term
->Parse into natural classes</term
-></indexTerm
-><indexTerm
-id="iFailureCVSegmenter"
-><term
->Parse into segments</term
-></indexTerm
-><indexTerm
-id="iFailureCVSyllables"
-><term
->Parse into syllables</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iONCFailures"
-><term
->ONC approach</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iFonts"
-see="iLanguage"
-><term
->Fonts</term
-></indexTerm
-><indexTerm
-id="iHelp"
-><term
->Help</term
-><indexTerms
-><indexTerm
-id="iIntroduction"
-><term
->Introduction to syllabification</term
-></indexTerm
-><indexTerm
-id="iUserDoc"
-><term
->User documentation</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iHyphenationParameters"
-><term
->Hyphenation parameters</term
-><indexTerms
-><indexTerm
-id="iHPDiscretionaryHyphen"
-><term
->Discretionary hyphen character(s)</term
-></indexTerm
-><indexTerm
-id="iHPStart"
-><term
->Start hyphenating at <object
-type="tItalic"
->i</object
-> characters from the front</term
-></indexTerm
-><indexTerm
-id="iHPStop"
-><term
->Stop hyphenating at <object
-type="tItalic"
->j</object
-> characters from the end</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iImportWords"
-see="iImport"
-><term
->Import words</term
-></indexTerm
-><indexTerm
-id="iInsertDataItem"
-see="iAddDataItem"
-><term
->Insert data item</term
-></indexTerm
-><indexTerm
-id="iLanguage"
-><term
->Language</term
-><indexTerms
-><indexTerm
-id="iLanguageAnalysis"
-><term
->Analysis</term
-></indexTerm
-><indexTerm
-id="iLanguageUI"
-><term
->User interface</term
-></indexTerm
-><indexTerm
-id="iLanguageVernacular"
-><term
->Vernacular</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iMoraicApproach"
-><term
->Moraic approach</term
-></indexTerm
-><indexTerm
-id="iNewProject"
-see="iProjectNew"
-><term
->New project</term
-></indexTerm
-><indexTerm
-id="iNuclearProjectionApproach"
-><term
->Nuclear projection approach</term
-></indexTerm
-><indexTerm
-id="iONCApproach"
-><term
->Onset-nucleus-coda approach</term
-></indexTerm
-><indexTerm
-id="iOpenProject"
-see="iProjectOpen"
-><term
->Open a project</term
-></indexTerm
-><indexTerm
-id="iOTApproach"
-><term
->Optimality Theory approach</term
-></indexTerm
-><indexTerm
-id="iOrdering"
-see="iSorting"
-><term
->Ordering data in display</term
-></indexTerm
-><indexTerm
-id="iParsing"
-><term
->Parsing</term
-><indexTerms
-><indexTerm
-id="iAlgorithmSegment"
-><term
->Characters into segments</term
-></indexTerm
-><indexTerm
-id="iAlgorithmCV"
-see="iCVPatternAlgorithm"
-><term
->CV algorithm</term
-></indexTerm
-><indexTerm
-id="iParsingResult"
-><term
->Parsing result failure messages</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iCVPredictedSyllabification"
-><term
->Predicted syllabification</term
-><indexTerms
-><indexTerm
-id="iCVPredictedSyllabificationCompare"
-><term
->Comparing with correct</term
-></indexTerm
-><indexTerm
-id="iCVPredictedSyllabificationConvert"
-><term
->Converting to correct</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iProject"
-><term
->Project</term
-><indexTerms
-><indexTerm
-id="iProjectManagement"
-><term
->Management</term
-><indexTerms
-><indexTerm
-id="iPMBackup"
-><term
->Backup</term
-></indexTerm
-><indexTerm
-id="iPMRestore"
-><term
->Restore</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iProjectNew"
-><term
->New</term
-></indexTerm
-><indexTerm
-id="iProjectOpen"
-><term
->Open</term
-></indexTerm
-><indexTerm
-id="iProjectSave"
-><term
->Save</term
-></indexTerm
-><indexTerm
-id="iProjectSaveAs"
-><term
->Save project as a new project</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iRemoveDataItem"
-see="iDeleteDataItem"
-><term
->Remove data item</term
-></indexTerm
-><indexTerm
-id="iSaveProject"
-see="iProjectSave"
-><term
->Save a project</term
-></indexTerm
-><indexTerm
-id="iSaveProjectAs"
-see="iProjectSaveAs"
-><term
->Save a project as a new project</term
-></indexTerm
-><indexTerm
-id="iSonorityHierarchyApproach"
-><term
->Sonority hierarchy approach</term
-></indexTerm
-><indexTerm
-id="iSorting"
-><term
->Sorting data in display</term
-></indexTerm
-><indexTerm
-id="iStartHyphenation"
-see="iHPStart"
-><term
->Start hyphenating at <object
-type="tItalic"
->i</object
-> characters from the front</term
-></indexTerm
-><indexTerm
-id="iStopHyphenation"
-see="iHPStop"
-><term
->Stop hyphenating at <object
-type="tItalic"
->j</object
-> characters from the end</term
-></indexTerm
-><indexTerm
-id="iSyllabification"
-see="iIntroduction"
-><term
->Syllabification</term
-></indexTerm
-><indexTerm
-id="iUserDocumentation"
-see="iUserDoc"
-><term
->User documentation</term
-></indexTerm
-><indexTerm
-id="iUILanguage"
-see="iLanguageUI"
-><term
->User interface language</term
-></indexTerm
-><indexTerm
-id="iVernacularLanguage"
-see="iLanguageVernacular"
-><term
->Vernacular language</term
-></indexTerm
-><indexTerm
-id="iWords"
-><term
->Words</term
-><indexTerms
-><indexTerm
-id="iExport"
-><term
->Export</term
-><indexTerms
-><indexTerm
-id="iExportInDesign"
-><term
->To <object
-type="tInDesign"
-></object
-></term
-></indexTerm
-><indexTerm
-id="iExportParaTExt"
-><term
->To <object
-type="tParatext"
-></object
-></term
-></indexTerm
-><indexTerm
-id="iExportTextFile"
-><term
->To a text file (plain text)</term
-></indexTerm
-><indexTerm
-id="iExportXLingPaper"
-><term
->To <object
-type="tXLingPaper"
-></object
-></term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iFindAWord"
-><term
->Find a word</term
-></indexTerm
-><indexTerm
-id="iImport"
-><term
->Import</term
-><indexTerms
-><indexTerm
-id="iImportFLEx"
-><term
->From <object
-type="tTool"
->FieldWorks Language Explorer</object
-></term
-></indexTerm
-><indexTerm
-id="iImportParaTExt"
-><term
->From <object
-type="tParatext"
-></object
-></term
-></indexTerm
-><indexTerm
-id="iImportTextFile"
-><term
->From a text file (plain text)</term
-></indexTerm
-></indexTerms
-></indexTerm
-><indexTerm
-id="iRemoveWords"
-><term
->Remove all words</term
-></indexTerm
-></indexTerms
-></indexTerm
-></indexTerms
+><xi:include
+href="Languages.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+><xi:include
+href="Types.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+><xi:include
+href="IndexTerms.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
 ></lingPaper
 ><xi:include
 href="SILInternationalPaperStylesheet.xml"

@@ -200,7 +200,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		}
 
 		okClicked = true;
-		dialogStage.close();
+		handleCancel();
 	}
 
 	/**

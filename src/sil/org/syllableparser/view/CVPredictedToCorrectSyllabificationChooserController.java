@@ -164,7 +164,7 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 			}
 		}
 		okClicked = true;
-		dialogStage.close();
+		handleCancel();
 	}
 
 	/**

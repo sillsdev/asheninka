@@ -164,7 +164,9 @@
 						<items>
 							<MenuItem mnemonicParsing="true" onAction="#handleUserDocumentation"
 								text="%menu.userdocumentation" />
-							<MenuItem mnemonicParsing="true" onAction="#handleHelpIntro"
+							<MenuItem mnemonicParsing="true" onAction="#handleSuggestedSteps"
+								text="%menu.suggestedsteps" />
+								<MenuItem mnemonicParsing="true" onAction="#handleHelpIntro"
 								text="%menu.helpintro" />
 							<MenuItem mnemonicParsing="true" onAction="#handleAbout"
 								text="%menu.about" />
@@ -211,16 +213,16 @@
 					<Separator orientation="VERTICAL" prefHeight="0.0"
 						prefWidth="3.0" />
 					<Button fx:id="buttonToolbarSyllabify" contentDisplay="GRAPHIC_ONLY"
-						graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true"
-						onAction="#handleSyllabifyWords" prefHeight="23.0" prefWidth="17.0"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleSyllabifyWords" prefHeight="23.0" prefWidth="19.0"
 						text="" />
 					<Button fx:id="buttonToolbarConvertPredictedToCorrectSyllabification"
-						contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="17.0"
+						contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" minWidth="19.0"
 						mnemonicParsing="true" onAction="#handleConvertPredictedToCorrectSyllabification"
-						prefHeight="23.0" prefWidth="17.0" text="" />
+						prefHeight="23.0" prefWidth="19.0" text="" />
 					<Button fx:id="buttonToolbarFindWord" contentDisplay="GRAPHIC_ONLY"
-						graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true"
-						onAction="#handleFindWord" prefHeight="23.0" prefWidth="17.0"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleFindWord" prefHeight="23.0" prefWidth="19.0"
 						text="" />
 				</items>
 			</ToolBar>

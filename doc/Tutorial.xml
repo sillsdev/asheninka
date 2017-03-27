@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xlingpaper PUBLIC "-//XMLmind//DTD XLingPap//EN"
+"XLingPap.dtd">
+<xlingpaper
+version="2.24.0"
+><styledPaper
+><lingPaper
+automaticallywrapinterlinears="yes"
+version="2.28.0"
+><frontMatter
+><title
+><object
+type="tAsheninka"
+></object
+> Tutorial</title
+><author
+>H. Andrew Black</author
+><affiliation
+>SIL International</affiliation
+><emailAddress
+>andy_black@sil.org</emailAddress
+><date
+>24 March 2017</date
+><version
+>0.4.0 Alpha</version
+><contents
+></contents
+></frontMatter
+><section1
+id="s1"
+><secTitle
+></secTitle
+><p
+></p
+></section1
+><section1
+id="s2"
+><secTitle
+></secTitle
+><p
+></p
+></section1
+><backMatter
+><endnotes
+></endnotes
+><references
+></references
+></backMatter
+><xi:include
+href="Languages.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+><xi:include
+href="Types.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+><xi:include
+href="IndexTerms.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+></lingPaper
+><xi:include
+href="SILInternationalPaperStylesheet.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+></styledPaper
+></xlingpaper
+>
