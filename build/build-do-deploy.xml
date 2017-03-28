@@ -3,10 +3,10 @@
 	<include file="${basedir}/build-init-fx-tasks.xml" as="nested"/>
 	<include file="${basedir}/build-setup-staging-area.xml" as="nested"/>
 	<include file="${basedir}/build-do-compile.xml" as="nested"/>
-	
+
 	<property name="appName" value="Asheninka Syllable Parser"/>
-	<property name="version" value="0.3.0.0"/>
-	
+	<property name="version" value="0.4.0.0"/>
+
 	<target name="do-deploy" depends="nested.setup-staging-area, nested.do-compile, nested.init-fx-tasks">
 		<delete file="dist" />
 		<delete file="deploy" />
@@ -70,14 +70,14 @@
 				<fx:jvmarg value="-Xmx1024m" />
 			</fx:platform>
 			<fx:info category="Education"
-			title="Asheninka (a Syllable Parser)" vendor="SIL International" license="LGPL" copyright="© 2016 SIL International" description="A tool for exploring syllabification algorithms and for inserting discretionay hyphens in word lists." />
+			title="Asheninka (a Syllable Parser)" vendor="SIL International" license="LGPL" copyright="© 2016-2017 SIL International" description="A tool for exploring syllabification algorithms and for inserting discretionay hyphens in word lists." />
 
 			<fx:application refId="fxApplication" />
 			<fx:resources refid="appRes" />
 			<fx:preferences shortcut="true" menu="true" install="true" />
 
 		</fx:deploy>
-		
+
 		<echo message="Renaming from '${basedir}/deploy/bundles/${mainFileName}-${version}.${nativeBundles}' to '${basedir}/deploy/bundles/${mainFileName}${processorType}-${version}.${nativeBundles}'"/>
 		<!-- Note: at least on Windows 10, we have to overtly delete the target file or the move operation fails if it already exists. -->
 		<delete file="${basedir}/deploy/bundles/${mainFileName}${processorType}-${version}.${nativeBundles}"/>

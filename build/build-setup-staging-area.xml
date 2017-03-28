@@ -24,6 +24,7 @@
 			<fileset dir="../doc">
 				<include name="Overview.pdf" />
 				<include name="UserDocumentation.pdf" />
+				<include name="SuggestedSteps.pdf"/>
 			</fileset>
 		</copy>
 

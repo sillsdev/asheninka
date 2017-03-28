@@ -6,37 +6,20 @@
  */
 package sil.org.syllableparser.view;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
-
-import com.sun.glass.events.WindowEvent;
-
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
-import sil.org.syllableparser.model.BackupFile;
-import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
-import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 import sil.org.syllableparser.model.cvapproach.CVTraceInfo;
-import sil.org.syllableparser.service.BackupFileRestorer;
-import sil.org.syllableparser.service.CVApproachLanguageComparer;
-import sil.org.syllableparser.service.CVApproachLanguageComparisonHTMLFormatter;
 import sil.org.syllableparser.service.CVNaturalClasser;
 import sil.org.syllableparser.service.CVNaturalClasserResult;
 import sil.org.syllableparser.service.CVSegmenter;
@@ -44,7 +27,6 @@ import sil.org.syllableparser.service.CVSegmenterResult;
 import sil.org.syllableparser.service.CVSyllabifier;
 import sil.org.syllableparser.service.CVSyllabifierResult;
 import sil.org.syllableparser.service.CVTryAWordHTMLFormatter;
-import sil.org.syllableparser.view.BackupChooserController.WrappingTableCell;
 import sil.org.utility.StringUtilities;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -52,22 +34,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.concurrent.Worker.State;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 /**

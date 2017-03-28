@@ -4,29 +4,19 @@
 package sil.org.syllableparser.view;
 
 import java.awt.Desktop;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-import java.util.stream.Stream;
-
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.dialog.FontSelectorDialog;
 
@@ -34,46 +24,31 @@ import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
 
 import static javafx.geometry.Orientation.VERTICAL;
-import static org.junit.Assert.assertEquals;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.IndexRange;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sil.org.syllableparser.ApplicationPreferences;
@@ -83,7 +58,6 @@ import sil.org.syllableparser.MainApp.TimerService;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachType;
 import sil.org.syllableparser.model.ApproachView;
-import sil.org.syllableparser.model.BackupFile;
 import sil.org.syllableparser.model.HyphenationParameters;
 import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
@@ -100,7 +74,6 @@ import sil.org.syllableparser.service.ParaTExtSegmentImporterNoCharactersExcepti
 import sil.org.syllableparser.service.SegmentImporterException;
 import sil.org.syllableparser.service.XLingPaperHyphenatedWordExporter;
 import sil.org.utility.DateTimeNormalizer;
-import sil.org.utility.StringUtilities;
 
 /**
  * The controller for the root layout. The root layout provides the basic
@@ -311,17 +284,18 @@ public class RootLayoutController implements Initializable {
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 
-		ButtonType buttonYes = ButtonType.YES;
-		ButtonType buttonNo = ButtonType.NO;
-		ButtonType buttonCancel = ButtonType.CANCEL;
+		ButtonType buttonTypeYes = ButtonType.YES;
+		ButtonType buttonTypeNo = ButtonType.NO;
+		ButtonType buttonTypeCancel = ButtonType.CANCEL;
 
-		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonYes) {
+		if (result.get() == buttonTypeYes) {
 			handleBackUpProject();
 			clearAllWords();
-		} else if (result.get() == buttonNo) {
+		} else if (result.get() == buttonTypeNo) {
 			clearAllWords();
 		}
 
@@ -347,20 +321,32 @@ public class RootLayoutController implements Initializable {
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 
-		ButtonType buttonYes = ButtonType.YES;
-		ButtonType buttonNo = ButtonType.NO;
-		ButtonType buttonCancel = ButtonType.CANCEL;
+		ButtonType buttonTypeYes = ButtonType.YES;
+		ButtonType buttonTypeNo = ButtonType.NO;
+		ButtonType buttonTypeCancel = ButtonType.CANCEL;
 
-		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonYes) {
+		if (result.get() == buttonTypeYes) {
 			handleBackUpProject();
 			clearAllCorrectSyllabifications();
-		} else if (result.get() == buttonNo) {
+		} else if (result.get() == buttonTypeNo) {
 			clearAllCorrectSyllabifications();
 		}
 
+	}
+
+	protected void localizeConfirmationButtons(Alert alert, ButtonType buttonTypeYes,
+			ButtonType buttonTypeNo, ButtonType buttonTypeCancel) {
+		Button buttonYes = (Button) alert.getDialogPane().lookupButton(buttonTypeYes);
+		buttonYes.setText(bundle.getString("label.yes"));
+		Button buttonNo = (Button) alert.getDialogPane().lookupButton(buttonTypeNo);
+		buttonNo.setText(bundle.getString("label.no"));
+		Button buttonCancel = (Button) alert.getDialogPane().lookupButton(buttonTypeCancel);
+		buttonCancel.setText(bundle.getString("label.cancel"));
+		// debug says that this has changed at this point, but it still shows with English...
 	}
 
 	public void clearAllCorrectSyllabifications() {
@@ -753,12 +739,11 @@ public class RootLayoutController implements Initializable {
 			}
 		}
 	}
-	
+
 	@FXML
 	private void handleSuggestedSteps() {
 		showFileToUser("doc/SuggestedSteps.pdf");
 	}
-
 
 	@FXML
 	private void handleHelpIntro() {
@@ -1022,7 +1007,8 @@ public class RootLayoutController implements Initializable {
 	public void importParaTExtCharacters() {
 		Stage stage;
 		ParaTExt7SegmentImporter importer = new ParaTExt7SegmentImporter(languageProject);
-		File file = ControllerUtilities.getFileToOpen(mainApp, "*.lds", "ParaTExt Parameters", "*.lds");
+		File file = ControllerUtilities.getFileToOpen(mainApp, "*.lds", "ParaTExt Parameters",
+				"*.lds");
 		if (file != null) {
 			try {
 				importer.importSegments(file);

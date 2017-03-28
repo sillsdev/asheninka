@@ -247,16 +247,20 @@ public class CVApproachController extends ApproachController {
 					CVSegmenterResult result = segmenter.segmentWord(sWord);
 					boolean fSuccess = result.success;
 					if (!fSuccess) {
-						word.setCVParserResult(sSegmentFailure.replace("{0}", sWord.substring(result.iPositionOfFailure)));
+						word.setCVParserResult(sSegmentFailure.replace("{0}",
+								sWord.substring(result.iPositionOfFailure)));
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
 					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-					CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+					CVNaturalClasserResult ncResult = naturalClasser
+							.convertSegmentsToNaturalClasses(segmentsInWord);
 					fSuccess = ncResult.success;
 					if (!fSuccess) {
-						String sFailureMessage0 = sNaturalClassFailure.replace("{0}", ncResult.sClassesSoFar);
-						String sFailureMessage1 = sFailureMessage0.replace("{1}", ncResult.sGraphemesSoFar);
+						String sFailureMessage0 = sNaturalClassFailure.replace("{0}",
+								ncResult.sClassesSoFar);
+						String sFailureMessage1 = sFailureMessage0.replace("{1}",
+								ncResult.sGraphemesSoFar);
 						word.setCVParserResult(sFailureMessage1);
 						word.setCVPredictedSyllabification("");
 						continue;
@@ -477,30 +481,30 @@ public class CVApproachController extends ApproachController {
 	@Override
 	void handleTryAWord() {
 		try {
-			Stage dialogStage = new Stage();
+			Stage tryAWordDialogStage = new Stage();
 			String resource = "fxml/CVTryAWord.fxml";
 			String title = bundle.getString("label.tryaword");
-			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
 					resource, title);
 
 			CVTryAWordController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
+			controller.setDialogStage(tryAWordDialogStage);
 			controller.setMainApp(mainApp);
 			controller.setLocale(locale);
 			controller.setData(cvApproachData);
-			
+
 			if (currentCVApproachController instanceof CVWordsController) {
 				CVWordsController cvWordsController = (CVWordsController) currentCVApproachController;
 				TableView<Word> cvWordsTable = cvWordsController.getCVWordsTable();
-				Word cvWord = (Word)cvWordsTable.getSelectionModel().getSelectedItem();
+				Word cvWord = (Word) cvWordsTable.getSelectionModel().getSelectedItem();
 				if (cvWord != null) {
 					String sCurrentWord = cvWord.getWord();
 					controller.getWordToTry().setText(sCurrentWord);
 				}
 			}
-			
-			dialogStage.initModality(Modality.NONE);
-			dialogStage.show();
+
+			tryAWordDialogStage.initModality(Modality.NONE);
+			tryAWordDialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

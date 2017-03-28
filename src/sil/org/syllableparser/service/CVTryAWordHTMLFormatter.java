@@ -11,27 +11,16 @@ import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.SortedSet;
-
-import com.sun.xml.internal.ws.encoding.SwACodec;
-
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
-import sil.org.syllableparser.model.Segment;
-import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
 import sil.org.syllableparser.model.cvapproach.CVTraceInfo;
 import sil.org.syllableparser.model.cvapproach.CVTraceSyllabifierInfo;
-import sil.org.utility.DateTimeNormalizer;
 import sil.org.utility.StringUtilities;
 
 /**
@@ -92,7 +81,7 @@ public class CVTryAWordHTMLFormatter {
 		File jarFile = new File(codeSource.getLocation().toURI().getPath());
 		String jarDir = jarFile.getParentFile().getPath();
 		imagesURI = StringUtilities.adjustForWindowsFileSeparator(jarDir)
-				+ "/src/sil/org/syllableparser/resources/images/";
+				+ "/resources/images/";
 	}
 
 	protected void getAnalysisAndVernacularLanguages() {

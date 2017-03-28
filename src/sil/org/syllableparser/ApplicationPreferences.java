@@ -4,8 +4,6 @@
 package sil.org.syllableparser;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import javafx.stage.Stage;
