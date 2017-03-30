@@ -20,9 +20,9 @@ type="tAsheninka"
 ><affiliation
 >SIL International</affiliation
 ><emailAddress
->andy_black@sil.org</emailAddress
+>asheninka_support@sil.org</emailAddress
 ><date
->27 March 2017</date
+>30 March 2017</date
 ><version
 >0.4.0 Alpha</version
 ><contents
@@ -36,7 +36,7 @@ id="sGameToPlay"
 >Setting up and using <object
 type="tAsheninka"
 ></object
-> is a bit like playing a game.  One needs to make sure the crucial items are set up correctly and then one starts playing.  This document outlines some suggestions on how to set up and play this game.  Please see the User Documentation for more information.  (Use menu item <object
+> is a bit like playing a game. One needs to make sure the crucial items are set up correctly and then one starts playing. This document outlines some suggestions on how to set up and play this game. Please see the User Documentation for more information. (Use menu item <object
 type="tMenuItem"
 >Help / User Documentation</object
 > to see it or click <link
@@ -94,7 +94,7 @@ id="sPlayTheGame"
 ><secTitle
 >Play the game</secTitle
 ><p
->You are now ready to play the game.   Try the following steps:</p
+>You are now ready to play the game. Try the following steps:</p
 ><ol
 ><li
 >Use menu item <object
@@ -125,13 +125,13 @@ type="tMenuItem"
 > process and see how it goes. If it's worse, just restore from the backup. If it's better, make a backup of that and go on.</li
 ></ol
 ><p
->  This is the basic process while playing the game.  In addition, the following items may be helpful, too, at various points in the process.</p
+>This is the basic process while playing the game. In addition, the following items may be helpful, too, at various points in the process.</p
 ><ol
 ><li
 >Use menu item <object
 type="tMenuItem"
 >Tools / Compare Implementations</object
-> to compare a backup with what you have now or to compare two backups. This creates a report of what is different between the two states.  It shows only those things which differ.</li
+> to compare a backup with what you have now or to compare two backups. This creates a report of what is different between the two states. It shows only those things which differ.</li
 ><li
 >Use menu item <object
 type="tMenuItem"
@@ -151,9 +151,9 @@ type="tMenuItem"
 >Use the <object
 type="tCVPredictedVsCorrectWords"
 ></object
-> view to discover any words whose parse does not match what is in the correct column.  There may well be cases where it is not worth the effort to get the parser to correctly syllabify certain words (e.g., loan words in a different orthography or words which may well be misspelled).</li
+> view to discover any words whose parse does not match what is in the correct column. There may well be cases where it is not worth the effort to get the parser to correctly syllabify certain words (e.g., loan words in a different orthography or words which may well be misspelled).</li
 ><li
->Depending on the orthography, you may find that you'll need to add some segments that are actually sequences of consonant-vowel.  On one language I used it for recently, I had to add <langData
+>Depending on the orthography, you may find that you'll need to add some segments that are actually sequences of consonant-vowel. On one language I used it for recently, I had to add <langData
 lang="lVernacular"
 >kue</langData
 > to handle a labialized velar stop-vowel sequence and avoid having <langData
