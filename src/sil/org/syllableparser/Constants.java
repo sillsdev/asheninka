@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 public class Constants {
 	// program wide constants
-	public static final String VERSION_NUMBER = "0.4.0.0 Alpha";
+	public static final String VERSION_NUMBER = "0.4.1.0 Alpha";
 	public static final int SAVE_DATA_PERIODICITY = 15;
 
 	// file-related constants

@@ -200,7 +200,8 @@ public class CVSyllabifier {
 				break;
 			}
 		}
-		if (currentCVPattern.isWordFinal() && currentNaturalClass.hasNext()) {
+		if (currentCVPattern.isWordFinal() && result.naturalClassesInSyllable.size() < naturalClassesInWord.size()) {
+			// not word final; return false result
 			return result;
 		}
 		result.success = true;
