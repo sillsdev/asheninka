@@ -4,10 +4,9 @@
 package sil.org.syllableparser;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import javafx.stage.Stage;
 import sil.org.syllableparser.model.ApproachType;
 import sil.org.syllableparser.model.cvapproach.CVApproachView;
 import sil.org.utility.*;
@@ -19,22 +18,33 @@ public class ApplicationPreferences {
 	static final String LAST_LOCALE_LANGUAGE = "lastLocaleLanguage";
 	// Not trying to be anglo-centric, but we have to start with something...
 	static final String DEFAULT_LOCALE_LANGUAGE = "en";
-	static final String LAST_WINDOW_POSITION_X = "lastWindowPositionX";
-	static final String LAST_WINDOW_POSITION_Y = "lastWindowPositionY";
-	static final String LAST_WINDOW_WIDTH = "lastWindowWidth";
-	static final String LAST_WINDOW_HEIGHT = "lastWindowHeight";
-	static final String LAST_WINDOW_MAXIMIZED = "lastWindowMaximized";
+	// last approach info
 	static final String LAST_APPROACH_USED = "lastApproachUsed";
 	static final String LAST_APPROACH_VIEW_USED = "lastApproachViewUsed";
 	static final String LAST_APPROACH_VIEW_ITEM_USED = "lastApproachViewItemUsed";
-	
+	// last CV info
 	static final String LAST_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastCVNaturalClassesViewItemUsed";
 	static final String LAST_CV_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastCVSegemntInventoryViewItemUsed";
 	static final String LAST_CV_SYLLABLE_PATTERNS_VIEW_ITEM_USED = "lastCVSyllablePatternsViewItemUsed";
+	static final String LAST_CV_TRY_A_WORD_USED = "lastCVTryAWordUsed";
 	static final String LAST_CV_WORDS_VIEW_ITEM_USED = "lastCVWordsViewItemUsed";
-	// We have one for predicted vs. correct words, but we're not setting it
-	// because it is not clear why it would be useful.
+	// We have a last item used for predicted vs. correct words, but we're not
+	// setting it because it is not clear why it would be useful. We'll use it if users
+	// request it.
 	static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastCVWordPredictedVsCorrectViewItemUsed";
+
+	// Window parameters to remember
+	static final String POSITION_X = "PositionX";
+	static final String POSITION_Y = "PositionY";
+	static final String WIDTH = "Width";
+	static final String HEIGHT = "Height";
+	static final String MAXIMIZED = "Maximized";
+	// Window parameters for main window and various dialogs
+	public static final String LAST_WINDOW = "lastWindow";
+	public static final String LAST_CV_COMPARISON = "lastCVComparision";
+	public static final String LAST_CV_SEGMENT_OR_NATURAL_CLASS = "lastCVSegmentOrNaturalClass";
+	public static final String LAST_CV_TRY_A_WORD = "lastCVTryAWord";
+	public static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT = "lastCVWordPredictedVsCorrect";
 	
 	Preferences prefs;
 
@@ -82,46 +92,6 @@ public class ApplicationPreferences {
 
 	public void setLastOpenedDirectoryPath(String directoryPath) {
 		setPreferencesKey(LAST_OPENED_DIRECTORY_PATH, directoryPath);
-	}
-
-	public Double getLastWindowPositionX() {
-		return prefs.getDouble(LAST_WINDOW_POSITION_X, 10);
-	}
-
-	public void setLastWindowPositionX(Double value) {
-		setPreferencesKey(LAST_WINDOW_POSITION_X, value);
-	}
-
-	public Double getLastWindowPositionY() {
-		return prefs.getDouble(LAST_WINDOW_POSITION_Y, 10);
-	}
-
-	public void setLastWindowPositionY(Double value) {
-		setPreferencesKey(LAST_WINDOW_POSITION_Y, value);
-	}
-
-	public Double getLastWindowHeight() {
-		return prefs.getDouble(LAST_WINDOW_HEIGHT, 660);
-	}
-
-	public void setLastWindowHeight(Double value) {
-		setPreferencesKey(LAST_WINDOW_HEIGHT, value);
-	}
-
-	public Double getLastWindowWidth() {
-		return prefs.getDouble(LAST_WINDOW_WIDTH, 1000);
-	}
-
-	public void setLastWindowWidth(Double value) {
-		setPreferencesKey(LAST_WINDOW_WIDTH, value);
-	}
-
-	public boolean getLastWindowMaximized() {
-		return prefs.getBoolean(LAST_WINDOW_MAXIMIZED, false);
-	}
-
-	public void setLastWindowMaximized(boolean value) {
-		setPreferencesKey(LAST_WINDOW_MAXIMIZED, value);
 	}
 
 	public String getLastApproachUsed() {
@@ -180,6 +150,39 @@ public class ApplicationPreferences {
 		setPreferencesKey(LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
 	}
 
+	public String getLastCVTryAWordUsed() {
+		return prefs.get(LAST_CV_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastCVTryAWordUsed(String lastCVTryAWordUsed) {
+		setPreferencesKey(LAST_CV_TRY_A_WORD_USED, lastCVTryAWordUsed);
+	}
+
+	public Stage getLastWindowParameters(String sWindow, Stage stage, Double defaultHeight, Double defaultWidth) {
+		Double value = prefs.getDouble(sWindow + HEIGHT, defaultHeight);
+		stage.setHeight(value);
+		value = prefs.getDouble(sWindow + WIDTH, defaultWidth);
+		stage.setWidth(value);
+		value = prefs.getDouble(sWindow + POSITION_X, 10);
+		stage.setX(value);
+		value = prefs.getDouble(sWindow + POSITION_Y, 10);
+		stage.setY(value);
+		boolean fValue = prefs.getBoolean(sWindow + MAXIMIZED, false);
+		stage.setMaximized(fValue);
+		return stage;
+	}
+
+	public void setLastWindowParameters(String sWindow, Stage stage) {
+		boolean isMaximized = stage.isMaximized();
+		if (!isMaximized) {
+			setPreferencesKey(sWindow + HEIGHT, stage.getHeight());
+			setPreferencesKey(sWindow + WIDTH, stage.getWidth());
+			setPreferencesKey(sWindow + POSITION_X, stage.getX());
+			setPreferencesKey(sWindow + POSITION_Y, stage.getY());
+		}
+		setPreferencesKey(sWindow + MAXIMIZED, stage.isMaximized());
+	}
+
 	private void setPreferencesKey(String key, boolean value) {
 		if (!StringUtilities.isNullOrEmpty(key)) {
 			if (key != null) {
@@ -215,7 +218,6 @@ public class ApplicationPreferences {
 
 	private void setPreferencesKey(String key, String value) {
 		if (!StringUtilities.isNullOrEmpty(key) && !StringUtilities.isNullOrEmpty(value)) {
-			// if (key != null && value != null && !value.isEmpty()) {
 			prefs.put(key, value);
 
 		} else {

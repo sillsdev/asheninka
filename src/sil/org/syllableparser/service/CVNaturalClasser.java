@@ -47,14 +47,31 @@ public class CVNaturalClasser {
 		for (Object snc : nc.getSegmentsOrNaturalClasses()) {
 			if (snc instanceof Segment) {
 				String sId = ((Segment) snc).getID();
-				List<CVNaturalClass> naturalClasses = segmentToNaturalClassesMapping.get(sId);
-				if (naturalClasses == null) {
-					naturalClasses = new LinkedList<CVNaturalClass>(Arrays.asList(nc));
-					segmentToNaturalClassesMapping.put(sId, naturalClasses);
-				} else {
-					naturalClasses.add(nc);
-				}
+				addNaturalClassToMap(sId, nc);
+			} else {
+				setSegmentToNestedNaturalClassesMapping((CVNaturalClass)snc, nc);
 			}
+		}
+	}
+
+	protected void setSegmentToNestedNaturalClassesMapping(CVNaturalClass nestedNC, CVNaturalClass nc) {
+		for (Object snc : nestedNC.getSegmentsOrNaturalClasses()) {
+			if (snc instanceof Segment) {
+				String sId = ((Segment) snc).getID();
+				addNaturalClassToMap(sId, nc);
+			} else {
+				setSegmentToNestedNaturalClassesMapping((CVNaturalClass)snc, nc);
+			}
+		}
+	}
+
+	protected void addNaturalClassToMap(String sId, CVNaturalClass nc) {
+		List<CVNaturalClass> naturalClasses = segmentToNaturalClassesMapping.get(sId);
+		if (naturalClasses == null) {
+			naturalClasses = new LinkedList<CVNaturalClass>(Arrays.asList(nc));
+			segmentToNaturalClassesMapping.put(sId, naturalClasses);
+		} else {
+			naturalClasses.add(nc);
 		}
 	}
 

@@ -1,6 +1,6 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 package sil.org.syllableparser;
 
 import java.io.File;
@@ -44,7 +44,7 @@ import sil.org.syllableparser.view.RootLayoutController;
 public class MainApp extends Application {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final String kApplicationIconResource = "file:resources/images/CushmaSmall128x128.png";
 	private Stage primaryStage;
@@ -83,13 +83,9 @@ public class MainApp extends Application {
 		saveDataPeriodically(Constants.SAVE_DATA_PERIODICITY);
 
 	}
-	
+
 	private void restoreWindowSettings() {
-		primaryStage.setX(applicationPreferences.getLastWindowPositionX());
-		primaryStage.setY(applicationPreferences.getLastWindowPositionY());
-		primaryStage.setHeight(applicationPreferences.getLastWindowHeight());
-		primaryStage.setWidth(applicationPreferences.getLastWindowWidth());
-		primaryStage.setMaximized(applicationPreferences.getLastWindowMaximized());
+		primaryStage = applicationPreferences.getLastWindowParameters(ApplicationPreferences.LAST_WINDOW, primaryStage, 660.0, 1000.);
 	}
 
 	public TimerService getSaveDataPeriodicallyService() {
@@ -126,23 +122,12 @@ public class MainApp extends Application {
 
 	@Override
 	public void stop() {
-		rememberWindowSettings();
+		applicationPreferences.setLastWindowParameters(ApplicationPreferences.LAST_WINDOW, primaryStage);
 		applicationPreferences.setLastLocaleLanguage(locale.getLanguage());
 		applicationPreferences.setLastApproachUsed(controller.getApproachUsed());
 		applicationPreferences.setLastApproachViewUsed(controller.getViewUsed());
 		controller.handleSave();
 		// TODO: add last file opened
-	}
-
-	protected void rememberWindowSettings() {
-		boolean isMaximized = primaryStage.isMaximized();
-		if (!isMaximized) {
-			applicationPreferences.setLastWindowPositionX(primaryStage.getX());
-			applicationPreferences.setLastWindowPositionY(primaryStage.getY());
-			applicationPreferences.setLastWindowHeight(primaryStage.getHeight());
-			applicationPreferences.setLastWindowWidth(primaryStage.getWidth());
-		}
-		applicationPreferences.setLastWindowMaximized(isMaximized);
 	}
 
 	public void setLocale(Locale locale) {
@@ -192,6 +177,9 @@ public class MainApp extends Application {
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("non-IO Exception caught!");
+			e.printStackTrace();
 		}
 	}
 
@@ -233,7 +221,7 @@ public class MainApp extends Application {
 
 	/**
 	 * Returns the main stage.
-	 * 
+	 *
 	 * @return
 	 */
 	public Stage getPrimaryStage() {
@@ -270,7 +258,7 @@ public class MainApp extends Application {
 	 * Returns the language project file preference, i.e. the file that was last
 	 * opened. The preference is read from the OS specific registry. If no such
 	 * preference can be found, null is returned.
-	 * 
+	 *
 	 * @return
 	 */
 	public File getLanguageProjectFilePath() {

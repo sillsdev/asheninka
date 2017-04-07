@@ -1,11 +1,12 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -21,14 +22,14 @@ import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
+import sil.org.syllableparser.model.cvapproach.CVTraceSyllabifierInfo;
 import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
  *
- * a Service
- *         Takes a sequence of natural classes and parses them into a sequence
- *         of syllables
+ *         a Service Takes a sequence of natural classes and parses them into a
+ *         sequence of syllables
  */
 public class CVSyllabifier {
 
@@ -38,7 +39,9 @@ public class CVSyllabifier {
 	private List<CVNaturalClass> activeNaturalClasses;
 	private CVSegmenter segmenter;
 	private CVNaturalClasser naturalClasser;
-	
+	private boolean fDoTrace = false;
+	private List<CVTraceSyllabifierInfo> syllabifierTraceInfo = new ArrayList<CVTraceSyllabifierInfo>();
+
 	private final List<CVSyllablePattern> activeCVPatterns;
 	private List<List<CVNaturalClassInSyllable>> naturalClassListsInCurrentWord;
 
@@ -65,7 +68,7 @@ public class CVSyllabifier {
 		naturalClasser = new CVNaturalClasser(activeNaturalClasses);
 		sSyllabifiedWord = "";
 	}
-	
+
 	public List<CVSyllable> getSyllablesInCurrentWord() {
 		return syllablesInCurrentWord;
 	}
@@ -74,15 +77,28 @@ public class CVSyllabifier {
 		this.syllablesInCurrentWord = syllablesInCurrentWord;
 	}
 
+	public List<CVTraceSyllabifierInfo> getSyllabifierTraceInfo() {
+		return syllabifierTraceInfo;
+	}
+
 	public List<CVSyllablePattern> getActiveCVPatterns() {
 		return activeCVPatterns;
 	}
 
+	public boolean isDoTrace() {
+		return fDoTrace;
+	}
+
+	public void setDoTrace(boolean fDoTrace) {
+		this.fDoTrace = fDoTrace;
+	}
+
 	public boolean convertNaturalClassesToSyllables() {
 		syllablesInCurrentWord.clear();
-
+		syllabifierTraceInfo.clear();
+		
 		// recursively parse into syllables
-		boolean result = parseIntoSyllables(naturalClassListsInCurrentWord, activeCVPatterns, true);
+		boolean result = parseIntoSyllables(naturalClassListsInCurrentWord, activeCVPatterns, syllabifierTraceInfo, true);
 
 		if (result) {
 			// the list of syllables found is in reverse order; flip them
@@ -92,21 +108,24 @@ public class CVSyllabifier {
 	}
 
 	public boolean convertStringToSyllables(String word) {
-		syllablesInCurrentWord.clear();	
+		syllablesInCurrentWord.clear();
+		syllabifierTraceInfo.clear();
 		boolean fSuccess = false;
-		CVSegmenterResult segResult = segmenter.segmentWord(word); 
+		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		fSuccess = segResult.success;
 		if (fSuccess) {
 			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-			CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+			CVNaturalClasserResult ncResult = naturalClasser
+					.convertSegmentsToNaturalClasses(segmentsInWord);
 			fSuccess = ncResult.success;
 			if (fSuccess) {
-				naturalClassListsInCurrentWord = naturalClasser
-						.getNaturalClassListsInCurrentWord();
-				fSuccess = parseIntoSyllables(naturalClassListsInCurrentWord, activeCVPatterns, true);
+				naturalClassListsInCurrentWord = naturalClasser.getNaturalClassListsInCurrentWord();
+				fSuccess = parseIntoSyllables(naturalClassListsInCurrentWord, activeCVPatterns,
+						syllabifierTraceInfo, true);
 
 				if (fSuccess) {
-					// the list of syllables found is in reverse order; flip them
+					// the list of syllables found is in reverse order; flip
+					// them
 					Collections.reverse(syllablesInCurrentWord);
 				}
 			}
@@ -115,21 +134,33 @@ public class CVSyllabifier {
 	}
 
 	private boolean parseIntoSyllables(List<List<CVNaturalClassInSyllable>> naturalClassesInWord,
-			List<CVSyllablePattern> activePatterns, Boolean isWordInitial) {
+			List<CVSyllablePattern> activePatterns, List<CVTraceSyllabifierInfo> sylTraceInfo, Boolean isWordInitial) {
 		if (naturalClassesInWord.size() == 0) {
 			return true;
 		}
+		CVTraceSyllabifierInfo sylInfo = new CVTraceSyllabifierInfo("");
 		for (CVSyllablePattern pattern : activePatterns) {
+			if (fDoTrace) {
+				sylInfo = new CVTraceSyllabifierInfo(pattern.getNCSRepresentation());
+				sylTraceInfo.add(sylInfo);
+			}
 			if (pattern.isWordInitial() && !isWordInitial) {
 				continue;
 			}
-			CVSyllabifierResult result = naturalClassesMatchSyllablePattern(naturalClassesInWord, pattern); 
+			CVSyllabifierResult result = naturalClassesMatchSyllablePattern(naturalClassesInWord,
+					pattern);
 			if (result.success) {
 				List<List<CVNaturalClassInSyllable>> remainingNaturalClassesInWord = naturalClassesInWord
 						.subList(pattern.getNCs().size(), naturalClassesInWord.size());
-				if (parseIntoSyllables(remainingNaturalClassesInWord, activePatterns, false)) {
+				if (fDoTrace) {
+					sylInfo.syllablePatternMatched = true;
+				}
+				if (parseIntoSyllables(remainingNaturalClassesInWord, activePatterns, sylInfo.daughterInfo, false)) {
 					CVSyllable syl = new CVSyllable(result.getNaturalClassesInSyllable());
 					syllablesInCurrentWord.add(syl);
+					if (fDoTrace) {
+						sylInfo.parseWasSuccessful = true;
+					}
 					return true;
 				}
 			}
@@ -138,7 +169,8 @@ public class CVSyllabifier {
 	}
 
 	private CVSyllabifierResult naturalClassesMatchSyllablePattern(
-			List<List<CVNaturalClassInSyllable>> naturalClassesInWord, CVSyllablePattern currentCVPattern) {
+			List<List<CVNaturalClassInSyllable>> naturalClassesInWord,
+			CVSyllablePattern currentCVPattern) {
 		CVSyllabifierResult result = new CVSyllabifierResult();
 		result.success = false;
 		// TODO: is there another, better way to compare the contents of two
@@ -147,7 +179,8 @@ public class CVSyllabifier {
 		if (naturalClassesInCVPattern.size() > naturalClassesInWord.size()) {
 			return result;
 		}
-		Iterator<List<CVNaturalClassInSyllable>> currentNaturalClass = naturalClassesInWord.iterator();
+		Iterator<List<CVNaturalClassInSyllable>> currentNaturalClass = naturalClassesInWord
+				.iterator();
 		List<CVNaturalClassInSyllable> ncInSyllable = currentNaturalClass.next();
 		for (CVNaturalClass ncInPattern : naturalClassesInCVPattern) {
 			boolean fClassInPatternMatchesClassInList = false;
@@ -167,7 +200,8 @@ public class CVSyllabifier {
 				break;
 			}
 		}
-		if (currentCVPattern.isWordFinal() && currentNaturalClass.hasNext()) {
+		if (currentCVPattern.isWordFinal() && result.naturalClassesInSyllable.size() < naturalClassesInWord.size()) {
+			// not word final; return false result
 			return result;
 		}
 		result.success = true;

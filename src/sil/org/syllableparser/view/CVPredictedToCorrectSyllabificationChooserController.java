@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.view;
 
@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.stage.Stage;
+import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -51,6 +52,7 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	Stage dialogStage;
 	private boolean okClicked = false;
 	private MainApp mainApp;
+	private ApplicationPreferences preferences;
 
 	private CVApproach cvApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
@@ -102,11 +104,14 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 
 	/**
 	 * Sets the stage of this dialog.
-	 * 
+	 *
 	 * @param dialogStage
 	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
+		this.dialogStage.setOnCloseRequest(event -> {
+			handleCancel();
+		});
 	}
 
 	/**
@@ -137,7 +142,7 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 
 	/**
 	 * Returns true if the user clicked OK, false otherwise.
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isOkClicked() {
@@ -159,7 +164,7 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 			}
 		}
 		okClicked = true;
-		dialogStage.close();
+		handleCancel();
 	}
 
 	/**
@@ -167,11 +172,14 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	 */
 	@FXML
 	private void handleCancel() {
+		preferences.setLastWindowParameters(ApplicationPreferences.LAST_CV_WORDS_PREDICTED_VS_CORRECT, dialogStage);
 		dialogStage.close();
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+		preferences = mainApp.getApplicationPreferences();
+		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_CV_WORDS_PREDICTED_VS_CORRECT, dialogStage, 397., 607.);
 	}
 
 	/**

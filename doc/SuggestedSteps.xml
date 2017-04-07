@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xlingpaper PUBLIC "-//XMLmind//DTD XLingPap//EN"
+"XLingPap.dtd">
+<xlingpaper
+version="2.24.0"
+><styledPaper
+><lingPaper
+automaticallywrapinterlinears="yes"
+version="2.28.0"
+><frontMatter
+><title
+>Suggested Steps to Follow</title
+><subtitle
+>when using <object
+type="tAsheninka"
+></object
+></subtitle
+><author
+>H. Andrew Black</author
+><affiliation
+>SIL International</affiliation
+><emailAddress
+>asheninka_support@sil.org</emailAddress
+><date
+>30 March 2017</date
+><version
+>0.4.0 Alpha</version
+><contents
+></contents
+></frontMatter
+><section1
+id="sGameToPlay"
+><secTitle
+>The basic “game” to play</secTitle
+><p
+>Setting up and using <object
+type="tAsheninka"
+></object
+> is a bit like playing a game. One needs to make sure the crucial items are set up correctly and then one starts playing. This document outlines some suggestions on how to set up and play this game. Please see the User Documentation for more information. (Use menu item <object
+type="tMenuItem"
+>Help / User Documentation</object
+> to see it or click <link
+href="UserDocumentation.pdf"
+>here</link
+>.)</p
+><section2
+id="sSetup"
+><secTitle
+>Setup</secTitle
+><p
+>The basic setup for the <object
+type="tCVPatternApproach"
+></object
+> approach is as follows:</p
+><ol
+><li
+>Create a new project (use menu item <object
+type="tMenuItem"
+>File / New</object
+><endnote
+id="nSaveAs"
+><p
+>If you already have a project and it is very similar to what you need for this new project, you can also use menu item <object
+type="tMenuItem"
+>File / Save As</object
+>.</p
+></endnote
+>).</li
+><li
+>Make sure that what is in the <object
+type="tCVSegmentInventory"
+></object
+> covers all the segments you have in the orthography.</li
+><li
+>Make sure that every segment is in a natural class.</li
+><li
+>Create <object
+type="tCVSyllablePatterns"
+></object
+> that cover the kinds of syllables you think the language has.  Be sure to allow for vowel-initial syllables if the language has them.</li
+><li
+>Import a list of words (or key them one by one).</li
+><li
+>Back up your project (use menu item <object
+type="tMenuItem"
+>File / Project Management / Back up this project</object
+>).</li
+></ol
+><p
+>With this, you have done the basic setup.</p
+></section2
+><section2
+id="sPlayTheGame"
+><secTitle
+>Play the game</secTitle
+><p
+>You are now ready to play the game. Try the following steps:</p
+><ol
+><li
+>Use menu item <object
+type="tMenuItem"
+>Parser / Parse all Words</object
+> to have <object
+type="tAsheninka"
+></object
+> parse all the words in the <object
+type="tCVWords"
+></object
+> view.</li
+><li
+>Look at the results. You can click on a column header to sort by that column (it currently only sorts by Unicode code point). Doing this on the <object
+type="tParserResult"
+></object
+> column in the <object
+type="tCVWords"
+></object
+> view will show all the words which failed at the top (at least in the English user interface language).</li
+><li
+>Make frequent (labeled) backups via menu item <object
+type="tMenuItem"
+>File / Project Management / Back up this project</object
+>. You can make a backup, try something else (e.g., add a segment or class; or re-order the syllable patterns or add a new one), perform the <object
+type="tMenuItem"
+>Parser / Parse all Words</object
+> process and see how it goes. If it's worse, just restore from the backup. If it's better, make a backup of that and go on.</li
+></ol
+><p
+>This is the basic process while playing the game. In addition, the following items may be helpful, too, at various points in the process.</p
+><ol
+><li
+>Use menu item <object
+type="tMenuItem"
+>Tools / Compare Implementations</object
+> to compare a backup with what you have now or to compare two backups. This creates a report of what is different between the two states. It shows only those things which differ.</li
+><li
+>Use menu item <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> to test various words or to try and figure out why a given word does not parse the way you expect.</li
+><li
+>Use menu item <object
+type="tMenuItem"
+>Tools / Find Word</object
+> to look for sequences of characters, if that helps you see patterns in the data.</li
+><li
+>Use menu item <object
+type="tMenuItem"
+>Tools / Predicted to correct syllabification</object
+> to more quickly set which words are correctly syllabified. In fact, you should use this before exporting the results.</li
+><li
+>Use the <object
+type="tCVPredictedVsCorrectWords"
+></object
+> view to discover any words whose parse does not match what is in the correct column. There may well be cases where it is not worth the effort to get the parser to correctly syllabify certain words (e.g., loan words in a different orthography or words which may well be misspelled).</li
+><li
+>Depending on the orthography, you may find that you'll need to add some segments that are actually sequences of consonant-vowel. On one language I used it for recently, I had to add <langData
+lang="lVernacular"
+>kue</langData
+> to handle a labialized velar stop-vowel sequence and avoid having <langData
+lang="lVernacular"
+>ku</langData
+> always being treated as labialized velar stop when it was a velar stop, u vowel sequence.<endnote
+id="nEnvironments"
+><p
+>We do plan on adding environments when defining segments to make this work-around not be needed.</p
+></endnote
+></li
+></ol
+></section2
+></section1
+><backMatter
+><endnotes
+></endnotes
+><references
+></references
+></backMatter
+><xi:include
+href="Languages.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+><xi:include
+href="Types.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+><xi:include
+href="IndexTerms.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+></lingPaper
+><xi:include
+href="SILInternationalPaperStylesheet.xml"
+xpointer="element(/1)"
+xmlns:xi="http://www.w3.org/2001/XInclude"
+></xi:include
+></styledPaper
+></xlingpaper
+>

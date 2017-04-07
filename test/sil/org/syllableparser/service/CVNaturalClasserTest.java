@@ -73,7 +73,7 @@ public class CVNaturalClasserTest {
 	// make sure the setup is what we expect
 	@Test
 	public void naturalClassesTest() {
-		assertEquals("Active natural Classes in natural classer size", 4, cvNaturalClasses.size());
+		assertEquals("Active natural Classes in natural classer size", 5, cvNaturalClasses.size());
 		String nc = cvNaturalClasses.get(0).getNCName().trim();
 		assertEquals("First natural class is [C]", "C", nc);
 		nc = cvNaturalClasses.get(1).getNCName().trim();
@@ -89,8 +89,9 @@ public class CVNaturalClasserTest {
 	public void wordToSegmentToNaturalClassesTest() {
 
 		checkNaturalClassParsing("Chiko", true, 4, "C, {V,V+hi}, C, V", "C, V, C, V", "abc");
-		checkNaturalClassParsing("champion", true, 7, "C, V, N, C, {V,V+hi}, V, N", "C, V, N, C, V, V, N",
+		checkNaturalClassParsing("champion", true, 7, "C, V, {C,N,S}, C, {V,V+hi}, V, {C,N,S}", "C, V, N, C, V, V, N",
 				"abc");
+		checkNaturalClassParsing("namo", true, 4, "{C,N,S}, V, {C,N,S}, V", "C, V, C, V", "abc");
 		// next three fail because /r/ is not in any class
 		checkNaturalClassParsing("karui", false, 2, "C, V", "C, V", "ka");
 		checkNaturalClassParsing("kiro", false, 2, "C, {V,V+hi}", "C, {V,V+hi}", "ki");

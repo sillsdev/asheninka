@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.view;
 
@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.control.textfield.TextFields;
 
+import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.*;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -30,6 +31,7 @@ import sil.org.syllableparser.service.CVNaturalClasserResult;
 import sil.org.syllableparser.service.CVSegmenter;
 import sil.org.syllableparser.service.CVSegmenterResult;
 import sil.org.syllableparser.service.CVSyllabifier;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,6 +42,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -179,7 +183,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleInsertNewItem()
 	 */
 	@Override
@@ -190,7 +194,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
 	 */
 	@Override
@@ -219,7 +223,7 @@ public class CVApproachController extends ApproachController {
 				List<Segment> cvSegmentInventory;
 				CVNaturalClasser naturalClasser;
 				List<CVNaturalClass> cvNaturalClasses;
-				ObservableList<CVSyllablePattern> patterns;
+				List<CVSyllablePattern> patterns;
 				CVSyllabifier syllabifier;
 				List<CVSyllablePattern> cvPatterns;
 
@@ -229,7 +233,7 @@ public class CVApproachController extends ApproachController {
 				naturalClasses = cvApproachData.getCVNaturalClasses();
 				naturalClasser = new CVNaturalClasser(naturalClasses);
 				cvNaturalClasses = naturalClasser.getActiveNaturalClasses();
-				patterns = cvApproachData.getCVSyllablePatterns();
+				patterns = cvApproachData.getActiveCVSyllablePatterns();
 				syllabifier = new CVSyllabifier(patterns, null);
 				cvPatterns = syllabifier.getActiveCVPatterns();
 
@@ -243,16 +247,20 @@ public class CVApproachController extends ApproachController {
 					CVSegmenterResult result = segmenter.segmentWord(sWord);
 					boolean fSuccess = result.success;
 					if (!fSuccess) {
-						word.setCVParserResult(sSegmentFailure.replace("{0}", sWord.substring(result.iPositionOfFailure)));
+						word.setCVParserResult(sSegmentFailure.replace("{0}",
+								sWord.substring(result.iPositionOfFailure)));
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
 					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-					CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+					CVNaturalClasserResult ncResult = naturalClasser
+							.convertSegmentsToNaturalClasses(segmentsInWord);
 					fSuccess = ncResult.success;
 					if (!fSuccess) {
-						String sFailureMessage0 = sNaturalClassFailure.replace("{0}", ncResult.sClassesSoFar);
-						String sFailureMessage1 = sFailureMessage0.replace("{1}", ncResult.sGraphemesSoFar);
+						String sFailureMessage0 = sNaturalClassFailure.replace("{0}",
+								ncResult.sClassesSoFar);
+						String sFailureMessage1 = sFailureMessage0.replace("{1}",
+								ncResult.sGraphemesSoFar);
 						word.setCVParserResult(sFailureMessage1);
 						word.setCVPredictedSyllabification("");
 						continue;
@@ -290,7 +298,7 @@ public class CVApproachController extends ApproachController {
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 		});
 
-		new Thread(task).start();
+		Platform.runLater(task);
 
 	}
 
@@ -387,7 +395,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleCopy()
 	 */
 	@Override
@@ -397,7 +405,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleCut()
 	 */
 	@Override
@@ -407,7 +415,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handlePaste()
 	 */
 	@Override
@@ -417,7 +425,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#anythingSelected()
 	 */
 	@Override
@@ -430,7 +438,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCopy()
 	 */
 	@Override
@@ -440,7 +448,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarPaste()
 	 */
 	@Override
@@ -450,7 +458,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCut()
 	 */
 	@Override
@@ -468,5 +476,37 @@ public class CVApproachController extends ApproachController {
 	public void setBackupDirectoryPath(String backupDirectoryPath) {
 		this.backupDirectoryPath = backupDirectoryPath;
 
+	}
+
+	@Override
+	void handleTryAWord() {
+		try {
+			Stage tryAWordDialogStage = new Stage();
+			String resource = "fxml/CVTryAWord.fxml";
+			String title = bundle.getString("label.tryaword");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
+					resource, title);
+
+			CVTryAWordController controller = loader.getController();
+			controller.setDialogStage(tryAWordDialogStage);
+			controller.setMainApp(mainApp);
+			controller.setLocale(locale);
+			controller.setData(cvApproachData);
+
+			if (currentCVApproachController instanceof CVWordsController) {
+				CVWordsController cvWordsController = (CVWordsController) currentCVApproachController;
+				TableView<Word> cvWordsTable = cvWordsController.getCVWordsTable();
+				Word cvWord = (Word) cvWordsTable.getSelectionModel().getSelectedItem();
+				if (cvWord != null) {
+					String sCurrentWord = cvWord.getWord();
+					controller.getWordToTry().setText(sCurrentWord);
+				}
+			}
+
+			tryAWordDialogStage.initModality(Modality.NONE);
+			tryAWordDialogStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

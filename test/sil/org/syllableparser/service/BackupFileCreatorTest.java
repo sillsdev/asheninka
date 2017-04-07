@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.service;
 
@@ -38,7 +38,7 @@ import sil.org.syllableparser.model.cvapproach.CVApproach;
 public class BackupFileCreatorTest {
 
 	File backupFile;
-	
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -61,7 +61,7 @@ public class BackupFileCreatorTest {
 	public void test() {
 		assertFalse(backupFile.exists());
 		BackupFileCreator backupCreator = new BackupFileCreator(new File(
-				Constants.UNIT_TEST_DATA_FILE), Constants.UNIT_TEST_BACKUP_FILE_NAME, 
+				Constants.UNIT_TEST_DATA_FILE), Constants.UNIT_TEST_BACKUP_FILE_NAME,
 				Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_COMMENT);
 		backupCreator.doBackup();
 		assertTrue(backupFile.exists());
@@ -69,8 +69,8 @@ public class BackupFileCreatorTest {
 			ZipFile zipFile = new ZipFile(backupFile);
 			assertEquals(1, zipFile.size());
 			ZipEntry entry = zipFile.getEntry(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_NAME);
-			assertEquals(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_NAME,entry.getName());
-			assertEquals(3050734,entry.getSize());
+			assertEquals(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_NAME, entry.getName());
+			assertEquals(3051403, entry.getSize());
 			assertEquals(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_COMMENT, zipFile.getComment());
 			zipFile.close();
 		} catch (ZipException e) {

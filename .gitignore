@@ -1,3 +1,11 @@
 /bin/
 XLingPaperPDFTemp
 *.xml~
+/.settings/
+build/build
+build/deploy
+build/dist
+build/doc
+build/externalLibs
+build/project
+resources/images

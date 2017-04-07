@@ -7,10 +7,10 @@
     </analysisLanguage>
     <cvApproach>
         <cvNaturalClasses>
-            <cvNaturalClass snc="000e634b-5e9e-479d-82e6-f44ab9e27879 a72f9654-e5ec-45dc-80ba-204abf0ef872 0c349a88-de1d-4bd8-8845-18775f142719 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 101d2651-cd84-4671-a286-0d37e22759e4 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b 373d2f17-d2ca-414a-b12e-ca61c9b821ed 65be3575-5c87-4a7d-8560-d1f32a816b2f 518cf26f-42ab-4555-ac4d-af1667774959 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df a606ebec-8ceb-42bd-93ee-2b78f65f9984 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" active="true" id="b500749a-9617-444c-ae28-7552cb3236ec">
+            <cvNaturalClass snc="000e634b-5e9e-479d-82e6-f44ab9e27879 a72f9654-e5ec-45dc-80ba-204abf0ef872 0c349a88-de1d-4bd8-8845-18775f142719 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b 373d2f17-d2ca-414a-b12e-ca61c9b821ed 65be3575-5c87-4a7d-8560-d1f32a816b2f 518cf26f-42ab-4555-ac4d-af1667774959 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df a606ebec-8ceb-42bd-93ee-2b78f65f9984 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 f2c71865-8291-4f7a-b44e-fdd98adcfccc" active="true" id="b500749a-9617-444c-ae28-7552cb3236ec">
                 <description>consonants</description>
                 <NCName>C</NCName>
-                <SNCRepresentation>b, ch, d, f, g, h, k, l, p, s, sh, t, v, w, x, y, z, N</SNCRepresentation>
+                <SNCRepresentation>b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, S</SNCRepresentation>
             </cvNaturalClass>
             <cvNaturalClass snc="de664190-dd3c-4bb3-892e-16dc596255ce 92284e25-50b0-4c3a-9043-c5a67c6cfcff 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 008bb81a-5594-45ee-ae2a-457a058cee16 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
                 <description>vowels</description>
@@ -32,6 +32,11 @@
                 <NCName>V+hi</NCName>
                 <SNCRepresentation>i, u</SNCRepresentation>
             </cvNaturalClass>
+            <cvNaturalClass snc="101d2651-cd84-4671-a286-0d37e22759e4 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" active="true" id="f2c71865-8291-4f7a-b44e-fdd98adcfccc">
+                <description>Sonorants</description>
+                <NCName>S</NCName>
+                <SNCRepresentation>l, N</SNCRepresentation>
+            </cvNaturalClass>
         </cvNaturalClasses>
         <cvSyllablePatterns>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="5059b228-2994-4195-a881-e62958bff0c5">
@@ -41,17 +46,17 @@
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </cvSyllablePattern>
-            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" active="true" id="ef542169-8f0c-45ee-9613-0ca0efcc1ec9">
-                <description>Closed syllable pattern</description>
-                <NCSRepresentation>C, V, C</NCSRepresentation>
-                <SPName>CVC</SPName>
-                <wordFinal>false</wordFinal>
-                <wordInitial>false</wordInitial>
-            </cvSyllablePattern>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" active="true" id="ad516e02-d5ae-4c06-b643-bd3105d3abc2">
                 <description>Nasal coda</description>
                 <NCSRepresentation>C, V, N</NCSRepresentation>
                 <SPName>CVN</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" active="true" id="ef542169-8f0c-45ee-9613-0ca0efcc1ec9">
+                <description>Closed syllable pattern</description>
+                <NCSRepresentation>C, V, C</NCSRepresentation>
+                <SPName>CVC</SPName>
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </cvSyllablePattern>
@@ -89,6 +94,13 @@
                 <SPName>#CCV+hiC#</SPName>
                 <wordFinal>true</wordFinal>
                 <wordInitial>true</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="" active="true" id="66875a3c-3852-402d-8028-8e2ffbe5e796">
+                <description>empty</description>
+                <NCSRepresentation></NCSRepresentation>
+                <SPName>empty</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
             </cvSyllablePattern>
         </cvSyllablePatterns>
     </cvApproach>

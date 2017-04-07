@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.service;
 
@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 import org.controlsfx.control.StatusBar;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -61,7 +62,7 @@ public class ListWordImporter extends WordImporter {
 	//		changing the mouse cursor which has to be in a separate thread, apparently)
 	// TODO: figure out how to get JUnit to deal with a thread so we do
 	// not have two copies of the crucial code.
-	// TODO: is there a way to avoid duplicating this code when just a method call or two 
+	// TODO: is there a way to avoid duplicating this code when just a method call or two
 	//	     is what is different?
 	public void importWords(File file, String sUntested, StatusBar statusBar, ResourceBundle bundle, MainApp mainApp) {
 		mainApp.getSaveDataPeriodicallyService().cancel();
@@ -104,6 +105,6 @@ public class ListWordImporter extends WordImporter {
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 			mainApp.getSaveDataPeriodicallyService().restart();
 		});
-		new Thread(task).start();
+		Platform.runLater(task);
 	}
 }

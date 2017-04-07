@@ -4,29 +4,19 @@
 package sil.org.syllableparser.view;
 
 import java.awt.Desktop;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-import java.util.stream.Stream;
-
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.dialog.FontSelectorDialog;
 
@@ -36,42 +26,29 @@ import com.sun.javafx.application.HostServicesDelegate;
 import static javafx.geometry.Orientation.VERTICAL;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.IndexRange;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sil.org.syllableparser.ApplicationPreferences;
@@ -81,7 +58,6 @@ import sil.org.syllableparser.MainApp.TimerService;
 import sil.org.syllableparser.SyllableParserException;
 import sil.org.syllableparser.model.ApproachType;
 import sil.org.syllableparser.model.ApproachView;
-import sil.org.syllableparser.model.BackupFile;
 import sil.org.syllableparser.model.HyphenationParameters;
 import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
@@ -93,6 +69,9 @@ import sil.org.syllableparser.service.ListWordImporter;
 import sil.org.syllableparser.service.ParaTExtExportedWordListImporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsExporter;
 import sil.org.syllableparser.service.ParaTExtHyphenatedWordsImporter;
+import sil.org.syllableparser.service.ParaTExt7SegmentImporter;
+import sil.org.syllableparser.service.ParaTExtSegmentImporterNoCharactersException;
+import sil.org.syllableparser.service.SegmentImporterException;
 import sil.org.syllableparser.service.XLingPaperHyphenatedWordExporter;
 import sil.org.utility.DateTimeNormalizer;
 
@@ -179,6 +158,8 @@ public class RootLayoutController implements Initializable {
 	private MenuItem menuItemEditRemove;
 	@FXML
 	private MenuItem menuItemSyllabify;
+	@FXML
+	private MenuItem menuItemTryAWord;
 	@FXML
 	private MenuItem menuItemConvertPredictedToCorrectSyllabification;
 	@FXML
@@ -280,6 +261,11 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
+	private void handleTryAWord() {
+		currentApproachController.handleTryAWord();
+	}
+
+	@FXML
 	private void handleConvertPredictedToCorrectSyllabification() {
 		currentApproachController.handleConvertPredictedToCorrectSyllabification();
 	}
@@ -294,21 +280,36 @@ public class RootLayoutController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(bundle.getString("program.name"));
 		alert.setHeaderText(bundle.getString("label.clearwords"));
-		alert.setContentText(bundle.getString("label.areyousure"));
+		alert.setContentText(bundle.getString("label.backupnowbeforeclearwords"));
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 
-		ButtonType buttonYes = ButtonType.YES;
-		ButtonType buttonNo = ButtonType.NO;
-		ButtonType buttonCancel = ButtonType.CANCEL;
+		ButtonType buttonTypeYes = ButtonType.YES;
+		ButtonType buttonTypeNo = ButtonType.NO;
+		ButtonType buttonTypeCancel = ButtonType.CANCEL;
 
-		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonYes) {
-			languageProject.getWords().clear();
+		if (result.get() == buttonTypeYes) {
+			handleBackUpProject();
+			clearAllWords();
+		} else if (result.get() == buttonTypeNo) {
+			clearAllWords();
 		}
 
+	}
+
+	private void clearAllWords() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				languageProject.getWords().clear();
+				return null;
+			}
+		};
+		Platform.runLater(task);
 	}
 
 	@FXML
@@ -316,22 +317,49 @@ public class RootLayoutController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(bundle.getString("program.name"));
 		alert.setHeaderText(bundle.getString("label.clearcorrectsyllabificationinwords"));
-		alert.setContentText(bundle.getString("label.areyousure"));
+		alert.setContentText(bundle.getString("label.backupnowbeforeclearcorrectsyllabification"));
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 
-		ButtonType buttonYes = ButtonType.YES;
-		ButtonType buttonNo = ButtonType.NO;
-		ButtonType buttonCancel = ButtonType.CANCEL;
+		ButtonType buttonTypeYes = ButtonType.YES;
+		ButtonType buttonTypeNo = ButtonType.NO;
+		ButtonType buttonTypeCancel = ButtonType.CANCEL;
 
-		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonYes) {
-			CorrectSyllabificationCleaner cleaner = new CorrectSyllabificationCleaner(languageProject.getWords());
-			cleaner.ClearAllCorrectSyllabificationFromWords();
+		if (result.get() == buttonTypeYes) {
+			handleBackUpProject();
+			clearAllCorrectSyllabifications();
+		} else if (result.get() == buttonTypeNo) {
+			clearAllCorrectSyllabifications();
 		}
 
+	}
+
+	protected void localizeConfirmationButtons(Alert alert, ButtonType buttonTypeYes,
+			ButtonType buttonTypeNo, ButtonType buttonTypeCancel) {
+		Button buttonYes = (Button) alert.getDialogPane().lookupButton(buttonTypeYes);
+		buttonYes.setText(bundle.getString("label.yes"));
+		Button buttonNo = (Button) alert.getDialogPane().lookupButton(buttonTypeNo);
+		buttonNo.setText(bundle.getString("label.no"));
+		Button buttonCancel = (Button) alert.getDialogPane().lookupButton(buttonTypeCancel);
+		buttonCancel.setText(bundle.getString("label.cancel"));
+		// debug says that this has changed at this point, but it still shows with English...
+	}
+
+	public void clearAllCorrectSyllabifications() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				CorrectSyllabificationCleaner cleaner = new CorrectSyllabificationCleaner(
+						languageProject.getWords());
+				cleaner.ClearAllCorrectSyllabificationFromWords();
+				return null;
+			}
+		};
+		Platform.runLater(task);
 	}
 
 	@FXML
@@ -376,7 +404,8 @@ public class RootLayoutController implements Initializable {
 		File file = new File(Constants.ASHENINKA_STARTER_FILE);
 		mainApp.loadLanguageData(file);
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
-		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, true, syllableParserFilterDescription);
+		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, true,
+				syllableParserFilterDescription);
 		if (timer != null) {
 			mainApp.getSaveDataPeriodicallyService().restart();
 		}
@@ -459,7 +488,7 @@ public class RootLayoutController implements Initializable {
 			String sDirectoryPath = file.getParent();
 			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 			mainApp.updateStageTitle(file);
-		} else if (fCloseIfCanceled){
+		} else if (fCloseIfCanceled) {
 			// probably first time running and user chose to open a file
 			// but then canceled. We quit.
 			System.exit(0);
@@ -485,12 +514,13 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleSaveAs() {
-		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false, syllableParserFilterDescription);
+		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false,
+				syllableParserFilterDescription);
 	}
 
 	@FXML
 	private void handleBackUpProject() {
-		String title = bundle.getString("menu.projectmanagementbackup");
+		String title = bundle.getString("label.backupproject");
 		String contentText = bundle.getString("label.backupcomment");
 		TextInputDialog dialog = ControllerUtilities
 				.getTextInputDialog(mainApp, title, contentText);
@@ -708,6 +738,11 @@ public class RootLayoutController implements Initializable {
 				}
 			}
 		}
+	}
+
+	@FXML
+	private void handleSuggestedSteps() {
+		showFileToUser("doc/SuggestedSteps.pdf");
 	}
 
 	@FXML
@@ -937,6 +972,59 @@ public class RootLayoutController implements Initializable {
 				Constants.PARATEXT_HYPHENATED_WORDS_FILE, Constants.TEXT_FILE_EXTENSION);
 		if (file != null) {
 			importer.importWords(file, sLabelUntested, statusBar, bundle, mainApp);
+		}
+	}
+
+	@FXML
+	private void handleImportFLExPhonemes() {
+		mainApp.showNotImplementedYet();
+	}
+
+	@FXML
+	private void handleImportParaTExtCharacters() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(bundle.getString("program.name"));
+		alert.setHeaderText(bundle.getString("label.importparatextcharacters"));
+		alert.setContentText(bundle.getString("label.backupnowbeforeimport"));
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(mainApp.getNewMainIconImage());
+
+		ButtonType buttonYes = ButtonType.YES;
+		ButtonType buttonNo = ButtonType.NO;
+		ButtonType buttonCancel = ButtonType.CANCEL;
+
+		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonYes) {
+			handleBackUpProject();
+			importParaTExtCharacters();
+		} else if (result.get() == buttonNo) {
+			importParaTExtCharacters();
+		}
+	}
+
+	public void importParaTExtCharacters() {
+		Stage stage;
+		ParaTExt7SegmentImporter importer = new ParaTExt7SegmentImporter(languageProject);
+		File file = ControllerUtilities.getFileToOpen(mainApp, "*.lds", "ParaTExt Parameters",
+				"*.lds");
+		if (file != null) {
+			try {
+				importer.importSegments(file);
+			} catch (SegmentImporterException e) {
+				if (e instanceof ParaTExtSegmentImporterNoCharactersException) {
+					ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
+					// ptex.getsFileName()
+					Alert errorAlert = new Alert(AlertType.ERROR);
+					errorAlert.setTitle(bundle.getString("program.name"));
+					errorAlert.setHeaderText(bundle
+							.getString("label.importparatextcharacterserror"));
+					stage = (Stage) errorAlert.getDialogPane().getScene().getWindow();
+					stage.getIcons().add(mainApp.getNewMainIconImage());
+					errorAlert.showAndWait();
+				}
+			}
 		}
 	}
 

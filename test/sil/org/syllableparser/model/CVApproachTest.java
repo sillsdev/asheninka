@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.model;
 
@@ -55,10 +55,10 @@ public class CVApproachTest {
 	// make sure the setup is what we expect
 	@Test
 	public void getActiveItemsTest() {
-		assertEquals("CV natural classes size", 5, cva.getCVNaturalClasses().size());
-		assertEquals("Active CV natural classes size", 4, cva.getActiveCVNaturalClasses().size());
-		
-		assertEquals("CV patterns size", 8, cva.getCVSyllablePatterns().size());
+		assertEquals("CV natural classes size", 6, cva.getCVNaturalClasses().size());
+		assertEquals("Active CV natural classes size", 5, cva.getActiveCVNaturalClasses().size());
+
+		assertEquals("CV patterns size", 9, cva.getCVSyllablePatterns().size());
 		assertEquals("Active CV patterns size", 7, cva.getActiveCVSyllablePatterns().size());
 	}
 }

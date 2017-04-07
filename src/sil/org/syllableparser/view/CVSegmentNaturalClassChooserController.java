@@ -1,14 +1,15 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Segment;
@@ -59,7 +60,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 			}
 		}
 	}
-	
+
 	@FXML
 	private TableView<CVSegmentOrNaturalClass> cvSegmentOrNaturalClassTable;
 	@FXML
@@ -71,6 +72,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 	Stage dialogStage;
 	private boolean okClicked = false;
 	private MainApp mainApp;
+	private ApplicationPreferences preferences;
 
 	private CVSegmentOrNaturalClass currentSegmentOrNaturalClass;
 	private ObservableList<CVSegmentOrNaturalClass> cvSegmentsOrNaturalClasses = FXCollections
@@ -107,11 +109,14 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 
 	/**
 	 * Sets the stage of this dialog.
-	 * 
+	 *
 	 * @param dialogStage
 	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
+		this.dialogStage.setOnCloseRequest(event -> {
+			handleCancel();
+		});
 	}
 
 	public void setData(CVApproach cvApproachData) {
@@ -160,7 +165,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 
 	/**
 	 * Returns true if the user clicked OK, false otherwise.
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isOkClicked() {
@@ -195,7 +200,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		}
 
 		okClicked = true;
-		dialogStage.close();
+		handleCancel();
 	}
 
 	/**
@@ -203,11 +208,14 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 	 */
 	@FXML
 	private void handleCancel() {
+		preferences.setLastWindowParameters(ApplicationPreferences.LAST_CV_SEGMENT_OR_NATURAL_CLASS, dialogStage);
 		dialogStage.close();
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+		preferences = mainApp.getApplicationPreferences();
+		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_CV_SEGMENT_OR_NATURAL_CLASS, dialogStage, 400., 400.);
 	}
 
 	/**

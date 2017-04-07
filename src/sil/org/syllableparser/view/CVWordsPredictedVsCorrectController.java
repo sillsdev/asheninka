@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.view;
 
@@ -87,7 +87,7 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * 
+	 *
 	 * @param words
 	 *            TODO
 	 * @param cvApproachController
@@ -118,7 +118,7 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * sil.org.syllableparser.view.ApproachEditorController#handleInsertNewItem
 	 * ()
@@ -130,7 +130,7 @@ public class CVWordsPredictedVsCorrectController extends SylParserBaseController
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * sil.org.syllableparser.view.ApproachEditorController#handleRemoveItem()
 	 */

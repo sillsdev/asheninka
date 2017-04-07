@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.service;
 
@@ -80,13 +80,13 @@ public class CVApproachLanguageComparerTest {
 		// natural classes
 		ObservableList<CVNaturalClass> naturalClasses;
 		naturalClasses = cva1.getCVNaturalClasses();
-		assertEquals("Natural Classes size", 5, naturalClasses.size());
+		assertEquals("Natural Classes size", 6, naturalClasses.size());
 		naturalClasses = cva2.getCVNaturalClasses();
 		assertEquals("Natural Classes size", 3, naturalClasses.size());
 		// syllable patterns
 		ObservableList<CVSyllablePattern> patterns;
 		patterns = cva1.getCVSyllablePatterns();
-		assertEquals("CV patterns size", 8, patterns.size());
+		assertEquals("CV patterns size", 9, patterns.size());
 		patterns = cva2.getCVSyllablePatterns();
 		assertEquals("CV patterns size", 4, patterns.size());
 		// words
@@ -114,6 +114,7 @@ public class CVApproachLanguageComparerTest {
 		compareSameSyllablePatterns(comparer);
 		compareSameWords(comparer);
 	}
+
 	protected void compareSegments(CVApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
 		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
@@ -142,7 +143,7 @@ public class CVApproachLanguageComparerTest {
 	protected void compareNaturalClasses(CVApproachLanguageComparer comparer) {
 		comparer.compareNaturalClasses();
 		SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
-		assertEquals("number of different natural classes", 5, diffs.size());
+		assertEquals("number of different natural classes", 6, diffs.size());
 		List<DifferentCVNaturalClass> listOfDiffs = new ArrayList<DifferentCVNaturalClass>();
 		listOfDiffs.addAll(diffs);
 		DifferentCVNaturalClass diffNaturalClass = listOfDiffs.get(1);
@@ -151,8 +152,8 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("second's 2 is [C]", "C",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getNCName());
 		assertEquals(
-				"second's 1's reps are 'b, ch, d, f, g, h, k, l, p, s, sh, t, v, w, x, y, z, N'",
-				"b, ch, d, f, g, h, k, l, p, s, sh, t, v, w, x, y, z, N",
+				"second's 1's reps are 'b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, S'",
+				"b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, S",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getSNCRepresentation());
 		assertEquals(
 				"second's 2's reps are '', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z'",
@@ -175,27 +176,32 @@ public class CVApproachLanguageComparerTest {
 	protected void compareSyllablePatterns(CVApproachLanguageComparer comparer) {
 		comparer.compareSyllablePatterns();
 		SortedSet<DifferentCVSyllablePattern> diffs = comparer.getSyllablePatternsWhichDiffer();
-		assertEquals("number of different syllable patterns", 9, diffs.size());
+		assertEquals("number of different syllable patterns", 10, diffs.size());
 		List<DifferentCVSyllablePattern> listOfDiffs = new ArrayList<DifferentCVSyllablePattern>();
 		listOfDiffs.addAll(diffs);
 		DifferentCVSyllablePattern diffSyllablePattern = listOfDiffs.get(3);
-		assertEquals("fourth's 1 is 'CV'", "CV", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
-		assertEquals("fourth's 2 is 'CV'", "CV", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
+		assertEquals("fourth's 1 is 'CV'", "CV",
+				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
+		assertEquals("fourth's 2 is 'CV'", "CV",
+				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
 		assertEquals("fourth's 1's natural classes are 'C, V'", "C, V",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getNCSRepresentation());
 		assertEquals("fourth's 2's natural classes are 'C, v'", "C, v",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getNCSRepresentation());
 		diffSyllablePattern = listOfDiffs.get(7);
 		assertNull("eighth's 1 is null", diffSyllablePattern.getObjectFrom1());
-		assertEquals("eighth's 2 is 'V'", "V", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
+		assertEquals("eighth's 2 is 'V'", "V",
+				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());
 		assertEquals("eighth's 2's natural classesare 'V'", "V",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getNCSRepresentation());
 		diffSyllablePattern = listOfDiffs.get(4);
-		assertEquals("fifth's 1 is 'CVCC#'", "CVCC#", ((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
+		assertEquals("fifth's 1 is 'CVCC#'", "CVCC#",
+				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getSPName());
 		assertNull("fifth's 2 is null", diffSyllablePattern.getObjectFrom2());
 		assertEquals("fifth's 1's natural classes are 'C, V, C, C,#'", "C, V, C, C, #",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getNCSRepresentation());
 	}
+
 	protected void compareWords(CVApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
@@ -223,7 +229,7 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("third's 1's parse is ''", "",
 				((Word) diffWord.getObjectFrom1()).getCVPredictedSyllabification());
 	}
-	
+
 	@Test
 	public void compareSyllablePatternOrderTest() {
 		// setup
@@ -239,11 +245,13 @@ public class CVApproachLanguageComparerTest {
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		CVApproach cva4 = languageProject4.getCVApproach();
 		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva3, cva4);
-		// test (we only use this as a way to tell if the the two orders are the same or not)
+		// test (we only use this as a way to tell if the the two orders are the
+		// same or not)
 		comparer.compareSyllablePatternOrder();
 		LinkedList<Diff> differences = comparer.getSyllablePatternOrderDifferences();
 		assertEquals(7, differences.size());
 	}
+
 	protected void compareSameSegments(CVApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
 		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
@@ -261,12 +269,13 @@ public class CVApproachLanguageComparerTest {
 		SortedSet<DifferentCVSyllablePattern> diffs = comparer.getSyllablePatternsWhichDiffer();
 		assertEquals("number of different syllable patterns", 0, diffs.size());
 	}
+
 	protected void compareSameWords(CVApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
 		assertEquals("number of different words", 0, diffs.size());
 	}
-	
+
 	@Test
 	public void compareSameSyllablePatternOrderTest() {
 		// setup
@@ -277,7 +286,8 @@ public class CVApproachLanguageComparerTest {
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		CVApproach cva3 = languageProject3.getCVApproach();
 		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva3, cva3);
-		// test (we only use this as a way to tell if the the two orders are the same or not)
+		// test (we only use this as a way to tell if the the two orders are the
+		// same or not)
 		comparer.compareSyllablePatternOrder();
 		LinkedList<Diff> differences = comparer.getSyllablePatternOrderDifferences();
 		assertEquals(1, differences.size());

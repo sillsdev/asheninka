@@ -24,6 +24,7 @@ import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSyllablePattern;
+import sil.org.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -76,14 +77,7 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void setDataSet1Info(String dataSet1Info) {
-		this.dataSet1Info = handleFileSeparator(dataSet1Info);
-	}
-
-	protected String handleFileSeparator(String sPath) {
-		if (File.separator.equals("\\")) {
-			sPath = sPath.replaceAll("\\\\", "/");
-		}
-		return sPath;
+		this.dataSet1Info = StringUtilities.adjustForWindowsFileSeparator(dataSet1Info);
 	}
 
 	public String getDataSet2Info() {
@@ -91,7 +85,7 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void setDataSet2Info(String dataSet2Info) {
-		this.dataSet2Info = handleFileSeparator(dataSet2Info);
+		this.dataSet2Info = StringUtilities.adjustForWindowsFileSeparator(dataSet2Info);
 	}
 
 	public SortedSet<DifferentSegment> getSegmentsWhichDiffer() {
