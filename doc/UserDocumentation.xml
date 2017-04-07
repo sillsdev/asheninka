@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->30 March 2017</date
+>7 April 2017</date
 ><version
->0.4.0 Alpha</version
+>0.4.1 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -1653,7 +1653,10 @@ type="tAsheninka"
 >This syllable parsing program is called <object
 type="tAsheninka"
 ></object
-> for historic reasons.</p
+> for historic reasons.  (The word is pronounced <langData
+lang="lVernacular"
+>a.ˈʃɛ.nɪŋ.ka</langData
+>.)</p
 ><p
 >In late 1983 my family and I were living in the jungles of Peru and David Payne came and asked me if I would create a <object
 type="tTool"
