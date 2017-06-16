@@ -9,12 +9,7 @@ automaticallywrapinterlinears="yes"
 version="2.20.0"
 ><frontMatter
 ><title
-><object
-type="tAsheninka"
-></object
-> Overview</title
-><subtitle
->A Syllable Parser</subtitle
+>Introduction to Syllabification</title
 ><author
 >H. Andrew Black</author
 ><affiliation
@@ -22,7 +17,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->30 March 2017</date
+>16 June 2017</date
 ><contents
 ></contents
 ></frontMatter
@@ -465,7 +460,10 @@ lang="lIPA"
 > is more sonorous than <langData
 lang="lIPA"
 >t</langData
->, both could be in the coda of the middle syllable. It is also possible for there to be a syllable break between the <langData
+>, both could be in the coda of the first syllable (i.e., <langData
+lang="lIPA"
+>fɹænt.ɪk)</langData
+>. It is also possible for there to be a syllable break between the <langData
 lang="lIPA"
 >n</langData
 > and <langData
@@ -477,7 +475,10 @@ lang="lIPA"
 > in the coda of the first syllable and the <langData
 lang="lIPA"
 >t</langData
-> in the onset of the final syllable. Which is to be preferred?</p
+> in the onset of the final syllable (i.e., <langData
+lang="lIPA"
+>fɹæn.tɪk)</langData
+>. Which is to be preferred?</p
 ></section3
 ><section3
 id="sOnsetPrinciple"
