@@ -49,6 +49,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	private CVNaturalClass removeNC;
 	private CVNaturalClass wordBoundaryNC;
 	private String sSequencePrompt;
+	ResourceBundle bundle;
 	// want unique strings for the next two so we can be sure we get the correct
 	// one
 	private static String kSpecialRemoveCode = "Asheninka!@#RemoveCode";
@@ -59,7 +60,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
-
+		bundle = resources;
 		removeNC = new CVNaturalClass(resources.getString("cv.view.syllablepatterns.remove"), null,
 				"", kSpecialRemoveCode);
 		wordBoundaryNC = new CVNaturalClass(
@@ -72,7 +73,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 			ObservableList<CVNaturalClass> ol = FXCollections.observableArrayList();
 			comboBoxDataList.add(ol);
 			cb.setItems(comboBoxDataList.get(i++));
-			cb.setCellFactory(renderNCsInComboBox());
+			cb.setCellFactory(renderNCsInComboBox(cb));
 			cb.setConverter(renderSelectedNCInCombox());
 			if (i < comboBoxList.size()) {
 				ComboBox<CVNaturalClass> cbNext = comboBoxList.get(i);
@@ -210,7 +211,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	}
 
 	// Define rendering of the list of values in ComboBox drop down.
-	protected Callback<ListView<CVNaturalClass>, ListCell<CVNaturalClass>> renderNCsInComboBox() {
+	protected Callback<ListView<CVNaturalClass>, ListCell<CVNaturalClass>> renderNCsInComboBox(ComboBox<CVNaturalClass> cb) {
 		return (comboBox) -> {
 			return new ListCell<CVNaturalClass>() {
 				@Override
@@ -225,6 +226,12 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 							setText(item.getNCName() + " - " + item.getDescription());
 						} else {
 							setText(item.getNCName());
+						}
+						// Include the "Remove' option only when some item has been selected
+						CVNaturalClass selectedNaturalClass = (CVNaturalClass) cb.getSelectionModel()
+								.getSelectedItem();
+						if (selectedNaturalClass != null) {
+							addRemoveOptionToComboBox(cb);
 						}
 						if (item.isActive()) {
 							this.setDisable(false);
@@ -256,7 +263,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 			}
 		};
 	}
-
+	
 	/**
 	 * Sets the stage of this dialog.
 	 * 
