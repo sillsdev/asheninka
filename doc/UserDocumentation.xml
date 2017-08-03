@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->7 April 2017</date
+>3 August 2017</date
 ><version
->0.4.1 Alpha</version
+>0.5.0 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -127,7 +127,7 @@ type="tAsheninka"
 ><p
 >When you want to create a new project, use <object
 type="tMenuItem"
->File / New</object
+>File / New Project</object
 > menu item or click on the <img
 src="resources/FileNew.png"
 ></img
@@ -160,7 +160,7 @@ type="tAsheninka"
 ></object
 >, use the <object
 type="tMenuItem"
->File / Open...</object
+>File / Open Project...</object
 > menu item or click on the <img
 src="resources/FileOpen.png"
 ></img
@@ -179,7 +179,7 @@ type="tAsheninka"
 ></object
 > will automatically save your work about every 30 seconds, you can also use the <object
 type="tMenuItem"
->File / Save</object
+>File / Save Project</object
 > menu item or click on the <img
 src="resources/Save.png"
 ></img
@@ -195,7 +195,7 @@ term="iProjectSaveAs"
 ></indexedItem
 >When you decide to save the current project with a different name, use the <object
 type="tMenuItem"
->File / Save As...</object
+>File / Save Project As...</object
 > menu item. The resulting file will have all the data that the original project did except it will have a new name.</p
 ></section2
 ><section2
@@ -1653,7 +1653,7 @@ type="tAsheninka"
 >This syllable parsing program is called <object
 type="tAsheninka"
 ></object
-> for historic reasons.  (The word is pronounced <langData
+> for historic reasons. (The word is pronounced <langData
 lang="lVernacular"
 >a.ˈʃɛ.nɪŋ.ka</langData
 >.)</p

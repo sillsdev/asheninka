@@ -126,7 +126,7 @@ public class MainApp extends Application {
 		applicationPreferences.setLastLocaleLanguage(locale.getLanguage());
 		applicationPreferences.setLastApproachUsed(controller.getApproachUsed());
 		applicationPreferences.setLastApproachViewUsed(controller.getViewUsed());
-		controller.handleSave();
+		controller.handleSaveProject();
 		// TODO: add last file opened
 	}
 
@@ -169,7 +169,10 @@ public class MainApp extends Application {
 			if (file != null) {
 				loadLanguageData(file);
 			} else {
-				askUserForNewOrToOpenExisingFile(bundle, controller);
+				boolean fSucceeded = askUserForNewOrToOpenExistingFile(bundle, controller);
+				if (!fSucceeded) {
+					System.exit(0);
+				}
 			}
 
 			updateStatusBarNumberOfItems("");
@@ -189,7 +192,7 @@ public class MainApp extends Application {
 		menuBar.useSystemMenuBarProperty().set(true);
 	}
 
-	protected void askUserForNewOrToOpenExisingFile(ResourceBundle bundle,
+	protected boolean askUserForNewOrToOpenExistingFile(ResourceBundle bundle,
 			RootLayoutController controller) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(bundle.getString("program.name"));
@@ -208,15 +211,21 @@ public class MainApp extends Application {
 		alert.getButtonTypes().setAll(buttonCreateNewProject, buttonOpenExistingProject,
 				buttonCancel);
 
+		boolean fSucceeded = true;
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonCreateNewProject) {
-			controller.handleNew();
+			controller.handleNewProject();
+			if (languageProject.getActiveSegmentsInInventory().size() == 0) {
+				// The user canceled creating a new project
+				fSucceeded = false;
+			}
 		} else if (result.get() == buttonOpenExistingProject) {
 			controller.doFileOpen(true);
 		} else {
 			// ... user chose CANCEL or closed the dialog
 			System.exit(0);
 		}
+		return fSucceeded;
 	}
 
 	/**

@@ -108,7 +108,7 @@ public class ControllerUtilities {
 		return fileChooser;
 	}
 
-	public static void doFileSaveAs(MainApp mainApp, Locale locale,
+	public static File doFileSaveAs(MainApp mainApp, Locale locale,
 			Boolean fForceSave, String syllableParserFilterDescription) {
 		FileChooser fileChooser = ControllerUtilities.initFileChooser(mainApp,
 				syllableParserFilterDescription, Constants.ASHENINKA_DATA_FILE_EXTENSIONS);
@@ -134,6 +134,7 @@ public class ControllerUtilities {
 		} else {
 			file = askUserToSaveFile(mainApp, fileChooser);
 		}
+		return file;
 	}
 
 	public static File askUserToSaveFile(MainApp mainApp, FileChooser fileChooser) {
