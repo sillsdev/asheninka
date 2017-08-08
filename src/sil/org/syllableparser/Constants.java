@@ -16,6 +16,7 @@ public class Constants {
 	// program wide constants
 	public static final String VERSION_NUMBER = "0.4.1.0 Alpha";
 	public static final int SAVE_DATA_PERIODICITY = 15;
+	public static final int CURRENT_DATABASE_VERSION = 2;
 
 	// file-related constants
 	public static final String ASHENINKA_BACKUP_FILE_EXTENSION = "ashebackup";
@@ -39,6 +40,7 @@ public class Constants {
 	public static final String TEXT_FILE_EXTENSION = "*.txt";
 	public static final String UTF8_ENCODING = "UTF8";
 	public static final String XML_FILE_EXTENSION = ".xml";
+	public static final String MIGRATION_XSLT_FILE_NAME = "resources/DataMigration";
 
 	// chooser related constants
 	public static final String WORD_BOUNDARY_SYMBOL = "#";
@@ -66,6 +68,10 @@ public class Constants {
 	public static final String UNIT_TEST_DATA_FILE_3 = "test/sil/org/syllableparser/testData/CVTestData3.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_4_NAME = "test/sil/org/syllableparser/testData/CVTestData4.";
 	public static final String UNIT_TEST_DATA_FILE_4 = "test/sil/org/syllableparser/testData/CVTestData4.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_VERSION_000 = "test/sil/org/syllableparser/testData/CVTestDataVersion000.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_VERSION_001 = "test/sil/org/syllableparser/testData/CVTestDataVersion001.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_VERSION_002 = "test/sil/org/syllableparser/testData/CVTestDataVersion002.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_VERSION_2 = "test/sil/org/syllableparser/testData/CVTestDataVersion2.ashedata";
 
 	// Text colors
 	public static final Color ACTIVE = Color.BLACK;

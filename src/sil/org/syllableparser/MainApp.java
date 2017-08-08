@@ -166,7 +166,7 @@ public class MainApp extends Application {
 
 			// Try to load last opened file.
 			File file = applicationPreferences.getLastOpenedFile();
-			if (file != null) {
+			if (file != null && file.exists()) {
 				loadLanguageData(file);
 			} else {
 				boolean fSucceeded = askUserForNewOrToOpenExistingFile(bundle, controller);

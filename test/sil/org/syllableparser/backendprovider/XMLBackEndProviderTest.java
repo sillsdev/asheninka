@@ -19,6 +19,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sil.org.syllableparser.Constants;
+import sil.org.syllableparser.model.Environment;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -60,12 +62,17 @@ public class XMLBackEndProviderTest {
 	public void checkLoadedData() {
 		languageProject = xmlBackEndProvider.getLanguageProject();
 		assertNotNull(languageProject);
+		assertEquals(0, languageProject.getDatabaseVersion());
 		CVApproach cva = languageProject.getCVApproach();
 		assertEquals(27, languageProject.getSegmentInventory().size());
 		assertEquals(6, cva.getCVNaturalClasses().size());
 		assertEquals(9, cva.getCVSyllablePatterns().size());
 		ObservableList<Word> words = languageProject.getWords();
 		assertEquals(10025, words.size());
+		ObservableList<Environment> environments = languageProject.getEnvironments();
+		assertEquals(0, environments.size());
+		ObservableList<Grapheme> graphemes = languageProject.getGraphemes();
+		assertEquals(0, graphemes.size());
 	}
 
 	@Test

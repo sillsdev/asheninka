@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,6 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -40,7 +42,10 @@ public class LanguageProject {
 	private HyphenationParametersListWord hyphenationParametersListWord;
 	private HyphenationParametersParaTExt hyphenationParametersParaTExt;
 	private HyphenationParametersXLingPaper hyphenationParametersXLingPaper;
-
+	private int databaseVersion;
+	private ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
+	private ObservableList<Environment> environments = FXCollections.observableArrayList();
+	
 	public LanguageProject() {
 		super();
 		cvApproach = new CVApproach();
@@ -59,6 +64,18 @@ public class LanguageProject {
 		cvApproach.clear();
 		segmentInventory.clear();
 		words.clear();
+		graphemes.clear();
+		environments.clear();
+	}
+
+	public int getDatabaseVersion() {
+		return databaseVersion;
+	}
+
+	//@XmlElement(name="databaseVersion")
+	@XmlAttribute(name="databaseVersion")
+	public void setDatabaseVersion(int databaseVersion) {
+		this.databaseVersion = databaseVersion;
 	}
 
 	public CVApproach getCVApproach() {
@@ -108,6 +125,25 @@ public class LanguageProject {
 		this.words = words;
 	}
 
+	@XmlElementWrapper(name = "graphemes")
+	@XmlElement(name = "grapheme")
+	public ObservableList<Grapheme> getGraphemes() {
+		return graphemes;
+	}
+
+	public void setGraphemes(ObservableList<Grapheme> graphemes) {
+		this.graphemes = graphemes;
+	}
+
+	@XmlElementWrapper(name = "environments")
+	@XmlElement(name = "environment")
+	public ObservableList<Environment> getEnvironments() {
+		return environments;
+	}
+
+	public void setEnvironments(ObservableList<Environment> environments) {
+		this.environments = environments;
+	}
 	public String getParaTExtHyphenatedWordsPreamble() {
 		return sParaTExtHyphenatedWordsPreamble;
 	}
@@ -120,15 +156,7 @@ public class LanguageProject {
 	 * @param languageProjectLoaded
 	 */
 	public void load(LanguageProject languageProjectLoaded) {
-//		String fontFamily = languageProjectLoaded.getVernacularFontFamily();
-//		Font font = vernacularFont;
-//		double fontSize = languageProjectLoaded.getVernacularFontSize();
-//		String fontType = languageProjectLoaded.getVernacularFontType();
-//		String defaultFont = "Charis SIL";
-//		setFontInfo(fontFamily, fontSize, fontType, defaultFont);
-//		setVernacularFontFamily(fontFamily);
-//		vernacularFont = new Font("Charis SIL", 12);
-		
+		databaseVersion = languageProjectLoaded.getDatabaseVersion();
 		cvApproach.load(languageProjectLoaded.getCVApproach());
 		cvApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
@@ -139,6 +167,14 @@ public class LanguageProject {
 		ObservableList<Word> wordsLoadedData = languageProjectLoaded.getWords();
 		for (Word word : wordsLoadedData) {
 			words.add(word);
+		}
+		ObservableList<Grapheme> graphemesLoadedData = languageProjectLoaded.getGraphemes();
+		for (Grapheme grapheme : graphemesLoadedData) {
+			graphemes.add(grapheme);
+		}
+		ObservableList<Environment> environmentsLoadedData = languageProjectLoaded.getEnvironments();
+		for (Environment environment : environmentsLoadedData) {
+			environments.add(environment);
 		}
 		analysisLanguage = languageProjectLoaded.getAnalysisLanguage();
 		vernacularLanguage = languageProjectLoaded.getVernacularLanguage();
