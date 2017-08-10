@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
+import javax.xml.bind.annotation.XmlTransient;
 
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 
@@ -86,6 +87,7 @@ public class Environment extends SylParserObject {
 		return leftContext;
 	}
 
+	@XmlTransient
 	public void setLeftContext(EnvironmentContext leftContext) {
 		this.leftContext = leftContext;
 	}
@@ -94,6 +96,7 @@ public class Environment extends SylParserObject {
 		return rightContext;
 	}
 
+	@XmlTransient
 	public void setRightContext(EnvironmentContext rightContext) {
 		this.rightContext = rightContext;
 	}

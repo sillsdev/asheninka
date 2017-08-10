@@ -10,3 +10,4 @@ build/externalLibs
 build/project
 resources/images
 oxygen
+*- Copy.ashedata

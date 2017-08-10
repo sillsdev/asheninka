@@ -106,6 +106,7 @@ public class DatabaseMigrator {
 			}
 			Files.copy(Paths.get(file.getPath()), Paths.get(databaseFile.getPath()),
 					StandardCopyOption.REPLACE_EXISTING);
+			// TODO: delete the temp files
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,9 +145,7 @@ public class DatabaseMigrator {
 			transformer.transform(source, result);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// HandleExceptionMessage.show("Failed to transform",
-			// e.getMessage(), true);
-			System.exit(1);
+			HandleExceptionMessage.show("Migration Ereror", "Failed to transform", e.getMessage(), true);
 		}
 		return tempSaveFile;
 	}

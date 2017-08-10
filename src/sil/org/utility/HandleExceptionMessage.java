@@ -15,11 +15,17 @@ import javafx.scene.control.Alert.AlertType;
  */
 public class HandleExceptionMessage {
 
-	public static void show(String sHeader, String sStackTrace, boolean fStop) {
+	/**
+	 * @param sErrorKind
+	 * @param sHeader
+	 * @param sContent
+	 * @param fStop
+	 */
+	public static void show(String sErrorKind, String sHeader, String sContent, boolean fStop) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Exception Found");
+		alert.setTitle(sErrorKind);
 		alert.setHeaderText(sHeader);
-		alert.setContentText(sStackTrace);
+		alert.setContentText(sContent);
 
 		alert.showAndWait();
 		if (fStop) {

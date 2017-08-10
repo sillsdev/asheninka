@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 
 import java.util.UUID;
 
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -43,9 +44,9 @@ public class SylParserObjectTest {
 	public void findIndexInListByUuidTest() {
 		ObservableList<Segment> cvSegmentInventory = FXCollections.observableArrayList();
 		ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
-		Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
-		Segment segB = new Segment("b", "b B", "voiced bilabial stop");
-		Segment segD = new Segment("d", "d D", "voiced alveolar stop");
+		Segment segA = new Segment("a", "low mid unrounded vowel", new SimpleListProperty<Grapheme>(), "a A");
+		Segment segB = new Segment("b", "voiced bilabial stop", new SimpleListProperty<Grapheme>(), "b B");
+		Segment segD = new Segment("d", "voiced alveolar stop", new SimpleListProperty<Grapheme>(), "d D");
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);
 		cvSegmentInventory.add(segD);

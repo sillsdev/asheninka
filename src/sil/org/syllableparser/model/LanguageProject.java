@@ -72,7 +72,6 @@ public class LanguageProject {
 		return databaseVersion;
 	}
 
-	//@XmlElement(name="databaseVersion")
 	@XmlAttribute(name="databaseVersion")
 	public void setDatabaseVersion(int databaseVersion) {
 		this.databaseVersion = databaseVersion;
@@ -144,6 +143,7 @@ public class LanguageProject {
 	public void setEnvironments(ObservableList<Environment> environments) {
 		this.environments = environments;
 	}
+	
 	public String getParaTExtHyphenatedWordsPreamble() {
 		return sParaTExtHyphenatedWordsPreamble;
 	}

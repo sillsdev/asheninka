@@ -7,6 +7,7 @@
 package sil.org.syllableparser.model;
 
 import static org.junit.Assert.*;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,7 +15,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sil.org.syllableparser.model.cvapproach.*;;
+import sil.org.syllableparser.model.cvapproach.*;
+
+;
 
 /**
  * @author Andy Black
@@ -29,9 +32,30 @@ public class CVSegmentOrNaturalClassTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
-		Segment segB = new Segment("b", "b B", "voiced bilabial stop");
-		Segment segD = new Segment("d", "d D", "voiced alveolar stop");
+		Grapheme aLower = new Grapheme("a", "lowercase a", new SimpleListProperty<Environment>(),
+				"");
+		Grapheme aUpper = new Grapheme("A", "uppercase a", new SimpleListProperty<Environment>(),
+				"");
+		Grapheme bLower = new Grapheme("b", "lowercase b", new SimpleListProperty<Environment>(),
+				"");
+		Grapheme bUpper = new Grapheme("B", "uppercase b", new SimpleListProperty<Environment>(),
+				"");
+		Grapheme dLower = new Grapheme("d", "lowercase d", new SimpleListProperty<Environment>(),
+				"");
+		Grapheme dUpper = new Grapheme("D", "uppercase d", new SimpleListProperty<Environment>(),
+				"");
+		SimpleListProperty<Grapheme> aGraphemes = new SimpleListProperty<Grapheme>();
+		aGraphemes.add(aLower);
+		aGraphemes.add(aUpper);
+		SimpleListProperty<Grapheme> bGraphemes = new SimpleListProperty<Grapheme>();
+		bGraphemes.add(bLower);
+		bGraphemes.add(bUpper);
+		SimpleListProperty<Grapheme> dGraphemes = new SimpleListProperty<Grapheme>();
+		dGraphemes.add(dLower);
+		dGraphemes.add(dUpper);
+		Segment segA = new Segment("a", "low mid unrounded vowel", aGraphemes, "a A");
+		Segment segB = new Segment("b", "voiced bilabial stop", bGraphemes, "b B");
+		Segment segD = new Segment("d", "voiced alveolar stop", dGraphemes, "d D");
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);
 		cvSegmentInventory.add(segD);
@@ -48,15 +72,16 @@ public class CVSegmentOrNaturalClassTest {
 
 	@Test
 	public void createSegmentOrNaturalClassList() {
-		ObservableList<CVSegmentOrNaturalClass> cvSegmentOrNaturalClass = FXCollections.observableArrayList();
+		ObservableList<CVSegmentOrNaturalClass> cvSegmentOrNaturalClass = FXCollections
+				.observableArrayList();
 		for (Segment cvSegment : cvSegmentInventory) {
-			CVSegmentOrNaturalClass segOrNC = new CVSegmentOrNaturalClass(cvSegment.getSegment(), 
+			CVSegmentOrNaturalClass segOrNC = new CVSegmentOrNaturalClass(cvSegment.getSegment(),
 					cvSegment.getDescription(), true, null, true);
 			cvSegmentOrNaturalClass.add(segOrNC);
 		}
 		for (CVNaturalClass cvNaturalClass : cvNaturalClasses) {
-			CVSegmentOrNaturalClass segOrNC = new CVSegmentOrNaturalClass(cvNaturalClass.getNCName(), 
-					cvNaturalClass.getDescription(), true, null, true);
+			CVSegmentOrNaturalClass segOrNC = new CVSegmentOrNaturalClass(
+					cvNaturalClass.getNCName(), cvNaturalClass.getDescription(), true, null, true);
 			cvSegmentOrNaturalClass.add(segOrNC);
 		}
 		assertEquals("Expected count to be 5", 5, cvSegmentOrNaturalClass.size());

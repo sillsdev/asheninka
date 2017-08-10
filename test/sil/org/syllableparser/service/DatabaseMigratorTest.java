@@ -25,6 +25,7 @@ import javafx.scene.text.Font;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import com.sun.nio.zipfs.ZipDirectoryStream;
@@ -35,6 +36,7 @@ import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.view.JavaFXThreadingRule;
 
 /**
  * @author Andy Black
@@ -45,6 +47,8 @@ public class DatabaseMigratorTest {
 	File databaseFile;
 	DatabaseMigrator migrator;
 	LanguageProject languageProject;
+	@Rule
+	public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
 
 	/**
 	 * @throws java.lang.Exception

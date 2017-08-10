@@ -23,12 +23,15 @@ import java.util.stream.Stream;
 
 import org.controlsfx.control.StatusBar;
 
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.Environment;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
@@ -92,14 +95,14 @@ public class ParaTExt7SegmentImporter extends SegmentImporter {
 				if (chars.length <= 0) {
 					continue;
 				}
-				String sName = chars[0];
-				StringBuilder sb = new StringBuilder();
+				SimpleListProperty<Grapheme> graphemes = new SimpleListProperty<Grapheme>();
 				for (int i = 0; i < chars.length; i++) {
-					sb.append(chars[i]);
-					sb.append(" ");
+					Grapheme grapheme = new Grapheme(chars[i], "", new SimpleListProperty<Environment>(),
+							"");
+					graphemes.add(grapheme);
 				}
-				String sGraphemes = sb.toString().trim();
-				Segment seg = new Segment(sName, sGraphemes, "");
+				String sName = chars[0];
+				Segment seg = new Segment(sName, "", graphemes, "");
 				languageProject.getSegmentInventory().add(seg);
 			}
 			line = bufr.readLine();

@@ -16,12 +16,14 @@ import javafx.collections.ObservableList;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Word;
+import sil.org.syllableparser.view.JavaFXThreadingRule;
 
 /**
  * @author Andy Black
@@ -31,6 +33,9 @@ public class LanguageProjectTest {
 	LanguageProject languageProject;
 	ResourceBundle bundle;
 	
+	@Rule
+	public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
+
 	/**
 	 * @throws java.lang.Exception
 	 */

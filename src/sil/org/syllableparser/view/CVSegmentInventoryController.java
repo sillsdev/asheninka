@@ -123,16 +123,8 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// checkBoxColumn.setCellValueFactory(cellData ->
-		// cellData.getValue().activeCheckBoxProperty());
-		// checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-		// checkBoxColumn.setEditable(true);
-		// checkBoxColumnHead.setOnAction((event) -> {
-		// handleCheckBoxColumnHead();
-		// });
-		// initializeCheckBoxContextMenu(resources);
 		segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
-		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
+		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphsRepresentationProperty());
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		;
@@ -170,7 +162,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		});
 		graphemesField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
-				currentSegment.setGraphemes(graphemesField.getText());
+				currentSegment.setGraphsRepresentation(graphemesField.getText());
 			}
 			if (languageProject != null) {
 				graphemesField.setFont(languageProject.getVernacularLanguage().getFont());
@@ -211,9 +203,9 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		String temp = segment.getSegment();
 		segment.setSegment("");
 		segment.setSegment(temp);
-		temp = segment.getGraphemes();
-		segment.setGraphemes("");
-		segment.setGraphemes(temp);
+		temp = segment.getGraphsRepresentation();
+		segment.setGraphsRepresentation("");
+		segment.setGraphsRepresentation(temp);
 		temp = segment.getDescription();
 		segment.setDescription("");
 		segment.setDescription(temp);
@@ -231,7 +223,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		if (segment != null) {
 			// Fill the text fields with info from the segment object.
 			segmentField.setText(segment.getSegment());
-			graphemesField.setText(segment.getGraphemes());
+			graphemesField.setText(segment.getGraphsRepresentation());
 			descriptionField.setText(segment.getDescription());
 			activeCheckBox.setSelected(segment.isActive());
 			displayFieldsPerActiveSetting(segment);
@@ -267,7 +259,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 
 	public void setSegment(Segment segment) {
 		segmentField.setText(segment.getSegment());
-		graphemesField.setText(segment.getGraphemes());
+		graphemesField.setText(segment.getGraphsRepresentation());
 		descriptionField.setText(segment.getDescription());
 	}
 

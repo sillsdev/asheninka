@@ -16,14 +16,17 @@ import javafx.collections.ObservableList;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.Environment;
 import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.syllableparser.view.JavaFXThreadingRule;
 
 /**
  * @author Andy Black
@@ -33,6 +36,8 @@ public class XMLBackEndProviderTest {
 
 	XMLBackEndProvider xmlBackEndProvider;
 	LanguageProject languageProject;
+	@Rule
+	public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
 
 	/**
 	 * @throws java.lang.Exception
@@ -62,9 +67,10 @@ public class XMLBackEndProviderTest {
 	public void checkLoadedData() {
 		languageProject = xmlBackEndProvider.getLanguageProject();
 		assertNotNull(languageProject);
-		assertEquals(0, languageProject.getDatabaseVersion());
+		assertEquals(2, languageProject.getDatabaseVersion());
 		CVApproach cva = languageProject.getCVApproach();
-		assertEquals(27, languageProject.getSegmentInventory().size());
+		ObservableList<Segment> segInventory = languageProject.getSegmentInventory(); 
+		assertEquals(27, segInventory.size());
 		assertEquals(6, cva.getCVNaturalClasses().size());
 		assertEquals(9, cva.getCVSyllablePatterns().size());
 		ObservableList<Word> words = languageProject.getWords();
@@ -72,7 +78,13 @@ public class XMLBackEndProviderTest {
 		ObservableList<Environment> environments = languageProject.getEnvironments();
 		assertEquals(0, environments.size());
 		ObservableList<Grapheme> graphemes = languageProject.getGraphemes();
-		assertEquals(0, graphemes.size());
+		assertEquals(56, graphemes.size());
+		Segment seg = segInventory.get(0);
+		assertEquals(2, seg.getGraphemes().size());
+		Grapheme grapheme = seg.getGraphemes().get(0);
+		assertEquals("a", grapheme.getForm());
+		grapheme = seg.getGraphemes().get(1);
+		assertEquals("A", grapheme.getForm());
 	}
 
 	@Test

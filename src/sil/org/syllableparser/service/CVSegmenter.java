@@ -10,8 +10,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.Segment;
+import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 
 /**
@@ -37,7 +40,7 @@ public class CVSegmenter {
 	protected void buildGraphemeToCVSegmentMapping() {
 		// TODO: use lambda expressions for this
 		for (Segment seg : activeSegmentInventory) {
-			String[] orthographemes = seg.getGraphemes().split(" +");
+			List<String> orthographemes = seg.getGraphemes().stream().map(Grapheme::getForm).collect(Collectors.toList());
 			for (String orthoform : orthographemes) {
 				if (orthoform.length() > iLongestGrapheme) {
 					iLongestGrapheme = orthoform.length();

@@ -40,7 +40,7 @@ public class Grapheme extends SylParserObject {
 		createUUID();
 	}
 
-	public Grapheme(String form, String graphemes, String description,
+	public Grapheme(String form, String description,
 			SimpleListProperty<Environment> environments, String envsRepresentation) {
 		super();
 		this.form = new SimpleStringProperty(form);
@@ -93,10 +93,6 @@ public class Grapheme extends SylParserObject {
 		return environments;
 	}
 
-	public void setNaturalClasses(ObservableList<Environment> environments) {
-		this.environments.set(environments);
-	}
-
 	public String getEnvsRepresentation() {
 		return envsRepresentation.get();
 	}
@@ -122,7 +118,7 @@ public class Grapheme extends SylParserObject {
 
 	@Override
 	public int hashCode() {
-		String sCombo = form.getValueSafe();
+		String sCombo = form.getValueSafe() + envsRepresentation.getValueSafe();
 		return sCombo.hashCode();
 	}
 
@@ -135,8 +131,8 @@ public class Grapheme extends SylParserObject {
 		if (getClass() != obj.getClass())
 			return false;
 		boolean result = true;
-		Grapheme seg = (Grapheme) obj;
-		if (!getForm().equals(seg.getForm())) {
+		Grapheme grapheme = (Grapheme) obj;
+		if (!getForm().equals(grapheme.getForm())) {
 			result = false;
 		}
 		return result;

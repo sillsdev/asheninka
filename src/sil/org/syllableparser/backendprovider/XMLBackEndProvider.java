@@ -19,6 +19,7 @@ import javax.xml.bind.Unmarshaller;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.LanguageProject;
+import sil.org.utility.HandleExceptionMessage;
 
 /**
  * @author Andy Black
@@ -32,12 +33,13 @@ public class XMLBackEndProvider extends BackEndProvider {
 	String sFileErrorLoadContent;
 	String sFileErrorSaveHeader;
 	String sFileErrorSaveContent;
+
 	/**
 	 * @param languageProject
 	 */
 	public XMLBackEndProvider(LanguageProject languageProject, Locale locale) {
 		this.languageProject = languageProject;
-		setResourceStrings(locale);		
+		setResourceStrings(locale);
 	}
 
 	private void setResourceStrings(Locale locale) {
@@ -48,13 +50,12 @@ public class XMLBackEndProvider extends BackEndProvider {
 		sFileErrorSaveHeader = bundle.getString("file.error.save.header");
 		sFileErrorSaveContent = bundle.getString("file.error.save.content");
 	}
-	
+
 	public LanguageProject getLanguageProject() {
 		return languageProject;
 	}
-	
-	final boolean useXMLClasses = false;
 
+	final boolean useXMLClasses = false;
 
 	/**
 	 * Loads language data from the specified file. The current language data
@@ -65,21 +66,22 @@ public class XMLBackEndProvider extends BackEndProvider {
 	@Override
 	public void loadLanguageDataFromFile(File file) {
 		try {
-				JAXBContext context = JAXBContext
-						.newInstance(LanguageProject.class);
-				Unmarshaller um = context.createUnmarshaller();
-				// Reading XML from the file and unmarshalling.
-				LanguageProject languageProjectLoaded = (LanguageProject) um
-						.unmarshal(file);
-				languageProject.clear();
-				languageProject.load(languageProjectLoaded);				
+			JAXBContext context = JAXBContext.newInstance(LanguageProject.class);
+			Unmarshaller um = context.createUnmarshaller();
+			// Reading XML from the file and unmarshalling.
+			LanguageProject languageProjectLoaded = (LanguageProject) um.unmarshal(file);
+			languageProject.clear();
+			languageProject.load(languageProjectLoaded);
 		} catch (Exception e) { // catches ANY exception
 			e.printStackTrace();
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle(sFileError);
-			alert.setHeaderText(sFileErrorLoadHeader);
-			alert.setContentText(sFileErrorLoadContent + file.getPath());
-			alert.showAndWait();
+			HandleExceptionMessage.show(sFileError, sFileErrorLoadHeader, sFileErrorLoadContent
+					+ file.getPath(), true);
+			// Alert alert = new Alert(AlertType.ERROR);
+			// alert.setTitle(sFileError);
+			// alert.setHeaderText(sFileErrorLoadHeader);
+			// alert.setContentText(sFileErrorLoadContent + file.getPath());
+			// alert.showAndWait();
+			// System.exit(1);
 		}
 	}
 
@@ -91,19 +93,20 @@ public class XMLBackEndProvider extends BackEndProvider {
 	@Override
 	public void saveLanguageDataToFile(File file) {
 		try {
-				JAXBContext context = JAXBContext
-						.newInstance(LanguageProject.class);
-				Marshaller m = context.createMarshaller();
-				m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-				// Marshalling and saving XML to the file.
-				m.marshal(languageProject, file);
+			JAXBContext context = JAXBContext.newInstance(LanguageProject.class);
+			Marshaller m = context.createMarshaller();
+			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			// Marshalling and saving XML to the file.
+			m.marshal(languageProject, file);
 		} catch (Exception e) { // catches ANY exception
 			e.printStackTrace();
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle(sFileError);
-			alert.setHeaderText(sFileErrorSaveHeader);
-			alert.setContentText(sFileErrorSaveContent + file.getPath());
-			alert.showAndWait();
+			HandleExceptionMessage.show(sFileError, sFileErrorSaveHeader, sFileErrorSaveContent
+					+ file.getPath(), true);
+			// Alert alert = new Alert(AlertType.ERROR);
+			// alert.setTitle(sFileError);
+			// alert.setHeaderText(sFileErrorSaveHeader);
+			// alert.setContentText(sFileErrorSaveContent + file.getPath());
+			// alert.showAndWait();
 		}
 	}
 

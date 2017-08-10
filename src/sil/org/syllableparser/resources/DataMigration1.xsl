@@ -90,8 +90,8 @@
         <xsl:variable name="sRest" select="substring-after($sNewList,' ')"/>
         <xsl:if test="string-length($sFirst) &gt; 0">
             <xsl:value-of select="concat(generate-id(.),'.',$iIdCount)"/>
-            <xsl:text>&#x20;</xsl:text>
             <xsl:if test="$sRest">
+                <xsl:text>&#x20;</xsl:text>
                 <xsl:call-template name="GetGraphemeStringId">
                     <xsl:with-param name="sGraph" select="$sRest"/>
                     <xsl:with-param name="iIdCount" select="$iIdCount + 1"/>
