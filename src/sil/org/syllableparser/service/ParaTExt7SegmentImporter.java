@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 import org.controlsfx.control.StatusBar;
 
 import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
@@ -91,18 +92,19 @@ public class ParaTExt7SegmentImporter extends SegmentImporter {
 		while (line != null && !line.matches("^\\[.+\\]$")) {
 			if (line.length() > 0) {
 				int indexOfStartOfCharacters = line.indexOf("=") + 1;
-				String[] chars = line.substring(indexOfStartOfCharacters).split("/");
+				String[] chars = line.substring(indexOfStartOfCharacters).split("[/ ]");
 				if (chars.length <= 0) {
 					continue;
 				}
-				SimpleListProperty<Grapheme> graphemes = new SimpleListProperty<Grapheme>();
+				ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
 				for (int i = 0; i < chars.length; i++) {
 					Grapheme grapheme = new Grapheme(chars[i], "", new SimpleListProperty<Environment>(),
 							"");
 					graphemes.add(grapheme);
 				}
 				String sName = chars[0];
-				Segment seg = new Segment(sName, "", graphemes, "");
+				Segment seg = new Segment(sName, "", "");
+				seg.setGraphemes(graphemes);
 				languageProject.getSegmentInventory().add(seg);
 			}
 			line = bufr.readLine();

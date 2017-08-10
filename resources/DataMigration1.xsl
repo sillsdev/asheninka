@@ -15,14 +15,6 @@
         <languageProject databaseVersion="2">
             <xsl:apply-templates select="analysisLanguage | cvApproach"/>
             <environments/>
-            <graphemes>
-                <xsl:for-each select="descendant::graphemes">
-                    <xsl:call-template name="ConvertGraphemeStringToGrapheme">
-                        <xsl:with-param name="sGraph" select="concat(.,' ')"/>
-                        <xsl:with-param name="iIdCount" select="1"/>
-                    </xsl:call-template>
-                </xsl:for-each>
-            </graphemes>
             <xsl:apply-templates select="hyphenationParametersListWord | hyphenationParametersParaTExt | hyphenationParametersXLingPaper | segments | vernacularLanguage | words"/>
         </languageProject>
     </xsl:template>
@@ -31,12 +23,9 @@
     -->
     <xsl:template match="graphemes" priority="100">
         <graphemes>
-            <xsl:attribute name="graphs">
-                <xsl:call-template name="GetGraphemeStringId">
+                <xsl:call-template name="ConvertGraphemeStringToGrapheme">
                     <xsl:with-param name="sGraph" select="concat(.,' ')"/>
-                    <xsl:with-param name="iIdCount" select="1"/>
                 </xsl:call-template>
-            </xsl:attribute>
         </graphemes>
     </xsl:template>
     <!-- 
@@ -59,12 +48,11 @@
     -->
     <xsl:template name="ConvertGraphemeStringToGrapheme">
         <xsl:param name="sGraph"/>
-        <xsl:param name="iIdCount"/>
         <xsl:variable name="sNewList" select="$sGraph"/>
         <xsl:variable name="sFirst" select="substring-before($sNewList,' ')"/>
         <xsl:variable name="sRest" select="substring-after($sNewList,' ')"/>
         <xsl:if test="string-length($sFirst) &gt; 0">
-            <grapheme active="true" id="{generate-id(.)}.{$iIdCount}">
+            <grapheme active="true">
                 <form>
                     <xsl:value-of select="$sFirst"/>
                 </form>
@@ -74,7 +62,6 @@
             <xsl:if test="$sRest">
                 <xsl:call-template name="ConvertGraphemeStringToGrapheme">
                     <xsl:with-param name="sGraph" select="$sRest"/>
-                    <xsl:with-param name="iIdCount" select="$iIdCount + 1"/>
                 </xsl:call-template>
             </xsl:if>
         </xsl:if>
@@ -90,8 +77,8 @@
         <xsl:variable name="sRest" select="substring-after($sNewList,' ')"/>
         <xsl:if test="string-length($sFirst) &gt; 0">
             <xsl:value-of select="concat(generate-id(.),'.',$iIdCount)"/>
-            <xsl:text>&#x20;</xsl:text>
             <xsl:if test="$sRest">
+                <xsl:text>&#x20;</xsl:text>
                 <xsl:call-template name="GetGraphemeStringId">
                     <xsl:with-param name="sGraph" select="$sRest"/>
                     <xsl:with-param name="iIdCount" select="$iIdCount + 1"/>

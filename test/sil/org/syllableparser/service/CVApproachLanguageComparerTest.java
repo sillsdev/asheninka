@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.Word;
@@ -122,22 +123,31 @@ public class CVApproachLanguageComparerTest {
 		List<DifferentSegment> listOfDiffs = new ArrayList<DifferentSegment>();
 		listOfDiffs.addAll(diffs);
 		DifferentSegment diffSeg = listOfDiffs.get(1);
-		assertEquals("second's 1 is an /a/", "a", ((Segment) diffSeg.getObjectFrom1()).getSegment());
-		assertEquals("second's 2 is an /a/", "a", ((Segment) diffSeg.getObjectFrom2()).getSegment());
-		assertEquals("second's 1's graphemes are 'a A'", "a A",
-				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
-		assertEquals("second's 2's graphemes are 'a A á Á'", "a A á Á",
-				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
+		Segment seg1 = ((Segment) diffSeg.getObjectFrom1());
+		Segment seg2 = ((Segment) diffSeg.getObjectFrom2());
+		assertEquals("second's 1 is an /a/", "a", seg1.getSegment());
+		assertEquals("second's 2 is an /a/", "a", seg2.getSegment());
+		assertEquals("number of graphemes in segment1", 2, seg1.getGraphemes().size());
+		assertEquals("number of graphemes in segment2", 4, seg2.getGraphemes().size());
+//		Grapheme graph1 = seg1.getGraphemes().get(0);
+//		assertEquals("second's 1's graphemes are 'a A'", "a A",
+//				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
+//		assertEquals("second's 2's graphemes are 'a A á Á'", "a A á Á",
+//				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
 		diffSeg = listOfDiffs.get(0);
 		assertNull("first's 1 is null", diffSeg.getObjectFrom1());
-		assertEquals("first's 2 is a /\'/", "'", ((Segment) diffSeg.getObjectFrom2()).getSegment());
-		assertEquals("first's 2's graphemes are '\''", "'",
-				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
+		seg2 = ((Segment) diffSeg.getObjectFrom2());
+		assertEquals("first's 2 is a /\'/", "'", seg2.getSegment());
+		assertEquals("number of graphemes in segment2", 1, seg2.getGraphemes().size());
+//		assertEquals("first's 2's graphemes are '\''", "'",
+//				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
 		diffSeg = listOfDiffs.get(12);
-		assertEquals("tenth's 1 is a /ɲ/", "ɲ", ((Segment) diffSeg.getObjectFrom1()).getSegment());
-		assertNull("tenth's 2 is null", diffSeg.getObjectFrom2());
-		assertEquals("tenth's 1's graphemes are 'ñ Ñ'", "ñ Ñ",
-				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
+		seg1 = ((Segment) diffSeg.getObjectFrom1());
+		assertEquals("eleventh's 1 is a /ɲ/", "ɲ", seg1.getSegment());
+		assertNull("eleventh's 2 is null", diffSeg.getObjectFrom2());
+		assertEquals("number of graphemes in segment1", 2, seg1.getGraphemes().size());
+//		assertEquals("tenth's 1's graphemes are 'ñ Ñ'", "ñ Ñ",
+//				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
 	}
 
 	protected void compareNaturalClasses(CVApproachLanguageComparer comparer) {

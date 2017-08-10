@@ -43,7 +43,6 @@ public class LanguageProject {
 	private HyphenationParametersParaTExt hyphenationParametersParaTExt;
 	private HyphenationParametersXLingPaper hyphenationParametersXLingPaper;
 	private int databaseVersion;
-	private ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
 	private ObservableList<Environment> environments = FXCollections.observableArrayList();
 	
 	public LanguageProject() {
@@ -64,7 +63,6 @@ public class LanguageProject {
 		cvApproach.clear();
 		segmentInventory.clear();
 		words.clear();
-		graphemes.clear();
 		environments.clear();
 	}
 
@@ -124,16 +122,6 @@ public class LanguageProject {
 		this.words = words;
 	}
 
-	@XmlElementWrapper(name = "graphemes")
-	@XmlElement(name = "grapheme")
-	public ObservableList<Grapheme> getGraphemes() {
-		return graphemes;
-	}
-
-	public void setGraphemes(ObservableList<Grapheme> graphemes) {
-		this.graphemes = graphemes;
-	}
-
 	@XmlElementWrapper(name = "environments")
 	@XmlElement(name = "environment")
 	public ObservableList<Environment> getEnvironments() {
@@ -144,6 +132,14 @@ public class LanguageProject {
 		this.environments = environments;
 	}
 	
+	public List<Grapheme> getGraphemes() {
+		List<Grapheme> graphemes = FXCollections.observableArrayList();
+		for (Segment segment : getSegmentInventory()) {
+			graphemes.addAll(segment.getGraphemes());
+		}
+		return graphemes;
+	}
+
 	public String getParaTExtHyphenatedWordsPreamble() {
 		return sParaTExtHyphenatedWordsPreamble;
 	}
@@ -167,10 +163,6 @@ public class LanguageProject {
 		ObservableList<Word> wordsLoadedData = languageProjectLoaded.getWords();
 		for (Word word : wordsLoadedData) {
 			words.add(word);
-		}
-		ObservableList<Grapheme> graphemesLoadedData = languageProjectLoaded.getGraphemes();
-		for (Grapheme grapheme : graphemesLoadedData) {
-			graphemes.add(grapheme);
 		}
 		ObservableList<Environment> environmentsLoadedData = languageProjectLoaded.getEnvironments();
 		for (Environment environment : environmentsLoadedData) {

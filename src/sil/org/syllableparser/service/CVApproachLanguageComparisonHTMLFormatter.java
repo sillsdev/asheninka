@@ -16,7 +16,9 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 
+import javafx.collections.ObservableList;
 import sil.org.syllableparser.Constants;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
@@ -157,7 +159,16 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		} else {
 			sb.append(seg.getSegment());
 			sb.append(" (");
-			sb.append(seg.getGraphemes());
+			ObservableList<Grapheme> graphemes = seg.getGraphemes();
+			int i = 1;
+			for (Grapheme grapheme : graphemes) {
+				sb.append(grapheme.getForm());
+				if (i < graphemes.size()) {
+					sb.append(" ");
+				}
+				i++;
+			}
+			//sb.append(seg.getGraphemes());
 			sb.append(")");
 		}
 	}

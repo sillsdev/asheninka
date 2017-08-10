@@ -7,6 +7,8 @@
 package sil.org.syllableparser.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
@@ -27,11 +29,7 @@ public class Segment extends SylParserObject {
 	private final StringProperty segment;
 	//private final StringProperty graphemes;
 	private final StringProperty description;
-	private final SimpleListProperty<Grapheme> graphemes;
-	
-	@XmlAttribute(name="graphs")
-	@XmlIDREF
-	@XmlList
+	private final SimpleListProperty<Grapheme> graphemes;	
 	ObservableList<Grapheme> graphs = FXCollections.observableArrayList();
 	private final StringProperty graphsRepresentation;
 	
@@ -44,10 +42,10 @@ public class Segment extends SylParserObject {
 		createUUID();
 	}
 
-	public Segment(String segment, String description, SimpleListProperty<Grapheme> graphemes, String graphsRepresentation) {
+	public Segment(String segment, String description, String graphsRepresentation) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
-		this.graphemes = new SimpleListProperty<Grapheme>(graphemes);
+		this.graphemes = new SimpleListProperty<Grapheme>();
 		this.description = new SimpleStringProperty(description);
 		this.graphsRepresentation = new SimpleStringProperty(graphsRepresentation);
 		createUUID();
@@ -77,16 +75,12 @@ public class Segment extends SylParserObject {
 		this.description.set(description);
 	}
 	
-//	@XmlAttribute(name="graphs")
-//	@XmlIDREF
-//	@XmlList
+	@XmlElementWrapper(name = "graphemes")
+	@XmlElement(name = "grapheme")
 	public ObservableList<Grapheme> getGraphemes() {
 		return graphs;
 	}
 
-//	@XmlAttribute(name="graphs")
-//	@XmlIDREF
-//	@XmlList
 	public void setGraphemes(ObservableList<Grapheme> graphs) {
 		this.graphs = graphs;
 	}

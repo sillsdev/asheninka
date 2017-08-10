@@ -44,9 +44,9 @@ public class SylParserObjectTest {
 	public void findIndexInListByUuidTest() {
 		ObservableList<Segment> cvSegmentInventory = FXCollections.observableArrayList();
 		ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
-		Segment segA = new Segment("a", "low mid unrounded vowel", new SimpleListProperty<Grapheme>(), "a A");
-		Segment segB = new Segment("b", "voiced bilabial stop", new SimpleListProperty<Grapheme>(), "b B");
-		Segment segD = new Segment("d", "voiced alveolar stop", new SimpleListProperty<Grapheme>(), "d D");
+		Segment segA = new Segment("a", "low mid unrounded vowel", "a A");
+		Segment segB = new Segment("b", "voiced bilabial stop", "b B");
+		Segment segD = new Segment("d", "voiced alveolar stop", "d D");
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);
 		cvSegmentInventory.add(segD);

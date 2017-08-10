@@ -77,14 +77,22 @@ public class XMLBackEndProviderTest {
 		assertEquals(10025, words.size());
 		ObservableList<Environment> environments = languageProject.getEnvironments();
 		assertEquals(0, environments.size());
-		ObservableList<Grapheme> graphemes = languageProject.getGraphemes();
-		assertEquals(56, graphemes.size());
+//		ObservableList<Grapheme> graphemes = languageProject.getGraphemes();
+//		assertEquals(56, graphemes.size());
 		Segment seg = segInventory.get(0);
 		assertEquals(2, seg.getGraphemes().size());
 		Grapheme grapheme = seg.getGraphemes().get(0);
 		assertEquals("a", grapheme.getForm());
 		grapheme = seg.getGraphemes().get(1);
 		assertEquals("A", grapheme.getForm());
+		seg = segInventory.get(2);
+		assertEquals(3, seg.getGraphemes().size());
+		grapheme = seg.getGraphemes().get(0);
+		assertEquals("ch", grapheme.getForm());
+		grapheme = seg.getGraphemes().get(1);
+		assertEquals("Ch", grapheme.getForm());
+		grapheme = seg.getGraphemes().get(2);
+		assertEquals("CH", grapheme.getForm());
 	}
 
 	@Test
