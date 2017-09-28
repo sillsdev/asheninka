@@ -16,6 +16,7 @@ import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -228,7 +229,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	private CheckBox activeCheckBox;
 
 	private Segment currentSegment;
-	private Grapheme currentGrapheme;
 
 	public CVSegmentInventoryController() {
 
@@ -265,35 +265,14 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		});
 
 		checkBoxColumn
-				.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
+				.setCellValueFactory(cellData -> {
+					BooleanProperty bp = cellData.getValue().checkedProperty();
+					cellData.getValue().setActive(bp.get());
+					forceTableRowToRedisplayPerActiveSetting(cellData.getValue());
+					return bp;
+				});
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
 		checkBoxColumn.setEditable(true);
-		// checkBoxColumn.setOnEditCommit(value);
-//		checkBoxColumn.setOnEditCommit(new EventHandler<CellEditEvent<Grapheme, Boolean>>() {
-//			// @Override
-//			// public void handle(ActionEvent t) {
-//			// int selectedIndex = getTableRow().getIndex();
-//			// Grapheme selectedGrapheme = (Grapheme)
-//			// graphemesTable.getItems().get(
-//			// selectedIndex);
-//			// // show environments chooser for this grapheme
-//			// Alert alert = new Alert(AlertType.INFORMATION);
-//			// alert.setTitle("Information Dialog");
-//			// alert.setHeaderText("Look, an Information Dialog");
-//			// alert.setContentText("Selected grapheme: " +
-//			// selectedGrapheme.getForm());
-//			//
-//			// alert.showAndWait();
-//			// }
-//
-//			@Override
-//			public void handle(CellEditEvent<Grapheme, Boolean> event) {
-//				Grapheme grapheme = event.getRowValue();
-//				if (grapheme != null) {
-//					grapheme.setActive(event.getNewValue());
-//				}
-//			}
-//		});
 		checkBoxColumnHead.setOnAction((event) -> {
 			handleCheckBoxColumnHead();
 		});
@@ -375,12 +354,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			}
 		});
 		
-		graphemesTable
-				.getSelectionModel()
-				.selectedItemProperty()
-				.addListener(
-						(observable, oldValue, newValue) -> showSegmentGraphemesDetails(newValue));
-
 		// Use of Enter move focus to next item.
 		segmentField.setOnAction((event) -> {
 			graphemesField.requestFocus();
@@ -455,40 +428,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
 					currentSegmentNumber);
 		}
-	}
-
-	/**
-	 * Fills all text fields to show details about the graphemes in the segment.
-	 * If the specified grapheme is null, all text fields are cleared.
-	 * 
-	 * @param grapheme
-	 *            the segment or null
-	 */
-	private void showSegmentGraphemesDetails(Grapheme grapheme) {
-		currentGrapheme = grapheme;
-		// if (grapheme != null) {
-		// // Fill the text fields with info from the segment object.
-		// graphemeField.setText(grapheme.getForm());
-		// environmentsField.setText(grapheme.getEnvsRepresentation());
-		// // activeCheckBox.setSelected(grapheme.isActive());
-		// displayFieldsPerActiveSetting(grapheme);
-		// } else {
-		// // Grapheme is null, remove all the text.
-		// graphemeField.setText(grapheme.getForm());
-		// environmentsField.setText(grapheme.getEnvsRepresentation());
-		// // activeCheckBox.setSelected(true);
-		// }
-		//
-		// if (grapheme != null) {
-		// int currentGraphemeNumber =
-		// graphemesTable.getItems().indexOf(currentGrapheme);
-		// // this.mainApp.updateStatusBarNumberOfItems((currentGraphemeNumber +
-		// 1) + "/"
-		// // + cvSegmentTable.getItems().size() + " ");
-		// //
-		// mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
-		// // currentGraphemeNumber);
-		// }
 	}
 
 	@Override
