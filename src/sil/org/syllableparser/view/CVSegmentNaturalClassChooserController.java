@@ -157,7 +157,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 	}
 
 	private void setCheckedStatus(SylParserObject sylParserObject) {
-		if (SylParserObject.findIndexInSylParserObjectListByUuid(
+		if (SylParserObject.findIndexInListByUuid(
 				naturalClass.getSegmentsOrNaturalClasses(), sylParserObject.getID()) > -1) {
 			currentSegmentOrNaturalClass.setChecked(true);
 		}
@@ -186,12 +186,12 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
 			if (segmentOrNaturalClass.isChecked()) {
 				if (segmentOrNaturalClass.isSegment()) {
-					int i = Segment.findIndexInSegmentsListByUuid(
+					int i = Segment.findIndexInListByUuid(
 							languageProject.getSegmentInventory(), segmentOrNaturalClass.getUuid());
 					naturalClass.getSegmentsOrNaturalClasses().add(
 							languageProject.getSegmentInventory().get(i));
 				} else {
-					int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
+					int i = CVNaturalClass.findIndexInListByUuid(
 							cvApproach.getCVNaturalClasses(), segmentOrNaturalClass.getUuid());
 					naturalClass.getSegmentsOrNaturalClasses().add(
 							cvApproach.getCVNaturalClasses().get(i));

@@ -135,7 +135,7 @@ public class LanguageProject {
 	public List<Grapheme> getGraphemes() {
 		List<Grapheme> graphemes = FXCollections.observableArrayList();
 		for (Segment segment : getSegmentInventory()) {
-			graphemes.addAll(segment.getGraphemes());
+			graphemes.addAll(segment.getGraphs());
 		}
 		return graphemes;
 	}

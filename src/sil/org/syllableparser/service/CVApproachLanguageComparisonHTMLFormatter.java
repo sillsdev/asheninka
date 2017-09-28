@@ -159,7 +159,7 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		} else {
 			sb.append(seg.getSegment());
 			sb.append(" (");
-			ObservableList<Grapheme> graphemes = seg.getGraphemes();
+			ObservableList<Grapheme> graphemes = seg.getGraphs();
 			int i = 1;
 			for (Grapheme grapheme : graphemes) {
 				sb.append(grapheme.getForm());

@@ -127,8 +127,8 @@ public class CVApproachLanguageComparerTest {
 		Segment seg2 = ((Segment) diffSeg.getObjectFrom2());
 		assertEquals("second's 1 is an /a/", "a", seg1.getSegment());
 		assertEquals("second's 2 is an /a/", "a", seg2.getSegment());
-		assertEquals("number of graphemes in segment1", 2, seg1.getGraphemes().size());
-		assertEquals("number of graphemes in segment2", 4, seg2.getGraphemes().size());
+		assertEquals("number of graphemes in segment1", 2, seg1.getGraphs().size());
+		assertEquals("number of graphemes in segment2", 4, seg2.getGraphs().size());
 //		Grapheme graph1 = seg1.getGraphemes().get(0);
 //		assertEquals("second's 1's graphemes are 'a A'", "a A",
 //				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
@@ -138,14 +138,14 @@ public class CVApproachLanguageComparerTest {
 		assertNull("first's 1 is null", diffSeg.getObjectFrom1());
 		seg2 = ((Segment) diffSeg.getObjectFrom2());
 		assertEquals("first's 2 is a /\'/", "'", seg2.getSegment());
-		assertEquals("number of graphemes in segment2", 1, seg2.getGraphemes().size());
+		assertEquals("number of graphemes in segment2", 1, seg2.getGraphs().size());
 //		assertEquals("first's 2's graphemes are '\''", "'",
 //				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
 		diffSeg = listOfDiffs.get(12);
 		seg1 = ((Segment) diffSeg.getObjectFrom1());
 		assertEquals("eleventh's 1 is a /ɲ/", "ɲ", seg1.getSegment());
 		assertNull("eleventh's 2 is null", diffSeg.getObjectFrom2());
-		assertEquals("number of graphemes in segment1", 2, seg1.getGraphemes().size());
+		assertEquals("number of graphemes in segment1", 2, seg1.getGraphs().size());
 //		assertEquals("tenth's 1's graphemes are 'ñ Ñ'", "ñ Ñ",
 //				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
 	}

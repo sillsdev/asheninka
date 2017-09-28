@@ -6,12 +6,15 @@
  */
 package sil.org.syllableparser.model;
 
+import java.util.stream.Collectors;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
+import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -27,27 +30,41 @@ import javafx.util.converter.IntegerStringConverter;
  */
 public class Segment extends SylParserObject {
 	private final StringProperty segment;
-	//private final StringProperty graphemes;
+	private final StringProperty graphemes;
 	private final StringProperty description;
-	private final SimpleListProperty<Grapheme> graphemes;	
+	private final SimpleListProperty<Grapheme> graphemesAsList;	
 	ObservableList<Grapheme> graphs = FXCollections.observableArrayList();
-	private final StringProperty graphsRepresentation;
+	//private final StringProperty graphsRepresentation;
 	
 	public Segment() {
 		super();
 		this.segment = new SimpleStringProperty("");
-		this.graphemes = new SimpleListProperty<Grapheme>();
+		this.graphemes = new SimpleStringProperty("");
+		this.graphemesAsList = new SimpleListProperty<Grapheme>();
 		this.description = new SimpleStringProperty("");
-		this.graphsRepresentation = new SimpleStringProperty("");
+		//this.graphsRepresentation = new SimpleStringProperty("");
 		createUUID();
 	}
 
-	public Segment(String segment, String description, String graphsRepresentation) {
+	public Segment(String segment, String graphsRepresentation, String description) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
-		this.graphemes = new SimpleListProperty<Grapheme>();
+		this.graphemes = new SimpleStringProperty(graphsRepresentation);
+		this.graphemesAsList = new SimpleListProperty<Grapheme>();
 		this.description = new SimpleStringProperty(description);
-		this.graphsRepresentation = new SimpleStringProperty(graphsRepresentation);
+		//this.graphsRepresentation = new SimpleStringProperty(graphsRepresentation);
+		createUUID();
+	}
+
+	public Segment(String segment, String description, SimpleListProperty<Grapheme> graphemeList) {
+		super();
+		this.segment = new SimpleStringProperty(segment);
+		//this.graphemes = new SimpleStringProperty(graphsRepresentation);
+		this.graphemesAsList = new SimpleListProperty<Grapheme>();
+		this.description = new SimpleStringProperty(description);
+		String graphs = graphemeList.stream().map(Grapheme::getForm)
+				.collect(Collectors.joining(" "));
+		this.graphemes = new SimpleStringProperty(graphs);
 		createUUID();
 	}
 
@@ -63,6 +80,18 @@ public class Segment extends SylParserObject {
 		this.segment.set(segment);
 	}
 
+//	public String getGraphemes() {
+//		return graphemes.get().trim();
+//	}
+//
+//	public StringProperty graphemesProperty() {
+//		return graphemes;
+//	}
+//
+//	public void setGraphemes(String graphemes) {
+//		this.graphemes.set(graphemes);
+//	}
+
 	public String getDescription() {
 		return description.get();
 	}
@@ -75,47 +104,33 @@ public class Segment extends SylParserObject {
 		this.description.set(description);
 	}
 	
-	@XmlElementWrapper(name = "graphemes")
+	@XmlElementWrapper(name = "graphemesAsList")
 	@XmlElement(name = "grapheme")
-	public ObservableList<Grapheme> getGraphemes() {
+	public ObservableList<Grapheme> getGraphs() {
 		return graphs;
 	}
 
-	public void setGraphemes(ObservableList<Grapheme> graphs) {
+	public void setGraphs(ObservableList<Grapheme> graphs) {
 		this.graphs = graphs;
 	}
 
-	public SimpleListProperty<Grapheme> graphemesProperty() {
+	public SimpleListProperty<Grapheme> graphemesListProperty() {
+		return graphemesAsList;
+	}
+
+	public String getGraphemes() {
+		return graphemes.get();
+	}
+	public StringProperty graphemesProperty() {
 		return graphemes;
 	}
-
-	public String getGraphsRepresentation() {
-		return graphsRepresentation.get();
-	}
-	public StringProperty graphsRepresentationProperty() {
-		return graphsRepresentation;
-	}
-	public void setGraphsRepresentation(String graphsRepresentation) {
-		this.graphsRepresentation.set(graphsRepresentation);
-	}
-
-	public static int findIndexInSegmentsListByUuid(ObservableList<Segment> list,
-			String uuid) {
-		// TODO: is there a way to do this with lambda expressions?
-		// Is there a way to use SylParserObject somehow?
-		int index = -1;
-		for (SylParserObject sylParserObject : list) {
-			index++;
-			if (sylParserObject.getID() == uuid) {
-				return index;
-			}
-		}
-		return -1;
+	public void setGraphemes(String graphsRepresentation) {
+		this.graphemes.set(graphsRepresentation);
 	}
 
 	@Override
 	public int hashCode() {
-		String sCombo = segment.getValueSafe() + graphsRepresentation.getValueSafe();
+		String sCombo = segment.getValueSafe() + graphemes.getValueSafe();
 		return sCombo.hashCode();
 	}
 
@@ -132,7 +147,7 @@ public class Segment extends SylParserObject {
 		if (!getSegment().equals(seg.getSegment())) {
 			result = false;
 		} else {
-			if (!getGraphemes().equals(seg.getGraphemes())) {
+			if (!getGraphs().equals(seg.getGraphs())) {
 				result = false;
 			}
 		}

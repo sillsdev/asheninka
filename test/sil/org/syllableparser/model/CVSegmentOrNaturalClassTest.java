@@ -33,17 +33,17 @@ public class CVSegmentOrNaturalClassTest {
 	@Before
 	public void setUp() throws Exception {
 		Grapheme aLower = new Grapheme("a", "lowercase a", new SimpleListProperty<Environment>(),
-				"");
+				"", true);
 		Grapheme aUpper = new Grapheme("A", "uppercase a", new SimpleListProperty<Environment>(),
-				"");
+				"", true);
 		Grapheme bLower = new Grapheme("b", "lowercase b", new SimpleListProperty<Environment>(),
-				"");
+				"", true);
 		Grapheme bUpper = new Grapheme("B", "uppercase b", new SimpleListProperty<Environment>(),
-				"");
+				"", true);
 		Grapheme dLower = new Grapheme("d", "lowercase d", new SimpleListProperty<Environment>(),
-				"");
+				"", true);
 		Grapheme dUpper = new Grapheme("D", "uppercase d", new SimpleListProperty<Environment>(),
-				"");
+				"", true);
 		ObservableList<Grapheme> aGraphemes = FXCollections.observableArrayList();
 		aGraphemes.add(aLower);
 		aGraphemes.add(aUpper);
@@ -53,12 +53,12 @@ public class CVSegmentOrNaturalClassTest {
 		ObservableList<Grapheme> dGraphemes = FXCollections.observableArrayList();
 		dGraphemes.add(dLower);
 		dGraphemes.add(dUpper);
-		Segment segA = new Segment("a", "low mid unrounded vowel", "a A");
-		segA.setGraphemes(aGraphemes);
-		Segment segB = new Segment("b", "voiced bilabial stop", "b B");
-		segB.setGraphemes(bGraphemes);
-		Segment segD = new Segment("d", "voiced alveolar stop", "d D");
-		segD.setGraphemes(dGraphemes);
+		Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
+		segA.setGraphs(aGraphemes);
+		Segment segB = new Segment("b", "b B", "voiced bilabial stop");
+		segB.setGraphs(bGraphemes);
+		Segment segD = new Segment("d", "d D", "voiced alveolar stop");
+		segD.setGraphs(dGraphemes);
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);
 		cvSegmentInventory.add(segD);

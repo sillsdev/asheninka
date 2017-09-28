@@ -32,6 +32,7 @@ import com.sun.nio.zipfs.ZipDirectoryStream;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
@@ -77,9 +78,11 @@ public class DatabaseMigratorTest {
 
 	@Test
 	public void testGetVersion() {
+		int version = migrator.getVersion();
+		assertEquals(1, version);
 		File version2Database = new File(Constants.UNIT_TEST_DATA_FILE_VERSION_2);
 		DatabaseMigrator migrator2 = new DatabaseMigrator(version2Database);
-		int version = migrator2.getVersion();
+		version = migrator2.getVersion();
 		assertEquals(2, version);
 	}
 
@@ -111,6 +114,13 @@ public class DatabaseMigratorTest {
 		checkFontInfo(lang, "System", 12.0, "Regular");
 		lang = languageProject.getVernacularLanguage();
 		checkFontInfo(lang, "System", 12.0, "Regular");
+		Segment seg = languageProject.getSegmentInventory().get(0);
+		assertEquals("a", seg.getSegment());
+		assertEquals("a A", seg.getGraphemes());
+		assertEquals("low mid unrounded vowel", seg.getDescription());
+		assertEquals(2, seg.getGraphs().size());
+		Grapheme graph = seg.getGraphs().get(0);
+		assertEquals("a", graph.getForm());
 	}
 
 	private void checkHyphenationParameters() {

@@ -11,3 +11,4 @@ build/project
 resources/images
 oxygen
 *- Copy.ashedata
+*.ashedato

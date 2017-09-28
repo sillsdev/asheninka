@@ -101,20 +101,6 @@ public class Environment extends SylParserObject {
 		this.rightContext = rightContext;
 	}
 
-	public static int findIndexInEnvironmentListByUuid(ObservableList<Environment> list,
-			String uuid) {
-		// TODO: is there a way to do this with lambda expressions?
-		// Is there a way to use SylParserObject somehow?
-		int index = -1;
-		for (SylParserObject sylParserObject : list) {
-			index++;
-			if (sylParserObject.getID() == uuid) {
-				return index;
-			}
-		}
-		return -1;
-	}
-
 	/**
 	 * @return
 	 */

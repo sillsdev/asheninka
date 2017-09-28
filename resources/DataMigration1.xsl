@@ -22,11 +22,12 @@
         graphemes 
     -->
     <xsl:template match="graphemes" priority="100">
-        <graphemes>
+        <xsl:copy-of select="."/>
+        <graphemesAsList>
                 <xsl:call-template name="ConvertGraphemeStringToGrapheme">
                     <xsl:with-param name="sGraph" select="concat(.,' ')"/>
                 </xsl:call-template>
-        </graphemes>
+        </graphemesAsList>
     </xsl:template>
     <!-- 
         basic copy template 

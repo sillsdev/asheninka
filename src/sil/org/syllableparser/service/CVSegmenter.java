@@ -40,7 +40,7 @@ public class CVSegmenter {
 	protected void buildGraphemeToCVSegmentMapping() {
 		// TODO: use lambda expressions for this
 		for (Segment seg : activeSegmentInventory) {
-			List<String> orthographemes = seg.getGraphemes().stream().map(Grapheme::getForm).collect(Collectors.toList());
+			List<String> orthographemes = seg.getGraphs().stream().map(Grapheme::getForm).collect(Collectors.toList());
 			for (String orthoform : orthographemes) {
 				if (orthoform.length() > iLongestGrapheme) {
 					iLongestGrapheme = orthoform.length();

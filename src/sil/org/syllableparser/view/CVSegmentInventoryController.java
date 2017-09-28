@@ -10,34 +10,49 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sil.org.syllableparser.Constants;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.util.Callback;
 
 /**
  * @author Andy Black
  *
  */
 
-public class CVSegmentInventoryController extends SylParserBaseController implements Initializable {
+public class CVSegmentInventoryController extends CheckBoxColumnController implements Initializable {
 
-	protected final class AnalysisWrappingTableCell extends TableCell<Segment, String> {
+	// TODO: how can we make the next four classes be more generic so we don't
+	// have to have
+	// one for Segment and one for Grapheme? (And one for vernacular vs
+	// anaysis?)
+	protected final class AnalysisWrappingTableCellGrapheme extends TableCell<Grapheme, String> {
 		private Text text;
 
 		@Override
@@ -51,8 +66,8 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Segment seg = (Segment) this.getTableRow().getItem();
-				if (seg != null && seg.isActive()) {
+				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
+				if (obj != null && obj.isActive()) {
 					text.setFill(Constants.ACTIVE);
 				} else {
 					text.setFill(Constants.INACTIVE);
@@ -63,7 +78,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<Segment, String> {
+	protected final class VernacularWrappingTableCellGrapheme extends TableCell<Grapheme, String> {
 		private Text text;
 
 		@Override
@@ -77,14 +92,101 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Segment seg = (Segment) this.getTableRow().getItem();
-				if (seg != null && seg.isActive()) {
+				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
+				if (obj != null && obj.isActive()) {
 					text.setFill(Constants.ACTIVE);
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
 				text.setFont(languageProject.getVernacularLanguage().getFont());
 				setGraphic(text);
+			}
+		}
+	}
+
+	protected final class AnalysisWrappingTableCellSegment extends TableCell<Segment, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				setStyle("");
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
+				if (obj != null && obj.isActive()) {
+					text.setFill(Constants.ACTIVE);
+				} else {
+					text.setFill(Constants.INACTIVE);
+				}
+				text.setFont(languageProject.getAnalysisLanguage().getFont());
+				setGraphic(text);
+			}
+		}
+	}
+
+	protected final class VernacularWrappingTableCellSegment extends TableCell<Segment, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				setStyle("");
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
+				if (obj != null && obj.isActive()) {
+					text.setFill(Constants.ACTIVE);
+				} else {
+					text.setFill(Constants.INACTIVE);
+				}
+				text.setFont(languageProject.getVernacularLanguage().getFont());
+				setGraphic(text);
+			}
+		}
+	}
+
+	// button table cell code base on code from
+	// http://java-buddy.blogspot.com/2014/08/javafx-get-row-data-from-tableview.html
+	// accessed on September 27 2017
+	// Define the button cell
+	private class ButtonCell extends TableCell<Grapheme, Boolean> {
+		final Button cellButton = new Button("...");
+
+		ButtonCell() {
+			cellButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent t) {
+					int selectedIndex = getTableRow().getIndex();
+					Grapheme selectedGrapheme = (Grapheme) graphemesTable.getItems().get(
+							selectedIndex);
+					// show environments chooser for this grapheme
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText("Look, an Information Dialog");
+					alert.setContentText("Selected grapheme: " + selectedGrapheme.getForm());
+
+					alert.showAndWait();
+				}
+			});
+		}
+
+		// Display button if the row is not empty
+		@Override
+		protected void updateItem(Boolean t, boolean empty) {
+			super.updateItem(t, empty);
+			if (!empty) {
+				setGraphic(cellButton);
 			}
 		}
 	}
@@ -98,9 +200,19 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	@FXML
 	private TableColumn<Segment, String> descriptionColumn;
 	@FXML
-	private TableColumn<Segment, Boolean> checkBoxColumn;
+	private TableView<Grapheme> graphemesTable;
+	@FXML
+	private TableColumn<Grapheme, String> graphemeColumn;
+	@FXML
+	private TableColumn<Grapheme, String> environmentsColumn;
+	// @FXML
+	// private TableColumn<Grapheme, String> graphemeDescriptionColumn;
+	@FXML
+	private TableColumn<Grapheme, Boolean> checkBoxColumn;
 	@FXML
 	private CheckBox checkBoxColumnHead;
+	@FXML
+	private TableColumn<Grapheme, Boolean> environmentsButtonColumn;
 
 	@FXML
 	private TextField segmentField;
@@ -109,9 +221,14 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	@FXML
 	private TextField descriptionField;
 	@FXML
+	private Button environmentsButton;
+	// @FXML
+	// private TextField graphemeDescriptionField;
+	@FXML
 	private CheckBox activeCheckBox;
 
 	private Segment currentSegment;
+	private Grapheme currentGrapheme;
 
 	public CVSegmentInventoryController() {
 
@@ -123,22 +240,95 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// Segment table
 		segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
-		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphsRepresentationProperty());
+		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-		;
+		// Grapheme table
+		graphemeColumn.setCellValueFactory(cellData -> cellData.getValue().formProperty());
+		environmentsColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.envsRepresentationProperty());
+		// graphemeDescriptionColumn
+		// .setCellValueFactory(cellData ->
+		// cellData.getValue().descriptionProperty());
 
 		// Custom rendering of the table cell.
 		segmentColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new VernacularWrappingTableCellSegment();
 		});
 		graphemesColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new VernacularWrappingTableCellSegment();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new AnalysisWrappingTableCell();
+			return new AnalysisWrappingTableCellSegment();
 		});
+
+		checkBoxColumn
+				.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
+		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
+		checkBoxColumn.setEditable(true);
+		// checkBoxColumn.setOnEditCommit(value);
+//		checkBoxColumn.setOnEditCommit(new EventHandler<CellEditEvent<Grapheme, Boolean>>() {
+//			// @Override
+//			// public void handle(ActionEvent t) {
+//			// int selectedIndex = getTableRow().getIndex();
+//			// Grapheme selectedGrapheme = (Grapheme)
+//			// graphemesTable.getItems().get(
+//			// selectedIndex);
+//			// // show environments chooser for this grapheme
+//			// Alert alert = new Alert(AlertType.INFORMATION);
+//			// alert.setTitle("Information Dialog");
+//			// alert.setHeaderText("Look, an Information Dialog");
+//			// alert.setContentText("Selected grapheme: " +
+//			// selectedGrapheme.getForm());
+//			//
+//			// alert.showAndWait();
+//			// }
+//
+//			@Override
+//			public void handle(CellEditEvent<Grapheme, Boolean> event) {
+//				Grapheme grapheme = event.getRowValue();
+//				if (grapheme != null) {
+//					grapheme.setActive(event.getNewValue());
+//				}
+//			}
+//		});
+		checkBoxColumnHead.setOnAction((event) -> {
+			handleCheckBoxColumnHead();
+		});
+		initializeCheckBoxContextMenu(resources);
+		graphemeColumn.setCellFactory(column -> {
+			return new VernacularWrappingTableCellGrapheme();
+		});
+		environmentsColumn.setCellFactory(column -> {
+			return new VernacularWrappingTableCellGrapheme();
+		});
+
+		// button table cell code base on code from
+		// http://java-buddy.blogspot.com/2014/08/javafx-get-row-data-from-tableview.html
+		// accessed on September 27 2017
+		environmentsButtonColumn
+				.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Grapheme, Boolean>, ObservableValue<Boolean>>() {
+					@Override
+					public ObservableValue<Boolean> call(
+							TableColumn.CellDataFeatures<Grapheme, Boolean> p) {
+						return new SimpleBooleanProperty(p.getValue() != null);
+					}
+				});
+		environmentsButtonColumn
+				.setCellFactory(new Callback<TableColumn<Grapheme, Boolean>, TableCell<Grapheme, Boolean>>() {
+					@Override
+					public TableCell<Grapheme, Boolean> call(TableColumn<Grapheme, Boolean> p) {
+						return new ButtonCell();
+					}
+				});
+		environmentsButtonColumn.setEditable(true);
+
+		graphemesTable.setEditable(true);
+		// graphemeDescriptionColumn.setCellFactory(column -> {
+		// return new AnalysisWrappingTableCellGrapheme();
+		// });
 
 		makeColumnHeaderWrappable(segmentColumn);
 		makeColumnHeaderWrappable(graphemesColumn);
@@ -162,7 +352,7 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		});
 		graphemesField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
-				currentSegment.setGraphsRepresentation(graphemesField.getText());
+				currentSegment.setGraphemes(graphemesField.getText());
 			}
 			if (languageProject != null) {
 				graphemesField.setFont(languageProject.getVernacularLanguage().getFont());
@@ -184,6 +374,12 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 				displayFieldsPerActiveSetting(currentSegment);
 			}
 		});
+		
+		graphemesTable
+				.getSelectionModel()
+				.selectedItemProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> showSegmentGraphemesDetails(newValue));
 
 		// Use of Enter move focus to next item.
 		segmentField.setOnAction((event) -> {
@@ -203,12 +399,24 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		String temp = segment.getSegment();
 		segment.setSegment("");
 		segment.setSegment(temp);
-		temp = segment.getGraphsRepresentation();
-		segment.setGraphsRepresentation("");
-		segment.setGraphsRepresentation(temp);
+		temp = segment.getGraphemes();
+		segment.setGraphemes("");
+		segment.setGraphemes(temp);
 		temp = segment.getDescription();
 		segment.setDescription("");
 		segment.setDescription(temp);
+	}
+
+	private void forceTableRowToRedisplayPerActiveSetting(Grapheme grapheme) {
+		// we need to make the content of the row cells change in order for
+		// the cell factory to fire.
+		// We do this by getting the value, blanking it, and then restoring it.
+		String temp = grapheme.getForm();
+		grapheme.setForm("");
+		grapheme.setForm(temp);
+		temp = grapheme.getEnvsRepresentation();
+		grapheme.setEnvsRepresentation("");
+		grapheme.setEnvsRepresentation(temp);
 	}
 
 	/**
@@ -223,10 +431,15 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		if (segment != null) {
 			// Fill the text fields with info from the segment object.
 			segmentField.setText(segment.getSegment());
-			graphemesField.setText(segment.getGraphsRepresentation());
+			graphemesField.setText(segment.getGraphemes());
 			descriptionField.setText(segment.getDescription());
 			activeCheckBox.setSelected(segment.isActive());
 			displayFieldsPerActiveSetting(segment);
+
+			// Add observable list data to the graphemes table and force it to
+			// redisplay
+			graphemesTable.setItems(currentSegment.getGraphs());
+			graphemesTable.refresh();
 		} else {
 			// Segment is null, remove all the text.
 			segmentField.setText("");
@@ -244,6 +457,40 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		}
 	}
 
+	/**
+	 * Fills all text fields to show details about the graphemes in the segment.
+	 * If the specified grapheme is null, all text fields are cleared.
+	 * 
+	 * @param grapheme
+	 *            the segment or null
+	 */
+	private void showSegmentGraphemesDetails(Grapheme grapheme) {
+		currentGrapheme = grapheme;
+		// if (grapheme != null) {
+		// // Fill the text fields with info from the segment object.
+		// graphemeField.setText(grapheme.getForm());
+		// environmentsField.setText(grapheme.getEnvsRepresentation());
+		// // activeCheckBox.setSelected(grapheme.isActive());
+		// displayFieldsPerActiveSetting(grapheme);
+		// } else {
+		// // Grapheme is null, remove all the text.
+		// graphemeField.setText(grapheme.getForm());
+		// environmentsField.setText(grapheme.getEnvsRepresentation());
+		// // activeCheckBox.setSelected(true);
+		// }
+		//
+		// if (grapheme != null) {
+		// int currentGraphemeNumber =
+		// graphemesTable.getItems().indexOf(currentGrapheme);
+		// // this.mainApp.updateStatusBarNumberOfItems((currentGraphemeNumber +
+		// 1) + "/"
+		// // + cvSegmentTable.getItems().size() + " ");
+		// //
+		// mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
+		// // currentGraphemeNumber);
+		// }
+	}
+
 	@Override
 	public void setViewItemUsed(int value) {
 		int max = cvSegmentTable.getItems().size();
@@ -255,11 +502,12 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 		segmentField.setDisable(!segment.isActive());
 		graphemesField.setDisable(!segment.isActive());
 		descriptionField.setDisable(!segment.isActive());
+		graphemesTable.setDisable(!segment.isActive());
 	}
 
 	public void setSegment(Segment segment) {
 		segmentField.setText(segment.getSegment());
-		graphemesField.setText(segment.getGraphsRepresentation());
+		graphemesField.setText(segment.getGraphemes());
 		descriptionField.setText(segment.getDescription());
 	}
 
@@ -323,27 +571,27 @@ public class CVSegmentInventoryController extends SylParserBaseController implem
 	}
 
 	protected void handleCheckBoxSelectAll() {
-		for (Segment segment : languageProject.getSegmentInventory()) {
-			segment.setActive(true);
-			forceTableRowToRedisplayPerActiveSetting(segment);
+		for (Grapheme grapheme : currentSegment.getGraphs()) {
+			grapheme.setActive(true);
+			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
 	}
 
 	protected void handleCheckBoxClearAll() {
-		for (Segment segment : languageProject.getSegmentInventory()) {
-			segment.setActive(false);
-			forceTableRowToRedisplayPerActiveSetting(segment);
+		for (Grapheme grapheme : currentSegment.getGraphs()) {
+			grapheme.setActive(false);
+			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
 	}
 
 	protected void handleCheckBoxToggle() {
-		for (Segment segment : languageProject.getSegmentInventory()) {
-			if (segment.isActive()) {
-				segment.setActive(false);
+		for (Grapheme grapheme : currentSegment.getGraphs()) {
+			if (grapheme.isActive()) {
+				grapheme.setActive(false);
 			} else {
-				segment.setActive(true);
+				grapheme.setActive(true);
 			}
-			forceTableRowToRedisplayPerActiveSetting(segment);
+			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
 	}
 

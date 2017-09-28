@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.model.cvapproach;
 
@@ -31,7 +31,7 @@ public class CVNaturalClass extends SylParserObject {
 	ObservableList<SylParserObject> snc = FXCollections.observableArrayList();
 //	ListChangeListener<SylParserObject> lcl;
 //	WeakListChangeListener<SylParserObject> weakListener = new WeakListChangeListener<>(lcl);
-	
+
 	public CVNaturalClass() {
 		super();
 		this.ncName = new SimpleStringProperty("");
@@ -42,7 +42,7 @@ public class CVNaturalClass extends SylParserObject {
 //		snc.addListener(weakListener);
 	}
 
-	public CVNaturalClass(String className, SimpleListProperty<Object> segmentsOrNaturalClasses, 
+	public CVNaturalClass(String className, SimpleListProperty<Object> segmentsOrNaturalClasses,
 			String description, String sncRepresentation) {
 		super();
 		this.ncName = new SimpleStringProperty(className);
@@ -102,19 +102,6 @@ public class CVNaturalClass extends SylParserObject {
 	public void setSNCRepresentation(String sncRepresentation) {
 		this.sncRepresentation.set(sncRepresentation);
 	}
-
-	public static int findIndexInNaturaClassListByUuid(ObservableList<CVNaturalClass> list, String uuid) {
-		// TODO: is there a way to do this with lambda expressions?
-		// Is there a way to use SylParserObject somehow?
-				int index = -1;
-				for (SylParserObject sylParserObject : list) {
-					index++;
-					if (sylParserObject.getID() == uuid) {
-						return index;
-					}
-				}		
-				return -1;
-			}
 
 	/**
 	 * @return

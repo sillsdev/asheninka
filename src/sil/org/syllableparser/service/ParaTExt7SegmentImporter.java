@@ -99,12 +99,12 @@ public class ParaTExt7SegmentImporter extends SegmentImporter {
 				ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
 				for (int i = 0; i < chars.length; i++) {
 					Grapheme grapheme = new Grapheme(chars[i], "", new SimpleListProperty<Environment>(),
-							"");
+							"", true);
 					graphemes.add(grapheme);
 				}
 				String sName = chars[0];
 				Segment seg = new Segment(sName, "", "");
-				seg.setGraphemes(graphemes);
+				seg.setGraphs(graphemes);
 				languageProject.getSegmentInventory().add(seg);
 			}
 			line = bufr.readLine();

@@ -156,7 +156,7 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	private void handleOk() {
 		for (CVPredictedSyllabification predictedSyllabification : cvPredictedSyllabifications) {
 			if (predictedSyllabification.isChecked()) {
-				int i = Word.findIndexInWordListByUuid(words,
+				int i = Word.findIndexInListByUuid(words,
 						predictedSyllabification.getUuid());
 				word = words.get(i);
 				word.setCorrectSyllabification(predictedSyllabification

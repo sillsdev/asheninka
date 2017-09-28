@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.model;
 
@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -30,6 +32,7 @@ public class Grapheme extends SylParserObject {
 	private final SimpleListProperty<Environment> environments;
 	ObservableList<Environment> envs = FXCollections.observableArrayList();
 	private final StringProperty envsRepresentation;
+	private BooleanProperty checked;
 
 	public Grapheme() {
 		super();
@@ -37,17 +40,34 @@ public class Grapheme extends SylParserObject {
 		this.description = new SimpleStringProperty("");
 		this.environments = new SimpleListProperty<Environment>();
 		this.envsRepresentation = new SimpleStringProperty("");
+		this.checked = new SimpleBooleanProperty(true);
+		active = true;
 		createUUID();
 	}
 
 	public Grapheme(String form, String description,
-			SimpleListProperty<Environment> environments, String envsRepresentation) {
+			SimpleListProperty<Environment> environments, String envsRepresentation, boolean isActive) {
 		super();
 		this.form = new SimpleStringProperty(form);
 		this.description = new SimpleStringProperty(description);
 		this.environments = new SimpleListProperty<Environment>(environments);
 		this.envsRepresentation = new SimpleStringProperty(envsRepresentation);
+		this.checked = new SimpleBooleanProperty(isActive);
+		this.active = isActive;
 		createUUID();
+	}
+
+	public boolean isChecked() {
+		return this.checked.getValue();
+	}
+
+	public void setChecked(boolean value) {
+		checked.set(value);
+		this.setActive(value);	
+	}
+
+	public BooleanProperty checkedProperty() {
+		return checked;
 	}
 
 	public String getForm() {
@@ -103,19 +123,6 @@ public class Grapheme extends SylParserObject {
 		this.envsRepresentation.set(envsRepresentation);
 	}
 	
-	public static int findIndexInGraphemesListByUuid(ObservableList<Grapheme> list, String uuid) {
-		// TODO: is there a way to do this with lambda expressions?
-		// Is there a way to use SylParserObject somehow?
-		int index = -1;
-		for (SylParserObject sylParserObject : list) {
-			index++;
-			if (sylParserObject.getID() == uuid) {
-				return index;
-			}
-		}
-		return -1;
-	}
-
 	@Override
 	public int hashCode() {
 		String sCombo = form.getValueSafe() + envsRepresentation.getValueSafe();

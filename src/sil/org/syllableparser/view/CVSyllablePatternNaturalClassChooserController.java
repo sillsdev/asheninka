@@ -327,7 +327,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 							syllablePattern.setWordFinal(true);
 						}
 					} else {
-						int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
+						int i = CVNaturalClass.findIndexInListByUuid(
 								cvApproach.getCVNaturalClasses(), selectedNaturalClass.getID());
 						syllablePattern.getNCs().add(cvApproach.getCVNaturalClasses().get(i));
 					}

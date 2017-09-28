@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.model.cvapproach;
 
@@ -30,7 +30,7 @@ public class CVSyllablePattern extends SylParserObject {
 	ObservableList<CVNaturalClass> ncs = FXCollections.observableArrayList();
 	private Boolean fWordInitial;
 	private Boolean fWordFinal;
-	
+
 	public CVSyllablePattern() {
 		super();
 		this.spName = new SimpleStringProperty("");
@@ -42,7 +42,7 @@ public class CVSyllablePattern extends SylParserObject {
 		createUUID();
 	}
 
-	public CVSyllablePattern(String patternName, SimpleListProperty<CVNaturalClass> naturalClasses, 
+	public CVSyllablePattern(String patternName, SimpleListProperty<CVNaturalClass> naturalClasses,
 			String description, String ncsRepresentation) {
 		super();
 		this.spName = new SimpleStringProperty(patternName);
@@ -110,7 +110,7 @@ public class CVSyllablePattern extends SylParserObject {
 	public void setNCSRepresentation(String ncsRepresentation) {
 		this.ncsRepresentation.set(ncsRepresentation);
 	}
-	
+
 	public Boolean isWordInitial() {
 		return fWordInitial;
 	}
@@ -126,19 +126,6 @@ public class CVSyllablePattern extends SylParserObject {
 	public void setWordFinal(Boolean fWordFinal) {
 		this.fWordFinal = fWordFinal;
 	}
-
-	public static int findIndexInSyllablePatternListByUuid(ObservableList<CVSyllablePattern> list, String uuid) {
-		// TODO: is there a way to do this with lambda expressions?
-		// Is there a way to use SylParserObject somehow?
-				int index = -1;
-				for (SylParserObject sylParserObject : list) {
-					index++;
-					if (sylParserObject.getID() == uuid) {
-						return index;
-					}
-				}		
-				return -1;
-			}
 
 	/**
 	 * @return

@@ -80,18 +80,18 @@ public class XMLBackEndProviderTest {
 //		ObservableList<Grapheme> graphemes = languageProject.getGraphemes();
 //		assertEquals(56, graphemes.size());
 		Segment seg = segInventory.get(0);
-		assertEquals(2, seg.getGraphemes().size());
-		Grapheme grapheme = seg.getGraphemes().get(0);
+		assertEquals(2, seg.getGraphs().size());
+		Grapheme grapheme = seg.getGraphs().get(0);
 		assertEquals("a", grapheme.getForm());
-		grapheme = seg.getGraphemes().get(1);
+		grapheme = seg.getGraphs().get(1);
 		assertEquals("A", grapheme.getForm());
 		seg = segInventory.get(2);
-		assertEquals(3, seg.getGraphemes().size());
-		grapheme = seg.getGraphemes().get(0);
+		assertEquals(3, seg.getGraphs().size());
+		grapheme = seg.getGraphs().get(0);
 		assertEquals("ch", grapheme.getForm());
-		grapheme = seg.getGraphemes().get(1);
+		grapheme = seg.getGraphs().get(1);
 		assertEquals("Ch", grapheme.getForm());
-		grapheme = seg.getGraphemes().get(2);
+		grapheme = seg.getGraphs().get(2);
 		assertEquals("CH", grapheme.getForm());
 	}
 
