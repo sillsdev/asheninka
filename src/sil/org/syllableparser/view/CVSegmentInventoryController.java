@@ -8,6 +8,7 @@ package sil.org.syllableparser.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.Grapheme;
@@ -264,13 +265,14 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			return new AnalysisWrappingTableCellSegment();
 		});
 
-		checkBoxColumn
-				.setCellValueFactory(cellData -> {
-					BooleanProperty bp = cellData.getValue().checkedProperty();
-					cellData.getValue().setActive(bp.get());
-					forceTableRowToRedisplayPerActiveSetting(cellData.getValue());
-					return bp;
-				});
+		checkBoxColumn.setCellValueFactory(cellData -> {
+			Grapheme graph = cellData.getValue();
+			BooleanProperty bp = graph.checkedProperty();
+			cellData.getValue().setActive(bp.get());
+			forceTableRowToRedisplayPerActiveSetting(graph);
+			redrawGraphemesField();
+			return bp;
+		});
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
 		checkBoxColumn.setEditable(true);
 		checkBoxColumnHead.setOnAction((event) -> {
@@ -337,6 +339,12 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				graphemesField.setFont(languageProject.getVernacularLanguage().getFont());
 			}
 		});
+		graphemesField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (!isNowFocused && currentSegment != null) {
+				currentSegment.updateGraphemes();
+				graphemesTable.refresh();
+			}
+		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
 				currentSegment.setDescription(descriptionField.getText());
@@ -353,7 +361,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				displayFieldsPerActiveSetting(currentSegment);
 			}
 		});
-		
+
 		// Use of Enter move focus to next item.
 		segmentField.setOnAction((event) -> {
 			graphemesField.requestFocus();
@@ -532,6 +540,16 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			}
 			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
+	}
+
+	protected void redrawGraphemesField() {
+		if (currentSegment != null) {
+			String sGraphemes = currentSegment.getGraphs().stream()
+					.filter(graph -> graph.isChecked()).map(Grapheme::getForm)
+					.collect(Collectors.joining(" "));
+			graphemesField.setText(sGraphemes);
+		}
+
 	}
 
 	// code taken from
