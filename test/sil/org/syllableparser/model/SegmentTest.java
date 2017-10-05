@@ -168,6 +168,16 @@ public class SegmentTest {
 		grapheme = graphs.get(1);
 		assertEquals("æ̀", grapheme.getForm());
 		
+		// test for duplicates
+		segment.setGraphemes("a a  æ̀");
+		segment.updateGraphemes();
+		graphs = segment.getGraphs();
+		assertEquals(2, graphs.size());
+		grapheme = graphs.get(0);
+		assertEquals("a", grapheme.getForm());
+		grapheme = graphs.get(1);
+		assertEquals("æ̀", grapheme.getForm());
+
 		// add all new ones
 		segment.setGraphemes("à A á");
 		segment.updateGraphemes();
@@ -196,6 +206,36 @@ public class SegmentTest {
 		assertEquals("A", grapheme.getForm());
 		grapheme = graphs.get(2);
 		assertEquals("á", grapheme.getForm());
-	
+
+		// reset inactive ones to active
+		grapheme = graphs.get(0);
+		grapheme.setActive(true);
+		grapheme = graphs.get(2);
+		grapheme.setActive(true);
+		// test for duplicates when one is inactive
+		segment.setGraphemes("a A á");
+		segment.updateGraphemes();
+		graphs = segment.getGraphs();
+		assertEquals(3, graphs.size());
+		grapheme = graphs.get(0);
+		assertEquals("A", grapheme.getForm());
+		grapheme = graphs.get(1);
+		assertEquals("á", grapheme.getForm());
+		grapheme = graphs.get(2);
+		assertEquals("a", grapheme.getForm());
+		// set second one to inactive
+		grapheme = graphs.get(1);
+		grapheme.setActive(false);
+		segment.setGraphemes("a A á");
+		segment.updateGraphemes();
+		graphs = segment.getGraphs();
+		assertEquals(3, graphs.size());
+		grapheme = graphs.get(0);
+		assertEquals("A", grapheme.getForm());
+		grapheme = graphs.get(1);
+		assertEquals("á", grapheme.getForm());
+		grapheme = graphs.get(2);
+		assertEquals("a", grapheme.getForm());
+
 	}
 }
