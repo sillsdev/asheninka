@@ -833,6 +833,23 @@ public class RootLayoutController implements Initializable {
 		selectApproachViewItem(4);
 	}
 
+	@FXML
+	private void handleGraphemeNaturalClasses() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		cvApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(5);
+	}
+
+	@FXML
+	private void handleEnvironments() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		cvApproachController.handleEnvironments();
+		selectApproachViewItem(6);
+	}
+
+
 	protected void selectApproachViewItem(int iItem) {
 		Platform.runLater(new Runnable() {
 			@Override
@@ -1110,6 +1127,14 @@ public class RootLayoutController implements Initializable {
 		handleCVApproach();
 		String sLastApproachViewUsed = applicationPreferences.getLastApproachViewUsed();
 		switch (sLastApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(6);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(5);
+			break;
+
 		case "NATURAL_CLASSES":
 			selectApproachViewItem(1);
 			break;

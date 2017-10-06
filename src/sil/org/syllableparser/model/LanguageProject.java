@@ -37,6 +37,7 @@ public class LanguageProject {
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
+	private ObservableList<GraphemeNaturalClass> graphemeNaturalClasses = FXCollections.observableArrayList();
 	private Language vernacularLanguage;
 	private Language analysisLanguage;
 	private HyphenationParametersListWord hyphenationParametersListWord;
@@ -64,6 +65,7 @@ public class LanguageProject {
 		segmentInventory.clear();
 		words.clear();
 		environments.clear();
+		graphemeNaturalClasses.clear();
 	}
 
 	public int getDatabaseVersion() {
@@ -105,6 +107,20 @@ public class LanguageProject {
 		this.segmentInventory = cvSegmentInventoryData;
 	}
 
+	@XmlElementWrapper(name = "graphemeNaturalClassess")
+	@XmlElement(name = "graphemeNaturalClass")
+	public ObservableList<GraphemeNaturalClass> getGraphemeNaturalClasses() {
+		return graphemeNaturalClasses;
+	}
+
+	public void setGraphemeNaturalClasses(ObservableList<GraphemeNaturalClass> graphemeNaturalClassesData) {
+		this.graphemeNaturalClasses = graphemeNaturalClassesData;
+	}
+
+	public List<GraphemeNaturalClass> getActiveGraphemeNaturalClasses() {
+		return graphemeNaturalClasses.stream().filter(gnc -> gnc.isActive()).collect(Collectors.toList());
+	}
+
 	/**
 	 * @return the word Data
 	 */
@@ -132,8 +148,8 @@ public class LanguageProject {
 		this.environments = environments;
 	}
 	
-	public List<Grapheme> getGraphemes() {
-		List<Grapheme> graphemes = FXCollections.observableArrayList();
+	public ObservableList<Grapheme> getGraphemes() {
+		ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
 		for (Segment segment : getSegmentInventory()) {
 			graphemes.addAll(segment.getGraphs());
 		}
@@ -163,6 +179,10 @@ public class LanguageProject {
 		ObservableList<Word> wordsLoadedData = languageProjectLoaded.getWords();
 		for (Word word : wordsLoadedData) {
 			words.add(word);
+		}
+		ObservableList<GraphemeNaturalClass> graphemeNaturalClassesLoadedData = languageProjectLoaded.getGraphemeNaturalClasses();
+		for (GraphemeNaturalClass gnc : graphemeNaturalClassesLoadedData) {
+			graphemeNaturalClasses.add(gnc);
 		}
 		ObservableList<Environment> environmentsLoadedData = languageProjectLoaded.getEnvironments();
 		for (Environment environment : environmentsLoadedData) {
@@ -227,7 +247,7 @@ public class LanguageProject {
 	/**
 	 * @param word
 	 * @param sUntested
-	 *            TODO
+	 *
 	 */
 	public void createNewWordFromParaTExt(Word word, String sUntested) {
 		word.setCVParserResult(sUntested);

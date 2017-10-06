@@ -131,7 +131,6 @@ public class MainApp extends Application {
 		applicationPreferences.setLastApproachUsed(controller.getApproachUsed());
 		applicationPreferences.setLastApproachViewUsed(controller.getViewUsed());
 		controller.handleSaveProject();
-		// TODO: add last file opened
 	}
 
 	public void setLocale(Locale locale) {

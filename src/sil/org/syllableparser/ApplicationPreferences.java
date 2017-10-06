@@ -24,10 +24,12 @@ public class ApplicationPreferences {
 	static final String LAST_APPROACH_VIEW_ITEM_USED = "lastApproachViewItemUsed";
 	// last CV info
 	static final String LAST_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastCVNaturalClassesViewItemUsed";
-	static final String LAST_CV_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastCVSegemntInventoryViewItemUsed";
+	static final String LAST_CV_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastCVSegmentInventoryViewItemUsed";
 	static final String LAST_CV_SYLLABLE_PATTERNS_VIEW_ITEM_USED = "lastCVSyllablePatternsViewItemUsed";
 	static final String LAST_CV_TRY_A_WORD_USED = "lastCVTryAWordUsed";
 	static final String LAST_CV_WORDS_VIEW_ITEM_USED = "lastCVWordsViewItemUsed";
+	static final String LAST_CV_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastCVGraphemeNaturalClassesViewItemUsed";
+	static final String LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED = "lastCVEnvironmentsViewItemUsed";
 	// We have a last item used for predicted vs. correct words, but we're not
 	// setting it because it is not clear why it would be useful. We'll use it if users
 	// request it.
@@ -45,6 +47,7 @@ public class ApplicationPreferences {
 	public static final String LAST_CV_SEGMENT_OR_NATURAL_CLASS = "lastCVSegmentOrNaturalClass";
 	public static final String LAST_CV_TRY_A_WORD = "lastCVTryAWord";
 	public static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT = "lastCVWordPredictedVsCorrect";
+	public static final String LAST_CV_GRAPHEME_OR_NATURAL_CLASS = "lastCVGraphemeOrNaturalClass";
 	
 	Preferences prefs;
 
@@ -156,6 +159,22 @@ public class ApplicationPreferences {
 
 	public void setLastCVTryAWordUsed(String lastCVTryAWordUsed) {
 		setPreferencesKey(LAST_CV_TRY_A_WORD_USED, lastCVTryAWordUsed);
+	}
+
+	public int getLastCVGraphemeNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_CV_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastCVGraphemeNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_CV_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastCVEnvironmentsViewItemUsed() {
+		return prefs.getInt(LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastCVEnvironmentsViewItemUsed(int value) {
+		setPreferencesKey(LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED, value);
 	}
 
 	public Stage getLastWindowParameters(String sWindow, Stage stage, Double defaultHeight, Double defaultWidth) {

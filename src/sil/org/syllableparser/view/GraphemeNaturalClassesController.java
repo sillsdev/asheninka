@@ -12,10 +12,11 @@ import java.util.ResourceBundle;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
+import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
-import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,9 +43,9 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends SylParserBaseController implements Initializable {
+public class GraphemeNaturalClassesController extends SylParserBaseController implements Initializable {
 
-	protected final class AnalysisWrappingTableCell extends TableCell<CVNaturalClass, String> {
+	protected final class AnalysisWrappingTableCell extends TableCell<GraphemeNaturalClass, String> {
 		private Text text;
 
 		@Override
@@ -58,7 +59,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
+				GraphemeNaturalClass nc = (GraphemeNaturalClass) this.getTableRow().getItem();
 				if (nc != null && nc.isActive()) {
 					text.setFill(Constants.ACTIVE);
 				} else {
@@ -70,7 +71,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<CVNaturalClass, String> {
+	protected final class VernacularWrappingTableCell extends TableCell<GraphemeNaturalClass, String> {
 		private Text text;
 
 		@Override
@@ -84,7 +85,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				text = new Text(item.toString());
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
+				GraphemeNaturalClass nc = (GraphemeNaturalClass) this.getTableRow().getItem();
 				if (nc != null && nc.isActive()) {
 					text.setFill(Constants.ACTIVE);
 				} else {
@@ -97,36 +98,36 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	}
 
 	@FXML
-	private TableView<CVNaturalClass> cvNaturalClassTable;
+	private TableView<GraphemeNaturalClass> graphemeNaturalClassTable;
 	@FXML
-	private TableColumn<CVNaturalClass, String> nameColumn;
+	private TableColumn<GraphemeNaturalClass, String> nameColumn;
 	@FXML
-	private TableColumn<CVNaturalClass, String> segmentOrNaturalClassColumn;
+	private TableColumn<GraphemeNaturalClass, String> graphemeOrNaturalClassColumn;
 	@FXML
-	private TableColumn<CVNaturalClass, String> descriptionColumn;
+	private TableColumn<GraphemeNaturalClass, String> descriptionColumn;
 	@FXML
-	private TableColumn<CVNaturalClass, Boolean> checkBoxColumn;
+	private TableColumn<GraphemeNaturalClass, Boolean> checkBoxColumn;
 	@FXML
 	private CheckBox checkBoxColumnHead;
 
 	@FXML
 	private TextField nameField;
 	@FXML
-	private TextField segmentOrNaturalClassField;
+	private TextField graphemeOrNaturalClassField;
 	@FXML
 	private TextField descriptionField;
 	@FXML
-	private FlowPane sncField;
+	private FlowPane gncField;
 	@FXML
-	private TextFlow sncTextFlow;
+	private TextFlow gncTextFlow;
 	@FXML
-	private Button sncButton;
+	private Button gncButton;
 	@FXML
 	private CheckBox activeCheckBox;
 
-	private CVNaturalClass currentNaturalClass;
+	private GraphemeNaturalClass currentNaturalClass;
 
-	public CVNaturalClassesController() {
+	public GraphemeNaturalClassesController() {
 
 	}
 
@@ -138,8 +139,8 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	public void initialize(URL location, ResourceBundle resources) {
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
-		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.sncRepresentationProperty());
+		graphemeOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.gncRepresentationProperty());
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 
@@ -147,7 +148,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		nameColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
-		segmentOrNaturalClassColumn.setCellFactory(column -> {
+		graphemeOrNaturalClassColumn.setCellFactory(column -> {
 			return new VernacularWrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
@@ -155,18 +156,18 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		});
 
 		makeColumnHeaderWrappable(nameColumn);
-		makeColumnHeaderWrappable(segmentOrNaturalClassColumn);
+		makeColumnHeaderWrappable(graphemeOrNaturalClassColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
 
 		// Clear cv natural class details.
-		showCVNaturalClassDetails(null);
+		showGraphemeNaturalClassDetails(null);
 
 		// Listen for selection changes and show the details when changed.
-		cvNaturalClassTable
+		graphemeNaturalClassTable
 				.getSelectionModel()
 				.selectedItemProperty()
 				.addListener(
-						(observable, oldValue, newValue) -> showCVNaturalClassDetails(newValue));
+						(observable, oldValue, newValue) -> showGraphemeNaturalClassDetails(newValue));
 
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -193,7 +194,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		activeCheckBox.setOnAction((event) -> {
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setActive(activeCheckBox.isSelected());
-				showSegmentOrNaturalClassContent();
+				showGraphemeOrNaturalClassContent();
 				forceTableRowToRedisplayPerActiveSetting(currentNaturalClass);
 			}
 			displayFieldsPerActiveSetting(currentNaturalClass);
@@ -204,14 +205,14 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			descriptionField.requestFocus();
 		});
 		descriptionField.setOnAction((event) -> {
-			segmentOrNaturalClassField.requestFocus();
+			graphemeOrNaturalClassField.requestFocus();
 		});
 
 		nameField.requestFocus();
 
 	}
 
-	public void displayFieldsPerActiveSetting(CVNaturalClass nc) {
+	public void displayFieldsPerActiveSetting(GraphemeNaturalClass nc) {
 		boolean fIsActive;
 		if (nc == null) {
 			fIsActive = false;
@@ -219,21 +220,21 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			fIsActive = nc.isActive();
 		}
 		nameField.setDisable(!fIsActive);
-		sncTextFlow.setDisable(!fIsActive);
-		sncButton.setDisable(!fIsActive);
+		gncTextFlow.setDisable(!fIsActive);
+		gncButton.setDisable(!fIsActive);
 		descriptionField.setDisable(!fIsActive);
 	}
 
-	private void forceTableRowToRedisplayPerActiveSetting(CVNaturalClass nc) {
+	private void forceTableRowToRedisplayPerActiveSetting(GraphemeNaturalClass nc) {
 		// we need to make the content of the row cells change in order for
 		// the cell factory to fire.
 		// We do this by getting the value, blanking it, and then restoring it.
 		String temp = nc.getNCName();
 		nc.setNCName("");
 		nc.setNCName(temp);
-		temp = nc.getSNCRepresentation();
-		nc.setSNCRepresentation("");
-		nc.setSNCRepresentation(temp);
+		temp = nc.getGNCRepresentation();
+		nc.setGNCRepresentation("");
+		nc.setGNCRepresentation(temp);
 		temp = nc.getDescription();
 		nc.setDescription("");
 		nc.setDescription(temp);
@@ -241,9 +242,9 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 	@Override
 	public void setViewItemUsed(int value) {
-		int max = cvNaturalClassTable.getItems().size();
+		int max = graphemeNaturalClassTable.getItems().size();
 		value = adjustIndexValue(value, max);
-		cvNaturalClassTable.getSelectionModel().clearAndSelect(value);
+		graphemeNaturalClassTable.getSelectionModel().clearAndSelect(value);
 	}
 
 	/**
@@ -253,47 +254,47 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	 * @param naturalClass
 	 *            the segment or null
 	 */
-	private void showCVNaturalClassDetails(CVNaturalClass naturalClass) {
+	private void showGraphemeNaturalClassDetails(GraphemeNaturalClass naturalClass) {
 		currentNaturalClass = naturalClass;
 		if (naturalClass != null) {
 			// Fill the text fields with info from the person object.
 			nameField.setText(naturalClass.getNCName());
 			descriptionField.setText(naturalClass.getDescription());
 			activeCheckBox.setSelected(naturalClass.isActive());
-			showSegmentOrNaturalClassContent();
+			showGraphemeOrNaturalClassContent();
 		} else {
 			// Segment is null, remove all the text.
 			nameField.setText("");
 			descriptionField.setText("");
-			sncTextFlow.getChildren().clear();
+			gncTextFlow.getChildren().clear();
 		}
 		displayFieldsPerActiveSetting(naturalClass);
 
 		if (naturalClass != null) {
-			int iCurrentIndex = cvNaturalClassTable.getItems().indexOf(currentNaturalClass);
+			int iCurrentIndex = graphemeNaturalClassTable.getItems().indexOf(currentNaturalClass);
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
-					+ cvNaturalClassTable.getItems().size() + " ");
+					+ graphemeNaturalClassTable.getItems().size() + " ");
 			// remember the selection
-			mainApp.getApplicationPreferences().setLastCVNaturalClassesViewItemUsed(iCurrentIndex);
+			mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(iCurrentIndex);
 		}
 
 	}
 
-	private void showSegmentOrNaturalClassContent() {
+	private void showGraphemeOrNaturalClassContent() {
 		StringBuilder sb = new StringBuilder();
-		sncTextFlow.getChildren().clear();
+		gncTextFlow.getChildren().clear();
 		int i = 1;
-		int iCount = currentNaturalClass.getSegmentsOrNaturalClasses().size();
-		for (SylParserObject snc : currentNaturalClass.getSegmentsOrNaturalClasses()) {
+		int iCount = currentNaturalClass.getGraphemesOrNaturalClasses().size();
+		for (SylParserObject gnc : currentNaturalClass.getGraphemesOrNaturalClasses()) {
 			Text t;
 			String s;
-			if (snc instanceof Segment) {
-				s = ((Segment) snc).getSegment();
+			if (gnc instanceof Grapheme) {
+				s = ((Grapheme) gnc).getForm();
 				t = new Text(s);
 				t.setFont(languageProject.getVernacularLanguage().getFont());
 				sb.append(s);
-			} else if (snc instanceof CVNaturalClass) {
-				s = ((CVNaturalClass) snc).getNCName();
+			} else if (gnc instanceof GraphemeNaturalClass) {
+				s = ((GraphemeNaturalClass) gnc).getNCName();
 				t = new Text(s);
 				t.setFont(languageProject.getAnalysisLanguage().getFont());
 				sb.append(s);
@@ -302,22 +303,22 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				t = new Text(s);
 				sb.append(s);
 			}
-			if (snc.isActive() && activeCheckBox.isSelected()) {
+			if (gnc.isActive() && activeCheckBox.isSelected()) {
 				t.setFill(Constants.ACTIVE);
 			} else {
 				t.setFill(Constants.INACTIVE);
 			}
 			Text tBar = new Text(" | ");
 			tBar.setStyle("-fx-stroke: lightgrey;");
-			sncTextFlow.getChildren().addAll(t, tBar);
+			gncTextFlow.getChildren().addAll(t, tBar);
 			if (i++ < iCount) {
 				sb.append(", ");
 			}
 		}
-		currentNaturalClass.setSNCRepresentation(sb.toString());
+		currentNaturalClass.setGNCRepresentation(sb.toString());
 	}
 
-	public void setNaturalClass(CVNaturalClass naturalClass) {
+	public void setNaturalClass(GraphemeNaturalClass naturalClass) {
 		nameField.setText(naturalClass.getNCName());
 		descriptionField.setText(naturalClass.getDescription());
 	}
@@ -332,20 +333,20 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		languageProject = cvApproach.getLanguageProject();
 
 		// Add observable list data to the table
-		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
-		int max = cvNaturalClassTable.getItems().size();
+		graphemeNaturalClassTable.setItems(cvApproachData.getLanguageProject().getGraphemeNaturalClasses());
+		int max = graphemeNaturalClassTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
 					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVNaturalClassesViewItemUsed();
+							.getLastCVGraphemeNaturalClassesViewItemUsed();
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					// select the last one used
-					cvNaturalClassTable.requestFocus();
-					cvNaturalClassTable.getSelectionModel().select(iLastIndex);
-					cvNaturalClassTable.getFocusModel().focus(iLastIndex);
-					cvNaturalClassTable.scrollTo(iLastIndex);
+					graphemeNaturalClassTable.requestFocus();
+					graphemeNaturalClassTable.getSelectionModel().select(iLastIndex);
+					graphemeNaturalClassTable.getFocusModel().focus(iLastIndex);
+					graphemeNaturalClassTable.scrollTo(iLastIndex);
 				}
 			});
 		}
@@ -358,13 +359,13 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	 */
 	@Override
 	void handleInsertNewItem() {
-		CVNaturalClass newNaturalClass = new CVNaturalClass();
-		cvApproach.getCVNaturalClasses().add(newNaturalClass);
-		int i = cvApproach.getCVNaturalClasses().size() - 1;
-		cvNaturalClassTable.requestFocus();
-		cvNaturalClassTable.getSelectionModel().select(i);
-		cvNaturalClassTable.getFocusModel().focus(i);
-		cvNaturalClassTable.scrollTo(i);
+		GraphemeNaturalClass newNaturalClass = new GraphemeNaturalClass();
+		cvApproach.getLanguageProject().getGraphemeNaturalClasses().add(newNaturalClass);
+		int i = cvApproach.getLanguageProject().getGraphemeNaturalClasses().size() - 1;
+		graphemeNaturalClassTable.requestFocus();
+		graphemeNaturalClassTable.getSelectionModel().select(i);
+		graphemeNaturalClassTable.getFocusModel().focus(i);
+		graphemeNaturalClassTable.scrollTo(i);
 	}
 
 	/*
@@ -375,17 +376,17 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	@Override
 	void handleRemoveItem() {
 		// need to deal with all pointers to this natural class
-		int i = cvApproach.getCVNaturalClasses().indexOf(currentNaturalClass);
+		int i = cvApproach.getLanguageProject().getGraphemeNaturalClasses().indexOf(currentNaturalClass);
 		currentNaturalClass = null;
 		if (i >= 0) {
-			cvApproach.getCVNaturalClasses().remove(i);
-			int max = cvNaturalClassTable.getItems().size();
+			cvApproach.getLanguageProject().getGraphemeNaturalClasses().remove(i);
+			int max = graphemeNaturalClassTable.getItems().size();
 			i = adjustIndexValue(i, max);
 			// select the last one used
-			cvNaturalClassTable.requestFocus();
-			cvNaturalClassTable.getSelectionModel().select(i);
-			cvNaturalClassTable.getFocusModel().focus(i);
-			cvNaturalClassTable.scrollTo(i);
+			graphemeNaturalClassTable.requestFocus();
+			graphemeNaturalClassTable.getSelectionModel().select(i);
+			graphemeNaturalClassTable.getFocusModel().focus(i);
+			graphemeNaturalClassTable.scrollTo(i);
 		}
 		// the last item in the middle pane will be repeated if we delete an
 		// earlier one
@@ -397,21 +398,21 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	}
 
 	@FXML
-	void handleLaunchSNCChooser() {
-		showSNCChooser();
-		showSegmentOrNaturalClassContent();
+	void handleLaunchGNCChooser() {
+		showGNCChooser();
+		showGraphemeOrNaturalClassContent();
 	}
 
 	/**
 	 * Opens a dialog to show the chooser.
 	 */
-	public void showSNCChooser() {
+	public void showGNCChooser() {
 		try {
 			Stage dialogStage = new Stage();
-			String resource = "fxml/CVSegmentNaturalClassChooser.fxml";
+			String resource = "fxml/GraphemeNaturalClassChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
 					resource, MainApp.kApplicationTitle);
-			CVSegmentNaturalClassChooserController controller = loader.getController();
+			GraphemeNaturalClassChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setNaturalClass(currentNaturalClass);
@@ -432,21 +433,21 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	}
 
 	protected void handleCheckBoxSelectAll() {
-		for (CVNaturalClass nc : cvApproach.getCVNaturalClasses()) {
+		for (GraphemeNaturalClass nc : cvApproach.getLanguageProject().getGraphemeNaturalClasses()) {
 			nc.setActive(true);
 			forceTableRowToRedisplayPerActiveSetting(nc);
 		}
 	}
 
 	protected void handleCheckBoxClearAll() {
-		for (CVNaturalClass nc : cvApproach.getCVNaturalClasses()) {
+		for (GraphemeNaturalClass nc : cvApproach.getLanguageProject().getGraphemeNaturalClasses()) {
 			nc.setActive(false);
 			forceTableRowToRedisplayPerActiveSetting(nc);
 		}
 	}
 
 	protected void handleCheckBoxToggle() {
-		for (CVNaturalClass nc : cvApproach.getCVNaturalClasses()) {
+		for (GraphemeNaturalClass nc : cvApproach.getLanguageProject().getGraphemeNaturalClasses()) {
 			if (nc.isActive()) {
 				nc.setActive(false);
 			} else {

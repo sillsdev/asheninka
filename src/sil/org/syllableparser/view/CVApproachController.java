@@ -78,6 +78,9 @@ public class CVApproachController extends ApproachController {
 		views.add(new ApproachView(bundle.getString("cv.view.words"), "handleCVWords"));
 		views.add(new ApproachView(bundle.getString("cv.view.wordspredictedvscorrect"),
 				"handleCVWordsPredictedVsCorrect"));
+		views.add(new ApproachView(bundle.getString("cv.view.graphemenaturalclasses"),
+				"handleGraphemeNaturalClasses"));
+		views.add(new ApproachView(bundle.getString("cv.view.environments"), "handleEnvironments"));
 	}
 
 	public ObservableList<ApproachView> getViews() {
@@ -106,6 +109,14 @@ public class CVApproachController extends ApproachController {
 
 		case "sil.org.syllableparser.view.CVWordsPredictedVsCorrectController":
 			sView = CVApproachView.PREDICTED_VS_CORRECT_WORDS.toString();
+			break;
+
+		case "sil.org.syllableparser.view.EnvironmentsController":
+			sView = CVApproachView.ENVIRONMENTS.toString();
+			break;
+
+		case "sil.org.syllableparser.view.GraphemeNaturalClassesController":
+			sView = CVApproachView.GRAPHEME_NATURAL_CLASSES.toString();
 			break;
 
 		default:
@@ -179,6 +190,24 @@ public class CVApproachController extends ApproachController {
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
 		controller.setFocusOnWord(0);
+	}
+
+	public void handleGraphemeNaturalClasses() {
+		FXMLLoader loader = createFXMLLoader("fxml/GraphemeNaturalClasses.fxml");
+		GraphemeNaturalClassesController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(cvApproachData);
+		int i = mainApp.getApplicationPreferences().getLastCVGraphemeNaturalClassesViewItemUsed();
+		controller.setViewItemUsed(i);
+	}
+
+	public void handleEnvironments() {
+		FXMLLoader loader = createFXMLLoader("fxml/Environments.fxml");
+		EnvironmentsController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(cvApproachData);
+		int i = mainApp.getApplicationPreferences().getLastCVEnvironmentsViewItemUsed();
+		controller.setViewItemUsed(i);
 	}
 
 	/*

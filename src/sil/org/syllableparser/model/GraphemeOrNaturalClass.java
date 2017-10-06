@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
-import sil.org.syllableparser.model.Segment;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.SylParserObject;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
