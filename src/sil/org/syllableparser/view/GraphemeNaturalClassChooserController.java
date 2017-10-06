@@ -33,7 +33,8 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class GraphemeNaturalClassChooserController extends CheckBoxColumnController implements Initializable {
+public class GraphemeNaturalClassChooserController extends CheckBoxColumnController implements
+		Initializable {
 
 	protected final class WrappingTableCell extends TableCell<GraphemeOrNaturalClass, String> {
 		private Text text;
@@ -104,6 +105,20 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 		});
 
 		initializeCheckBoxContextMenu(resources);
+
+		graphemeOrNaturalClassTable.setOnKeyPressed(keyEvent -> {
+			switch (keyEvent.getCode()) {
+			case SPACE: {
+				keyEvent.consume();
+				GraphemeOrNaturalClass gnc = graphemeOrNaturalClassTable.getSelectionModel()
+						.getSelectedItem();
+				if (gnc != null) {
+					gnc.setChecked(!gnc.isChecked());
+				}
+				break;
+			}
+			}
+		});
 	}
 
 	/**
@@ -142,7 +157,8 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 				setCheckedStatus(grapheme);
 			}
 		}
-		for (GraphemeNaturalClass cvNaturalClass : cvApproach.getLanguageProject().getGraphemeNaturalClasses()) {
+		for (GraphemeNaturalClass cvNaturalClass : cvApproach.getLanguageProject()
+				.getGraphemeNaturalClasses()) {
 			if (cvNaturalClass.isActive()) {
 				if (cvNaturalClass.getID() != naturalClass.getID()) {
 					currentGraphemeOrNaturalClass = new GraphemeOrNaturalClass(
@@ -156,8 +172,8 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 	}
 
 	private void setCheckedStatus(SylParserObject sylParserObject) {
-		if (SylParserObject.findIndexInListByUuid(
-				naturalClass.getGraphemesOrNaturalClasses(), sylParserObject.getID()) > -1) {
+		if (SylParserObject.findIndexInListByUuid(naturalClass.getGraphemesOrNaturalClasses(),
+				sylParserObject.getID()) > -1) {
 			currentGraphemeOrNaturalClass.setChecked(true);
 		}
 	}
@@ -185,13 +201,14 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 		for (GraphemeOrNaturalClass graphemeOrNaturalClass : graphemesOrNaturalClasses) {
 			if (graphemeOrNaturalClass.isChecked()) {
 				if (graphemeOrNaturalClass.isGrapheme()) {
-					int i = Grapheme.findIndexInListByUuid(
-							languageProject.getGraphemes(), graphemeOrNaturalClass.getUuid());
+					int i = Grapheme.findIndexInListByUuid(languageProject.getGraphemes(),
+							graphemeOrNaturalClass.getUuid());
 					naturalClass.getGraphemesOrNaturalClasses().add(
 							languageProject.getGraphemes().get(i));
 				} else {
-					int i = GraphemeNaturalClass.findIndexInListByUuid(
-							cvApproach.getLanguageProject().getGraphemeNaturalClasses(), graphemeOrNaturalClass.getUuid());
+					int i = GraphemeNaturalClass.findIndexInListByUuid(cvApproach
+							.getLanguageProject().getGraphemeNaturalClasses(),
+							graphemeOrNaturalClass.getUuid());
 					naturalClass.getGraphemesOrNaturalClasses().add(
 							cvApproach.getCVNaturalClasses().get(i));
 				}
@@ -207,14 +224,16 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 	 */
 	@FXML
 	private void handleCancel() {
-		preferences.setLastWindowParameters(ApplicationPreferences.LAST_CV_GRAPHEME_OR_NATURAL_CLASS, dialogStage);
+		preferences.setLastWindowParameters(
+				ApplicationPreferences.LAST_CV_GRAPHEME_OR_NATURAL_CLASS, dialogStage);
 		dialogStage.close();
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		preferences = mainApp.getApplicationPreferences();
-		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_CV_GRAPHEME_OR_NATURAL_CLASS, dialogStage, 400., 400.);
+		dialogStage = preferences.getLastWindowParameters(
+				ApplicationPreferences.LAST_CV_GRAPHEME_OR_NATURAL_CLASS, dialogStage, 400., 400.);
 	}
 
 	/**
@@ -255,7 +274,8 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 		}
 	}
 
-	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
 	TextField[] createTextFields() {
 		return null;

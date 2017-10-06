@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.GraphemeOrNaturalClass;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -105,6 +106,21 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		});
 
 		initializeCheckBoxContextMenu(resources);
+
+		cvSegmentOrNaturalClassTable.setOnKeyPressed(keyEvent -> {
+			switch (keyEvent.getCode()) {
+			case SPACE: {
+				keyEvent.consume();
+				CVSegmentOrNaturalClass snc = cvSegmentOrNaturalClassTable.getSelectionModel()
+						.getSelectedItem();
+				if (snc != null) {
+					snc.setChecked(!snc.isChecked());
+				}
+				break;
+			}
+			}
+		});
+
 	}
 
 	/**
