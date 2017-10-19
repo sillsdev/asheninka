@@ -212,7 +212,6 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			if (currentEnvironment != null) {
 				String sRep = representationField.getText();
 				currentEnvironment.setEnvironmentRepresentation(sRep);
-
 				boolean fParseSucceeded = parseEnvironmentRepresentation(sRep);
 				environmentErrorMessage.setVisible(!fParseSucceeded);
 			}
@@ -255,46 +254,51 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		if (iNumErrors > 0) {
 			reportEnvironmentSyntaxError(errListener, iNumErrors);
 			return false;
-		} else {
-			ParseTreeWalker walker = new ParseTreeWalker(); // create standard
-			// walker
-			List<String> graphemes = this.languageProject.getActiveGraphemes().stream()
-					.map(Grapheme::getForm).collect(Collectors.toList());
-			List<String> graphemeNaturalClasses = this.languageProject
-					.getActiveGraphemeNaturalClasses().stream()
-					.map(GraphemeNaturalClass::getNCName).collect(Collectors.toList());
-			CheckGraphemeAndClassListener validator = new CheckGraphemeAndClassListener(parser,
-					graphemes, graphemeNaturalClasses);
-			validator.setfCheckForReduplication(true);
-			walker.walk(validator, tree); // initiate walk of tree with listener
-			parser.addParseListener(validator);
-			CheckGraphemeAndClassListener listener = (CheckGraphemeAndClassListener) parser
-					.getParseListeners().get(0);
-			List<GraphemeErrorInfo> badGraphemes = listener.getBadGraphemes();
-			int iBadGraphemes = badGraphemes.size();
-			String sMessage = "";
-			if (iBadGraphemes > 0) {
-				String sMsg = badGraphemes.stream().map(GraphemeErrorInfo::getGrapheme)
-						.collect(Collectors.joining(", "));
-				Optional<GraphemeErrorInfo> info = badGraphemes.stream().collect(
-						Collectors.maxBy(Comparator.comparing(GraphemeErrorInfo::getMaxDepth)));
-				int iMax = (info.isPresent() ? info.get().getMaxDepth() : -1);
-				String sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.unknowngrapheme");
-				sMessage = sSyntaxErrorMessage.replace("{0}", sMsg.substring(iMax));
-			}
-			List<String> badClasses = listener.getBadClasses();
-			int iBadClasses = badClasses.size();
-			if (iBadClasses > 0) {
-				String sMsg = badClasses.stream().collect(Collectors.joining(", "));
-				String sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.unknowngraphemenaturalclass");
-				sMessage = sMessage + "  " + sSyntaxErrorMessage.replace("{0}", sMsg);
-			}
-			if (sMessage.length() > 0) {
-				environmentErrorMessage.setText(sMessage);
-				return false;				
-			}
-			return true;
 		}
+
+		return reportEnvironmentUnrecognizedItem(parser, tree);
+
+	}
+
+	private boolean reportEnvironmentUnrecognizedItem(EnvironmentParser parser, ParseTree tree) {
+		ParseTreeWalker walker = new ParseTreeWalker();
+		List<String> graphemes = this.languageProject.getActiveGraphemes().stream()
+				.map(Grapheme::getForm).collect(Collectors.toList());
+		List<String> graphemeNaturalClasses = this.languageProject
+				.getActiveGraphemeNaturalClasses().stream().map(GraphemeNaturalClass::getNCName)
+				.collect(Collectors.toList());
+		CheckGraphemeAndClassListener validator = new CheckGraphemeAndClassListener(parser,
+				graphemes, graphemeNaturalClasses);
+		validator.setfCheckForReduplication(true);
+		walker.walk(validator, tree); // initiate walk of tree with listener
+		parser.addParseListener(validator);
+		CheckGraphemeAndClassListener listener = (CheckGraphemeAndClassListener) parser
+				.getParseListeners().get(0);
+		List<GraphemeErrorInfo> badGraphemes = listener.getBadGraphemes();
+		int iBadGraphemes = badGraphemes.size();
+		String sMessage = "";
+		if (iBadGraphemes > 0) {
+			String sMsg = badGraphemes.stream().map(GraphemeErrorInfo::getGrapheme)
+					.collect(Collectors.joining(", "));
+			Optional<GraphemeErrorInfo> info = badGraphemes.stream().collect(
+					Collectors.maxBy(Comparator.comparing(GraphemeErrorInfo::getMaxDepth)));
+			int iMax = (info.isPresent() ? info.get().getMaxDepth() : -1);
+			String sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.unknowngrapheme");
+			sMessage = sSyntaxErrorMessage.replace("{0}", sMsg.substring(iMax));
+		}
+		List<String> badClasses = listener.getBadClasses();
+		int iBadClasses = badClasses.size();
+		if (iBadClasses > 0) {
+			String sMsg = badClasses.stream().collect(Collectors.joining(", "));
+			String sSyntaxErrorMessage = bundle
+					.getString("environmentsyntaxerror.unknowngraphemenaturalclass");
+			sMessage = sMessage + "  " + sSyntaxErrorMessage.replace("{0}", sMsg);
+		}
+		if (sMessage.length() > 0) {
+			environmentErrorMessage.setText(sMessage);
+			return false;
+		}
+		return true;
 	}
 
 	private void reportEnvironmentSyntaxError(VerboseListener errListener, int iNumErrors) {
