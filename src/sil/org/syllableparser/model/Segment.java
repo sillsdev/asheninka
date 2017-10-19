@@ -119,6 +119,10 @@ public class Segment extends SylParserObject {
 	public void setGraphs(ObservableList<Grapheme> graphs) {
 		this.graphs = graphs;
 	}
+	
+	public List<Grapheme> getActiveGraphs() {
+		return graphs.stream().filter(grapheme -> grapheme.isActive()).collect(Collectors.toList());
+	}
 
 	public SimpleListProperty<Grapheme> graphemesListProperty() {
 		return graphemesAsList;
