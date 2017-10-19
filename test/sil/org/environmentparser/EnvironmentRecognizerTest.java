@@ -132,9 +132,9 @@ public class EnvironmentRecognizerTest {
 		VerboseListener errListener = new EnvironmentErrorListener.VerboseListener();
 		errListener.clearErrorMessageList();
 		parser.addErrorListener(errListener);
-		//int iNumErrors = parser.getNumberOfSyntaxErrors();
 		// begin parsing at rule 'environment'
 		ParseTree tree = parser.environment();
+		//int iNumErrors = parser.getNumberOfSyntaxErrors();
 		// List<EnvironmentErrorInfo> errors = errListener.getErrorMessages();
 		// System.out.println(errors.size());
 		// String sTree = tree.toStringTree(parser);
@@ -144,53 +144,67 @@ public class EnvironmentRecognizerTest {
 	@Test
 	public void invalidEnvironmentsTest() {
 		// two slashes
-		checkInvalidEnvironment("/ /_", "tooManySlashes", 3, 1);
+		checkInvalidEnvironment("/ /_", EnvironmentConstants.TOO_MANY_SLASHES, 3, 1);
 		// two underscores
-		checkInvalidEnvironment("/ a _ _", "tooManyUnderscores", 7, 1);
+		checkInvalidEnvironment("/ a _ _", EnvironmentConstants.TOO_MANY_UNDERSCORES, 7, 1);
 		// two underscores
-		checkInvalidEnvironment("/ _ _ a", "tooManyUnderscores", 7, 1);
+		checkInvalidEnvironment("/ _ _ a", EnvironmentConstants.TOO_MANY_UNDERSCORES, 7, 1);
 		// two word boundaries before underscore
-		checkInvalidEnvironment("/ # #_", "tooManyWordInitialBoundaries", 5, 1);
+		checkInvalidEnvironment("/ # #_", EnvironmentConstants.TOO_MANY_WORD_INITIAL_BOUNDARIES, 5, 1);
+		// two word boundaries before underscore
+		checkInvalidEnvironment("/ # # a_", EnvironmentConstants.TOO_MANY_WORD_INITIAL_BOUNDARIES, 7, 1);
 		// two word boundaries after underscore
-		checkInvalidEnvironment("/ _##", "tooManyWordFinalBoundaries", 5, 1);
+		checkInvalidEnvironment("/ _##", EnvironmentConstants.TOO_MANY_WORD_FINAL_BOUNDARIES, 5, 1);
+		// two word boundaries after underscore
+		checkInvalidEnvironment("/ _a##", EnvironmentConstants.TOO_MANY_WORD_FINAL_BOUNDARIES, 6, 1);
 		// letter after word boundary
-		checkInvalidEnvironment("/ _# a", "contentAfterWordFinalBoundary", 6, 1);
+		checkInvalidEnvironment("/ _# a", EnvironmentConstants.CONTENT_AFTER_WORD_FINAL_BOUNDARY, 6, 1);
 		// letter before word boundary
-		checkInvalidEnvironment("/a # _", "contentBeforeWordInitialBoundary", 5, 1);
+		checkInvalidEnvironment("/a # _", EnvironmentConstants.CONTENT_BEFORE_WORD_INITIAL_BOUNDARY, 5, 1);
 		// class after word boundary
-		checkInvalidEnvironment("/ _# [C]", "contentAfterWordFinalBoundary", 8, 1);
+		checkInvalidEnvironment("/ _# [C]", EnvironmentConstants.CONTENT_AFTER_WORD_FINAL_BOUNDARY, 8, 1);
 		// class before word boundary
-		checkInvalidEnvironment("/[C] # _", "contentBeforeWordInitialBoundary", 7, 1);
+		checkInvalidEnvironment("/[C] # _", EnvironmentConstants.CONTENT_BEFORE_WORD_INITIAL_BOUNDARY, 7, 1);
 		// two word boundaries and two underscores
-		checkInvalidEnvironment("/ _# _ #", "tooManyUnderscores", 8, 2);
+		checkInvalidEnvironment("/ _# _ #", EnvironmentConstants.TOO_MANY_UNDERSCORES, 8, 2);
 		// missing closing paren before underscore
-		checkInvalidEnvironment("/ (a _", "missingClosingParen", 5, 1);
+		checkInvalidEnvironment("/ ( _", EnvironmentConstants.MISSING_CLASS_OR_GRAPHEME, 4, 1);
+		// missing closing paren before underscore
+		checkInvalidEnvironment("/ () _", EnvironmentConstants.MISSING_CLASS_OR_GRAPHEME, 5, 1);
+		// missing closing paren before underscore
+		checkInvalidEnvironment("/ (a _", EnvironmentConstants.MISSING_CLOSING_PAREN, 5, 1);
 		// missing opening paren before underscore
-		checkInvalidEnvironment("/ a) _", "missingOpeningParen", 5, 1);
+		checkInvalidEnvironment("/ a) _", EnvironmentConstants.MISSING_OPENING_PAREN, 5, 1);
 		// missing closing paren after underscore
-		checkInvalidEnvironment("/ _ (a", "missingClosingParen", 6, 1);
+		checkInvalidEnvironment("/ _ (a", EnvironmentConstants.MISSING_CLOSING_PAREN, 6, 1);
 		// missing opening paren after underscore
-		checkInvalidEnvironment("/ _ a)", "missingOpeningParen", 6, 1);
+		checkInvalidEnvironment("/ _ a)", EnvironmentConstants.MISSING_OPENING_PAREN, 6, 1);
+		// missing class before underscore
+		checkInvalidEnvironment("/ [ _", EnvironmentConstants.MISSING_CLASS_AFTER_OPENING_SQUARE_BRACKET, 4, 1);
+		// missing class before underscore
+		checkInvalidEnvironment("/ [] _", EnvironmentConstants.MISSING_CLASS_AFTER_OPENING_SQUARE_BRACKET, 5, 1);
 		// missing closing bracket before underscore
-		checkInvalidEnvironment("/ [C _", "missingClosingSquareBracket", 5, 1);
+		checkInvalidEnvironment("/ [C _", EnvironmentConstants.MISSING_CLOSING_SQUARE_BRACKET, 5, 1);
 		// missing opening bracket before underscore
-		checkInvalidEnvironment("/  C] _", "missingOpeningSquareBracket", 6, 1);
+		checkInvalidEnvironment("/  ] _", EnvironmentConstants.MISSING_OPENING_SQUARE_BRACKET, 5, 1);
+		// missing opening bracket before underscore
+		checkInvalidEnvironment("/  C] _", EnvironmentConstants.MISSING_OPENING_SQUARE_BRACKET, 6, 1);
 		// missing closing bracket after underscore
-		checkInvalidEnvironment("/ _ [C", "missingClosingSquareBracket", 6, 1);
+		checkInvalidEnvironment("/ _ [C", EnvironmentConstants.MISSING_CLOSING_SQUARE_BRACKET, 6, 1);
 		// missing opening bracket after underscore
-		checkInvalidEnvironment("/ _ C]", "missingOpeningSquareBracket", 6, 1);
+		checkInvalidEnvironment("/ _ C]", EnvironmentConstants.MISSING_OPENING_SQUARE_BRACKET, 6, 1);
 		// missing closing bracket before closing paren
-		checkInvalidEnvironment("/ ([C) _", "missingClosingSquareBracket", 5, 1);
+		checkInvalidEnvironment("/ ([C) _", EnvironmentConstants.MISSING_CLOSING_SQUARE_BRACKET, 5, 1);
 		// missing closing paren after closing bracket
-		checkInvalidEnvironment("/ ([C] _", "missingClosingParen", 7, 1);
+		checkInvalidEnvironment("/ ([C] _", EnvironmentConstants.MISSING_CLOSING_PAREN, 7, 1);
 		// missing opening bracket and missing closing paren before underscore
-		checkInvalidEnvironment("/  (C] _", "missingClosingParen", 7, 2);
+		checkInvalidEnvironment("/  (C] _", EnvironmentConstants.MISSING_CLOSING_PAREN, 7, 2);
 		// missing closing bracket and closing paren after underscore
-		checkInvalidEnvironment("/ _ ([C", "missingClosingParen", 7, 2);
+		checkInvalidEnvironment("/ _ ([C", EnvironmentConstants.MISSING_CLOSING_PAREN, 7, 2);
 		// missing closing bracket and closing paren after underscore
-		checkInvalidEnvironment("/ _ ([C]", "missingClosingParen", 8, 1);
+		checkInvalidEnvironment("/ _ ([C]", EnvironmentConstants.MISSING_CLOSING_PAREN, 8, 1);
 		// missing opening bracket and closing paren after underscore
-		checkInvalidEnvironment("/ _ (C]", "missingClosingParen", 7, 2);
+		checkInvalidEnvironment("/ _ (C]", EnvironmentConstants.MISSING_CLOSING_PAREN, 7, 2);
 	}
 
 	private void checkInvalidEnvironment(String sEnv, String sFailedPortion, int iPos,

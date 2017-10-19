@@ -6,6 +6,7 @@
  */
 package sil.org.syllableparser.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -115,6 +116,14 @@ public class LanguageProject {
 
 	public void setGraphemeNaturalClasses(ObservableList<GraphemeNaturalClass> graphemeNaturalClassesData) {
 		this.graphemeNaturalClasses = graphemeNaturalClassesData;
+	}
+
+	public List<Grapheme> getActiveGraphemes() {
+		List<Grapheme> graphemes = new ArrayList<Grapheme>();
+		for (Segment segment : getActiveSegmentsInInventory()) {
+			graphemes.addAll(segment.getActiveGraphs());
+		}
+		return graphemes;
 	}
 
 	public List<GraphemeNaturalClass> getActiveGraphemeNaturalClasses() {

@@ -20,7 +20,7 @@ grammar Environment;
 environment : '/'             '_' rightContext EOF
 			| '/' leftContext '_'              EOF
 			| '/' leftContext '_' rightContext EOF
-			| '/' '/'                               {notifyErrorListeners("tooManySlashes");}
+			| '/' '/'                                  {notifyErrorListeners("tooManySlashes");}
 			| '/'             '_' '_' rightContext EOF {notifyErrorListeners("tooManyUnderscores");}
 			| '/'             '_' rightContext '_' EOF {notifyErrorListeners("tooManyUnderscores");}
 			| '/' leftContext '_' '_'              EOF {notifyErrorListeners("tooManyUnderscores");}
@@ -31,15 +31,17 @@ environment : '/'             '_' rightContext EOF
 leftContext : '#'
 			| termSequence
 			| '#' termSequence
- 		    | termSequence '#'   {notifyErrorListeners("contentBeforeWordInitialBoundary");}
-			| '#' '#'            {notifyErrorListeners("tooManyWordInitialBoundaries");}
+ 		    | termSequence '#'       {notifyErrorListeners("contentBeforeWordInitialBoundary");}
+			| '#' '#'                {notifyErrorListeners("tooManyWordInitialBoundaries");}
+			| '#' '#' termSequence   {notifyErrorListeners("tooManyWordInitialBoundaries");}
 			;
 
 rightContext : '#'
 			 | termSequence
 			 | termSequence '#'
-			 | '#' termSequence   {notifyErrorListeners("contentAfterWordFinalBoundary");}
-			 | '#' '#'            {notifyErrorListeners("tooManyWordFinalBoundaries");}
+			 | '#' termSequence      {notifyErrorListeners("contentAfterWordFinalBoundary");}
+			 | termSequence '#' '#'  {notifyErrorListeners("tooManyWordFinalBoundaries");}
+			 | '#' '#'               {notifyErrorListeners("tooManyWordFinalBoundaries");}
 			 ;
 
 termSequence : term
@@ -51,6 +53,8 @@ term : optionalSegment
 	 ;
 
 optionalSegment : '(' segment ')'
+				| '('             {notifyErrorListeners("missingClassOrGrapheme");}
+				| '(' ')'         {notifyErrorListeners("missingClassOrGrapheme");}
 				| '(' segment     {notifyErrorListeners("missingClosingParen");}
 				|     segment ')' {notifyErrorListeners("missingOpeningParen");}
 				;
@@ -62,6 +66,9 @@ segment : orthClass
 orthClass : '[' ID+ ']'
  	      | '[' ID      {notifyErrorListeners("missingClosingSquareBracket");}
 	      | ID ']'      {notifyErrorListeners("missingOpeningSquareBracket");}
+ 	      | '['         {notifyErrorListeners("missingClassAfterOpeningSquareBracket");}
+ 	      | '[' ']'     {notifyErrorListeners("missingClassAfterOpeningSquareBracket");}
+ 	      | ']'         {notifyErrorListeners("missingOpeningSquareBracket");}
 	      ;
 
 literal : ID

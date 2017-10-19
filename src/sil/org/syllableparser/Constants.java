@@ -78,6 +78,7 @@ public class Constants {
 	public static final Color INACTIVE = Color.GRAY;
 	public static final Color PARSER_SUCCESS = Color.GREEN;
 	public static final Color PARSER_FAILURE = Color.RED;
+	public static final Color ENVIRONMENT_ERROR_MESSAGE = Color.CRIMSON;
 	
 	// Try a Word constants
 	public static final String TRY_A_WORD_INTERBLOCK_CSS = ".interblock {\n"
