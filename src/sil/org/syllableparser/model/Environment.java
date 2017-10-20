@@ -25,6 +25,8 @@ public class Environment extends SylParserObject {
 	private final StringProperty environmentRepresentation;
 	private EnvironmentContext leftContext;
 	private EnvironmentContext rightContext;
+	
+	private boolean valid = false;
 
 	public Environment() {
 		super();
@@ -106,6 +108,14 @@ public class Environment extends SylParserObject {
 	 */
 	public StringProperty environmentProperty() {
 		return this.envName;
+	}
+
+	public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
 	}
 
 	@Override

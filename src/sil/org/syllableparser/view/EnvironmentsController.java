@@ -213,6 +213,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 				String sRep = representationField.getText();
 				currentEnvironment.setEnvironmentRepresentation(sRep);
 				boolean fParseSucceeded = parseEnvironmentRepresentation(sRep);
+				currentEnvironment.setValid(fParseSucceeded);
 				environmentErrorMessage.setVisible(!fParseSucceeded);
 			}
 			if (languageProject != null) {

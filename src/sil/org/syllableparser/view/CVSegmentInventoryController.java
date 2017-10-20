@@ -6,11 +6,13 @@
  */
 package sil.org.syllableparser.view;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import sil.org.syllableparser.Constants;
+import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
@@ -23,6 +25,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -41,6 +44,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -173,12 +177,13 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 					Grapheme selectedGrapheme = (Grapheme) graphemesTable.getItems().get(
 							selectedIndex);
 					// show environments chooser for this grapheme
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText("Look, an Information Dialog");
-					alert.setContentText("Selected grapheme: " + selectedGrapheme.getForm());
-
-					alert.showAndWait();
+//					Alert alert = new Alert(AlertType.INFORMATION);
+//					alert.setTitle("Information Dialog");
+//					alert.setHeaderText("Look, an Information Dialog");
+//					alert.setContentText("Selected grapheme: " + selectedGrapheme.getForm());
+//
+//					alert.showAndWait();
+					showEnvironmentsChooser(selectedGrapheme);
 				}
 			});
 		}
@@ -551,6 +556,30 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		}
 
 	}
+	
+	/**
+	 * Opens a dialog to show the chooser.
+	 * @param grapheme TODO
+	 */
+	public void showEnvironmentsChooser(Grapheme grapheme) {
+		try {
+			Stage dialogStage = new Stage();
+			String resource = "fxml/EnvironmentChooser.fxml";
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
+					resource, MainApp.kApplicationTitle);
+			EnvironmentChooserController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setGrapheme(grapheme);
+			controller.setData(cvApproach);
+
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	// code taken from
 	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html

@@ -130,6 +130,10 @@ public class LanguageProject {
 		return graphemeNaturalClasses.stream().filter(gnc -> gnc.isActive()).collect(Collectors.toList());
 	}
 
+	public List<Environment> getActiveAndValidEnvironments() {
+		return environments.stream().filter(env -> env.isActive() && env.isValid()).collect(Collectors.toList());
+	}
+
 	/**
 	 * @return the word Data
 	 */

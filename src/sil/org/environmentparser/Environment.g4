@@ -26,6 +26,7 @@ environment : '/'             '_' rightContext EOF
 			| '/' leftContext '_' '_'              EOF {notifyErrorListeners("tooManyUnderscores");}
 			| '/' leftContext '_' '_' rightContext EOF {notifyErrorListeners("tooManyUnderscores");}
 			| '/' leftContext '_' rightContext '_' EOF {notifyErrorListeners("tooManyUnderscores");}
+			| '/' '_'                              EOF {notifyErrorListeners("missingClassOrGrapheme");}
 			;
 
 leftContext : '#'

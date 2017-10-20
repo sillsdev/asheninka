@@ -48,6 +48,7 @@ public class ApplicationPreferences {
 	public static final String LAST_CV_TRY_A_WORD = "lastCVTryAWord";
 	public static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT = "lastCVWordPredictedVsCorrect";
 	public static final String LAST_CV_GRAPHEME_OR_NATURAL_CLASS = "lastCVGraphemeOrNaturalClass";
+	public static final String LAST_CV_ENVIRONMENTS_CHOOSER = "lastCVEnvironmentsChooser";
 	
 	Preferences prefs;
 
