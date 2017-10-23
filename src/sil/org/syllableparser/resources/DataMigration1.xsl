@@ -26,6 +26,7 @@
         <graphemesAsList>
                 <xsl:call-template name="ConvertGraphemeStringToGrapheme">
                     <xsl:with-param name="sGraph" select="concat(.,' ')"/>
+                    <xsl:with-param name="sSegmentID" select="../@id"/>
                 </xsl:call-template>
         </graphemesAsList>
     </xsl:template>
@@ -49,11 +50,12 @@
     -->
     <xsl:template name="ConvertGraphemeStringToGrapheme">
         <xsl:param name="sGraph"/>
+        <xsl:param name="sSegmentID"/>
         <xsl:variable name="sNewList" select="$sGraph"/>
         <xsl:variable name="sFirst" select="substring-before($sNewList,' ')"/>
         <xsl:variable name="sRest" select="substring-after($sNewList,' ')"/>
         <xsl:if test="string-length($sFirst) &gt; 0">
-            <grapheme active="true">
+            <grapheme active="true" segment="{$sSegmentID}">
                 <form>
                     <xsl:value-of select="$sFirst"/>
                 </form>

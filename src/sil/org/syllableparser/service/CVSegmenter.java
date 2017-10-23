@@ -6,6 +6,7 @@
  */
 package sil.org.syllableparser.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,33 +26,41 @@ import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
  */
 public class CVSegmenter {
 
-	private final List<Segment> activeSegmentInventory;
+	//private final List<Segment> activeSegmentInventory;
+	private final List<Grapheme> activeGraphemes;
 	List<CVSegmentInSyllable> segmentsInCurrentWord = new LinkedList<CVSegmentInSyllable>(
 			Arrays.asList(new CVSegmentInSyllable(null, null)));
-	HashMap<String, Segment> graphemeToSegmentMapping = new HashMap<>();
+	HashMap<String, List<Grapheme>> graphemeToSegmentMapping = new HashMap<>();
 	int iLongestGrapheme = 0;
 
-	public CVSegmenter(List<Segment> activeSegmentInventory) {
+//	public CVSegmenter(List<Segment> activeSegmentInventory) {
+//		super();
+//		this.activeSegmentInventory = activeSegmentInventory;
+//		this.activeGraphemes = null;
+//		buildGraphemeToCVSegmentMapping();
+//	}
+
+	public CVSegmenter(List<Grapheme> activeGraphemes) {
 		super();
-		this.activeSegmentInventory = activeSegmentInventory;
+		this.activeGraphemes = activeGraphemes;
 		buildGraphemeToCVSegmentMapping();
 	}
-
 	protected void buildGraphemeToCVSegmentMapping() {
-		// TODO: use lambda expressions for this
-		for (Segment seg : activeSegmentInventory) {
-			List<String> orthographemes = seg.getGraphs().stream().map(Grapheme::getForm).collect(Collectors.toList());
-			for (String orthoform : orthographemes) {
-				if (orthoform.length() > iLongestGrapheme) {
-					iLongestGrapheme = orthoform.length();
-				}
-				graphemeToSegmentMapping.put(orthoform, seg);
+		for (Grapheme graph : activeGraphemes) {
+			String sForm = graph.getForm();
+			if (sForm.length() > iLongestGrapheme) {
+				iLongestGrapheme = sForm.length();
 			}
+			List<Grapheme> graphs;
+			if (graphemeToSegmentMapping.containsKey(sForm)) {
+				graphs = graphemeToSegmentMapping.get(sForm);
+				graphs.add(graph);
+			} else {
+				graphs = new ArrayList<Grapheme>();
+				graphs.add(graph);
+			}
+			graphemeToSegmentMapping.put(sForm, graphs);
 		}
-	}
-
-	public List<Segment> getActiveSegmentInventory() {
-		return activeSegmentInventory;
 	}
 
 	public List<CVSegmentInSyllable> getSegmentsInWord() {
@@ -62,11 +71,11 @@ public class CVSegmenter {
 		this.segmentsInCurrentWord = segments;
 	}
 
-	public HashMap<String, Segment> getGraphemeToSegmentMapping() {
+	public HashMap<String, List<Grapheme>> getGraphemeToSegmentMapping() {
 		return graphemeToSegmentMapping;
 	}
 
-	public void setGraphemeToSegmentMapping(HashMap<String, Segment> graphemes) {
+	public void setGraphemeToSegmentMapping(HashMap<String, List<Grapheme>> graphemes) {
 		this.graphemeToSegmentMapping = graphemes;
 	}
 
@@ -88,11 +97,24 @@ public class CVSegmenter {
 					continue;
 				}
 				String sPotentialGrapheme = word.substring(iStart, iStart + iSegLength);
-				Segment seg = graphemeToSegmentMapping.get(sPotentialGrapheme);
-				if (seg != null) {
-					CVSegmentInSyllable segmentInSyllable = new CVSegmentInSyllable(seg, sPotentialGrapheme);
-					segmentsInCurrentWord.add(segmentInSyllable);
-					break;
+				List<Grapheme> graphsForThisForm = graphemeToSegmentMapping.get(sPotentialGrapheme);
+				if (graphsForThisForm != null && graphsForThisForm.size() > 0) {
+					boolean fIsMatch = false;
+					for (Grapheme grapheme : graphsForThisForm) {
+						if (!grapheme.matchesAnEnvironment()) {
+							continue;
+						}
+						Segment seg = grapheme.getOwningSegment();
+						if (seg != null) {
+							CVSegmentInSyllable segmentInSyllable = new CVSegmentInSyllable(seg, sPotentialGrapheme);
+							segmentsInCurrentWord.add(segmentInSyllable);
+							fIsMatch = true;
+							break;
+						}						
+					}
+					if (fIsMatch) {
+						break;
+					}
 				}
 			}
 			if (iSegLength == 0) {

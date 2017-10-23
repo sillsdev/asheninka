@@ -81,7 +81,7 @@ public class CVApproachLanguageComparerTest {
 		// natural classes
 		ObservableList<CVNaturalClass> naturalClasses;
 		naturalClasses = cva1.getCVNaturalClasses();
-		assertEquals("Natural Classes size", 6, naturalClasses.size());
+		assertEquals("Natural Classes size", 7, naturalClasses.size());
 		naturalClasses = cva2.getCVNaturalClasses();
 		assertEquals("Natural Classes size", 3, naturalClasses.size());
 		// syllable patterns
@@ -153,7 +153,7 @@ public class CVApproachLanguageComparerTest {
 	protected void compareNaturalClasses(CVApproachLanguageComparer comparer) {
 		comparer.compareNaturalClasses();
 		SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
-		assertEquals("number of different natural classes", 6, diffs.size());
+		assertEquals("number of different natural classes", 7, diffs.size());
 		List<DifferentCVNaturalClass> listOfDiffs = new ArrayList<DifferentCVNaturalClass>();
 		listOfDiffs.addAll(diffs);
 		DifferentCVNaturalClass diffNaturalClass = listOfDiffs.get(1);

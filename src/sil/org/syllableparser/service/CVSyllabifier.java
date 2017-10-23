@@ -64,7 +64,7 @@ public class CVSyllabifier {
 		activeSegmentInventory = languageProject.getActiveSegmentsInInventory();
 		activeNaturalClasses = cva.getActiveCVNaturalClasses();
 		activeCVPatterns = cva.getActiveCVSyllablePatterns();
-		segmenter = new CVSegmenter(activeSegmentInventory);
+		segmenter = new CVSegmenter(languageProject.getActiveGraphemes());
 		naturalClasser = new CVNaturalClasser(activeNaturalClasses);
 		sSyllabifiedWord = "";
 	}

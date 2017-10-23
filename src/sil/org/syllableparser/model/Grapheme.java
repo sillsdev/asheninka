@@ -33,6 +33,7 @@ public class Grapheme extends SylParserObject {
 	ObservableList<Environment> envs = FXCollections.observableArrayList();
 	private final StringProperty envsRepresentation;
 	private BooleanProperty checked;
+	private Segment owningSegment;
 
 	public Grapheme() {
 		super();
@@ -121,6 +122,21 @@ public class Grapheme extends SylParserObject {
 	}
 	public void setEnvsRepresentation(String envsRepresentation) {
 		this.envsRepresentation.set(envsRepresentation);
+	}
+	
+	public Segment getOwningSegment() {
+		return owningSegment;
+	}
+
+	@XmlAttribute(name="segment")
+	@XmlIDREF
+	public void setOwningSegment(Segment owningSegment) {
+		this.owningSegment = owningSegment;
+	}
+
+	public boolean matchesAnEnvironment() {
+		// TODO: check grapheme for its environment
+		return true;
 	}
 	
 	@Override

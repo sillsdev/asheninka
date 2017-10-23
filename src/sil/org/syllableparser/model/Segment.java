@@ -118,6 +118,10 @@ public class Segment extends SylParserObject {
 
 	public void setGraphs(ObservableList<Grapheme> graphs) {
 		this.graphs = graphs;
+		// TODO: can we do this with lambdas?
+		for	(Grapheme graph : graphs) {
+			graph.setOwningSegment(this);
+		}
 	}
 	
 	public List<Grapheme> getActiveGraphs() {
@@ -169,6 +173,7 @@ public class Segment extends SylParserObject {
 			if (graphemeForm.trim().length() > 0) {
 				Grapheme newGrapheme = new Grapheme();
 				newGrapheme.setForm(graphemeForm);
+				newGrapheme.setOwningSegment(this);
 				graphs.add(newGrapheme);
 			}
 		}

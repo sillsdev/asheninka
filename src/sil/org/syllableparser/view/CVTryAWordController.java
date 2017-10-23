@@ -182,14 +182,14 @@ public class CVTryAWordController implements Initializable {
 
 				ObservableList<CVNaturalClass> naturalClasses;
 				CVSegmenter segmenter;
-				ObservableList<Segment> segmentInventory;
+				//ObservableList<Segment> segmentInventory;
 				CVNaturalClasser naturalClasser;
 				List<CVSyllablePattern> patterns;
 				CVSyllabifier syllabifier;
 				List<CVSyllablePattern> cvPatterns;
 
-				segmentInventory = cva.getLanguageProject().getSegmentInventory();
-				segmenter = new CVSegmenter(segmentInventory);
+				//segmentInventory = cva.getLanguageProject().getSegmentInventory();
+				segmenter = new CVSegmenter(cva.getLanguageProject().getActiveGraphemes());
 				naturalClasses = cva.getCVNaturalClasses();
 				naturalClasser = new CVNaturalClasser(naturalClasses);
 				patterns = cva.getActiveCVSyllablePatterns();

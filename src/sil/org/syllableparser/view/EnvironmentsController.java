@@ -39,6 +39,7 @@ import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.Environment;
+import sil.org.syllableparser.service.AsheninkaGraphemeAndClassListener;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -257,27 +258,38 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			return false;
 		}
 
-		return reportEnvironmentUnrecognizedItem(parser, tree);
+		return buildEnvironmentContexts(parser, tree);
 
 	}
 
-	private boolean reportEnvironmentUnrecognizedItem(EnvironmentParser parser, ParseTree tree) {
+	private boolean buildEnvironmentContexts(EnvironmentParser parser, ParseTree tree) {
 		ParseTreeWalker walker = new ParseTreeWalker();
 		List<String> graphemes = this.languageProject.getActiveGraphemes().stream()
 				.map(Grapheme::getForm).collect(Collectors.toList());
 		List<String> graphemeNaturalClasses = this.languageProject
 				.getActiveGraphemeNaturalClasses().stream().map(GraphemeNaturalClass::getNCName)
 				.collect(Collectors.toList());
-		CheckGraphemeAndClassListener validator = new CheckGraphemeAndClassListener(parser,
+		AsheninkaGraphemeAndClassListener validator = new AsheninkaGraphemeAndClassListener(parser,
 				graphemes, graphemeNaturalClasses);
-		validator.setfCheckForReduplication(true);
+		validator.setEnvironment(currentEnvironment);
+		validator.setCheckForReduplication(false);
 		walker.walk(validator, tree); // initiate walk of tree with listener
 		parser.addParseListener(validator);
-		CheckGraphemeAndClassListener listener = (CheckGraphemeAndClassListener) parser
+		AsheninkaGraphemeAndClassListener listener = (AsheninkaGraphemeAndClassListener) parser
 				.getParseListeners().get(0);
+		String sMessage = "";
+		sMessage = buildAnyMissingItems(listener, sMessage);
+		if (sMessage.length() > 0) {
+			environmentErrorMessage.setText(sMessage);
+			return false;
+		}
+		currentEnvironment = validator.getEnvironment();
+		return true;
+	}
+
+	private String buildAnyMissingItems(AsheninkaGraphemeAndClassListener listener, String sMessage) {
 		List<GraphemeErrorInfo> badGraphemes = listener.getBadGraphemes();
 		int iBadGraphemes = badGraphemes.size();
-		String sMessage = "";
 		if (iBadGraphemes > 0) {
 			String sMsg = badGraphemes.stream().map(GraphemeErrorInfo::getGrapheme)
 					.collect(Collectors.joining(", "));
@@ -295,11 +307,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 					.getString("environmentsyntaxerror.unknowngraphemenaturalclass");
 			sMessage = sMessage + "  " + sSyntaxErrorMessage.replace("{0}", sMsg);
 		}
-		if (sMessage.length() > 0) {
-			environmentErrorMessage.setText(sMessage);
-			return false;
-		}
-		return true;
+		return sMessage;
 	}
 
 	private void reportEnvironmentSyntaxError(VerboseListener errListener, int iNumErrors) {

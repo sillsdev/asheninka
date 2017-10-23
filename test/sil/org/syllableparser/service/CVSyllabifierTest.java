@@ -22,6 +22,7 @@ import org.junit.Test;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.service.CVNaturalClasser;
@@ -40,7 +41,7 @@ public class CVSyllabifierTest {
 	ObservableList<CVNaturalClass> naturalClasses;
 	CVSegmenter segmenter;
 	ObservableList<Segment> segmentInventory;
-	List<Segment> cvSegmentInventory;
+	List<Grapheme> activeGraphemes;
 	CVNaturalClasser naturalClasser;
 	List<CVNaturalClass> cvNaturalClasses;
 	ObservableList<CVSyllablePattern> patterns;
@@ -60,8 +61,8 @@ public class CVSyllabifierTest {
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		cvSegmentInventory = languageProject.getActiveSegmentsInInventory();
-		segmenter = new CVSegmenter(cvSegmentInventory);
+		activeGraphemes = languageProject.getActiveGraphemes();
+		segmenter = new CVSegmenter(activeGraphemes);
 		cvNaturalClasses = cva.getActiveCVNaturalClasses();
 		naturalClasser = new CVNaturalClasser(cvNaturalClasses);
 		cvPatterns = cva.getActiveCVSyllablePatterns();

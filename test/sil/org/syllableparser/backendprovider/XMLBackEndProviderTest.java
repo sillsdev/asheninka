@@ -71,12 +71,12 @@ public class XMLBackEndProviderTest {
 		CVApproach cva = languageProject.getCVApproach();
 		ObservableList<Segment> segInventory = languageProject.getSegmentInventory(); 
 		assertEquals(27, segInventory.size());
-		assertEquals(6, cva.getCVNaturalClasses().size());
+		assertEquals(7, cva.getCVNaturalClasses().size());
 		assertEquals(9, cva.getCVSyllablePatterns().size());
 		ObservableList<Word> words = languageProject.getWords();
 		assertEquals(10025, words.size());
 		ObservableList<Environment> environments = languageProject.getEnvironments();
-		assertEquals(0, environments.size());
+		assertEquals(3, environments.size());
 //		ObservableList<Grapheme> graphemes = languageProject.getGraphemes();
 //		assertEquals(56, graphemes.size());
 		Segment seg = segInventory.get(0);

@@ -24,6 +24,7 @@ import org.junit.Test;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.service.CVNaturalClasser;
@@ -41,7 +42,7 @@ public class CVNaturalClasserTest {
 	ObservableList<CVNaturalClass> naturalClasses;
 	CVSegmenter segmenter;
 	ObservableList<Segment> segmentInventory;
-	List<Segment> cvSegmentInventory;
+	List<Grapheme> activeGraphemes;
 	CVNaturalClasser naturalClasser;
 	List<CVNaturalClass> cvNaturalClasses;
 
@@ -57,8 +58,8 @@ public class CVNaturalClasserTest {
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		cvSegmentInventory = languageProject.getActiveSegmentsInInventory();
-		segmenter = new CVSegmenter(cvSegmentInventory);
+		activeGraphemes = languageProject.getActiveGraphemes();
+		segmenter = new CVSegmenter(activeGraphemes);
 		cvNaturalClasses = cva.getActiveCVNaturalClasses();
 		naturalClasser = new CVNaturalClasser(cvNaturalClasses);
 	}
@@ -73,7 +74,7 @@ public class CVNaturalClasserTest {
 	// make sure the setup is what we expect
 	@Test
 	public void naturalClassesTest() {
-		assertEquals("Active natural Classes in natural classer size", 5, cvNaturalClasses.size());
+		assertEquals("Active natural Classes in natural classer size", 6, cvNaturalClasses.size());
 		String nc = cvNaturalClasses.get(0).getNCName().trim();
 		assertEquals("First natural class is [C]", "C", nc);
 		nc = cvNaturalClasses.get(1).getNCName().trim();
@@ -89,9 +90,9 @@ public class CVNaturalClasserTest {
 	public void wordToSegmentToNaturalClassesTest() {
 
 		checkNaturalClassParsing("Chiko", true, 4, "C, {V,V+hi}, C, V", "C, V, C, V", "abc");
-		checkNaturalClassParsing("champion", true, 7, "C, V, {C,N,S}, C, {V,V+hi}, V, {C,N,S}", "C, V, N, C, V, V, N",
+		checkNaturalClassParsing("champion", true, 7, "C, V, {C,N,S,[+lab, +vd]}, C, {V,V+hi}, V, {C,N,S}", "C, V, N, C, V, V, N",
 				"abc");
-		checkNaturalClassParsing("namo", true, 4, "{C,N,S}, V, {C,N,S}, V", "C, V, C, V", "abc");
+		checkNaturalClassParsing("namo", true, 4, "{C,N,S}, V, {C,N,S,[+lab, +vd]}, V", "C, V, C, V", "abc");
 		// next three fail because /r/ is not in any class
 		checkNaturalClassParsing("karui", false, 2, "C, V", "C, V", "ka");
 		checkNaturalClassParsing("kiro", false, 2, "C, {V,V+hi}", "C, {V,V+hi}", "ki");

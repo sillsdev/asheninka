@@ -249,16 +249,16 @@ public class CVApproachController extends ApproachController {
 				ObservableList<CVNaturalClass> naturalClasses;
 				CVSegmenter segmenter;
 				ObservableList<Segment> segmentInventory;
-				List<Segment> cvSegmentInventory;
+				//List<Segment> cvSegmentInventory;
 				CVNaturalClasser naturalClasser;
 				List<CVNaturalClass> cvNaturalClasses;
 				List<CVSyllablePattern> patterns;
 				CVSyllabifier syllabifier;
 				List<CVSyllablePattern> cvPatterns;
 
-				segmentInventory = languageProject.getSegmentInventory();
-				segmenter = new CVSegmenter(segmentInventory);
-				cvSegmentInventory = segmenter.getActiveSegmentInventory();
+				//segmentInventory = languageProject.getSegmentInventory();
+				segmenter = new CVSegmenter(languageProject.getActiveGraphemes());
+				//cvSegmentInventory = segmenter.getActiveSegmentInventory();
 				naturalClasses = cvApproachData.getCVNaturalClasses();
 				naturalClasser = new CVNaturalClasser(naturalClasses);
 				cvNaturalClasses = naturalClasser.getActiveNaturalClasses();

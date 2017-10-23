@@ -66,7 +66,7 @@
                         <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" />
                         <TextField fx:id="representationField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES" />
                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="environmentErrorMessage" text="Oops" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="environmentErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                </children>

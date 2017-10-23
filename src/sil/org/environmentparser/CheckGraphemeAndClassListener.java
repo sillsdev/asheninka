@@ -14,15 +14,15 @@ import java.util.stream.Collectors;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class CheckGraphemeAndClassListener extends EnvironmentBaseListener {
-	EnvironmentParser parser;
+	protected EnvironmentParser parser;
 
-	List<String> graphemesMasterList;
-	List<String> classesMasterList;
-	LinkedList<GraphemeErrorInfo> badGraphemes = new LinkedList<GraphemeErrorInfo>(Arrays.asList());
-	LinkedList<String> badClasses = new LinkedList<String>(Arrays.asList());
-	GraphemeSequenceValidator validator;
+	protected List<String> graphemesMasterList;
+	protected List<String> classesMasterList;
+	protected LinkedList<GraphemeErrorInfo> badGraphemes = new LinkedList<GraphemeErrorInfo>(Arrays.asList());
+	protected LinkedList<String> badClasses = new LinkedList<String>(Arrays.asList());
+	protected GraphemeSequenceValidator validator;
 	
-	boolean fCheckForReduplication = false;
+	protected boolean fCheckForReduplication = false;
 	
 	public CheckGraphemeAndClassListener(EnvironmentParser parser,
 			List<String> graphemesMasterList, List<String> classesMasterList) {
@@ -90,7 +90,7 @@ public class CheckGraphemeAndClassListener extends EnvironmentBaseListener {
 		return fCheckForReduplication;
 	}
 
-	public void setfCheckForReduplication(boolean fCheckForReduplication) {
+	public void setCheckForReduplication(boolean fCheckForReduplication) {
 		this.fCheckForReduplication = fCheckForReduplication;
 	}
 

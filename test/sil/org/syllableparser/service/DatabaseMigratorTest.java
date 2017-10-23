@@ -121,7 +121,8 @@ public class DatabaseMigratorTest {
 		assertEquals(2, seg.getGraphs().size());
 		Grapheme graph = seg.getGraphs().get(0);
 		assertEquals("a", graph.getForm());
-	}
+		assertEquals("de664190-dd3c-4bb3-892e-16dc596255ce", graph.getOwningSegment().getID());
+		}
 
 	private void checkHyphenationParameters() {
 		assertEquals("list word hyphenation string", "=", languageProject

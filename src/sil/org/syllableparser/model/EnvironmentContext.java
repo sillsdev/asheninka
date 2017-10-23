@@ -24,50 +24,57 @@ import javafx.collections.ObservableList;
  * an Object Value
  */
 public class EnvironmentContext {
-	private final SimpleListProperty<GraphemeOrNaturalClass> graphemesAndNaturalClasses;
-	private final StringProperty envContextRepresentation;
-	ObservableList<GraphemeOrNaturalClass> envContext = FXCollections.observableArrayList();
+	private SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass> graphemesAndNaturalClasses;
+	private String envContextRepresentation;
+	ObservableList<EnvironmentContextGraphemeOrNaturalClass> envContext = FXCollections.observableArrayList();
+	private boolean wordBoundary = false;
 	
 	public EnvironmentContext() {
-		this.graphemesAndNaturalClasses = new SimpleListProperty<GraphemeOrNaturalClass>();
-		this.envContextRepresentation = new SimpleStringProperty("");
+		this.graphemesAndNaturalClasses = new SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass>();
+		this.envContextRepresentation = "";
 	}
 
-	public EnvironmentContext(SimpleListProperty<GraphemeOrNaturalClass> graphemesAndNaturalClasses, 
-			String envContextRepresentation) {
+	public EnvironmentContext(SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass> graphemesAndNaturalClasses, 
+			String envContextRepresentation, boolean wordBoundary) {
 		super();
-		this.graphemesAndNaturalClasses = new SimpleListProperty<GraphemeOrNaturalClass>(graphemesAndNaturalClasses);
-		this.envContextRepresentation = new SimpleStringProperty(envContextRepresentation);
+		this.graphemesAndNaturalClasses = new SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass>(graphemesAndNaturalClasses);
+		this.envContextRepresentation = envContextRepresentation;
+		this.wordBoundary = wordBoundary;
 	}
 
-	public ObservableList<GraphemeOrNaturalClass> getGraphemesAndNaturalClasses() {
+	public ObservableList<EnvironmentContextGraphemeOrNaturalClass> getGraphemesAndNaturalClasses() {
 		return graphemesAndNaturalClasses;
 	}
 
-	public ObservableList<GraphemeOrNaturalClass> getEnvContext() {
+	public ObservableList<EnvironmentContextGraphemeOrNaturalClass> getEnvContext() {
 		return envContext;
 	}
 
 	@XmlElement(name="envContext")
-	public void setEnvContext(ObservableList<GraphemeOrNaturalClass> envContext) {
+	public void setEnvContext(ObservableList<EnvironmentContextGraphemeOrNaturalClass> envContext) {
 		this.envContext = envContext;
 	}
 
-	public SimpleListProperty<GraphemeOrNaturalClass> getGraphemesAndNaturalClassesProperty() {
+	public SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass> getGraphemesAndNaturalClassesProperty() {
 		return graphemesAndNaturalClasses;
 	}
 
-	public void setGraphemesAndNaturalClasses(ObservableList<GraphemeOrNaturalClass> graphemesAndNaturalClasses) {
+	public void setGraphemesAndNaturalClasses(ObservableList<EnvironmentContextGraphemeOrNaturalClass> graphemesAndNaturalClasses) {
 		this.graphemesAndNaturalClasses.set(graphemesAndNaturalClasses);
 	}
 
 	public String getEnvironmentContextRepresentation() {
-		return envContextRepresentation.get();
-	}
-	public StringProperty envContextRepresentationProperty() {
 		return envContextRepresentation;
 	}
 	public void setEnvironmentContextRepresentation(String environmentContextRepresentation) {
-		this.envContextRepresentation.set(environmentContextRepresentation);
+		this.envContextRepresentation = environmentContextRepresentation;
+	}
+
+	public boolean isWordBoundary() {
+		return wordBoundary;
+	}
+
+	public void setWordBoundary(boolean wordBoundary) {
+		this.wordBoundary = wordBoundary;
 	}
 }

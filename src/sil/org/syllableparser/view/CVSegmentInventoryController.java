@@ -339,6 +339,8 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		graphemesField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
 				currentSegment.setGraphemes(graphemesField.getText());
+				// following is temporary
+				currentSegment.setGraphs(currentSegment.getGraphs());
 			}
 			if (languageProject != null) {
 				graphemesField.setFont(languageProject.getVernacularLanguage().getFont());

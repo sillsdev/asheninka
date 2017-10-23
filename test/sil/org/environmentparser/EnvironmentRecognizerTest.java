@@ -115,7 +115,7 @@ public class EnvironmentRecognizerTest {
 														// walker
 		CheckGraphemeAndClassListener validator = new CheckGraphemeAndClassListener(parser,
 				graphemesMasterList, classesMasterList);
-		validator.setfCheckForReduplication(true);
+		validator.setCheckForReduplication(true);
 		walker.walk(validator, tree); // initiate walk of tree with listener
 		return numErrors;
 	}
@@ -265,7 +265,7 @@ public class EnvironmentRecognizerTest {
 														// walker
 		CheckGraphemeAndClassListener validator = new CheckGraphemeAndClassListener(parser,
 				graphemesMasterList, classesMasterList);
-		validator.setfCheckForReduplication(true);
+		validator.setCheckForReduplication(true);
 		walker.walk(validator, tree); // initiate walk of tree with listener
 		parser.addParseListener(validator);
 		return parser;
