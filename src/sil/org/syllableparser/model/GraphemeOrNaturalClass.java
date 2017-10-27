@@ -23,7 +23,7 @@ import javafx.collections.ObservableList;
 /**
  * @author Andy Black
  *
- * an Object Value
+ *         an Object Value
  */
 public class GraphemeOrNaturalClass {
 	private StringProperty graphemeOrNaturalClass;
@@ -37,7 +37,8 @@ public class GraphemeOrNaturalClass {
 		this(null, null, true, null, true);
 	}
 
-	public GraphemeOrNaturalClass(String graphemeOrNaturalClass, String description, boolean isGrapheme, String uuid, boolean isActive) {
+	public GraphemeOrNaturalClass(String graphemeOrNaturalClass, String description,
+			boolean isGrapheme, String uuid, boolean isActive) {
 		this.graphemeOrNaturalClass = new SimpleStringProperty(graphemeOrNaturalClass);
 		this.description = new SimpleStringProperty(description);
 		this.checked = new SimpleBooleanProperty(false);
@@ -45,16 +46,18 @@ public class GraphemeOrNaturalClass {
 		this.isActive = isActive;
 		this.uuid = uuid;
 	}
-	
+
 	/**
 	 * Properties
 	 */
 	public String getGraphemeOrNaturalClass() {
 		return graphemeOrNaturalClass.get();
 	}
+
 	public String getDescription() {
 		return description.get();
 	}
+
 	public boolean isChecked() {
 		return checked.get();
 	}
@@ -62,6 +65,7 @@ public class GraphemeOrNaturalClass {
 	public void setGraphemeOrNaturalClass(String graphemeOrNaturalClass) {
 		this.graphemeOrNaturalClass.set(graphemeOrNaturalClass);
 	}
+
 	public String getUuid() {
 		return uuid;
 	}
@@ -81,16 +85,19 @@ public class GraphemeOrNaturalClass {
 	public void setDescription(String description) {
 		this.description.set(description);
 	}
+
 	public void setChecked(boolean value) {
-		this.checked.set(value);	
+		this.checked.set(value);
 	}
 
 	public StringProperty graphemeOrNaturalClassProperty() {
 		return graphemeOrNaturalClass;
 	}
+
 	public StringProperty descriptionProperty() {
 		return description;
 	}
+
 	public BooleanProperty checkedProperty() {
 		return checked;
 	}
@@ -103,7 +110,8 @@ public class GraphemeOrNaturalClass {
 	}
 
 	/**
-	 * @param isActive the isActive to set
+	 * @param isActive
+	 *            the isActive to set
 	 */
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;

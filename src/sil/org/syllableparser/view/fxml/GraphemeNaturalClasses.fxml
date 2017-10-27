@@ -64,7 +64,6 @@
                         <Label text="%label.active" GridPane.rowIndex="3" />
                         <TextField fx:id="nameField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES" />
-<!--                         <TextField fx:id="segmentOrNaturalClassField" GridPane.columnIndex="1" GridPane.rowIndex="2" /> -->
                         <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                            <children>
                               <TextFlow fx:id="gncTextFlow" prefWidth="234.0">

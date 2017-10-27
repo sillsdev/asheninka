@@ -19,6 +19,7 @@ import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import sil.org.syllableparser.view.CVNaturalClassesController.VernacularWrappingTableCell;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -92,8 +93,16 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		checkBoxColumnHead.setOnAction((event) -> {
 			handleCheckBoxColumnHead();
 		});
-		segOrNCColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.segmentOrNaturalClassProperty());
+		segOrNCColumn.setCellValueFactory(cellData -> {
+			if (cellData.getValue().isSegment()) {
+				return cellData.getValue().segmentOrNaturalClassProperty();
+			} else {
+				SimpleStringProperty sp = new SimpleStringProperty(Constants.NATURAL_CLASS_PREFIX
+						+ cellData.getValue().segmentOrNaturalClassProperty().getValue()
+						+ Constants.NATURAL_CLASS_SUFFIX);
+				return sp;
+			}
+		});
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		cvSegmentOrNaturalClassTable.setEditable(true);

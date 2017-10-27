@@ -163,7 +163,7 @@ public class CVApproachLanguageComparerTest {
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getNCName());
 		assertEquals(
 				"second's 1's reps are 'b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, S'",
-				"b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, S",
+				"b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, [S]",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getSNCRepresentation());
 		assertEquals(
 				"second's 2's reps are '', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z'",

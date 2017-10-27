@@ -294,6 +294,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				sb.append(s);
 			} else if (snc instanceof CVNaturalClass) {
 				s = ((CVNaturalClass) snc).getNCName();
+				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
 				t = new Text(s);
 				t.setFont(languageProject.getAnalysisLanguage().getFont());
 				sb.append(s);

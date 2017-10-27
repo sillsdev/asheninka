@@ -17,6 +17,7 @@ import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.GraphemeOrNaturalClass;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -91,8 +92,16 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 		checkBoxColumnHead.setOnAction((event) -> {
 			handleCheckBoxColumnHead();
 		});
-		graphemeOrNCColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.graphemeOrNaturalClassProperty());
+		graphemeOrNCColumn.setCellValueFactory(cellData -> {
+			if (cellData.getValue().isGrapheme()) {
+				return cellData.getValue().graphemeOrNaturalClassProperty();
+			} else {
+				SimpleStringProperty sp = new SimpleStringProperty(Constants.NATURAL_CLASS_PREFIX
+						+ cellData.getValue().graphemeOrNaturalClassProperty().getValue()
+						+ Constants.NATURAL_CLASS_SUFFIX);
+				return sp;
+			}
+		});
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		graphemeOrNaturalClassTable.setEditable(true);

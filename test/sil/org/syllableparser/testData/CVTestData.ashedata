@@ -10,7 +10,7 @@
             <cvNaturalClass snc="000e634b-5e9e-479d-82e6-f44ab9e27879 a72f9654-e5ec-45dc-80ba-204abf0ef872 0c349a88-de1d-4bd8-8845-18775f142719 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b 373d2f17-d2ca-414a-b12e-ca61c9b821ed 65be3575-5c87-4a7d-8560-d1f32a816b2f 518cf26f-42ab-4555-ac4d-af1667774959 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df a606ebec-8ceb-42bd-93ee-2b78f65f9984 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 f2c71865-8291-4f7a-b44e-fdd98adcfccc" active="true" id="b500749a-9617-444c-ae28-7552cb3236ec">
                 <description>consonants</description>
                 <NCName>C</NCName>
-                <SNCRepresentation>b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, S</SNCRepresentation>
+                <SNCRepresentation>b, ch, d, f, g, h, k, p, s, sh, t, v, w, x, y, z, [S]</SNCRepresentation>
             </cvNaturalClass>
             <cvNaturalClass snc="de664190-dd3c-4bb3-892e-16dc596255ce 92284e25-50b0-4c3a-9043-c5a67c6cfcff 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 008bb81a-5594-45ee-ae2a-457a058cee16 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
                 <description>vowels</description>
@@ -35,7 +35,7 @@
             <cvNaturalClass snc="101d2651-cd84-4671-a286-0d37e22759e4 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" active="true" id="f2c71865-8291-4f7a-b44e-fdd98adcfccc">
                 <description>Sonorants</description>
                 <NCName>S</NCName>
-                <SNCRepresentation>l, N</SNCRepresentation>
+                <SNCRepresentation>l, [N]</SNCRepresentation>
             </cvNaturalClass>
             <cvNaturalClass snc="000e634b-5e9e-479d-82e6-f44ab9e27879 a09371d4-f079-42ff-a2f6-25c2dcab0b95" active="true" id="989c8d03-4dbe-4826-82bd-27b69ea8b50a">
                 <description>Voiced labials</description>
@@ -204,7 +204,7 @@
         </graphemeNaturalClass>
         <graphemeNaturalClass gnc="223ba3c2-5fdd-4c27-a979-6eab2e40112f 85ed4250-bd7e-4128-a4a8-1b3d41836745" active="true" id="1d11075b-eea7-4619-8789-06c28c10ca02">
             <description>Vowel u plus all other vowels</description>
-            <GNCRepresentation>u, V</GNCRepresentation>
+            <GNCRepresentation>u, [V]</GNCRepresentation>
             <NCName>uV</NCName>
         </graphemeNaturalClass>
         <graphemeNaturalClass gnc="60200ba3-81e2-47f1-af2e-67797d6ea5d5 09b6c362-aed6-4475-9757-2ec18f96425a 998360f1-a6d9-4d54-aedb-98435ebe2f60 a7b2b506-7463-40c5-aa86-8b0e7aba11c4 b70f6d99-85b7-4e74-a62f-f03a0469ef50 b86017b7-f633-41cd-95a3-9b274689150a bf19ac17-8314-4d9a-97e5-084a9c6d0d25 67a3bb4f-6c9b-430b-b871-0300cc0dd659 9f42215e-7c33-48f3-965d-5fccd8fa21a6 f06e85be-4d25-49b1-bc9b-02d2db92064c 9187b2d1-eeaf-4bc6-9133-f4851a8c4a6b 06489da7-3897-4128-beea-550a70f5308f 4f1a6adb-6af1-4df5-b8c9-e2b7888ae814 f5d2ade6-7a44-4320-96bb-e46bfecad2f2 3ebdbe46-973d-40a5-94d0-d8b25b7aae25 9cc95e54-198d-4939-92af-9cf5b0713b65 f98f1eff-84a6-480a-a3cd-84fd8e25821a 8ddaf1e9-b95c-473e-8de3-12e502c1fcdc 2ab5ef2d-db6c-408c-a246-50523ae1507a c0f4f0f9-c101-487a-bc8b-47e4f8c31686 253b9a5c-5462-42de-aafd-b8b8a8c6fa2f e7d47fe8-f48b-4a05-a01a-136ca8594c7a f4fea79e-b164-4b84-b11b-18c67fe221e3 cd63568e-2424-4c86-be55-40cb916b6fd4 f014325d-1175-498a-afce-545bffc0948e f57eb196-e282-4334-9357-1231ae678a84 87c09941-d31c-439d-b40b-a6ae0582ab57 3a542ef0-4fa4-4bf6-b364-0283bbb6c533 30bcf250-b11f-42e0-9427-f170f7c177fa d4cf6f2e-f503-4464-8d50-e427e087bcd8 e45e7042-bde7-4130-863b-ac5fc2e8a36e 2cde6f47-54c0-45be-9dc5-2e54b99a2f99 15be2099-d334-4764-b19b-78776038c685 cef48c7a-6932-42d7-b8e0-2f1299b28e36 58e4a2b3-c67d-4095-81e8-8bdcf5b2ba5e eaefbfd1-56fa-4b87-983f-20a25925fcc1 7e291494-d47b-45aa-bd97-e6f8c605ca11 4910f680-8319-4007-b961-c8074406f92b 51ac526a-86e7-4f77-99a0-c89548bd9b90 d5bb9bd9-c11a-47b4-9341-b40bc6249d7d 223ba3c2-5fdd-4c27-a979-6eab2e40112f 60382abb-6d65-4ff7-b36a-e60dbefdf5e7 e3a25bb6-53df-489e-966f-506675170f90 7e7cf5ee-7468-4bbc-870d-6e59f845a32a f0176b8f-a233-447a-8143-adabfa492aaa 7c8ba2be-b9b1-4b0e-a40e-0721f2ca49ac 675b7671-3514-4088-a0fd-0bb5ae6c0703 735c3348-d49a-4d9f-9db3-7f672b96d2bf 362047a8-bcff-43d8-bec9-01d3189871be 4bb80151-b46e-459b-9171-d3914f92ef38 2f4c6f16-888e-466d-9cdb-a8b80d1a0b29 0777d122-5405-44b6-8a04-9174b9f4476d 3898c1eb-97da-4b72-a0f9-278057368543 8ea7ecd6-7c17-4f00-949f-26eeca3f6692" active="true" id="20b01e59-6e0b-40bb-8d65-cd57d04a31c3">

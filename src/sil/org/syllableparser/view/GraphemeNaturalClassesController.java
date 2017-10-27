@@ -178,10 +178,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-		// segmentOrNaturalClassField.textProperty().addListener(
-		// (observable, oldValue, newValue) -> {
-		// currentNaturalClass.setSNCRepresentation(segmentOrNaturalClassField.getText());
-		// });
+
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setDescription(descriptionField.getText());
@@ -257,7 +254,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	private void showGraphemeNaturalClassDetails(GraphemeNaturalClass naturalClass) {
 		currentNaturalClass = naturalClass;
 		if (naturalClass != null) {
-			// Fill the text fields with info from the person object.
+			// Fill the text fields with info from the object.
 			nameField.setText(naturalClass.getNCName());
 			descriptionField.setText(naturalClass.getDescription());
 			activeCheckBox.setSelected(naturalClass.isActive());
@@ -295,6 +292,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 				sb.append(s);
 			} else if (gnc instanceof GraphemeNaturalClass) {
 				s = ((GraphemeNaturalClass) gnc).getNCName();
+				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
 				t = new Text(s);
 				t.setFont(languageProject.getAnalysisLanguage().getFont());
 				sb.append(s);
