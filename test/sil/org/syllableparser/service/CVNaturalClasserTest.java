@@ -59,7 +59,7 @@ public class CVNaturalClasserTest {
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
 		activeGraphemes = languageProject.getActiveGraphemes();
-		segmenter = new CVSegmenter(activeGraphemes);
+		segmenter = new CVSegmenter(activeGraphemes, languageProject.getActiveGraphemeNaturalClasses());
 		cvNaturalClasses = cva.getActiveCVNaturalClasses();
 		naturalClasser = new CVNaturalClasser(cvNaturalClasses);
 	}

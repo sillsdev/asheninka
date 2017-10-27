@@ -212,7 +212,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleInsertNewItem()
 	 */
 	@Override
@@ -223,7 +223,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
 	 */
 	@Override
@@ -249,16 +249,17 @@ public class CVApproachController extends ApproachController {
 				ObservableList<CVNaturalClass> naturalClasses;
 				CVSegmenter segmenter;
 				ObservableList<Segment> segmentInventory;
-				//List<Segment> cvSegmentInventory;
+				// List<Segment> cvSegmentInventory;
 				CVNaturalClasser naturalClasser;
 				List<CVNaturalClass> cvNaturalClasses;
 				List<CVSyllablePattern> patterns;
 				CVSyllabifier syllabifier;
 				List<CVSyllablePattern> cvPatterns;
 
-				//segmentInventory = languageProject.getSegmentInventory();
-				segmenter = new CVSegmenter(languageProject.getActiveGraphemes());
-				//cvSegmentInventory = segmenter.getActiveSegmentInventory();
+				// segmentInventory = languageProject.getSegmentInventory();
+				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
+						languageProject.getActiveGraphemeNaturalClasses());
+				// cvSegmentInventory = segmenter.getActiveSegmentInventory();
 				naturalClasses = cvApproachData.getCVNaturalClasses();
 				naturalClasser = new CVNaturalClasser(naturalClasses);
 				cvNaturalClasses = naturalClasser.getActiveNaturalClasses();
@@ -424,7 +425,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleCopy()
 	 */
 	@Override
@@ -434,7 +435,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleCut()
 	 */
 	@Override
@@ -444,7 +445,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handlePaste()
 	 */
 	@Override
@@ -454,7 +455,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#anythingSelected()
 	 */
 	@Override
@@ -467,7 +468,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCopy()
 	 */
 	@Override
@@ -477,7 +478,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarPaste()
 	 */
 	@Override
@@ -487,7 +488,7 @@ public class CVApproachController extends ApproachController {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see sil.org.syllableparser.view.ApproachController#handleToolBarCut()
 	 */
 	@Override

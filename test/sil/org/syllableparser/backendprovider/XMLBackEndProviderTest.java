@@ -76,7 +76,7 @@ public class XMLBackEndProviderTest {
 		ObservableList<Word> words = languageProject.getWords();
 		assertEquals(10025, words.size());
 		ObservableList<Environment> environments = languageProject.getEnvironments();
-		assertEquals(3, environments.size());
+		assertEquals(4, environments.size());
 //		ObservableList<Grapheme> graphemes = languageProject.getGraphemes();
 //		assertEquals(56, graphemes.size());
 		Segment seg = segInventory.get(0);

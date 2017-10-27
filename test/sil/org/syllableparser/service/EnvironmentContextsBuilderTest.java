@@ -42,16 +42,7 @@ import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 
-public class EnvironmentContextsBuilderTest {
-
-	List<String> graphemesMasterList = Arrays.asList("a", "ai", "b", "c", "d", "e", "f", "fl",
-			"fr", "a", // test duplicate
-			"\u00ED", // single combined Unicode acute i (í)
-			"i\u0301", // combined acute i
-			"H");
-
-	List<String> classesMasterList = Arrays.asList("V", "Vowels", "C", "+son", "C", "+lab, +vd",
-			"+ant, -cor, -vd");
+public class EnvironmentContextsBuilderTest extends EnvironmentParsingBase {
 
 	CVApproach cva;
 	List<Grapheme> activeGraphemes;
@@ -83,7 +74,7 @@ public class EnvironmentContextsBuilderTest {
 
 		// word boundary
 		env = checkValidEnvironment("/ # _", true, false, 0, 0);
-		
+
 		env = checkValidEnvironment("/ _ #", false, true, 0, 0);
 
 		env = checkValidEnvironment("/ # _ #", true, true, 0, 0);
@@ -92,7 +83,7 @@ public class EnvironmentContextsBuilderTest {
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -100,7 +91,7 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -109,7 +100,7 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -117,7 +108,7 @@ public class EnvironmentContextsBuilderTest {
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -125,49 +116,48 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
-		
+
 		env = checkValidEnvironment("/ a b _ ai d #", false, true, 2, 2);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("ai", gnc.getGraphemeOrNaturalClass());
+		assertEquals("ai", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("d", gnc.getGraphemeOrNaturalClass());
+		assertEquals("d", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
-		
-		
+
 		// segments
 		env = checkValidEnvironment("/ a b _", false, false, 2, 0);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -175,11 +165,11 @@ public class EnvironmentContextsBuilderTest {
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -187,30 +177,30 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
-		
+
 		// segments without intervening spaces
 		env = checkValidEnvironment("/ ab _", false, false, 1, 0);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("ab", gnc.getGraphemeOrNaturalClass());
+		assertEquals("ab", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -218,7 +208,7 @@ public class EnvironmentContextsBuilderTest {
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("ab", gnc.getGraphemeOrNaturalClass());
+		assertEquals("ab", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -226,13 +216,13 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("ab", gnc.getGraphemeOrNaturalClass());
+		assertEquals("ab", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("ab", gnc.getGraphemeOrNaturalClass());
+		assertEquals("ab", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -240,14 +230,14 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("flaid", gnc.getGraphemeOrNaturalClass());
+		assertEquals("flaid", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 
 		env = checkValidEnvironment("/ _ flaid", false, false, 0, 1);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("flaid", gnc.getGraphemeOrNaturalClass());
+		assertEquals("flaid", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -255,12 +245,12 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("flaid", gnc.getGraphemeOrNaturalClass());
+		assertEquals("flaid", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("flaid", gnc.getGraphemeOrNaturalClass());
+		assertEquals("flaid", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -269,23 +259,23 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
-		
+
 		env = checkValidEnvironment("/ _ (a) b", false, false, 0, 2);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -293,21 +283,21 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("c", gnc.getGraphemeOrNaturalClass());
+		assertEquals("c", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("d", gnc.getGraphemeOrNaturalClass());
+		assertEquals("d", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -315,11 +305,11 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("f", gnc.getGraphemeOrNaturalClass());
+		assertEquals("f", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("fl", gnc.getGraphemeOrNaturalClass());
+		assertEquals("fl", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 
@@ -327,11 +317,11 @@ public class EnvironmentContextsBuilderTest {
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("d", gnc.getGraphemeOrNaturalClass());
+		assertEquals("d", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("c", gnc.getGraphemeOrNaturalClass());
+		assertEquals("c", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 
@@ -339,21 +329,21 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("f", gnc.getGraphemeOrNaturalClass());
+		assertEquals("f", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("fl", gnc.getGraphemeOrNaturalClass());
+		assertEquals("fl", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("d", gnc.getGraphemeOrNaturalClass());
+		assertEquals("d", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("c", gnc.getGraphemeOrNaturalClass());
+		assertEquals("c", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 
@@ -362,138 +352,156 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
-		
+		checkGraphemeNaturalClass(gnc, 1);
+
 		env = checkValidEnvironment("/ _ [V]", false, false, 0, 1);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 1);
 
 		env = checkValidEnvironment("/ [V] _ [V]", false, false, 1, 1);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 1);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 1);
 
 		// Natural Classes with spaces in the name
 		env = checkValidEnvironment("/ [+lab, +vd] _ ", false, false, 1, 0);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("+lab, +vd", gnc.getGraphemeOrNaturalClass());
+		assertEquals("+lab, +vd", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 
 		env = checkValidEnvironment("/ _ [+lab, +vd]", false, false, 0, 1);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("+lab, +vd", gnc.getGraphemeOrNaturalClass());
+		assertEquals("+lab, +vd", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 
 		env = checkValidEnvironment("/ [+lab, +vd] _ [+lab, +vd]", false, false, 1, 1);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("+lab, +vd", gnc.getGraphemeOrNaturalClass());
+		assertEquals("+lab, +vd", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("+lab, +vd", gnc.getGraphemeOrNaturalClass());
+		assertEquals("+lab, +vd", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 
 		// Natural Classes with optionality
 		env = checkValidEnvironment("/ ([C]) [V] _ ", false, false, 2, 0);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("C", gnc.getGraphemeOrNaturalClass());
+		assertEquals("C", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 		gnc = gncList.get(1);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 1);
 
 		env = checkValidEnvironment("/ _ ([C]) [V]", false, false, 0, 2);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("C", gnc.getGraphemeOrNaturalClass());
+		assertEquals("C", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 		gnc = gncList.get(1);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 1);
 
 		env = checkValidEnvironment("/ [V] ([C]) _ ([C]) [V]", false, false, 2, 2);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 1);
 		gnc = gncList.get(1);
-		assertEquals("C", gnc.getGraphemeOrNaturalClass());
+		assertEquals("C", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("C", gnc.getGraphemeOrNaturalClass());
+		assertEquals("C", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 		gnc = gncList.get(1);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 1);
 
 		// Combo
 		env = checkValidEnvironment("/# ([V]) b fr [C] _ a (c) #", true, true, 4, 2);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("V", gnc.getGraphemeOrNaturalClass());
+		assertEquals("V", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 1);
 		gnc = gncList.get(1);
-		assertEquals("b", gnc.getGraphemeOrNaturalClass());
+		assertEquals("b", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(2);
-		assertEquals("fr", gnc.getGraphemeOrNaturalClass());
+		assertEquals("fr", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(3);
-		assertEquals("C", gnc.getGraphemeOrNaturalClass());
+		assertEquals("C", gnc.getGraphemeString());
 		assertEquals(false, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
+		checkGraphemeNaturalClass(gnc, 0);
 		rightContext = env.getRightContext();
 		gncList = rightContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("a", gnc.getGraphemeOrNaturalClass());
+		assertEquals("a", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 		gnc = gncList.get(1);
-		assertEquals("c", gnc.getGraphemeOrNaturalClass());
+		assertEquals("c", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(true, gnc.isOptional());
 
@@ -502,16 +510,16 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("í", gnc.getGraphemeOrNaturalClass());
+		assertEquals("í", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
-		
-		// Unicode i followed by combining acute (í) 
-		env = checkValidEnvironment("/ i\u0301 _", false, false, 1, 0); 
+
+		// Unicode i followed by combining acute (í)
+		env = checkValidEnvironment("/ i\u0301 _", false, false, 1, 0);
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("i\u0301", gnc.getGraphemeOrNaturalClass());
+		assertEquals("i\u0301", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 
@@ -519,12 +527,28 @@ public class EnvironmentContextsBuilderTest {
 		leftContext = env.getLeftContext();
 		gncList = leftContext.getEnvContext();
 		gnc = gncList.get(0);
-		assertEquals("H", gnc.getGraphemeOrNaturalClass());
+		assertEquals("H", gnc.getGraphemeString());
 		assertEquals(true, gnc.isGrapheme());
 		assertEquals(false, gnc.isOptional());
 	}
 
-	private Environment checkValidEnvironment(String sEnv, boolean fWordInitial, boolean fWordFinal, int iLeftItems, int iRightItems) {
+	private void checkGraphemeNaturalClass(EnvironmentContextGraphemeOrNaturalClass gnc,
+			int iMatches) {
+		final String sName = gnc.getGraphemeString();
+		List<GraphemeNaturalClass> matches = classes.stream()
+				.filter(n -> n.getNCName().equals(sName)).collect(Collectors.toList());
+		assertEquals(iMatches, matches.size());
+		if (iMatches > 0) {
+			GraphemeNaturalClass gnClassFound = matches.get(0);
+			gnc.setGraphemeNaturalClass(gnClassFound);
+			gnc.setGraphemeNaturalClass(matches.get(0));
+			GraphemeNaturalClass gnClassStored = gnc.getGraphemeNaturalClass();
+			assertEquals(gnClassFound.getID(), gnClassStored.getID());
+		}
+	}
+
+	private Environment checkValidEnvironment(String sEnv, boolean fWordInitial,
+			boolean fWordFinal, int iLeftItems, int iRightItems) {
 		EnvironmentParser parser = parseEnvironmentString(sEnv);
 		int iNumErrors = parser.getNumberOfSyntaxErrors();
 		assertEquals(0, iNumErrors);
@@ -543,24 +567,5 @@ public class EnvironmentContextsBuilderTest {
 		gncList = rightContext.getEnvContext();
 		assertEquals(iRightItems, gncList.size());
 		return env;
-	}
-
-	private EnvironmentParser parseEnvironmentString(String sInput) {
-		CharStream input = CharStreams.fromString(sInput);
-		EnvironmentLexer lexer = new EnvironmentLexer(input);
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		EnvironmentParser parser = new EnvironmentParser(tokens);
-		// begin parsing at rule 'environment'
-		ParseTree tree = parser.environment();
-		ParseTreeWalker walker = new ParseTreeWalker(); // create standard
-														// walker
-		AsheninkaGraphemeAndClassListener validator = new AsheninkaGraphemeAndClassListener(parser,
-				graphemesMasterList, classesMasterList);
-		validator.setCheckForReduplication(true);
-		Environment env = new Environment();
-		validator.setEnvironment(env);
-		walker.walk(validator, tree); // initiate walk of tree with listener
-		parser.addParseListener(validator);
-		return parser;
 	}
 }

@@ -157,15 +157,15 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 				setCheckedStatus(grapheme);
 			}
 		}
-		for (GraphemeNaturalClass cvNaturalClass : cvApproach.getLanguageProject()
+		for (GraphemeNaturalClass gNaturalClass : cvApproach.getLanguageProject()
 				.getGraphemeNaturalClasses()) {
-			if (cvNaturalClass.isActive()) {
-				if (cvNaturalClass.getID() != naturalClass.getID()) {
+			if (gNaturalClass.isActive()) {
+				if (gNaturalClass.getID() != naturalClass.getID()) {
 					currentGraphemeOrNaturalClass = new GraphemeOrNaturalClass(
-							cvNaturalClass.getNCName(), cvNaturalClass.getDescription(), false,
-							cvNaturalClass.getID(), true);
+							gNaturalClass.getNCName(), gNaturalClass.getDescription(), false,
+							gNaturalClass.getID(), true);
 					graphemesOrNaturalClasses.add(currentGraphemeOrNaturalClass);
-					setCheckedStatus(cvNaturalClass);
+					setCheckedStatus(gNaturalClass);
 				}
 			}
 		}
@@ -210,7 +210,7 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 							.getLanguageProject().getGraphemeNaturalClasses(),
 							graphemeOrNaturalClass.getUuid());
 					naturalClass.getGraphemesOrNaturalClasses().add(
-							cvApproach.getCVNaturalClasses().get(i));
+							cvApproach.getLanguageProject().getGraphemeNaturalClasses().get(i));
 				}
 			}
 		}

@@ -1,5 +1,9 @@
 package sil.org.syllableparser.model;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -12,20 +16,16 @@ import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlTransient;
 
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.utility.StringUtilities;
 
 public class Environment extends SylParserObject {
-	// a. String representation
-	// b. Name
-	// c. Description
-	// d. Left context
-	// e. Right context
 
 	private final StringProperty envName;
 	private final StringProperty description;
 	private final StringProperty environmentRepresentation;
 	private EnvironmentContext leftContext;
 	private EnvironmentContext rightContext;
-	
+
 	private boolean valid = false;
 
 	public Environment() {
@@ -89,7 +89,7 @@ public class Environment extends SylParserObject {
 		return leftContext;
 	}
 
-	@XmlTransient
+	//@XmlTransient
 	public void setLeftContext(EnvironmentContext leftContext) {
 		this.leftContext = leftContext;
 	}
@@ -98,7 +98,7 @@ public class Environment extends SylParserObject {
 		return rightContext;
 	}
 
-	@XmlTransient
+	//@XmlTransient
 	public void setRightContext(EnvironmentContext rightContext) {
 		this.rightContext = rightContext;
 	}
@@ -116,6 +116,153 @@ public class Environment extends SylParserObject {
 
 	public void setValid(boolean valid) {
 		this.valid = valid;
+	}
+
+	public boolean matches(String sBefore, String sAfter, List<GraphemeNaturalClass> classes) {
+		boolean fMatches = false;
+		int iContextSize = leftContext.getEnvContext().size();
+		fMatches = matchLeftContext(iContextSize - 1, sBefore, classes);
+		if (fMatches) {
+			fMatches = matchRightContext(0, rightContext.getEnvContext().size(), sAfter, classes);
+		}
+		return fMatches;
+	}
+
+	private boolean matchLeftContext(int iItemToTest, String sStringToMatch,
+			List<GraphemeNaturalClass> classes) {
+		boolean fMatches = false;
+		if (iItemToTest < 0) {
+			// left context has nothing more to match
+			if (StringUtilities.isNullOrEmpty(sStringToMatch)) {
+				fMatches = true;
+			} else if (!leftContext.isWordBoundary()) {
+				fMatches = true; // doesn't need to be word initial and isn't
+			}
+		} else {
+			EnvironmentContextGraphemeOrNaturalClass gnc = leftContext.getEnvContext().get(
+					iItemToTest);
+			if (gnc.isGrapheme()) {
+				String sGrapheme = gnc.getGraphemeString();
+				if (sStringToMatch.endsWith(sGrapheme)) {
+					// have a matching grapheme, try next one to the left
+					int iLen = sGrapheme.length();
+					iLen = (iLen == sStringToMatch.length()) ? 0 : iLen;
+					fMatches = matchLeftContext(iItemToTest - 1, sStringToMatch.substring(0, iLen),
+							classes);
+				} else if (gnc.isOptional()) {
+					fMatches = matchLeftContext(iItemToTest - 1, sStringToMatch, classes);
+				}
+			} else {
+				// have a grapheme natural class
+				final String sClassName = gnc.getGraphemeString();
+				fMatches = matchClassLeftContext(iItemToTest, sStringToMatch, classes, sClassName);
+				if (!fMatches && gnc.isOptional()) {
+					fMatches = matchLeftContext(iItemToTest - 1, sStringToMatch, classes);
+				}
+			}
+		}
+		return fMatches;
+	}
+
+	private boolean matchClassLeftContext(int iItemToTest, String sStringToMatch,
+			List<GraphemeNaturalClass> classes, final String sClassName) {
+		boolean fMatches = false;
+		List<GraphemeNaturalClass> matches = classes.stream()
+				.filter(n -> n.getNCName().equals(sClassName)).collect(Collectors.toList());
+		for (GraphemeNaturalClass nc : matches) {
+			for (SylParserObject spo : nc.getGraphemesOrNaturalClasses()) {
+				if (spo instanceof Grapheme) {
+					String sGrapheme = ((Grapheme) spo).getForm();
+					if (sStringToMatch.endsWith(sGrapheme)) {
+						// have a matching grapheme, try next one to the left
+						int iLen = sGrapheme.length();
+						fMatches = matchLeftContext(iItemToTest - 1,
+								sStringToMatch.substring(0, iLen), classes);
+						if (fMatches) {
+							break;
+						}
+					}
+				} else {
+					final String sNewClassName = ((GraphemeNaturalClass) spo).getNCName();
+					fMatches = matchClassLeftContext(iItemToTest, sStringToMatch, classes,
+							sNewClassName);
+				}
+			}
+			if (fMatches) {
+				break;
+			}
+		}
+		return fMatches;
+	}
+
+	private boolean matchRightContext(int iItemToTest, int iNumberOfItems, String sStringToMatch,
+			List<GraphemeNaturalClass> classes) {
+		boolean fMatches = false;
+		if (iItemToTest < 0 || iItemToTest >= iNumberOfItems) {
+			if (StringUtilities.isNullOrEmpty(sStringToMatch)) {
+				fMatches = true;
+			} else if (!rightContext.isWordBoundary()) {
+				fMatches = true; // doesn't need to be word final and isn't
+			}
+		} else {
+			EnvironmentContextGraphemeOrNaturalClass gnc = rightContext.getEnvContext().get(
+					iItemToTest);
+			if (gnc.isGrapheme()) {
+				String sGrapheme = gnc.getGraphemeString();
+				if (sStringToMatch.startsWith(sGrapheme)) {
+					// have a matching grapheme, try next one to the right
+					int iLen = sGrapheme.length();
+					fMatches = matchRightContext(iItemToTest + 1, iNumberOfItems,
+							sStringToMatch.substring(iLen), classes);
+				} else if (gnc.isOptional()) {
+					fMatches = matchRightContext(iItemToTest + 1, iNumberOfItems, sStringToMatch,
+							classes);
+				}
+			} else {
+				// have a grapheme natural class
+				final String sClassName = gnc.getGraphemeString();
+				fMatches = matchClassRightContext(iItemToTest, iNumberOfItems, sStringToMatch,
+						classes, sClassName);
+				if (!fMatches && gnc.isOptional()) {
+					fMatches = matchRightContext(iItemToTest + 1, iNumberOfItems, sStringToMatch,
+							classes);
+				}
+
+			}
+		}
+		return fMatches;
+	}
+
+	private boolean matchClassRightContext(int iItemToTest, int iNumberOfItems,
+			String sStringToMatch, List<GraphemeNaturalClass> classes, final String sClassName) {
+		boolean fMatches = false;
+		List<GraphemeNaturalClass> matches = classes.stream()
+				.filter(n -> n.getNCName().equals(sClassName)).collect(Collectors.toList());
+		for (GraphemeNaturalClass nc : matches) {
+			for (SylParserObject spo : nc.getGraphemesOrNaturalClasses()) {
+				if (spo instanceof Grapheme) {
+					String sGrapheme = ((Grapheme) spo).getForm();
+					if (sStringToMatch.startsWith(sGrapheme)) {
+						// have a matching grapheme, try next one to the right
+						int iLen = sGrapheme.length();
+						fMatches = matchRightContext(iItemToTest + 1, iNumberOfItems,
+								sStringToMatch.substring(iLen), classes);
+
+						if (fMatches) {
+							break;
+						}
+					}
+				} else {
+					final String sNewClassName = ((GraphemeNaturalClass) spo).getNCName();
+					fMatches = matchClassRightContext(iItemToTest, iNumberOfItems, sStringToMatch,
+							classes, sNewClassName);
+				}
+			}
+			if (fMatches) {
+				break;
+			}
+		}
+		return fMatches;
 	}
 
 	@Override

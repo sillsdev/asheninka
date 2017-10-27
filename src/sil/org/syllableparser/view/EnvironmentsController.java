@@ -274,6 +274,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		validator.setEnvironment(currentEnvironment);
 		validator.setCheckForReduplication(false);
 		walker.walk(validator, tree); // initiate walk of tree with listener
+		parser.removeParseListeners();
 		parser.addParseListener(validator);
 		AsheninkaGraphemeAndClassListener listener = (AsheninkaGraphemeAndClassListener) parser
 				.getParseListeners().get(0);
@@ -283,7 +284,9 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			environmentErrorMessage.setText(sMessage);
 			return false;
 		}
-		currentEnvironment = validator.getEnvironment();
+		Environment env =  validator.getEnvironment();
+		currentEnvironment.setLeftContext(env.getLeftContext());
+		currentEnvironment.setRightContext(env.getRightContext());
 		return true;
 	}
 
@@ -417,11 +420,10 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	}
 
 	/**
-	 * Fills all text fields to show details about the CV natural class. If the
-	 * specified segment is null, all text fields are cleared.
+	 * Fills all text fields to show details about the environment.
 	 *
 	 * @param env
-	 *            the segment or null
+	 *            the environment
 	 */
 	private void showEnvironmentDetails(Environment env) {
 		currentEnvironment = env;

@@ -8,6 +8,7 @@ package sil.org.syllableparser.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
@@ -25,20 +26,17 @@ import javafx.collections.ObservableList;
  */
 public class EnvironmentContext {
 	private SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass> graphemesAndNaturalClasses;
-	private String envContextRepresentation;
 	ObservableList<EnvironmentContextGraphemeOrNaturalClass> envContext = FXCollections.observableArrayList();
 	private boolean wordBoundary = false;
 	
 	public EnvironmentContext() {
 		this.graphemesAndNaturalClasses = new SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass>();
-		this.envContextRepresentation = "";
 	}
 
 	public EnvironmentContext(SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass> graphemesAndNaturalClasses, 
-			String envContextRepresentation, boolean wordBoundary) {
+			boolean wordBoundary) {
 		super();
 		this.graphemesAndNaturalClasses = new SimpleListProperty<EnvironmentContextGraphemeOrNaturalClass>(graphemesAndNaturalClasses);
-		this.envContextRepresentation = envContextRepresentation;
 		this.wordBoundary = wordBoundary;
 	}
 
@@ -49,8 +47,8 @@ public class EnvironmentContext {
 	public ObservableList<EnvironmentContextGraphemeOrNaturalClass> getEnvContext() {
 		return envContext;
 	}
-
-	@XmlElement(name="envContext")
+	@XmlElementWrapper(name = "environmentContexts")
+	@XmlElement(name="envContextGOrNC")
 	public void setEnvContext(ObservableList<EnvironmentContextGraphemeOrNaturalClass> envContext) {
 		this.envContext = envContext;
 	}
@@ -61,13 +59,6 @@ public class EnvironmentContext {
 
 	public void setGraphemesAndNaturalClasses(ObservableList<EnvironmentContextGraphemeOrNaturalClass> graphemesAndNaturalClasses) {
 		this.graphemesAndNaturalClasses.set(graphemesAndNaturalClasses);
-	}
-
-	public String getEnvironmentContextRepresentation() {
-		return envContextRepresentation;
-	}
-	public void setEnvironmentContextRepresentation(String environmentContextRepresentation) {
-		this.envContextRepresentation = environmentContextRepresentation;
 	}
 
 	public boolean isWordBoundary() {

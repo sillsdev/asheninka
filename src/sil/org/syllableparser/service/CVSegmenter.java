@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import sil.org.syllableparser.model.Grapheme;
+import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
@@ -28,6 +29,7 @@ public class CVSegmenter {
 
 	//private final List<Segment> activeSegmentInventory;
 	private final List<Grapheme> activeGraphemes;
+	private final List<GraphemeNaturalClass> activeClasses;
 	List<CVSegmentInSyllable> segmentsInCurrentWord = new LinkedList<CVSegmentInSyllable>(
 			Arrays.asList(new CVSegmentInSyllable(null, null)));
 	HashMap<String, List<Grapheme>> graphemeToSegmentMapping = new HashMap<>();
@@ -40,9 +42,10 @@ public class CVSegmenter {
 //		buildGraphemeToCVSegmentMapping();
 //	}
 
-	public CVSegmenter(List<Grapheme> activeGraphemes) {
+	public CVSegmenter(List<Grapheme> activeGraphemes, List<GraphemeNaturalClass> activeClasses) {
 		super();
 		this.activeGraphemes = activeGraphemes;
+		this.activeClasses = activeClasses;
 		buildGraphemeToCVSegmentMapping();
 	}
 	protected void buildGraphemeToCVSegmentMapping() {
@@ -101,7 +104,7 @@ public class CVSegmenter {
 				if (graphsForThisForm != null && graphsForThisForm.size() > 0) {
 					boolean fIsMatch = false;
 					for (Grapheme grapheme : graphsForThisForm) {
-						if (!grapheme.matchesAnEnvironment()) {
+						if (!grapheme.matchesAnEnvironment(word.substring(0,iStart), word.substring(iStart+iSegLength), activeClasses)) {
 							continue;
 						}
 						Segment seg = grapheme.getOwningSegment();

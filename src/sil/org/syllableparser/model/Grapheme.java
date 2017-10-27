@@ -6,6 +6,8 @@
  */
 package sil.org.syllableparser.model;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
@@ -46,8 +48,8 @@ public class Grapheme extends SylParserObject {
 		createUUID();
 	}
 
-	public Grapheme(String form, String description,
-			SimpleListProperty<Environment> environments, String envsRepresentation, boolean isActive) {
+	public Grapheme(String form, String description, SimpleListProperty<Environment> environments,
+			String envsRepresentation, boolean isActive) {
 		super();
 		this.form = new SimpleStringProperty(form);
 		this.description = new SimpleStringProperty(description);
@@ -64,7 +66,7 @@ public class Grapheme extends SylParserObject {
 
 	public void setChecked(boolean value) {
 		checked.set(value);
-		this.setActive(value);	
+		this.setActive(value);
 	}
 
 	public BooleanProperty checkedProperty() {
@@ -99,7 +101,7 @@ public class Grapheme extends SylParserObject {
 		return environments;
 	}
 
-	@XmlAttribute(name="envs")
+	@XmlAttribute(name = "envs")
 	@XmlIDREF
 	@XmlList
 	public ObservableList<Environment> getEnvs() {
@@ -117,28 +119,41 @@ public class Grapheme extends SylParserObject {
 	public String getEnvsRepresentation() {
 		return envsRepresentation.get();
 	}
+
 	public StringProperty envsRepresentationProperty() {
 		return envsRepresentation;
 	}
+
 	public void setEnvsRepresentation(String envsRepresentation) {
 		this.envsRepresentation.set(envsRepresentation);
 	}
-	
+
 	public Segment getOwningSegment() {
 		return owningSegment;
 	}
 
-	@XmlAttribute(name="segment")
+	@XmlAttribute(name = "segment")
 	@XmlIDREF
 	public void setOwningSegment(Segment owningSegment) {
 		this.owningSegment = owningSegment;
 	}
 
-	public boolean matchesAnEnvironment() {
-		// TODO: check grapheme for its environment
-		return true;
+	public boolean matchesAnEnvironment(String sBefore, String sAfter,
+			List<GraphemeNaturalClass> classes) {
+		boolean fMatches = false;
+		if (envs.size() == 0) {
+			fMatches = true;
+		} else {
+			for (Environment env : envs) {
+				if (env.matches(sBefore, sAfter, classes)) {
+					fMatches = true;
+					break;
+				}
+			}
+		}
+		return fMatches;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		String sCombo = form.getValueSafe() + envsRepresentation.getValueSafe();

@@ -52,7 +52,8 @@ public class CVSegmenterTest {
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
 		activeGraphemes = languageProject.getActiveGraphemes();
-		segmenter = new CVSegmenter(activeGraphemes);
+		segmenter = new CVSegmenter(activeGraphemes,
+				languageProject.getActiveGraphemeNaturalClasses());
 	}
 
 	/**
@@ -84,10 +85,9 @@ public class CVSegmenterTest {
 				"ch, i, k, o", "Ch, i, k, o", 4, true, 0);
 		checkSegmentation("SHiju", "Expect graphemes to be /SH,sh/, /i/, missing", "sh, i",
 				"SH, i", 2, false, 3);
-		checkSegmentation("aqba", "Expect graphemes to be /a/, missing", "a", "a", 1, false,
-				1);
-		checkSegmentation("shomu", "Expect sh environment to fail: it is not before /i/", "",
-				"", 0, false, 2);
+		checkSegmentation("aqba", "Expect graphemes to be /a/, missing", "a", "a", 1, false, 1);
+		checkSegmentation("shomu", "Expect sh environment to fail: it is not before /i/", "s", "s",
+				1, false, 1);
 	}
 
 	protected void checkSegmentation(String word, String comment, String expectedSegments,

@@ -7,6 +7,8 @@
 package sil.org.syllableparser.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
@@ -26,7 +28,8 @@ import javafx.collections.ObservableList;
  * an Object Value used in environment contexts
  */
 public class EnvironmentContextGraphemeOrNaturalClass {
-	private String graphemeOrNaturalClass;
+	private String graphemeString;
+	private GraphemeNaturalClass graphemeNaturalClass;
 	private boolean isGrapheme = true;
 	private boolean isOptional = false;
 
@@ -34,22 +37,39 @@ public class EnvironmentContextGraphemeOrNaturalClass {
 		this(null, true);
 	}
 
-	public EnvironmentContextGraphemeOrNaturalClass(String graphemeOrNaturalClass, boolean isGrapheme) {
-		this.graphemeOrNaturalClass = graphemeOrNaturalClass;
+	public EnvironmentContextGraphemeOrNaturalClass(String graphemeString, boolean isGrapheme) {
+		this.graphemeString = graphemeString;
 		this.isGrapheme = isGrapheme;
 	}
 	
 	/**
 	 * Properties
 	 */
-	public String getGraphemeOrNaturalClass() {
-		return graphemeOrNaturalClass;
+	@XmlElement(name="graphemeString")
+	public String getGraphemeString() {
+		return graphemeString;
 	}
 
-	public void setGraphemeOrNaturalClass(String graphemeOrNaturalClass) {
-		this.graphemeOrNaturalClass = graphemeOrNaturalClass;
+	public void setGraphemeString(String graphemeString) {
+		this.graphemeString = graphemeString;
 	}
 
+	/**
+	 * @return the graphemeNaturalClass
+	 */
+	@XmlElement(name = "graphemeNaturalClass")
+	public GraphemeNaturalClass getGraphemeNaturalClass() {
+		return graphemeNaturalClass;
+	}
+
+	/**
+	 * @param graphemeNaturalClass the graphemeNaturalClass to set
+	 */
+	public void setGraphemeNaturalClass(GraphemeNaturalClass graphemeNaturalClass) {
+		this.graphemeNaturalClass = graphemeNaturalClass;
+	}
+
+	@XmlElement(name="isGrapheme")
 	public boolean isGrapheme() {
 		return isGrapheme;
 	}
@@ -58,6 +78,7 @@ public class EnvironmentContextGraphemeOrNaturalClass {
 		this.isGrapheme = isGrapheme;
 	}
 
+	@XmlElement(name="isOptional")
 	public boolean isOptional() {
 		return isOptional;
 	}

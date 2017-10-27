@@ -26,7 +26,7 @@ public class AsheninkaGraphemeAndClassListener extends CheckGraphemeAndClassList
 
 	public AsheninkaGraphemeAndClassListener(EnvironmentParser parser,
 			List<String> graphemesMasterList, List<String> classesMasterList) {
-		super(parser, classesMasterList, classesMasterList);
+		super(parser, graphemesMasterList, classesMasterList);
 	}
 
 	public Environment getEnvironment() {
