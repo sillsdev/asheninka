@@ -5,14 +5,19 @@
  */
 package sil.org.syllableparser.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * @author Andy Black
  *
+ * This is essentially a struct so we use public class fields
+ * (http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#177)
  */
 public class CVSegmenterResult extends ParseResult {
 	public int iPositionOfFailure = -1;
+	public List<CVSegmenterGraphemeResult> graphemesTried = new ArrayList<>();
 
 	public CVSegmenterResult() {
 		super();
@@ -20,8 +25,12 @@ public class CVSegmenterResult extends ParseResult {
 
 	String getFailureMessage(String sWord, ResourceBundle bundle) {
 		String sSegmentFailure = bundle.getString("label.cvsegmentfailure");
-		String sSegmenterResult = sSegmentFailure.replace("{0}",
-				sWord.substring(iPositionOfFailure));
-		return sSegmenterResult;
+		StringBuilder sb = new StringBuilder();
+		sb.append(sSegmentFailure.replace("{0}",
+				sWord.substring(iPositionOfFailure)));
+		for (CVSegmenterGraphemeResult graphemeResult : graphemesTried) {
+			sb.append(graphemeResult.getFailureMessage(bundle));
+		}
+		return sb.toString();
 	}
 }

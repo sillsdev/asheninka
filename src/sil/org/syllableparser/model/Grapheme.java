@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.service.CVSegmenterGraphemeEnvironmentResult;
+import sil.org.syllableparser.service.CVSegmenterGraphemeResult;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -139,14 +141,18 @@ public class Grapheme extends SylParserObject {
 	}
 
 	public boolean matchesAnEnvironment(String sBefore, String sAfter,
-			List<GraphemeNaturalClass> classes) {
+			List<GraphemeNaturalClass> classes, CVSegmenterGraphemeResult graphemeResult) {
 		boolean fMatches = false;
 		if (envs.size() == 0) {
 			fMatches = true;
 		} else {
 			for (Environment env : envs) {
+				CVSegmenterGraphemeEnvironmentResult envResult = new CVSegmenterGraphemeEnvironmentResult();
+				envResult.sEnvironmentRepresentation = env.getEnvironmentRepresentation();
+				graphemeResult.environmentsTried.add(envResult);
 				if (env.matches(sBefore, sAfter, classes)) {
 					fMatches = true;
+					envResult.fEnvironmentPassed = true;
 					break;
 				}
 			}

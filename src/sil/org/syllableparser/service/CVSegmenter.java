@@ -22,12 +22,12 @@ import sil.org.syllableparser.model.cvapproach.CVSegmentInSyllable;
 /**
  * @author Andy Black
  *
- * a Service
- * Takes a word string and parses it into a sequence of segments
+ *         a Service Takes a word string and parses it into a sequence of
+ *         segments
  */
 public class CVSegmenter {
 
-	//private final List<Segment> activeSegmentInventory;
+	// private final List<Segment> activeSegmentInventory;
 	private final List<Grapheme> activeGraphemes;
 	private final List<GraphemeNaturalClass> activeClasses;
 	List<CVSegmentInSyllable> segmentsInCurrentWord = new LinkedList<CVSegmentInSyllable>(
@@ -35,12 +35,12 @@ public class CVSegmenter {
 	HashMap<String, List<Grapheme>> graphemeToSegmentMapping = new HashMap<>();
 	int iLongestGrapheme = 0;
 
-//	public CVSegmenter(List<Segment> activeSegmentInventory) {
-//		super();
-//		this.activeSegmentInventory = activeSegmentInventory;
-//		this.activeGraphemes = null;
-//		buildGraphemeToCVSegmentMapping();
-//	}
+	// public CVSegmenter(List<Segment> activeSegmentInventory) {
+	// super();
+	// this.activeSegmentInventory = activeSegmentInventory;
+	// this.activeGraphemes = null;
+	// buildGraphemeToCVSegmentMapping();
+	// }
 
 	public CVSegmenter(List<Grapheme> activeGraphemes, List<GraphemeNaturalClass> activeClasses) {
 		super();
@@ -48,6 +48,7 @@ public class CVSegmenter {
 		this.activeClasses = activeClasses;
 		buildGraphemeToCVSegmentMapping();
 	}
+
 	protected void buildGraphemeToCVSegmentMapping() {
 		for (Grapheme graph : activeGraphemes) {
 			String sForm = graph.getForm();
@@ -84,7 +85,7 @@ public class CVSegmenter {
 
 	public CVSegmenterResult segmentWord(String word) {
 		segmentsInCurrentWord.clear();
-		
+
 		CVSegmenterResult result = new CVSegmenterResult();
 
 		if (word == null || word.isEmpty()) {
@@ -104,16 +105,21 @@ public class CVSegmenter {
 				if (graphsForThisForm != null && graphsForThisForm.size() > 0) {
 					boolean fIsMatch = false;
 					for (Grapheme grapheme : graphsForThisForm) {
-						if (!grapheme.matchesAnEnvironment(word.substring(0,iStart), word.substring(iStart+iSegLength), activeClasses)) {
+						CVSegmenterGraphemeResult graphemeResult = new CVSegmenterGraphemeResult();
+						graphemeResult.sGrapheme = grapheme.getForm();
+						result.graphemesTried.add(graphemeResult);
+						if (!grapheme.matchesAnEnvironment(word.substring(0, iStart),
+								word.substring(iStart + iSegLength), activeClasses, graphemeResult)) {
 							continue;
 						}
 						Segment seg = grapheme.getOwningSegment();
 						if (seg != null) {
-							CVSegmentInSyllable segmentInSyllable = new CVSegmentInSyllable(seg, sPotentialGrapheme);
+							CVSegmentInSyllable segmentInSyllable = new CVSegmentInSyllable(seg,
+									sPotentialGrapheme);
 							segmentsInCurrentWord.add(segmentInSyllable);
 							fIsMatch = true;
 							break;
-						}						
+						}
 					}
 					if (fIsMatch) {
 						break;
