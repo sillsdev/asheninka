@@ -18,7 +18,9 @@ import java.util.SortedSet;
 
 import javafx.collections.ObservableList;
 import sil.org.syllableparser.Constants;
+import sil.org.syllableparser.model.Environment;
 import sil.org.syllableparser.model.Grapheme;
+import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.Language;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
@@ -51,7 +53,7 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		super();
 		initialize(comparer, locale, LocalDateTime.now());
 	}
-	
+
 	// Used for testing so the date time can be constant
 	public CVApproachLanguageComparisonHTMLFormatter(CVApproachLanguageComparer comparer,
 			Locale locale, LocalDateTime dateTime) {
@@ -59,7 +61,8 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		initialize(comparer, locale, dateTime);
 	}
 
-	protected void initialize(CVApproachLanguageComparer comparer, Locale locale, LocalDateTime dateTime) {
+	protected void initialize(CVApproachLanguageComparer comparer, Locale locale,
+			LocalDateTime dateTime) {
 		this.comparer = comparer;
 		this.locale = locale;
 		bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale);
@@ -81,6 +84,8 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		formatHTMLBeginning(sb);
 		formatOverview(sb);
 		formatSegmentInventory(sb);
+		formatGraphemeNaturalClasses(sb);
+		formatEnvironments(sb);
 		formatNaturalClasses(sb);
 		formatSyllablePatterns(sb);
 		formatSyllablePatternOrder(sb);
@@ -139,12 +144,12 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 			for (DifferentSegment differentSegment : diffSegments) {
 				sb.append("<tr>\n<td class=\"");
 				sb.append(VERNACULAR_1);
-				sb.append("\">");
+				sb.append("\" valign=\"top\">");
 				Segment seg = (Segment) differentSegment.objectFrom1;
 				formatSegmentInfo(sb, seg);
 				sb.append("</td>\n<td class=\"");
 				sb.append(VERNACULAR_2);
-				sb.append("\">");
+				sb.append("\" valign=\"top\">");
 				seg = (Segment) differentSegment.objectFrom2;
 				formatSegmentInfo(sb, seg);
 				sb.append("</td>\n</tr>\n");
@@ -157,19 +162,109 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		if (seg == null) {
 			sb.append("&#xa0;");
 		} else {
-			sb.append(seg.getSegment());
-			sb.append(" (");
 			ObservableList<Grapheme> graphemes = seg.getGraphs();
-			int i = 1;
-			for (Grapheme grapheme : graphemes) {
-				sb.append(grapheme.getForm());
-				if (i < graphemes.size()) {
-					sb.append(" ");
+			int iNumGraphemes = graphemes.size();
+			if (iNumGraphemes > 0) {
+				sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+				sb.append(bundle.getString("label.segment"));
+				sb.append("</th>\n<th>");
+				sb.append(bundle.getString("report.graphemes"));
+				sb.append("</th>\n<th>");
+				sb.append(bundle.getString("report.environments"));
+				sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+				sb.append("<tr>\n");
+				sb.append("<td rowspan=\"" + iNumGraphemes + "\" valign=\"top\">");
+				sb.append(seg.getSegment());
+				int i = 0;
+				for (Grapheme grapheme : graphemes) {
+					if (i > 0) {
+						sb.append("<tr>\n");
+					}
+					sb.append("<td>");
+					sb.append(grapheme.getForm());
+					sb.append("</td>\n<td>");
+					sb.append(grapheme.getEnvsRepresentation());
+					sb.append("</td>\n</tr>\n");
+					i++;
 				}
-				i++;
+				sb.append("</tbody>\n</table>\n");
 			}
-			//sb.append(seg.getGraphemes());
-			sb.append(")");
+		}
+	}
+
+	protected void formatGraphemeNaturalClasses(StringBuilder sb) {
+		sb.append("<h3>" + bundle.getString("report.graphemenaturalclasses") + "</h3>\n");
+		SortedSet<DifferentGraphemeNaturalClass> diffGraphemeNaturalClasses = comparer
+				.getGraphemeNaturalClassesWhichDiffer();
+		if (diffGraphemeNaturalClasses.size() == 0) {
+			sb.append("<p>" + bundle.getString("report.samegraphemenaturalclasses") + "</p>\n");
+		} else {
+			sb.append("<p>" + bundle.getString("report.graphemenaturalclasseswhichdiffer")
+					+ "</p>\n");
+			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
+			sb.append("</th>\n<th>");
+			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
+			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			for (DifferentGraphemeNaturalClass differentGraphemeNaturalClass : diffGraphemeNaturalClasses) {
+				sb.append("<tr>\n<td class=\"");
+				sb.append(VERNACULAR_1);
+				sb.append("\">");
+				GraphemeNaturalClass gnc = (GraphemeNaturalClass) differentGraphemeNaturalClass.objectFrom1;
+				formatGraphemeNaturalClassInfo(sb, gnc);
+				sb.append("</td>\n<td class=\"");
+				sb.append(VERNACULAR_2);
+				sb.append("\">");
+				gnc = (GraphemeNaturalClass) differentGraphemeNaturalClass.objectFrom2;
+				formatGraphemeNaturalClassInfo(sb, gnc);
+				sb.append("</td>\n</tr>\n");
+			}
+			sb.append("</tbody>\n</table>\n");
+		}
+	}
+
+	protected void formatGraphemeNaturalClassInfo(StringBuilder sb, GraphemeNaturalClass gnc) {
+		if (gnc == null) {
+			sb.append("&#xa0;");
+		} else {
+			sb.append(gnc.getGNCRepresentation());
+		}
+	}
+
+	protected void formatEnvironments(StringBuilder sb) {
+		sb.append("<h3>" + bundle.getString("report.environments") + "</h3>\n");
+		SortedSet<DifferentEnvironment> diffEnvironments = comparer.getEnvironmentsWhichDiffer();
+		if (diffEnvironments.size() == 0) {
+			sb.append("<p>" + bundle.getString("report.sameenvironments") + "</p>\n");
+		} else {
+			sb.append("<p>" + bundle.getString("report.environmentswhichdiffer") + "</p>\n");
+			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
+			sb.append("</th>\n<th>");
+			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
+			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			for (DifferentEnvironment differentEnvironment : diffEnvironments) {
+				sb.append("<tr>\n<td class=\"");
+				sb.append(VERNACULAR_1);
+				sb.append("\">");
+				Environment gnc = (Environment) differentEnvironment.objectFrom1;
+				formatEnvironmentInfo(sb, gnc);
+				sb.append("</td>\n<td class=\"");
+				sb.append(VERNACULAR_2);
+				sb.append("\">");
+				gnc = (Environment) differentEnvironment.objectFrom2;
+				formatEnvironmentInfo(sb, gnc);
+				sb.append("</td>\n</tr>\n");
+			}
+			sb.append("</tbody>\n</table>\n");
+		}
+	}
+
+	protected void formatEnvironmentInfo(StringBuilder sb, Environment env) {
+		if (env == null) {
+			sb.append("&#xa0;");
+		} else {
+			sb.append(env.getEnvironmentRepresentation());
 		}
 	}
 
@@ -203,7 +298,8 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		}
 	}
 
-	protected void formatNaturalClassInfo(StringBuilder sb, CVNaturalClass naturalClass, String vernacularCSS) {
+	protected void formatNaturalClassInfo(StringBuilder sb, CVNaturalClass naturalClass,
+			String vernacularCSS) {
 		if (naturalClass == null) {
 			sb.append("&#xa0;");
 		} else {

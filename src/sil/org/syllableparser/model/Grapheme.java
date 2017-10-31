@@ -172,6 +172,8 @@ public class Grapheme extends SylParserObject {
 		Grapheme grapheme = (Grapheme) obj;
 		if (!getForm().equals(grapheme.getForm())) {
 			result = false;
+		} else if (!getEnvsRepresentation().equals(grapheme.getEnvsRepresentation())) {
+			result = false;
 		}
 		return result;
 	}

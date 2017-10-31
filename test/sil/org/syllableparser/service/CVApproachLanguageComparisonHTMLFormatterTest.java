@@ -70,6 +70,9 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 		comparer.setDataSet1Info(file1.getPath());
 		comparer.setDataSet2Info(file2.getPath());
 		comparer.compareSegmentInventory();
+		comparer.compareGraphemes();
+		comparer.compareGraphemeNaturalClasses();
+		comparer.compareEnvironments();
 		comparer.compareNaturalClasses();
 		comparer.compareSyllablePatterns();
 		comparer.compareSyllablePatternOrder();

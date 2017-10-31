@@ -25,9 +25,13 @@ import org.junit.Test;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
+import sil.org.syllableparser.model.Environment;
 import sil.org.syllableparser.model.Grapheme;
+import sil.org.syllableparser.model.GraphemeNaturalClass;
+import sil.org.syllableparser.model.GraphemeOrNaturalClass;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
+import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
@@ -102,6 +106,9 @@ public class CVApproachLanguageComparerTest {
 	public void compareLanguagesTest() {
 		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva1, cva2);
 		compareSegments(comparer);
+		compareGraphemes(comparer);
+		compareGraphemeNaturalClasses(comparer);
+		compareEnvironments(comparer);
 		compareNaturalClasses(comparer);
 		compareSyllablePatterns(comparer);
 		compareWords(comparer);
@@ -111,6 +118,9 @@ public class CVApproachLanguageComparerTest {
 	public void compareSameLanguagesTest() {
 		CVApproachLanguageComparer comparer = new CVApproachLanguageComparer(cva1, cva1);
 		compareSameSegments(comparer);
+		compareSameGraphemes(comparer);
+		compareSameGraphemeNaturalClasses(comparer);
+		compareSameEnvironments(comparer);
 		compareSameNaturalClasses(comparer);
 		compareSameSyllablePatterns(comparer);
 		compareSameWords(comparer);
@@ -119,7 +129,7 @@ public class CVApproachLanguageComparerTest {
 	protected void compareSegments(CVApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
 		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
-		assertEquals("number of different segments", 13, diffs.size());
+		assertEquals("number of different segments", 17, diffs.size());
 		List<DifferentSegment> listOfDiffs = new ArrayList<DifferentSegment>();
 		listOfDiffs.addAll(diffs);
 		DifferentSegment diffSeg = listOfDiffs.get(1);
@@ -129,25 +139,77 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("second's 2 is an /a/", "a", seg2.getSegment());
 		assertEquals("number of graphemes in segment1", 2, seg1.getGraphs().size());
 		assertEquals("number of graphemes in segment2", 4, seg2.getGraphs().size());
-//		Grapheme graph1 = seg1.getGraphemes().get(0);
-//		assertEquals("second's 1's graphemes are 'a A'", "a A",
-//				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
-//		assertEquals("second's 2's graphemes are 'a A á Á'", "a A á Á",
-//				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
+		Grapheme graph1 = seg1.getGraphs().get(0);
+		assertEquals("second's 1's graphemes are 'a A'", "a A",
+				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
+		assertEquals("second's 2's graphemes are 'a A á Á'", "a A á Á",
+				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
 		diffSeg = listOfDiffs.get(0);
 		assertNull("first's 1 is null", diffSeg.getObjectFrom1());
 		seg2 = ((Segment) diffSeg.getObjectFrom2());
 		assertEquals("first's 2 is a /\'/", "'", seg2.getSegment());
 		assertEquals("number of graphemes in segment2", 1, seg2.getGraphs().size());
-//		assertEquals("first's 2's graphemes are '\''", "'",
-//				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
-		diffSeg = listOfDiffs.get(12);
+		assertEquals("first's 2's graphemes are '\''", "'",
+				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
+		diffSeg = listOfDiffs.get(16);
 		seg1 = ((Segment) diffSeg.getObjectFrom1());
 		assertEquals("eleventh's 1 is a /ɲ/", "ɲ", seg1.getSegment());
 		assertNull("eleventh's 2 is null", diffSeg.getObjectFrom2());
 		assertEquals("number of graphemes in segment1", 2, seg1.getGraphs().size());
-//		assertEquals("tenth's 1's graphemes are 'ñ Ñ'", "ñ Ñ",
-//				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
+		assertEquals("tenth's 1's graphemes are 'ñ Ñ'", "ñ Ñ",
+				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
+	}
+
+	protected void compareGraphemes(CVApproachLanguageComparer comparer) {
+		comparer.compareGraphemes();;
+		SortedSet<DifferentGrapheme> diffs = comparer.getGraphemesWhichDiffer();
+		assertEquals("number of different graphemes", 31, diffs.size());
+		List<DifferentGrapheme> listOfDiffs = new ArrayList<DifferentGrapheme>();
+		listOfDiffs.addAll(diffs);
+		DifferentGrapheme diffGrapheme = listOfDiffs.get(0);
+		Grapheme grapheme1 = ((Grapheme) diffGrapheme.getObjectFrom1());
+		Grapheme grapheme2 = ((Grapheme) diffGrapheme.getObjectFrom2());
+		assertNull(grapheme1);
+		assertEquals("'", grapheme2.getForm());
+		assertEquals(0, grapheme2.getEnvs().size());
+		diffGrapheme = listOfDiffs.get(1);
+		assertNull(diffGrapheme.getObjectFrom1());
+		grapheme2 = ((Grapheme) diffGrapheme.getObjectFrom2());
+		assertEquals("C", grapheme2.getForm());
+		assertEquals(0, grapheme2.getEnvs().size());
+		assertEquals("C",
+				((Grapheme) diffGrapheme.getObjectFrom2()).getForm());
+		diffGrapheme = listOfDiffs.get(3);
+		grapheme1 = ((Grapheme) diffGrapheme.getObjectFrom1());
+		assertEquals("Ch", grapheme1.getForm());
+		assertNull(diffGrapheme.getObjectFrom2());
+		assertEquals(0, grapheme1.getEnvs().size());
+	}
+
+	protected void compareGraphemeNaturalClasses(CVApproachLanguageComparer comparer) {
+		comparer.compareGraphemeNaturalClasses();
+		SortedSet<DifferentGraphemeNaturalClass> diffs = comparer.getGraphemeNaturalClassesWhichDiffer();
+		assertEquals("number of different grapheme natural classes", 3, diffs.size());
+		List<DifferentGraphemeNaturalClass> listOfDiffs = new ArrayList<DifferentGraphemeNaturalClass>();
+		listOfDiffs.addAll(diffs);
+		DifferentGraphemeNaturalClass diffGnc = listOfDiffs.get(1);
+		GraphemeNaturalClass gnc1 = ((GraphemeNaturalClass) diffGnc.getObjectFrom1());
+		GraphemeNaturalClass gnc2 = ((GraphemeNaturalClass) diffGnc.getObjectFrom2());
+		assertEquals("a, e, E, i, I, o, O, U", gnc1.getGNCRepresentation());
+		assertNull(gnc2);
+	}
+	
+	protected void compareEnvironments(CVApproachLanguageComparer comparer) {
+		comparer.compareEnvironments();
+		SortedSet<DifferentEnvironment> diffs = comparer.getEnvironmentsWhichDiffer();
+		assertEquals(5, diffs.size());
+		List<DifferentEnvironment> listOfDiffs = new ArrayList<DifferentEnvironment>();
+		listOfDiffs.addAll(diffs);
+		DifferentEnvironment diffSeg = listOfDiffs.get(1);
+		Environment env1 = ((Environment) diffSeg.getObjectFrom1());
+		Environment env2 = ((Environment) diffSeg.getObjectFrom2());
+		assertEquals("/  _  i", env1.getEnvironmentRepresentation());
+		assertNull(env2);
 	}
 
 	protected void compareNaturalClasses(CVApproachLanguageComparer comparer) {
@@ -266,6 +328,24 @@ public class CVApproachLanguageComparerTest {
 		comparer.compareSegmentInventory();
 		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
 		assertEquals("number of different segments", 0, diffs.size());
+	}
+
+	protected void compareSameGraphemes(CVApproachLanguageComparer comparer) {
+		comparer.compareGraphemes();;
+		SortedSet<DifferentGrapheme> diffs = comparer.getGraphemesWhichDiffer();
+		assertEquals("number of different graphemes", 0, diffs.size());
+	}
+
+	protected void compareSameGraphemeNaturalClasses(CVApproachLanguageComparer comparer) {
+		comparer.compareGraphemeNaturalClasses();;
+		SortedSet<DifferentGraphemeNaturalClass> diffs = comparer.getGraphemeNaturalClassesWhichDiffer();
+		assertEquals("number of different grapheme natural classes", 0, diffs.size());
+	}
+
+	protected void compareSameEnvironments(CVApproachLanguageComparer comparer) {
+		comparer.compareEnvironments();;
+		SortedSet<DifferentEnvironment> diffs = comparer.getEnvironmentsWhichDiffer();
+		assertEquals("number of different environments", 0, diffs.size());
 	}
 
 	protected void compareSameNaturalClasses(CVApproachLanguageComparer comparer) {

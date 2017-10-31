@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 import javafx.collections.ObservableList;
+import sil.org.syllableparser.model.Environment;
+import sil.org.syllableparser.model.Grapheme;
+import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.Word;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
@@ -42,8 +45,14 @@ public class CVApproachLanguageComparer {
 
 	SortedSet<DifferentSegment> segmentsWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentSegment::getSortingValue));
+	SortedSet<DifferentGrapheme> graphemesWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentGrapheme::getSortingValue));
+	SortedSet<DifferentEnvironment> environmentsWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentEnvironment::getSortingValue));
 	SortedSet<DifferentCVNaturalClass> naturalClassesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
+	SortedSet<DifferentGraphemeNaturalClass> graphemeNaturalClassesWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentGraphemeNaturalClass::getSortingValue));
 	SortedSet<DifferentCVSyllablePattern> syllablePatternsWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentCVSyllablePattern::getSortingValue));
 	SortedSet<DifferentWord> wordsWhichDiffer = new TreeSet<>(
@@ -92,8 +101,20 @@ public class CVApproachLanguageComparer {
 		return segmentsWhichDiffer;
 	}
 
+	public SortedSet<DifferentGrapheme> getGraphemesWhichDiffer() {
+		return graphemesWhichDiffer;
+	}
+
+	public SortedSet<DifferentEnvironment> getEnvironmentsWhichDiffer() {
+		return environmentsWhichDiffer;
+	}
+
 	public SortedSet<DifferentCVNaturalClass> getNaturalClassesWhichDiffer() {
 		return naturalClassesWhichDiffer;
+	}
+
+	public SortedSet<DifferentGraphemeNaturalClass> getGraphemeNaturalClassesWhichDiffer() {
+		return graphemeNaturalClassesWhichDiffer;
 	}
 
 	public SortedSet<DifferentCVSyllablePattern> getSyllablePatternsWhichDiffer() {
@@ -146,6 +167,69 @@ public class CVApproachLanguageComparer {
 		}
 	}
 
+	public void compareGraphemes() {
+		ObservableList<Grapheme> graphemes1 = cva1.getLanguageProject().getGraphemes();
+		ObservableList<Grapheme> graphemes2 = cva2.getLanguageProject().getGraphemes();
+
+		Set<Grapheme> difference1from2 = new HashSet<Grapheme>(graphemes1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(graphemes2);
+		difference1from2.stream().forEach(
+				grapheme -> graphemesWhichDiffer.add(new DifferentGrapheme(grapheme, null)));
+
+		Set<Grapheme> difference2from1 = new HashSet<Grapheme>(graphemes2);
+		difference2from1.removeAll(graphemes1);
+		difference2from1.stream().forEach(grapheme -> mergeSimilarGraphemes(grapheme));
+	}
+
+	protected void mergeSimilarGraphemes(Grapheme grapheme) {
+		List<DifferentGrapheme> sameGraphemesForm = graphemesWhichDiffer
+				.stream()
+				.filter(ds -> ds.getObjectFrom1() != null
+						&& ((Grapheme) ds.getObjectFrom1()).getForm()
+								.equals(grapheme.getForm())
+						&& ((Grapheme) ds.getObjectFrom1()).getEnvsRepresentation()
+								.equals(grapheme.getEnvsRepresentation())
+								).collect(Collectors.toList());
+		if (sameGraphemesForm.size() > 0) {
+			DifferentGrapheme diffGrapheme = sameGraphemesForm.get(0);
+			diffGrapheme.setObjectFrom2(grapheme);
+		} else {
+			DifferentGrapheme diffGrapheme = new DifferentGrapheme(null, grapheme);
+			graphemesWhichDiffer.add(diffGrapheme);
+		}
+	}
+
+	public void compareEnvironments() {
+		ObservableList<Environment> environment1 = cva1.getLanguageProject().getEnvironments();
+		ObservableList<Environment> environment2 = cva2.getLanguageProject().getEnvironments();
+
+		Set<Environment> difference1from2 = new HashSet<Environment>(environment1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(environment2);
+		difference1from2.stream().forEach(
+				environment -> environmentsWhichDiffer.add(new DifferentEnvironment(environment, null)));
+
+		Set<Environment> difference2from1 = new HashSet<Environment>(environment2);
+		difference2from1.removeAll(environment1);
+		difference2from1.stream().forEach(environment -> mergeSimilarEnvironments(environment));
+	}
+
+	protected void mergeSimilarEnvironments(Environment environment) {
+		List<DifferentEnvironment> sameEnvironments = environmentsWhichDiffer
+				.stream()
+				.filter(ds -> ds.getObjectFrom1() != null
+						&& ((Environment) ds.getObjectFrom1()).getEnvironmentRepresentation()
+								.equals(environment.getEnvironmentRepresentation())).collect(Collectors.toList());
+		if (sameEnvironments.size() > 0) {
+			DifferentEnvironment diffEnv = sameEnvironments.get(0);
+			diffEnv.setObjectFrom2(environment);
+		} else {
+			DifferentEnvironment diffEnv = new DifferentEnvironment(null, environment);
+			environmentsWhichDiffer.add(diffEnv);
+		}
+	}
+
 	public void compareNaturalClasses() {
 		ObservableList<CVNaturalClass> naturalClasses1 = cva1.getCVNaturalClasses();
 		ObservableList<CVNaturalClass> naturalClasses2 = cva2.getCVNaturalClasses();
@@ -176,6 +260,36 @@ public class CVApproachLanguageComparer {
 			DifferentCVNaturalClass diffNaturalClass = new DifferentCVNaturalClass(null,
 					naturalClass);
 			naturalClassesWhichDiffer.add(diffNaturalClass);
+		}
+	}
+
+	public void compareGraphemeNaturalClasses() {
+		ObservableList<GraphemeNaturalClass> gncs1 = cva1.getLanguageProject().getGraphemeNaturalClasses();
+		ObservableList<GraphemeNaturalClass> gncs2 = cva2.getLanguageProject().getGraphemeNaturalClasses();
+
+		Set<GraphemeNaturalClass> difference1from2 = new HashSet<GraphemeNaturalClass>(gncs1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(gncs2);
+		difference1from2.stream().forEach(
+				gnc -> graphemeNaturalClassesWhichDiffer.add(new DifferentGraphemeNaturalClass(gnc, null)));
+
+		Set<GraphemeNaturalClass> difference2from1 = new HashSet<GraphemeNaturalClass>(gncs2);
+		difference2from1.removeAll(gncs1);
+		difference2from1.stream().forEach(gnc -> mergeSimilarGraphemeNaturalClasses(gnc));
+	}
+
+	protected void mergeSimilarGraphemeNaturalClasses(GraphemeNaturalClass gnc) {
+		List<DifferentGraphemeNaturalClass> sameGNCRepresentation = graphemeNaturalClassesWhichDiffer
+				.stream()
+				.filter(ds -> ds.getObjectFrom1() != null
+						&& ((GraphemeNaturalClass) ds.getObjectFrom1()).getGNCRepresentation()
+								.equals(gnc.getGNCRepresentation())).collect(Collectors.toList());
+		if (sameGNCRepresentation.size() > 0) {
+			DifferentGraphemeNaturalClass diffGnc = sameGNCRepresentation.get(0);
+			diffGnc.setObjectFrom2(gnc);
+		} else {
+			DifferentGraphemeNaturalClass diffGnc = new DifferentGraphemeNaturalClass(null, gnc);
+			graphemeNaturalClassesWhichDiffer.add(diffGnc);
 		}
 	}
 
