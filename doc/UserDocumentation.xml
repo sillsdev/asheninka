@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->3 August 2017</date
+>2 November 2017</date
 ><version
->0.5.0 Alpha</version
+>0.6.0 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -391,6 +391,16 @@ sec="sCVNaturalClasses"
 sec="sCVSyllablePatterns"
 ></sectionRef
 >)</li
+><li
+>grapheme natural classes (<sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+>)</li
+><li
+>environments (<sectionRef
+sec="sEnvironments"
+></sectionRef
+>)</li
 ></ol
 ><p
 >After that, you import a word list (see <sectionRef
@@ -424,7 +434,7 @@ type="tCVPatternApproach"
 > in <object
 type="tAsheninka"
 ></object
-> is to adjust the segment inventory, natural classes, and syllable patterns so that one gets most, if not all, words to syllabify correctly.</p
+> is to adjust the segment inventory (including graphemes and their environments), natural classes, and syllable patterns so that one gets most, if not all, words to syllabify correctly.</p
 ><p
 ><indexedItem
 term="iCVPatternAlgorithm"
@@ -435,7 +445,7 @@ term="iParsingResult"
 >The main algorithm is as follows:</p
 ><ol
 ><li
->It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. Currently, it uses a longest match algorithm; that is, when two or more graphemes match, it uses the longest one. See <sectionRef
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
 sec="sCVSegmentInventory"
 ></sectionRef
 > for more on this. <indexedItem
@@ -450,7 +460,13 @@ type="tItalic"
 > and quits. The '<object
 type="tItalic"
 >some characters</object
->' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment.</li
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met. You can use the <object
+type="tTryAWord"
+></object
+> tool to get more details (see <sectionRef
+sec="sCVTryAWord"
+></sectionRef
+>).</li
 ><li
 >If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited, trying to find a sequence of natural classes that covers the entire sequence of segments. It uses the set of segments or natural (sub-)classes defined within a natural class to determine a match with a natural class. If two or more natural classes match, it tries each of them in turn. <indexedItem
 term="iFailureCVNaturalClasser"
@@ -513,37 +529,10 @@ type="tCVSegmentInventory"
 > view covers all the segments you have in the orthography. <indexedItem
 term="iAlgorithmSegment"
 ></indexedItem
->Currently, <object
+><object
 type="tAsheninka"
 ></object
-> uses a “longest match” algorithm for figuring out which segment a letter (or sequence of letters) belongs to. This could be a problem in some cases where a language has both codas and onsets and a given sequence of consonants might be ambiguous between various possibilities. So if you have a <langData
-lang="lVernacular"
->k</langData
->, a <langData
-lang="lVernacular"
->kl</langData
->, an <langData
-lang="lVernacular"
->l</langData
->, and an <langData
-lang="lVernacular"
->ll</langData
->, then something like <langData
-lang="lVernacular"
->aklli</langData
-> could be ambiguous between <langData
-lang="lVernacular"
->ak.lli</langData
-> and <langData
-lang="lVernacular"
->akl.li</langData
->. The current version will only try <langData
-lang="lVernacular"
->akl.li</langData
-> because <langData
-lang="lVernacular"
->kl</langData
-> is the longest match in a left-to-right sweep. We do plan to add environments so one can limit certain graphemes to specified environments.</p
+> tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme.</p
 ><p
 >In the <object
 type="tField"
@@ -567,7 +556,47 @@ type="tField"
 >In the <object
 type="tField"
 >Graphemes</object
-> field, key all the ways the particular segment appears in your orthography, including any upper case forms. Separate each one by a space.</p
+> field, key all the ways the particular segment appears in your orthography, including any upper case forms. Separate each one by a space. When you leave this field (e.g., by clicking in the <object
+type="tField"
+>Description</object
+> field or by pressing the <object
+type="tKey"
+>Tab</object
+> key or using <object
+type="tKey"
+>Shift-Tab</object
+>), <object
+type="tAsheninka"
+></object
+> automatically shows the graphemes in the table at the bottom. You can choose to disable one or more of the graphemes by clicking on the check box in the table at the beginning of the row for the grapheme. You can also select one or more environments where the given grapheme is valid by clicking on the chooser button at the end of the row (see <sectionRef
+sec="sEnvironments"
+></sectionRef
+> and also <sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+> for more on environments). The chooser button looks like <img
+src="resources/ChooserButton.png"
+></img
+>.</p
+><p
+>To remove a grapheme from the table, merely remove it from the <object
+type="tField"
+>Graphemes</object
+> field. Note that when you uncheck a grapheme check box at the beginning of the row, <object
+type="tAsheninka"
+></object
+> will automatically remove that grapheme from the <object
+type="tField"
+>Graphemes</object
+> field. When you check that check box, <object
+type="tAsheninka"
+></object
+> will automatically add it back to the <object
+type="tField"
+>Graphemes</object
+> field. Thus, you can uncheck the box to see what might happen if this grapheme is no longer present. This can be useful when testing environments to condition a grapheme.</p
+><p
+>It is possible to have the same grapheme occur for more than one segment. If you do this, you may well want to add environments for when each grapheme is valid for a given segment.</p
 ></section2
 ><section2
 id="sCVNaturalClasses"
@@ -590,7 +619,9 @@ id="nCVClassName"
 ><p
 >This is not required, it is just a suggestion.</p
 ></endnote
-> The <object
+> While it is possible to use the same name more than once, it will most likely turn out to be confusing. So we recommend you make the name be unique.</p
+><p
+>The <object
 type="tField"
 >Description</object
 > field is for your use to document anything special about this natural class.</p
@@ -642,6 +673,450 @@ type="tCVPatternApproach"
 type="tAsheninka"
 ></object
 > parses a word, it tries to match the patterns in the order in which they appear. You control the order of the syllable patterns by clicking on a pattern in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+></section2
+><section2
+id="sGraphemeNaturalClasses"
+><secTitle
+>Grapheme natural classes</secTitle
+><p
+>When your orthography is such that you need to condition some graphemes by one or more environments and you want to capture a generalization about which graphemes can occur around that grapheme via a natural class, then create one or more grapheme natural classes. Note that these are not the same as CV natural classes. The grapheme natural classes are based on the set of graphemes defined in all the segments. The CV natural classes, on the other hand, are defined based on the segments in the segment inventory. The first can be used to determine if a given grapheme is valid for its segment in a given orthographic environment. The second is used to define a class for a segment during the parsing process of a word into syllables.</p
+><p
+>The <object
+type="tField"
+>Name</object
+> field is for you to define how this grapheme natural class will appear in environments. We suggest using something short and if there is more than one character in it, make the first one be capitalized and the rest be in lower case. The name should be unique among all the grapheme natural classes. If two or more grapheme natural classes share the same name, then any environment which refers to such a grapheme natural class will always use the first one <object
+type="tAsheninka"
+></object
+> happens to find.</p
+><p
+>The <object
+type="tField"
+>Description</object
+> field is for your use to document anything special about this grapheme natural class.</p
+><p
+>The <object
+type="tField"
+>Grapheme or natural class</object
+> field has a chooser button (<img
+src="resources/ChooserButton.png"
+></img
+>) at the right edge. Clicking on this brings up a chooser where you can select the graphemes and/or other grapheme natural classes that should belong to the grapheme natural class you are defining. Note that it is possible to insert one entire grapheme natural class within another grapheme natural class. For example, if you have a class of nasal consonants, you can include that class within another class that has all consonants.</p
+></section2
+><section2
+id="sEnvironments"
+><secTitle
+>Environments</secTitle
+><p
+>When your orthography is such that you need to condition some graphemes by one or more environments, you add the environments here. Besides the usual Active check box, there are three fields.</p
+><p
+>The <object
+type="tField"
+>Name</object
+> field is for you to give a short name for this environment.</p
+><p
+>The <object
+type="tField"
+>Description</object
+> field is for your use to document anything special about this environment, including why it is needed.</p
+><p
+>The <object
+type="tField"
+>Environment</object
+> field is where you key the environment. Any error message will appear below the Active check box a you type. (When you create a new environment, this field contains "/ _ " which causes an error message of <object
+type="tErrorMessageText"
+>A class or a grapheme is missing; detected at or about position 6.</object
+> This is because the environment is not valid until it has at least one grapheme, grapheme natural class, or word boundary symbol.)</p
+><p
+>The content of the <object
+type="tField"
+>Environment</object
+> field follows a special notation. This notation is one that is reminiscent of what is used in many generative-style rules. The basic rules of thumb are:</p
+><example
+num="xEnvironmentsHowTo"
+><chart
+><ol
+><li
+>Begin each environment with the forward slash character <object
+type="TT"
+>/</object
+></li
+><li
+>The location of the grapheme itself is indicated by an underscore character <object
+type="TT"
+>_</object
+></li
+><li
+>Any letters or grapheme natural classes that must come before the grapheme are typed in before this underscore character. Type them in the order in which they must appear.</li
+><li
+>Any letters or grapheme natural classes that must come after the grapheme are typed in after this underscore character. Type them in the order in which they must appear.</li
+><li
+>Any letter is indicated by typing it the way it appears in the practical orthography.</li
+><li
+>Any grapheme natural classes are indicated by<ol
+><li
+>typing a left square bracket <object
+type="TT"
+>[</object
+>,</li
+><li
+>typing the name of the grapheme natural class,<endnote
+id="nNatClassName"
+><p
+>This is another reason why you should use unique names for grapheme natural classes. If you have two or more grapheme natural classes with the same name, it is not clear which one you mean. <object
+type="tAsheninka"
+></object
+> will automatically select one, but it may not be the one you intended.</p
+></endnote
+> and</li
+><li
+>then typing a right square bracket <object
+type="TT"
+>]</object
+></li
+></ol
+></li
+><li
+>Optional letters or grapheme natural classes are indicated by<ol
+><li
+>typing an opening parenthesis <object
+type="TT"
+>(</object
+>,</li
+><li
+>typing the letter or grapheme natural class as above, and</li
+><li
+>then typing a closing parenthesis <object
+type="TT"
+>)</object
+></li
+><li
+>Note that one should not nest optional items. The <object
+type="tAsheninka"
+></object
+> parser will not handle these properly. You must enter each optional item after the other.</li
+></ol
+></li
+></ol
+></chart
+></example
+><p
+>Example <exampleRef
+equal="no"
+letterOnly="no"
+num="xEnvironmentExamples"
+></exampleRef
+> gives some sample environments along with what they mean.</p
+><example
+num="xEnvironmentExamples"
+><table
+border="1"
+><tr
+><th
+align="left"
+valign="top"
+>Environment    </th
+><th
+align="left"
+valign="top"
+>Meaning</th
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ m _</object
+></td
+><td
+align="left"
+valign="top"
+>after an <object
+type="TT"
+>m</object
+></td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ [V] _</object
+></td
+><td
+align="left"
+valign="top"
+>after a vowel (assuming there is a grapheme natural class of vowels called <object
+type="TT"
+>V</object
+>)</td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ # i _</object
+></td
+><td
+align="left"
+valign="top"
+>after a word initial <object
+type="TT"
+>i</object
+></td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ # [V] _</object
+></td
+><td
+align="left"
+valign="top"
+>after a word initial vowel (assuming there is a grapheme natural class of vowels called <object
+type="TT"
+>V</object
+>)</td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ [V] y _</object
+></td
+><td
+align="left"
+valign="top"
+>after a vowel (assuming there is a grapheme natural class of vowels called <object
+type="TT"
+>V</object
+>) and a <object
+type="TT"
+>y</object
+></td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ _ i</object
+></td
+><td
+align="left"
+valign="top"
+>before an <object
+type="TT"
+>i</object
+></td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ _ [C]</object
+></td
+><td
+align="left"
+valign="top"
+>before a consonant (assuming there is a grapheme natural class of consonants called <object
+type="TT"
+>C</object
+>)</td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ _ y #</object
+></td
+><td
+align="left"
+valign="top"
+>before a <object
+type="TT"
+>y</object
+> which is word final</td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ _ [C] #</object
+></td
+><td
+align="left"
+valign="top"
+>before a word final consonant (assuming there is a grapheme natural class of consonants called <object
+type="TT"
+>C</object
+>)</td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ m _ w</object
+></td
+><td
+align="left"
+valign="top"
+>between an <object
+type="TT"
+>m</object
+> and a <object
+type="TT"
+>w</object
+></td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ [C] _ [C]</object
+></td
+><td
+align="left"
+valign="top"
+>between two consonants (assuming there is a grapheme natural class of consonants called <object
+type="TT"
+>C</object
+>)</td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ ai _</object
+></td
+><td
+align="left"
+valign="top"
+>after an <object
+type="TT"
+>a</object
+> and an <object
+type="TT"
+>i</object
+></td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ _ ai</object
+></td
+><td
+align="left"
+valign="top"
+>before an <object
+type="TT"
+>a</object
+> and an <object
+type="TT"
+>i</object
+></td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ _ (a)i</object
+></td
+><td
+align="left"
+valign="top"
+>before an optional <object
+type="TT"
+>a</object
+> and an <object
+type="TT"
+>i</object
+>; that is, either before <object
+type="TT"
+>ai</object
+> or before <object
+type="TT"
+>i</object
+></td
+></tr
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>/ _ ([C]) #</object
+></td
+><td
+align="left"
+valign="top"
+>before an optional word final consonant (assuming there is a grapheme natural class of consonants called <object
+type="TT"
+>C</object
+>); that is, either before a word final consonant or word finally</td
+></tr
+></table
+></example
+><p
+>A given grapheme may have more than one environment, in which case the various environments are logically ORed with each other. That is, if any one of the environments for the grapheme are found, then the grapheme is considered to be valid (as far as its environments are concerned). For example, if a given grapheme can appear either before a consonant or word finally, then you can list both an environment for “before a consonant” and one for “before a word boundary.” Example <exampleRef
+equal="no"
+letterOnly="no"
+num="xSyllableFinalEnvironment"
+></exampleRef
+> shows what this might look like, assuming that you have a grapheme natural class of consonants with an abbreviation of <object
+type="TT"
+>C</object
+>.</p
+><example
+num="xSyllableFinalEnvironment"
+><table
+border="1"
+><tr
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+>  / _ [C]  </object
+></td
+><td
+align="left"
+valign="top"
+><object
+type="TT"
+> / _ #  </object
+></td
+></tr
+></table
+></example
+><p
+></p
 ></section2
 ><section2
 id="sCVWords"
@@ -916,6 +1391,25 @@ lang="lVernacular"
 lang="lVernacular"
 >q</langData
 > was not defined in any segment. Note that it shows where the problem was initially found.</pc
+><pc
+>It will also show the steps it took in trying to parse the word into segments, but failed as in example <exampleRef
+letter="xCVTryAWordGraphemeEnvironmentFailure"
+num="xCVTryAWordGraphemeEnvironmentFailure"
+></exampleRef
+>.</pc
+><example
+num="xCVTryAWordGraphemeEnvironmentFailure"
+><chart
+><img
+src="resources/CVTryAWordGraphemeEnvironmentFailure.png"
+></img
+></chart
+></example
+><p
+>In this case, the grapheme <langData
+lang="lVernacular"
+>a̱</langData
+> has two environments: either before a vowel or word finally.  Neither succeeded.</p
 ><p
 ><indexedItem
 term="iFailureCVNaturalClasser"

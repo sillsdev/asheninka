@@ -103,7 +103,7 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 			}
 		});
 		descriptionColumn
-				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+		.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		graphemeOrNaturalClassTable.setEditable(true);
 		// Custom rendering of the table cell.
 		graphemeOrNCColumn.setCellFactory(column -> {
