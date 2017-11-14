@@ -145,7 +145,7 @@ public class DatabaseMigrator {
 			transformer.transform(source, result);
 		} catch (Exception e) {
 			e.printStackTrace();
-			HandleExceptionMessage.show("Migration Ereror", "Failed to transform", e.getMessage(), true);
+			HandleExceptionMessage.show("Migration Error", "Failed to transform", e.getMessage(), true);
 		}
 		return tempSaveFile;
 	}

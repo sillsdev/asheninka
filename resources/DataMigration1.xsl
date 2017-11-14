@@ -65,6 +65,7 @@
             <xsl:if test="$sRest">
                 <xsl:call-template name="ConvertGraphemeStringToGrapheme">
                     <xsl:with-param name="sGraph" select="$sRest"/>
+                    <xsl:with-param name="sSegmentID" select="$sSegmentID"/>
                 </xsl:call-template>
             </xsl:if>
         </xsl:if>

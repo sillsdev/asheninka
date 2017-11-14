@@ -170,11 +170,6 @@ public class MainApp extends Application {
 			// Try to load last opened file.
 			File file = applicationPreferences.getLastOpenedFile();
 			if (file != null && file.exists()) {
-				DatabaseMigrator migrator = new DatabaseMigrator(file);
-				int version = migrator.getVersion();
-				if (version < Constants.CURRENT_DATABASE_VERSION) {
-					migrator.doMigration();
-				}
 				loadLanguageData(file);
 			} else {
 				boolean fSucceeded = askUserForNewOrToOpenExistingFile(bundle, controller);
@@ -246,6 +241,11 @@ public class MainApp extends Application {
 	}
 
 	public void loadLanguageData(File file) {
+		DatabaseMigrator migrator = new DatabaseMigrator(file);
+		int version = migrator.getVersion();
+		if (version < Constants.CURRENT_DATABASE_VERSION) {
+			migrator.doMigration();
+		}
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		applicationPreferences.setLastOpenedFilePath(file);
 		applicationPreferences.setLastOpenedDirectoryPath(file.getParent());
