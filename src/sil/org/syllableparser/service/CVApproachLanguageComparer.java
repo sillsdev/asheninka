@@ -132,6 +132,8 @@ public class CVApproachLanguageComparer {
 	public void compare() {
 		compareSegmentInventory();
 		compareNaturalClasses();
+		compareGraphemeNaturalClasses();
+		compareEnvironments();
 		compareSyllablePatterns();
 		compareSyllablePatternOrder();
 		compareWords();
