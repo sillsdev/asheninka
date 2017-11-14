@@ -15,6 +15,7 @@ import sil.org.syllableparser.MainApp;
 import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.GraphemeOrNaturalClass;
+import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import javafx.beans.property.SimpleStringProperty;
@@ -159,7 +160,12 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 		languageProject = cvApproach.getLanguageProject();
 
 		for (Grapheme grapheme : languageProject.getGraphemes()) {
-			if (grapheme.isActive()) {
+			Segment owningSegment = grapheme.getOwningSegment();
+			if (owningSegment == null) {
+				System.out.println("grapheme with null owning segment:" + grapheme.getForm());
+				continue;
+			}
+			if (grapheme.isActive() && owningSegment.isActive()) {
 				currentGraphemeOrNaturalClass = new GraphemeOrNaturalClass(grapheme.getForm(),
 						grapheme.getDescription(), true, grapheme.getID(), true);
 				graphemesOrNaturalClasses.add(currentGraphemeOrNaturalClass);
