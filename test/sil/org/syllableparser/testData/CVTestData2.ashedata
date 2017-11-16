@@ -17,7 +17,7 @@
                 <NCName>V</NCName>
                 <SNCRepresentation>a, e, i, o, u</SNCRepresentation>
             </cvNaturalClass>
-            <cvNaturalClass snc="a72f9654-e5ec-45dc-80ba-204abf0ef872 373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="false" id="f67aab03-a0d6-452f-afa3-b808d1d0e185">
+            <cvNaturalClass snc="a72f9654-e5ec-45dc-80ba-204abf0ef872 373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="true" id="f67aab03-a0d6-452f-afa3-b808d1d0e185">
                 <description>Glottal consonant</description>
                 <NCName>Gl</NCName>
                 <SNCRepresentation>', h</SNCRepresentation>

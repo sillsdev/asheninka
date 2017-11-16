@@ -129,7 +129,7 @@ public class CVApproachLanguageComparerTest {
 	protected void compareSegments(CVApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
 		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
-		assertEquals("number of different segments", 17, diffs.size());
+		assertEquals("number of different segments", 18, diffs.size());
 		List<DifferentSegment> listOfDiffs = new ArrayList<DifferentSegment>();
 		listOfDiffs.addAll(diffs);
 		DifferentSegment diffSeg = listOfDiffs.get(1);
@@ -151,7 +151,7 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("number of graphemes in segment2", 1, seg2.getGraphs().size());
 		assertEquals("first's 2's graphemes are '\''", "'",
 				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
-		diffSeg = listOfDiffs.get(16);
+		diffSeg = listOfDiffs.get(17);
 		seg1 = ((Segment) diffSeg.getObjectFrom1());
 		assertEquals("eleventh's 1 is a /ɲ/", "ɲ", seg1.getSegment());
 		assertNull("eleventh's 2 is null", diffSeg.getObjectFrom2());
@@ -163,7 +163,7 @@ public class CVApproachLanguageComparerTest {
 	protected void compareGraphemes(CVApproachLanguageComparer comparer) {
 		comparer.compareGraphemes();;
 		SortedSet<DifferentGrapheme> diffs = comparer.getGraphemesWhichDiffer();
-		assertEquals("number of different graphemes", 31, diffs.size());
+		assertEquals("number of different graphemes", 33, diffs.size());
 		List<DifferentGrapheme> listOfDiffs = new ArrayList<DifferentGrapheme>();
 		listOfDiffs.addAll(diffs);
 		DifferentGrapheme diffGrapheme = listOfDiffs.get(0);
@@ -215,10 +215,10 @@ public class CVApproachLanguageComparerTest {
 	protected void compareNaturalClasses(CVApproachLanguageComparer comparer) {
 		comparer.compareNaturalClasses();
 		SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
-		assertEquals("number of different natural classes", 7, diffs.size());
+		assertEquals("number of different natural classes", 6, diffs.size());
 		List<DifferentCVNaturalClass> listOfDiffs = new ArrayList<DifferentCVNaturalClass>();
 		listOfDiffs.addAll(diffs);
-		DifferentCVNaturalClass diffNaturalClass = listOfDiffs.get(1);
+		DifferentCVNaturalClass diffNaturalClass = listOfDiffs.get(0);
 		assertEquals("second's 1 is [C]", "C",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getNCName());
 		assertEquals("second's 2 is [C]", "C",
@@ -231,13 +231,13 @@ public class CVApproachLanguageComparerTest {
 				"second's 2's reps are '', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z'",
 				"', b, c, ch, d, f, g, h, j, k, kw, ky, l, m, n, ñ, p, q, r, s, sh, t, ts, v, w, x, y, z",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getSNCRepresentation());
-		diffNaturalClass = listOfDiffs.get(2);
+		diffNaturalClass = listOfDiffs.get(1);
 		assertNull("third's 1 is null", diffNaturalClass.getObjectFrom1());
 		assertEquals("third's 2 is [Gl]", "Gl",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getNCName());
 		assertEquals("third's 2's reps are '\', h'", "', h",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom2()).getSNCRepresentation());
-		diffNaturalClass = listOfDiffs.get(3);
+		diffNaturalClass = listOfDiffs.get(2);
 		assertEquals("fourth's 1 is [N]", "N",
 				((CVNaturalClass) diffNaturalClass.getObjectFrom1()).getNCName());
 		assertNull("fourth's 2 is null", diffNaturalClass.getObjectFrom2());
@@ -248,7 +248,7 @@ public class CVApproachLanguageComparerTest {
 	protected void compareSyllablePatterns(CVApproachLanguageComparer comparer) {
 		comparer.compareSyllablePatterns();
 		SortedSet<DifferentCVSyllablePattern> diffs = comparer.getSyllablePatternsWhichDiffer();
-		assertEquals("number of different syllable patterns", 10, diffs.size());
+		assertEquals("number of different syllable patterns", 8, diffs.size());
 		List<DifferentCVSyllablePattern> listOfDiffs = new ArrayList<DifferentCVSyllablePattern>();
 		listOfDiffs.addAll(diffs);
 		DifferentCVSyllablePattern diffSyllablePattern = listOfDiffs.get(3);
@@ -260,7 +260,7 @@ public class CVApproachLanguageComparerTest {
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getNCSRepresentation());
 		assertEquals("fourth's 2's natural classes are 'C, v'", "C, v",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getNCSRepresentation());
-		diffSyllablePattern = listOfDiffs.get(7);
+		diffSyllablePattern = listOfDiffs.get(6);
 		assertNull("eighth's 1 is null", diffSyllablePattern.getObjectFrom1());
 		assertEquals("eighth's 2 is 'V'", "V",
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom2()).getSPName());

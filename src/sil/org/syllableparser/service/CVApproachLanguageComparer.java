@@ -140,8 +140,8 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void compareSegmentInventory() {
-		ObservableList<Segment> segments1 = cva1.getLanguageProject().getSegmentInventory();
-		ObservableList<Segment> segments2 = cva2.getLanguageProject().getSegmentInventory();
+		List<Segment> segments1 = cva1.getLanguageProject().getActiveSegmentsInInventory();
+		List<Segment> segments2 = cva2.getLanguageProject().getActiveSegmentsInInventory();
 
 		Set<Segment> difference1from2 = new HashSet<Segment>(segments1);
 		// use set difference (removeAll)
@@ -170,8 +170,8 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void compareGraphemes() {
-		ObservableList<Grapheme> graphemes1 = cva1.getLanguageProject().getGraphemes();
-		ObservableList<Grapheme> graphemes2 = cva2.getLanguageProject().getGraphemes();
+		List<Grapheme> graphemes1 = cva1.getLanguageProject().getActiveGraphemes();
+		List<Grapheme> graphemes2 = cva2.getLanguageProject().getActiveGraphemes();
 
 		Set<Grapheme> difference1from2 = new HashSet<Grapheme>(graphemes1);
 		// use set difference (removeAll)
@@ -203,8 +203,8 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void compareEnvironments() {
-		ObservableList<Environment> environment1 = cva1.getLanguageProject().getEnvironments();
-		ObservableList<Environment> environment2 = cva2.getLanguageProject().getEnvironments();
+		List<Environment> environment1 = cva1.getLanguageProject().getActiveAndValidEnvironments();
+		List<Environment> environment2 = cva2.getLanguageProject().getActiveAndValidEnvironments();
 
 		Set<Environment> difference1from2 = new HashSet<Environment>(environment1);
 		// use set difference (removeAll)
@@ -233,8 +233,8 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void compareNaturalClasses() {
-		ObservableList<CVNaturalClass> naturalClasses1 = cva1.getCVNaturalClasses();
-		ObservableList<CVNaturalClass> naturalClasses2 = cva2.getCVNaturalClasses();
+		List<CVNaturalClass> naturalClasses1 = cva1.getActiveCVNaturalClasses();
+		List<CVNaturalClass> naturalClasses2 = cva2.getActiveCVNaturalClasses();
 
 		Set<CVNaturalClass> difference1from2 = new HashSet<CVNaturalClass>(naturalClasses1);
 		// use set difference (removeAll)
@@ -266,8 +266,8 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void compareGraphemeNaturalClasses() {
-		ObservableList<GraphemeNaturalClass> gncs1 = cva1.getLanguageProject().getGraphemeNaturalClasses();
-		ObservableList<GraphemeNaturalClass> gncs2 = cva2.getLanguageProject().getGraphemeNaturalClasses();
+		List<GraphemeNaturalClass> gncs1 = cva1.getLanguageProject().getActiveGraphemeNaturalClasses();
+		List<GraphemeNaturalClass> gncs2 = cva2.getLanguageProject().getActiveGraphemeNaturalClasses();
 
 		Set<GraphemeNaturalClass> difference1from2 = new HashSet<GraphemeNaturalClass>(gncs1);
 		// use set difference (removeAll)
@@ -296,8 +296,8 @@ public class CVApproachLanguageComparer {
 	}
 
 	public void compareSyllablePatterns() {
-		ObservableList<CVSyllablePattern> syllablePatterns1 = cva1.getCVSyllablePatterns();
-		ObservableList<CVSyllablePattern> syllablePatterns2 = cva2.getCVSyllablePatterns();
+		List<CVSyllablePattern> syllablePatterns1 = cva1.getActiveCVSyllablePatterns();
+		List<CVSyllablePattern> syllablePatterns2 = cva2.getActiveCVSyllablePatterns();
 
 		Set<CVSyllablePattern> difference1from2 = new HashSet<CVSyllablePattern>(syllablePatterns1);
 		// use set difference (removeAll)
