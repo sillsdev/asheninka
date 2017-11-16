@@ -177,12 +177,13 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 					Grapheme selectedGrapheme = (Grapheme) graphemesTable.getItems().get(
 							selectedIndex);
 					// show environments chooser for this grapheme
-//					Alert alert = new Alert(AlertType.INFORMATION);
-//					alert.setTitle("Information Dialog");
-//					alert.setHeaderText("Look, an Information Dialog");
-//					alert.setContentText("Selected grapheme: " + selectedGrapheme.getForm());
-//
-//					alert.showAndWait();
+					// Alert alert = new Alert(AlertType.INFORMATION);
+					// alert.setTitle("Information Dialog");
+					// alert.setHeaderText("Look, an Information Dialog");
+					// alert.setContentText("Selected grapheme: " +
+					// selectedGrapheme.getForm());
+					//
+					// alert.showAndWait();
 					showEnvironmentsChooser(selectedGrapheme);
 				}
 			});
@@ -253,8 +254,10 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		// Grapheme table
 		graphemeColumn.setCellValueFactory(cellData -> cellData.getValue().formProperty());
-		environmentsColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.envsRepresentationProperty());
+		environmentsColumn.setCellValueFactory(cellData -> {
+			cellData.getValue().recalulateEnvsRepresentation();
+			return cellData.getValue().envsRepresentationProperty();
+		});
 		// graphemeDescriptionColumn
 		// .setCellValueFactory(cellData ->
 		// cellData.getValue().descriptionProperty());
@@ -405,6 +408,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		temp = grapheme.getEnvsRepresentation();
 		grapheme.setEnvsRepresentation("");
 		grapheme.setEnvsRepresentation(temp);
+		grapheme.recalulateEnvsRepresentation();
 	}
 
 	/**
@@ -558,10 +562,12 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		}
 
 	}
-	
+
 	/**
 	 * Opens a dialog to show the chooser.
-	 * @param grapheme TODO
+	 *
+	 * @param grapheme
+	 *            TODO
 	 */
 	public void showEnvironmentsChooser(Grapheme grapheme) {
 		try {
@@ -581,7 +587,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			e.printStackTrace();
 		}
 	}
-
 
 	// code taken from
 	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html

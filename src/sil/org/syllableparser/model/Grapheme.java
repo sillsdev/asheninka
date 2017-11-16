@@ -7,6 +7,7 @@
 package sil.org.syllableparser.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -128,6 +129,13 @@ public class Grapheme extends SylParserObject {
 
 	public void setEnvsRepresentation(String envsRepresentation) {
 		this.envsRepresentation.set(envsRepresentation);
+	}
+
+	public void recalulateEnvsRepresentation() {
+		String sEnvs = envs.stream().filter(env -> env.isActiveCheckBox())
+				.map(Environment::getEnvironmentRepresentation).collect(Collectors.joining("; "));
+		setEnvsRepresentation(sEnvs);
+		envsRepresentationProperty().setValue(sEnvs);
 	}
 
 	public Segment getOwningSegment() {
