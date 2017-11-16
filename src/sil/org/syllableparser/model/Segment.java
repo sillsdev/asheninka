@@ -198,7 +198,7 @@ public class Segment extends SylParserObject {
 		if (!getSegment().equals(seg.getSegment())) {
 			result = false;
 		} else {
-			if (!getGraphs().equals(seg.getGraphs())) {
+			if (!getActiveGraphs().equals(seg.getActiveGraphs())) {
 				result = false;
 			}
 		}

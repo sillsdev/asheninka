@@ -138,7 +138,9 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("second's 1 is an /a/", "a", seg1.getSegment());
 		assertEquals("second's 2 is an /a/", "a", seg2.getSegment());
 		assertEquals("number of graphemes in segment1", 2, seg1.getGraphs().size());
-		assertEquals("number of graphemes in segment2", 4, seg2.getGraphs().size());
+		assertEquals("number of active graphemes in segment1", 2, seg1.getActiveGraphs().size());
+		assertEquals("number of graphemes in segment2", 5, seg2.getGraphs().size());
+		assertEquals("number of graphemes in segment2", 4, seg2.getActiveGraphs().size());
 		Grapheme graph1 = seg1.getGraphs().get(0);
 		assertEquals("second's 1's graphemes are 'a A'", "a A",
 				((Segment) diffSeg.getObjectFrom1()).getGraphemes());

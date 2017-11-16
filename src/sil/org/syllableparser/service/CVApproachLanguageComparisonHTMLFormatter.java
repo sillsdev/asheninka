@@ -162,7 +162,7 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		if (seg == null) {
 			sb.append("&#xa0;");
 		} else {
-			ObservableList<Grapheme> graphemes = seg.getGraphs();
+			List<Grapheme> graphemes = seg.getActiveGraphs();
 			int iNumGraphemes = graphemes.size();
 			if (iNumGraphemes > 0) {
 				sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
@@ -227,7 +227,10 @@ public class CVApproachLanguageComparisonHTMLFormatter {
 		if (gnc == null) {
 			sb.append("&#xa0;");
 		} else {
+			sb.append(gnc.getNCName());
+			sb.append(" (");
 			sb.append(gnc.getGNCRepresentation());
+			sb.append(")");
 		}
 	}
 
