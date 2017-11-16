@@ -184,9 +184,7 @@ public class EnvironmentChooserController extends CheckBoxColumnController imple
 				grapheme.getEnvs().add(languageProject.getEnvironments().get(i));
 			}
 		}
-		String sEnvs = environments.stream().filter(env -> env.isActiveCheckBox())
-				.map(Environment::getEnvironmentRepresentation).collect(Collectors.joining("; "));
-		grapheme.setEnvsRepresentation(sEnvs);
+		grapheme.recalulateEnvsRepresentation();
 
 		okClicked = true;
 		handleCancel();
