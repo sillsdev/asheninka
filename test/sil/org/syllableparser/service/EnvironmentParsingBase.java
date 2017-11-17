@@ -17,6 +17,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import sil.org.environmentparser.EnvironmentLexer;
 import sil.org.environmentparser.EnvironmentParser;
 import sil.org.syllableparser.model.Environment;
+import sil.org.syllableparser.model.GraphemeNaturalClass;
 
 /**
  * @author Andy Black
@@ -33,7 +34,16 @@ public class EnvironmentParsingBase {
 	List<String> classesMasterList = Arrays.asList("V", "Vowels", "C", "+son", "C", "+lab, +vd",
 			"+ant, -cor, -vd");
 
+	protected List<GraphemeNaturalClass> classes;
 	
+	public List<GraphemeNaturalClass> getClasses() {
+		return classes;
+	}
+
+	public void setClasses(List<GraphemeNaturalClass> classes) {
+		this.classes = classes;
+	}
+
 	protected EnvironmentParser parseEnvironmentString(String sInput) {
 		CharStream input = CharStreams.fromString(sInput);
 		EnvironmentLexer lexer = new EnvironmentLexer(input);
@@ -48,6 +58,7 @@ public class EnvironmentParsingBase {
 		validator.setCheckForReduplication(true);
 		Environment env = new Environment();
 		validator.setEnvironment(env);
+		validator.setClasses(classes);
 		walker.walk(validator, tree); // initiate walk of tree with listener
 		parser.addParseListener(validator);
 		return parser;

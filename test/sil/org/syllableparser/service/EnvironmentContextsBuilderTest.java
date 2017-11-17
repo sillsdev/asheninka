@@ -46,7 +46,6 @@ public class EnvironmentContextsBuilderTest extends EnvironmentParsingBase {
 
 	CVApproach cva;
 	List<Grapheme> activeGraphemes;
-	List<GraphemeNaturalClass> classes;
 
 	@Before
 	public void setUp() throws Exception {

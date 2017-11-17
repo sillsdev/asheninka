@@ -10,15 +10,19 @@ package sil.org.syllableparser.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javafx.collections.ObservableList;
+
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import sil.org.environmentparser.*;
 import sil.org.syllableparser.model.Environment;
 import sil.org.syllableparser.model.EnvironmentContextGraphemeOrNaturalClass;
+import sil.org.syllableparser.model.GraphemeNaturalClass;
 
 public class AsheninkaGraphemeAndClassListener extends CheckGraphemeAndClassListener {
 
 	Environment environment;
+	List<GraphemeNaturalClass> classes;
 	sil.org.syllableparser.model.EnvironmentContext leftContext;
 	sil.org.syllableparser.model.EnvironmentContext rightContext;
 	sil.org.syllableparser.model.EnvironmentContext currentContext;
@@ -35,6 +39,14 @@ public class AsheninkaGraphemeAndClassListener extends CheckGraphemeAndClassList
 
 	public void setEnvironment(Environment environment) {
 		this.environment = environment;
+	}
+
+	public List<GraphemeNaturalClass> getClasses() {
+		return classes;
+	}
+
+	public void setClasses(List<GraphemeNaturalClass> classes) {
+		this.classes = classes;
 	}
 
 	@Override
@@ -103,6 +115,10 @@ public class AsheninkaGraphemeAndClassListener extends CheckGraphemeAndClassList
 					.collect(Collectors.joining(" "));
 			EnvironmentContextGraphemeOrNaturalClass gnc = new EnvironmentContextGraphemeOrNaturalClass(
 					sClass, false);
+			List<GraphemeNaturalClass> matchingClasses = classes.stream().filter(nc -> nc.getNCName().equals(sClass)).collect(Collectors.toList());
+			if (matchingClasses.size() > 0) {
+				gnc.setGraphemeNaturalClass(matchingClasses.get(0));
+			}
 			currentContext.getEnvContext().add(gnc);
 			if (!classesMasterList.contains(sClass)) {
 				badClasses.add(sClass);

@@ -8,16 +8,20 @@ package sil.org.syllableparser.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.Environment;
 import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,7 +47,8 @@ import javafx.stage.Stage;
  *
  */
 
-public class GraphemeNaturalClassesController extends SylParserBaseController implements Initializable {
+public class GraphemeNaturalClassesController extends SylParserBaseController implements
+		Initializable {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<GraphemeNaturalClass, String> {
 		private Text text;
@@ -71,7 +76,8 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<GraphemeNaturalClass, String> {
+	protected final class VernacularWrappingTableCell extends
+			TableCell<GraphemeNaturalClass, String> {
 		private Text text;
 
 		@Override
@@ -127,6 +133,8 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 
 	private GraphemeNaturalClass currentNaturalClass;
 
+	private List<Environment> environmentsUsingThisClass;
+
 	public GraphemeNaturalClassesController() {
 
 	}
@@ -173,6 +181,9 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setNCName(nameField.getText());
+				for (Environment env : environmentsUsingThisClass) {
+					env.rebuildRepresentationFromContext();
+				}
 			}
 			if (languageProject != null) {
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
@@ -253,6 +264,11 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	 */
 	private void showGraphemeNaturalClassDetails(GraphemeNaturalClass naturalClass) {
 		currentNaturalClass = naturalClass;
+		if (languageProject != null) {
+			environmentsUsingThisClass = languageProject.getActiveAndValidEnvironments().stream()
+					.filter(env -> env.usesGraphemeNaturalClass(currentNaturalClass))
+					.collect(Collectors.toList());
+		}
 		if (naturalClass != null) {
 			// Fill the text fields with info from the object.
 			nameField.setText(naturalClass.getNCName());
@@ -272,7 +288,8 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ graphemeNaturalClassTable.getItems().size() + " ");
 			// remember the selection
-			mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(iCurrentIndex);
+			mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(
+					iCurrentIndex);
 		}
 
 	}
@@ -331,7 +348,8 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		languageProject = cvApproach.getLanguageProject();
 
 		// Add observable list data to the table
-		graphemeNaturalClassTable.setItems(cvApproachData.getLanguageProject().getGraphemeNaturalClasses());
+		graphemeNaturalClassTable.setItems(cvApproachData.getLanguageProject()
+				.getGraphemeNaturalClasses());
 		int max = graphemeNaturalClassTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -374,7 +392,8 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	@Override
 	void handleRemoveItem() {
 		// need to deal with all pointers to this natural class
-		int i = cvApproach.getLanguageProject().getGraphemeNaturalClasses().indexOf(currentNaturalClass);
+		int i = cvApproach.getLanguageProject().getGraphemeNaturalClasses()
+				.indexOf(currentNaturalClass);
 		currentNaturalClass = null;
 		if (i >= 0) {
 			cvApproach.getLanguageProject().getGraphemeNaturalClasses().remove(i);

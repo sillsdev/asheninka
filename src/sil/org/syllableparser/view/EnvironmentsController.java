@@ -12,9 +12,12 @@ import static org.junit.Assert.assertNotNull;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.CharStream;
@@ -41,6 +44,11 @@ import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.Environment;
 import sil.org.syllableparser.service.AsheninkaGraphemeAndClassListener;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,12 +56,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
@@ -144,6 +154,8 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	private CheckBox activeCheckBox;
 	@FXML
 	private Label environmentErrorMessage;
+	@FXML
+	private ComboBox<String> gncChoicesComboBox;
 
 	private Environment currentEnvironment;
 
@@ -221,6 +233,33 @@ public class EnvironmentsController extends SylParserBaseController implements I
 				representationField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
+//		representationField.focusedProperty()
+//				.addListener(
+//						(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+//								Boolean newValue) -> {
+//							if (newValue) {
+//								System.out.println("Rep Focus Gained");
+//							} else {
+//								System.out.println("Rep Focus Lost");
+//							}
+//						});
+		representationField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				switch (event.getCode()) {
+				case CLOSE_BRACKET:
+					gncChoicesComboBox.setVisible(false);
+					gncChoicesComboBox.requestFocus();
+					break;
+				case OPEN_BRACKET:
+					gncChoicesComboBox.setVisible(true);
+					representationField.requestFocus();
+					break;
+				default:
+					break;
+				}
+			}
+		});
 
 		activeCheckBox.setOnAction((event) -> {
 			if (currentEnvironment != null) {
@@ -229,6 +268,30 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			}
 			displayFieldsPerActiveSetting(currentEnvironment);
 		});
+
+		gncChoicesComboBox.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<String>() {
+					@Override
+					public void changed(ObservableValue<? extends String> selected,
+							String oldValue, String newValue) {
+						if (newValue != null) {
+							representationField.setText(representationField.getText() + newValue);
+						}
+					}
+				});
+		String sChooseClass = resources.getString("label.chooseclass");
+		gncChoicesComboBox.setPromptText(sChooseClass);
+
+//		gncChoicesComboBox.focusedProperty()
+//				.addListener(
+//						(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+//								Boolean newValue) -> {
+//							if (newValue) {
+//								System.out.println("Combo Focus Gained");
+//							} else {
+//								System.out.println("Combo Focus Lost");
+//							}
+//						});
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -271,6 +334,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 				.collect(Collectors.toList());
 		AsheninkaGraphemeAndClassListener validator = new AsheninkaGraphemeAndClassListener(parser,
 				graphemes, graphemeNaturalClasses);
+		validator.setClasses(languageProject.getActiveGraphemeNaturalClasses());
 		validator.setEnvironment(currentEnvironment);
 		validator.setCheckForReduplication(false);
 		walker.walk(validator, tree); // initiate walk of tree with listener
@@ -284,7 +348,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			environmentErrorMessage.setText(sMessage);
 			return false;
 		}
-		Environment env =  validator.getEnvironment();
+		Environment env = validator.getEnvironment();
 		currentEnvironment.setLeftContext(env.getLeftContext());
 		currentEnvironment.setRightContext(env.getRightContext());
 		return true;
@@ -433,6 +497,11 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			descriptionField.setText(env.getDescription());
 			representationField.setText(env.getEnvironmentRepresentation());
 			activeCheckBox.setSelected(env.isActive());
+			List<String> choices = languageProject.getActiveGraphemeNaturalClasses().stream()
+					.map(GraphemeNaturalClass::getNCName).collect(Collectors.toList());
+			ObservableList<String> choices2 = FXCollections.observableArrayList(choices);
+			gncChoicesComboBox.setItems(choices2);
+			gncChoicesComboBox.setVisible(false);
 		} else {
 			// Environment is null, remove all the text.
 			nameField.setText("");

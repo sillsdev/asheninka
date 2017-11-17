@@ -1,5 +1,6 @@
 package sil.org.syllableparser.model;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,14 @@ public class Environment extends SylParserObject {
 	private EnvironmentContext rightContext;
 
 	private boolean valid = false;
+	private final String ksSlash = "/ ";
+	private final String ksBar = "_";
+	private final String ksClassOpen = "[";
+	private final String ksClassClose = "]";
+	private final String ksOptionalOpen = "(";
+	private final String ksOptionalClose = ")";
+	private final String ksWordBoundary = "#";
+	private final String ksSpace = " ";
 
 	public Environment() {
 		super();
@@ -89,7 +98,7 @@ public class Environment extends SylParserObject {
 		return leftContext;
 	}
 
-	//@XmlTransient
+	// @XmlTransient
 	public void setLeftContext(EnvironmentContext leftContext) {
 		this.leftContext = leftContext;
 	}
@@ -98,7 +107,7 @@ public class Environment extends SylParserObject {
 		return rightContext;
 	}
 
-	//@XmlTransient
+	// @XmlTransient
 	public void setRightContext(EnvironmentContext rightContext) {
 		this.rightContext = rightContext;
 	}
@@ -263,6 +272,73 @@ public class Environment extends SylParserObject {
 			}
 		}
 		return fMatches;
+	}
+
+	public void rebuildRepresentationFromContext() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(ksSlash);
+		rebuildLeftContext(sb);
+		sb.append(ksBar);
+		rebuildRightContext(sb);
+		setEnvironmentRepresentation(sb.toString());
+	}
+
+	private void rebuildLeftContext(StringBuilder sb) {
+		List<EnvironmentContextGraphemeOrNaturalClass> reversedLeftContextItems = leftContext
+				.getEnvContext();
+		// Collections.reverse(reversedLeftContextItems);
+		if (leftContext.isWordBoundary()) {
+			sb.append(ksWordBoundary);
+			if (reversedLeftContextItems.size() == 0) {
+				sb.append(ksSpace);
+			}
+		}
+		for (EnvironmentContextGraphemeOrNaturalClass ecgnc : reversedLeftContextItems) {
+			rebuildGraphemeOrClass(sb, ecgnc);
+			sb.append(" ");
+		}
+	}
+
+	private void rebuildGraphemeOrClass(StringBuilder sb,
+			EnvironmentContextGraphemeOrNaturalClass ecgnc) {
+		if (ecgnc.isOptional()) {
+			sb.append(ksOptionalOpen);
+		}
+		if (ecgnc.isGrapheme()) {
+			sb.append(ecgnc.getGraphemeString());
+		} else {
+			sb.append(ksClassOpen);
+			sb.append(ecgnc.getGraphemeNaturalClass() != null ? ecgnc.getGraphemeNaturalClass()
+					.getNCName() : ecgnc.getGraphemeString());
+			sb.append(ksClassClose);
+		}
+		if (ecgnc.isOptional()) {
+			sb.append(ksOptionalClose);
+		}
+	}
+
+	private void rebuildRightContext(StringBuilder sb) {
+		for (EnvironmentContextGraphemeOrNaturalClass ecgnc : rightContext.getEnvContext()) {
+			sb.append(" ");
+			rebuildGraphemeOrClass(sb, ecgnc);
+		}
+		if (rightContext.isWordBoundary()) {
+			if (rightContext.getEnvContext().size() == 0) {
+				sb.append(ksSpace);
+			}
+			sb.append(ksWordBoundary);
+		}
+	}
+
+	public boolean usesGraphemeNaturalClass(GraphemeNaturalClass gnc) {
+		boolean leftMatches = leftContext.envContext.stream().anyMatch(
+				ecgnc -> ecgnc.getGraphemeNaturalClass().equals(gnc));
+		if (leftMatches) {
+			return true;
+		}
+		boolean rightMatches = rightContext.envContext.stream().anyMatch(
+				ecgnc -> ecgnc.getGraphemeNaturalClass().equals(gnc));
+		return rightMatches;
 	}
 
 	@Override

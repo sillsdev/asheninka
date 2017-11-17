@@ -10,7 +10,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +17,6 @@ import org.junit.Test;
 import sil.org.environmentparser.EnvironmentParser;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
-import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.service.AsheninkaGraphemeAndClassListener;
 
 /**
@@ -27,14 +25,14 @@ import sil.org.syllableparser.service.AsheninkaGraphemeAndClassListener;
  */
 public class EnvironmentTest extends sil.org.syllableparser.service.EnvironmentParsingBase {
 
-	List<GraphemeNaturalClass> classes;
+	LanguageProject languageProject;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		LanguageProject languageProject = new LanguageProject();
+		languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
@@ -410,5 +408,61 @@ public class EnvironmentTest extends sil.org.syllableparser.service.EnvironmentP
 		assertNotNull(listener);
 		Environment env = listener.getEnvironment();
 		return env;
+	}
+
+	@Test
+	public void rebuildRepresentationFromContextTest() {
+		// just word boundaries
+		checkRebuildRepresentationFromContext("/ # _");
+		checkRebuildRepresentationFromContext("/ _ #");
+		checkRebuildRepresentationFromContext("/ # _ #");
+
+		// graphemes
+		checkRebuildRepresentationFromContext("/ _ a");
+		checkRebuildRepresentationFromContext("/ a _ a");
+		checkRebuildRepresentationFromContext("/ b a _");
+		checkRebuildRepresentationFromContext("/ _ b a");
+		checkRebuildRepresentationFromContext("/ b a _ b a");
+		checkRebuildRepresentationFromContext("/ ba _");
+		checkRebuildRepresentationFromContext("/ _ ba");
+		checkRebuildRepresentationFromContext("/ ba _ ba");
+
+		// optional graphemes
+		checkRebuildRepresentationFromContext("/ (a) _");
+		checkRebuildRepresentationFromContext("/ _ (a)");
+		checkRebuildRepresentationFromContext("/ (a) _ a");
+		checkRebuildRepresentationFromContext("/ a _ (a)");
+		checkRebuildRepresentationFromContext("/ (b) a _");
+		checkRebuildRepresentationFromContext("/ _ (b) a");
+		checkRebuildRepresentationFromContext("/ (b) a _ (b) a");
+		checkRebuildRepresentationFromContext("/ b (a) _");
+		checkRebuildRepresentationFromContext("/ _ b (a)");
+		checkRebuildRepresentationFromContext("/ b (a) _ b (a)");
+
+		// natural classes
+		checkRebuildRepresentationFromContext("/ [V] _");
+		checkRebuildRepresentationFromContext("/ _ [V]");
+		checkRebuildRepresentationFromContext("/ [V] _ [V]");
+		checkRebuildRepresentationFromContext("/ [uV] _");
+
+		// uV has u as well as all V
+		checkRebuildRepresentationFromContext("/ _ [uV]");
+		checkRebuildRepresentationFromContext("/ [uV] _ [uV]");
+
+		// optional natural classes
+		checkRebuildRepresentationFromContext("/ b ([V]) _");
+		checkRebuildRepresentationFromContext("/ _ ([V]) b");
+		checkRebuildRepresentationFromContext("/ b ([V]) _ [V]");
+		checkRebuildRepresentationFromContext("/ [V] _ ([V]) b");
+		checkRebuildRepresentationFromContext("/ b ([V]) _ ([V]) b");
+
+		// combinations
+		checkRebuildRepresentationFromContext("/ #b ([V]) _ ([V]) b#");
+	}
+
+	private void checkRebuildRepresentationFromContext(String sEnv) {
+		Environment env = createEnvironmentFromRepresentation(sEnv);
+		env.rebuildRepresentationFromContext();
+		assertEquals(sEnv, env.getEnvironmentRepresentation());
 	}
 }
