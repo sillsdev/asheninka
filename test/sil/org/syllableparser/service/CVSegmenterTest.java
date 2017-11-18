@@ -23,6 +23,8 @@ import org.junit.Test;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
+import sil.org.syllableparser.model.Environment;
+import sil.org.syllableparser.model.EnvironmentContext;
 import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
@@ -38,14 +40,14 @@ public class CVSegmenterTest {
 	ObservableList<Segment> segmentInventory;
 	CVSegmenter segmenter;
 	List<Grapheme> activeGraphemes;
-
+	LanguageProject languageProject;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 
-		LanguageProject languageProject = new LanguageProject();
+		languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
@@ -88,6 +90,24 @@ public class CVSegmenterTest {
 		checkSegmentation("aqba", "Expect graphemes to be /a/, missing", "a", "a", 1, false, 1);
 		checkSegmentation("shomu", "Expect sh environment to fail: it is not before /i/", "s", "s",
 				1, false, 1);
+	}
+
+	@Test
+	public void wordSegmentingWithEnvironmentsTest() {
+		languageProject = new LanguageProject();
+		Locale locale = new Locale("en");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
+		File file = new File(Constants.UNIT_TEST_DATA_FILE_ENVIRONMENTS);
+		xmlBackEndProvider.loadLanguageDataFromFile(file);
+		cva = languageProject.getCVApproach();
+		activeGraphemes = languageProject.getActiveGraphemes();
+		segmenter = new CVSegmenter(activeGraphemes,
+				languageProject.getActiveGraphemeNaturalClasses());
+
+		checkSegmentation("tlaqa", "Expect graphemes to be /tl/, /a/, qk/, and /a/",
+				"tl, a, k, a", "tl, a, q, a", 4, true, 0);
+		checkSegmentation("tliqa", "Expect q environment to fail: it is not after /tla/", "tl, i", "tl, i",
+				2, false, 3);
 	}
 
 	protected void checkSegmentation(String word, String comment, String expectedSegments,

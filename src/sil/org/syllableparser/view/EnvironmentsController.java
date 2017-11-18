@@ -158,6 +158,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	private ComboBox<String> gncChoicesComboBox;
 
 	private Environment currentEnvironment;
+	private int iRepresentationCaretPosition;
 
 	public EnvironmentsController() {
 
@@ -233,27 +234,43 @@ public class EnvironmentsController extends SylParserBaseController implements I
 				representationField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-//		representationField.focusedProperty()
-//				.addListener(
-//						(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-//								Boolean newValue) -> {
-//							if (newValue) {
-//								System.out.println("Rep Focus Gained");
-//							} else {
-//								System.out.println("Rep Focus Lost");
-//							}
-//						});
+		representationField.focusedProperty()
+				.addListener(
+						(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+								Boolean newValue) -> {
+							if (newValue) {
+								Platform.runLater(new Runnable() {
+									@Override
+									public void run() {
+										representationField
+												.positionCaret(iRepresentationCaretPosition);
+									}
+								});
+							}
+						});
 		representationField.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
 				case CLOSE_BRACKET:
-					gncChoicesComboBox.setVisible(false);
-					gncChoicesComboBox.requestFocus();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							gncChoicesComboBox.setVisible(false);
+							representationField.requestFocus();
+						}
+					});
 					break;
 				case OPEN_BRACKET:
-					gncChoicesComboBox.setVisible(true);
-					representationField.requestFocus();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							iRepresentationCaretPosition = representationField.getCaretPosition();
+							gncChoicesComboBox.setVisible(true);
+							gncChoicesComboBox.getSelectionModel().clearSelection();
+							gncChoicesComboBox.requestFocus();
+						}
+					});
 					break;
 				default:
 					break;
@@ -275,23 +292,17 @@ public class EnvironmentsController extends SylParserBaseController implements I
 					public void changed(ObservableValue<? extends String> selected,
 							String oldValue, String newValue) {
 						if (newValue != null) {
-							representationField.setText(representationField.getText() + newValue);
+							String sLeftOfCaret = representationField.getText().substring(0,
+									iRepresentationCaretPosition);
+							String sRightOfCaret = representationField.getText().substring(
+									iRepresentationCaretPosition);
+							representationField.setText(sLeftOfCaret + newValue + sRightOfCaret);
+							iRepresentationCaretPosition += newValue.length();
 						}
 					}
 				});
 		String sChooseClass = resources.getString("label.chooseclass");
 		gncChoicesComboBox.setPromptText(sChooseClass);
-
-//		gncChoicesComboBox.focusedProperty()
-//				.addListener(
-//						(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-//								Boolean newValue) -> {
-//							if (newValue) {
-//								System.out.println("Combo Focus Gained");
-//							} else {
-//								System.out.println("Combo Focus Lost");
-//							}
-//						});
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {

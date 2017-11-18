@@ -154,10 +154,7 @@ public class Environment extends SylParserObject {
 				String sGrapheme = gnc.getGraphemeString();
 				if (sStringToMatch.endsWith(sGrapheme)) {
 					// have a matching grapheme, try next one to the left
-					int iLen = sGrapheme.length();
-					iLen = (iLen == sStringToMatch.length()) ? 0 : iLen;
-					fMatches = matchLeftContext(iItemToTest - 1, sStringToMatch.substring(0, iLen),
-							classes);
+					fMatches = tryNextOneToLeft(iItemToTest, sStringToMatch, classes, sGrapheme);
 				} else if (gnc.isOptional()) {
 					fMatches = matchLeftContext(iItemToTest - 1, sStringToMatch, classes);
 				}
@@ -173,6 +170,21 @@ public class Environment extends SylParserObject {
 		return fMatches;
 	}
 
+	private boolean tryNextOneToLeft(int iItemToTest, String sStringToMatch,
+			List<GraphemeNaturalClass> classes, String sGrapheme) {
+		boolean fMatches;
+		int iLen = sGrapheme.length();
+		int iRemainingLen = sStringToMatch.length() - iLen;
+		String sRemaining;
+		if (iRemainingLen <= 0) {
+			sRemaining = "";
+		} else {
+			sRemaining = sStringToMatch.substring(0, iRemainingLen);
+		}
+		fMatches = matchLeftContext(iItemToTest - 1, sRemaining, classes);
+		return fMatches;
+	}
+
 	private boolean matchClassLeftContext(int iItemToTest, String sStringToMatch,
 			List<GraphemeNaturalClass> classes, final String sClassName) {
 		boolean fMatches = false;
@@ -184,9 +196,10 @@ public class Environment extends SylParserObject {
 					String sGrapheme = ((Grapheme) spo).getForm();
 					if (sStringToMatch.endsWith(sGrapheme)) {
 						// have a matching grapheme, try next one to the left
-						int iLen = sGrapheme.length();
-						fMatches = matchLeftContext(iItemToTest - 1,
-								sStringToMatch.substring(0, iLen), classes);
+						fMatches = tryNextOneToLeft(iItemToTest, sStringToMatch, classes, sGrapheme);
+//						int iLen = sGrapheme.length();
+//						fMatches = matchLeftContext(iItemToTest - 1,
+//								sStringToMatch.substring(0, iLen), classes);
 						if (fMatches) {
 							break;
 						}
@@ -332,12 +345,12 @@ public class Environment extends SylParserObject {
 
 	public boolean usesGraphemeNaturalClass(GraphemeNaturalClass gnc) {
 		boolean leftMatches = leftContext.envContext.stream().anyMatch(
-				ecgnc -> ecgnc.getGraphemeNaturalClass().equals(gnc));
+				ecgnc -> ecgnc.getGraphemeNaturalClass()!= null && ecgnc.getGraphemeNaturalClass().equals(gnc));
 		if (leftMatches) {
 			return true;
 		}
 		boolean rightMatches = rightContext.envContext.stream().anyMatch(
-				ecgnc -> ecgnc.getGraphemeNaturalClass().equals(gnc));
+				ecgnc -> ecgnc.getGraphemeNaturalClass()!= null && ecgnc.getGraphemeNaturalClass().equals(gnc));
 		return rightMatches;
 	}
 
