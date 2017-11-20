@@ -64,6 +64,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
@@ -158,7 +159,15 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	private ComboBox<String> gncChoicesComboBox;
 
 	private Environment currentEnvironment;
-	private int iRepresentationCaretPosition;
+	private int iRepresentationCaretPosition = 6;
+	// fGncChoicesUsingMouse distinguishes between using the keyboard or the
+	// mouse
+	// while using the combo box.
+	private boolean fGncChoicesUsingMouse;
+	// fJustSwitchedFocusFromGncComboBoxToRepField when true will put cursor at
+	// the
+	// end of the class name in the representationField
+	private boolean fJustSwitchedFocusFromGncComboBoxToRepField = false;
 
 	public EnvironmentsController() {
 
@@ -234,6 +243,8 @@ public class EnvironmentsController extends SylParserBaseController implements I
 				representationField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
+		// Want to have the cursor appear in the given location when coming back
+		// from the combo box
 		representationField.focusedProperty()
 				.addListener(
 						(ObservableValue<? extends Boolean> observable, Boolean oldValue,
@@ -242,12 +253,18 @@ public class EnvironmentsController extends SylParserBaseController implements I
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
-										representationField
-												.positionCaret(iRepresentationCaretPosition);
+										if (fJustSwitchedFocusFromGncComboBoxToRepField) {
+											representationField
+													.positionCaret(iRepresentationCaretPosition);
+											fJustSwitchedFocusFromGncComboBoxToRepField = false;
+										}
+										gncChoicesComboBox.setVisible(false);
 									}
 								});
 							}
 						});
+		// Want to show the combo box chooser when the user presses the [ key
+		// and stop showing it when the user presses the ] key.
 		representationField.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -267,8 +284,13 @@ public class EnvironmentsController extends SylParserBaseController implements I
 						public void run() {
 							iRepresentationCaretPosition = representationField.getCaretPosition();
 							gncChoicesComboBox.setVisible(true);
+							// this does show the list, but the list remains
+							// showing and we don't want that:
+							// gncChoicesComboBox.show();
 							gncChoicesComboBox.getSelectionModel().clearSelection();
-							gncChoicesComboBox.requestFocus();
+							// No: forcing the combo box to have the focus is
+							// confusing when the user wants to just type:
+							// gncChoicesComboBox.requestFocus();
 						}
 					});
 					break;
@@ -286,19 +308,83 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			displayFieldsPerActiveSetting(currentEnvironment);
 		});
 
+		// When using the keyboard for the combo box, show the options with
+		// first down arrow and select the item when the Enter key is pressed.
+		// NB: for some reason, using setOnKeyPressed does not see the ENTER
+		// key. Presumably it is being used by a child node to do the select
+		// action.
+		gncChoicesComboBox.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				switch (event.getCode()) {
+				case ENTER:
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							String selectedValue = gncChoicesComboBox.getSelectionModel()
+									.getSelectedItem();
+//							System.out.println("ENTER: selectedValue=" + selectedValue);
+							if (selectedValue != null) {
+								fGncChoicesUsingMouse = true;
+								updateRepresentationFieldPerClassChoice(selectedValue);
+								fJustSwitchedFocusFromGncComboBoxToRepField = true;
+								representationField.requestFocus();
+								fGncChoicesUsingMouse = false;
+							}
+						}
+					});
+					break;
+				case DOWN:
+//					System.out.println("down arrow: using mouse = " + fGncChoicesUsingMouse);
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							if (!gncChoicesComboBox.isShowing()) {
+								gncChoicesComboBox.show();
+							}
+							fGncChoicesUsingMouse = false;
+						}
+					});
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		// User has used the mouse to click on the combo box
+		gncChoicesComboBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+//						System.out.println("Mouse clicked");
+						fGncChoicesUsingMouse = true;
+					}
+				});
+			}
+		});
 		gncChoicesComboBox.getSelectionModel().selectedItemProperty()
 				.addListener(new ChangeListener<String>() {
 					@Override
 					public void changed(ObservableValue<? extends String> selected,
-							String oldValue, String newValue) {
-						if (newValue != null) {
-							String sLeftOfCaret = representationField.getText().substring(0,
-									iRepresentationCaretPosition);
-							String sRightOfCaret = representationField.getText().substring(
-									iRepresentationCaretPosition);
-							representationField.setText(sLeftOfCaret + newValue + sRightOfCaret);
-							iRepresentationCaretPosition += newValue.length();
-						}
+							String oldValue, String selectedValue) {
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+//								System.out
+//										.println("SelectedItemProperty: fGncChoicesUsingMouse= "
+//												+ fGncChoicesUsingMouse + " selectedValue="
+//												+ selectedValue);
+//
+								if (fGncChoicesUsingMouse && selectedValue != null) {
+									updateRepresentationFieldPerClassChoice(selectedValue);
+									fGncChoicesUsingMouse = false;
+									fJustSwitchedFocusFromGncComboBoxToRepField = true;
+									representationField.requestFocus();
+								}
+							}
+						});
 					}
 				});
 		String sChooseClass = resources.getString("label.chooseclass");
@@ -314,6 +400,17 @@ public class EnvironmentsController extends SylParserBaseController implements I
 
 		nameField.requestFocus();
 
+	}
+
+	private void updateRepresentationFieldPerClassChoice(String selectedValue) {
+		if (selectedValue != null) {
+			String sLeftOfCaret = representationField.getText().substring(0,
+					iRepresentationCaretPosition);
+			String sRightOfCaret = representationField.getText().substring(
+					iRepresentationCaretPosition);
+			representationField.setText(sLeftOfCaret + selectedValue + sRightOfCaret);
+			iRepresentationCaretPosition += selectedValue.length();
+		}
 	}
 
 	private boolean parseEnvironmentRepresentation(String sRep) {
@@ -545,6 +642,8 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		iRepresentationCaretPosition = 6;
+		fGncChoicesUsingMouse = false;
 
 		// Add observable list data to the table
 		environmentTable.setItems(cvApproachData.getLanguageProject().getEnvironments());
