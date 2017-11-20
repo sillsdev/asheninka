@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->2 November 2017</date
+>20 November 2017</date
 ><version
 >0.6.0 Alpha</version
 ><contents
@@ -722,7 +722,7 @@ type="tField"
 >The <object
 type="tField"
 >Environment</object
-> field is where you key the environment. Any error message will appear below the Active check box a you type. (When you create a new environment, this field contains "/ _ " which causes an error message of <object
+> field is where you key the environment. Any error message will appear below the Active check box as you type. (When you create a new environment, this field contains "/ _ " which causes an error message of <object
 type="tErrorMessageText"
 >A class or a grapheme is missing; detected at or about position 6.</object
 > This is because the environment is not valid until it has at least one grapheme, grapheme natural class, or word boundary symbol.)</p
@@ -774,6 +774,25 @@ type="TT"
 >]</object
 ></li
 ></ol
+><pc
+>When you type a left square bracket, a drop-down box will appear which has the list of grapheme natural class names.  You can click on this drop-down box and then click on the name you want to use.<endnote
+id="nGraphemeClasDropDown"
+><p
+>You can also press the <object
+type="tKey"
+>Tab</object
+> key two times to get to the drop-down box.  Then use the <object
+type="tKey"
+>down-arrow</object
+> key to move to the one you want and press the <object
+type="tKey"
+>Enter</object
+> key.  Please note that currently if you click on the drop-down box with the mouse and then use the <object
+type="tKey"
+>down-arrow</object
+> key, it will choose the first item in the list.  I have yet to figure out how to avoid this poor behavior.</p
+></endnote
+></pc
 ></li
 ><li
 >Optional letters or grapheme natural classes are indicated by<ol
@@ -1409,7 +1428,7 @@ src="resources/CVTryAWordGraphemeEnvironmentFailure.png"
 >In this case, the grapheme <langData
 lang="lVernacular"
 >a̱</langData
-> has two environments: either before a vowel or word finally.  Neither succeeded.</p
+> has two environments: either before a vowel or word finally. Neither succeeded.</p
 ><p
 ><indexedItem
 term="iFailureCVNaturalClasser"
