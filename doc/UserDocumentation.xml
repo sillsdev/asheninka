@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->20 November 2017</date
+>21 November 2017</date
 ><version
 >0.6.0 Alpha</version
 ><contents
@@ -553,6 +553,9 @@ type="tField"
 >Description</object
 > field is for your benefit. Key whatever helps you (and anyone looking at your data) know what the segment is. For example, you could key its phonetic or phonological description.</p
 ><p
+><indexedItem
+term="iCVGraphemes"
+></indexedItem
 >In the <object
 type="tField"
 >Graphemes</object
@@ -679,6 +682,9 @@ id="sGraphemeNaturalClasses"
 ><secTitle
 >Grapheme natural classes</secTitle
 ><p
+><indexedItem
+term="iCVGraphemeNaturalClasses"
+></indexedItem
 >When your orthography is such that you need to condition some graphemes by one or more environments and you want to capture a generalization about which graphemes can occur around that grapheme via a natural class, then create one or more grapheme natural classes. Note that these are not the same as CV natural classes. The grapheme natural classes are based on the set of graphemes defined in all the segments. The CV natural classes, on the other hand, are defined based on the segments in the segment inventory. The first can be used to determine if a given grapheme is valid for its segment in a given orthographic environment. The second is used to define a class for a segment during the parsing process of a word into syllables.</p
 ><p
 >The <object
@@ -707,6 +713,9 @@ id="sEnvironments"
 ><secTitle
 >Environments</secTitle
 ><p
+><indexedItem
+term="iCVEnvironments"
+></indexedItem
 >When your orthography is such that you need to condition some graphemes by one or more environments, you add the environments here. Besides the usual Active check box, there are three fields.</p
 ><p
 >The <object
@@ -775,22 +784,22 @@ type="TT"
 ></li
 ></ol
 ><pc
->When you type a left square bracket, a drop-down box will appear which has the list of grapheme natural class names.  You can click on this drop-down box and then click on the name you want to use.<endnote
+>When you type a left square bracket, a drop-down box will appear which has the list of grapheme natural class names. You can click on this drop-down box and then click on the name you want to use.<endnote
 id="nGraphemeClasDropDown"
 ><p
 >You can also press the <object
 type="tKey"
 >Tab</object
-> key two times to get to the drop-down box.  Then use the <object
+> key two times to get to the drop-down box. Then use the <object
 type="tKey"
 >down-arrow</object
 > key to move to the one you want and press the <object
 type="tKey"
 >Enter</object
-> key.  Please note that currently if you click on the drop-down box with the mouse and then use the <object
+> key. Please note that currently if you click on the drop-down box with the mouse and then use the <object
 type="tKey"
 >down-arrow</object
-> key, it will choose the first item in the list.  I have yet to figure out how to avoid this poor behavior.</p
+> key, it will choose the first item in the list. I have yet to figure out how to avoid this poor behavior.</p
 ></endnote
 ></pc
 ></li
@@ -1134,8 +1143,6 @@ type="TT"
 ></tr
 ></table
 ></example
-><p
-></p
 ></section2
 ><section2
 id="sCVWords"
