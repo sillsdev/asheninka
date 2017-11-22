@@ -12,3 +12,6 @@ resources/images
 oxygen
 *- Copy.ashedata
 *.ashedato
+*.orig
+*.bak
+*.xso
