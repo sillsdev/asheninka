@@ -1,195 +1,202 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- Copyright (c) 2016 SIL International 
-    This software is licensed under the LGPL, version 2.1 or later 
-    (http://www.gnu.org/licenses/lgpl-2.1.html) --> 
-<languageProject>
-    <cvApproach>
+<?xml version="1.0" encoding="UTF-8"?><languageProject databaseVersion="2"><analysisLanguage>
+        <fontFamily>System</fontFamily>
+        <fontSize>12.0</fontSize>
+        <fontType>Regular</fontType>
+    </analysisLanguage><cvApproach>
         <cvNaturalClasses>
-            <cvNaturalClass
-                snc="000e634b-5e9e-479d-82e6-f44ab9e27879 0c349a88-de1d-4bd8-8845-18775f142719 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 101d2651-cd84-4671-a286-0d37e22759e4 91c1f393-497a-4345-9fcd-cd67fbb5575b 76e0b311-b742-4eb5-98f9-8670dfce5149 25bdfcdf-242a-49d8-94d2-74e2f666f88b 65be3575-5c87-4a7d-8560-d1f32a816b2f 518cf26f-42ab-4555-ac4d-af1667774959 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df a606ebec-8ceb-42bd-93ee-2b78f65f9984 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 6fbdfa10-f79d-44c6-a1bf-b474ac386c12"
-                id="b500749a-9617-444c-ae28-7552cb3236ec">
+            <cvNaturalClass active="true" id="b500749a-9617-444c-ae28-7552cb3236ec" snc="000e634b-5e9e-479d-82e6-f44ab9e27879 0c349a88-de1d-4bd8-8845-18775f142719 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 101d2651-cd84-4671-a286-0d37e22759e4 91c1f393-497a-4345-9fcd-cd67fbb5575b 76e0b311-b742-4eb5-98f9-8670dfce5149 25bdfcdf-242a-49d8-94d2-74e2f666f88b 65be3575-5c87-4a7d-8560-d1f32a816b2f 518cf26f-42ab-4555-ac4d-af1667774959 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df a606ebec-8ceb-42bd-93ee-2b78f65f9984 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
                 <description>consonants</description>
                 <NCName>C</NCName>
                 <SNCRepresentation>b, d, f, g, h, k, l, p, r, s, t, v, w, x, y, z, N</SNCRepresentation>
             </cvNaturalClass>
-            <cvNaturalClass
-                snc="de664190-dd3c-4bb3-892e-16dc596255ce 92284e25-50b0-4c3a-9043-c5a67c6cfcff 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 008bb81a-5594-45ee-ae2a-457a058cee16 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f"
-                id="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+            <cvNaturalClass active="true" id="9821d4ba-8c34-432d-9afe-7c428dcd9afa" snc="de664190-dd3c-4bb3-892e-16dc596255ce 92284e25-50b0-4c3a-9043-c5a67c6cfcff 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 008bb81a-5594-45ee-ae2a-457a058cee16 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f">
                 <description>vowels</description>
                 <NCName>V</NCName>
                 <SNCRepresentation>a, e, i, o, u</SNCRepresentation>
             </cvNaturalClass>
-            <cvNaturalClass snc="a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" id="6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
+            <cvNaturalClass active="true" id="6fbdfa10-f79d-44c6-a1bf-b474ac386c12" snc="a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a ae820f4f-a8c9-4d69-b528-8dc480ec7a8c">
                 <description>nasals</description>
                 <NCName>N</NCName>
                 <SNCRepresentation>m, n, ɲ</SNCRepresentation>
             </cvNaturalClass>
         </cvNaturalClasses>
         <cvSyllablePatterns>
-            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="5059b228-2994-4195-a881-e62958bff0c5">
+            <cvSyllablePattern active="true" id="5059b228-2994-4195-a881-e62958bff0c5" ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa">
                 <description>Basic syllable pattern</description>
                 <NCSRepresentation>C, V</NCSRepresentation>
                 <SPName>CV</SPName>
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </cvSyllablePattern>
-            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" id="ef542169-8f0c-45ee-9613-0ca0efcc1ec9">
+            <cvSyllablePattern active="true" id="ef542169-8f0c-45ee-9613-0ca0efcc1ec9" ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec">
                 <description>Closed syllable pattern</description>
                 <NCSRepresentation>C, V, C</NCSRepresentation>
                 <SPName>CVC</SPName>
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </cvSyllablePattern>
-            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" id="ad516e02-d5ae-4c06-b643-bd3105d3abc2">
+            <cvSyllablePattern active="true" id="ad516e02-d5ae-4c06-b643-bd3105d3abc2" ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa 6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
                 <description>Nasal coda</description>
                 <NCSRepresentation>C, V, N</NCSRepresentation>
                 <SPName>CVN</SPName>
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </cvSyllablePattern>
+            <cvSyllablePattern active="true" id="ed8f00a6-81a8-4390-9b0d-dd7086cc2faf" ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec">
+                <description>Onsetless closed syllable</description>
+                <NCSRepresentation>V, C</NCSRepresentation>
+                <SPName>VC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern active="true" id="e9126200-ddc4-41fc-b5ef-33cbe3dccc9d" ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                <description>Onsetless open syllable</description>
+                <NCSRepresentation>V</NCSRepresentation>
+                <SPName>V</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
         </cvSyllablePatterns>
-    </cvApproach>
-    <hyphenationParametersListWord>
+    </cvApproach><environments/><hyphenationParametersListWord>
         <discretionaryHyphen>=</discretionaryHyphen>
         <startAfterCharactersFromBeginning>0</startAfterCharactersFromBeginning>
         <stopBeforeCharactersFromEnd>0</stopBeforeCharactersFromEnd>
-    </hyphenationParametersListWord>
-    <hyphenationParametersParaTExt>
+    </hyphenationParametersListWord><hyphenationParametersParaTExt>
         <discretionaryHyphen>=</discretionaryHyphen>
         <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
         <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
-    </hyphenationParametersParaTExt>
-    <hyphenationParametersXLingPaper>
+    </hyphenationParametersParaTExt><hyphenationParametersXLingPaper>
         <discretionaryHyphen>-</discretionaryHyphen>
         <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
         <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
-    </hyphenationParametersXLingPaper>
-    <segments>
-        <segment id="de664190-dd3c-4bb3-892e-16dc596255ce">
+    </hyphenationParametersXLingPaper><segments>
+        <segment active="true" id="de664190-dd3c-4bb3-892e-16dc596255ce">
             <description>low central unrounded vowel</description>
-            <graphemes>a A</graphemes>
+            <graphemes>a A</graphemes><graphemesAsList><grapheme active="true" segment="de664190-dd3c-4bb3-892e-16dc596255ce"><form>a</form><description/><environments/></grapheme><grapheme active="true" segment="de664190-dd3c-4bb3-892e-16dc596255ce"><form>A</form><description/><environments/></grapheme></graphemesAsList>
             <segment>a</segment>
         </segment>
-        <segment id="000e634b-5e9e-479d-82e6-f44ab9e27879">
+        <segment active="true" id="000e634b-5e9e-479d-82e6-f44ab9e27879">
             <description>voiced bilabial stop</description>
-            <graphemes>b B</graphemes>
+            <graphemes>b B</graphemes><graphemesAsList><grapheme active="true" segment="000e634b-5e9e-479d-82e6-f44ab9e27879"><form>b</form><description/><environments/></grapheme><grapheme active="true" segment="000e634b-5e9e-479d-82e6-f44ab9e27879"><form>B</form><description/><environments/></grapheme></graphemesAsList>
             <segment>b</segment>
         </segment>
-        <segment id="0c349a88-de1d-4bd8-8845-18775f142719">
+        <segment active="true" id="0c349a88-de1d-4bd8-8845-18775f142719">
             <description>voiced alveolar stop</description>
-            <graphemes>d D</graphemes>
+            <graphemes>d D</graphemes><graphemesAsList><grapheme active="true" segment="0c349a88-de1d-4bd8-8845-18775f142719"><form>d</form><description/><environments/></grapheme><grapheme active="true" segment="0c349a88-de1d-4bd8-8845-18775f142719"><form>D</form><description/><environments/></grapheme></graphemesAsList>
             <segment>d</segment>
         </segment>
-        <segment id="92284e25-50b0-4c3a-9043-c5a67c6cfcff">
+        <segment active="true" id="92284e25-50b0-4c3a-9043-c5a67c6cfcff">
             <description>mid front unrounded vowel</description>
-            <graphemes>e E</graphemes>
+            <graphemes>e E</graphemes><graphemesAsList><grapheme active="true" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff"><form>e</form><description/><environments/></grapheme><grapheme active="true" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff"><form>E</form><description/><environments/></grapheme></graphemesAsList>
             <segment>e</segment>
         </segment>
-        <segment id="0701fe22-3ac3-43a9-8d0d-78940f0ec514">
+        <segment active="true" id="0701fe22-3ac3-43a9-8d0d-78940f0ec514">
             <description>voiceless interdental fricative</description>
-            <graphemes>f F</graphemes>
+            <graphemes>f F</graphemes><graphemesAsList><grapheme active="true" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514"><form>f</form><description/><environments/></grapheme><grapheme active="true" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514"><form>F</form><description/><environments/></grapheme></graphemesAsList>
             <segment>f</segment>
         </segment>
-        <segment id="bad3c040-9306-423c-95d0-58b3678b40ee">
+        <segment active="true" id="bad3c040-9306-423c-95d0-58b3678b40ee">
             <description>voiced velar stop</description>
-            <graphemes>g G</graphemes>
+            <graphemes>g G</graphemes><graphemesAsList><grapheme active="true" segment="bad3c040-9306-423c-95d0-58b3678b40ee"><form>g</form><description/><environments/></grapheme><grapheme active="true" segment="bad3c040-9306-423c-95d0-58b3678b40ee"><form>G</form><description/><environments/></grapheme></graphemesAsList>
             <segment>g</segment>
         </segment>
-        <segment id="60765d81-b40d-42b2-ace5-9d476355270c">
+        <segment active="true" id="60765d81-b40d-42b2-ace5-9d476355270c">
             <description>voiceless glottal fricative</description>
-            <graphemes>h H</graphemes>
+            <graphemes>h H</graphemes><graphemesAsList><grapheme active="true" segment="60765d81-b40d-42b2-ace5-9d476355270c"><form>h</form><description/><environments/></grapheme><grapheme active="true" segment="60765d81-b40d-42b2-ace5-9d476355270c"><form>H</form><description/><environments/></grapheme></graphemesAsList>
             <segment>h</segment>
         </segment>
-        <segment id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf">
+        <segment active="true" id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf">
             <description>high front unrounded vowel</description>
-            <graphemes>i I</graphemes>
+            <graphemes>i I</graphemes><graphemesAsList><grapheme active="true" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf"><form>i</form><description/><environments/></grapheme><grapheme active="true" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf"><form>I</form><description/><environments/></grapheme></graphemesAsList>
             <segment>i</segment>
         </segment>
-        <segment id="6bc43a79-0aac-42aa-994e-6368a05bc29a">
+        <segment active="true" id="6bc43a79-0aac-42aa-994e-6368a05bc29a">
             <description>voiceless velar stop</description>
-            <graphemes>k K</graphemes>
+            <graphemes>k K</graphemes><graphemesAsList><grapheme active="true" segment="6bc43a79-0aac-42aa-994e-6368a05bc29a"><form>k</form><description/><environments/></grapheme><grapheme active="true" segment="6bc43a79-0aac-42aa-994e-6368a05bc29a"><form>K</form><description/><environments/></grapheme></graphemesAsList>
             <segment>k</segment>
         </segment>
-        <segment id="101d2651-cd84-4671-a286-0d37e22759e4">
+        <segment active="true" id="101d2651-cd84-4671-a286-0d37e22759e4">
             <description>voiced lateral</description>
-            <graphemes>l L</graphemes>
+            <graphemes>l L</graphemes><graphemesAsList><grapheme active="true" segment="101d2651-cd84-4671-a286-0d37e22759e4"><form>l</form><description/><environments/></grapheme><grapheme active="true" segment="101d2651-cd84-4671-a286-0d37e22759e4"><form>L</form><description/><environments/></grapheme></graphemesAsList>
             <segment>l</segment>
         </segment>
-        <segment id="a09371d4-f079-42ff-a2f6-25c2dcab0b95">
+        <segment active="true" id="a09371d4-f079-42ff-a2f6-25c2dcab0b95">
             <description>bilabial nasal</description>
-            <graphemes>m M</graphemes>
+            <graphemes>m M</graphemes><graphemesAsList><grapheme active="true" segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95"><form>m</form><description/><environments/></grapheme><grapheme active="true" segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95"><form>M</form><description/><environments/></grapheme></graphemesAsList>
             <segment>m</segment>
         </segment>
-        <segment id="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
+        <segment active="true" id="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
             <description>alveolar nasal</description>
-            <graphemes>n N</graphemes>
+            <graphemes>n N</graphemes><graphemesAsList><grapheme active="true" segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a"><form>n</form><description/><environments/></grapheme><grapheme active="true" segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a"><form>N</form><description/><environments/></grapheme></graphemesAsList>
             <segment>n</segment>
         </segment>
-        <segment id="008bb81a-5594-45ee-ae2a-457a058cee16">
+        <segment active="true" id="008bb81a-5594-45ee-ae2a-457a058cee16">
             <description>mid back rounded vowel</description>
-            <graphemes>o O</graphemes>
+            <graphemes>o O</graphemes><graphemesAsList><grapheme active="true" segment="008bb81a-5594-45ee-ae2a-457a058cee16"><form>o</form><description/><environments/></grapheme><grapheme active="true" segment="008bb81a-5594-45ee-ae2a-457a058cee16"><form>O</form><description/><environments/></grapheme></graphemesAsList>
             <segment>o</segment>
         </segment>
-        <segment id="91c1f393-497a-4345-9fcd-cd67fbb5575b">
+        <segment active="true" id="91c1f393-497a-4345-9fcd-cd67fbb5575b">
             <description>voiceless bilabial stop</description>
-            <graphemes>p P</graphemes>
+            <graphemes>p P</graphemes><graphemesAsList><grapheme active="true" segment="91c1f393-497a-4345-9fcd-cd67fbb5575b"><form>p</form><description/><environments/></grapheme><grapheme active="true" segment="91c1f393-497a-4345-9fcd-cd67fbb5575b"><form>P</form><description/><environments/></grapheme></graphemesAsList>
             <segment>p</segment>
         </segment>
-        <segment id="0a11acc2-cca2-45c8-a500-b3952aaf9002">
+        <segment active="true" id="0a11acc2-cca2-45c8-a500-b3952aaf9002">
             <description>voiceless uvular stop</description>
-            <graphemes>q Q</graphemes>
+            <graphemes>q Q</graphemes><graphemesAsList><grapheme active="true" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002"><form>q</form><description/><environments/></grapheme><grapheme active="true" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002"><form>Q</form><description/><environments/></grapheme></graphemesAsList>
             <segment>q</segment>
         </segment>
-        <segment id="76e0b311-b742-4eb5-98f9-8670dfce5149">
+        <segment active="true" id="76e0b311-b742-4eb5-98f9-8670dfce5149">
             <description>voiced alveolar flap</description>
-            <graphemes>r R</graphemes>
+            <graphemes>r R</graphemes><graphemesAsList><grapheme active="true" segment="76e0b311-b742-4eb5-98f9-8670dfce5149"><form>r</form><description/><environments/></grapheme><grapheme active="true" segment="76e0b311-b742-4eb5-98f9-8670dfce5149"><form>R</form><description/><environments/></grapheme></graphemesAsList>
             <segment>r</segment>
         </segment>
-        <segment id="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
+        <segment active="true" id="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
             <description>voiceless alveolar fricative</description>
-            <graphemes>s S</graphemes>
+            <graphemes>s S</graphemes><graphemesAsList><grapheme active="true" segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b"><form>s</form><description/><environments/></grapheme><grapheme active="true" segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b"><form>S</form><description/><environments/></grapheme></graphemesAsList>
             <segment>s</segment>
         </segment>
-        <segment id="65be3575-5c87-4a7d-8560-d1f32a816b2f">
+        <segment active="true" id="65be3575-5c87-4a7d-8560-d1f32a816b2f">
             <description>voiceless alveolar stop</description>
-            <graphemes>t T</graphemes>
+            <graphemes>t T</graphemes><graphemesAsList><grapheme active="true" segment="65be3575-5c87-4a7d-8560-d1f32a816b2f"><form>t</form><description/><environments/></grapheme><grapheme active="true" segment="65be3575-5c87-4a7d-8560-d1f32a816b2f"><form>T</form><description/><environments/></grapheme></graphemesAsList>
             <segment>t</segment>
         </segment>
-        <segment id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f">
+        <segment active="true" id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f">
             <description>high back rounded vowel</description>
-            <graphemes>u U</graphemes>
+            <graphemes>u U</graphemes><graphemesAsList><grapheme active="true" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f"><form>u</form><description/><environments/></grapheme><grapheme active="true" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f"><form>U</form><description/><environments/></grapheme></graphemesAsList>
             <segment>u</segment>
         </segment>
-        <segment id="518cf26f-42ab-4555-ac4d-af1667774959">
+        <segment active="true" id="518cf26f-42ab-4555-ac4d-af1667774959">
             <description>voiced interdental fricative</description>
-            <graphemes>v V</graphemes>
+            <graphemes>v V</graphemes><graphemesAsList><grapheme active="true" segment="518cf26f-42ab-4555-ac4d-af1667774959"><form>v</form><description/><environments/></grapheme><grapheme active="true" segment="518cf26f-42ab-4555-ac4d-af1667774959"><form>V</form><description/><environments/></grapheme></graphemesAsList>
             <segment>v</segment>
         </segment>
-        <segment id="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df">
+        <segment active="true" id="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df">
             <description>labio-velar aproximate</description>
-            <graphemes>w W</graphemes>
+            <graphemes>w W</graphemes><graphemesAsList><grapheme active="true" segment="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df"><form>w</form><description/><environments/></grapheme><grapheme active="true" segment="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df"><form>W</form><description/><environments/></grapheme></graphemesAsList>
             <segment>w</segment>
         </segment>
-        <segment id="a606ebec-8ceb-42bd-93ee-2b78f65f9984">
+        <segment active="true" id="a606ebec-8ceb-42bd-93ee-2b78f65f9984">
             <description>voiceless velar fricative</description>
-            <graphemes>x X</graphemes>
+            <graphemes>x X</graphemes><graphemesAsList><grapheme active="true" segment="a606ebec-8ceb-42bd-93ee-2b78f65f9984"><form>x</form><description/><environments/></grapheme><grapheme active="true" segment="a606ebec-8ceb-42bd-93ee-2b78f65f9984"><form>X</form><description/><environments/></grapheme></graphemesAsList>
             <segment>x</segment>
         </segment>
-        <segment id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
+        <segment active="true" id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
             <description>voiced palatal approximate</description>
-            <graphemes>y Y</graphemes>
+            <graphemes>y Y</graphemes><graphemesAsList><grapheme active="true" segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97"><form>y</form><description/><environments/></grapheme><grapheme active="true" segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97"><form>Y</form><description/><environments/></grapheme></graphemesAsList>
             <segment>y</segment>
         </segment>
-        <segment id="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422">
+        <segment active="true" id="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422">
             <description>voiced alveolar fricative</description>
-            <graphemes>z Z</graphemes>
+            <graphemes>z Z</graphemes><graphemesAsList><grapheme active="true" segment="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422"><form>z</form><description/><environments/></grapheme><grapheme active="true" segment="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422"><form>Z</form><description/><environments/></grapheme></graphemesAsList>
             <segment>z</segment>
         </segment>
-        <segment id="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c">
+        <segment active="true" id="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c">
             <description>palatal nasal</description>
-            <graphemes>ñ Ñ</graphemes>
+            <graphemes>ñ Ñ</graphemes><graphemesAsList><grapheme active="true" segment="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c"><form>ñ</form><description/><environments/></grapheme><grapheme active="true" segment="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c"><form>Ñ</form><description/><environments/></grapheme></graphemesAsList>
             <segment>ɲ</segment>
         </segment>
-    </segments>
-    <words></words>
-</languageProject>
+    </segments><vernacularLanguage>
+        <fontFamily>System</fontFamily>
+        <fontSize>12.0</fontSize>
+        <fontType>Regular</fontType>
+    </vernacularLanguage><words/></languageProject>

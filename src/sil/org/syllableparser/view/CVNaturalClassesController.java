@@ -195,8 +195,8 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				currentNaturalClass.setActive(activeCheckBox.isSelected());
 				showSegmentOrNaturalClassContent();
 				forceTableRowToRedisplayPerActiveSetting(currentNaturalClass);
-				displayFieldsPerActiveSetting(currentNaturalClass);
 			}
+			displayFieldsPerActiveSetting(currentNaturalClass);
 		});
 
 		// Use of Enter move focus to next item.
@@ -212,11 +212,16 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	}
 
 	public void displayFieldsPerActiveSetting(CVNaturalClass nc) {
-		nameField.setDisable(!nc.isActive());
-		// Following does not show as grey for some reason...
-		sncTextFlow.setDisable(!nc.isActive());
-		sncButton.setDisable(!nc.isActive());
-		descriptionField.setDisable(!nc.isActive());
+		boolean fIsActive;
+		if (nc == null) {
+			fIsActive = false;
+		} else {
+			fIsActive = nc.isActive();
+		}
+		nameField.setDisable(!fIsActive);
+		sncTextFlow.setDisable(!fIsActive);
+		sncButton.setDisable(!fIsActive);
+		descriptionField.setDisable(!fIsActive);
 	}
 
 	private void forceTableRowToRedisplayPerActiveSetting(CVNaturalClass nc) {
@@ -256,13 +261,13 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			descriptionField.setText(naturalClass.getDescription());
 			activeCheckBox.setSelected(naturalClass.isActive());
 			showSegmentOrNaturalClassContent();
-			displayFieldsPerActiveSetting(naturalClass);
 		} else {
 			// Segment is null, remove all the text.
 			nameField.setText("");
 			descriptionField.setText("");
 			sncTextFlow.getChildren().clear();
 		}
+		displayFieldsPerActiveSetting(naturalClass);
 
 		if (naturalClass != null) {
 			int iCurrentIndex = cvNaturalClassTable.getItems().indexOf(currentNaturalClass);
@@ -289,6 +294,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				sb.append(s);
 			} else if (snc instanceof CVNaturalClass) {
 				s = ((CVNaturalClass) snc).getNCName();
+				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
 				t = new Text(s);
 				t.setFont(languageProject.getAnalysisLanguage().getFont());
 				sb.append(s);

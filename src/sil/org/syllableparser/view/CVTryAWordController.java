@@ -87,7 +87,6 @@ public class CVTryAWordController implements Initializable {
 				setTryItButtonDisable();
 			}
 		});
-		
 
 		Platform.runLater(new Runnable() {
 			@Override
@@ -142,7 +141,8 @@ public class CVTryAWordController implements Initializable {
 		preferences = mainApp.getApplicationPreferences();
 		String lastWordTried = preferences.getLastCVTryAWordUsed();
 		wordToTry.setText(lastWordTried);
-		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_CV_TRY_A_WORD, dialogStage, 533., 637.);
+		dialogStage = preferences.getLastWindowParameters(
+				ApplicationPreferences.LAST_CV_TRY_A_WORD, dialogStage, 533., 637.);
 	}
 
 	public void setLocale(Locale locale) {
@@ -170,7 +170,9 @@ public class CVTryAWordController implements Initializable {
 			@Override
 			protected Void call() throws Exception {
 				try {
-					Thread.sleep(1); // probably not needed, but we do it anyway in case its needed on slower machines...
+					Thread.sleep(1); // probably not needed, but we do it anyway
+										// in case its needed on slower
+										// machines...
 				} catch (InterruptedException e) {
 				}
 				return null;
@@ -182,14 +184,16 @@ public class CVTryAWordController implements Initializable {
 
 				ObservableList<CVNaturalClass> naturalClasses;
 				CVSegmenter segmenter;
-				ObservableList<Segment> segmentInventory;
+				// ObservableList<Segment> segmentInventory;
 				CVNaturalClasser naturalClasser;
 				List<CVSyllablePattern> patterns;
 				CVSyllabifier syllabifier;
 				List<CVSyllablePattern> cvPatterns;
 
-				segmentInventory = cva.getLanguageProject().getSegmentInventory();
-				segmenter = new CVSegmenter(segmentInventory);
+				// segmentInventory =
+				// cva.getLanguageProject().getSegmentInventory();
+				segmenter = new CVSegmenter(cva.getLanguageProject().getActiveGraphemes(), cva
+						.getLanguageProject().getActiveGraphemeNaturalClasses());
 				naturalClasses = cva.getCVNaturalClasses();
 				naturalClasser = new CVNaturalClasser(naturalClasses);
 				patterns = cva.getActiveCVSyllablePatterns();

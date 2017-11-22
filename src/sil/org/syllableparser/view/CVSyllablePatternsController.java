@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.view;
 
@@ -166,7 +166,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		nameColumn.setSortable(false);
 		naturalClassColumn.setSortable(false);
 		descriptionColumn.setSortable(false);
-		
+
 		// Clear cv syllable pattern details.
 		showCVSyllablePatternDetails(null);
 
@@ -194,14 +194,14 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-		
+
 		activeCheckBox.setOnAction((event) -> {
 			if (currentSyllablePattern != null) {
 				currentSyllablePattern.setActive(activeCheckBox.isSelected());
 				showNaturalClassesContent();
 				forceTableRowToRedisplayPerActiveSetting(currentSyllablePattern);
-				displayFieldsPerActiveSetting(currentSyllablePattern);
 			}
+			displayFieldsPerActiveSetting(currentSyllablePattern);
 		});
 
 		// Use of Enter move focus to next item.
@@ -217,10 +217,16 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	}
 
 	public void displayFieldsPerActiveSetting(CVSyllablePattern syllablePattern) {
-		nameField.setDisable(!syllablePattern.isActive());
-		ncsTextFlow.setDisable(!syllablePattern.isActive());
-		ncsButton.setDisable(!syllablePattern.isActive());
-		descriptionField.setDisable(!syllablePattern.isActive());
+		boolean fIsActive;
+		if (syllablePattern == null) {
+			fIsActive = false;
+		} else {
+			fIsActive = syllablePattern.isActive();
+		}
+		nameField.setDisable(!fIsActive);
+		ncsTextFlow.setDisable(!fIsActive);
+		ncsButton.setDisable(!fIsActive);
+		descriptionField.setDisable(!fIsActive);
 	}
 
 	private void forceTableRowToRedisplayPerActiveSetting(CVSyllablePattern syllablePattern) {
@@ -241,7 +247,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	/**
 	 * Fills all text fields to show details about the CV natural class. If the
 	 * specified segment is null, all text fields are cleared.
-	 * 
+	 *
 	 * @param syllablePattern
 	 *            the segment or null
 	 */
@@ -253,7 +259,6 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			descriptionField.setText(syllablePattern.getDescription());
 			activeCheckBox.setSelected(syllablePattern.isActive());
 			showNaturalClassesContent();
-			displayFieldsPerActiveSetting(syllablePattern);
 			setUpDownButtonDisabled();
 
 		} else {
@@ -270,6 +275,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			buttonMoveDown.setDisable(true);
 			buttonMoveUp.setDisable(true);
 		}
+		displayFieldsPerActiveSetting(syllablePattern);
 
 		if (syllablePattern != null) {
 			int currentItem = cvSyllablePatternTable.getItems().indexOf(currentSyllablePattern);
@@ -348,7 +354,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * 
+	 *
 	 * @param cvApproachController
 	 */
 	public void setData(CVApproach cvApproachData) {
@@ -379,7 +385,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleInsertNewItem()
 	 */
 	@Override
@@ -395,7 +401,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see sil.org.syllableparser.view.ApproachController#handleRemoveItem()
 	 */
 	@Override

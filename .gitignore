@@ -9,3 +9,9 @@ build/doc
 build/externalLibs
 build/project
 resources/images
+oxygen
+*- Copy.ashedata
+*.ashedato
+*.orig
+*.bak
+*.xso

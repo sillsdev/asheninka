@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<languageProject>
+<languageProject databaseVersion="2">
     <analysisLanguage>
         <fontFamily>Times New Roman</fontFamily>
         <fontSize>12.0</fontSize>
@@ -17,7 +17,7 @@
                 <NCName>V</NCName>
                 <SNCRepresentation>a, e, i, o, u</SNCRepresentation>
             </cvNaturalClass>
-            <cvNaturalClass snc="a72f9654-e5ec-45dc-80ba-204abf0ef872 373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="false" id="f67aab03-a0d6-452f-afa3-b808d1d0e185">
+            <cvNaturalClass snc="a72f9654-e5ec-45dc-80ba-204abf0ef872 373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="true" id="f67aab03-a0d6-452f-afa3-b808d1d0e185">
                 <description>Glottal consonant</description>
                 <NCName>Gl</NCName>
                 <SNCRepresentation>', h</SNCRepresentation>
@@ -54,6 +54,29 @@
             </cvSyllablePattern>
         </cvSyllablePatterns>
     </cvApproach>
+    <environments>
+        <environment active="true" id="1edf9963-b305-4196-8b4e-d062119c2a83">
+            <description>Word Intial</description>
+            <environmentName>Word Initial</environmentName>
+            <environmentRepresentation>/ #  _  </environmentRepresentation>
+            <leftContext>
+                <environmentContexts/>
+                <wordBoundary>true</wordBoundary>
+            </leftContext>
+            <rightContext>
+                <environmentContexts/>
+                <wordBoundary>false</wordBoundary>
+            </rightContext>
+            <valid>true</valid>
+        </environment>
+    </environments>
+    <graphemeNaturalClassess>
+        <graphemeNaturalClass gnc="5e9c8d07-612a-4984-9651-7f1867234e2a ab19fc83-df6b-479e-bd44-1f54a51489b4 f85f332d-f622-4670-bcbb-d6d56c73b8b5 b891d5a6-c56b-4779-9a4f-65c113a6674f 75e307a9-ab68-469d-b679-b7562e793f99 785fd1f2-353e-4d1b-8375-197b426a0c97" active="true" id="c22256f7-7ef3-4eb8-82c5-74cb57fd0b03">
+            <description>Nasals</description>
+            <GNCRepresentation>m, M, n, N, ñ, Ñ</GNCRepresentation>
+            <NCName>N</NCName>
+        </graphemeNaturalClass>
+    </graphemeNaturalClassess>
     <hyphenationParametersListWord>
         <discretionaryHyphen>=</discretionaryHyphen>
         <startAfterCharactersFromBeginning>0</startAfterCharactersFromBeginning>
@@ -73,166 +96,712 @@
         <segment active="true" id="28f82d15-cd1a-462d-8f24-045ab0f163b6">
             <description>glottal stop (used between vowels)</description>
             <graphemes>'</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="28f82d15-cd1a-462d-8f24-045ab0f163b6" active="true" id="7573f14c-f999-4c0c-ba4f-d831caeef0df">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>'</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>'</segment>
         </segment>
         <segment active="true" id="de664190-dd3c-4bb3-892e-16dc596255ce">
             <description>low central unrounded vowel</description>
             <graphemes>a A á Á</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" active="true" id="10f068e9-2dfc-4360-b295-acccbdb8fcc8">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>a</form>
+                </grapheme>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" active="true" id="86dca487-ab44-4384-969c-f6f29bbc52fb">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>A</form>
+                </grapheme>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" active="true" id="3a380e09-8b03-4613-94d0-45441a36d37c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>á</form>
+                </grapheme>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" active="true" id="c16e48ec-6ff0-421d-be29-68d586025655">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Á</form>
+                </grapheme>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" active="false" id="36c230f9-5194-4583-bca9-098f7ac67d61">
+                    <checked>false</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>a</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>a</segment>
         </segment>
         <segment active="true" id="000e634b-5e9e-479d-82e6-f44ab9e27879">
             <description>voiced bilabial stop</description>
             <graphemes>b B</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="000e634b-5e9e-479d-82e6-f44ab9e27879" active="true" id="8815316a-23c7-4ac8-9b09-177492109d31">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>b</form>
+                </grapheme>
+                <grapheme envs="" segment="000e634b-5e9e-479d-82e6-f44ab9e27879" active="true" id="d5fef68f-6ecf-423f-8422-37a4b038e247">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>B</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>b</segment>
         </segment>
         <segment active="true" id="45eba5fa-70b8-4212-aaa0-5de154377ba5">
             <description>voiceless velar stop</description>
             <graphemes>c C</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="45eba5fa-70b8-4212-aaa0-5de154377ba5" active="true" id="026586d3-ade3-4e68-a88e-161160c08c85">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>c</form>
+                </grapheme>
+                <grapheme envs="" segment="45eba5fa-70b8-4212-aaa0-5de154377ba5" active="true" id="60995e6d-e4a8-4f20-a5f3-4df51f1dc077">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>C</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>c</segment>
         </segment>
         <segment active="true" id="a72f9654-e5ec-45dc-80ba-204abf0ef872">
             <description>voiceless alveopalatal affricate</description>
-            <graphemes>ch Ch CH</graphemes>
+            <graphemes>ch Chr</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a72f9654-e5ec-45dc-80ba-204abf0ef872" active="true" id="e23e23e9-d997-48f7-bdaa-848a4a7b3ee2">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ch</form>
+                </grapheme>
+                <grapheme envs="" segment="a72f9654-e5ec-45dc-80ba-204abf0ef872" active="true" id="a789bf52-2dcf-41d5-b9ce-bb1f246894e4">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Chr</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>ch</segment>
         </segment>
         <segment active="true" id="0c349a88-de1d-4bd8-8845-18775f142719">
             <description>voiced alveolar stop</description>
             <graphemes>d D</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0c349a88-de1d-4bd8-8845-18775f142719" active="true" id="828320b6-6623-413a-929b-87934e0fcaa9">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>d</form>
+                </grapheme>
+                <grapheme envs="" segment="0c349a88-de1d-4bd8-8845-18775f142719" active="true" id="9030850b-2dc3-4ec2-aba7-8060b04554a1">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>D</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>d</segment>
         </segment>
         <segment active="true" id="92284e25-50b0-4c3a-9043-c5a67c6cfcff">
             <description>mid front unrounded vowel</description>
             <graphemes>e E é É</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" active="true" id="e691aebf-c90f-46f8-aeb7-5458aa1fc8dc">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>e</form>
+                </grapheme>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" active="true" id="f8e4c70d-f581-4891-945a-6ce6ae25d72e">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>E</form>
+                </grapheme>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" active="true" id="43b27771-c64f-4ab2-a6b5-fd18e78914ba">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>é</form>
+                </grapheme>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" active="true" id="02f72cf3-2a9b-468f-8445-54c13c688a55">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>É</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>e</segment>
         </segment>
         <segment active="true" id="0701fe22-3ac3-43a9-8d0d-78940f0ec514">
             <description>voiceless interdental fricative</description>
             <graphemes>f F</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514" active="true" id="a4cb02ca-bf70-4771-a6ec-4888d6e73155">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>f</form>
+                </grapheme>
+                <grapheme envs="" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514" active="true" id="253a0ab0-3b2c-4a29-99a0-185df675e487">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>F</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>f</segment>
         </segment>
         <segment active="true" id="bad3c040-9306-423c-95d0-58b3678b40ee">
             <description>voiced velar stop</description>
             <graphemes>g G</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="bad3c040-9306-423c-95d0-58b3678b40ee" active="true" id="03c448cc-086d-447c-9b19-789eb19b80da">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>g</form>
+                </grapheme>
+                <grapheme envs="" segment="bad3c040-9306-423c-95d0-58b3678b40ee" active="true" id="498893cd-96f5-49ba-8e83-18d7848897a3">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>G</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>g</segment>
         </segment>
         <segment active="true" id="60765d81-b40d-42b2-ace5-9d476355270c">
             <description>voiceless glottal fricative</description>
             <graphemes>h H</graphemes>
+            <graphemesAsList>
+                <grapheme envs="1edf9963-b305-4196-8b4e-d062119c2a83" segment="60765d81-b40d-42b2-ace5-9d476355270c" active="true" id="2529064b-3322-4ad4-b37d-4a24ae1d6e45">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ #  _  </envsRepresentation>
+                    <form>h</form>
+                </grapheme>
+                <grapheme envs="" segment="60765d81-b40d-42b2-ace5-9d476355270c" active="true" id="a6d53513-5876-425d-8a41-c3e48f408657">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>H</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>h</segment>
         </segment>
         <segment active="true" id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf">
             <description>high front unrounded vowel</description>
             <graphemes>i I í Í</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" active="true" id="e4362a03-8182-4e43-b2ec-5fb334aa4548">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>i</form>
+                </grapheme>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" active="true" id="f4850441-ddf4-44d1-8188-e87d0344071d">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>I</form>
+                </grapheme>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" active="true" id="0694ccbb-601c-43a7-be28-1289c6ca927c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>í</form>
+                </grapheme>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" active="true" id="a28fc98e-bf18-4c8c-85e7-05c12b6366f6">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Í</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>i</segment>
         </segment>
         <segment active="true" id="40829dfd-925c-4b59-9a7f-25de2119d8d9">
             <description>voiceless glottal fricative </description>
             <graphemes>j J</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="40829dfd-925c-4b59-9a7f-25de2119d8d9" active="true" id="3fa2c736-41fd-43f8-85df-107e74fb445a">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>j</form>
+                </grapheme>
+                <grapheme envs="" segment="40829dfd-925c-4b59-9a7f-25de2119d8d9" active="true" id="e5a708d3-3dad-4e70-8bd9-1969434ec9bf">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>J</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>j</segment>
         </segment>
         <segment active="true" id="6bc43a79-0aac-42aa-994e-6368a05bc29a">
             <description>voiceless velar stop</description>
             <graphemes>k K</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="6bc43a79-0aac-42aa-994e-6368a05bc29a" active="true" id="bbdcc86f-85f8-4a3c-9640-d820fed05917">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>k</form>
+                </grapheme>
+                <grapheme envs="" segment="6bc43a79-0aac-42aa-994e-6368a05bc29a" active="true" id="7c98c81c-69f6-455d-b078-d1a61175d3dd">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>K</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>k</segment>
         </segment>
         <segment active="true" id="bece0c84-063e-4b8f-93b5-46b58b5335b7">
             <description>labialized voiceless velar stop</description>
             <graphemes>kw Kw KW</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="bece0c84-063e-4b8f-93b5-46b58b5335b7" active="true" id="836386d9-1c09-4b8b-96c0-fd2d1c33af54">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>kw</form>
+                </grapheme>
+                <grapheme envs="" segment="bece0c84-063e-4b8f-93b5-46b58b5335b7" active="true" id="71e7a180-1e03-4877-b4e6-b329dba9094d">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Kw</form>
+                </grapheme>
+                <grapheme envs="" segment="bece0c84-063e-4b8f-93b5-46b58b5335b7" active="true" id="086c7e74-d306-4640-8ef4-ff2a3514850b">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>KW</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>kw</segment>
         </segment>
         <segment active="true" id="40279c4e-d982-4439-b4ea-1a807ad33edf">
             <description>palatalized voiceless velar stop</description>
             <graphemes>ky Ky KY</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="40279c4e-d982-4439-b4ea-1a807ad33edf" active="true" id="0cf95309-16e7-4ada-8cf8-7870d13fcb39">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ky</form>
+                </grapheme>
+                <grapheme envs="" segment="40279c4e-d982-4439-b4ea-1a807ad33edf" active="true" id="2893401b-d70c-425b-9fe0-4a0d2cc481b7">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ky</form>
+                </grapheme>
+                <grapheme envs="" segment="40279c4e-d982-4439-b4ea-1a807ad33edf" active="true" id="5f0fbc88-bef0-4a26-a051-060725c37263">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>KY</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>ky</segment>
         </segment>
         <segment active="true" id="101d2651-cd84-4671-a286-0d37e22759e4">
             <description>voiced lateral</description>
             <graphemes>l L</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="101d2651-cd84-4671-a286-0d37e22759e4" active="true" id="ff9ca8c9-8105-44f3-ad53-c76616993478">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>l</form>
+                </grapheme>
+                <grapheme envs="" segment="101d2651-cd84-4671-a286-0d37e22759e4" active="true" id="3232a64b-3ca5-4081-b4e0-e9671e9e9c5f">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>L</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>l</segment>
         </segment>
         <segment active="true" id="a09371d4-f079-42ff-a2f6-25c2dcab0b95">
             <description>bilabial nasal</description>
             <graphemes>m M</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95" active="true" id="5e9c8d07-612a-4984-9651-7f1867234e2a">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>m</form>
+                </grapheme>
+                <grapheme envs="" segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95" active="true" id="ab19fc83-df6b-479e-bd44-1f54a51489b4">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>M</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>m</segment>
         </segment>
         <segment active="true" id="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
             <description>alveolar nasal</description>
             <graphemes>n N</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a" active="true" id="f85f332d-f622-4670-bcbb-d6d56c73b8b5">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>n</form>
+                </grapheme>
+                <grapheme envs="" segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a" active="true" id="b891d5a6-c56b-4779-9a4f-65c113a6674f">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>N</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>n</segment>
         </segment>
         <segment active="true" id="8ba0dff9-4b45-4c13-9e51-2598d8924950">
             <description>palatal nasal</description>
             <graphemes>ñ Ñ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="8ba0dff9-4b45-4c13-9e51-2598d8924950" active="true" id="75e307a9-ab68-469d-b679-b7562e793f99">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ñ</form>
+                </grapheme>
+                <grapheme envs="" segment="8ba0dff9-4b45-4c13-9e51-2598d8924950" active="true" id="785fd1f2-353e-4d1b-8375-197b426a0c97">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ñ</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>ñ</segment>
         </segment>
         <segment active="true" id="008bb81a-5594-45ee-ae2a-457a058cee16">
             <description>mid back rounded vowel</description>
             <graphemes>o O ó Ó</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" active="true" id="ff401939-2fc2-49ad-97b3-0cb73ba3a450">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>o</form>
+                </grapheme>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" active="true" id="a3a735b2-1a9f-4c11-94fb-2bd92ec57199">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>O</form>
+                </grapheme>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" active="true" id="6abc4864-555f-4241-a243-779afc9c6f14">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ó</form>
+                </grapheme>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" active="true" id="5043ef58-745c-4893-83ad-00a1331eb35e">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ó</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>o</segment>
         </segment>
         <segment active="true" id="91c1f393-497a-4345-9fcd-cd67fbb5575b">
             <description>voiceless bilabial stop</description>
             <graphemes>p P</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="91c1f393-497a-4345-9fcd-cd67fbb5575b" active="true" id="899c6367-20b8-4679-b443-f2fc45033b9d">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>p</form>
+                </grapheme>
+                <grapheme envs="" segment="91c1f393-497a-4345-9fcd-cd67fbb5575b" active="true" id="7283ae05-2ab8-4255-b263-ded019e4ea2e">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>P</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>p</segment>
         </segment>
         <segment active="true" id="0a11acc2-cca2-45c8-a500-b3952aaf9002">
             <description>voiceless uvular stop</description>
             <graphemes>q Q</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002" active="true" id="f0b39b35-81b2-44f8-a8db-66c7374b0981">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>q</form>
+                </grapheme>
+                <grapheme envs="" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002" active="true" id="11a0c319-bd81-43c4-9783-e29e6e92a3fd">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Q</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>q</segment>
         </segment>
         <segment active="true" id="76e0b311-b742-4eb5-98f9-8670dfce5149">
             <description>voiced alveolar flap</description>
             <graphemes>r R</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="76e0b311-b742-4eb5-98f9-8670dfce5149" active="true" id="b88d5b0c-6bf5-41c4-9daa-eb1b73764a94">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>r</form>
+                </grapheme>
+                <grapheme envs="" segment="76e0b311-b742-4eb5-98f9-8670dfce5149" active="true" id="452d16f7-0b2d-4641-b858-6bb741193d21">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>R</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>r</segment>
         </segment>
         <segment active="true" id="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
             <description>voiceless alveolar fricative</description>
             <graphemes>s S</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b" active="true" id="7bb17247-d8c6-4eab-a9cb-90bab0b19e52">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>s</form>
+                </grapheme>
+                <grapheme envs="" segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b" active="true" id="ec2c2380-7461-4047-b148-8eb84c3aa15c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>S</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>s</segment>
         </segment>
         <segment active="true" id="373d2f17-d2ca-414a-b12e-ca61c9b821ed">
             <description>voiceless alveopalatal fricative</description>
             <graphemes>sh Sh SH</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="true" id="eb6484ba-cb83-4cb0-b366-4774e4dbfba7">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>sh</form>
+                </grapheme>
+                <grapheme envs="" segment="373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="true" id="1b18531b-9154-4502-9049-bf6062901c92">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Sh</form>
+                </grapheme>
+                <grapheme envs="" segment="373d2f17-d2ca-414a-b12e-ca61c9b821ed" active="true" id="9d7cf021-cd8f-44f1-951f-20a667b0badd">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>SH</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>sh</segment>
         </segment>
         <segment active="true" id="65be3575-5c87-4a7d-8560-d1f32a816b2f">
             <description>voiceless alveolar stop</description>
             <graphemes>t T</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="65be3575-5c87-4a7d-8560-d1f32a816b2f" active="true" id="a870cd91-f9c4-4146-b8c2-381ea8842c10">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>t</form>
+                </grapheme>
+                <grapheme envs="" segment="65be3575-5c87-4a7d-8560-d1f32a816b2f" active="true" id="81f33ebe-cc61-4e10-8145-cc59ba454bbe">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>T</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>t</segment>
         </segment>
         <segment active="true" id="fc98c3e4-c13b-4371-821c-cf1d61ef443a">
             <description>voiceless alveolar affricate</description>
             <graphemes>ts Ts TS</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="fc98c3e4-c13b-4371-821c-cf1d61ef443a" active="true" id="2321b0cd-c22d-46f9-8422-c4c793528d12">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ts</form>
+                </grapheme>
+                <grapheme envs="" segment="fc98c3e4-c13b-4371-821c-cf1d61ef443a" active="true" id="252dde59-3d22-4c02-9cf1-bfcaa69415ef">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ts</form>
+                </grapheme>
+                <grapheme envs="" segment="fc98c3e4-c13b-4371-821c-cf1d61ef443a" active="true" id="dafc75a2-57c9-42cc-b027-48b5b35c93f4">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>TS</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>ts</segment>
         </segment>
         <segment active="true" id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f">
             <description>high back rounded vowel</description>
             <graphemes>u U ú Ú</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="057ef47a-3dd0-40ad-988b-0142f1a2fab3">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>u</form>
+                </grapheme>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="9a2b8d29-47f1-4a1e-bbd2-4c77dad9b9f1">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>U</form>
+                </grapheme>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="9d1be672-aad0-42f3-a87c-ec721985e30b">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ú</form>
+                </grapheme>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="455865f9-917c-4137-80ac-b5fdfcbc8bdc">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ú</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>u</segment>
         </segment>
         <segment active="true" id="518cf26f-42ab-4555-ac4d-af1667774959">
             <description>voiced interdental fricative</description>
             <graphemes>v V</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="518cf26f-42ab-4555-ac4d-af1667774959" active="true" id="c9863528-e8db-4484-a200-51b31f091af1">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>v</form>
+                </grapheme>
+                <grapheme envs="" segment="518cf26f-42ab-4555-ac4d-af1667774959" active="true" id="281a867d-139b-4fae-a50f-3cadfde4e107">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>V</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>v</segment>
         </segment>
         <segment active="true" id="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df">
             <description>labio-velar aproximate</description>
             <graphemes>w W</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df" active="true" id="9c5e12fa-2c24-448f-af35-10e1cddb2cf0">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>w</form>
+                </grapheme>
+                <grapheme envs="" segment="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df" active="true" id="c06c4e23-b98d-42c8-918f-f1c4f51e22b5">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>W</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>w</segment>
         </segment>
         <segment active="true" id="a606ebec-8ceb-42bd-93ee-2b78f65f9984">
             <description>voiceless velar fricative</description>
             <graphemes>x X</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a606ebec-8ceb-42bd-93ee-2b78f65f9984" active="true" id="32dff233-ccaa-4e5f-8c15-ba147d973dc8">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>x</form>
+                </grapheme>
+                <grapheme envs="" segment="a606ebec-8ceb-42bd-93ee-2b78f65f9984" active="true" id="1b0094a0-0def-47c5-8da3-5142798cd5aa">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>X</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>x</segment>
         </segment>
         <segment active="true" id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
             <description>voiced palatal approximate</description>
             <graphemes>y Y</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97" active="true" id="7d590f6c-2e14-4e14-97c0-c5a059373262">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>y</form>
+                </grapheme>
+                <grapheme envs="" segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97" active="true" id="bfc67e71-6d66-4434-b26c-91405ccc7143">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Y</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>y</segment>
         </segment>
         <segment active="true" id="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422">
             <description>voiced alveolar fricative</description>
             <graphemes>z Z</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" active="true" id="74c425d4-67b2-4262-92fe-90cf50b2bc0b">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>z</form>
+                </grapheme>
+                <grapheme envs="" segment="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" active="true" id="409e5979-c5a5-4aa5-adf0-628abaf05865">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Z</form>
+                </grapheme>
+            </graphemesAsList>
             <segment>z</segment>
         </segment>
     </segments>
@@ -254,12 +823,6 @@
             <correctSyllabification>aaah</correctSyllabification>
             <word>aaah</word>
         </word>
-       <!-- <word active="true" id="0a51a1d6-6412-425f-9524-d8d98fb5cfe7">
-            <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
-            <cvPredictedSyllabification></cvPredictedSyllabification>
-            <correctSyllabification></correctSyllabification>
-            <word>ababrastro</word>
-        </word>-->
         <word active="true" id="1cd83f48-50cc-42ee-9e1f-8986980fe190">
             <CVParserResult>Success</CVParserResult>
             <cvPredictedSyllabification>ab.ba</cvPredictedSyllabification>

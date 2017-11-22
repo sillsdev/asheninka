@@ -25,13 +25,13 @@
 				<menus>
 					<Menu mnemonicParsing="true" text="%menu.file">
 						<items>
-							<MenuItem mnemonicParsing="true" onAction="#handleNew"
+							<MenuItem mnemonicParsing="true" onAction="#handleNewProject"
 								text="%menu.new" accelerator="Ctrl+n" />
-							<MenuItem mnemonicParsing="true" onAction="#handleOpen"
+							<MenuItem mnemonicParsing="true" onAction="#handleOpenProject"
 								text="%menu.open" accelerator="Ctrl+o" />
-							<MenuItem mnemonicParsing="true" onAction="#handleSave"
+							<MenuItem mnemonicParsing="true" onAction="#handleSaveProject"
 								text="%menu.save" accelerator="Ctrl+s" />
-							<MenuItem mnemonicParsing="true" onAction="#handleSaveAs"
+							<MenuItem mnemonicParsing="true" onAction="#handleSaveProjectAs"
 								text="%menu.saveas" />
 							<SeparatorMenuItem />
 							<Menu mnemonicParsing="true" text="%menu.projectmanagement">
@@ -100,6 +100,10 @@
 									text="%cv.view.words" />
 								<MenuItem mnemonicParsing="true"
 									onAction="#handleCVWordsPredictedVsCorrect" text="%cv.view.wordspredictedvscorrect" />
+								<MenuItem mnemonicParsing="true" onAction="#handleGraphemeNaturalClasses"
+									text="%cv.view.graphemenaturalclasses" />
+								<MenuItem mnemonicParsing="true" onAction="#handleEnvironments"
+									text="%cv.view.environments" />
 							</Menu>
 							<MenuItem mnemonicParsing="true"
 								onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy"
@@ -179,13 +183,13 @@
 				<items>
 					<Button fx:id="buttonToolbarFileNew" contentDisplay="GRAPHIC_ONLY"
 						graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true"
-						onAction="#handleNew" prefHeight="23.0" prefWidth="17.0" text="" />
+						onAction="#handleNewProject" prefHeight="23.0" prefWidth="17.0" text="" />
 					<Button fx:id="buttonToolbarFileOpen" contentDisplay="GRAPHIC_ONLY"
 						graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true"
-						onAction="#handleOpen" prefHeight="23.0" prefWidth="17.0" text="" />
+						onAction="#handleOpenProject" prefHeight="23.0" prefWidth="17.0" text="" />
 					<Button fx:id="buttonToolbarFileSave" contentDisplay="GRAPHIC_ONLY"
 						graphicTextGap="0.0" minWidth="17.0" mnemonicParsing="true"
-						onAction="#handleSave" prefHeight="23.0" prefWidth="17.0" text="" />
+						onAction="#handleSaveProject" prefHeight="23.0" prefWidth="17.0" text="" />
 					<Separator orientation="VERTICAL" prefHeight="0.0"
 						prefWidth="3.0" />
 					<Button fx:id="buttonToolbarEditCut" contentDisplay="GRAPHIC_ONLY"

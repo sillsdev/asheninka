@@ -23,12 +23,16 @@ import java.util.stream.Stream;
 
 import org.controlsfx.control.StatusBar;
 
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.Environment;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
@@ -88,18 +92,19 @@ public class ParaTExt7SegmentImporter extends SegmentImporter {
 		while (line != null && !line.matches("^\\[.+\\]$")) {
 			if (line.length() > 0) {
 				int indexOfStartOfCharacters = line.indexOf("=") + 1;
-				String[] chars = line.substring(indexOfStartOfCharacters).split("/");
+				String[] chars = line.substring(indexOfStartOfCharacters).split("[/ ]");
 				if (chars.length <= 0) {
 					continue;
 				}
-				String sName = chars[0];
-				StringBuilder sb = new StringBuilder();
+				ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
 				for (int i = 0; i < chars.length; i++) {
-					sb.append(chars[i]);
-					sb.append(" ");
+					Grapheme grapheme = new Grapheme(chars[i], "", new SimpleListProperty<Environment>(),
+							"", true);
+					graphemes.add(grapheme);
 				}
-				String sGraphemes = sb.toString().trim();
-				Segment seg = new Segment(sName, sGraphemes, "");
+				String sName = chars[0];
+				Segment seg = new Segment(sName, "", "");
+				seg.setGraphs(graphemes);
 				languageProject.getSegmentInventory().add(seg);
 			}
 			line = bufr.readLine();

@@ -12,12 +12,14 @@ import java.util.ResourceBundle;
 import sil.org.syllableparser.ApplicationPreferences;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.MainApp;
+import sil.org.syllableparser.model.GraphemeOrNaturalClass;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.SylParserObject;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
 import sil.org.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import sil.org.syllableparser.view.CVNaturalClassesController.VernacularWrappingTableCell;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -91,8 +93,16 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		checkBoxColumnHead.setOnAction((event) -> {
 			handleCheckBoxColumnHead();
 		});
-		segOrNCColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.segmentOrNaturalClassProperty());
+		segOrNCColumn.setCellValueFactory(cellData -> {
+			if (cellData.getValue().isSegment()) {
+				return cellData.getValue().segmentOrNaturalClassProperty();
+			} else {
+				SimpleStringProperty sp = new SimpleStringProperty(Constants.NATURAL_CLASS_PREFIX
+						+ cellData.getValue().segmentOrNaturalClassProperty().getValue()
+						+ Constants.NATURAL_CLASS_SUFFIX);
+				return sp;
+			}
+		});
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		cvSegmentOrNaturalClassTable.setEditable(true);
@@ -105,6 +115,21 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		});
 
 		initializeCheckBoxContextMenu(resources);
+
+		cvSegmentOrNaturalClassTable.setOnKeyPressed(keyEvent -> {
+			switch (keyEvent.getCode()) {
+			case SPACE: {
+				keyEvent.consume();
+				CVSegmentOrNaturalClass snc = cvSegmentOrNaturalClassTable.getSelectionModel()
+						.getSelectedItem();
+				if (snc != null) {
+					snc.setChecked(!snc.isChecked());
+				}
+				break;
+			}
+			}
+		});
+
 	}
 
 	/**
@@ -157,7 +182,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 	}
 
 	private void setCheckedStatus(SylParserObject sylParserObject) {
-		if (SylParserObject.findIndexInSylParserObjectListByUuid(
+		if (SylParserObject.findIndexInListByUuid(
 				naturalClass.getSegmentsOrNaturalClasses(), sylParserObject.getID()) > -1) {
 			currentSegmentOrNaturalClass.setChecked(true);
 		}
@@ -186,12 +211,12 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 		for (CVSegmentOrNaturalClass segmentOrNaturalClass : cvSegmentsOrNaturalClasses) {
 			if (segmentOrNaturalClass.isChecked()) {
 				if (segmentOrNaturalClass.isSegment()) {
-					int i = Segment.findIndexInSegmentsListByUuid(
+					int i = Segment.findIndexInListByUuid(
 							languageProject.getSegmentInventory(), segmentOrNaturalClass.getUuid());
 					naturalClass.getSegmentsOrNaturalClasses().add(
 							languageProject.getSegmentInventory().get(i));
 				} else {
-					int i = CVNaturalClass.findIndexInNaturaClassListByUuid(
+					int i = CVNaturalClass.findIndexInListByUuid(
 							cvApproach.getCVNaturalClasses(), segmentOrNaturalClass.getUuid());
 					naturalClass.getSegmentsOrNaturalClasses().add(
 							cvApproach.getCVNaturalClasses().get(i));

@@ -233,6 +233,11 @@ id="tTryAWord"
 types="tTool"
 ></type
 ><type
+color="black"
+font-family="Courier New"
+id="TT"
+></type
+><type
 color="purple"
 font-weight="bold"
 id="tView"

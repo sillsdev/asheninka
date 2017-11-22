@@ -226,6 +226,7 @@ font-weight="bold"
 spaceafter="12pt"
 spacebefore="24pt"
 textalign="center"
+useperiodafterappendixletter="yes"
 ></contentsLayout
 ><abstractLayout
 font-size="14pt"

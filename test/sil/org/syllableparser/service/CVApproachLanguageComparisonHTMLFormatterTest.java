@@ -1,3 +1,4 @@
+
 // Copyright (c) 2016 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
@@ -69,6 +70,9 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 		comparer.setDataSet1Info(file1.getPath());
 		comparer.setDataSet2Info(file2.getPath());
 		comparer.compareSegmentInventory();
+		comparer.compareGraphemes();
+		comparer.compareGraphemeNaturalClasses();
+		comparer.compareEnvironments();
 		comparer.compareNaturalClasses();
 		comparer.compareSyllablePatterns();
 		comparer.compareSyllablePatternOrder();

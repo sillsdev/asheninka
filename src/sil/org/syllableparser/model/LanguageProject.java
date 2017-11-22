@@ -6,6 +6,7 @@
  */
 package sil.org.syllableparser.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,6 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
+import sil.org.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -35,12 +38,15 @@ public class LanguageProject {
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
+	private ObservableList<GraphemeNaturalClass> graphemeNaturalClasses = FXCollections.observableArrayList();
 	private Language vernacularLanguage;
 	private Language analysisLanguage;
 	private HyphenationParametersListWord hyphenationParametersListWord;
 	private HyphenationParametersParaTExt hyphenationParametersParaTExt;
 	private HyphenationParametersXLingPaper hyphenationParametersXLingPaper;
-
+	private int databaseVersion;
+	private ObservableList<Environment> environments = FXCollections.observableArrayList();
+	
 	public LanguageProject() {
 		super();
 		cvApproach = new CVApproach();
@@ -59,6 +65,17 @@ public class LanguageProject {
 		cvApproach.clear();
 		segmentInventory.clear();
 		words.clear();
+		environments.clear();
+		graphemeNaturalClasses.clear();
+	}
+
+	public int getDatabaseVersion() {
+		return databaseVersion;
+	}
+
+	@XmlAttribute(name="databaseVersion")
+	public void setDatabaseVersion(int databaseVersion) {
+		this.databaseVersion = databaseVersion;
 	}
 
 	public CVApproach getCVApproach() {
@@ -91,6 +108,32 @@ public class LanguageProject {
 		this.segmentInventory = cvSegmentInventoryData;
 	}
 
+	@XmlElementWrapper(name = "graphemeNaturalClassess")
+	@XmlElement(name = "graphemeNaturalClass")
+	public ObservableList<GraphemeNaturalClass> getGraphemeNaturalClasses() {
+		return graphemeNaturalClasses;
+	}
+
+	public void setGraphemeNaturalClasses(ObservableList<GraphemeNaturalClass> graphemeNaturalClassesData) {
+		this.graphemeNaturalClasses = graphemeNaturalClassesData;
+	}
+
+	public List<Grapheme> getActiveGraphemes() {
+		List<Grapheme> graphemes = new ArrayList<Grapheme>();
+		for (Segment segment : getActiveSegmentsInInventory()) {
+			graphemes.addAll(segment.getActiveGraphs());
+		}
+		return graphemes;
+	}
+
+	public List<GraphemeNaturalClass> getActiveGraphemeNaturalClasses() {
+		return graphemeNaturalClasses.stream().filter(gnc -> gnc.isActive()).collect(Collectors.toList());
+	}
+
+	public List<Environment> getActiveAndValidEnvironments() {
+		return environments.stream().filter(env -> env.isActive() && env.isValid()).collect(Collectors.toList());
+	}
+
 	/**
 	 * @return the word Data
 	 */
@@ -108,6 +151,24 @@ public class LanguageProject {
 		this.words = words;
 	}
 
+	@XmlElementWrapper(name = "environments")
+	@XmlElement(name = "environment")
+	public ObservableList<Environment> getEnvironments() {
+		return environments;
+	}
+
+	public void setEnvironments(ObservableList<Environment> environments) {
+		this.environments = environments;
+	}
+	
+	public ObservableList<Grapheme> getGraphemes() {
+		ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
+		for (Segment segment : getSegmentInventory()) {
+			graphemes.addAll(segment.getGraphs());
+		}
+		return graphemes;
+	}
+
 	public String getParaTExtHyphenatedWordsPreamble() {
 		return sParaTExtHyphenatedWordsPreamble;
 	}
@@ -120,15 +181,7 @@ public class LanguageProject {
 	 * @param languageProjectLoaded
 	 */
 	public void load(LanguageProject languageProjectLoaded) {
-//		String fontFamily = languageProjectLoaded.getVernacularFontFamily();
-//		Font font = vernacularFont;
-//		double fontSize = languageProjectLoaded.getVernacularFontSize();
-//		String fontType = languageProjectLoaded.getVernacularFontType();
-//		String defaultFont = "Charis SIL";
-//		setFontInfo(fontFamily, fontSize, fontType, defaultFont);
-//		setVernacularFontFamily(fontFamily);
-//		vernacularFont = new Font("Charis SIL", 12);
-		
+		databaseVersion = languageProjectLoaded.getDatabaseVersion();
 		cvApproach.load(languageProjectLoaded.getCVApproach());
 		cvApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
@@ -139,6 +192,14 @@ public class LanguageProject {
 		ObservableList<Word> wordsLoadedData = languageProjectLoaded.getWords();
 		for (Word word : wordsLoadedData) {
 			words.add(word);
+		}
+		ObservableList<GraphemeNaturalClass> graphemeNaturalClassesLoadedData = languageProjectLoaded.getGraphemeNaturalClasses();
+		for (GraphemeNaturalClass gnc : graphemeNaturalClassesLoadedData) {
+			graphemeNaturalClasses.add(gnc);
+		}
+		ObservableList<Environment> environmentsLoadedData = languageProjectLoaded.getEnvironments();
+		for (Environment environment : environmentsLoadedData) {
+			environments.add(environment);
 		}
 		analysisLanguage = languageProjectLoaded.getAnalysisLanguage();
 		vernacularLanguage = languageProjectLoaded.getVernacularLanguage();
@@ -199,7 +260,7 @@ public class LanguageProject {
 	/**
 	 * @param word
 	 * @param sUntested
-	 *            TODO
+	 *
 	 */
 	public void createNewWordFromParaTExt(Word word, String sUntested) {
 		word.setCVParserResult(sUntested);

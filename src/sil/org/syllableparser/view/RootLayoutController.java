@@ -389,7 +389,7 @@ public class RootLayoutController implements Initializable {
 	 * Creates an empty language project.
 	 */
 	@FXML
-	public void handleNew() {
+	public void handleNewProject() {
 		TimerService timer = mainApp.getSaveDataPeriodicallyService();
 		if (timer != null) {
 			mainApp.getSaveDataPeriodicallyService().cancel();
@@ -399,13 +399,16 @@ public class RootLayoutController implements Initializable {
 			// probably creating a new file the first time the program is run;
 			// set the directory to the closest we can to a reasonable default
 			sDirectoryPath = tryToGetDefaultDirectoryPath();
-			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		}
-		File file = new File(Constants.ASHENINKA_STARTER_FILE);
-		mainApp.loadLanguageData(file);
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
-		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, true,
+		File fileCreated = ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false,
 				syllableParserFilterDescription);
+		if (fileCreated != null) {
+			File file = new File(Constants.ASHENINKA_STARTER_FILE);
+			mainApp.loadLanguageData(file);
+			mainApp.saveLanguageData(fileCreated);
+			mainApp.updateStageTitle(fileCreated);
+		}
 		if (timer != null) {
 			mainApp.getSaveDataPeriodicallyService().restart();
 		}
@@ -476,7 +479,7 @@ public class RootLayoutController implements Initializable {
 	 * Opens a FileChooser to let the user select a language project to load.
 	 */
 	@FXML
-	public void handleOpen() {
+	public void handleOpenProject() {
 		doFileOpen(false);
 	}
 
@@ -500,12 +503,12 @@ public class RootLayoutController implements Initializable {
 	 * there is no open file, the "save as" dialog is shown.
 	 */
 	@FXML
-	public void handleSave() {
+	public void handleSaveProject() {
 		File file = mainApp.getLanguageProjectFilePath();
 		if (file != null) {
 			mainApp.saveLanguageData(file);
 		} else {
-			handleSaveAs();
+			handleSaveProjectAs();
 		}
 	}
 
@@ -513,7 +516,7 @@ public class RootLayoutController implements Initializable {
 	 * Opens a FileChooser to let the user select a file to save to.
 	 */
 	@FXML
-	private void handleSaveAs() {
+	private void handleSaveProjectAs() {
 		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false,
 				syllableParserFilterDescription);
 	}
@@ -755,7 +758,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleExit() {
-		handleSave();
+		handleSaveProject();
 		System.exit(0);
 	}
 
@@ -829,6 +832,23 @@ public class RootLayoutController implements Initializable {
 		cvApproachController.handleCVWordsPredictedVsCorrect();
 		selectApproachViewItem(4);
 	}
+
+	@FXML
+	private void handleGraphemeNaturalClasses() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		cvApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(5);
+	}
+
+	@FXML
+	private void handleEnvironments() {
+		handleCVApproach();
+		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		cvApproachController.handleEnvironments();
+		selectApproachViewItem(6);
+	}
+
 
 	protected void selectApproachViewItem(int iItem) {
 		Platform.runLater(new Runnable() {
@@ -1107,6 +1127,14 @@ public class RootLayoutController implements Initializable {
 		handleCVApproach();
 		String sLastApproachViewUsed = applicationPreferences.getLastApproachViewUsed();
 		switch (sLastApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(6);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(5);
+			break;
+
 		case "NATURAL_CLASSES":
 			selectApproachViewItem(1);
 			break;

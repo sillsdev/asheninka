@@ -3,6 +3,8 @@
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 package sil.org.syllableparser;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -38,6 +40,7 @@ import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.model.cvapproach.CVApproach;
 import sil.org.syllableparser.model.cvapproach.CVNaturalClass;
+import sil.org.syllableparser.service.DatabaseMigrator;
 import sil.org.syllableparser.view.ControllerUtilities;
 import sil.org.syllableparser.view.RootLayoutController;
 
@@ -53,7 +56,6 @@ public class MainApp extends Application {
 	private XMLBackEndProvider xmlBackEndProvider;
 	private LanguageProject languageProject;
 	private String sOperatingSystem = System.getProperty("os.name");
-
 
 	public static String kApplicationTitle = "Asheninka";
 	// private static String kLanguageProjectFilePath =
@@ -85,7 +87,8 @@ public class MainApp extends Application {
 	}
 
 	private void restoreWindowSettings() {
-		primaryStage = applicationPreferences.getLastWindowParameters(ApplicationPreferences.LAST_WINDOW, primaryStage, 660.0, 1000.);
+		primaryStage = applicationPreferences.getLastWindowParameters(
+				ApplicationPreferences.LAST_WINDOW, primaryStage, 660.0, 1000.);
 	}
 
 	public TimerService getSaveDataPeriodicallyService() {
@@ -122,12 +125,12 @@ public class MainApp extends Application {
 
 	@Override
 	public void stop() {
-		applicationPreferences.setLastWindowParameters(ApplicationPreferences.LAST_WINDOW, primaryStage);
+		applicationPreferences.setLastWindowParameters(ApplicationPreferences.LAST_WINDOW,
+				primaryStage);
 		applicationPreferences.setLastLocaleLanguage(locale.getLanguage());
 		applicationPreferences.setLastApproachUsed(controller.getApproachUsed());
 		applicationPreferences.setLastApproachViewUsed(controller.getViewUsed());
-		controller.handleSave();
-		// TODO: add last file opened
+		controller.handleSaveProject();
 	}
 
 	public void setLocale(Locale locale) {
@@ -166,10 +169,13 @@ public class MainApp extends Application {
 
 			// Try to load last opened file.
 			File file = applicationPreferences.getLastOpenedFile();
-			if (file != null) {
+			if (file != null && file.exists()) {
 				loadLanguageData(file);
 			} else {
-				askUserForNewOrToOpenExisingFile(bundle, controller);
+				boolean fSucceeded = askUserForNewOrToOpenExistingFile(bundle, controller);
+				if (!fSucceeded) {
+					System.exit(0);
+				}
 			}
 
 			updateStatusBarNumberOfItems("");
@@ -184,12 +190,12 @@ public class MainApp extends Application {
 	}
 
 	protected void adjustMenusForMacOSX() {
-		VBox vbox = (VBox)rootLayout.getChildren().get(0);
+		VBox vbox = (VBox) rootLayout.getChildren().get(0);
 		MenuBar menuBar = (MenuBar) vbox.getChildren().get(0);
 		menuBar.useSystemMenuBarProperty().set(true);
 	}
 
-	protected void askUserForNewOrToOpenExisingFile(ResourceBundle bundle,
+	protected boolean askUserForNewOrToOpenExistingFile(ResourceBundle bundle,
 			RootLayoutController controller) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(bundle.getString("program.name"));
@@ -208,15 +214,21 @@ public class MainApp extends Application {
 		alert.getButtonTypes().setAll(buttonCreateNewProject, buttonOpenExistingProject,
 				buttonCancel);
 
+		boolean fSucceeded = true;
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonCreateNewProject) {
-			controller.handleNew();
+			controller.handleNewProject();
+			if (languageProject.getActiveSegmentsInInventory().size() == 0) {
+				// The user canceled creating a new project
+				fSucceeded = false;
+			}
 		} else if (result.get() == buttonOpenExistingProject) {
 			controller.doFileOpen(true);
 		} else {
 			// ... user chose CANCEL or closed the dialog
 			System.exit(0);
 		}
+		return fSucceeded;
 	}
 
 	/**
@@ -229,6 +241,11 @@ public class MainApp extends Application {
 	}
 
 	public void loadLanguageData(File file) {
+		DatabaseMigrator migrator = new DatabaseMigrator(file);
+		int version = migrator.getVersion();
+		if (version < Constants.CURRENT_DATABASE_VERSION) {
+			migrator.doMigration();
+		}
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		applicationPreferences.setLastOpenedFilePath(file);
 		applicationPreferences.setLastOpenedDirectoryPath(file.getParent());
@@ -237,7 +254,8 @@ public class MainApp extends Application {
 
 	public void updateStageTitle(File file) {
 		if (file != null) {
-			String sFileNameToUse = file.getName().replace("." + Constants.ASHENINKA_DATA_FILE_EXTENSION, "");
+			String sFileNameToUse = file.getName().replace(
+					"." + Constants.ASHENINKA_DATA_FILE_EXTENSION, "");
 			primaryStage.setTitle(kApplicationTitle + " - " + sFileNameToUse);
 		} else {
 			primaryStage.setTitle(kApplicationTitle);

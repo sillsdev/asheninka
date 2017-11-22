@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!-- Copyright (c) 2016 SIL International 
     This software is licensed under the LGPL, version 2.1 or later 
     (http://www.gnu.org/licenses/lgpl-2.1.html) -->
-    
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
 
-<StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.CVSegmentInventoryController">
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sil.org.syllableparser.view.CVSegmentInventoryController">
    <children>
       <SplitPane dividerPositions="0.4373040752351097" prefHeight="160.0" prefWidth="200.0">
         <items>
@@ -51,12 +58,26 @@
                         <Label text="%label.description" GridPane.rowIndex="1" />
                         <Label text="%label.orthographicforms" GridPane.rowIndex="2" />
                         <Label text="%label.active" GridPane.rowIndex="3" />
-                        <TextField fx:id="segmentField" GridPane.columnIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
-                        <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
-                        <TextField fx:id="graphemesField" GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="segmentField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" />
+                        <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="graphemesField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
+<!--                   <Label layoutX="5.0" layoutY="150.0" text="%label.orthographicformswithcolon" /> -->
+                  <TableView fx:id="graphemesTable" layoutX="17.0" layoutY="170.0" prefHeight="232.0" prefWidth="430.0">
+                    <columns>
+                      <TableColumn fx:id="checkBoxColumn" prefWidth="30.0">
+        		       	<graphic>
+                		  <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" selected="true" />
+              			</graphic>
+		              </TableColumn>
+                      <TableColumn fx:id="graphemeColumn" prefWidth="75.0" text="%label.orthographicform" />
+                      <TableColumn fx:id="environmentsColumn" prefWidth="290.0" text="%label.environments" />
+<!--                       <TableColumn fx:id="graphemeDescriptionColumn" prefWidth="89.0" text="%label.description" /> -->
+					  <TableColumn fx:id="environmentsButtonColumn" prefWidth="30.0" />
+                    </columns>
+                  </TableView>
                </children>
             </AnchorPane>
         </items>

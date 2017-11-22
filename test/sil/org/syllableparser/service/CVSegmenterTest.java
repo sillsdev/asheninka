@@ -23,6 +23,9 @@ import org.junit.Test;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
+import sil.org.syllableparser.model.Environment;
+import sil.org.syllableparser.model.EnvironmentContext;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.service.CVSegmenter;
@@ -36,22 +39,23 @@ public class CVSegmenterTest {
 	CVApproach cva;
 	ObservableList<Segment> segmentInventory;
 	CVSegmenter segmenter;
-	List<Segment> cvSegmentInventory;
-
+	List<Grapheme> activeGraphemes;
+	LanguageProject languageProject;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 
-		LanguageProject languageProject = new LanguageProject();
+		languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		cvSegmentInventory = languageProject.getActiveSegmentsInInventory();
-		segmenter = new CVSegmenter(cvSegmentInventory);
+		activeGraphemes = languageProject.getActiveGraphemes();
+		segmenter = new CVSegmenter(activeGraphemes,
+				languageProject.getActiveGraphemeNaturalClasses());
 	}
 
 	/**
@@ -64,12 +68,12 @@ public class CVSegmenterTest {
 	// make sure the setup is what we expect
 	@Test
 	public void inventoryTest() {
-		assertEquals("Active segment inventory size", 26, cvSegmentInventory.size());
-		String seg = cvSegmentInventory.get(0).getSegment().trim();
-		assertEquals("First segment is /a/", "a", seg);
-		seg = cvSegmentInventory.get(25).getSegment().trim();
-		assertEquals("Last segment is /ɲ/", "ɲ", seg);
-		HashMap<String, Segment> graphemes = segmenter.getGraphemeToSegmentMapping();
+		assertEquals("Active graphemes size", 54, activeGraphemes.size());
+		String grapheme = activeGraphemes.get(0).getForm().trim();
+		assertEquals("First grapheme is /a/", "a", grapheme);
+		grapheme = activeGraphemes.get(53).getForm().trim();
+		assertEquals("Last grapheme is /ɲ/", "Ñ", grapheme);
+		HashMap<String, List<Grapheme>> graphemes = segmenter.getGraphemeToSegmentMapping();
 		assertEquals("Hash map size is 54", 54, graphemes.size());
 	}
 
@@ -83,8 +87,27 @@ public class CVSegmenterTest {
 				"ch, i, k, o", "Ch, i, k, o", 4, true, 0);
 		checkSegmentation("SHiju", "Expect graphemes to be /SH,sh/, /i/, missing", "sh, i",
 				"SH, i", 2, false, 3);
-		checkSegmentation("aqba", "Expect graphemes to be /a/, missing", "a", "a", 1, false,
-				1);
+		checkSegmentation("aqba", "Expect graphemes to be /a/, missing", "a", "a", 1, false, 1);
+		checkSegmentation("shomu", "Expect sh environment to fail: it is not before /i/", "s", "s",
+				1, false, 1);
+	}
+
+	@Test
+	public void wordSegmentingWithEnvironmentsTest() {
+		languageProject = new LanguageProject();
+		Locale locale = new Locale("en");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
+		File file = new File(Constants.UNIT_TEST_DATA_FILE_ENVIRONMENTS);
+		xmlBackEndProvider.loadLanguageDataFromFile(file);
+		cva = languageProject.getCVApproach();
+		activeGraphemes = languageProject.getActiveGraphemes();
+		segmenter = new CVSegmenter(activeGraphemes,
+				languageProject.getActiveGraphemeNaturalClasses());
+
+		checkSegmentation("tlaqa", "Expect graphemes to be /tl/, /a/, qk/, and /a/",
+				"tl, a, k, a", "tl, a, q, a", 4, true, 0);
+		checkSegmentation("tliqa", "Expect q environment to fail: it is not after /tla/", "tl, i", "tl, i",
+				2, false, 3);
 	}
 
 	protected void checkSegmentation(String word, String comment, String expectedSegments,

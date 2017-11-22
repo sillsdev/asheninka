@@ -22,6 +22,7 @@ import org.junit.Test;
 import sil.org.syllableparser.Constants;
 import sil.org.syllableparser.backendprovider.XMLBackEndProvider;
 import sil.org.syllableparser.model.cvapproach.*;
+import sil.org.syllableparser.model.Grapheme;
 import sil.org.syllableparser.model.LanguageProject;
 import sil.org.syllableparser.model.Segment;
 import sil.org.syllableparser.service.CVNaturalClasser;
@@ -40,7 +41,7 @@ public class CVSyllabifierTest {
 	ObservableList<CVNaturalClass> naturalClasses;
 	CVSegmenter segmenter;
 	ObservableList<Segment> segmentInventory;
-	List<Segment> cvSegmentInventory;
+	List<Grapheme> activeGraphemes;
 	CVNaturalClasser naturalClasser;
 	List<CVNaturalClass> cvNaturalClasses;
 	ObservableList<CVSyllablePattern> patterns;
@@ -60,8 +61,9 @@ public class CVSyllabifierTest {
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
-		cvSegmentInventory = languageProject.getActiveSegmentsInInventory();
-		segmenter = new CVSegmenter(cvSegmentInventory);
+		activeGraphemes = languageProject.getActiveGraphemes();
+		segmenter = new CVSegmenter(activeGraphemes,
+				languageProject.getActiveGraphemeNaturalClasses());
 		cvNaturalClasses = cva.getActiveCVNaturalClasses();
 		naturalClasser = new CVNaturalClasser(cvNaturalClasses);
 		cvPatterns = cva.getActiveCVSyllablePatterns();
@@ -92,10 +94,13 @@ public class CVSyllabifierTest {
 		checkSyllabification("dapbek", true, 2, "CVC, CVC", "dap.bek");
 		checkSyllabification("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
 		checkSyllabification("bovdek", true, 2, "CVC, CVC", "bov.dek");
-		checkSyllabification("fuhgt", false, 0, "", "");  // no CCC possible
+		checkSyllabification("fuhgt", false, 0, "", ""); // no CCC possible
 		checkSyllabification("blofugh", true, 2, "CCV, CVCC", "blo.fugh");
 		checkSyllabification("bo", true, 1, "CV", "bo");
-		checkSyllabification("funglo", false, 0, "", "");  // CVCC only word finally; CCV not possible word medially
+		checkSyllabification("funglo", false, 0, "", ""); // CVCC only word
+															// finally; CCV not
+															// possible word
+															// medially
 		checkSyllabification("fugh", true, 1, "CVCC", "fugh");
 		checkSyllabification("flu", true, 1, "CCV", "flu");
 		checkSyllabification("fluk", true, 1, "CCV+hiC", "fluk");
@@ -103,10 +108,11 @@ public class CVSyllabifierTest {
 
 	protected void checkSyllabification(String word, boolean success, int numberOfSyllables,
 			String expectedCVPatternsUsed, String expectedSyllabification) {
-		CVSegmenterResult segResult =  segmenter.segmentWord(word);
+		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		boolean fSuccess = segResult.success;
 		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-		CVNaturalClasserResult ncResult = naturalClasser.convertSegmentsToNaturalClasses(segmentsInWord);
+		CVNaturalClasserResult ncResult = naturalClasser
+				.convertSegmentsToNaturalClasses(segmentsInWord);
 		fSuccess = ncResult.success;
 		List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
 				.getNaturalClassListsInCurrentWord();
@@ -129,10 +135,13 @@ public class CVSyllabifierTest {
 		checkSyllabifyWord("dapbek", true, 2, "CVC, CVC", "dap.bek");
 		checkSyllabifyWord("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
 		checkSyllabifyWord("bovdek", true, 2, "CVC, CVC", "bov.dek");
-		checkSyllabifyWord("fuhgt", false, 0, "", "");  // no CCC possible
+		checkSyllabifyWord("fuhgt", false, 0, "", ""); // no CCC possible
 		checkSyllabifyWord("blofugh", true, 2, "CCV, CVCC", "blo.fugh");
 		checkSyllabifyWord("bo", true, 1, "CV", "bo");
-		checkSyllabifyWord("funglo", false, 0, "", "");  // CVCC only word finally; CCV not possible word medially
+		checkSyllabifyWord("funglo", false, 0, "", ""); // CVCC only word
+														// finally; CCV not
+														// possible word
+														// medially
 		checkSyllabifyWord("fugh", true, 1, "CVCC", "fugh");
 		checkSyllabifyWord("flu", true, 1, "CCV", "flu");
 		checkSyllabifyWord("cat", false, 0, "", ""); // no c segment
@@ -168,70 +177,73 @@ public class CVSyllabifierTest {
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(0, traceInfo.size());
-		
+
 		checkSyllabifyWord("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
 		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(2, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertNotNull(sylInfo);
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-		assertEquals(false,sylInfo.parseWasSuccessful);
+		assertEquals(false, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(7, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertNotNull(sylInfo);
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-		assertEquals(false,sylInfo.parseWasSuccessful);
+		assertEquals(false, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(0, traceInfo.size());
-		
+
 		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
 		sylInfo = traceInfo.get(1);
 		assertNotNull(sylInfo);
 		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
-		assertEquals(true,sylInfo.parseWasSuccessful);
+		assertEquals(true, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(1, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertNotNull(sylInfo);
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-		assertEquals(true,sylInfo.parseWasSuccessful);
+		assertEquals(true, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(2, traceInfo.size());
 		sylInfo = traceInfo.get(1);
 		assertNotNull(sylInfo);
 		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
-		assertEquals(true,sylInfo.parseWasSuccessful);
+		assertEquals(true, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(0, traceInfo.size());
-		
-		checkSyllabifyWord("funglo", false, 0, "", "");  // CVCC only word finally; CCV not possible word medially
+
+		checkSyllabifyWord("funglo", false, 0, "", ""); // CVCC only word
+														// finally; CCV not
+														// possible word
+														// medially
 		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(7, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertNotNull(sylInfo);
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-		assertEquals(false,sylInfo.parseWasSuccessful);
+		assertEquals(false, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(7, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertNotNull(sylInfo);
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-		assertEquals(false,sylInfo.parseWasSuccessful);
+		assertEquals(false, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(0, traceInfo.size());
-		
+
 		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
 		sylInfo = traceInfo.get(1);
 		assertNotNull(sylInfo);
 		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
-		assertEquals(false,sylInfo.parseWasSuccessful);
+		assertEquals(false, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(7, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertNotNull(sylInfo);
 		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-		assertEquals(false,sylInfo.parseWasSuccessful);
+		assertEquals(false, sylInfo.parseWasSuccessful);
 		traceInfo = sylInfo.daughterInfo;
 		assertEquals(0, traceInfo.size());
 
