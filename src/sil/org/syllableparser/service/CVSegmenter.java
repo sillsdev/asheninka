@@ -67,10 +67,6 @@ public class CVSegmenter {
 		}
 	}
 
-	public List<Segment> getActiveSegmentInventory() {
-		return activeSegmentInventory;
-	}
-
 	public List<CVSegmentInSyllable> getSegmentsInWord() {
 		return segmentsInCurrentWord;
 	}
