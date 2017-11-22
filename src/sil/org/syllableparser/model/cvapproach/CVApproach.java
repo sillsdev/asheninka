@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import sil.org.utility.*;
 import sil.org.syllableparser.model.Approach;
+import sil.org.syllableparser.model.GraphemeNaturalClass;
 import sil.org.syllableparser.model.HyphenationParameters;
 import sil.org.syllableparser.model.HyphenationParametersListWord;
 import sil.org.syllableparser.model.HyphenationParametersParaTExt;

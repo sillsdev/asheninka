@@ -16,6 +16,7 @@ public class Constants {
 	// program wide constants
 	public static final String VERSION_NUMBER = "0.4.1.0 Alpha";
 	public static final int SAVE_DATA_PERIODICITY = 15;
+	public static final int CURRENT_DATABASE_VERSION = 2;
 
 	// file-related constants
 	public static final String ASHENINKA_BACKUP_FILE_EXTENSION = "ashebackup";
@@ -39,6 +40,7 @@ public class Constants {
 	public static final String TEXT_FILE_EXTENSION = "*.txt";
 	public static final String UTF8_ENCODING = "UTF8";
 	public static final String XML_FILE_EXTENSION = ".xml";
+	public static final String MIGRATION_XSLT_FILE_NAME = "resources/DataMigration";
 
 	// chooser related constants
 	public static final String WORD_BOUNDARY_SYMBOL = "#";
@@ -52,6 +54,9 @@ public class Constants {
 			+ "<title>" + Constants.PLEASE_WAIT_HTML_TITLE + "</title>\n</head>\n<body><h2>";
 	public static final String PLEASE_WAIT_HTML_MIDDLE = "</h2>\n<p>";
 	public static final String PLEASE_WAIT_HTML_ENDING = "</p>\n</body>\n</html>\n";
+	public static final String NATURAL_CLASS_PREFIX = "[";
+	public static final String NATURAL_CLASS_SUFFIX = "]";
+	
 
 	// Unit Testing constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/sil/org/syllableparser/testData/CVTestData.";
@@ -66,12 +71,18 @@ public class Constants {
 	public static final String UNIT_TEST_DATA_FILE_3 = "test/sil/org/syllableparser/testData/CVTestData3.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_4_NAME = "test/sil/org/syllableparser/testData/CVTestData4.";
 	public static final String UNIT_TEST_DATA_FILE_4 = "test/sil/org/syllableparser/testData/CVTestData4.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_VERSION_000 = "test/sil/org/syllableparser/testData/CVTestDataVersion000.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_VERSION_001 = "test/sil/org/syllableparser/testData/CVTestDataVersion001.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_VERSION_002 = "test/sil/org/syllableparser/testData/CVTestDataVersion002.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_VERSION_2 = "test/sil/org/syllableparser/testData/CVTestDataVersion2.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_ENVIRONMENTS = "test/sil/org/syllableparser/testData/CVTestDataEnvironments.ashedata";
 
 	// Text colors
 	public static final Color ACTIVE = Color.BLACK;
 	public static final Color INACTIVE = Color.GRAY;
 	public static final Color PARSER_SUCCESS = Color.GREEN;
 	public static final Color PARSER_FAILURE = Color.RED;
+	public static final Color ENVIRONMENT_ERROR_MESSAGE = Color.CRIMSON;
 	
 	// Try a Word constants
 	public static final String TRY_A_WORD_INTERBLOCK_CSS = ".interblock {\n"

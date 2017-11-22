@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.model;
 
@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
@@ -28,12 +29,12 @@ public abstract class SylParserObject {
 	protected String id;
 	protected boolean active;
 	protected BooleanProperty activeCheckBox;
-	
+
 	public SylParserObject() {
 		active = true;
 		activeCheckBox = new SimpleBooleanProperty(true);
 	}
-	
+
 	@XmlAttribute(name="active")
 	public boolean isActive() {
 		return active;
@@ -46,12 +47,15 @@ public abstract class SylParserObject {
 	public BooleanProperty activeCheckBoxProperty() {
 		return activeCheckBox;
 	}
+//	public ObservableBooleanValue isActiveCheckBox() {
+//	    return activeCheckBox;
+//	}
 	@XmlTransient
 	public boolean isActiveCheckBox() {
 		return activeCheckBox.get();
 	}
 	public void setActiveCheckBox(boolean value) {
-		this.activeCheckBox.set(value);	
+		this.activeCheckBox.set(value);
 	}
 
 
@@ -70,10 +74,9 @@ public abstract class SylParserObject {
 		setID(uuid.toString());
 	}
 
-	public static int findIndexInSylParserObjectListByUuid(ObservableList<SylParserObject> list,
+	public static int findIndexInListByUuid(ObservableList<? extends SylParserObject> list,
 			String uuid) {
 		// TODO: is there a way to do this with lambda expressions?
-		// Is there a way to use SylParserObject somehow?
 		int index = -1;
 		for (SylParserObject sylParserObject : list) {
 			index++;

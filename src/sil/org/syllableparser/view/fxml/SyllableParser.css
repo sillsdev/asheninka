@@ -1,6 +1,6 @@
 /* custom CSS for Syllable Parser */
 /*
- * Copyright (c) 2016 SIL International 
+ * Copyright (c) 2016-2017 SIL International 
  *  This software is licensed under the LGPL, version 2.1 or later 
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  * 
@@ -48,3 +48,10 @@
 .combo-box-popup .list-cell  {
     -fx-opacity: 1.0 ;
 } */
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+ 
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}

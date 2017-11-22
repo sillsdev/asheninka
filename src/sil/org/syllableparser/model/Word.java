@@ -1,8 +1,8 @@
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
+// Copyright (c) 2016-2017 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
- * 
+ *
  */
 package sil.org.syllableparser.model;
 
@@ -102,19 +102,6 @@ public class Word extends SylParserObject {
 		s.bind(Bindings.concat(cvPredictedSyllabificationProperty(), "\n",
 				correctSyllabificationProperty()));
 		return s;
-	}
-
-	public static int findIndexInWordListByUuid(ObservableList<Word> list, String uuid) {
-		// TODO: is there a way to do this with lambda expressions?
-		// Is there a way to use SylParserObject somehow?
-		int index = -1;
-		for (SylParserObject sylParserObject : list) {
-			index++;
-			if (sylParserObject.getID() == uuid) {
-				return index;
-			}
-		}
-		return -1;
 	}
 
 	@Override

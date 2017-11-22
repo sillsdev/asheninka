@@ -64,7 +64,8 @@ public class CVSyllabifier {
 		activeSegmentInventory = languageProject.getActiveSegmentsInInventory();
 		activeNaturalClasses = cva.getActiveCVNaturalClasses();
 		activeCVPatterns = cva.getActiveCVSyllablePatterns();
-		segmenter = new CVSegmenter(activeSegmentInventory);
+		segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
+				languageProject.getActiveGraphemeNaturalClasses());
 		naturalClasser = new CVNaturalClasser(activeNaturalClasses);
 		sSyllabifiedWord = "";
 	}
@@ -96,9 +97,10 @@ public class CVSyllabifier {
 	public boolean convertNaturalClassesToSyllables() {
 		syllablesInCurrentWord.clear();
 		syllabifierTraceInfo.clear();
-		
+
 		// recursively parse into syllables
-		boolean result = parseIntoSyllables(naturalClassListsInCurrentWord, activeCVPatterns, syllabifierTraceInfo, true);
+		boolean result = parseIntoSyllables(naturalClassListsInCurrentWord, activeCVPatterns,
+				syllabifierTraceInfo, true);
 
 		if (result) {
 			// the list of syllables found is in reverse order; flip them
@@ -134,7 +136,8 @@ public class CVSyllabifier {
 	}
 
 	private boolean parseIntoSyllables(List<List<CVNaturalClassInSyllable>> naturalClassesInWord,
-			List<CVSyllablePattern> activePatterns, List<CVTraceSyllabifierInfo> sylTraceInfo, Boolean isWordInitial) {
+			List<CVSyllablePattern> activePatterns, List<CVTraceSyllabifierInfo> sylTraceInfo,
+			Boolean isWordInitial) {
 		if (naturalClassesInWord.size() == 0) {
 			return true;
 		}
@@ -155,7 +158,8 @@ public class CVSyllabifier {
 				if (fDoTrace) {
 					sylInfo.syllablePatternMatched = true;
 				}
-				if (parseIntoSyllables(remainingNaturalClassesInWord, activePatterns, sylInfo.daughterInfo, false)) {
+				if (parseIntoSyllables(remainingNaturalClassesInWord, activePatterns,
+						sylInfo.daughterInfo, false)) {
 					CVSyllable syl = new CVSyllable(result.getNaturalClassesInSyllable());
 					syllablesInCurrentWord.add(syl);
 					if (fDoTrace) {
@@ -200,7 +204,8 @@ public class CVSyllabifier {
 				break;
 			}
 		}
-		if (currentCVPattern.isWordFinal() && result.naturalClassesInSyllable.size() < naturalClassesInWord.size()) {
+		if (currentCVPattern.isWordFinal()
+				&& result.naturalClassesInSyllable.size() < naturalClassesInWord.size()) {
 			// not word final; return false result
 			return result;
 		}
