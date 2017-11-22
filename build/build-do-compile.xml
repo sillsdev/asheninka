@@ -14,6 +14,8 @@
 				<include name="diff-match-patch.jar" />
 				<include name="diff-match-patchCOPYING" />
 				<include name="diff-match-patchREADME.txt" />
+				<include name="antlr-4.7-complete.jar"/>
+				<include name="ANTLR-4-License.txt"/>
 			</fileset>
 		</copy>
 
@@ -26,7 +28,7 @@
 			</fileset>
 		</copy>
 
-		<javac includeantruntime="false" source="1.8" target="1.8" srcdir="build/src" destdir="build/classes" encoding="Cp1252">
+		<javac includeantruntime="false" source="1.8" target="1.8" srcdir="build/src" destdir="build/classes" encoding="UTF-8">
 			<classpath>
 				<fileset dir="build/libs">
 					<include name="*" />

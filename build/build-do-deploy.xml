@@ -5,7 +5,7 @@
 	<include file="${basedir}/build-do-compile.xml" as="nested"/>
 
 	<property name="appName" value="Asheninka Syllable Parser"/>
-	<property name="version" value="0.4.1.0"/>
+	<property name="version" value="0.5.0.0"/>
 
 	<target name="do-deploy" depends="nested.setup-staging-area, nested.do-compile, nested.init-fx-tasks">
 		<delete file="dist" />

@@ -17,6 +17,10 @@
 				<include name="diff-match-patchCOPYING" />
 				<include name="diff-match-patchREADME.txt" />
 			</fileset>
+			<fileset dir="../ANTLR">
+				<include name="antlr-4.7-complete.jar"/>
+				<include name="ANTLR-4-License.txt"/>
+			</fileset>
 		</copy>
 
 		<mkdir dir="doc" />
