@@ -699,13 +699,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			environmentTable.getFocusModel().focus(i);
 			environmentTable.scrollTo(i);
 		}
-		// the last item in the middle pane will be repeated if we delete an
-		// earlier one
-		// how can we get it to show a blank?
-		// chances are we do not have something set up properly - looks like it
-		// is just supposed to work
-		// Any (currently showing) item referring to the deleted item needs to
-		// be have its sncField recalculated.
+		environmentTable.refresh();
 	}
 
 	// code taken from

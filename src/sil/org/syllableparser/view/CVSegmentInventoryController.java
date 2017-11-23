@@ -525,7 +525,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		if (i >= 0) {
 			languageProject.getSegmentInventory().remove(i);
 		}
-
+		cvSegmentTable.refresh();
 	}
 
 	protected void handleCheckBoxSelectAll() {

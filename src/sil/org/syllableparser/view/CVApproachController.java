@@ -229,7 +229,6 @@ public class CVApproachController extends ApproachController {
 	@Override
 	void handleRemoveItem() {
 		currentCVApproachController.handleRemoveItem();
-
 	}
 
 	@Override
