@@ -3,8 +3,6 @@
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 package sil.org.syllableparser;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;

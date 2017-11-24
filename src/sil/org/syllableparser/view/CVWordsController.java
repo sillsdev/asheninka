@@ -335,7 +335,15 @@ public class CVWordsController extends SylParserBaseController implements Initia
 		currentWord = null;
 		if (i >= 0) {
 			words.remove(i);
+			int max = cvWordsTable.getItems().size();
+			i = adjustIndexValue(i, max);
+			// select the last one used
+			cvWordsTable.requestFocus();
+			cvWordsTable.getSelectionModel().select(i);
+			cvWordsTable.getFocusModel().focus(i);
+			cvWordsTable.scrollTo(i);
 		}
+		cvWordsTable.refresh();
 	}
 
 	// code taken from

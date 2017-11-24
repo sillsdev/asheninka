@@ -410,7 +410,15 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		currentSyllablePattern = null;
 		if (i >= 0) {
 			cvApproach.getCVSyllablePatterns().remove(i);
+			int max = cvSyllablePatternTable.getItems().size();
+			i = adjustIndexValue(i, max);
+			// select the last one used
+			cvSyllablePatternTable.requestFocus();
+			cvSyllablePatternTable.getSelectionModel().select(i);
+			cvSyllablePatternTable.getFocusModel().focus(i);
+			cvSyllablePatternTable.scrollTo(i);
 		}
+		cvSyllablePatternTable.refresh();
 	}
 
 	@FXML
