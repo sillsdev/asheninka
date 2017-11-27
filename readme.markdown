@@ -12,9 +12,4 @@ There also is a comparison capability on the Tools menu.  Choose the current imp
 
 #### Known Issues
 * Only the CV Pattern approach is implemented
-<<<<<<< HEAD
-* When first starting a view/tool and there are no items, still shows the fields in the right pane.
-* When delete an item from CV Patterns, still shows one that should not be there.
-=======
->>>>>>> develop
 * The Spanish user interface probably has many errors in it.  Any corrections are welcome.
