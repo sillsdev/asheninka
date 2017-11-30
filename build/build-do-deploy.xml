@@ -28,7 +28,7 @@
 
 		<mkdir dir="dist/resources" />
 	    <copy todir="dist/resources">
-	      <fileset dir="../src/sil/org/syllableparser/resources">
+	      <fileset dir="../src/org/sil/syllableparser/resources">
 	        <include name="**" />
 	      </fileset>
 	    </copy>
@@ -40,7 +40,7 @@
 			<fx:fileset dir="dist" includes="resources/**" />
 		</fx:resources>
 
-		<fx:application id="fxApplication" name="${appName}" mainClass="sil.org.syllableparser.MainApp" version="${version}" />
+		<fx:application id="fxApplication" name="${appName}" mainClass="org.sil.syllableparser.MainApp" version="${version}" />
 
 		<mkdir dir="build/classes/META-INF" />
 
