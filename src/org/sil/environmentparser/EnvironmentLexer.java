@@ -1,6 +1,6 @@
 // Generated from Environment.g4 by ANTLR 4.7
 
-	package sil.org.environmentparser;
+	package org.sil.environmentparser;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

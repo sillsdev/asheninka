@@ -5,7 +5,7 @@
  * @author Andy Black
  * 
  */
-package sil.org.environmentparser;
+package org.sil.environmentparser;
 
 import org.antlr.v4.runtime.RecognitionException;
 

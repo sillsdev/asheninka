@@ -5,7 +5,7 @@
  * @author Andy Black
  * 
  */
-package sil.org.environmentparser;
+package org.sil.environmentparser;
 
 import java.util.Arrays;
 import java.util.LinkedList;

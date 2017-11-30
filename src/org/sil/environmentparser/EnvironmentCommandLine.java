@@ -6,7 +6,7 @@
  * 
  */
 
-package sil.org.environmentparser;
+package org.sil.environmentparser;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
