@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="220.0" prefWidth="509.0" stylesheets="@SyllableParser.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.HyphenationParametersController">
+   <children>
+      <ButtonBar layoutX="216.0" layoutY="190.0" prefHeight="40.0" prefWidth="272.0">
+        <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="%label.ok" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="%label.cancel" />
+            <Button mnemonicParsing="false" onAction="#handleHelp" text="%label.help" />
+        </buttons>
+      </ButtonBar>
+      <Label fx:id="hyphenationParametersFor" layoutX="11.0" layoutY="14.0" text="%label.hyphenationparameters" wrapText="true" />
+      <GridPane layoutX="14.0" layoutY="51.0" prefHeight="120.0" prefWidth="482.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" prefWidth="366.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="116.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="SOMETIMES" /> <!-- maxHeight="93.0" minHeight="10.0" prefHeight="66.0"  -->
+          <RowConstraints vgrow="SOMETIMES" /> <!-- maxHeight="128.0" minHeight="10.0" prefHeight="73.0"  -->
+          <RowConstraints vgrow="SOMETIMES" /> <!-- maxHeight="148.0" minHeight="10.0" prefHeight="65.0"  -->
+        </rowConstraints>
+         <children>
+            <Label text="%label.discretionaryhyphen" wrapText="true" />
+            <Label text="%label.hyphenationstartsafter" wrapText="true" GridPane.rowIndex="1" />
+            <Label text="%label.hyphenationstopsbefore" wrapText="true" GridPane.rowIndex="2" />
+            <TextField fx:id="discretionaryHyphen" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" right="30.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="startIndex" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" right="30.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="endIndex" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" right="30.0" />
+               </GridPane.margin></TextField>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

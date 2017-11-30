@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016 SIL International 
+    This software is licensed under the LGPL, version 2.1 or later 
+    (http://www.gnu.org/licenses/lgpl-2.1.html) -->
+    
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.CVWordsController">
+   <children>
+      <SplitPane dividerPositions="0.4373040752351097" prefHeight="160.0" prefWidth="200.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="cvWordsTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="wordColumn" prefWidth="63.0" text="%label.word" />
+                      <TableColumn fx:id="predictedSyllabificationColumn" prefWidth="119.0" text="%label.predictedsyllabification" />
+                      <TableColumn fx:id="correctSyllabificationColumn" prefWidth="120.0" text="%label.correctsyllabification" />
+                      <TableColumn fx:id="parserResultColumn" prefWidth="-1.0" text="%label.parserresult" editable="false" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="383.0">
+               <children>
+                  <Label layoutX="1.0" layoutY="7.0" text="%label.words" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <GridPane layoutX="5.0" layoutY="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="35.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="70.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="276.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="%label.word" />
+                        <Label text="%label.predictedsyllabification" GridPane.rowIndex="1" />
+                        <Label text="%label.correctsyllabification" GridPane.rowIndex="2" />
+                        <Label text="%label.parserresult" GridPane.rowIndex="3" />
+                        <TextField fx:id="wordField" GridPane.columnIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="true" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</StackPane>
