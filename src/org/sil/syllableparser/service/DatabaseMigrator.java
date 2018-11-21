@@ -99,6 +99,9 @@ public class DatabaseMigrator {
 					StandardCopyOption.REPLACE_EXISTING);
 
 			File file = databaseFile;
+			if (version == 0) {
+				version = 1;
+			}
 			while (version < Constants.CURRENT_DATABASE_VERSION) {
 				file = applyMigrationTransformToFile(version, file);
 				version++;

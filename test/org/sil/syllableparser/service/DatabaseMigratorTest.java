@@ -82,6 +82,7 @@ public class DatabaseMigratorTest {
 		assertEquals(1, version);
 		File version2Database = new File(Constants.UNIT_TEST_DATA_FILE_VERSION_2);
 		DatabaseMigrator migrator2 = new DatabaseMigrator(version2Database);
+		migrator2.doMigration();
 		version = migrator2.getVersion();
 		assertEquals(2, version);
 	}
