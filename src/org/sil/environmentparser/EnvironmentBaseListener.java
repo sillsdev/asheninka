@@ -1,6 +1,6 @@
 // Generated from Environment.g4 by ANTLR 4.7
 
-package org.sil.environmentparser;
+	package org.sil.environmentparser;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;

@@ -8,14 +8,14 @@
 // Last reviewed:
 //
 // <remarks>
-// ANTLR v.4 grammar for recognizing phonological environments
+// ANTLR v.4 grammar for parsing phonological environments
 // </remarks>
 // --------------------------------------------------------------------------------------------
 
 grammar Environment;
 
 @header {
-	package sil.org.environmentparser;
+	package org.sil.environmentparser;
 }
 environment : '/'             '_' rightContext EOF
 			| '/' leftContext '_'              EOF
@@ -76,5 +76,5 @@ literal : ID
 		;
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
-//ID : [^/()_# \t\n\r]+ ; // Identifier
+
 ID : [,.;:^!?@$%&'"a-zA-Z\u0080-\uFFFF0-9+-]+ ; // Identifier
