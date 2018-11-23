@@ -923,9 +923,6 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleChangeInterfaceLanguage() {
-
-//		Map<String, ResourceBundle> validLocales = new TreeMap<String, ResourceBundle>();
-//		getListOfValidLocales(validLocales);
 		ValidLocaleCollector collector = new ValidLocaleCollector(currentLocale);
 		collector.collectValidLocales();
 		Map<String, ResourceBundle> validLocales = collector.getValidLocales();
@@ -937,13 +934,19 @@ public class RootLayoutController implements Initializable {
 		dialog.setContentText(sChooseLanguage);
 
 		Optional<String> result = dialog.showAndWait();
-//		result.ifPresent(locale -> mainApp.setLocale(validLocales.get(locale).getLocale()));
 		result.ifPresent(locale -> {
 			Locale selectedLocale = validLocales.get(locale).getLocale();
 			bundle = validLocales.get(locale);
 			if (!currentLocale.equals(selectedLocale)) {
+				TimerService timer = mainApp.getSaveDataPeriodicallyService();
+				if (timer != null) {
+					mainApp.getSaveDataPeriodicallyService().cancel();
+				}
 				mainApp.setLocale(selectedLocale);
 				currentLocale = selectedLocale;
+				if (timer != null) {
+					mainApp.getSaveDataPeriodicallyService().restart();
+				}
 			}
 		});
 	}
