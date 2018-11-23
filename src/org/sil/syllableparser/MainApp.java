@@ -130,6 +130,9 @@ public class MainApp extends Application {
 		applicationPreferences.setLastApproachUsed(controller.getApproachUsed());
 		applicationPreferences.setLastApproachViewUsed(controller.getViewUsed());
 		controller.handleSaveProject();
+		if (saveDataPeriodicallyService != null) {
+			saveDataPeriodicallyService.cancel();
+		}
 	}
 
 	public void setLocale(Locale locale) {

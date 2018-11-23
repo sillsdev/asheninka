@@ -760,7 +760,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleExit() {
-		handleSaveProject();
+		mainApp.stop();
 		System.exit(0);
 	}
 
