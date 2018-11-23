@@ -41,6 +41,7 @@ import org.sil.syllableparser.service.ParaTExtHyphenatedWordsExporter;
 import org.sil.syllableparser.service.ParaTExtHyphenatedWordsImporter;
 import org.sil.syllableparser.service.ParaTExtSegmentImporterNoCharactersException;
 import org.sil.syllableparser.service.SegmentImporterException;
+import org.sil.syllableparser.service.ValidLocaleCollector;
 import org.sil.syllableparser.service.XLingPaperHyphenatedWordExporter;
 import org.sil.utility.DateTimeNormalizer;
 
@@ -923,8 +924,11 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleChangeInterfaceLanguage() {
 
-		Map<String, ResourceBundle> validLocales = new TreeMap<String, ResourceBundle>();
-		getListOfValidLocales(validLocales);
+//		Map<String, ResourceBundle> validLocales = new TreeMap<String, ResourceBundle>();
+//		getListOfValidLocales(validLocales);
+		ValidLocaleCollector collector = new ValidLocaleCollector(currentLocale);
+		collector.collectValidLocales();
+		Map<String, ResourceBundle> validLocales = collector.getValidLocales();
 
 		ChoiceDialog<String> dialog = new ChoiceDialog<>(
 				currentLocale.getDisplayLanguage(currentLocale), validLocales.keySet());
@@ -933,20 +937,15 @@ public class RootLayoutController implements Initializable {
 		dialog.setContentText(sChooseLanguage);
 
 		Optional<String> result = dialog.showAndWait();
-		result.ifPresent(locale -> mainApp.setLocale(validLocales.get(locale).getLocale()));
-
-	}
-
-	private void getListOfValidLocales(Map<String, ResourceBundle> choices) {
-		Locale[] locales = Locale.getAvailableLocales();
-		for (Locale locale : locales) {
-			ResourceBundle rb = ResourceBundle.getBundle(
-					"org.sil.syllableparser.resources.SyllableParser", locale);
-			if (rb != null) {
-				String localeName = rb.getLocale().getDisplayName(currentLocale);
-				choices.putIfAbsent(localeName, rb);
+//		result.ifPresent(locale -> mainApp.setLocale(validLocales.get(locale).getLocale()));
+		result.ifPresent(locale -> {
+			Locale selectedLocale = validLocales.get(locale).getLocale();
+			bundle = validLocales.get(locale);
+			if (!currentLocale.equals(selectedLocale)) {
+				mainApp.setLocale(selectedLocale);
+				currentLocale = selectedLocale;
 			}
-		}
+		});
 	}
 
 	@FXML
