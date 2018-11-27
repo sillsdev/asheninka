@@ -25,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
@@ -155,12 +156,16 @@ public class ControllerUtilities {
 	}
 
 	public static TextInputDialog getTextInputDialog(MainApp mainApp, String title,
-			String contentText) {
+			String contentText, ResourceBundle bundle) {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle(title);
 		dialog.setHeaderText("");
 		dialog.setGraphic(null);
 		dialog.setContentText(contentText);
+		Button buttonOK = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+		buttonOK.setText(bundle.getString("label.ok"));
+		Button buttonCancel = (Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+		buttonCancel.setText(bundle.getString("label.cancel"));
 		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 		return dialog;

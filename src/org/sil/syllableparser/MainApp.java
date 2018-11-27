@@ -138,6 +138,7 @@ public class MainApp extends Application {
 	public void setLocale(Locale locale) {
 
 		this.locale = locale;
+		primaryStage.close();
 		initRootLayout();
 	}
 

@@ -291,7 +291,7 @@ public class RootLayoutController implements Initializable {
 		ButtonType buttonTypeCancel = ButtonType.CANCEL;
 
 		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
-		localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		alert = localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeYes) {
@@ -328,7 +328,7 @@ public class RootLayoutController implements Initializable {
 		ButtonType buttonTypeCancel = ButtonType.CANCEL;
 
 		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
-		localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		alert = localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeYes) {
@@ -340,7 +340,7 @@ public class RootLayoutController implements Initializable {
 
 	}
 
-	protected void localizeConfirmationButtons(Alert alert, ButtonType buttonTypeYes,
+	protected Alert localizeConfirmationButtons(Alert alert, ButtonType buttonTypeYes,
 			ButtonType buttonTypeNo, ButtonType buttonTypeCancel) {
 		Button buttonYes = (Button) alert.getDialogPane().lookupButton(buttonTypeYes);
 		buttonYes.setText(bundle.getString("label.yes"));
@@ -348,7 +348,7 @@ public class RootLayoutController implements Initializable {
 		buttonNo.setText(bundle.getString("label.no"));
 		Button buttonCancel = (Button) alert.getDialogPane().lookupButton(buttonTypeCancel);
 		buttonCancel.setText(bundle.getString("label.cancel"));
-		// debug says that this has changed at this point, but it still shows with English...
+		return alert;
 	}
 
 	public void clearAllCorrectSyllabifications() {
@@ -528,7 +528,7 @@ public class RootLayoutController implements Initializable {
 		String title = bundle.getString("label.backupproject");
 		String contentText = bundle.getString("label.backupcomment");
 		TextInputDialog dialog = ControllerUtilities
-				.getTextInputDialog(mainApp, title, contentText);
+				.getTextInputDialog(mainApp, title, contentText, bundle);
 		dialog.setResizable(true);
 
 		Optional<String> result = dialog.showAndWait();
@@ -1012,17 +1012,17 @@ public class RootLayoutController implements Initializable {
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 
-		ButtonType buttonYes = ButtonType.YES;
-		ButtonType buttonNo = ButtonType.NO;
-		ButtonType buttonCancel = ButtonType.CANCEL;
-
-		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+		ButtonType buttonTypeYes = ButtonType.YES;
+		ButtonType buttonTypeNo = ButtonType.NO;
+		ButtonType buttonTypeCancel = ButtonType.CANCEL;
+		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		alert = localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonYes) {
+		if (result.get() == buttonTypeYes) {
 			handleBackUpProject();
 			importParaTExtCharacters();
-		} else if (result.get() == buttonNo) {
+		} else if (result.get() == buttonTypeNo) {
 			importParaTExtCharacters();
 		}
 	}

@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->22 November 2017</date
+>27 November 2018</date
 ><version
->0.5.0 Alpha</version
+>0.5.1 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -267,12 +267,29 @@ id="sUserInterfaceLanguage"
 ><indexedItem
 term="iLanguageUI"
 ></indexedItem
+><indexedItem
+term="iUIEnglish"
+></indexedItem
+><indexedItem
+term="iUIFrench"
+></indexedItem
+><indexedItem
+term="iUISpanish"
+></indexedItem
 >You can set the user interface language by using the <object
 type="tMenuItem"
 >Settings / Change the interface language</object
-> menu item. This brings up a dialog box showing the current interface language in a drop down chooser. Click on the chooser's drop down button to see other interface language choices. The choices given use the name of the language in the current interface language (so if the current interface language is English, then it will show “Spanish” as an option; if the current interface language is Spanish, it will show English as “inglés”).</p
+> menu item. This brings up a dialog box showing the current interface language in a drop down chooser. Click on the chooser's drop down button to see other interface language choices. The choices given use the name of the language in the current interface language followed by the name of the language in its own language. So if the current interface language is English, then it will show “Spanish (español)” as an option; if the current interface language is Spanish, it will show English as “inglés (English)”. When you click on the "OK" button, the program will "flash" and show with the new user interface language.</p
 ><p
->The current version has English and a rough, most likely often inaccurate version of Spanish. Any corrections to the Spanish are welcome.</p
+>The current version has English, French<endnote
+id="nFrench"
+><p
+>Many thanks to the folks at <link
+href="https://home.missionassist.org.uk/"
+>Mission Assist</link
+>.</p
+></endnote
+> and a rough, most likely often inaccurate version of Spanish. Any corrections to any of the languages are welcome.</p
 ></section2
 ><section2
 id="sHelp"

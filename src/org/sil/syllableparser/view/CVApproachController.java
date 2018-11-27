@@ -42,6 +42,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -385,7 +387,7 @@ public class CVApproachController extends ApproachController {
 			String title = bundle.getString("program.name");
 			String contentText = bundle.getString("label.wordtofind");
 			TextInputDialog dialog = ControllerUtilities.getTextInputDialog(mainApp, title,
-					contentText);
+					contentText, bundle);
 
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
 			for (Word word : words) {

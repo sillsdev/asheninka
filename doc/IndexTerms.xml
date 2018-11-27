@@ -140,6 +140,12 @@ see="iLanguage"
 >Fonts</term
 ></indexTerm
 ><indexTerm
+id="iFrench"
+see="iUIFrench"
+><term
+>French</term
+></indexTerm
+><indexTerm
 id="iHelp"
 ><term
 >Help</term
@@ -215,6 +221,23 @@ id="iLanguageAnalysis"
 id="iLanguageUI"
 ><term
 >User interface</term
+><indexTerms
+><indexTerm
+id="iUIEnglish"
+><term
+>English</term
+></indexTerm
+><indexTerm
+id="iUIFrench"
+><term
+>French</term
+></indexTerm
+><indexTerm
+id="iUISpanish"
+><term
+>Spanish</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iLanguageVernacular"
@@ -372,6 +395,12 @@ id="iSonorityHierarchyApproach"
 id="iSorting"
 ><term
 >Sorting data in display</term
+></indexTerm
+><indexTerm
+id="iSpanish"
+see="iUISpanish"
+><term
+>Spanish</term
 ></indexTerm
 ><indexTerm
 id="iStartHyphenation"
