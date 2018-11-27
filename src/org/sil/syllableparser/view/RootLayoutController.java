@@ -932,6 +932,10 @@ public class RootLayoutController implements Initializable {
 		dialog.setTitle(sChangeInterfaceLanguage);
 		dialog.setHeaderText(sChooseInterfaceLanguage);
 		dialog.setContentText(sChooseLanguage);
+		Button buttonOK = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+		buttonOK.setText(bundle.getString("label.ok"));
+		Button buttonCancel = (Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+		buttonCancel.setText(bundle.getString("label.cancel"));
 
 		Optional<String> result = dialog.showAndWait();
 		result.ifPresent(locale -> {
