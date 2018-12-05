@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->27 November 2018</date
+>5 December 2018</date
 ><version
->0.5.1 Alpha</version
+>0.6.0 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -76,6 +76,7 @@ term="iAddDataItem"
 type="tMenuItem"
 >Edit / New item</object
 > menu item or clicking on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/AddItem.png"
 ></img
 > button. <indexedItem
@@ -85,6 +86,7 @@ term="iDeleteDataItem"
 type="tMenuItem"
 >Edit / Remove item</object
 > menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/Remove.png"
 ></img
 > button.</p
@@ -129,6 +131,7 @@ type="tAsheninka"
 type="tMenuItem"
 >File / New Project</object
 > menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/FileNew.png"
 ></img
 > toolbar button. This brings up a standard “Save as...” dialog box so you can save this stock set of data as your new project. The expected file extension to use with all <object
@@ -162,6 +165,7 @@ type="tAsheninka"
 type="tMenuItem"
 >File / Open Project...</object
 > menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/FileOpen.png"
 ></img
 > toolbar button. This brings up a standard “File Open...” dialog box. Find the file you want and click on OK.</p
@@ -181,6 +185,7 @@ type="tAsheninka"
 type="tMenuItem"
 >File / Save Project</object
 > menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/Save.png"
 ></img
 > button in the toolbar.</p
@@ -427,6 +432,7 @@ sec="sWords"
 type="tMenuItem"
 >Parser / Syllabify Words </object
 > menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/SyllabifyWords.png"
 ></img
 > tool bar button. This will apply the algorithm of the <object
@@ -595,9 +601,10 @@ sec="sEnvironments"
 sec="sGraphemeNaturalClasses"
 ></sectionRef
 > for more on environments). The chooser button looks like <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/ChooserButton.png"
 ></img
->.</p
+>.  Note that whenever a given grapheme can occur as more than one segment, then be sure to include the appropriate environments for the grapheme in every such segment.</p
 ><p
 >To remove a grapheme from the table, merely remove it from the <object
 type="tField"
@@ -650,6 +657,7 @@ type="tField"
 type="tField"
 >Segment or Natural Class</object
 > field has a chooser button on the far right which looks like <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/ChooserButton.png"
 ></img
 >. Click on it to bring up a dialog box which lets you select segments and/or natural classes which belong to this natural class. Note that it is possible to insert one entire natural class within another natural class. For example, if you have a class of nasal consonants, you can include that class within another class that has all consonants.</p
@@ -679,6 +687,7 @@ type="tField"
 type="tField"
 >Natural Classes</object
 > field shows the sequence of any natural classes this pattern consists of. It has a chooser button on the far right which looks like <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/ChooserButton.png"
 ></img
 >. Click on it to bring up a dialog box which lets you select natural classes which constitute this syllable pattern. This chooser consists of one or more drop-down boxes. Click on the drop-down arrow in the box. It will show you the list of possible natural classes to choose from. In addition, if this is the very first drop-down box or the last one currently being shown, it will also include “Word boundary”. When you choose “Word boundary”, the pattern shown above the drop-down box(es), will show “#” to indicate a word boundary.</p
@@ -721,6 +730,7 @@ type="tField"
 type="tField"
 >Grapheme or natural class</object
 > field has a chooser button (<img
+XeLaTeXSpecial="scaled='500'"
 src="resources/ChooserButton.png"
 ></img
 >) at the right edge. Clicking on this brings up a chooser where you can select the graphemes and/or other grapheme natural classes that should belong to the grapheme natural class you are defining. Note that it is possible to insert one entire grapheme natural class within another grapheme natural class. For example, if you have a class of nasal consonants, you can include that class within another class that has all consonants.</p
@@ -1244,6 +1254,7 @@ type="tConvertPredictedToCorrectSyllabifcation"
 type="tMenuItem"
 >Tools / Convert predicted to correct syllabification</object
 > menu item or clicking on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/ConvertPredictedToCorrect.png"
 ></img
 > tool bar button.</p
@@ -1634,6 +1645,7 @@ type="tConvertPredictedToCorrectSyllabifcation"
 type="tMenuItem"
 >Tools / Convert predicted to correct syllabification</object
 > menu item or by clicking on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/ConvertPredictedToCorrect.png"
 ></img
 > tool bar button, it brings up a dialog box listing all the words which have a non-empty <object
@@ -1955,6 +1967,7 @@ type="tMenuItem"
 type="tKey"
 >Ctrl F</object
 > or click on the <img
+XeLaTeXSpecial="scaled='500'"
 src="resources/FindWord.png"
 ></img
 > button on the toolbar to find a particular word. This brings up a dialog box which allows you to start typing the word you are looking for. As you type, it has a drop down area showing all words which contain the sequence of characters you have typed. Note that it shows all words which have this sequence anywhere in them, not just at the beginning. For example, with one project when I typed “<object

@@ -22,9 +22,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->30 March 2017</date
+>5 December 2018</date
 ><version
->0.4.0 Alpha</version
+>0.6.0 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -70,7 +70,7 @@ type="tMenuItem"
 >Make sure that what is in the <object
 type="tCVSegmentInventory"
 ></object
-> covers all the segments you have in the orthography.</li
+> covers all the segments you have in the orthography.  Depending on the orthography, you may find that you'll need to add environments for some graphemes within some segments.</li
 ><li
 >Make sure that every segment is in a natural class.</li
 ><li
@@ -152,19 +152,6 @@ type="tMenuItem"
 type="tCVPredictedVsCorrectWords"
 ></object
 > view to discover any words whose parse does not match what is in the correct column. There may well be cases where it is not worth the effort to get the parser to correctly syllabify certain words (e.g., loan words in a different orthography or words which may well be misspelled).</li
-><li
->Depending on the orthography, you may find that you'll need to add some segments that are actually sequences of consonant-vowel. On one language I used it for recently, I had to add <langData
-lang="lVernacular"
->kue</langData
-> to handle a labialized velar stop-vowel sequence and avoid having <langData
-lang="lVernacular"
->ku</langData
-> always being treated as labialized velar stop when it was a velar stop, u vowel sequence.<endnote
-id="nEnvironments"
-><p
->We do plan on adding environments when defining segments to make this work-around not be needed.</p
-></endnote
-></li
 ></ol
 ></section2
 ></section1
