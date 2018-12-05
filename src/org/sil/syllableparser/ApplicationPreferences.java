@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser;
@@ -12,7 +12,7 @@ import org.sil.utility.*;
 
 import javafx.stage.Stage;
 
-public class ApplicationPreferences {
+public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	static final String LAST_OPENED_FILE_PATH = "lastOpenedFilePath";
 	static final String LAST_OPENED_DIRECTORY_PATH = "lastOpenedDirectoryPath";

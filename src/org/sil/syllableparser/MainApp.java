@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 package org.sil.syllableparser;
@@ -8,24 +8,16 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.service.DatabaseMigrator;
-import org.sil.syllableparser.view.ControllerUtilities;
+import org.sil.utility.MainAppUtilities;
+import org.sil.utility.view.ControllerUtilities;
 import org.sil.syllableparser.view.RootLayoutController;
 
 import javafx.application.Application;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.ObservableList;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -43,7 +35,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MainApp extends Application {
+public class MainApp extends Application implements MainAppUtilities {
 
 	/**
 	 *
@@ -265,6 +257,10 @@ public class MainApp extends Application {
 		}
 	}
 
+	public void saveFile(File file) {
+		saveLanguageData(file);
+	}
+
 	public void saveLanguageData(File file) {
 		xmlBackEndProvider.saveLanguageDataToFile(file);
 		applicationPreferences.setLastOpenedFilePath(file);
@@ -307,7 +303,8 @@ public class MainApp extends Application {
 	 * @return the mainIconImage
 	 */
 	public Image getNewMainIconImage() {
-		Image img = ControllerUtilities.getIconImageFromURL(kApplicationIconResource);
+		Image img = ControllerUtilities.getIconImageFromURL(kApplicationIconResource,
+				Constants.RESOURCE_SOURCE_LOCATION);
 		return img;
 	}
 

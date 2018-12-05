@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -12,12 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -29,7 +26,7 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.view.ApproachController;
-import org.sil.syllableparser.view.ControllerUtilities;
+import org.sil.utility.view.ControllerUtilities;
 
 /**
  * @author Andy Black

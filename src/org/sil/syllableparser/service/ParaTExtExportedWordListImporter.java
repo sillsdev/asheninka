@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -6,30 +6,22 @@
  */
 package org.sil.syllableparser.service;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Stream;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.controlsfx.control.StatusBar;
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
-import org.sil.syllableparser.view.ControllerUtilities;
+import org.sil.utility.view.ControllerUtilities;
 import org.xml.sax.SAXException;
 
 import javafx.application.Platform;

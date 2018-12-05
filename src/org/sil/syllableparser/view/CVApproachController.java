@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.control.textfield.TextFields;
-import org.sil.syllableparser.ApplicationPreferences;
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.*;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
@@ -23,36 +23,26 @@ import org.sil.syllableparser.model.cvapproach.CVApproachView;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
 import org.sil.syllableparser.service.CVNaturalClasser;
 import org.sil.syllableparser.service.CVNaturalClasserResult;
 import org.sil.syllableparser.service.CVSegmenter;
 import org.sil.syllableparser.service.CVSegmenterResult;
 import org.sil.syllableparser.service.CVSyllabifier;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * @author Andy Black
@@ -340,7 +330,8 @@ public class CVApproachController extends ApproachController {
 			Stage dialogStage = new Stage();
 			String resource = "fxml/CVPredictedToCorrectSyllabificationChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
-					resource, MainApp.kApplicationTitle);
+					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 
 			CVPredictedToCorrectSyllabificationChooserController controller = loader
 					.getController();
@@ -362,8 +353,8 @@ public class CVApproachController extends ApproachController {
 			Stage dialogStage = new Stage();
 			String resource = "fxml/CVComparison.fxml";
 			String title = bundle.getString("label.compareimplementations");
-			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
-					resource, title);
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
+					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
 
 			CVComparisonController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -516,7 +507,8 @@ public class CVApproachController extends ApproachController {
 			String resource = "fxml/CVTryAWord.fxml";
 			String title = bundle.getString("label.tryaword");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
-					resource, title);
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 
 			CVTryAWordController controller = loader.getController();
 			controller.setDialogStage(tryAWordDialogStage);

@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -44,6 +44,8 @@ import org.sil.syllableparser.service.SegmentImporterException;
 import org.sil.syllableparser.service.ValidLocaleCollector;
 import org.sil.syllableparser.service.XLingPaperHyphenatedWordExporter;
 import org.sil.utility.DateTimeNormalizer;
+import org.sil.utility.MainAppUtilities;
+import org.sil.utility.view.ControllerUtilities;
 
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
@@ -404,7 +406,9 @@ public class RootLayoutController implements Initializable {
 		}
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		File fileCreated = ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false,
-				syllableParserFilterDescription);
+				syllableParserFilterDescription, bundle.getString("file.new"),
+				Constants.ASHENINKA_DATA_FILE_EXTENSION, Constants.ASHENINKA_DATA_FILE_EXTENSIONS,
+				Constants.RESOURCE_LOCATION);
 		if (fileCreated != null) {
 			File file = new File(Constants.ASHENINKA_STARTER_FILE);
 			mainApp.loadLanguageData(file);
@@ -520,15 +524,16 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleSaveProjectAs() {
 		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false,
-				syllableParserFilterDescription);
+				syllableParserFilterDescription, null, Constants.ASHENINKA_DATA_FILE_EXTENSION,
+				Constants.ASHENINKA_DATA_FILE_EXTENSIONS, Constants.RESOURCE_LOCATION);
 	}
 
 	@FXML
 	private void handleBackUpProject() {
 		String title = bundle.getString("label.backupproject");
 		String contentText = bundle.getString("label.backupcomment");
-		TextInputDialog dialog = ControllerUtilities
-				.getTextInputDialog(mainApp, title, contentText, bundle);
+		TextInputDialog dialog = ControllerUtilities.getTextInputDialog(mainApp, title,
+				contentText, bundle);
 		dialog.setResizable(true);
 
 		Optional<String> result = dialog.showAndWait();
@@ -572,7 +577,8 @@ public class RootLayoutController implements Initializable {
 			String resource = "fxml/RestoreBackupChooser.fxml";
 			String title = bundle.getString("label.restoreproject");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
-					resource, title);
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 
 			RestoreBackupChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -665,7 +671,8 @@ public class RootLayoutController implements Initializable {
 			String resource = "fxml/HyphenationParametersChooser.fxml";
 			String title = bundle.getString("label.sethyphenationparameters");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
-					resource, title);
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 
 			Object[] args = { bundle.getString(sHyphenationParametersType) };
 			MessageFormat msgFormatter = new MessageFormat("");
@@ -714,8 +721,8 @@ public class RootLayoutController implements Initializable {
 		alert.setTitle(sAboutHeader);
 		alert.setHeaderText(null);
 		alert.setContentText(sAboutContent);
-		Image silLogo = ControllerUtilities
-				.getIconImageFromURL("file:resources/images/SILLogo.png");
+		Image silLogo = ControllerUtilities.getIconImageFromURL(
+				"file:resources/images/SILLogo.png", Constants.RESOURCE_SOURCE_LOCATION);
 		// Image silLogo = new
 		// Image("file:src/org/sil/syllableparser/resources/images/SILLogo.png");
 		alert.setGraphic(new ImageView(silLogo));
@@ -850,7 +857,6 @@ public class RootLayoutController implements Initializable {
 		cvApproachController.handleEnvironments();
 		selectApproachViewItem(6);
 	}
-
 
 	protected void selectApproachViewItem(int iItem) {
 		Platform.runLater(new Runnable() {
@@ -1169,32 +1175,42 @@ public class RootLayoutController implements Initializable {
 	}
 
 	protected void createToolbarButtons(ResourceBundle bundle) {
-		ControllerUtilities.createToolbarButtonWithImage("newAction.png", buttonToolbarFileNew,
-				tooltipToolbarFileNew, bundle.getString("tooltip.new"));
-		ControllerUtilities.createToolbarButtonWithImage("openAction.png", buttonToolbarFileOpen,
-				tooltipToolbarFileOpen, bundle.getString("tooltip.open"));
-		ControllerUtilities.createToolbarButtonWithImage("saveAction.png", buttonToolbarFileSave,
-				tooltipToolbarFileSave, bundle.getString("tooltip.save"));
-		ControllerUtilities.createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut,
-				tooltipToolbarEditCut, bundle.getString("tooltip.cut"));
-		ControllerUtilities.createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy,
-				tooltipToolbarEditCopy, bundle.getString("tooltip.copy"));
-		ControllerUtilities.createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste,
-				tooltipToolbarEditPaste, bundle.getString("tooltip.paste"));
-		ControllerUtilities.createToolbarButtonWithImage("insertAction.png",
-				buttonToolbarEditInsert, tooltipToolbarEditInsert,
-				bundle.getString("tooltip.insertnew"));
-		ControllerUtilities.createToolbarButtonWithImage("deleteAction.png",
-				buttonToolbarEditRemove, tooltipToolbarEditRemove,
-				bundle.getString("tooltip.remove"));
-		ControllerUtilities.createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify,
-				tooltipToolbarSyllabify, bundle.getString("tooltip.syllabifywords"));
-		ControllerUtilities.createToolbarButtonWithImage("predictedToCorrect.png",
-				buttonToolbarConvertPredictedToCorrectSyllabification,
-				tooltipToolbarConvertPredictedToCorrectSyllabification,
-				bundle.getString("tooltip.convertpredictedtocorrect"));
-		ControllerUtilities.createToolbarButtonWithImage("FindWord.png", buttonToolbarFindWord,
-				tooltipToolbarFindWord, bundle.getString("tooltip.findword"));
+		tooltipToolbarFileNew = ControllerUtilities.createToolbarButtonWithImage("newAction.png",
+				buttonToolbarFileNew, tooltipToolbarFileNew, bundle.getString("tooltip.new"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarFileOpen = ControllerUtilities.createToolbarButtonWithImage("openAction.png",
+				buttonToolbarFileOpen, tooltipToolbarFileOpen, bundle.getString("tooltip.open"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarFileSave = ControllerUtilities.createToolbarButtonWithImage("saveAction.png",
+				buttonToolbarFileSave, tooltipToolbarFileSave, bundle.getString("tooltip.save"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditCut = ControllerUtilities.createToolbarButtonWithImage("cutAction.png",
+				buttonToolbarEditCut, tooltipToolbarEditCut, bundle.getString("tooltip.cut"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditCopy = ControllerUtilities.createToolbarButtonWithImage("copyAction.png",
+				buttonToolbarEditCopy, tooltipToolbarEditCopy, bundle.getString("tooltip.copy"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditPaste = ControllerUtilities.createToolbarButtonWithImage(
+				"pasteAction.png", buttonToolbarEditPaste, tooltipToolbarEditPaste,
+				bundle.getString("tooltip.paste"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditInsert = ControllerUtilities.createToolbarButtonWithImage(
+				"insertAction.png", buttonToolbarEditInsert, tooltipToolbarEditInsert,
+				bundle.getString("tooltip.insertnew"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditRemove = ControllerUtilities.createToolbarButtonWithImage(
+				"deleteAction.png", buttonToolbarEditRemove, tooltipToolbarEditRemove,
+				bundle.getString("tooltip.remove"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarSyllabify = ControllerUtilities.createToolbarButtonWithImage("syllabify.png",
+				buttonToolbarSyllabify, tooltipToolbarSyllabify,
+				bundle.getString("tooltip.syllabifywords"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarConvertPredictedToCorrectSyllabification = ControllerUtilities
+				.createToolbarButtonWithImage("predictedToCorrect.png",
+						buttonToolbarConvertPredictedToCorrectSyllabification,
+						tooltipToolbarConvertPredictedToCorrectSyllabification,
+						bundle.getString("tooltip.convertpredictedtocorrect"),
+						Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarFindWord = ControllerUtilities.createToolbarButtonWithImage("FindWord.png",
+				buttonToolbarFindWord, tooltipToolbarFindWord,
+				bundle.getString("tooltip.findword"), Constants.RESOURCE_SOURCE_LOCATION);
 	}
 
 	private void listenForChangesInApproachViews() {

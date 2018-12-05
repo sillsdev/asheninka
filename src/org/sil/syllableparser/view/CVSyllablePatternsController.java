@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -19,6 +19,7 @@ import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -127,10 +128,12 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	public void initialize(URL location, ResourceBundle resources) {
 		bundle = resources;
 		// Initialize the button icons
-		ControllerUtilities.createToolbarButtonWithImage("UpArrow.png", buttonMoveUp,
-				tooltipMoveUp, bundle.getString("cv.view.syllablepatterns.up"));
-		ControllerUtilities.createToolbarButtonWithImage("DownArrow.png", buttonMoveDown,
-				tooltipMoveDown, bundle.getString("cv.view.syllablepatterns.down"));
+		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",
+				buttonMoveUp, tooltipMoveUp, bundle.getString("cv.view.syllablepatterns.up"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipMoveDown = ControllerUtilities.createToolbarButtonWithImage("DownArrow.png",
+				buttonMoveDown, tooltipMoveDown, bundle.getString("cv.view.syllablepatterns.down"),
+				Constants.RESOURCE_SOURCE_LOCATION);
 
 		// checkBoxColumn.setCellValueFactory(cellData ->
 		// cellData.getValue().activeCheckBoxProperty());

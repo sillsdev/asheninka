@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -29,6 +29,7 @@ import org.sil.syllableparser.service.CVApproachLanguageComparer;
 import org.sil.syllableparser.service.CVApproachLanguageComparisonHTMLFormatter;
 import org.sil.syllableparser.view.BackupChooserController.WrappingTableCell;
 import org.sil.utility.StringUtilities;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -262,8 +263,9 @@ public class CVComparisonController implements Initializable {
 		Stage dialogStage = new Stage();
 		String resource = "fxml/BackupChooser.fxml";
 		String title = bundle.getString("label.restoreproject");
-		FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, resource,
-				title);
+		FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
+				title, ApproachViewNavigator.class.getResource(resource),
+				Constants.RESOURCE_LOCATION);
 
 		BackupChooserController controller = loader.getController();
 		controller.setDialogStage(dialogStage);

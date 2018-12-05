@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2018 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -41,6 +41,7 @@ public class Constants {
 	public static final String UTF8_ENCODING = "UTF8";
 	public static final String XML_FILE_EXTENSION = ".xml";
 	public static final String MIGRATION_XSLT_FILE_NAME = "resources/DataMigration";
+	public static final String RESOURCE_SOURCE_LOCATION = "src/org/sil/syllableparser/";
 
 	// chooser related constants
 	public static final String WORD_BOUNDARY_SYMBOL = "#";

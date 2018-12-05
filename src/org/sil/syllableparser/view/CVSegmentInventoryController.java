@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -18,6 +18,7 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -575,7 +576,8 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			Stage dialogStage = new Stage();
 			String resource = "fxml/EnvironmentChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
-					resource, MainApp.kApplicationTitle);
+					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 			EnvironmentChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);

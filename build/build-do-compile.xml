@@ -11,6 +11,7 @@
 			<fileset dir="externalLibs">
 				<include name="controlsfx-8.40.12.jar" />
 				<include name="controlsfx-8.40.12license.txt" />
+				<include name="libjavadev-1.1.0.jar"/>
 				<include name="diff-match-patch.jar" />
 				<include name="diff-match-patchCOPYING" />
 				<include name="diff-match-patchREADME.txt" />
