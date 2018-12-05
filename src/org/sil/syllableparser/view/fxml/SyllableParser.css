@@ -55,3 +55,7 @@
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
 }
+.tooltip {
+   -fx-text-fill: black;
+   -fx-background-color: #f5deb3;
+}
