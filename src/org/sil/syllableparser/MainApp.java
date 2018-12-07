@@ -149,9 +149,7 @@ public class MainApp extends Application implements MainAppUtilities {
 			ResourceBundle bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale);
 			loader.setResources(bundle);
 			rootLayout = (BorderPane) loader.load();
-			if (getOperatingSystem().equals("Mac OS X")) {
-				adjustMenusForMacOSX();
-			}
+			ControllerUtilities.adjustMenusIfNeeded(sOperatingSystem, rootLayout);
 
 			sNotImplementedYetHeader = bundle.getString("misc.niyheader");
 			sNotImplementedYetContent = bundle.getString("misc.niycontent");
@@ -182,12 +180,6 @@ public class MainApp extends Application implements MainAppUtilities {
 			System.out.println("non-IO Exception caught!");
 			e.printStackTrace();
 		}
-	}
-
-	protected void adjustMenusForMacOSX() {
-		VBox vbox = (VBox) rootLayout.getChildren().get(0);
-		MenuBar menuBar = (MenuBar) vbox.getChildren().get(0);
-		menuBar.useSystemMenuBarProperty().set(true);
 	}
 
 	protected boolean askUserForNewOrToOpenExistingFile(ResourceBundle bundle,

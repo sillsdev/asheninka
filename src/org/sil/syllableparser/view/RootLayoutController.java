@@ -16,7 +16,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.dialog.FontSelectorDialog;
@@ -41,10 +40,8 @@ import org.sil.syllableparser.service.ParaTExtHyphenatedWordsExporter;
 import org.sil.syllableparser.service.ParaTExtHyphenatedWordsImporter;
 import org.sil.syllableparser.service.ParaTExtSegmentImporterNoCharactersException;
 import org.sil.syllableparser.service.SegmentImporterException;
-import org.sil.syllableparser.service.ValidLocaleCollector;
 import org.sil.syllableparser.service.XLingPaperHyphenatedWordExporter;
 import org.sil.utility.DateTimeNormalizer;
-import org.sil.utility.MainAppUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
@@ -929,9 +926,8 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleChangeInterfaceLanguage() {
-		ValidLocaleCollector collector = new ValidLocaleCollector(currentLocale);
-		collector.collectValidLocales();
-		Map<String, ResourceBundle> validLocales = collector.getValidLocales();
+		Map<String, ResourceBundle> validLocales = ControllerUtilities.getValidLocales(
+				currentLocale, Constants.RESOURCE_LOCATION);
 
 		ChoiceDialog<String> dialog = new ChoiceDialog<>(
 				currentLocale.getDisplayLanguage(currentLocale), validLocales.keySet());

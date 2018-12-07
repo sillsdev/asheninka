@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -9,18 +9,11 @@ package org.sil.syllableparser.service;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.Locale;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 
-import javafx.collections.ObservableList;
 import javafx.scene.text.Font;
 
 import org.junit.After;
@@ -35,9 +28,7 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.service.DatabaseMigrator;
-import org.sil.syllableparser.view.JavaFXThreadingRule;
-
-import com.sun.nio.zipfs.ZipDirectoryStream;
+import org.sil.utility.view.JavaFXThreadingRule;
 
 /**
  * @author Andy Black

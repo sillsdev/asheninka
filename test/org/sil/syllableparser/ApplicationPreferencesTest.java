@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2018 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser;
@@ -7,13 +7,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import org.junit.After;
@@ -23,8 +17,7 @@ import org.junit.Test;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.cvapproach.CVApproachView;
-import org.sil.syllableparser.view.ApproachViewNavigator;
-import org.sil.syllableparser.view.JavaFXThreadingRule;
+import org.sil.utility.view.JavaFXThreadingRule;
 
 public class ApplicationPreferencesTest {
 
