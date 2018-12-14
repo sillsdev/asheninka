@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
+import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.*;
@@ -31,7 +32,7 @@ import org.sil.syllableparser.model.cvapproach.*;
  */
 public class CVApproachTest {
 
-	CVApproach cva;
+	Approach cva;
 	ObservableList<Word> words;
 	
 	/**

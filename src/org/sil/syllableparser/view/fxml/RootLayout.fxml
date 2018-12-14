@@ -105,9 +105,23 @@
 								<MenuItem mnemonicParsing="true" onAction="#handleEnvironments"
 									text="%cv.view.environments" />
 							</Menu>
-							<MenuItem mnemonicParsing="true"
-								onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy"
-								fx:id="menuItemSonorityHierarchyApproach" />
+							<Menu mnemonicParsing="true" onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy">
+								<MenuItem mnemonicParsing="true" onAction="#handleCVSegmentInventory"
+									text="%cv.view.segmentinventory" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSHSonorityHierarchy"
+									text="%sh.view.sonorityhierarchy" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSHWords"
+									text="%sh.view.words" />
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleSHWordsPredictedVsCorrect" text="%sh.view.wordspredictedvscorrect" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSHGraphemeNaturalClasses"
+									text="%cv.view.graphemenaturalclasses" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSHEnvironments"
+									text="%cv.view.environments" />
+							</Menu>
+<!-- 							<MenuItem mnemonicParsing="true" -->
+<!-- 								onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy" -->
+<!-- 								fx:id="menuItemSonorityHierarchyApproach" /> -->
 							<MenuItem mnemonicParsing="true" onAction="#handleONCApproach"
 								text="%approach.onc" fx:id="menuItemONCApproach" />
 							<MenuItem mnemonicParsing="true" onAction="#handleMoraicApproach"

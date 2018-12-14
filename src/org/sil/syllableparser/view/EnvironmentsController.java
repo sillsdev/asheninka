@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -6,15 +6,11 @@
  */
 package org.sil.syllableparser.view;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.CharStream;
@@ -23,16 +19,12 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
-import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-
-import org.sil.environmentparser.CheckGraphemeAndClassListener;
 import org.sil.environmentparser.EnvironmentConstants;
 import org.sil.environmentparser.EnvironmentErrorInfo;
 import org.sil.environmentparser.EnvironmentErrorListener;
@@ -40,6 +32,7 @@ import org.sil.environmentparser.GraphemeErrorInfo;
 import org.sil.environmentparser.EnvironmentErrorListener.VerboseListener;
 import org.sil.environmentparser.EnvironmentLexer;
 import org.sil.environmentparser.EnvironmentParser;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,11 +40,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -59,16 +48,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * @author Andy Black
@@ -631,11 +613,6 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		descriptionField.setText(environment.getDescription());
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 *
-	 * @param cvApproachController
-	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
@@ -644,6 +621,32 @@ public class EnvironmentsController extends SylParserBaseController implements I
 
 		// Add observable list data to the table
 		environmentTable.setItems(cvApproachData.getLanguageProject().getEnvironments());
+		int max = environmentTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastCVEnvironmentsViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					// select the last one used
+					environmentTable.requestFocus();
+					environmentTable.getSelectionModel().select(iLastIndex);
+					environmentTable.getFocusModel().focus(iLastIndex);
+					environmentTable.scrollTo(iLastIndex);
+				}
+			});
+		}
+	}
+
+	public void setData(SHApproach shApproachData) {
+		shApproach = shApproachData;
+		languageProject = shApproach.getLanguageProject();
+		iRepresentationCaretPosition = 6;
+		fGncChoicesUsingMouse = false;
+
+		// Add observable list data to the table
+		environmentTable.setItems(shApproachData.getLanguageProject().getEnvironments());
 		int max = environmentTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {

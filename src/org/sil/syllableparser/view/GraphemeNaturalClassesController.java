@@ -17,31 +17,24 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -340,17 +333,37 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		descriptionField.setText(naturalClass.getDescription());
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 *
-	 * @param cvApproachController
-	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
 
 		// Add observable list data to the table
 		graphemeNaturalClassTable.setItems(cvApproachData.getLanguageProject()
+				.getGraphemeNaturalClasses());
+		int max = graphemeNaturalClassTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastCVGraphemeNaturalClassesViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					// select the last one used
+					graphemeNaturalClassTable.requestFocus();
+					graphemeNaturalClassTable.getSelectionModel().select(iLastIndex);
+					graphemeNaturalClassTable.getFocusModel().focus(iLastIndex);
+					graphemeNaturalClassTable.scrollTo(iLastIndex);
+				}
+			});
+		}
+	}
+
+	public void setData(SHApproach shApproachData) {
+		shApproach = shApproachData;
+		languageProject = shApproach.getLanguageProject();
+
+		// Add observable list data to the table
+		graphemeNaturalClassTable.setItems(shApproachData.getLanguageProject()
 				.getGraphemeNaturalClasses());
 		int max = graphemeNaturalClassTable.getItems().size();
 		if (max > 0) {

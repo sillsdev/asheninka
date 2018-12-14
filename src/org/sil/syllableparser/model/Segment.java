@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2018 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -17,9 +17,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -37,6 +40,7 @@ public class Segment extends SylParserObject {
 	private final StringProperty segment;
 	private final StringProperty graphemes;
 	private final StringProperty description;
+	private BooleanProperty checked;
 	private final SimpleListProperty<Grapheme> graphemesAsList;
 	ObservableList<Grapheme> graphs = FXCollections.observableArrayList();
 
@@ -48,6 +52,7 @@ public class Segment extends SylParserObject {
 		this.graphemes = new SimpleStringProperty("");
 		this.graphemesAsList = new SimpleListProperty<Grapheme>();
 		this.description = new SimpleStringProperty("");
+		this.checked = new SimpleBooleanProperty(false);
 		// this.graphsRepresentation = new SimpleStringProperty("");
 		createUUID();
 	}
@@ -58,6 +63,7 @@ public class Segment extends SylParserObject {
 		this.graphemes = new SimpleStringProperty(graphsRepresentation);
 		this.graphemesAsList = new SimpleListProperty<Grapheme>();
 		this.description = new SimpleStringProperty(description);
+		this.checked = new SimpleBooleanProperty(false);
 		// this.graphsRepresentation = new
 		// SimpleStringProperty(graphsRepresentation);
 		createUUID();
@@ -109,6 +115,16 @@ public class Segment extends SylParserObject {
 
 	public void setDescription(String description) {
 		this.description.set(description);
+	}
+	public BooleanProperty checkedProperty() {
+		return checked;
+	}
+	public void setChecked(boolean value) {
+		this.checked.set(value);	
+	}
+	@XmlTransient
+	public boolean isChecked() {
+		return checked.get();
 	}
 
 	@XmlElementWrapper(name = "graphemesAsList")

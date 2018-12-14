@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2018 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -8,24 +8,18 @@ package org.sil.syllableparser.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.utility.StringUtilities;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 /**
  * @author Andy Black
@@ -35,6 +29,7 @@ import org.sil.utility.StringUtilities;
 public class LanguageProject {
 
 	private CVApproach cvApproach;
+	private SHApproach shApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
@@ -51,6 +46,8 @@ public class LanguageProject {
 		super();
 		cvApproach = new CVApproach();
 		cvApproach.setLanguageProject(this);
+		shApproach = new SHApproach();
+		shApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
 		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
@@ -63,6 +60,7 @@ public class LanguageProject {
 	 */
 	public void clear() {
 		cvApproach.clear();
+		shApproach.clear();
 		segmentInventory.clear();
 		words.clear();
 		environments.clear();
@@ -87,6 +85,15 @@ public class LanguageProject {
 		this.cvApproach = cvApproach;
 	}
 
+	public SHApproach getSHApproach() {
+		return shApproach;
+	}
+
+	@XmlElement(name = "shApproach")
+	public void setSHApproach(SHApproach shApproach) {
+		this.shApproach = shApproach;
+	}
+
 	/**
 	 * @return the cvSegmentInventoryData
 	 */
@@ -100,12 +107,8 @@ public class LanguageProject {
 		return segmentInventory.stream().filter(segment -> segment.isActive()).collect(Collectors.toList());
 	}
 
-	/**
-	 * @param cvSegmentInventoryData
-	 *            the cvSegmentInventoryData to set
-	 */
-	public void setSegmentInventory(ObservableList<Segment> cvSegmentInventoryData) {
-		this.segmentInventory = cvSegmentInventoryData;
+	public void setSegmentInventory(ObservableList<Segment> segmentInventoryData) {
+		this.segmentInventory = segmentInventoryData;
 	}
 
 	@XmlElementWrapper(name = "graphemeNaturalClassess")
@@ -184,6 +187,8 @@ public class LanguageProject {
 		databaseVersion = languageProjectLoaded.getDatabaseVersion();
 		cvApproach.load(languageProjectLoaded.getCVApproach());
 		cvApproach.setLanguageProject(this);
+		shApproach.load(languageProjectLoaded.getSHApproach());
+		shApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
 				.getSegmentInventory();
 		for (Segment segment : segmentInventoryLoadedData) {

@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeOrNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -138,7 +138,7 @@ public class EnvironmentChooserController extends CheckBoxColumnController imple
 		});
 	}
 
-	public void setData(CVApproach cvApproachData) {
+	public void setData(Approach cvApproachData) {
 		languageProject = cvApproachData.getLanguageProject();
 		environments = FXCollections.observableList(languageProject.getActiveAndValidEnvironments());
 		for (Environment env : environments) {

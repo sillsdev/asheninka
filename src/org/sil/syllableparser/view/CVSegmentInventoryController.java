@@ -17,7 +17,7 @@ import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -29,23 +29,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -317,9 +308,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		environmentsButtonColumn.setEditable(true);
 
 		graphemesTable.setEditable(true);
-		// graphemeDescriptionColumn.setCellFactory(column -> {
-		// return new AnalysisWrappingTableCellGrapheme();
-		// });
 
 		makeColumnHeaderWrappable(segmentColumn);
 		makeColumnHeaderWrappable(graphemesColumn);
@@ -331,6 +319,11 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		// Listen for selection changes and show the details when changed.
 		cvSegmentTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showCVSegmentDetails(newValue));
+
+		// Following avoids getting the following message: 
+		// com.sun.javafx.scene.control.skin.VirtualFlow addTrailingCells
+		// INFO: index exceeds maxCellCount.
+		cvSegmentTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
 		// Handle TextField text changes.
 		segmentField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -471,16 +464,19 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		descriptionField.setText(segment.getDescription());
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * 
-	 * @param cvApproachController
-	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		populateSegmentTable();
+}
 
-		// Add observable list data to the table
+	public void setData(SHApproach shApproachData) {
+		shApproach = shApproachData;
+		languageProject = shApproach.getLanguageProject();
+		populateSegmentTable();
+	}
+
+	private void populateSegmentTable() {
 		cvSegmentTable.setItems(languageProject.getSegmentInventory());
 		int max = cvSegmentTable.getItems().size();
 		if (max > 0) {
@@ -565,12 +561,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 
 	}
 
-	/**
-	 * Opens a dialog to show the chooser.
-	 *
-	 * @param grapheme
-	 *            TODO
-	 */
 	public void showEnvironmentsChooser(Grapheme grapheme) {
 		try {
 			Stage dialogStage = new Stage();

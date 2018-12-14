@@ -36,6 +36,17 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	// request it.
 	static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastCVWordPredictedVsCorrectViewItemUsed";
 
+	// last Sonority Hierarchy used
+	static final String LAST_SH_SONORITY_HIERARCHY_VIEW_ITEM_USED = "lastSHSonorityHierarchViewItemUsed";
+	static final String LAST_SH_TRY_A_WORD_USED = "lastSHTryAWordUsed";
+	static final String LAST_SH_WORDS_VIEW_ITEM_USED = "lastSHWordsViewItemUsed";
+	static final String LAST_SH_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastSHGraphemeNaturalClassesViewItemUsed";
+	static final String LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED = "lastSHEnvironmentsViewItemUsed";
+	// We have a last item used for predicted vs. correct words, but we're not
+	// setting it because it is not clear why it would be useful. We'll use it if users
+	// request it.
+	static final String LAST_SH_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastSHWordPredictedVsCorrectViewItemUsed";
+
 	// Window parameters to remember
 	static final String POSITION_X = "PositionX";
 	static final String POSITION_Y = "PositionY";
@@ -50,6 +61,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT = "lastCVWordPredictedVsCorrect";
 	public static final String LAST_CV_GRAPHEME_OR_NATURAL_CLASS = "lastCVGraphemeOrNaturalClass";
 	public static final String LAST_CV_ENVIRONMENTS_CHOOSER = "lastCVEnvironmentsChooser";
+	public static final String LAST_SH_SEGMENT = "lastSHSegment";
 	
 	Preferences prefs;
 
@@ -177,6 +189,54 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastCVEnvironmentsViewItemUsed(int value) {
 		setPreferencesKey(LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastSHSonorityHierarchyViewItemUsed() {
+		return prefs.getInt(LAST_SH_SONORITY_HIERARCHY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastSHSonorityHierarchyViewItemUsed(int value) {
+		setPreferencesKey(LAST_SH_SONORITY_HIERARCHY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastSHWordsViewItemUsed() {
+		return prefs.getInt(LAST_SH_WORDS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastSHWordsViewItemUsed(int value) {
+		setPreferencesKey(LAST_SH_WORDS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastSHWordsPredictedVsCorrectViewItemUsed() {
+		return prefs.getInt(LAST_SH_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastSHWordsPredictedVsCorrectViewItemUsed(int value) {
+		setPreferencesKey(LAST_SH_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastSHTryAWordUsed() {
+		return prefs.get(LAST_SH_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastSHTryAWordUsed(String lastSHTryAWordUsed) {
+		setPreferencesKey(LAST_SH_TRY_A_WORD_USED, lastSHTryAWordUsed);
+	}
+
+	public int getLastSHGraphemeNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_SH_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastSHGraphemeNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_SH_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastSHEnvironmentsViewItemUsed() {
+		return prefs.getInt(LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastSHEnvironmentsViewItemUsed(int value) {
+		setPreferencesKey(LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED, value);
 	}
 
 	public Stage getLastWindowParameters(String sWindow, Stage stage, Double defaultHeight, Double defaultWidth) {

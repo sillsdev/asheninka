@@ -191,6 +191,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private ListView<ApproachView> approachViews;
 	private CVApproachController cvApproachController;
+	private SHApproachController shApproachController;
 	private ONCApproachController oncApproachController;
 	private ApproachController currentApproachController;
 
@@ -235,6 +236,8 @@ public class RootLayoutController implements Initializable {
 		this.mainApp = mainApp;
 		cvApproachController.setMainApp(mainApp);
 		cvApproachController.setRootLayout(this);
+		shApproachController.setMainApp(mainApp);
+		shApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -244,6 +247,9 @@ public class RootLayoutController implements Initializable {
 		cvApproachController.setCVApproachData(languageProject.getCVApproach(),
 				languageProject.getWords());
 		cvApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		shApproachController.setSHApproachData(languageProject.getSHApproach(),
+				languageProject.getWords());
+		shApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -785,6 +791,15 @@ public class RootLayoutController implements Initializable {
 		setDisableForSomeMenuAndToolbarItems();
 	}
 
+	@FXML
+	private void handleSHApproach() {
+		toggleButtonSelectedStatus(buttonSonorityHierarchyApproach);
+		approachViews.setItems(shApproachController.getViews());
+		currentApproachController = shApproachController;
+		selectApproachViewItem(0);
+		setDisableForSomeMenuAndToolbarItems();
+	}
+
 	protected void setDisableForSomeMenuAndToolbarItems() {
 		buttonToolbarEditInsert.setDisable(true);
 		menuItemEditInsert.setDisable(true);
@@ -819,7 +834,6 @@ public class RootLayoutController implements Initializable {
 		handleCVApproach();
 		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
 		cvApproachController.handleCVSyllablePatterns();
-		;
 		selectApproachViewItem(2);
 	}
 
@@ -855,6 +869,46 @@ public class RootLayoutController implements Initializable {
 		selectApproachViewItem(6);
 	}
 
+	@FXML
+	private void handleSHSonorityHierarchy() {
+		handleSHApproach();
+		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		shApproachController.handleSHSonorityHierarchy();
+		selectApproachViewItem(1);
+	}
+
+	@FXML
+	private void handleSHWords() {
+		handleSHApproach();
+		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		shApproachController.handleSHWords();
+		selectApproachViewItem(2);
+	}
+
+	@FXML
+	private void handleSHWordsPredictedVsCorrect() {
+		handleSHApproach();
+		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		shApproachController.handleSHWordsPredictedVsCorrect();
+		selectApproachViewItem(3);
+	}
+
+	@FXML
+	private void handleSHGraphemeNaturalClasses() {
+		handleSHApproach();
+		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		shApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(4);
+	}
+
+	@FXML
+	private void handleSHEnvironments() {
+		handleSHApproach();
+		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		shApproachController.handleEnvironments();
+		selectApproachViewItem(5);
+	}
+
 	protected void selectApproachViewItem(int iItem) {
 		Platform.runLater(new Runnable() {
 			@Override
@@ -880,7 +934,10 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleSonorityHierarchyApproach() {
 		toggleButtonSelectedStatus(buttonSonorityHierarchyApproach);
-		mainApp.showNotImplementedYet();
+		approachViews.setItems(shApproachController.getViews());
+		currentApproachController = shApproachController;
+		selectApproachViewItem(0);
+		setDisableForSomeMenuAndToolbarItems();
 	}
 
 	/**
@@ -1067,6 +1124,7 @@ public class RootLayoutController implements Initializable {
 		sLabelUntested = bundle.getString("label.untested");
 
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
+		shApproachController = new SHApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle);
 
 		createToolbarButtons(bundle);
@@ -1123,7 +1181,7 @@ public class RootLayoutController implements Initializable {
 			break;
 
 		case "SONORITY_HIERARCHY":
-			handleSonorityHierarchyApproach();
+			setSHApproachAndInitialCVView();
 			break;
 
 		default:
@@ -1162,6 +1220,40 @@ public class RootLayoutController implements Initializable {
 
 		case "WORDS":
 			selectApproachViewItem(3);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
+	protected void setSHApproachAndInitialCVView() {
+		handleSHApproach();
+		String sLastApproachViewUsed = applicationPreferences.getLastApproachViewUsed();
+		switch (sLastApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(5);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(4);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(3);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(0);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(1);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(2);
 			break;
 
 		default:
@@ -1231,11 +1323,10 @@ public class RootLayoutController implements Initializable {
 		p.addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				try {
-					Class<?> c = Class.forName(currentApproachController.getClass().getName());// this.getClass().getName());
+					Class<?> c = Class.forName(currentApproachController.getClass().getName());
 					Method method = c.getDeclaredMethod(newValue.getViewHandler(),
 							(Class<?>[]) null);
-					method.invoke(currentApproachController, (Object[]) null);// this,
-																				// (Object[])null);
+					method.invoke(currentApproachController, (Object[]) null);
 					buttonToolbarEditInsert.setDisable(false);
 					menuItemEditInsert.setDisable(false);
 					buttonToolbarEditRemove.setDisable(false);

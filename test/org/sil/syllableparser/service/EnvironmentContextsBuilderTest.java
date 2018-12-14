@@ -24,17 +24,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
+import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.EnvironmentContext;
 import org.sil.syllableparser.model.EnvironmentContextGraphemeOrNaturalClass;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
-
 import org.sil.environmentparser.EnvironmentConstants;
 import org.sil.environmentparser.EnvironmentErrorInfo;
 import org.sil.environmentparser.EnvironmentErrorListener;
@@ -45,7 +44,7 @@ import org.sil.environmentparser.GraphemeErrorInfo;
 
 public class EnvironmentContextsBuilderTest extends EnvironmentParsingBase {
 
-	CVApproach cva;
+	Approach cva;
 	List<Grapheme> activeGraphemes;
 
 	@Before

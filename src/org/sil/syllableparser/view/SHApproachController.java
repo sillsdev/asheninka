@@ -1,0 +1,523 @@
+// Copyright (c) 2016-2018 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
+/**
+ *
+ */
+package org.sil.syllableparser.view;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+import org.controlsfx.control.StatusBar;
+import org.controlsfx.control.textfield.TextFields;
+import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.*;
+import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.cvapproach.CVApproachView;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
+import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
+import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
+import org.sil.syllableparser.service.CVNaturalClasser;
+import org.sil.syllableparser.service.CVNaturalClasserResult;
+import org.sil.syllableparser.service.CVSegmenter;
+import org.sil.syllableparser.service.CVSegmenterResult;
+import org.sil.syllableparser.service.CVSyllabifier;
+import org.sil.utility.view.ControllerUtilities;
+
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+/**
+ * @author Andy Black
+ *
+ */
+public class SHApproachController extends ApproachController {
+
+	private ObservableList<ApproachView> views = FXCollections.observableArrayList();
+	private LanguageProject languageProject;
+	private SHApproach shApproachData;
+	private ObservableList<Word> words = FXCollections.observableArrayList();
+	private String backupDirectoryPath;
+	private ApproachEditorController currentSHApproachController;
+
+	public SHApproachController(ResourceBundle bundle, Locale locale) {
+		super();
+		this.bundle = bundle;
+		this.locale = locale;
+		views.add(new ApproachView(bundle.getString("sh.view.segmentinventory"),
+				"handleSHSegmentInventory"));
+		views.add(new ApproachView(bundle.getString("sh.view.sonorityhierarchy"),
+				"handleSHSonorityHierarchy"));
+		views.add(new ApproachView(bundle.getString("sh.view.words"), "handleSHWords"));
+		views.add(new ApproachView(bundle.getString("sh.view.wordspredictedvscorrect"),
+				"handleSHWordsPredictedVsCorrect"));
+		views.add(new ApproachView(bundle.getString("sh.view.graphemenaturalclasses"),
+				"handleGraphemeNaturalClasses"));
+		views.add(new ApproachView(bundle.getString("sh.view.environments"), "handleEnvironments"));
+	}
+
+	public ObservableList<ApproachView> getViews() {
+		return views;
+	}
+
+	public String getViewUsed() {
+		String sView = "unknown";
+		String sClass = currentSHApproachController.getClass().getName();
+		switch (sClass) {
+		case "org.sil.syllableparser.view.CVSegmentInventoryController":
+			sView = SHApproachView.SEGMENT_INVENTORY.toString();
+			break;
+
+		case "org.sil.syllableparser.view.SHSonorityHierarchyController":
+			sView = SHApproachView.SONORITY_HIERARCHY.toString();
+			break;
+
+		case "org.sil.syllableparser.view.SHWordsController":
+			sView = SHApproachView.WORDS.toString();
+			break;
+
+		case "org.sil.syllableparser.view.SHWordsPredictedVsCorrectController":
+			sView = SHApproachView.PREDICTED_VS_CORRECT_WORDS.toString();
+			break;
+
+		case "org.sil.syllableparser.view.EnvironmentsController":
+			sView = SHApproachView.ENVIRONMENTS.toString();
+			break;
+
+		case "org.sil.syllableparser.view.GraphemeNaturalClassesController":
+			sView = SHApproachView.GRAPHEME_NATURAL_CLASSES.toString();
+			break;
+
+		default:
+			break;
+		}
+		return sView;
+	}
+
+	public void setSHApproachData(SHApproach shApproach, ObservableList<Word> words) {
+		this.shApproachData = shApproach;
+		languageProject = shApproach.getLanguageProject();
+		this.words = words;
+	}
+
+	public void handleSHSegmentInventory() {
+		// CV and Sonority Hierarchy use the same segment layout
+		FXMLLoader loader = createFXMLLoader("fxml/CVSegmentInventory.fxml");
+		CVSegmentInventoryController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(shApproachData);
+		controller.setViewItemUsed(mainApp.getApplicationPreferences()
+				.getLastCVSegmentInventoryViewItemUsed());
+	}
+
+	private FXMLLoader createFXMLLoader(String sFxml) {
+		FXMLLoader loader = new FXMLLoader();
+		ApproachViewNavigator.loadApproachView(loader, sFxml, locale);
+		return loader;
+	}
+
+	private void initializeApproachEditorController(ApproachEditorController controller) {
+		currentSHApproachController = controller;
+		controller.setMainApp(mainApp);
+		controller.setRootLayout(rootController);
+		controller.setLocale(locale);
+		controller.setToolBarDelegate(rootController.toolBarDelegate);
+	}
+
+	public void handleSHSonorityHierarchy() {
+		FXMLLoader loader = createFXMLLoader("fxml/SHSonorityHierarchy.fxml");
+		SHSonorityHierarchyController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(shApproachData);
+	}
+
+	public void handleSHWords() {
+		handleSHWords(0, false);
+	}
+
+	public void handleSHWords(int index, boolean fResetIndex) {
+		FXMLLoader loader = createFXMLLoader("fxml/SHWords.fxml");
+		SHWordsController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(shApproachData, words);
+		if (fResetIndex) {
+			controller.setFocusOnWord(index);
+		}
+	}
+
+	public void handleSHWordsPredictedVsCorrect() {
+		FXMLLoader loader = createFXMLLoader("fxml/SHWordsPredictedVsCorrect.fxml");
+		SHWordsPredictedVsCorrectController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(shApproachData, words);
+		controller.setFocusOnWord(0);
+	}
+
+	public void handleGraphemeNaturalClasses() {
+		FXMLLoader loader = createFXMLLoader("fxml/GraphemeNaturalClasses.fxml");
+		GraphemeNaturalClassesController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(shApproachData);
+		int i = mainApp.getApplicationPreferences().getLastSHGraphemeNaturalClassesViewItemUsed();
+		controller.setViewItemUsed(i);
+	}
+
+	public void handleEnvironments() {
+		FXMLLoader loader = createFXMLLoader("fxml/Environments.fxml");
+		EnvironmentsController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(shApproachData);
+		int i = mainApp.getApplicationPreferences().getLastSHEnvironmentsViewItemUsed();
+		controller.setViewItemUsed(i);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
+	 */
+	@Override
+	void handleInsertNewItem() {
+		currentSHApproachController.handleInsertNewItem();
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
+	 */
+	@Override
+	void handleRemoveItem() {
+		currentSHApproachController.handleRemoveItem();
+	}
+
+	@Override
+	void handleSyllabifyWords(StatusBar statusBar) {
+		String sSuccess = bundle.getString("label.success");
+		String sSegmentFailure = bundle.getString("label.shsegmentfailure");
+		String sNaturalClassFailure = bundle.getString("label.shnaturalclassfailure");
+		String sSyllabificationFailure = bundle.getString("label.shsyllabificationfailure");
+		long timeStart = System.currentTimeMillis();
+//
+//		Task<Void> task = new Task<Void>() {
+//			@Override
+//			protected Void call() throws Exception {
+//				Scene scene = statusBar.getScene();
+//				Cursor currentCursor = scene.getCursor();
+//				scene.setCursor(Cursor.WAIT);
+//				ObservableList<CVNaturalClass> naturalClasses;
+//				CVSegmenter segmenter;
+//				ObservableList<Segment> segmentInventory;
+//				// List<Segment> cvSegmentInventory;
+//				CVNaturalClasser naturalClasser;
+//				List<CVNaturalClass> cvNaturalClasses;
+//				List<CVSyllablePattern> patterns;
+//				CVSyllabifier syllabifier;
+//				List<CVSyllablePattern> cvPatterns;
+//
+//				// segmentInventory = languageProject.getSegmentInventory();
+//				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
+//						languageProject.getActiveGraphemeNaturalClasses());
+//				// cvSegmentInventory = segmenter.getActiveSegmentInventory();
+//				naturalClasses = shApproachData.getCVNaturalClasses();
+//				naturalClasser = new CVNaturalClasser(naturalClasses);
+//				cvNaturalClasses = naturalClasser.getActiveNaturalClasses();
+//				patterns = shApproachData.getActiveCVSyllablePatterns();
+//				syllabifier = new CVSyllabifier(patterns, null);
+//				cvPatterns = syllabifier.getActiveCVPatterns();
+//
+//				int max = words.size();
+//				int i = 0;
+//				for (Word word : words) {
+//					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
+//					updateProgress(i++, max);
+//
+//					String sWord = word.getWord();
+//					CVSegmenterResult result = segmenter.segmentWord(sWord);
+//					boolean fSuccess = result.success;
+//					if (!fSuccess) {
+//						word.setCVParserResult(sSegmentFailure.replace("{0}",
+//								sWord.substring(result.iPositionOfFailure)));
+//						word.setCVPredictedSyllabification("");
+//						continue;
+//					}
+//					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+//					CVNaturalClasserResult ncResult = naturalClasser
+//							.convertSegmentsToNaturalClasses(segmentsInWord);
+//					fSuccess = ncResult.success;
+//					if (!fSuccess) {
+//						String sFailureMessage0 = sNaturalClassFailure.replace("{0}",
+//								ncResult.sClassesSoFar);
+//						String sFailureMessage1 = sFailureMessage0.replace("{1}",
+//								ncResult.sGraphemesSoFar);
+//						word.setCVParserResult(sFailureMessage1);
+//						word.setCVPredictedSyllabification("");
+//						continue;
+//					}
+//					List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
+//							.getNaturalClassListsInCurrentWord();
+//					syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
+//					fSuccess = syllabifier.convertNaturalClassesToSyllables();
+//					if (!fSuccess) {
+//						word.setCVParserResult(sSyllabificationFailure);
+//						word.setCVPredictedSyllabification("");
+//						continue;
+//					}
+//					word.setCVPredictedSyllabification(syllabifier
+//							.getSyllabificationOfCurrentWord());
+//					word.setCVParserResult(sSuccess);
+//				}
+//				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
+//				scene.setCursor(currentCursor);
+//				// sleep for a second since it all happens so quickly
+//				Thread.sleep(1000);
+//				updateProgress(0, 0);
+//				done();
+//				return null;
+//			}
+//		};
+//
+//		statusBar.textProperty().bind(task.messageProperty());
+//		statusBar.progressProperty().bind(task.progressProperty());
+//
+//		// remove bindings again
+//		task.setOnSucceeded(event -> {
+//			statusBar.textProperty().unbind();
+//			statusBar.progressProperty().unbind();
+//			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
+//		});
+//
+//		Platform.runLater(task);
+
+	}
+
+	@Override
+	void handleConvertPredictedToCorrectSyllabification() {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/SHPredictedToCorrectSyllabificationChooser.fxml";
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
+					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
+
+			CVPredictedToCorrectSyllabificationChooserController controller = loader
+					.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setData(shApproachData, words);
+
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleCompareImplementations() {
+//		try {
+//			// Load the fxml file and create a new stage for the popup.
+//			Stage dialogStage = new Stage();
+//			String resource = "fxml/SHComparison.fxml";
+//			String title = bundle.getString("label.compareimplementations");
+//			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
+//					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
+//
+//			SHComparisonController controller = loader.getController();
+//			controller.setDialogStage(dialogStage);
+//			controller.setMainApp(mainApp);
+//			controller.setLocale(locale);
+//			controller.setData(shApproachData);
+//			controller.setBackupDirectoryPath(backupDirectoryPath);
+//
+//			dialogStage.initModality(Modality.NONE);
+//			dialogStage.show();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+
+	}
+
+	@Override
+	void handleFindWord() {
+		try {
+			// TextFields wordToFind
+			String title = bundle.getString("program.name");
+			String contentText = bundle.getString("label.wordtofind");
+			TextInputDialog dialog = ControllerUtilities.getTextInputDialog(mainApp, title,
+					contentText, bundle);
+
+			ObservableList<String> listOfWords = FXCollections.observableArrayList();
+			for (Word word : words) {
+				listOfWords.add(word.getWord());
+			}
+			TextFields.bindAutoCompletion(dialog.getEditor(), listOfWords);
+			Optional<String> result = dialog.showAndWait();
+			result.ifPresent(word -> {
+				int index = listOfWords.indexOf(result.get());
+				handleSHWords(index, true);
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public ArrayList<String> getHyphenatedWordsListWord(ObservableList<Word> words) {
+		return shApproachData.getHyphenatedWordsListWord(words);
+	}
+
+	@Override
+	public ArrayList<String> getHyphenatedWordsParaTExt(ObservableList<Word> words) {
+		return shApproachData.getHyphenatedWordsParaTExt(words);
+	}
+
+	@Override
+	public ArrayList<String> getHyphenatedWordsXLingPaper(ObservableList<Word> words) {
+		return shApproachData.getHyphenatedWordsXLingPaper(words);
+	}
+
+	public ObservableList<Word> getWords() {
+		return words;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#handleCopy()
+	 */
+	@Override
+	public void handleCopy() {
+		currentSHApproachController.handleCopy();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#handleCut()
+	 */
+	@Override
+	public void handleCut() {
+		currentSHApproachController.handleCut();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#handlePaste()
+	 */
+	@Override
+	public void handlePaste() {
+		currentSHApproachController.handlePaste();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#anythingSelected()
+	 */
+	@Override
+	boolean anythingSelected() {
+		if (currentSHApproachController != null) {
+			return currentSHApproachController.anythingSelected();
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#handleToolBarCopy()
+	 */
+	@Override
+	public void handleToolBarCopy() {
+		currentSHApproachController.handleToolBarCopy();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#handleToolBarPaste()
+	 */
+	@Override
+	public void handleToolBarPaste() {
+		currentSHApproachController.handleToolBarPaste();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sil.syllableparser.view.ApproachController#handleToolBarCut()
+	 */
+	@Override
+	public void handleToolBarCut() {
+		currentSHApproachController.handleToolBarCut();
+	}
+
+	public String getBackupDirectoryPath() {
+		return backupDirectoryPath;
+	}
+
+	/**
+	 * @param backupDirectoryPath
+	 */
+	public void setBackupDirectoryPath(String backupDirectoryPath) {
+		this.backupDirectoryPath = backupDirectoryPath;
+
+	}
+
+	@Override
+	void handleTryAWord() {
+//		try {
+//			Stage tryAWordDialogStage = new Stage();
+//			String resource = "fxml/SHTryAWord.fxml";
+//			String title = bundle.getString("label.tryaword");
+//			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
+//					title, ApproachViewNavigator.class.getResource(resource),
+//					Constants.RESOURCE_LOCATION);
+//
+//			SHTryAWordController controller = loader.getController();
+//			controller.setDialogStage(tryAWordDialogStage);
+//			controller.setMainApp(mainApp);
+//			controller.setLocale(locale);
+//			controller.setData(shApproachData);
+//
+//			if (currentSHApproachController instanceof SHWordsController) {
+//				SHWordsController shWordsController = (SHWordsController) currentSHApproachController;
+//				TableView<Word> shWordsTable = shWordsController.getCVWordsTable();
+//				Word cvWord = (Word) shWordsTable.getSelectionModel().getSelectedItem();
+//				if (cvWord != null) {
+//					String sCurrentWord = cvWord.getWord();
+//					controller.getWordToTry().setText(sCurrentWord);
+//				}
+//			}
+//
+//			tryAWordDialogStage.initModality(Modality.NONE);
+//			tryAWordDialogStage.show();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+	}
+}

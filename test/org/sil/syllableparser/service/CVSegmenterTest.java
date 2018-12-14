@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
+import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.EnvironmentContext;
 import org.sil.syllableparser.model.Grapheme;
@@ -36,7 +37,7 @@ import org.sil.syllableparser.service.CVSegmenterResult;
  */
 public class CVSegmenterTest {
 
-	CVApproach cva;
+	Approach cva;
 	ObservableList<Segment> segmentInventory;
 	CVSegmenter segmenter;
 	List<Grapheme> activeGraphemes;

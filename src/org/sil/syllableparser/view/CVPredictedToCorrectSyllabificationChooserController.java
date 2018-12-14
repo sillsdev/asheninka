@@ -14,6 +14,7 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVPredictedSyllabification;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,6 +57,7 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	private ApplicationPreferences preferences;
 
 	private CVApproach cvApproach;
+	private SHApproach shApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private CVPredictedSyllabification currentPredictedSyllabification;
 	private ObservableList<CVPredictedSyllabification> cvPredictedSyllabifications = FXCollections
@@ -123,7 +125,10 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
 		this.words = words;
+		createListOfDifferentWords(words);
+	}
 
+	private void createListOfDifferentWords(ObservableList<Word> words) {
 		for (Word cvWord : words) {
 			if (!cvWord.cvPredictedSyllabificationProperty().isEmpty().getValue()) {
 				currentPredictedSyllabification = new CVPredictedSyllabification(
@@ -139,6 +144,12 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 			cvPredictedSyllabificationTable.getSelectionModel().select(0);
 			cvPredictedSyllabificationTable.getFocusModel().focus(0);
 		}
+	}
+
+	public void setData(SHApproach shApproachData, ObservableList<Word> words) {
+		shApproach = shApproachData;
+		this.words = words;
+		createListOfDifferentWords(words);
 	}
 
 	/**
@@ -228,4 +239,5 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 			}
 		}
 	}
+
 }

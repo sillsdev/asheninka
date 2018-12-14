@@ -22,7 +22,6 @@ import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.utility.view.JavaFXThreadingRule;
 
 /**
@@ -30,7 +29,7 @@ import org.sil.utility.view.JavaFXThreadingRule;
  *
  */
 public class SegmentTest {
-	CVApproach cva;
+	Approach cva;
 	Segment segment;
 	@Rule
 	public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();

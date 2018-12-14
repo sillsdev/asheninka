@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2018 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -24,6 +24,8 @@ public class Word extends SylParserObject {
 	protected final StringProperty correctSyllabification;
 	protected StringProperty cvParserResult;
 	protected StringProperty cvPredictedSyllabification;
+	protected StringProperty shParserResult;
+	protected StringProperty shPredictedSyllabification;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
 	// case this word represents
@@ -37,6 +39,8 @@ public class Word extends SylParserObject {
 		this.correctSyllabification = new SimpleStringProperty("");
 		this.cvParserResult = new SimpleStringProperty("");
 		this.cvPredictedSyllabification = new SimpleStringProperty("");
+		this.shParserResult = new SimpleStringProperty("");
+		this.shPredictedSyllabification = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -105,10 +109,42 @@ public class Word extends SylParserObject {
 		return s;
 	}
 
+	public String getSHParserResult() {
+		return shParserResult.get();
+	}
+
+	public StringProperty shParserResultProperty() {
+		return shParserResult;
+	}
+
+	public void setSHParserResult(String parserResult) {
+		this.shParserResult.set(parserResult);
+	}
+
+	public String getSHPredictedSyllabification() {
+		return shPredictedSyllabification.get();
+	}
+
+	public StringProperty shPredictedSyllabificationProperty() {
+		return shPredictedSyllabification;
+	}
+
+	@XmlElement(name = "shPredictedSyllabification")
+	public void setSHPredictedSyllabification(String predictedSyllabification) {
+		this.shPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public StringProperty shPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(shPredictedSyllabificationProperty(), "\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
 	@Override
 	public int hashCode() {
 		String sCombo = word.getValueSafe() + cvPredictedSyllabification.getValueSafe()
-				+ correctSyllabification.getValueSafe();
+				 + shPredictedSyllabification.getValueSafe() + correctSyllabification.getValueSafe();
 		return sCombo.hashCode();
 	}
 
@@ -127,6 +163,10 @@ public class Word extends SylParserObject {
 		} else {
 			if (!getCVPredictedSyllabification().equals(otherWord.getCVPredictedSyllabification())) {
 				result = false;
+			} else {
+				if (!getSHPredictedSyllabification().equals(otherWord.getSHPredictedSyllabification())) {
+					result = false;
+				}
 			}
 		}
 		return result;
