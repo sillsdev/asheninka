@@ -1181,7 +1181,7 @@ public class RootLayoutController implements Initializable {
 			break;
 
 		case "SONORITY_HIERARCHY":
-			setSHApproachAndInitialCVView();
+			setSHApproachAndInitialSHView();
 			break;
 
 		default:
@@ -1228,7 +1228,7 @@ public class RootLayoutController implements Initializable {
 		}
 	}
 
-	protected void setSHApproachAndInitialCVView() {
+	protected void setSHApproachAndInitialSHView() {
 		handleSHApproach();
 		String sLastApproachViewUsed = applicationPreferences.getLastApproachViewUsed();
 		switch (sLastApproachViewUsed) {
@@ -1371,6 +1371,10 @@ public class RootLayoutController implements Initializable {
 		switch (sClass) {
 		case "org.sil.syllableparser.view.CVApproachController":
 			sApproach = ApproachType.CV.toString();
+			break;
+
+		case "org.sil.syllableparser.view.SHApproachController":
+			sApproach = ApproachType.SONORITY_HIERARCHY.toString();
 			break;
 
 		case "org.sil.syllableparser.view.ONCApproachController":
