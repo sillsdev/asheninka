@@ -870,6 +870,14 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
+	private void handleSHSegmentInventory() {
+		handleSHApproach();
+		SHApproachController cvApproachController = (SHApproachController) currentApproachController;
+		shApproachController.handleSHSegmentInventory();
+		selectApproachViewItem(0);
+	}
+
+	@FXML
 	private void handleSHSonorityHierarchy() {
 		handleSHApproach();
 		SHApproachController shApproachController = (SHApproachController) currentApproachController;

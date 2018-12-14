@@ -106,7 +106,7 @@
 									text="%cv.view.environments" />
 							</Menu>
 							<Menu mnemonicParsing="true" onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy">
-								<MenuItem mnemonicParsing="true" onAction="#handleCVSegmentInventory"
+								<MenuItem mnemonicParsing="true" onAction="#handleSHSegmentInventory"
 									text="%cv.view.segmentinventory" />
 								<MenuItem mnemonicParsing="true" onAction="#handleSHSonorityHierarchy"
 									text="%sh.view.sonorityhierarchy" />
