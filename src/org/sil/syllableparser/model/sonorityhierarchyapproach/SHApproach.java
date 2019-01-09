@@ -1,4 +1,4 @@
-// Copyright (c) 2018 SIL International
+// Copyright (c) 2018-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -15,7 +15,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 
 import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
+import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -68,4 +70,18 @@ public class SHApproach extends Approach {
 	protected String getPredictedSyllabificationOfWord(Word word) {
 		return word.getSHPredictedSyllabification();
 	}
+
+	public SHNaturalClass getNaturalClassContainingSegment(Segment segment) {
+		if (segment == null) {
+			return null;
+		}
+		List<SHNaturalClass> natClassesWithSegment = shSonorityHierarchy.stream()
+				.filter(nc -> nc.isActive() && nc.getSegments().contains(segment))
+				.collect(Collectors.toList());
+		if (natClassesWithSegment.size() == 0) {
+			return null;
+		}
+		return natClassesWithSegment.get(0);
+	}
+
 }

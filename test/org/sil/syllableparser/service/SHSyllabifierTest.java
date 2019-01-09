@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -27,11 +27,9 @@ import org.sil.syllableparser.model.cvapproach.*;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
-import org.sil.syllableparser.service.CVNaturalClasser;
-import org.sil.syllableparser.service.CVNaturalClasserResult;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifierInfo;
 import org.sil.syllableparser.service.CVSegmenter;
 import org.sil.syllableparser.service.CVSegmenterResult;
-import org.sil.syllableparser.service.CVSyllabifier;
 
 /**
  * @author Andy Black
@@ -65,7 +63,7 @@ public class SHSyllabifierTest {
 		segmenter = new CVSegmenter(activeGraphemes,
 				languageProject.getActiveGraphemeNaturalClasses());
 		shNaturalClasses = sonHierApproach.getActiveSHNaturalClasses();
-//		shSyllabifier = new SHSyllabifier(cvPatterns, null);
+		shSyllabifier = new SHSyllabifier(sonHierApproach);
 	}
 
 	/**
@@ -73,16 +71,6 @@ public class SHSyllabifierTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-	}
-
-	// make sure the setup is what we expect
-	@Test
-	public void syllabifierTest() {
-//		assertEquals("CV patterns size", 7, cvPatterns.size());
-//		String pattern = cvPatterns.get(0).getSPName().trim();
-//		assertEquals("First CV pattern is [C][V]", "CV", pattern);
-//		pattern = cvPatterns.get(2).getSPName().trim();
-//		assertEquals("Third pattern is [CVC]", "CVC", pattern);
 	}
 
 	@Test
@@ -104,6 +92,7 @@ public class SHSyllabifierTest {
 		checkSyllabification("flu", true, 1, "flu");
 		checkSyllabification("fluk", true, 1, "fluk");
 		checkSyllabification("iae", true, 1, "iae");
+		checkSyllabification("ibabe", false, 0, ""); // b not in hierarchy
 	}
 
 	protected void checkSyllabification(String word, boolean success, int numberOfSyllables,
@@ -111,7 +100,6 @@ public class SHSyllabifierTest {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		boolean fSuccess = segResult.success;
 		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-		shSyllabifier = new SHSyllabifier(sonHierApproach);
 		fSuccess = shSyllabifier.syllabify(segmentsInWord);
 		assertEquals("word syllabified", success, fSuccess);
 		List<SHSyllable> syllablesInWord = shSyllabifier.getSyllablesInCurrentWord();
@@ -122,105 +110,62 @@ public class SHSyllabifierTest {
 				shSyllabifier.getSyllabificationOfCurrentWord());
 	}
 
-	protected void checkSyllabifyWord(String word, boolean success, int numberOfSyllables,
-			String expectedCVPatternsUsed, String expectedSyllabification) {
-//		boolean fSuccess = stringSyllabifier.convertStringToSyllables(word);
-//		assertEquals("word syllabified", success, fSuccess);
-//		List<CVSyllable> syllablesInWord = stringSyllabifier.getSyllablesInCurrentWord();
-//		assertEquals("Expect " + numberOfSyllables + " syllables in word", numberOfSyllables,
-//				syllablesInWord.size());
-//		String joined = syllablesInWord.stream().map(CVSyllable::getNaturalClassNamesInSyllable)
-//				.collect(Collectors.joining(", "));
-//		assertEquals("Expected Syllable CV Pattern", expectedCVPatternsUsed, joined);
-//		assertEquals("Expected Syllabification of word", expectedSyllabification,
-//				stringSyllabifier.getSyllabificationOfCurrentWord());
+	protected void checkSyllabifyWord(String word, boolean success, String expectedNaturalClasses,
+			String expectedSonorityValues, int numberOfSyllables, String expectedSyllabification) {
+		boolean fSuccess = shSyllabifier.convertStringToSyllables(word);
+		assertEquals("word syllabified", success, fSuccess);
+		String naturalClassesInWord = shSyllabifier.getNaturalClassesInCurrentWord();
+		assertEquals(expectedNaturalClasses, naturalClassesInWord);
+		String sonorityValues = shSyllabifier.getSonorityValuesInCurrentWord();
+		assertEquals(expectedSonorityValues, sonorityValues);
+		List<SHSyllable> syllablesInWord = shSyllabifier.getSyllablesInCurrentWord();
+		assertEquals("Expect " + numberOfSyllables + " syllables in word", numberOfSyllables,
+				syllablesInWord.size());
+		assertEquals("Expected Syllabification of word", expectedSyllabification,
+				shSyllabifier.getSyllabificationOfCurrentWord());
 	}
 
 	@Test
 	public void traceSyllabifyWordTest() {
-//		stringSyllabifier.setDoTrace(true);
-//		checkSyllabifyWord("Chiko", true, 2, "CV, CV", "Chi.ko");
-//		List<CVTraceSyllabifierInfo> traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
-//		assertEquals(1, traceInfo.size());
-//		CVTraceSyllabifierInfo sylInfo = traceInfo.get(0);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(1, traceInfo.size());
-//		sylInfo = traceInfo.get(0);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(0, traceInfo.size());
-//
-//		checkSyllabifyWord("bampidon", true, 3, "CVN, CV, CVN", "bam.pi.don");
-//		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
-//		assertEquals(2, traceInfo.size());
-//		sylInfo = traceInfo.get(0);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-//		assertEquals(false, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(7, traceInfo.size());
-//		sylInfo = traceInfo.get(0);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-//		assertEquals(false, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(0, traceInfo.size());
-//
-//		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
-//		sylInfo = traceInfo.get(1);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
-//		assertEquals(true, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(1, traceInfo.size());
-//		sylInfo = traceInfo.get(0);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-//		assertEquals(true, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(2, traceInfo.size());
-//		sylInfo = traceInfo.get(1);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
-//		assertEquals(true, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(0, traceInfo.size());
-//
-//		checkSyllabifyWord("funglo", false, 0, "", ""); // CVCC only word
-//														// finally; CCV not
-//														// possible word
-//														// medially
-//		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
-//		assertEquals(7, traceInfo.size());
-//		sylInfo = traceInfo.get(0);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-//		assertEquals(false, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(7, traceInfo.size());
-//		sylInfo = traceInfo.get(0);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-//		assertEquals(false, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(0, traceInfo.size());
-//
-//		traceInfo = stringSyllabifier.getSyllabifierTraceInfo();
-//		sylInfo = traceInfo.get(1);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V, N", sylInfo.sCVSyllablePattern);
-//		assertEquals(false, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(7, traceInfo.size());
-//		sylInfo = traceInfo.get(0);
-//		assertNotNull(sylInfo);
-//		assertEquals("C, V", sylInfo.sCVSyllablePattern);
-//		assertEquals(false, sylInfo.parseWasSuccessful);
-//		traceInfo = sylInfo.daughterInfo;
-//		assertEquals(0, traceInfo.size());
+		shSyllabifier.setDoTrace(true);
 
+		checkSyllabifyWord("", false, "", "", 0, "");
+		checkSyllabifyWord("A", true, "", "", 1, "A");
+		checkSyllabifyWord("ta", true, "Obstruents, Vowels", "LESS", 1, "ta");
+		checkSyllabifyWord("tad", true, "Obstruents, Vowels, Obstruents", "LESS, MORE", 1, "tad");
+
+		checkSyllabifyWord("Chiko", true, "Obstruents, Vowels, Obstruents, Vowels",
+				"LESS, MORE, LESS", 2, "Chi.ko");
+
+		checkSyllabifyWord("tampidon", true,
+				"Obstruents, Vowels, Nasals, Obstruents, Vowels, Obstruents, Vowels, Nasals",
+				"LESS, MORE, MORE, LESS, MORE, LESS, MORE", 3, "tam.pi.don");
+
+		checkSyllabifyWord("dapgek", true,
+				"Obstruents, Vowels, Obstruents, Obstruents, Vowels, Obstruents",
+				"LESS, MORE, EQUAL, LESS, MORE", 2, "dap.gek");
+		checkSyllabifyWord("dapkgek", true,
+				"Obstruents, Vowels, Obstruents, Obstruents, Obstruents, Vowels, Obstruents",
+				"LESS, MORE, EQUAL, EQUAL, LESS, MORE", 2, "dap.kgek");
+		checkSyllabifyWord("dovdek", true,
+				"Obstruents, Vowels, Obstruents, Obstruents, Vowels, Obstruents",
+				"LESS, MORE, EQUAL, LESS, MORE", 2, "dov.dek");
+		checkSyllabifyWord("fuhgt", true, "Obstruents, Vowels, Obstruents, Obstruents, Obstruents",
+				"LESS, MORE, EQUAL, EQUAL", 2, "fuh.gt");
+		checkSyllabifyWord("dlofugh", true,
+				"Obstruents, Liquids, Vowels, Obstruents, Vowels, Obstruents, Obstruents",
+				"LESS, LESS, MORE, LESS, MORE, EQUAL", 3, "dlo.fug.h");
+		checkSyllabifyWord("do", true, "Obstruents, Vowels", "LESS", 1, "do");
+		checkSyllabifyWord("funglo", true,
+				"Obstruents, Vowels, Nasals, Obstruents, Liquids, Vowels",
+				"LESS, MORE, MORE, LESS, LESS", 2, "fun.glo");
+		checkSyllabifyWord("fugh", true, "Obstruents, Vowels, Obstruents, Obstruents",
+				"LESS, MORE, EQUAL", 2, "fug.h");
+		checkSyllabifyWord("flu", true, "Obstruents, Liquids, Vowels", "LESS, LESS", 1, "flu");
+		checkSyllabifyWord("fluk", true, "Obstruents, Liquids, Vowels, Obstruents",
+				"LESS, LESS, MORE", 1, "fluk");
+		checkSyllabifyWord("iae", true, "Vowels, Vowels, Vowels", "EQUAL, EQUAL", 1, "iae");
+		checkSyllabifyWord("babe", false, "null, Vowels", "MISSING1", 0, ""); // b not in hierarchy
+		checkSyllabifyWord("ibabe", false, "Vowels, null", "MISSING2", 0, ""); // b not in hierarchy
 	}
 }

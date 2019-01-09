@@ -37,22 +37,16 @@ public class SHSonorityComparer {
 		if (seg2 == null) {
 			return SHComparisonResult.MORE;
 		}
-		List<SHNaturalClass> natClass1 = hierarchy.stream()
-				.filter(nc -> nc.isActive() && nc.getSegments().contains(seg1))
-				.collect(Collectors.toList());
-		List<SHNaturalClass> natClass2 = hierarchy.stream()
-				.filter(nc -> nc.isActive() && nc.getSegments().contains(seg2))
-				.collect(Collectors.toList());
-		if (natClass1.size() == 0) {
-			// same as if null
+		SHNaturalClass natClass1 = shApproach.getNaturalClassContainingSegment(seg1);
+		SHNaturalClass natClass2 = shApproach.getNaturalClassContainingSegment(seg2);
+		if (natClass1 == null) {
 			return SHComparisonResult.MISSING1;
 		}
-		if (natClass2.size() == 0) {
-			// same as if null
+		if (natClass2 == null) {
 			return SHComparisonResult.MISSING2;
 		}
-		int pos1 = hierarchy.indexOf(natClass1.get(0));
-		int pos2 = hierarchy.indexOf(natClass2.get(0));
+		int pos1 = hierarchy.indexOf(natClass1);
+		int pos2 = hierarchy.indexOf(natClass2);
 		if (pos1 < pos2) {
 			return SHComparisonResult.MORE;
 		}

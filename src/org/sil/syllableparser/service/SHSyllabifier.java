@@ -1,4 +1,4 @@
-// Copyright (c) 2018 SIL International
+// Copyright (c) 2018-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -41,7 +41,7 @@ public class SHSyllabifier {
 	private CVSegmenter segmenter;
 	private SHSonorityComparer sonorityComparer;
 	private boolean fDoTrace = false;
-	private List<SHTraceSyllabifierInfo> syllabifierTraceInfo = new ArrayList<SHTraceSyllabifierInfo>();
+	private List<SHTraceSyllabifierInfo> syllabifierTraceInfoList = new ArrayList<SHTraceSyllabifierInfo>();
 
 	LinkedList<SHSyllable> syllablesInCurrentWord = new LinkedList<SHSyllable>(
 			Arrays.asList(new SHSyllable(null)));
@@ -68,7 +68,7 @@ public class SHSyllabifier {
 	}
 
 	public List<SHTraceSyllabifierInfo> getSyllabifierTraceInfo() {
-		return syllabifierTraceInfo;
+		return syllabifierTraceInfoList;
 	}
 
 	public boolean isDoTrace() {
@@ -80,76 +80,78 @@ public class SHSyllabifier {
 	}
 
 	public boolean convertSegmentstoSyllables() {
-//		syllablesInCurrentWord.clear();
-//		syllabifierTraceInfo.clear();
-//
-//		// recursively parse into syllables
-//		boolean result = parseIntoSyllables(naturalClassListInCurrentWord,
-//				syllabifierTraceInfo, true);
-//
-//		if (result) {
-//			// the list of syllables found is in reverse order; flip them
-//			Collections.reverse(syllablesInCurrentWord);
-//		}
+		// syllablesInCurrentWord.clear();
+		// syllabifierTraceInfo.clear();
+		//
+		// // recursively parse into syllables
+		// boolean result = parseIntoSyllables(naturalClassListInCurrentWord,
+		// syllabifierTraceInfo, true);
+		//
+		// if (result) {
+		// // the list of syllables found is in reverse order; flip them
+		// Collections.reverse(syllablesInCurrentWord);
+		// }
 		return false;
 	}
 
 	public boolean convertStringToSyllables(String word) {
 		syllablesInCurrentWord.clear();
-		syllabifierTraceInfo.clear();
+		syllabifierTraceInfoList.clear();
 		boolean fSuccess = false;
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		fSuccess = segResult.success;
 		if (fSuccess) {
 			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-				fSuccess = parseIntoSyllables(segmentsInWord,
-						syllabifierTraceInfo, true);
-
-				if (fSuccess) {
-					// the list of syllables found is in reverse order; flip
-					// them
-					Collections.reverse(syllablesInCurrentWord);
-				}
-			}
+			fSuccess = parseIntoSyllables(segmentsInWord, syllabifierTraceInfoList, true);
+		}
 		return fSuccess;
 	}
 
 	private boolean parseIntoSyllables(List<CVSegmentInSyllable> segmentsInWord,
-			List<SHTraceSyllabifierInfo> sylTraceInfo,
-			Boolean isWordInitial) {
+			List<SHTraceSyllabifierInfo> sylTraceInfo, Boolean isWordInitial) {
 		if (segmentsInWord.size() == 0) {
-			return true;
+			return false;
 		}
 		boolean fResult = syllabify(segmentsInWord);
-		SHTraceSyllabifierInfo sylInfo = new SHTraceSyllabifierInfo("");
+		SHTraceSyllabifierInfo sylInfo = new SHTraceSyllabifierInfo();
 		return fResult;
 	}
 
 	public boolean syllabify(List<CVSegmentInSyllable> segmentsInWord) {
 		syllablesInCurrentWord.clear();
-		syllabifierTraceInfo.clear();
-		int segmentCount = segmentsInWord.size();  
+		syllabifierTraceInfoList.clear();
+		SHTraceSyllabifierInfo traceInfo;
+		int segmentCount = segmentsInWord.size();
 		if (segmentCount == 0) {
 			return false;
 		}
 		SHSyllable syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
 		syl.add(segmentsInWord.get(0));
-//		syllablesInCurrentWord.add(syl);
 		int i = 1;
 		while (i < segmentCount) {
-			Segment seg1 = segmentsInWord.get(i-1).getSegment();
-			Segment seg2 = segmentsInWord.get(i).getSegment(); 
+			Segment seg1 = segmentsInWord.get(i - 1).getSegment();
+			Segment seg2 = segmentsInWord.get(i).getSegment();
 			SHComparisonResult result = sonorityComparer.compare(seg1, seg2);
+			if (fDoTrace) {
+				traceInfo = new SHTraceSyllabifierInfo(seg1,
+						sonHierApproach.getNaturalClassContainingSegment(seg1), seg2,
+						sonHierApproach.getNaturalClassContainingSegment(seg2), result);
+				syllabifierTraceInfoList.add(traceInfo);
+			}
 			if (result == SHComparisonResult.MORE) {
-				int j = i+1;
+				int j = i + 1;
 				if (j < segmentCount) {
 					Segment seg3 = segmentsInWord.get(j).getSegment();
 					result = sonorityComparer.compare(seg2, seg3);
-					if (result == SHComparisonResult.EQUAL ||
-							result == SHComparisonResult.MORE) {
+					if (result == SHComparisonResult.EQUAL || result == SHComparisonResult.MORE) {
 						syl.add(segmentsInWord.get(i));
-//						syl.add(segmentsInWord.get(j));
 						i++;
+						if (fDoTrace) {
+							traceInfo = new SHTraceSyllabifierInfo(seg2,
+									sonHierApproach.getNaturalClassContainingSegment(seg2), seg3,
+									sonHierApproach.getNaturalClassContainingSegment(seg3), result);
+							syllabifierTraceInfoList.add(traceInfo);
+						}
 					}
 				} else {
 					syl.add(segmentsInWord.get(i));
@@ -165,69 +167,16 @@ public class SHSyllabifier {
 				syl.add(segmentsInWord.get(i));
 			} else {
 				System.out.println("syllabify: result=" + result);
+				return false;
 			}
 			i++;
 		}
 		if (syl.getSegmentsInSyllable().size() > 0) {
 			syllablesInCurrentWord.add(syl);
-		}		
-		return true;
-	}
-	
-	public boolean syllabifyOld(List<CVSegmentInSyllable> segmentsInWord) {
-		syllablesInCurrentWord.clear();
-		syllabifierTraceInfo.clear();
-		int segmentCount = segmentsInWord.size();  
-		if (segmentCount == 0) {
-			return false;
-		}
-		segmentCount--;
-		SHSyllable syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
-		Segment seg1 = null;
-		Segment seg2 = null; 
-		Segment seg3 = null;
-		int i = -1;
-		while (i < segmentCount) {
-			if (i == -1) {
-				seg1 = null;
-			} else {
-				seg1 = segmentsInWord.get(i).getSegment();
-			}
-			seg2 = segmentsInWord.get(i+1).getSegment();
-			if ((i+1) < segmentCount) {
-				seg3 = segmentsInWord.get(i+2).getSegment();
-			} else {
-				seg3 = null;
-			}
-			SHComparisonResult result = sonorityComparer.compare(seg1, seg2);
-			if (result == SHComparisonResult.MORE) {
-				result = sonorityComparer.compare(seg2, seg3);
-				if (result == SHComparisonResult.EQUAL) {
-					syl.add(segmentsInWord.get(++i));					
-				}
-				syllablesInCurrentWord.add(syl);
-				syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
-				syl.add(segmentsInWord.get(++i));
-			} else if (result == SHComparisonResult.LESS) {
-				syl.add(segmentsInWord.get(++i));
-			} else if (result == SHComparisonResult.EQUAL) {
-				syl.add(segmentsInWord.get(i));
-				result = sonorityComparer.compare(seg2, seg3);
-				if (result == SHComparisonResult.LESS) {
-					i++;
-				}
-//				syllablesInCurrentWord.add(syl);
-//				syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
-			} else {
-				System.out.println("syllabify: result=" + result);
-			}
-			//i++;
-		}
-		if (syl.getSegmentsInSyllable().size() > 0) {
-			syllablesInCurrentWord.add(syl);
 		}
 		return true;
 	}
+
 	public String getSyllabificationOfCurrentWord() {
 		// TODO: figure out a lambda way to do this
 		StringBuilder sb = new StringBuilder();
@@ -244,4 +193,33 @@ public class SHSyllabifier {
 		return sb.toString();
 	}
 
+	public String getNaturalClassesInCurrentWord() {
+		StringBuilder sb = new StringBuilder();
+		int iSize = syllabifierTraceInfoList.size();
+		for (int i = 0; i < iSize; i++) {
+			SHTraceSyllabifierInfo info = syllabifierTraceInfoList.get(i);
+			if (i > 0) {
+				sb.append(", ");
+			}
+			sb.append(getNCName(info.naturalClass1));
+			if (i == iSize - 1) {
+				sb.append(", ");
+				sb.append(getNCName(info.naturalClass2));
+			}
+		}
+		return sb.toString();
+	}
+
+	private String getNCName(SHNaturalClass natClass) {
+		if (natClass == null) {
+			return "null";
+		} else {
+			return natClass.getNCName();
+		}
+	}
+
+	public String getSonorityValuesInCurrentWord() {
+		return syllabifierTraceInfoList.stream().map(SHTraceSyllabifierInfo::getComparisonResult)
+				.collect(Collectors.joining(", "));
+	}
 }

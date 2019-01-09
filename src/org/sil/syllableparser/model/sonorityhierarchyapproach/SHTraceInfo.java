@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 SIL International
+ * Copyright (c) 2018-2019 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -8,32 +8,26 @@
 
 package org.sil.syllableparser.model.sonorityhierarchyapproach;
 
-import org.sil.syllableparser.service.CVNaturalClasser;
-import org.sil.syllableparser.service.CVNaturalClasserResult;
 import org.sil.syllableparser.service.CVSegmenter;
 import org.sil.syllableparser.service.CVSegmenterResult;
-import org.sil.syllableparser.service.CVSyllabifier;
-import org.sil.syllableparser.service.CVSyllabifierResult;
+import org.sil.syllableparser.service.SHSyllabifier;
+import org.sil.syllableparser.service.SHSyllabifierResult;
 
 public class SHTraceInfo {
-	
+
 	CVSegmenter segmenter;
-	CVNaturalClasser naturalClasser;
-	CVSyllabifier syllabifier;
+	SHSyllabifier syllabifier;
 	String sWord;
 	CVSegmenterResult segmenterResult;
-	CVNaturalClasserResult naturalClasserResult;
-	CVSyllabifierResult syllabifierResult;
-	
+	SHSyllabifierResult syllabifierResult;
+
 	public SHTraceInfo(String sWord) {
 		this.sWord = sWord;
 	}
 
-	public SHTraceInfo(String sWord, CVSegmenter segmenter,
-			CVNaturalClasser naturalClasser, CVSyllabifier syllabifier) {
+	public SHTraceInfo(String sWord, CVSegmenter segmenter, SHSyllabifier syllabifier) {
 		super();
 		this.segmenter = segmenter;
-		this.naturalClasser = naturalClasser;
 		this.syllabifier = syllabifier;
 		this.sWord = sWord;
 	}
@@ -54,19 +48,11 @@ public class SHTraceInfo {
 		this.segmenter = segmenter;
 	}
 
-	public CVNaturalClasser getNaturalClasser() {
-		return naturalClasser;
-	}
-
-	public void setNaturalClasser(CVNaturalClasser naturalClasser) {
-		this.naturalClasser = naturalClasser;
-	}
-
-	public CVSyllabifier getSyllabifier() {
+	public SHSyllabifier getSyllabifier() {
 		return syllabifier;
 	}
 
-	public void setSyllabifier(CVSyllabifier syllabifier) {
+	public void setSyllabifier(SHSyllabifier syllabifier) {
 		this.syllabifier = syllabifier;
 	}
 
@@ -78,19 +64,11 @@ public class SHTraceInfo {
 		this.segmenterResult = segmenterResult;
 	}
 
-	public CVNaturalClasserResult getNaturalClasserResult() {
-		return naturalClasserResult;
-	}
-
-	public void setNaturalClasserResult(CVNaturalClasserResult naturalClasserResult) {
-		this.naturalClasserResult = naturalClasserResult;
-	}
-
-	public CVSyllabifierResult getSyllabifierResult() {
+	public SHSyllabifierResult getSyllabifierResult() {
 		return syllabifierResult;
 	}
 
-	public void setSyllabifierResult(CVSyllabifierResult syllabifierResult) {
+	public void setSyllabifierResult(SHSyllabifierResult syllabifierResult) {
 		this.syllabifierResult = syllabifierResult;
 	}
 
