@@ -212,10 +212,6 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		}
 	}
 
-	public TableView<Word> getCVWordsTable() {
-		return wordsTable;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

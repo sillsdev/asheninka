@@ -127,4 +127,8 @@ public class CVWordsController extends WordsControllerCommon {
 			mainApp.getApplicationPreferences().setLastCVWordsViewItemUsed(currentItem);
 		}
 	}
+
+	public TableView<Word> getCVWordsTable() {
+		return wordsTable;
+	}
 }

@@ -62,6 +62,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_CV_GRAPHEME_OR_NATURAL_CLASS = "lastCVGraphemeOrNaturalClass";
 	public static final String LAST_CV_ENVIRONMENTS_CHOOSER = "lastCVEnvironmentsChooser";
 	public static final String LAST_SH_SEGMENT = "lastSHSegment";
+	public static final String LAST_SH_TRY_A_WORD = "lastSHTryAWord";
 	
 	Preferences prefs;
 

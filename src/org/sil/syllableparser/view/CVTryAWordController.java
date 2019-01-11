@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -6,15 +6,9 @@
  */
 package org.sil.syllableparser.view;
 
-import java.net.URL;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.MainApp;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
@@ -28,128 +22,20 @@ import org.sil.syllableparser.service.CVSegmenterResult;
 import org.sil.syllableparser.service.CVSyllabifier;
 import org.sil.syllableparser.service.CVSyllabifierResult;
 import org.sil.syllableparser.service.CVTryAWordHTMLFormatter;
-import org.sil.utility.StringUtilities;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 /**
  * @author Andy Black
  *
  */
-public class CVTryAWordController implements Initializable {
+public class CVTryAWordController extends TryAWordController {
 
-	@FXML
-	private TextField wordToTry;
-	@FXML
-	private Button tryItButton = new Button();
-	@FXML
-	WebView browser;
-	@FXML
-	WebEngine webEngine;
-
-	Stage dialogStage;
-	private MainApp mainApp;
-	private ApplicationPreferences preferences;
-	private String sWordToTry;
-	private ResourceBundle bundle;
-	private Locale locale;
 	private CVApproach cva;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
-	 * java.util.ResourceBundle)
-	 */
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		bundle = resources;
-		tryItButton.setText(bundle.getString("label.tryit"));
-		setTryItButtonDisable();
-		// browser = new WebView();
-		webEngine = browser.getEngine();
-
-		wordToTry.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue,
-					String newValue) {
-				setTryItButtonDisable();
-			}
-		});
-
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				wordToTry.requestFocus();
-			}
-		});
-	}
-
-	// Following getters and setters are for testing
-
-	public TextField getWordToTry() {
-		return wordToTry;
-	}
-
-	public void setWordToTry(TextField wordToTry) {
-		this.wordToTry = wordToTry;
-	}
-
-	public Button getTryItButton() {
-		return tryItButton;
-	}
-
-	public void setTryItButton(Button tryItButton) {
-		this.tryItButton = tryItButton;
-	}
-
-	public void setTryItButtonDisable() {
-		sWordToTry = wordToTry.getText();
-		if (StringUtilities.isNullOrEmpty(sWordToTry)) {
-			tryItButton.setDisable(true);
-		} else {
-			tryItButton.setDisable(false);
-		}
-	}
-
-	/**
-	 * Sets the stage of this dialog.
-	 * 
-	 * @param dialogStage
-	 */
-	public void setDialogStage(Stage dialogStage) {
-		this.dialogStage = dialogStage;
-
-		this.dialogStage.setOnCloseRequest(event -> {
-			handleClose();
-		});
-	}
-
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
-		preferences = mainApp.getApplicationPreferences();
-		String lastWordTried = preferences.getLastCVTryAWordUsed();
-		wordToTry.setText(lastWordTried);
-		dialogStage = preferences.getLastWindowParameters(
-				ApplicationPreferences.LAST_CV_TRY_A_WORD, dialogStage, 533., 637.);
-	}
-
-	public void setLocale(Locale locale) {
-		this.locale = locale;
-	}
 
 	public void setData(CVApproach cvApproachData) {
 		cva = cvApproachData;
@@ -232,30 +118,21 @@ public class CVTryAWordController implements Initializable {
 			}
 		});
 		new Thread(sleeper).start();
-
-		String sPleaseWaitMessage = Constants.PLEASE_WAIT_HTML_BEGINNING
-				+ bundle.getString("label.pleasewait") + Constants.PLEASE_WAIT_HTML_MIDDLE
-				+ bundle.getString("label.pleasewaittaw") + Constants.PLEASE_WAIT_HTML_ENDING;
-		webEngine.loadContent(sPleaseWaitMessage);
-
+		createAndShowPleaseWaitMessage();
 	}
 
-	/**
-	 * Called when the user clicks Close.
-	 */
-	@FXML
-	private void handleClose() {
-		String lastWordTried = wordToTry.getText();
+	@Override
+	protected String getLastTryAWord() {
+		return ApplicationPreferences.LAST_CV_TRY_A_WORD;
+	}
+
+	@Override
+	protected String getLastTryAWordUsed() {
+		return preferences.getLastCVTryAWordUsed();
+	}
+
+	@Override
+	protected void setLastTryAWordUsed(String lastWordTried) {
 		mainApp.getApplicationPreferences().setLastCVTryAWordUsed(lastWordTried);
-		preferences.setLastWindowParameters(ApplicationPreferences.LAST_CV_TRY_A_WORD, dialogStage);
-		dialogStage.close();
-	}
-
-	/**
-	 * Called when the user clicks help.
-	 */
-	@FXML
-	private void handleHelp() {
-		mainApp.showNotImplementedYet();
 	}
 }

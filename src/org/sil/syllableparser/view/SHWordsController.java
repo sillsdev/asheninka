@@ -127,4 +127,8 @@ public class SHWordsController extends WordsControllerCommon {
 			mainApp.getApplicationPreferences().setLastSHWordsViewItemUsed(currentItem);
 		}
 	}
+
+	public TableView<Word> getSHWordsTable() {
+		return wordsTable;
+	}
 }

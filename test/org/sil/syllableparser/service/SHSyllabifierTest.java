@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2018-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 
@@ -27,7 +26,6 @@ import org.sil.syllableparser.model.cvapproach.*;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifierInfo;
 import org.sil.syllableparser.service.CVSegmenter;
 import org.sil.syllableparser.service.CVSegmenterResult;
 

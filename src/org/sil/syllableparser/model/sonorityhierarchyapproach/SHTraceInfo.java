@@ -8,44 +8,24 @@
 
 package org.sil.syllableparser.model.sonorityhierarchyapproach;
 
+import org.sil.syllableparser.model.TraceInfo;
 import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.CVSegmenterResult;
 import org.sil.syllableparser.service.SHSyllabifier;
 import org.sil.syllableparser.service.SHSyllabifierResult;
 
-public class SHTraceInfo {
+public class SHTraceInfo extends TraceInfo {
 
-	CVSegmenter segmenter;
 	SHSyllabifier syllabifier;
-	String sWord;
-	CVSegmenterResult segmenterResult;
 	SHSyllabifierResult syllabifierResult;
 
 	public SHTraceInfo(String sWord) {
+		super(sWord);
 		this.sWord = sWord;
 	}
 
 	public SHTraceInfo(String sWord, CVSegmenter segmenter, SHSyllabifier syllabifier) {
-		super();
-		this.segmenter = segmenter;
+		super(sWord, segmenter);
 		this.syllabifier = syllabifier;
-		this.sWord = sWord;
-	}
-
-	public String getWord() {
-		return sWord;
-	}
-
-	public void setWord(String sWord) {
-		this.sWord = sWord;
-	}
-
-	public CVSegmenter getSegmenter() {
-		return segmenter;
-	}
-
-	public void setSegmenter(CVSegmenter segmenter) {
-		this.segmenter = segmenter;
 	}
 
 	public SHSyllabifier getSyllabifier() {
@@ -56,14 +36,6 @@ public class SHTraceInfo {
 		this.syllabifier = syllabifier;
 	}
 
-	public CVSegmenterResult getSegmenterResult() {
-		return segmenterResult;
-	}
-
-	public void setSegmenterResult(CVSegmenterResult segmenterResult) {
-		this.segmenterResult = segmenterResult;
-	}
-
 	public SHSyllabifierResult getSyllabifierResult() {
 		return syllabifierResult;
 	}
@@ -71,5 +43,4 @@ public class SHTraceInfo {
 	public void setSyllabifierResult(SHSyllabifierResult syllabifierResult) {
 		this.syllabifierResult = syllabifierResult;
 	}
-
 }

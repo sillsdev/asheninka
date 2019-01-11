@@ -490,34 +490,34 @@ public class SHApproachController extends ApproachController {
 
 	@Override
 	void handleTryAWord() {
-//		try {
-//			Stage tryAWordDialogStage = new Stage();
-//			String resource = "fxml/SHTryAWord.fxml";
-//			String title = bundle.getString("label.tryaword");
-//			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
-//					title, ApproachViewNavigator.class.getResource(resource),
-//					Constants.RESOURCE_LOCATION);
-//
-//			SHTryAWordController controller = loader.getController();
-//			controller.setDialogStage(tryAWordDialogStage);
-//			controller.setMainApp(mainApp);
-//			controller.setLocale(locale);
-//			controller.setData(shApproachData);
-//
-//			if (currentSHApproachController instanceof SHWordsController) {
-//				SHWordsController shWordsController = (SHWordsController) currentSHApproachController;
-//				TableView<Word> shWordsTable = shWordsController.getCVWordsTable();
-//				Word cvWord = (Word) shWordsTable.getSelectionModel().getSelectedItem();
-//				if (cvWord != null) {
-//					String sCurrentWord = cvWord.getWord();
-//					controller.getWordToTry().setText(sCurrentWord);
-//				}
-//			}
-//
-//			tryAWordDialogStage.initModality(Modality.NONE);
-//			tryAWordDialogStage.show();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Stage tryAWordDialogStage = new Stage();
+			String resource = "fxml/SHTryAWord.fxml";
+			String title = bundle.getString("label.tryaword");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
+
+			SHTryAWordController controller = loader.getController();
+			controller.setDialogStage(tryAWordDialogStage);
+			controller.setMainApp(mainApp);
+			controller.setLocale(locale);
+			controller.setData(shApproachData);
+
+			if (currentSHApproachController instanceof SHWordsController) {
+				SHWordsController shWordsController = (SHWordsController) currentSHApproachController;
+				TableView<Word> shWordsTable = shWordsController.getSHWordsTable();
+				Word shWord = (Word) shWordsTable.getSelectionModel().getSelectedItem();
+				if (shWord != null) {
+					String sCurrentWord = shWord.getWord();
+					controller.getWordToTry().setText(sCurrentWord);
+				}
+			}
+
+			tryAWordDialogStage.initModality(Modality.NONE);
+			tryAWordDialogStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

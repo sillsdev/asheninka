@@ -8,8 +8,6 @@ package org.sil.syllableparser.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,14 +15,11 @@ import java.util.stream.Collectors;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVTraceSyllabifierInfo;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifierInfo;
-
-import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
@@ -36,8 +31,6 @@ public class SHSyllabifier {
 
 	private LanguageProject languageProject;
 	private SHApproach sonHierApproach;
-	private List<Segment> activeSegmentInventory;
-	private List<SHNaturalClass> activeNaturalClasses;
 	private CVSegmenter segmenter;
 	private SHSonorityComparer sonorityComparer;
 	private boolean fDoTrace = false;
@@ -51,8 +44,6 @@ public class SHSyllabifier {
 		super();
 		this.sonHierApproach = sonHierApproach;
 		languageProject = sonHierApproach.getLanguageProject();
-		activeSegmentInventory = languageProject.getActiveSegmentsInInventory();
-		activeNaturalClasses = sonHierApproach.getActiveSHNaturalClasses();
 		segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
 				languageProject.getActiveGraphemeNaturalClasses());
 		sonorityComparer = new SHSonorityComparer(sonHierApproach);
@@ -79,21 +70,6 @@ public class SHSyllabifier {
 		this.fDoTrace = fDoTrace;
 	}
 
-	public boolean convertSegmentstoSyllables() {
-		// syllablesInCurrentWord.clear();
-		// syllabifierTraceInfo.clear();
-		//
-		// // recursively parse into syllables
-		// boolean result = parseIntoSyllables(naturalClassListInCurrentWord,
-		// syllabifierTraceInfo, true);
-		//
-		// if (result) {
-		// // the list of syllables found is in reverse order; flip them
-		// Collections.reverse(syllablesInCurrentWord);
-		// }
-		return false;
-	}
-
 	public boolean convertStringToSyllables(String word) {
 		syllablesInCurrentWord.clear();
 		syllabifierTraceInfoList.clear();
@@ -102,18 +78,16 @@ public class SHSyllabifier {
 		fSuccess = segResult.success;
 		if (fSuccess) {
 			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-			fSuccess = parseIntoSyllables(segmentsInWord, syllabifierTraceInfoList, true);
+			fSuccess = parseIntoSyllables(segmentsInWord);
 		}
 		return fSuccess;
 	}
 
-	private boolean parseIntoSyllables(List<CVSegmentInSyllable> segmentsInWord,
-			List<SHTraceSyllabifierInfo> sylTraceInfo, Boolean isWordInitial) {
+	private boolean parseIntoSyllables(List<CVSegmentInSyllable> segmentsInWord) {
 		if (segmentsInWord.size() == 0) {
 			return false;
 		}
 		boolean fResult = syllabify(segmentsInWord);
-		SHTraceSyllabifierInfo sylInfo = new SHTraceSyllabifierInfo();
 		return fResult;
 	}
 

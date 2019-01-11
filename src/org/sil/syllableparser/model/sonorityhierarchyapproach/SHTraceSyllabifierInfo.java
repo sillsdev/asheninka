@@ -23,6 +23,38 @@ public class SHTraceSyllabifierInfo {
 	public SHNaturalClass naturalClass2 = null;
 	public SHComparisonResult comparisonResult;
 
+	public String getSegment1Result() {
+		if (segment1 == null) {
+			return "null";
+		} else {
+			return segment1.getSegment();
+		}
+	}
+
+	public String getNaturalClass1Result() {
+		if (naturalClass1 == null) {
+			return "null";
+		} else {
+			return naturalClass1.getNCName();
+		}
+	}
+
+	public String getSegment2Result() {
+		if (segment2 == null) {
+			return "null";
+		} else {
+			return segment2.getSegment();
+		}
+	}
+
+	public String getNaturalClass2Result() {
+		if (naturalClass2 == null) {
+			return "null";
+		} else {
+			return naturalClass2.getNCName();
+		}
+	}
+
 	public String getComparisonResult() {
 		if (comparisonResult == null) {
 			return "null";
