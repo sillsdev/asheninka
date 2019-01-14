@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.cvapproach.CVTraceSyllabifierInfo;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceInfo;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifierInfo;
 
@@ -44,7 +44,6 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 
 	protected void formatSyllablification(StringBuilder sb) {
 		SHSyllabifier syllabifier = traceInfo.getSyllabifier();
-		List<SHTraceSyllabifierInfo> syllabifierInfo = syllabifier.getSyllabifierTraceInfo();
 		SHSyllabifierResult sylResult = traceInfo.getSyllabifierResult();
 		if (sylResult != null) {
 			if (sylResult.success) {
@@ -70,78 +69,84 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		if (traceList.size() == 0) {
 			return;
 		}
+		String row1Status;
+		String row2Status;
+
 		sb.append("<table border='1'>\n");
 		sb.append("<tr valign='top'>");
-		sb.append("<th>Segment</th>\n");
-		sb.append("<th>Natural Class</th>\n");
-		sb.append("<th>Sonority Comparison</th>\n");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawshsegment1"));
+		sb.append("</th>\n");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawshrelation"));
+		sb.append("</th>\n");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawshsegment2"));
+		sb.append("</th>\n");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawshstartssyllable"));
+		sb.append("</th>\n");
 		sb.append("</tr>\n");
 		int i = 0;
 		for (SHTraceSyllabifierInfo sylInfo : traceList) {
+			if (sylInfo.comparisonResult == SHComparisonResult.MISSING1) {
+				sylInfo.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
+				row1Status = FAILURE;
+			} else {
+				row1Status = SUCCESS;
+			}
+			if (sylInfo.comparisonResult == SHComparisonResult.MISSING2) {
+				sylInfo.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
+				row2Status = FAILURE;
+			} else {
+				row2Status = SUCCESS;
+			}
 			sb.append("<tr valign='top'>");
 			sb.append("<td>");
 			sb.append("<span class='");
-			if (sylInfo.segment1 != null) {
-				sb.append(SUCCESS);
-			} else {
-				sb.append(FAILURE);
-			}
-			sb.append("'>");
+			sb.append(row1Status);
+			sb.append("'>&#xa0;");
 			sb.append(sylInfo.getSegment1Result());
-			sb.append("</span></a>\n");
-			sb.append("</td>");
-
-			sb.append("<td>");
-			sb.append("<span class='");
-			if (sylInfo.naturalClass1 != null) {
-				sb.append(SUCCESS);
-			} else {
-				sb.append(FAILURE);
-			}
-			sb.append("'>");
+			sb.append(" (");
 			sb.append(sylInfo.getNaturalClass1Result());
-			sb.append("</span></a>\n");
+			sb.append(")&#xa0;");
+			sb.append("</span>\n");
 			sb.append("</td>");
 
-			sb.append("<td rowspan=\"2\" valign=\"middle\">");
+			sb.append("<td align=\"center\">");
 			sb.append("<span class='");
-			if (sylInfo.comparisonResult != null) {
-				sb.append(SUCCESS);
-			} else {
+			if (sylInfo.comparisonResult == SHComparisonResult.MISSING1
+					|| sylInfo.comparisonResult == SHComparisonResult.MISSING2) {
 				sb.append(FAILURE);
+			} else {
+				sb.append(SUCCESS);
 			}
 			sb.append("'>");
 			sb.append(sylInfo.getComparisonResult());
-			sb.append("</span></a>\n");
-			sb.append("</td>");		
-			sb.append("</tr>\n");
-			sb.append("<tr valign='top'>");
-			sb.append("<td>");
-			sb.append("<span class='");
-			if (sylInfo.segment2 != null) {
-				sb.append(SUCCESS);
-			} else {
-				sb.append(FAILURE);
-			}
-			sb.append("'>");
-			sb.append(sylInfo.getSegment2Result());
-			sb.append("</span></a>\n");
+			sb.append("</span>\n");
 			sb.append("</td>");
 
 			sb.append("<td>");
 			sb.append("<span class='");
-			if (sylInfo.naturalClass2 != null) {
-				sb.append(SUCCESS);
-			} else {
-				sb.append(FAILURE);
-			}
-			sb.append("'>");
+			sb.append(row2Status);
+			sb.append("'>&#xa0;");
+			sb.append(sylInfo.getSegment2Result());
+			sb.append(" (");
 			sb.append(sylInfo.getNaturalClass2Result());
-			sb.append("</span></a>\n");
+			sb.append(")&#xa0;");
+			sb.append("</span>\n");
+			sb.append("<td align='center'>");
+			if (sylInfo.startsSyllable) {
+				sb.append("&sigma;");
+			} else {
+				sb.append("&#xa0;");
+			}
 			sb.append("</td>");
 			sb.append("</tr>\n");
-			sb.append("<tr><td colspan=\"3\"/></td>\n");
 			i++;
+			if (i < traceList.size()) {
+				sb.append("<tr><td colspan=\"4\"/></td>\n");
+			}
 		}
 		sb.append("</table>\n");
 	}

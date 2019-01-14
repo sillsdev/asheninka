@@ -94,7 +94,8 @@ public class SHSyllabifier {
 	public boolean syllabify(List<CVSegmentInSyllable> segmentsInWord) {
 		syllablesInCurrentWord.clear();
 		syllabifierTraceInfoList.clear();
-		SHTraceSyllabifierInfo traceInfo;
+		SHTraceSyllabifierInfo traceInfo = null;
+		boolean fLastStartedSyllable = true;
 		int segmentCount = segmentsInWord.size();
 		if (segmentCount == 0) {
 			return false;
@@ -110,6 +111,10 @@ public class SHSyllabifier {
 				traceInfo = new SHTraceSyllabifierInfo(seg1,
 						sonHierApproach.getNaturalClassContainingSegment(seg1), seg2,
 						sonHierApproach.getNaturalClassContainingSegment(seg2), result);
+				if (fLastStartedSyllable) {
+					traceInfo.startsSyllable = true;
+					fLastStartedSyllable = false;
+				}
 				syllabifierTraceInfoList.add(traceInfo);
 			}
 			if (result == SHComparisonResult.MORE) {
@@ -127,12 +132,11 @@ public class SHSyllabifier {
 							syllabifierTraceInfoList.add(traceInfo);
 						}
 					}
-				} else {
-					syl.add(segmentsInWord.get(i));
-				}
-				if (j < segmentCount) {
 					syllablesInCurrentWord.add(syl);
 					syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
+					syl.add(segmentsInWord.get(i));
+					fLastStartedSyllable = true;
+				} else {
 					syl.add(segmentsInWord.get(i));
 				}
 			} else if (result == SHComparisonResult.LESS) {
@@ -140,13 +144,20 @@ public class SHSyllabifier {
 			} else if (result == SHComparisonResult.EQUAL) {
 				syl.add(segmentsInWord.get(i));
 			} else {
-				System.out.println("syllabify: result=" + result);
 				return false;
 			}
 			i++;
 		}
 		if (syl.getSegmentsInSyllable().size() > 0) {
 			syllablesInCurrentWord.add(syl);
+			if (fDoTrace && fLastStartedSyllable) {
+				Segment seg = segmentsInWord.get(segmentCount -1).getSegment();
+				traceInfo = new SHTraceSyllabifierInfo(seg,
+						sonHierApproach.getNaturalClassContainingSegment(seg), null,
+						null, null);
+				traceInfo.startsSyllable = true;
+				syllabifierTraceInfoList.add(traceInfo);
+			}
 		}
 		return true;
 	}

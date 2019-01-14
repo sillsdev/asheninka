@@ -5,10 +5,6 @@
  */
 package org.sil.syllableparser.model.sonorityhierarchyapproach;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.sil.syllableparser.model.Segment;
 
 /**
@@ -22,10 +18,13 @@ public class SHTraceSyllabifierInfo {
 	public Segment segment2 = null;
 	public SHNaturalClass naturalClass2 = null;
 	public SHComparisonResult comparisonResult;
+	public boolean startsSyllable = false;
+	public String sMissingNaturalClass = "No Natural Class";
+	public static final String NULL_REPRESENTATION = "&#xa0;&#x2014";
 
 	public String getSegment1Result() {
 		if (segment1 == null) {
-			return "null";
+			return NULL_REPRESENTATION;
 		} else {
 			return segment1.getSegment();
 		}
@@ -33,7 +32,11 @@ public class SHTraceSyllabifierInfo {
 
 	public String getNaturalClass1Result() {
 		if (naturalClass1 == null) {
-			return "null";
+			if (comparisonResult == SHComparisonResult.MISSING1) {
+				return sMissingNaturalClass;
+			} else {
+				return NULL_REPRESENTATION;
+			}
 		} else {
 			return naturalClass1.getNCName();
 		}
@@ -41,7 +44,7 @@ public class SHTraceSyllabifierInfo {
 
 	public String getSegment2Result() {
 		if (segment2 == null) {
-			return "null";
+			return NULL_REPRESENTATION;
 		} else {
 			return segment2.getSegment();
 		}
@@ -49,17 +52,41 @@ public class SHTraceSyllabifierInfo {
 
 	public String getNaturalClass2Result() {
 		if (naturalClass2 == null) {
-			return "null";
+			if (comparisonResult == SHComparisonResult.MISSING2) {
+				return sMissingNaturalClass;
+			} else {
+				return NULL_REPRESENTATION;
+			}
 		} else {
 			return naturalClass2.getNCName();
 		}
 	}
 
 	public String getComparisonResult() {
+		String result = "";
 		if (comparisonResult == null) {
-			return "null";
+			return NULL_REPRESENTATION;
 		} else {
-			return comparisonResult.name();
+			switch (comparisonResult) {
+			case LESS:
+				result = "<";
+				break;
+			case EQUAL:
+				result = "=";
+				break;
+			case MORE:
+				result = ">";
+				break;
+			case MISSING1:
+				result = "!!!";
+				break;
+			case MISSING2:
+				result = "!!!";
+				break;
+			default:
+				break;
+			}
+			return result;
 		}
 	}
 
