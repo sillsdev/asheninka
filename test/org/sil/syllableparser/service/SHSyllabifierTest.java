@@ -102,7 +102,6 @@ public class SHSyllabifierTest {
 		fSuccess = shSyllabifier.syllabify(segmentsInWord);
 		assertEquals("word syllabified", success, fSuccess);
 		List<SHSyllable> syllablesInWord = shSyllabifier.getSyllablesInCurrentWord();
-		System.out.println("syls=" + shSyllabifier.getSyllabificationOfCurrentWord());
 		assertEquals("Expect " + numberOfSyllables + " syllables in word", numberOfSyllables,
 				syllablesInWord.size());
 		assertEquals("Expected Syllabification of word", expectedSyllabification,
@@ -111,7 +110,6 @@ public class SHSyllabifierTest {
 
 	protected void checkSyllabifyWord(String word, boolean success, String expectedNaturalClasses,
 			String expectedSonorityValues, int numberOfSyllables, String expectedSyllabification) {
-		System.out.println("word=" + word);
 		boolean fSuccess = shSyllabifier.convertStringToSyllables(word);
 		assertEquals("word syllabified", success, fSuccess);
 		String naturalClassesInWord = shSyllabifier.getNaturalClassesInCurrentWord();
