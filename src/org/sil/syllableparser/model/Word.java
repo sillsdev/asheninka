@@ -50,6 +50,8 @@ public class Word extends SylParserObject {
 		this.correctSyllabification = new SimpleStringProperty(correctHyphenation);
 		this.cvParserResult = new SimpleStringProperty(parserResult);
 		this.cvPredictedSyllabification = new SimpleStringProperty("");
+		this.shParserResult = new SimpleStringProperty(parserResult);
+		this.shPredictedSyllabification = new SimpleStringProperty("");
 		createUUID();
 	}
 

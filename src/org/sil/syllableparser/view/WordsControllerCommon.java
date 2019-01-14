@@ -51,33 +51,6 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		}
 	}
 
-	protected final class ParserResultWrappingTableCell extends TableCell<Word, String> {
-		private Text text;
-
-		@Override
-		protected void updateItem(String item, boolean empty) {
-			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Word word = (Word) this.getTableRow().getItem();
-				if (word != null && word.getCVParserResult().length() > 0
-						&& word.getCVPredictedSyllabification().length() == 0) {
-					text.setFill(Constants.PARSER_FAILURE);
-				} else {
-					text.setFill(Constants.PARSER_SUCCESS);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
-		}
-	}
-
 	@FXML
 	protected TableView<Word> wordsTable;
 	@FXML
@@ -132,9 +105,6 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		});
 		correctSyllabificationColumn.setCellFactory(column -> {
 			return new VernacularWrappingTableCell();
-		});
-		parserResultColumn.setCellFactory(column -> {
-			return new ParserResultWrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(wordColumn);

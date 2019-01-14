@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2018-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -18,19 +18,12 @@ import org.controlsfx.control.textfield.TextFields;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.*;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVApproachView;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
-import org.sil.syllableparser.service.CVNaturalClasser;
-import org.sil.syllableparser.service.CVNaturalClasserResult;
 import org.sil.syllableparser.service.CVSegmenter;
 import org.sil.syllableparser.service.CVSegmenterResult;
-import org.sil.syllableparser.service.CVSyllabifier;
+import org.sil.syllableparser.service.SHSyllabifier;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -214,100 +207,70 @@ public class SHApproachController extends ApproachController {
 	@Override
 	void handleSyllabifyWords(StatusBar statusBar) {
 		String sSuccess = bundle.getString("label.success");
-		String sSegmentFailure = bundle.getString("label.shsegmentfailure");
-		String sNaturalClassFailure = bundle.getString("label.shnaturalclassfailure");
+		String sSegmentFailure = bundle.getString("label.cvsegmentfailure");
 		String sSyllabificationFailure = bundle.getString("label.shsyllabificationfailure");
 		long timeStart = System.currentTimeMillis();
-//
-//		Task<Void> task = new Task<Void>() {
-//			@Override
-//			protected Void call() throws Exception {
-//				Scene scene = statusBar.getScene();
-//				Cursor currentCursor = scene.getCursor();
-//				scene.setCursor(Cursor.WAIT);
-//				ObservableList<CVNaturalClass> naturalClasses;
-//				CVSegmenter segmenter;
-//				ObservableList<Segment> segmentInventory;
-//				// List<Segment> cvSegmentInventory;
-//				CVNaturalClasser naturalClasser;
-//				List<CVNaturalClass> cvNaturalClasses;
-//				List<CVSyllablePattern> patterns;
-//				CVSyllabifier syllabifier;
-//				List<CVSyllablePattern> cvPatterns;
-//
-//				// segmentInventory = languageProject.getSegmentInventory();
-//				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
-//						languageProject.getActiveGraphemeNaturalClasses());
-//				// cvSegmentInventory = segmenter.getActiveSegmentInventory();
-//				naturalClasses = shApproachData.getCVNaturalClasses();
-//				naturalClasser = new CVNaturalClasser(naturalClasses);
-//				cvNaturalClasses = naturalClasser.getActiveNaturalClasses();
-//				patterns = shApproachData.getActiveCVSyllablePatterns();
-//				syllabifier = new CVSyllabifier(patterns, null);
-//				cvPatterns = syllabifier.getActiveCVPatterns();
-//
-//				int max = words.size();
-//				int i = 0;
-//				for (Word word : words) {
-//					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
-//					updateProgress(i++, max);
-//
-//					String sWord = word.getWord();
-//					CVSegmenterResult result = segmenter.segmentWord(sWord);
-//					boolean fSuccess = result.success;
-//					if (!fSuccess) {
-//						word.setCVParserResult(sSegmentFailure.replace("{0}",
-//								sWord.substring(result.iPositionOfFailure)));
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-//					CVNaturalClasserResult ncResult = naturalClasser
-//							.convertSegmentsToNaturalClasses(segmentsInWord);
-//					fSuccess = ncResult.success;
-//					if (!fSuccess) {
-//						String sFailureMessage0 = sNaturalClassFailure.replace("{0}",
-//								ncResult.sClassesSoFar);
-//						String sFailureMessage1 = sFailureMessage0.replace("{1}",
-//								ncResult.sGraphemesSoFar);
-//						word.setCVParserResult(sFailureMessage1);
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
-//							.getNaturalClassListsInCurrentWord();
-//					syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
-//					fSuccess = syllabifier.convertNaturalClassesToSyllables();
-//					if (!fSuccess) {
-//						word.setCVParserResult(sSyllabificationFailure);
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					word.setCVPredictedSyllabification(syllabifier
-//							.getSyllabificationOfCurrentWord());
-//					word.setCVParserResult(sSuccess);
-//				}
-//				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
-//				scene.setCursor(currentCursor);
-//				// sleep for a second since it all happens so quickly
-//				Thread.sleep(1000);
-//				updateProgress(0, 0);
-//				done();
-//				return null;
-//			}
-//		};
-//
-//		statusBar.textProperty().bind(task.messageProperty());
-//		statusBar.progressProperty().bind(task.progressProperty());
-//
-//		// remove bindings again
-//		task.setOnSucceeded(event -> {
-//			statusBar.textProperty().unbind();
-//			statusBar.progressProperty().unbind();
-//			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
-//		});
-//
-//		Platform.runLater(task);
+
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				Scene scene = statusBar.getScene();
+				Cursor currentCursor = scene.getCursor();
+				scene.setCursor(Cursor.WAIT);
+				CVSegmenter segmenter;
+				SHSyllabifier syllabifier;
+
+				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
+						languageProject.getActiveGraphemeNaturalClasses());
+				syllabifier = new SHSyllabifier(languageProject.getSHApproach());
+
+				int max = words.size();
+				int i = 0;
+				for (Word word : words) {
+					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
+					updateProgress(i++, max);
+
+					String sWord = word.getWord();
+					CVSegmenterResult result = segmenter.segmentWord(sWord);
+					boolean fSuccess = result.success;
+					if (!fSuccess) {
+						word.setSHParserResult(sSegmentFailure.replace("{0}",
+								sWord.substring(result.iPositionOfFailure)));
+						word.setSHPredictedSyllabification("");
+						continue;
+					}
+					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					fSuccess = syllabifier.syllabify(segmentsInWord);
+					if (!fSuccess) {
+						word.setSHParserResult(sSyllabificationFailure);
+						word.setSHPredictedSyllabification("");
+						continue;
+					}
+					word.setSHPredictedSyllabification(syllabifier
+							.getSyllabificationOfCurrentWord());
+					word.setSHParserResult(sSuccess);
+				}
+				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
+				scene.setCursor(currentCursor);
+				// sleep for a second since it all happens so quickly
+				Thread.sleep(1000);
+				updateProgress(0, 0);
+				done();
+				return null;
+			}
+		};
+
+		statusBar.textProperty().bind(task.messageProperty());
+		statusBar.progressProperty().bind(task.progressProperty());
+
+		// remove bindings again
+		task.setOnSucceeded(event -> {
+			statusBar.textProperty().unbind();
+			statusBar.progressProperty().unbind();
+			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
+		});
+
+		Platform.runLater(task);
 
 	}
 

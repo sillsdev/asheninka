@@ -35,10 +35,42 @@ public class CVWordsController extends WordsControllerCommon {
 	@FXML
 	protected TableView<Word> cvWordsTable;
 
+	protected final class ParserResultWrappingTableCell extends TableCell<Word, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item == null || empty) {
+				setText(null);
+				setStyle("");
+			} else {
+				setStyle("");
+				text = new Text(item.toString());
+				// Get it to wrap.
+				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
+				Word word = (Word) this.getTableRow().getItem();
+				if (word != null && word.getCVParserResult().length() > 0
+						&& word.getCVPredictedSyllabification().length() == 0) {
+					text.setFill(Constants.PARSER_FAILURE);
+				} else {
+					text.setFill(Constants.PARSER_SUCCESS);
+				}
+				text.setFont(languageProject.getAnalysisLanguage().getFont());
+				setGraphic(text);
+			}
+		}
+	}
+
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.setWordsTable(cvWordsTable);
 		super.initialize(location, resources);
+		parserResultColumn.setCellFactory(column -> {
+			return new ParserResultWrappingTableCell();
+		});
+
 		predictedSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.cvPredictedSyllabificationProperty());
 		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue()
