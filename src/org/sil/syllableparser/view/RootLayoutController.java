@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -235,8 +235,10 @@ public class RootLayoutController implements Initializable {
 	public void setMainApp(MainApp mainApp, Locale locale, LanguageProject languageProject) {
 		this.mainApp = mainApp;
 		cvApproachController.setMainApp(mainApp);
+		cvApproachController.setPrefs(mainApp.getApplicationPreferences());
 		cvApproachController.setRootLayout(this);
 		shApproachController.setMainApp(mainApp);
+		shApproachController.setPrefs(mainApp.getApplicationPreferences());
 		shApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
@@ -661,7 +663,6 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleHyphenationParametersSimpleList() {
-		System.out.println("Simple list hyphenation parameters");
 		launchHyphenationParametersController("label.hyphenationparametersindesign",
 				languageProject.getHyphenationParametersListWord());
 	}
@@ -697,14 +698,12 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleHyphenationParametersParaTExt() {
-		System.out.println("Paratext hyphenation parameters");
 		launchHyphenationParametersController("label.hyphenationparametersparatext",
 				languageProject.getHyphenationParametersParaTExt());
 	}
 
 	@FXML
 	private void handleHyphenationParametersXLingPaper() {
-		System.out.println("XLingPaper hyphenation parameters");
 		launchHyphenationParametersController("label.hyphenationparametersxlingpaper",
 				languageProject.getHyphenationParametersXLingPaper());
 	}
@@ -774,29 +773,16 @@ public class RootLayoutController implements Initializable {
 		System.exit(0);
 	}
 
-	@FXML
-	private void handleApproachClick() {
-
-	}
-
 	/**
 	 * CV Approach
 	 */
 	@FXML
 	private void handleCVApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonCVApproach);
 		approachViews.setItems(cvApproachController.getViews());
 		currentApproachController = cvApproachController;
-		selectApproachViewItem(0);
-		setDisableForSomeMenuAndToolbarItems();
-	}
-
-	@FXML
-	private void handleSHApproach() {
-		toggleButtonSelectedStatus(buttonSonorityHierarchyApproach);
-		approachViews.setItems(shApproachController.getViews());
-		currentApproachController = shApproachController;
-		selectApproachViewItem(0);
+		setInitialCVView();
 		setDisableForSomeMenuAndToolbarItems();
 	}
 
@@ -813,106 +799,105 @@ public class RootLayoutController implements Initializable {
 		menuItemFindWord.setDisable(false);
 	}
 
+	private void rememberLastApproachViewUsed() {
+		if (currentApproachController == null) {
+			return;
+		}
+		String sCurrentView = currentApproachController.getViewUsed();
+		if (currentApproachController instanceof CVApproachController) {
+			applicationPreferences.setLastCVApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof SHApproachController) {
+			applicationPreferences.setLastSHApproachViewUsed(sCurrentView);
+		}
+	}
+
 	@FXML
 	private void handleCVSegmentInventory() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVSegmentInventory();
 		selectApproachViewItem(0);
 	}
 
 	@FXML
 	private void handleCVNaturalClasses() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVNaturalClasses();
 		selectApproachViewItem(1);
 	}
 
 	@FXML
 	private void handleCVSyllablePatterns() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVSyllablePatterns();
 		selectApproachViewItem(2);
 	}
 
 	@FXML
 	private void handleCVWords() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVWords();
 		selectApproachViewItem(3);
 	}
 
 	@FXML
 	private void handleCVWordsPredictedVsCorrect() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVWordsPredictedVsCorrect();
 		selectApproachViewItem(4);
 	}
 
 	@FXML
 	private void handleGraphemeNaturalClasses() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleGraphemeNaturalClasses();
 		selectApproachViewItem(5);
 	}
 
 	@FXML
 	private void handleEnvironments() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleEnvironments();
 		selectApproachViewItem(6);
 	}
 
 	@FXML
 	private void handleSHSegmentInventory() {
-		handleSHApproach();
-		SHApproachController cvApproachController = (SHApproachController) currentApproachController;
+		currentApproachController = shApproachController;
 		shApproachController.handleSHSegmentInventory();
 		selectApproachViewItem(0);
 	}
 
 	@FXML
 	private void handleSHSonorityHierarchy() {
-		handleSHApproach();
-		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		currentApproachController = shApproachController;
 		shApproachController.handleSHSonorityHierarchy();
 		selectApproachViewItem(1);
 	}
 
 	@FXML
 	private void handleSHWords() {
-		handleSHApproach();
-		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		currentApproachController = shApproachController;
 		shApproachController.handleSHWords();
 		selectApproachViewItem(2);
 	}
 
 	@FXML
 	private void handleSHWordsPredictedVsCorrect() {
-		handleSHApproach();
-		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		currentApproachController = shApproachController;
 		shApproachController.handleSHWordsPredictedVsCorrect();
 		selectApproachViewItem(3);
 	}
 
 	@FXML
 	private void handleSHGraphemeNaturalClasses() {
-		handleSHApproach();
-		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		currentApproachController = shApproachController;
 		shApproachController.handleGraphemeNaturalClasses();
 		selectApproachViewItem(4);
 	}
 
 	@FXML
 	private void handleSHEnvironments() {
-		handleSHApproach();
-		SHApproachController shApproachController = (SHApproachController) currentApproachController;
+		currentApproachController = shApproachController;
 		shApproachController.handleEnvironments();
 		selectApproachViewItem(5);
 	}
@@ -941,10 +926,11 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleSonorityHierarchyApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonSonorityHierarchyApproach);
 		approachViews.setItems(shApproachController.getViews());
 		currentApproachController = shApproachController;
-		selectApproachViewItem(0);
+		setInitialSHView();
 		setDisableForSomeMenuAndToolbarItems();
 	}
 
@@ -1169,7 +1155,8 @@ public class RootLayoutController implements Initializable {
 		String sLastApproachUsed = applicationPreferences.getLastApproachUsed();
 		switch (sLastApproachUsed) {
 		case "CV":
-			setCVApproachAndInitialCVView();
+			handleCVApproach();
+			setInitialCVView();
 			break;
 
 		case "MORAIC":
@@ -1189,19 +1176,20 @@ public class RootLayoutController implements Initializable {
 			break;
 
 		case "SONORITY_HIERARCHY":
-			setSHApproachAndInitialSHView();
+			handleSonorityHierarchyApproach();
+			setInitialSHView();
 			break;
 
 		default:
-			setCVApproachAndInitialCVView();
+			handleCVApproach();
+			setInitialCVView();
 			break;
 		}
 	}
 
-	protected void setCVApproachAndInitialCVView() {
-		handleCVApproach();
-		String sLastApproachViewUsed = applicationPreferences.getLastApproachViewUsed();
-		switch (sLastApproachViewUsed) {
+	protected void setInitialCVView() {
+		String sLastCVApproachViewUsed = applicationPreferences.getLastCVApproachViewUsed();
+		switch (sLastCVApproachViewUsed) {
 		case "ENVIRONMENTS":
 			selectApproachViewItem(6);
 			break;
@@ -1236,10 +1224,9 @@ public class RootLayoutController implements Initializable {
 		}
 	}
 
-	protected void setSHApproachAndInitialSHView() {
-		handleSHApproach();
-		String sLastApproachViewUsed = applicationPreferences.getLastApproachViewUsed();
-		switch (sLastApproachViewUsed) {
+	protected void setInitialSHView() {
+		String sLastSHApproachViewUsed = applicationPreferences.getLastSHApproachViewUsed();
+		switch (sLastSHApproachViewUsed) {
 		case "ENVIRONMENTS":
 			selectApproachViewItem(5);
 			break;
@@ -1378,15 +1365,15 @@ public class RootLayoutController implements Initializable {
 		String sClass = currentApproachController.getClass().getName();
 		switch (sClass) {
 		case "org.sil.syllableparser.view.CVApproachController":
-			sApproach = ApproachType.CV.toString();
+			sApproach = ApproachType.CV.name();
 			break;
 
 		case "org.sil.syllableparser.view.SHApproachController":
-			sApproach = ApproachType.SONORITY_HIERARCHY.toString();
+			sApproach = ApproachType.SONORITY_HIERARCHY.name();
 			break;
 
 		case "org.sil.syllableparser.view.ONCApproachController":
-			sApproach = ApproachType.ONSET_NUCLEUS_CODA.toString();
+			sApproach = ApproachType.ONSET_NUCLEUS_CODA.name();
 			break;
 
 		default:

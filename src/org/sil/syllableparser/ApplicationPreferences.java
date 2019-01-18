@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.cvapproach.CVApproachView;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
 import org.sil.utility.*;
 
 import javafx.stage.Stage;
@@ -24,6 +25,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_APPROACH_VIEW_USED = "lastApproachViewUsed";
 	static final String LAST_APPROACH_VIEW_ITEM_USED = "lastApproachViewItemUsed";
 	// last CV info
+	static final String LAST_CV_APPROACH_VIEW_USED = "lastCVApproachViewUsed";
 	static final String LAST_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastCVNaturalClassesViewItemUsed";
 	static final String LAST_CV_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastCVSegmentInventoryViewItemUsed";
 	static final String LAST_CV_SYLLABLE_PATTERNS_VIEW_ITEM_USED = "lastCVSyllablePatternsViewItemUsed";
@@ -37,6 +39,8 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastCVWordPredictedVsCorrectViewItemUsed";
 
 	// last Sonority Hierarchy used
+	static final String LAST_SH_APPROACH_VIEW_USED = "lastSHApproachViewUsed";
+	static final String LAST_SH_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastSHSegmentInventoryViewItemUsed";
 	static final String LAST_SH_SONORITY_HIERARCHY_VIEW_ITEM_USED = "lastSHSonorityHierarchViewItemUsed";
 	static final String LAST_SH_TRY_A_WORD_USED = "lastSHTryAWordUsed";
 	static final String LAST_SH_WORDS_VIEW_ITEM_USED = "lastSHWordsViewItemUsed";
@@ -128,6 +132,14 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 		setPreferencesKey(LAST_APPROACH_VIEW_USED, lastApproachViewUsed);
 	}
 
+	public String getLastCVApproachViewUsed() {
+		return prefs.get(LAST_CV_APPROACH_VIEW_USED, CVApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastCVApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_CV_APPROACH_VIEW_USED, lastApproachViewUsed);
+	}
+
 	public int getLastCVNaturalClassesViewItemUsed() {
 		return prefs.getInt(LAST_CV_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
 	}
@@ -190,6 +202,22 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastCVEnvironmentsViewItemUsed(int value) {
 		setPreferencesKey(LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastSHApproachViewUsed() {
+		return prefs.get(LAST_SH_APPROACH_VIEW_USED, SHApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastSHApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_SH_APPROACH_VIEW_USED, lastApproachViewUsed);
+	}
+
+	public int getLastSHSegmentInventoryViewItemUsed() {
+		return prefs.getInt(LAST_SH_SEGMENT_INVENTORY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastSHSegmentInventoryViewItemUsed(int value) {
+		setPreferencesKey(LAST_SH_SEGMENT_INVENTORY_VIEW_ITEM_USED, value);
 	}
 
 	public int getLastSHSonorityHierarchyViewItemUsed() {

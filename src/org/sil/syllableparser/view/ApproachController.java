@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 
 import org.controlsfx.control.StatusBar;
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Word;
 
@@ -23,6 +24,7 @@ import org.sil.syllableparser.model.Word;
 public abstract class ApproachController {
 	
 	protected MainApp mainApp;
+	protected ApplicationPreferences prefs;
 	protected ResourceBundle bundle;
 	protected Locale locale;
 	protected RootLayoutController rootController;
@@ -46,18 +48,17 @@ public abstract class ApproachController {
 	public abstract ArrayList<String> getHyphenatedWordsXLingPaper(ObservableList<Word> words);
 	public abstract String getViewUsed();
 	
-	/**
-	 * @return the mainApp
-	 */
 	public MainApp getMainApp() {
 		return mainApp;
 	}
-
-	/**
-	 * @param mainApp the mainApp to set
-	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+	}
+	public ApplicationPreferences getPrefs() {
+		return prefs;
+	}
+	public void setPrefs(ApplicationPreferences prefs) {
+		this.prefs = prefs;
 	}
 	public void setRootLayout(RootLayoutController controller) {
 		rootController = controller;

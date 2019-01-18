@@ -74,6 +74,10 @@ public class SHApproachController extends ApproachController {
 
 	public String getViewUsed() {
 		String sView = "unknown";
+		if (currentSHApproachController == null) {
+			sView = prefs.getLastSHApproachViewUsed();
+			return sView;
+		}
 		String sClass = currentSHApproachController.getClass().getName();
 		switch (sClass) {
 		case "org.sil.syllableparser.view.CVSegmentInventoryController":
@@ -118,8 +122,8 @@ public class SHApproachController extends ApproachController {
 		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
-		controller.setViewItemUsed(mainApp.getApplicationPreferences()
-				.getLastCVSegmentInventoryViewItemUsed());
+		controller.setViewItemUsed(prefs.getLastSHSegmentInventoryViewItemUsed());
+		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
 	private FXMLLoader createFXMLLoader(String sFxml) {
@@ -141,6 +145,7 @@ public class SHApproachController extends ApproachController {
 		SHSonorityHierarchyController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
+		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
 	public void handleSHWords() {
@@ -155,6 +160,7 @@ public class SHApproachController extends ApproachController {
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
 		}
+		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
 	public void handleSHWordsPredictedVsCorrect() {
@@ -163,6 +169,7 @@ public class SHApproachController extends ApproachController {
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData, words);
 		controller.setFocusOnWord(0);
+		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
 	public void handleGraphemeNaturalClasses() {
@@ -170,8 +177,9 @@ public class SHApproachController extends ApproachController {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
-		int i = mainApp.getApplicationPreferences().getLastSHGraphemeNaturalClassesViewItemUsed();
+		int i = prefs.getLastSHGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
+		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
 	public void handleEnvironments() {
@@ -179,8 +187,9 @@ public class SHApproachController extends ApproachController {
 		EnvironmentsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
-		int i = mainApp.getApplicationPreferences().getLastSHEnvironmentsViewItemUsed();
+		int i = prefs.getLastSHEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
+		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
 	/*

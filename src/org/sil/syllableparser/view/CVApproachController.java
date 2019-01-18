@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -81,6 +81,10 @@ public class CVApproachController extends ApproachController {
 
 	public String getViewUsed() {
 		String sView = "unknown";
+		if (currentCVApproachController == null) {
+			sView = prefs.getLastCVApproachViewUsed();
+			return sView;
+		}
 		String sClass = currentCVApproachController.getClass().getName();
 		switch (sClass) {
 		case "org.sil.syllableparser.view.CVSegmentInventoryController":
@@ -128,8 +132,8 @@ public class CVApproachController extends ApproachController {
 		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		controller.setViewItemUsed(mainApp.getApplicationPreferences()
-				.getLastCVSegmentInventoryViewItemUsed());
+		controller.setViewItemUsed(prefs.getLastCVSegmentInventoryViewItemUsed());
+		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
 	private FXMLLoader createFXMLLoader(String sFxml) {
@@ -151,8 +155,9 @@ public class CVApproachController extends ApproachController {
 		CVNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		int i = mainApp.getApplicationPreferences().getLastCVNaturalClassesViewItemUsed();
+		int i = prefs.getLastCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
 	public void handleCVSyllablePatterns() {
@@ -160,6 +165,7 @@ public class CVApproachController extends ApproachController {
 		CVSyllablePatternsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
 	public void handleCVWords() {
@@ -174,6 +180,7 @@ public class CVApproachController extends ApproachController {
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
 		}
+		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
 	public void handleCVWordsPredictedVsCorrect() {
@@ -182,6 +189,7 @@ public class CVApproachController extends ApproachController {
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
 		controller.setFocusOnWord(0);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
 	public void handleGraphemeNaturalClasses() {
@@ -189,8 +197,9 @@ public class CVApproachController extends ApproachController {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		int i = mainApp.getApplicationPreferences().getLastCVGraphemeNaturalClassesViewItemUsed();
+		int i = prefs.getLastCVGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
 	public void handleEnvironments() {
@@ -198,8 +207,9 @@ public class CVApproachController extends ApproachController {
 		EnvironmentsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		int i = mainApp.getApplicationPreferences().getLastCVEnvironmentsViewItemUsed();
+		int i = prefs.getLastCVEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
 	/*

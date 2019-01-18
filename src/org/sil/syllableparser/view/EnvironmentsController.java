@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -19,6 +19,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
@@ -603,7 +604,14 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ environmentTable.getItems().size() + " ");
 			// remember the selection
-			mainApp.getApplicationPreferences().setLastCVEnvironmentsViewItemUsed(iCurrentIndex);
+			String sApproach = this.rootController.getApproachUsed();
+			if (sApproach.equals(ApproachType.CV.name())) {
+				mainApp.getApplicationPreferences().setLastCVEnvironmentsViewItemUsed(
+						iCurrentIndex);
+			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+				mainApp.getApplicationPreferences().setLastSHEnvironmentsViewItemUsed(
+						iCurrentIndex);
+			}
 		}
 
 	}
@@ -653,7 +661,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 				@Override
 				public void run() {
 					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVEnvironmentsViewItemUsed();
+							.getLastSHEnvironmentsViewItemUsed();
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					// select the last one used
 					environmentTable.requestFocus();

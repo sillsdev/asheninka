@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
@@ -283,8 +284,14 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ graphemeNaturalClassTable.getItems().size() + " ");
 			// remember the selection
-			mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(
-					iCurrentIndex);
+			String sApproach = this.rootController.getApproachUsed();
+			if (sApproach.equals(ApproachType.CV.name())) {
+				mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+				mainApp.getApplicationPreferences().setLastSHGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+			}
 		}
 
 	}
@@ -371,7 +378,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 				@Override
 				public void run() {
 					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVGraphemeNaturalClassesViewItemUsed();
+							.getLastSHGraphemeNaturalClassesViewItemUsed();
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					// select the last one used
 					graphemeNaturalClassTable.requestFocus();
@@ -385,7 +392,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
 	 */
 	@Override
@@ -401,7 +408,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
 	 */
 	@Override

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
@@ -320,7 +321,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		cvSegmentTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showCVSegmentDetails(newValue));
 
-		// Following avoids getting the following message: 
+		// Following avoids getting the following message:
 		// com.sun.javafx.scene.control.skin.VirtualFlow addTrailingCells
 		// INFO: index exceeds maxCellCount.
 		cvSegmentTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
@@ -439,8 +440,15 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			int currentSegmentNumber = cvSegmentTable.getItems().indexOf(currentSegment);
 			this.mainApp.updateStatusBarNumberOfItems((currentSegmentNumber + 1) + "/"
 					+ cvSegmentTable.getItems().size() + " ");
-			mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
-					currentSegmentNumber);
+
+			String sApproach = this.rootController.getApproachUsed();
+			if (sApproach.equals(ApproachType.CV.name())) {
+				mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
+						currentSegmentNumber);
+			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+				mainApp.getApplicationPreferences().setLastSHSegmentInventoryViewItemUsed(
+						currentSegmentNumber);
+			}
 		}
 	}
 
@@ -467,24 +475,30 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
-		populateSegmentTable();
-}
+		populateSegmentTable(ApproachType.CV);
+	}
 
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
-		populateSegmentTable();
+		populateSegmentTable(ApproachType.SONORITY_HIERARCHY);
 	}
 
-	private void populateSegmentTable() {
+	private void populateSegmentTable(ApproachType appType) {
 		cvSegmentTable.setItems(languageProject.getSegmentInventory());
 		int max = cvSegmentTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVSegmentInventoryViewItemUsed();
+					int iLastIndex = 0;
+					if (appType == ApproachType.CV) {
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastCVSegmentInventoryViewItemUsed();
+					} else if (appType == ApproachType.SONORITY_HIERARCHY) {
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastSHSegmentInventoryViewItemUsed();
+					}
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					cvSegmentTable.requestFocus();
 					cvSegmentTable.getSelectionModel().select(iLastIndex);
