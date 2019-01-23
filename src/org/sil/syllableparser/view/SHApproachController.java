@@ -308,27 +308,26 @@ public class SHApproachController extends ApproachController {
 
 	@FXML
 	public void handleCompareImplementations() {
-//		try {
-//			// Load the fxml file and create a new stage for the popup.
-//			Stage dialogStage = new Stage();
-//			String resource = "fxml/SHComparison.fxml";
-//			String title = bundle.getString("label.compareimplementations");
-//			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
-//					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
-//
-//			SHComparisonController controller = loader.getController();
-//			controller.setDialogStage(dialogStage);
-//			controller.setMainApp(mainApp);
-//			controller.setLocale(locale);
-//			controller.setData(shApproachData);
-//			controller.setBackupDirectoryPath(backupDirectoryPath);
-//
-//			dialogStage.initModality(Modality.NONE);
-//			dialogStage.show();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/SHComparison.fxml";
+			String title = bundle.getString("label.compareimplementations");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
+					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
 
+			SHComparisonController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setLocale(locale);
+			controller.setData(shApproachData);
+			controller.setBackupDirectoryPath(backupDirectoryPath);
+
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

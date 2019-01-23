@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser;
@@ -65,6 +65,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT = "lastCVWordPredictedVsCorrect";
 	public static final String LAST_CV_GRAPHEME_OR_NATURAL_CLASS = "lastCVGraphemeOrNaturalClass";
 	public static final String LAST_CV_ENVIRONMENTS_CHOOSER = "lastCVEnvironmentsChooser";
+	public static final String LAST_SH_COMPARISON = "lastCVComparision";
 	public static final String LAST_SH_SEGMENT = "lastSHSegment";
 	public static final String LAST_SH_TRY_A_WORD = "lastSHTryAWord";
 	

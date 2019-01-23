@@ -92,6 +92,35 @@
         <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
         <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
     </hyphenationParametersXLingPaper>
+    <shApproach>
+        <shSonorityHierarchy>
+            <shNaturalClass segs="de664190-dd3c-4bb3-892e-16dc596255ce 92284e25-50b0-4c3a-9043-c5a67c6cfcff 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 008bb81a-5594-45ee-ae2a-457a058cee16 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="0f500ba4-f011-4c35-b413-9013ba50ae95">
+                <description>Vowels</description>
+                <NCName>Vowels</NCName>
+                <segmentsRepresentation>a, e, i, o, u</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df 5b00fb26-005d-4e73-a7c0-5ffac83a3a97" active="true" id="4d3217ec-d6a5-4bf2-8b5c-e3e56e444ee8">
+                <description>Glides</description>
+                <NCName>Glides</NCName>
+                <segmentsRepresentation>w, y</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a" active="true" id="e888da6c-3232-4be1-804d-97e1086a87cd">
+                <description>Nasals</description>
+                <NCName>Nasals</NCName>
+                <segmentsRepresentation>m, n</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="101d2651-cd84-4671-a286-0d37e22759e4 76e0b311-b742-4eb5-98f9-8670dfce5149" active="true" id="12ce6c90-20d6-4d2a-88bf-511d78e8756f">
+                <description>Liquids</description>
+                <NCName>Liquids</NCName>
+                <segmentsRepresentation>l, r</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="a72f9654-e5ec-45dc-80ba-204abf0ef872 0c349a88-de1d-4bd8-8845-18775f142719 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b 373d2f17-d2ca-414a-b12e-ca61c9b821ed 65be3575-5c87-4a7d-8560-d1f32a816b2f 518cf26f-42ab-4555-ac4d-af1667774959 a606ebec-8ceb-42bd-93ee-2b78f65f9984 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" active="true" id="289ef0a5-58ca-482d-841c-0dbca2395755">
+                <description>Obstruents</description>
+                <NCName>Obstruents</NCName>
+                <segmentsRepresentation>ch, d, f, g, h, k, p, s, sh, t, v, x, z</segmentsRepresentation>
+            </shNaturalClass>
+        </shSonorityHierarchy>
+    </shApproach>
     <segments>
         <segment active="true" id="28f82d15-cd1a-462d-8f24-045ab0f163b6">
             <description>glottal stop (used between vowels)</description>

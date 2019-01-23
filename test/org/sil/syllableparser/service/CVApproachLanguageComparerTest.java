@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import java.util.SortedSet;
 
 import javafx.collections.ObservableList;
@@ -27,10 +26,8 @@ import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
-import org.sil.syllableparser.model.GraphemeOrNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
@@ -148,7 +145,6 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("number of active graphemes in segment1", 2, seg1.getActiveGraphs().size());
 		assertEquals("number of graphemes in segment2", 5, seg2.getGraphs().size());
 		assertEquals("number of graphemes in segment2", 4, seg2.getActiveGraphs().size());
-		Grapheme graph1 = seg1.getGraphs().get(0);
 		assertEquals("second's 1's graphemes are 'a A'", "a A",
 				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
 		assertEquals("second's 2's graphemes are 'a A á Á'", "a A á Á",
