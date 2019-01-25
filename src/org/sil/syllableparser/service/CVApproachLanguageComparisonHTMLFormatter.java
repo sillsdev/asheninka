@@ -183,14 +183,6 @@ public class CVApproachLanguageComparisonHTMLFormatter extends ApproachLanguageC
 		return syllablePattern1;
 	}
 
-	protected void formatCVPredictedSyllabification(StringBuilder sb, Word word) {
-		if (word == null || word.getCVPredictedSyllabification().length() == 0) {
-			sb.append("&#xa0;");
-		} else {
-			sb.append(word.getCVPredictedSyllabification());
-		}
-	}
-
 	protected void formatHTMLEnding(StringBuilder sb) {
 		sb.append("</body>\n</html>\n");
 	}
@@ -211,5 +203,4 @@ public class CVApproachLanguageComparisonHTMLFormatter extends ApproachLanguageC
 			sb.append(word.getCVPredictedSyllabification());
 		}
 	}
-
 }

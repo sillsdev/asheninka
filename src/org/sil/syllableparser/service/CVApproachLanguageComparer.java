@@ -160,7 +160,8 @@ public class CVApproachLanguageComparer extends ApproachLanguageComparer {
 		for (Word word : words) {
 			boolean fSuccess = stringSyllabifier.convertStringToSyllables(word.getWord());
 			if (fSuccess) {
-				word.setCVPredictedSyllabification(word.getCVPredictedSyllabification());
+				word.setCVPredictedSyllabification(stringSyllabifier.getSyllabificationOfCurrentWord());
+//				word.setCVPredictedSyllabification(word.getCVPredictedSyllabification());
 			}
 		}
 

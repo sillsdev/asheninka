@@ -41,7 +41,8 @@ public class SHComparisonController extends ComparisonController {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		preferences = mainApp.getApplicationPreferences();
-		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_SH_COMPARISON, dialogStage, 533.0, 637.0);
+		setWindowParams(ApplicationPreferences.LAST_SH_COMPARISON);
+		dialogStage = preferences.getLastWindowParameters(sWindowParams, dialogStage, 533.0, 637.0);
 	}
 
 	public void setData(SHApproach shApproachData) {

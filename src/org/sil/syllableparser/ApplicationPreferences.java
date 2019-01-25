@@ -65,9 +65,10 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT = "lastCVWordPredictedVsCorrect";
 	public static final String LAST_CV_GRAPHEME_OR_NATURAL_CLASS = "lastCVGraphemeOrNaturalClass";
 	public static final String LAST_CV_ENVIRONMENTS_CHOOSER = "lastCVEnvironmentsChooser";
-	public static final String LAST_SH_COMPARISON = "lastCVComparision";
+	public static final String LAST_SH_COMPARISON = "lastSHComparision";
 	public static final String LAST_SH_SEGMENT = "lastSHSegment";
 	public static final String LAST_SH_TRY_A_WORD = "lastSHTryAWord";
+	public static final String LAST_SYLLABIFICATION_COMPARISON = "lastSyllabificationComparision";
 	
 	Preferences prefs;
 

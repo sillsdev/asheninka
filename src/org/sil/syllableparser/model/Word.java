@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -13,7 +13,6 @@ import org.sil.syllableparser.model.SylParserObject;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
@@ -172,5 +171,9 @@ public class Word extends SylParserObject {
 			}
 		}
 		return result;
+	}
+
+	public String getSortingValue() {
+		return getWord();
 	}
 }

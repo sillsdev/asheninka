@@ -44,7 +44,8 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 	final String VERNACULAR_1 = "vernacular1";
 	final String VERNACULAR_2 = "vernacular2";
 
-	public ApproachLanguageComparisonHTMLFormatter(ApproachLanguageComparer comparer, LanguageProject lang1, LanguageProject lang2, Locale locale) {
+	public ApproachLanguageComparisonHTMLFormatter(ApproachLanguageComparer comparer,
+			LanguageProject lang1, LanguageProject lang2, Locale locale) {
 		super();
 		langProj1 = lang1;
 		langProj2 = lang2;
@@ -52,14 +53,16 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 	}
 
 	// Used for testing so the date time can be constant
-	public ApproachLanguageComparisonHTMLFormatter(ApproachLanguageComparer comparer, LanguageProject lang1, LanguageProject lang2, Locale locale, LocalDateTime dateTime) {
+	public ApproachLanguageComparisonHTMLFormatter(ApproachLanguageComparer comparer,
+			LanguageProject lang1, LanguageProject lang2, Locale locale, LocalDateTime dateTime) {
 		super();
 		langProj1 = lang1;
 		langProj2 = lang2;
 		initialize(comparer, locale, dateTime);
 	}
 
-	protected void initialize(ApproachLanguageComparer comparer, Locale locale, LocalDateTime dateTime) {
+	protected void initialize(ApproachLanguageComparer comparer, Locale locale,
+			LocalDateTime dateTime) {
 		this.comparer = comparer;
 		this.locale = locale;
 		bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale);
@@ -101,11 +104,13 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatOverview(StringBuilder sb, String comparisonOf) {
 		sb.append("<h2>" + comparisonOf + "</h2>\n");
-		sb.append("<ol><li>");
-		sb.append(comparer.getDataSet1Info());
-		sb.append("</li>\n<li>");
-		sb.append(comparer.getDataSet2Info());
-		sb.append("</li>\n</ol>\n");
+		if (comparer.getDataSet1Info() != null || comparer.getDataSet2Info() != null) {
+			sb.append("<ol><li>");
+			sb.append(comparer.getDataSet1Info());
+			sb.append("</li>\n<li>");
+			sb.append(comparer.getDataSet2Info());
+			sb.append("</li>\n</ol>\n");
+		}
 		sb.append("<div>" + bundle.getString("report.performedon"));
 		sb.append(DateTimeNormalizer.normalizeDateTimeWithWords(dateTime, locale));
 		sb.append("</div>\n");
