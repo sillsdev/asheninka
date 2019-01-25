@@ -156,6 +156,10 @@
 							<MenuItem mnemonicParsing="true"
 								onAction="#handleCompareImplementations" text="%menu.compareimplementations"
 								fx:id="menuItemCompareImplementations" />
+							<SeparatorMenuItem />
+							<MenuItem mnemonicParsing="true"
+								onAction="#handleCompareApproachSyllabifications" text="%menu.compareapproachsyllabifications"
+								fx:id="menuItemCompareApproachSyllabifications" />
 						</items>
 					</Menu>
 					<Menu mnemonicParsing="true" text="%menu.settings">

@@ -74,6 +74,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -171,6 +172,8 @@ public class RootLayoutController implements Initializable {
 	private MenuItem menuItemClearCorrectSyllabificationInWords;
 	@FXML
 	private MenuItem menuItemCompareImplementations;
+	@FXML
+	private MenuItem menuItemCompareApproachSyllabifications;
 	@FXML
 	private MenuItem menuItemVernacularFont;
 	@FXML
@@ -601,6 +604,30 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleCompareImplementations() {
 		currentApproachController.handleCompareImplementations();
+	}
+
+	@FXML
+	private void handleCompareApproachSyllabifications() {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/SyllabificationComparison.fxml";
+			String title = bundle.getString("label.comparesyllabifications");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage, title,
+					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
+
+			SyllabificationComparisonController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setLocale(currentLocale);
+			controller.setData(languageProject);
+
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@FXML

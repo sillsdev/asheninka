@@ -71,6 +71,7 @@ public abstract class ComparisonController implements Initializable {
 	protected String sDataSet1Info;
 	protected String sDataSet2Info;
 	protected final String sCurrentImplementationResourceLabel = "radio.current";
+	protected String sWindowParams = ApplicationPreferences.LAST_CV_COMPARISON;
 
 	/*
 	 * (non-Javadoc)
@@ -204,7 +205,7 @@ public abstract class ComparisonController implements Initializable {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		preferences = mainApp.getApplicationPreferences();
-		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_CV_COMPARISON, dialogStage, 533.0, 637.0);
+		dialogStage = preferences.getLastWindowParameters(sWindowParams, dialogStage, 533.0, 637.0);
 	}
 
 	public void setLocale(Locale locale) {
@@ -213,6 +214,14 @@ public abstract class ComparisonController implements Initializable {
 
 	public void setBackupDirectoryPath(String directory) {
 		backupDirectory = directory;
+	}
+
+	public String getWindowParams() {
+		return sWindowParams;
+	}
+
+	public void setWindowParams(String sWindowParams) {
+		this.sWindowParams = sWindowParams;
 	}
 
 	@FXML
@@ -299,7 +308,7 @@ public abstract class ComparisonController implements Initializable {
 	 */
 	@FXML
 	protected void handleCancel() {
-		preferences.setLastWindowParameters(ApplicationPreferences.LAST_CV_COMPARISON, dialogStage);
+		preferences.setLastWindowParameters(sWindowParams, dialogStage);
 		dialogStage.close();
 	}
 

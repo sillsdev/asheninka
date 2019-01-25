@@ -282,10 +282,10 @@ public class CVApproachLanguageComparerTest {
 	protected void compareWords(CVApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
-		assertEquals("number of different words", 8140, diffs.size());
+		assertEquals("number of different words", 6345, diffs.size());
 		List<DifferentWord> listOfDiffs = new ArrayList<DifferentWord>();
 		listOfDiffs.addAll(diffs);
-		DifferentWord diffWord = listOfDiffs.get(3804);
+		DifferentWord diffWord = listOfDiffs.get(3117);
 		assertEquals("3804's 1 is motankwakwetsak", "motankwakwetsak",
 				((Word) diffWord.getObjectFrom1()).getWord());
 		assertEquals("3804's 2 is motankwakwetsak", "motankwakwetsak",
