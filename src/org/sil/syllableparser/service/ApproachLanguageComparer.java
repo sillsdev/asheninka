@@ -137,11 +137,9 @@ public abstract class ApproachLanguageComparer {
 		List<DifferentGrapheme> sameGraphemesForm = graphemesWhichDiffer
 				.stream()
 				.filter(ds -> ds.getObjectFrom1() != null
-						&& ((Grapheme) ds.getObjectFrom1()).getForm()
-								.equals(grapheme.getForm())
-						&& ((Grapheme) ds.getObjectFrom1()).getEnvsRepresentation()
-								.equals(grapheme.getEnvsRepresentation())
-								).collect(Collectors.toList());
+						&& ((Grapheme) ds.getObjectFrom1()).getForm().equals(grapheme.getForm())
+						&& ((Grapheme) ds.getObjectFrom1()).getEnvsRepresentation().equals(
+								grapheme.getEnvsRepresentation())).collect(Collectors.toList());
 		if (sameGraphemesForm.size() > 0) {
 			DifferentGrapheme diffGrapheme = sameGraphemesForm.get(0);
 			diffGrapheme.setObjectFrom2(grapheme);
@@ -159,7 +157,8 @@ public abstract class ApproachLanguageComparer {
 		// use set difference (removeAll)
 		difference1from2.removeAll(environment2);
 		difference1from2.stream().forEach(
-				environment -> environmentsWhichDiffer.add(new DifferentEnvironment(environment, null)));
+				environment -> environmentsWhichDiffer.add(new DifferentEnvironment(environment,
+						null)));
 
 		Set<Environment> difference2from1 = new HashSet<Environment>(environment2);
 		difference2from1.removeAll(environment1);
@@ -171,7 +170,8 @@ public abstract class ApproachLanguageComparer {
 				.stream()
 				.filter(ds -> ds.getObjectFrom1() != null
 						&& ((Environment) ds.getObjectFrom1()).getEnvironmentRepresentation()
-								.equals(environment.getEnvironmentRepresentation())).collect(Collectors.toList());
+								.equals(environment.getEnvironmentRepresentation()))
+				.collect(Collectors.toList());
 		if (sameEnvironments.size() > 0) {
 			DifferentEnvironment diffEnv = sameEnvironments.get(0);
 			diffEnv.setObjectFrom2(environment);
@@ -189,7 +189,8 @@ public abstract class ApproachLanguageComparer {
 		// use set difference (removeAll)
 		difference1from2.removeAll(gncs2);
 		difference1from2.stream().forEach(
-				gnc -> graphemeNaturalClassesWhichDiffer.add(new DifferentGraphemeNaturalClass(gnc, null)));
+				gnc -> graphemeNaturalClassesWhichDiffer.add(new DifferentGraphemeNaturalClass(gnc,
+						null)));
 
 		Set<GraphemeNaturalClass> difference2from1 = new HashSet<GraphemeNaturalClass>(gncs2);
 		difference2from1.removeAll(gncs1);
@@ -231,7 +232,9 @@ public abstract class ApproachLanguageComparer {
 	}
 
 	protected abstract void syllabifyWords(List<Word> words1, List<Word> words2);
-	
+
+	protected abstract boolean predictedSyllabificationAreSame(DifferentWord diffWord, Word word);
+
 	protected void mergeSimilarWords(Word word) {
 		List<DifferentWord> sameWordsName = wordsWhichDiffer
 				.stream()
@@ -241,6 +244,9 @@ public abstract class ApproachLanguageComparer {
 		if (sameWordsName.size() > 0) {
 			DifferentWord diffWord = sameWordsName.get(0);
 			diffWord.setObjectFrom2(word);
+			if (predictedSyllabificationAreSame(diffWord, word)) {
+				wordsWhichDiffer.remove(diffWord);
+			}
 		} else {
 			DifferentWord diffWord = new DifferentWord(null, word);
 			wordsWhichDiffer.add(diffWord);

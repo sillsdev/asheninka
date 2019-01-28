@@ -142,4 +142,10 @@ public class SHApproachLanguageComparer extends ApproachLanguageComparer {
 		});
 		return sb.toString();
 	}
+
+	@Override
+	protected boolean predictedSyllabificationAreSame(DifferentWord diffWord, Word word) {
+		return word.getSHPredictedSyllabification().equals(
+				((Word) diffWord.getObjectFrom1()).getSHPredictedSyllabification());
+	}
 }

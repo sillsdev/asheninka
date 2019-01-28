@@ -160,8 +160,8 @@ public class CVApproachLanguageComparer extends ApproachLanguageComparer {
 		for (Word word : words) {
 			boolean fSuccess = stringSyllabifier.convertStringToSyllables(word.getWord());
 			if (fSuccess) {
-				word.setCVPredictedSyllabification(stringSyllabifier.getSyllabificationOfCurrentWord());
-//				word.setCVPredictedSyllabification(word.getCVPredictedSyllabification());
+				word.setCVPredictedSyllabification(stringSyllabifier
+						.getSyllabificationOfCurrentWord());
 			}
 		}
 
@@ -183,5 +183,11 @@ public class CVApproachLanguageComparer extends ApproachLanguageComparer {
 			sb.append("\n");
 		});
 		return sb.toString();
+	}
+
+	@Override
+	protected boolean predictedSyllabificationAreSame(DifferentWord diffWord, Word word) {
+		return word.getCVPredictedSyllabification().equals(
+				((Word) diffWord.getObjectFrom1()).getCVPredictedSyllabification());
 	}
 }

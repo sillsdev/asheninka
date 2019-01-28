@@ -226,28 +226,28 @@ public class SHApproachLanguageComparerTest {
 	protected void compareWords(SHApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
-		assertEquals("number of different words", 8561, diffs.size());
+		assertEquals("number of different words", 4611, diffs.size());
 		List<DifferentWord> listOfDiffs = new ArrayList<DifferentWord>();
 		listOfDiffs.addAll(diffs);
-		DifferentWord diffWord = listOfDiffs.get(3960);
-		assertEquals("3960's 1 is motankwakwetsak", "motankwakwetsak",
+		DifferentWord diffWord = listOfDiffs.get(2026);
+		assertEquals("2026's 1 is motankwakwetsak", "motankwakwetsak",
 				((Word) diffWord.getObjectFrom1()).getWord());
-		assertEquals("3960's 2 is motankwakwetsak", "motankwakwetsak",
+		assertEquals("2026's 2 is motankwakwetsak", "motankwakwetsak",
 				((Word) diffWord.getObjectFrom2()).getWord());
-		assertEquals("3960's 1's parse is ''", "",
+		assertEquals("2026's 1's parse is ''", "",
 				((Word) diffWord.getObjectFrom1()).getCVPredictedSyllabification());
-		assertEquals("3960's 2's parse is 'mo.tan.kwa.kwe.tsak'", "mo.tan.kwa.kwe.tsak",
+		assertEquals("2026's 2's parse is 'mo.tan.kwa.kwe.tsak'", "mo.tan.kwa.kwe.tsak",
+				((Word) diffWord.getObjectFrom2()).getCVPredictedSyllabification());
+		diffWord = listOfDiffs.get(0);
+		assertEquals("first's 1 is null", null, ((Word) diffWord.getObjectFrom1()));
+		assertEquals("first's 2 is aaah", "aaah", ((Word) diffWord.getObjectFrom2()).getWord());
+		assertEquals("first's 2's parse is 'aaah'", "a.a.ah",
 				((Word) diffWord.getObjectFrom2()).getCVPredictedSyllabification());
 		diffWord = listOfDiffs.get(1);
-		assertEquals("second's 1 is null", null, ((Word) diffWord.getObjectFrom1()));
-		assertEquals("second's 2 is aaah", "aaah", ((Word) diffWord.getObjectFrom2()).getWord());
-		assertEquals("second's 2's parse is 'aaah'", "a.a.ah",
-				((Word) diffWord.getObjectFrom2()).getCVPredictedSyllabification());
-		diffWord = listOfDiffs.get(2);
-		assertEquals("third's 1 is ababrastro", "ababrastro",
+		assertEquals("second's 1 is ababrastro", "ababrastro",
 				((Word) diffWord.getObjectFrom1()).getWord());
-		assertEquals("third's 2 is null", null, ((Word) diffWord.getObjectFrom2()));
-		assertEquals("third's 1's parse is ''", "",
+		assertEquals("second's 2 is null", null, ((Word) diffWord.getObjectFrom2()));
+		assertEquals("second's 1's parse is ''", "",
 				((Word) diffWord.getObjectFrom1()).getCVPredictedSyllabification());
 	}
 

@@ -91,4 +91,9 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 		// not used in this comparer
 		
 	}
+
+	@Override
+	protected boolean predictedSyllabificationAreSame(DifferentWord diffWord, Word word) {
+		return true;
+	}
 }
