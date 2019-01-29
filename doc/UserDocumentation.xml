@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->5 December 2018</date
+>29 January 2019</date
 ><version
->0.6.0 Alpha</version
+>0.7.0 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -366,8 +366,13 @@ textBefore="plural"
 sec="sOTApproach"
 textBefore="none"
 ></sectionRef
->. Only one is implemented in the current version. See <sectionRef
+>. Only two are implemented in the current version. See <sectionRef
 sec="sCVApproach"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sSonorityHiearchyApproach"
+textBefore="none"
 ></sectionRef
 >.</p
 ><p
@@ -604,7 +609,7 @@ sec="sGraphemeNaturalClasses"
 XeLaTeXSpecial="scaled='500'"
 src="resources/ChooserButton.png"
 ></img
->.  Note that whenever a given grapheme can occur as more than one segment, then be sure to include the appropriate environments for the grapheme in every such segment.</p
+>. Note that whenever a given grapheme can occur as more than one segment, then be sure to include the appropriate environments for the grapheme in every such segment.</p
 ><p
 >To remove a grapheme from the table, merely remove it from the <object
 type="tField"
@@ -1583,12 +1588,504 @@ type="tCVPredictedVsCorrectWords"
 ><section1
 id="sSonorityHiearchyApproach"
 ><secTitle
->Sonority hierarchy approach</secTitle
+><object
+type="tSHApproach"
+></object
+></secTitle
 ><p
 ><indexedItem
 term="iSonorityHierarchyApproach"
 ></indexedItem
->This approach has not been implemented yet.</p
+>In the <object
+type="tSHApproach"
+></object
+>, you need to define the following items:</p
+><ol
+><li
+>segments (<sectionRef
+sec="sSHSegmentInventory"
+></sectionRef
+>)</li
+><li
+>a sonority hierarchy via natural classes (<sectionRef
+sec="sSHSonorityHierarchy"
+></sectionRef
+>)</li
+><li
+>grapheme natural classes (<sectionRef
+sec="sSHGraphemeNaturalClasses"
+></sectionRef
+>)</li
+><li
+>environments (<sectionRef
+sec="sSHEnvironments"
+></sectionRef
+>)</li
+></ol
+><p
+>After that, you either use a existing word list, import a word list (see <sectionRef
+sec="sWords"
+></sectionRef
+>) or enter a list of words by hand. Then you use the <object
+type="tMenuItem"
+>Parser / Syllabify Words </object
+> menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/SyllabifyWords.png"
+></img
+> tool bar button. This will apply the algorithm of the <object
+type="tSHApproach"
+></object
+> to all the words. You can then see the results in the <object
+type="tSHWords"
+></object
+> view. See <sectionRef
+sec="sSHWords"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sSHTryAWord"
+textBefore="none"
+></sectionRef
+> for ideas on how to check the results, among other things.</p
+><p
+>The main “game” to play with the <object
+type="tSHApproach"
+></object
+> in <object
+type="tAsheninka"
+></object
+> is to adjust the segment inventory (including graphemes and their environments), and the sonority hierarchy (i.e., its ordered set of natural classes) so that one gets most, if not all, words to syllabify correctly.  Depending on the needs of the language you are modeling, you may find that this algorithm is less than you need as noted in the “Overview” document.</p
+><p
+><indexedItem
+term="iSHPatternAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm is as follows:</p
+><ol
+><li
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
+></object
+> and quits. The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
+id="nSHSegSameAsCV"
+><p
+>This is the exact same algorithm used by the <object
+type="tCVPatternApproach"
+></object
+>.</p
+></endnote
+> You can use the <object
+type="tTryAWord"
+></object
+> tool to get more details (see <sectionRef
+sec="sSHTryAWord"
+></sectionRef
+>).</li
+><li
+>If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited.  It places the first segment of the word in the first syllable.  It then tries to find the natural class of the current segment and the natural class of the following segment (unless the current segment is at the end of the word and also not already in a syllable; in this case, it adds the current segment to the current syllable).  It then compares the “level” in the sonority hierarchy of these two natural classes and processes them as follows:<ol
+><li
+>If they are at the same level, it adds the following segment to the current syllable.<endnote
+id="nSameLevel"
+><p
+>One implication of this is that if all vowels are in the same natural class, then a sequence of two or more vowels will all be put in the same syllable.</p
+></endnote
+></li
+><li
+>If the natural class of the current segment is less sonorous than the natural class of the following segment, then it adds the following segment to the current syllable.</li
+><li
+>If the natural class of the current segment is more sonorous than the natural class of the following segment, then it looks at the segment after the following segment.  There are two cases considered:<ol
+><li
+>If the second segment's natural class is the same or more sonorous than the third segment's natural class, than the second segment is added to the current syllable.  A new syllable is created and the third segment is added to it.</li
+><li
+>Otherwise, a new syllable is created and the second segment is added to it.</li
+></ol
+></li
+></ol
+></li
+><li
+>Whenever a segment is not found in any natural class, an error is reported.</li
+><li
+>If it succeeded in finding natural classes for all segments, it outputs the syllabification into the <object
+type="tPredictedSyllableBreaks"
+></object
+> field and reports <object
+type="tSuccessMessage"
+></object
+>.</li
+></ol
+><p
+>We now give more information on the various views available in the user interface for the <object
+type="tSHApproach"
+></object
+>.</p
+><section2
+id="sSHSegmentInventory"
+><secTitle
+>SH segment inventory</secTitle
+><p
+><indexedItem
+term="iSHSegments"
+></indexedItem
+>The <object
+type="tSHSegmentInventory"
+></object
+> view works exactly like the <object
+type="tCVSegmentInventory"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>.  See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sSHSonorityHierarchy"
+><secTitle
+>Sonority hierarchy</secTitle
+><p
+><indexedItem
+term="iSHSonorityHierarchy"
+></indexedItem
+>Use the <object
+type="tSHSonorityHierarchy"
+></object
+> view to create an ordered set of natural classes that constitute the sonority hierarchy you wish to use.  More sonorous classes are above less sonorous classes.</p
+><p
+>The <object
+type="tField"
+>Name</object
+> field is for you to define a short name for this natural class. We suggest using something short. The <object
+type="tField"
+>Description</object
+> field is for your use to document anything more specific about this class.</p
+><p
+>The <object
+type="tField"
+>Segments</object
+> field shows the set of segments this class consists of. It has a chooser button on the far right which looks like <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/ChooserButton.png"
+></img
+>. Click on it to bring up a dialog box which lets you select the segments which constitute this class.  Note that <object
+type="tAsheninka"
+></object
+> currently does not check to see if a given segment has already been used in some other class.  It is up to you to avoid using the same segment in more than one class.  If a given segment is in more than one class, the syllabification algorithm will use the topmost class containing that segment.</p
+><p
+>Finally, the order in which the classes occur is important.  The items are in order of sonority: the most sonorous at top and the least sonorous at the bottom. You control the order of the classes by clicking on a class in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+></section2
+><section2
+id="sSHGraphemeNaturalClasses"
+><secTitle
+>Grapheme natural classes</secTitle
+><p
+><indexedItem
+term="iSHGraphemes"
+></indexedItem
+>This works exactly like the <object
+type="tGraphemeNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>.  See <sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sSHEnvironments"
+><secTitle
+>Environments</secTitle
+><p
+><indexedItem
+term="iSHEnvironments"
+></indexedItem
+>This works exactly like the <object
+type="tEnvironments"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sEnvironments"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sSHWords"
+><secTitle
+>Sonority hierarchy words</secTitle
+><p
+><indexedItem
+term="iSHEnvironments"
+></indexedItem
+>This works like the <object
+type="tCVWords"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>, except that the <object
+type="tPredictedSyllableBreaks"
+></object
+> values and the <object
+type="tParserResult"
+></object
+> values are the result of the <object
+type="tSHApproach"
+></object
+> algorithm. See <sectionRef
+sec="sCVWords"
+></sectionRef
+> for more on this view.</p
+></section2
+><section2
+id="sSHTryAWord"
+><secTitle
+>Sonority hierarchy Try a Word</secTitle
+><p
+><indexedItem
+term="iSHTryAWord"
+></indexedItem
+><indexedItem
+term="iTryAWord"
+></indexedItem
+>There are times when it may be difficult to know just why a given word is not syllabifying correctly. That's where the <object
+type="tTryAWord"
+></object
+> dialog box can be useful. To see it, use the <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> menu item. This brings up a dialog box like the one shown in example <exampleRef
+letter="xSHTryAWord"
+num="xSHTryAWord"
+></exampleRef
+>. (Note: unlike most dialog boxes, you can keep the <object
+type="tTryAWord"
+></object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it.  Further, the size and location of the <object
+type="tTryAWord"
+></object
+> dialog box for the <object
+type="tCVPatternApproach"
+></object
+> and the one for the <object
+type="tSHApproach"
+></object
+> can be set independently; you can have both <object
+type="tTryAWord"
+></object
+> dialog boxes open at the same time if you wish.)</p
+><example
+num="xSHTryAWord"
+><chart
+><img
+src="resources/CVTryAWord1.png"
+width="500"
+></img
+></chart
+></example
+><p
+>You can key a word to try in the text box. By default, <object
+type="tAsheninka"
+></object
+> shows the current word selected in the <object
+type="tSHWords"
+></object
+> view (if you are showing that view) or the last word you used (or nothing if you've never used <object
+type="tTryAWord"
+></object
+> before and are not showing the <object
+type="tSHWords"
+></object
+> view).</p
+><p
+>When you either press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>Try it</object
+> button, <object
+type="tAsheninka"
+></object
+> will try to parse the word in the text box and report the result in the Results portion of the dialog box.</p
+><p
+>For the <object
+type="tSHApproach"
+></object
+>, there are at most two steps that are tried:</p
+><ol
+><li
+>Parsing into segments.</li
+><li
+>Parsing segments into syllables (via their natural classes).</li
+></ol
+><p
+>The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into syllables. Successful steps are shown in <object
+type="tGreen"
+></object
+> while unsuccessful ones are shown in <object
+type="tRed"
+></object
+>. An example of a successful parse is shown in example <exampleRef
+letter="xSHTryAWordachinmeh1"
+num="xSHTryAWordachinmeh1"
+></exampleRef
+>.</p
+><example
+num="xSHTryAWordachinmeh1"
+><chart
+><img
+src="resources/SHTryAWord2.png"
+width="500"
+></img
+></chart
+></example
+><p
+><indexedItem
+term="iFailureSHSegmenter"
+></indexedItem
+>The parsing into segments part is exactly the same as it is for the <object
+type="tCVPatternApproach"
+></object
+>.</p
+><p
+>Scrolling the results window down shows the last part:</p
+><example
+num="xSHTryAWordachinmeh2"
+><chart
+><img
+src="resources/SHTryAWord3.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>In the last part, it shows the sequence of segment pairs that were found along with their respective natural class and relationship.  The <object
+type="tBold"
+>Relation</object
+> column uses mathematical symbols to indicate the relationship as given in example <exampleRef
+letter="xSHtryAWordRelation"
+num="xSHtryAWordRelation"
+></exampleRef
+>.</pc
+><example
+num="xSHtryAWordRelation"
+><table
+border="1"
+><tr
+><th
+align="center"
+>Relation</th
+><th
+>Meaning</th
+></tr
+><tr
+><td
+align="center"
+>&lt;</td
+><td
+>Segment 1 is less sonorous than segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>=</td
+><td
+>Segment 1 is equal in sonority to segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>&gt;</td
+><td
+>Segment 1 is more sonorous than segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>!!!</td
+><td
+>The segment was not in any natural class.</td
+></tr
+></table
+></example
+><pc
+>The <object
+type="tBold"
+>Starts Syllable</object
+> column shows a syllable symbol (σ) when the algorithm began a new syllable.</pc
+><p
+>As mentioned above, whenever one of the two steps fails, there is an error message shown for that step (and no following steps will be tried).  See <sectionRef
+sec="sCVTryAWord"
+></sectionRef
+> for examples where the segments could not be parsed.</p
+><p
+><indexedItem
+term="iFailureSHNaturalClasser"
+></indexedItem
+>If a word contains a segment that is not in any natural class, the sonority hierarchy results table will end with a row whose <object
+type="tBold"
+>Relation</object
+> column contains “!!!” in red and one of the offending segments will have “(No Natural Class) after it  as shown in example <exampleRef
+letter="xSHTryAWordNCFailure"
+num="xSHTryAWordNCFailure"
+></exampleRef
+>.</p
+><example
+num="xSHTryAWordNCFailure"
+><chart
+><img
+src="resources/SHTryAWordNCFailure.png"
+></img
+></chart
+></example
+><pc
+>In this case, the word was <langData
+lang="lVernacular"
+>ambu</langData
+>, but no natural class has the segment <langData
+lang="lVernacular"
+>b</langData
+> in it. So when it tried to find a natural class for <langData
+lang="lVernacular"
+>b</langData
+>, it failed</pc
+></section2
+><section2
+id="sSHPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct Son. Hier. words</secTitle
+><p
+><indexedItem
+term="iSHPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iSHPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tSHPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the predictions of the current set of segments and sonority hierarchy differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
+></section2
 ></section1
 ><section1
 id="sONCApproach"
@@ -1988,6 +2485,29 @@ src="resources/FindWordSample.png"
 ></example
 ><p
 >This can be very useful not only for finding a particular word, but also for looking for particular sequences of characters.</p
+><p
+>When your press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>OK</object
+> button, <object
+type="tAsheninka"
+></object
+> will show the selected word in the approach you last used: either via the <object
+type="tCVWords"
+></object
+> view of the <object
+type="tCVPatternApproach"
+></object
+> or the <object
+type="tSHWords"
+></object
+> view of the <object
+type="tSHApproach"
+></object
+>.</p
 ></section2
 ><section2
 id="sRemoveAllWords"
@@ -2000,8 +2520,11 @@ term="iRemoveWords"
 >Use the <object
 type="tMenuItem"
 >Tools / Remove all words</object
-> menu item to completely clear the list of words in the <object
+> menu item to completely clear the list of words in both the <object
 type="tCVWords"
+></object
+> view and the <object
+type="tSHWords"
 ></object
 > view. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
 letter="xRemoveAllWords"
@@ -2043,6 +2566,9 @@ type="tAsheninka"
 >Note that when the words are removed, it will happen whether or not the <object
 type="tCVWords"
 ></object
+> view or the <object
+type="tSHWords"
+></object
 > view is currently being shown. It usually happens very quickly.</p
 ><p
 >If you click on the <object
@@ -2064,8 +2590,11 @@ type="tMenuItem"
 > menu item to completely clear the <object
 type="tCorrectSyllableBreaks"
 ></object
-> column in the <object
+> column in both the <object
 type="tCVWords"
+></object
+> view and the <object
+type="tSHWords"
 ></object
 > view. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
 letter="xRemoveCorrectSyllabification"
@@ -2118,6 +2647,9 @@ type="tCorrectSyllableBreaks"
 ></object
 > forms are removed, it will happen whether or not the <object
 type="tCVWords"
+></object
+> view or the <object
+type="tSHWords"
 ></object
 > view is currently being shown. It usually happens very quickly.</p
 ><p
@@ -2174,7 +2706,24 @@ type="tField"
 >Restore a Project</object
 > dialog. Choose the backup you want and click OK.</p
 ><p
->When you have chosen the two implementations to compare, click on the “Compare” button. Depending on how many differences there are, the comparison process can take quite a long time so please be patient. When it is done, a report is shown in the bottom part of the dialog. When I did this for one project, I got what is shown in example <exampleRef
+>When you have chosen the two implementations to compare, click on the “Compare” button. Depending on how many differences there are, the comparison process can take quite a long time so please be patient. When it is done, a report is shown in the bottom part of the dialog.  The dialog box will stay visible until you close it (e.g., by clicking on the “Cancel” button). This lets you examine the report while still being able to make changes to the data in the user interface.</p
+><p
+>Which approach is used in the comparison is the current one being shown.</p
+><section3
+id="sCVCompare"
+><secTitle
+><object
+type="tCVPatternApproach"
+></object
+> comparison</secTitle
+><p
+><indexedItem
+term="iCVCompare2Implementstions"
+></indexedItem
+>When I did this for one project using the <object
+type="tCVPatternApproach"
+></object
+>, I got what is shown in example <exampleRef
 letter="xCompareImplementationsResult"
 num="xCompareImplementationsResult"
 ></exampleRef
@@ -2187,8 +2736,84 @@ src="resources/CompareImplementationsResult.png"
 ></img
 ></chart
 ></example
+></section3
+><section3
+id="sSHCompare"
+><secTitle
+><object
+type="tSHApproach"
+></object
+> comparison</secTitle
 ><p
->The dialog box will stay visible until you close it (e.g., by clicking on the “Cancel” button). This lets you examine the report while still being able to make changes to the data in the user interface.</p
+>When I did this for one project while showing the <object
+type="tSHApproach"
+></object
+>, I got what is shown in example <exampleRef
+letter="xSHCompareImplementationsResult"
+num="xSHCompareImplementationsResult"
+></exampleRef
+>.</p
+><example
+num="xSHCompareImplementationsResult"
+><chart
+><img
+src="resources/SHCompareImplementationsResult.png"
+></img
+></chart
+></example
+></section3
+></section2
+><section2
+id="sCompareSyllabificationResults"
+><secTitle
+>Compare syllabification results between approaches</secTitle
+><p
+><indexedItem
+term="iCompareApproaches"
+></indexedItem
+><object
+type="tAsheninka"
+></object
+> also offers a way to more easily see how the words are syllabified between the approaches. Use the <object
+type="tMenuItem"
+>Tools / Compare Syllabification Results between Approaches</object
+> menu item to do this. This immediately does a comparison of the predicted syllabification of all words and shows the result in a dialog box.  In one implementaton I did, it looked like what is in example <exampleRef
+letter="xCompareSyllabifications"
+num="xCompareSyllabifications"
+></exampleRef
+>.</p
+><example
+num="xCompareSyllabifications"
+><chart
+><img
+src="resources/CompareSyllabifications.png"
+></img
+></chart
+></example
+><p
+>Note that there are three columns.  The first is the result of the <object
+type="tCVPatternApproach"
+></object
+>, the second is the result of the <object
+type="tSHApproach"
+></object
+>, and the third shows these two one on top of the other for better comparison.  In the case above, no vowel initial words were allowed in the <object
+type="tCVPatternApproach"
+></object
+> so that's why there were so many failures.  Scrolling down more in the dialog, there was the following portion, which better illustrates the differences:</p
+><example
+num="xCompareSyllabifications2"
+><chart
+><img
+src="resources/CompareSyllabifications2.png"
+></img
+></chart
+></example
+><p
+>Like several other dialog boxes in <object
+type="tAsheninka"
+></object
+>, you can keep this dialog box open while doing other things.</p
 ></section2
 ></section1
 ><backMatter

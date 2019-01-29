@@ -86,7 +86,7 @@ id="tUnderline"
 xsl-foSpecial="text-decoration=&quot;underline&quot;"
 ></type
 ><comment
->Add your custom types here.CW</comment
+>Add your custom types here.</comment
 ><type
 before="Asheninka"
 id="tAsheninka"
@@ -118,13 +118,13 @@ id="tCorrectSyllableBreaks"
 types="tView"
 ></type
 ><type
+before="CV pattern approach"
+id="tCVPatternApproach"
+></type
+><type
 before="CV Natural Classes"
 id="tCVNaturalClasses"
 types="tView"
-></type
-><type
-before="CV pattern approach"
-id="tCVPatternApproach"
 ></type
 ><type
 before="Predicted vs. Correct CV Words"
@@ -132,7 +132,7 @@ id="tCVPredictedVsCorrectWords"
 types="tView"
 ></type
 ><type
-before="CV Segment Inventory"
+before="Segment Inventory"
 id="tCVSegmentInventory"
 types="tView"
 ></type
@@ -144,6 +144,11 @@ types="tView"
 ><type
 before="CV Words"
 id="tCVWords"
+types="tView"
+></type
+><type
+before="Environments"
+id="tEnvironments"
 types="tView"
 ></type
 ><type
@@ -160,6 +165,11 @@ id="tErrorMessageText"
 after="”"
 before="“"
 id="tField"
+></type
+><type
+before="Grapheme Natural Classes"
+id="tGraphemeNaturalClasses"
+types="tView"
 ></type
 ><type
 after="green"
@@ -210,6 +220,30 @@ types="tView"
 after="red"
 color="red"
 id="tRed"
+></type
+><type
+before="Sonority hierarchy approach"
+id="tSHApproach"
+></type
+><type
+before="Predicted vs. Correct Son. Hier. Words"
+id="tSHPredictedVsCorrectWords"
+types="tView"
+></type
+><type
+before="Segment Inventory"
+id="tSHSegmentInventory"
+types="tView"
+></type
+><type
+before="Sonority Hierarchy"
+id="tSHSonorityHierarchy"
+types="tView"
+></type
+><type
+before="Son. Hier. Words"
+id="tSHWords"
+types="tView"
 ></type
 ><type
 after="”"

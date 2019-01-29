@@ -21,6 +21,11 @@ see="iLanguageAnalysis"
 >Analysis language</term
 ></indexTerm
 ><indexTerm
+id="iCompareApproaches"
+><term
+>Compare approaches</term
+></indexTerm
+><indexTerm
 id="iCompare2Implementations"
 ><term
 >Compare two implementations</term
@@ -34,6 +39,11 @@ id="iCVPatternApproach"
 id="iCVPatternAlgorithm"
 ><term
 >Algorithm</term
+></indexTerm
+><indexTerm
+id="iCVCompare2Implementstions"
+><term
+>Compare two implementations</term
 ></indexTerm
 ><indexTerm
 id="iCVEnvironments"
@@ -123,6 +133,23 @@ id="iFailureCVSegmenter"
 id="iFailureCVSyllables"
 ><term
 >Parse into syllables</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iCVFailures"
+><term
+>Sonority hierarchy approach</term
+><indexTerms
+><indexTerm
+id="iFailureSHNaturalClasser"
+><term
+>Parse into natural classes</term
+></indexTerm
+><indexTerm
+id="iFailureSHSegmenter"
+><term
+>Parse into segments</term
 ></indexTerm
 ></indexTerms
 ></indexTerm
@@ -305,6 +332,12 @@ id="iParsingResult"
 ><term
 >Parsing result failure messages</term
 ></indexTerm
+><indexTerm
+id="iAlgorithmSH"
+see="iSHPatternAlgorithm"
+><term
+>Sonority hierarchy algorithm</term
+></indexTerm
 ></indexTerms
 ></indexTerm
 ><indexTerm
@@ -315,7 +348,12 @@ id="iCVPredictedSyllabification"
 ><indexTerm
 id="iCVPredictedSyllabificationCompare"
 ><term
->Comparing with correct</term
+>Comparing with correct (CV)</term
+></indexTerm
+><indexTerm
+id="iSHPredictedSyllabificationCompare"
+><term
+>Comparing with correct (Son. Hier.)</term
 ></indexTerm
 ><indexTerm
 id="iCVPredictedSyllabificationConvert"
@@ -390,6 +428,63 @@ see="iProjectSaveAs"
 id="iSonorityHierarchyApproach"
 ><term
 >Sonority hierarchy approach</term
+><indexTerms
+><indexTerm
+id="iSHPatternAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iSHCompare2Implementstions"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iSHEnvironments"
+><term
+>Environments</term
+></indexTerm
+><indexTerm
+id="iSHGraphemeNaturalClasses"
+><term
+>Grapheme natural classes</term
+></indexTerm
+><indexTerm
+id="iSHGraphemes"
+><term
+>Graphemes</term
+></indexTerm
+><indexTerm
+id="iSHNaturalClasses"
+><term
+>Natural classes</term
+></indexTerm
+><indexTerm
+id="iSHPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="iSHSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iSHSonorityHierarchy"
+><term
+>Sonority hierarchy</term
+></indexTerm
+><indexTerm
+id="iSHTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iSHWords"
+><term
+>Words</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iSorting"
