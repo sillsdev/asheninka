@@ -8,9 +8,12 @@ package org.sil.syllableparser.service;
 
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
+
+import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
@@ -140,9 +143,8 @@ public class CVApproachLanguageComparisonHTMLFormatter extends ApproachLanguageC
 	}
 
 	protected void formatSyllablePatternOrder(StringBuilder sb) {
-		SortedSet<DifferentCVSyllablePattern> diffSyllablePatterns = cvComparer
-				.getSyllablePatternsWhichDiffer();
-		if (diffSyllablePatterns.size() != 0) {
+		LinkedList<Diff> diffs = cvComparer.getSyllablePatternOrderDifferences();
+		if (diffs.size() > 1) {
 			sb.append("<p>" + bundle.getString("report.cvsyllablepatternsorder") + "</p>\n");
 			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
 			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));

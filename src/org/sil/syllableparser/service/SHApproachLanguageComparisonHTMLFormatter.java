@@ -7,9 +7,12 @@
 package org.sil.syllableparser.service;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
+
+import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
@@ -96,9 +99,8 @@ public class SHApproachLanguageComparisonHTMLFormatter extends
 	}
 
 	protected void formatSonorityHierarchyOrder(StringBuilder sb) {
-		SortedSet<DifferentSHNaturalClass> diffNaturalClasses = shComparer
-				.getNaturalClassesWhichDiffer();
-		if (diffNaturalClasses.size() != 0) {
+		LinkedList<Diff> diffs = shComparer.getSonorityHierarchyOrderDifferences();
+		if (diffs.size() > 1) {
 			sb.append("<p>" + bundle.getString("report.shsonorityhierarchyorder") + "</p>\n");
 			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
 			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
@@ -114,14 +116,14 @@ public class SHApproachLanguageComparisonHTMLFormatter extends
 				sb.append("<tr>\n<td class=\"");
 				sb.append(ANALYSIS_1);
 				sb.append("\">");
-				SHNaturalClass syllablePattern = formatSonorityHierarchyInOrder(sonorityHierarchy1,
+				SHNaturalClass naturalClass = formatSonorityHierarchyInOrder(sonorityHierarchy1,
 						size1, i);
-				formatNaturalClassInfo(sb, syllablePattern);
+				formatNaturalClassInfo(sb, naturalClass);
 				sb.append("</td>\n<td class=\"");
 				sb.append(ANALYSIS_2);
 				sb.append("\">");
-				syllablePattern = formatSonorityHierarchyInOrder(sonorityHierarchy2, size2, i);
-				formatNaturalClassInfo(sb, syllablePattern);
+				naturalClass = formatSonorityHierarchyInOrder(sonorityHierarchy2, size2, i);
+				formatNaturalClassInfo(sb, naturalClass);
 				sb.append("</td>\n</tr>\n");
 			}
 			sb.append("</tbody>\n</table>\n");
@@ -130,13 +132,13 @@ public class SHApproachLanguageComparisonHTMLFormatter extends
 
 	protected SHNaturalClass formatSonorityHierarchyInOrder(List<SHNaturalClass> naturalClasses,
 			int size1, int i) {
-		SHNaturalClass naturalCLass;
+		SHNaturalClass naturalClass;
 		if (i < size1) {
-			naturalCLass = (SHNaturalClass) naturalClasses.get(i);
+			naturalClass = (SHNaturalClass) naturalClasses.get(i);
 		} else {
-			naturalCLass = null;
+			naturalClass = null;
 		}
-		return naturalCLass;
+		return naturalClass;
 	}
 
 	@Override
