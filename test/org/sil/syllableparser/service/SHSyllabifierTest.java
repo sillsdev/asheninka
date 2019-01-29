@@ -75,6 +75,7 @@ public class SHSyllabifierTest {
 	@Test
 	public void wordToSegmentToSyllableTest() {
 		checkSyllabification("", false, 0, "");
+		checkSyllabification("b", false, 0, "");
 		checkSyllabification("A", true, 1, "A");
 		checkSyllabification("ta", true, 1, "ta");
 		checkSyllabification("tad", true, 1, "tad");
@@ -326,11 +327,11 @@ public class SHSyllabifierTest {
 		assertEquals(true, sylInfo.startsSyllable);
 		sylInfo = traceInfo.get(1);
 
-		checkSyllabifyWord("babe", false, "null, Vowels", "!!!", 0, ""); // b not in hierarchy
+		checkSyllabifyWord("babe", false, "null, null", "!!!", 0, ""); // b not in hierarchy
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(1, traceInfo.size());
 		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
+		assertEquals(false, sylInfo.startsSyllable);
 
 		checkSyllabifyWord("ibabe", false, "Vowels, null", "!!!", 0, ""); // b not in hierarchy
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();

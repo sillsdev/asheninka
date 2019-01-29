@@ -102,9 +102,18 @@ public class SHSyllabifier {
 		}
 		SHSyllable syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
 		syl.add(segmentsInWord.get(0));
+		Segment seg1 = segmentsInWord.get(0).getSegment();
+		SHNaturalClass natClass = sonHierApproach.getNaturalClassContainingSegment(seg1);
+		if (natClass == null) {
+			if (fDoTrace) {
+				traceInfo = new SHTraceSyllabifierInfo(seg1, null, null, null, SHComparisonResult.MISSING1);
+				syllabifierTraceInfoList.add(traceInfo);
+			}
+			return false;
+		}
 		int i = 1;
 		while (i < segmentCount) {
-			Segment seg1 = segmentsInWord.get(i - 1).getSegment();
+			seg1 = segmentsInWord.get(i - 1).getSegment();
 			Segment seg2 = segmentsInWord.get(i).getSegment();
 			SHComparisonResult result = sonorityComparer.compare(seg1, seg2);
 			if (fDoTrace) {
