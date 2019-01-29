@@ -15,8 +15,8 @@ import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.service.SyllabificationComparisonHTMLFormatter;
-import org.sil.syllableparser.service.SyllabificationsComparer;
+import org.sil.syllableparser.service.comparison.SyllabificationComparisonHTMLFormatter;
+import org.sil.syllableparser.service.comparison.SyllabificationsComparer;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;

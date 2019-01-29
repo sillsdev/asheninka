@@ -17,8 +17,8 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.service.BackupFileRestorer;
-import org.sil.syllableparser.service.CVApproachLanguageComparer;
-import org.sil.syllableparser.service.CVApproachLanguageComparisonHTMLFormatter;
+import org.sil.syllableparser.service.comparison.CVApproachLanguageComparer;
+import org.sil.syllableparser.service.comparison.CVApproachLanguageComparisonHTMLFormatter;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;

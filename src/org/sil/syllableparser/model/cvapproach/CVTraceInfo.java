@@ -9,11 +9,11 @@
 package org.sil.syllableparser.model.cvapproach;
 
 import org.sil.syllableparser.model.TraceInfo;
-import org.sil.syllableparser.service.CVNaturalClasser;
-import org.sil.syllableparser.service.CVNaturalClasserResult;
-import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.CVSyllabifier;
-import org.sil.syllableparser.service.CVSyllabifierResult;
+import org.sil.syllableparser.service.parsing.CVNaturalClasser;
+import org.sil.syllableparser.service.parsing.CVNaturalClasserResult;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.CVSyllabifier;
+import org.sil.syllableparser.service.parsing.CVSyllabifierResult;
 
 public class CVTraceInfo extends TraceInfo {
 	

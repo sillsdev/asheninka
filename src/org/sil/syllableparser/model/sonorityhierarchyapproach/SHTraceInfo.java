@@ -9,9 +9,9 @@
 package org.sil.syllableparser.model.sonorityhierarchyapproach;
 
 import org.sil.syllableparser.model.TraceInfo;
-import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.SHSyllabifier;
-import org.sil.syllableparser.service.SHSyllabifierResult;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.SHSyllabifier;
+import org.sil.syllableparser.service.parsing.SHSyllabifierResult;
 
 public class SHTraceInfo extends TraceInfo {
 

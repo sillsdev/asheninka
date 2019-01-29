@@ -21,9 +21,9 @@ import org.sil.syllableparser.model.*;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
-import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.CVSegmenterResult;
-import org.sil.syllableparser.service.SHSyllabifier;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.SHSyllabifier;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;

@@ -8,8 +8,8 @@
 
 package org.sil.syllableparser.model;
 
-import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 
 public abstract class TraceInfo {
 	

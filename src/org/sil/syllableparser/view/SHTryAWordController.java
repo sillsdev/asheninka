@@ -12,11 +12,11 @@ import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceInfo;
-import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.CVSegmenterResult;
-import org.sil.syllableparser.service.SHSyllabifier;
-import org.sil.syllableparser.service.SHSyllabifierResult;
-import org.sil.syllableparser.service.SHTryAWordHTMLFormatter;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.SHSyllabifier;
+import org.sil.syllableparser.service.parsing.SHSyllabifierResult;
+import org.sil.syllableparser.service.parsing.SHTryAWordHTMLFormatter;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;

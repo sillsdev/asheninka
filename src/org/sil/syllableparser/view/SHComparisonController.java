@@ -17,8 +17,8 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.BackupFileRestorer;
-import org.sil.syllableparser.service.SHApproachLanguageComparer;
-import org.sil.syllableparser.service.SHApproachLanguageComparisonHTMLFormatter;
+import org.sil.syllableparser.service.comparison.SHApproachLanguageComparer;
+import org.sil.syllableparser.service.comparison.SHApproachLanguageComparisonHTMLFormatter;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;

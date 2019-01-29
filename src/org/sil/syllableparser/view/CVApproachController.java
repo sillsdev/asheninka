@@ -24,11 +24,11 @@ import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
-import org.sil.syllableparser.service.CVNaturalClasser;
-import org.sil.syllableparser.service.CVNaturalClasserResult;
-import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.CVSegmenterResult;
-import org.sil.syllableparser.service.CVSyllabifier;
+import org.sil.syllableparser.service.parsing.CVNaturalClasser;
+import org.sil.syllableparser.service.parsing.CVNaturalClasserResult;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.CVSyllabifier;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
