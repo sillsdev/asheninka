@@ -7,6 +7,7 @@ package org.sil.syllableparser.service.parsing;
 
 import javafx.collections.ObservableList;
 
+import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
@@ -23,6 +24,14 @@ public class SHSonorityComparer {
 
 	public SHSonorityComparer(SHApproach shApproach) {
 		this.shApproach = shApproach;
+		hierarchy = shApproach.getSHSonorityHierarchy();
+	}
+
+	/**
+	 * @param langProj
+	 */
+	public SHSonorityComparer(LanguageProject langProj) {
+		shApproach = langProj.getSHApproach();
 		hierarchy = shApproach.getSHSonorityHierarchy();
 	}
 

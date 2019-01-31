@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 /**
@@ -30,6 +31,7 @@ public class LanguageProject {
 
 	private CVApproach cvApproach;
 	private SHApproach shApproach;
+	private ONCApproach oncApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
@@ -48,6 +50,8 @@ public class LanguageProject {
 		cvApproach.setLanguageProject(this);
 		shApproach = new SHApproach();
 		shApproach.setLanguageProject(this);
+		oncApproach = new ONCApproach();
+		oncApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
 		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
@@ -61,6 +65,7 @@ public class LanguageProject {
 	public void clear() {
 		cvApproach.clear();
 		shApproach.clear();
+		oncApproach.clear();
 		segmentInventory.clear();
 		words.clear();
 		environments.clear();
@@ -92,6 +97,15 @@ public class LanguageProject {
 	@XmlElement(name = "shApproach")
 	public void setSHApproach(SHApproach shApproach) {
 		this.shApproach = shApproach;
+	}
+
+	public ONCApproach getONCApproach() {
+		return oncApproach;
+	}
+
+	@XmlElement(name = "oncApproach")
+	public void setONCApproach(ONCApproach oncApproach) {
+		this.oncApproach = oncApproach;
 	}
 
 	/**
@@ -189,6 +203,8 @@ public class LanguageProject {
 		cvApproach.setLanguageProject(this);
 		shApproach.load(languageProjectLoaded.getSHApproach());
 		shApproach.setLanguageProject(this);
+		oncApproach.load(languageProjectLoaded.getONCApproach());
+		oncApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
 				.getSegmentInventory();
 		for (Segment segment : segmentInventoryLoadedData) {

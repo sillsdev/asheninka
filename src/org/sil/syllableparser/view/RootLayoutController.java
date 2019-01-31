@@ -243,6 +243,9 @@ public class RootLayoutController implements Initializable {
 		shApproachController.setMainApp(mainApp);
 		shApproachController.setPrefs(mainApp.getApplicationPreferences());
 		shApproachController.setRootLayout(this);
+		oncApproachController.setMainApp(mainApp);
+		oncApproachController.setPrefs(mainApp.getApplicationPreferences());
+		oncApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -255,6 +258,9 @@ public class RootLayoutController implements Initializable {
 		shApproachController.setSHApproachData(languageProject.getSHApproach(),
 				languageProject.getWords());
 		shApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		oncApproachController.setONCApproachData(languageProject.getONCApproach(),
+				languageProject.getWords());
+		oncApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -835,6 +841,8 @@ public class RootLayoutController implements Initializable {
 			applicationPreferences.setLastCVApproachViewUsed(sCurrentView);
 		} else if (currentApproachController instanceof SHApproachController) {
 			applicationPreferences.setLastSHApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof ONCApproachController) {
+			applicationPreferences.setLastONCApproachViewUsed(sCurrentView);
 		}
 	}
 
@@ -966,10 +974,12 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleONCApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonONCApproach);
-		mainApp.showNotImplementedYet();
-		// approachViews.setItems(oncApproachController.getViews());
-		// currentApproachController = oncApproachController;
+		approachViews.setItems(oncApproachController.getViews());
+		currentApproachController = oncApproachController;
+		setInitialONCView();
+		setDisableForSomeMenuAndToolbarItems();
 	}
 
 	/**
@@ -1121,7 +1131,7 @@ public class RootLayoutController implements Initializable {
 				importer.importSegments(file);
 			} catch (SegmentImporterException e) {
 				if (e instanceof ParaTExtSegmentImporterNoCharactersException) {
-					ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
+					//ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
 					// ptex.getsFileName()
 					Alert errorAlert = new Alert(AlertType.ERROR);
 					errorAlert.setTitle(bundle.getString("program.name"));
@@ -1146,7 +1156,7 @@ public class RootLayoutController implements Initializable {
 
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		shApproachController = new SHApproachController(bundle, bundle.getLocale());
-		oncApproachController = new ONCApproachController(bundle);
+		oncApproachController = new ONCApproachController(bundle, bundle.getLocale());
 
 		createToolbarButtons(bundle);
 
@@ -1196,6 +1206,7 @@ public class RootLayoutController implements Initializable {
 
 		case "ONSET_NUCLEUS_CODA":
 			handleONCApproach();
+			setInitialONCView();
 			break;
 
 		case "OPTIMALITY_THEORY":
@@ -1254,6 +1265,39 @@ public class RootLayoutController implements Initializable {
 	protected void setInitialSHView() {
 		String sLastSHApproachViewUsed = applicationPreferences.getLastSHApproachViewUsed();
 		switch (sLastSHApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(5);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(4);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(3);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(0);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(1);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(2);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
+	protected void setInitialONCView() {
+		String sLastONCApproachViewUsed = applicationPreferences.getLastONCApproachViewUsed();
+		switch (sLastONCApproachViewUsed) {
 		case "ENVIRONMENTS":
 			selectApproachViewItem(5);
 			break;

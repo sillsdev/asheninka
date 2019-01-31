@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -14,6 +14,7 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVPredictedSyllabification;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import javafx.collections.FXCollections;
@@ -58,6 +59,7 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 
 	private CVApproach cvApproach;
 	private SHApproach shApproach;
+	private ONCApproach oncApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private CVPredictedSyllabification currentPredictedSyllabification;
 	private ObservableList<CVPredictedSyllabification> cvPredictedSyllabifications = FXCollections
@@ -148,6 +150,12 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 
 	public void setData(SHApproach shApproachData, ObservableList<Word> words) {
 		shApproach = shApproachData;
+		this.words = words;
+		createListOfDifferentWords(words);
+	}
+
+	public void setData(ONCApproach oncApproachData, ObservableList<Word> words) {
+		oncApproach = oncApproachData;
 		this.words = words;
 		createListOfDifferentWords(words);
 	}

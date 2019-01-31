@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.cvapproach.CVApproachView;
+import org.sil.syllableparser.model.oncapproach.ONCApproachView;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
 import org.sil.utility.*;
 
@@ -51,6 +52,19 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	// request it.
 	static final String LAST_SH_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastSHWordPredictedVsCorrectViewItemUsed";
 
+	// last ONC view used
+	static final String LAST_ONC_APPROACH_VIEW_USED = "lastONCApproachViewUsed";
+	static final String LAST_ONC_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastONCSegmentInventoryViewItemUsed";
+	static final String LAST_ONC_SONORITY_HIERARCHY_VIEW_ITEM_USED = "lastONCSonorityHierarchViewItemUsed";
+	static final String LAST_ONC_TRY_A_WORD_USED = "lastONCTryAWordUsed";
+	static final String LAST_ONC_WORDS_VIEW_ITEM_USED = "lastONCWordsViewItemUsed";
+	static final String LAST_ONC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastONCGraphemeNaturalClassesViewItemUsed";
+	static final String LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED = "lastONCEnvironmentsViewItemUsed";
+	// We have a last item used for predicted vs. correct words, but we're not
+	// setting it because it is not clear why it would be useful. We'll use it if users
+	// request it.
+	static final String LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastONCWordPredictedVsCorrectViewItemUsed";
+
 	// Window parameters to remember
 	static final String POSITION_X = "PositionX";
 	static final String POSITION_Y = "PositionY";
@@ -68,6 +82,9 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_SH_COMPARISON = "lastSHComparision";
 	public static final String LAST_SH_SEGMENT = "lastSHSegment";
 	public static final String LAST_SH_TRY_A_WORD = "lastSHTryAWord";
+	public static final String LAST_ONC_COMPARISON = "lastONCComparision";
+	public static final String LAST_ONC_SEGMENT = "lastONCSegment";
+	public static final String LAST_ONC_TRY_A_WORD = "lastONCTryAWord";
 	public static final String LAST_SYLLABIFICATION_COMPARISON = "lastSyllabificationComparision";
 	
 	Preferences prefs;
@@ -204,6 +221,70 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastCVEnvironmentsViewItemUsed(int value) {
 		setPreferencesKey(LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastONCApproachViewUsed() {
+		return prefs.get(LAST_ONC_APPROACH_VIEW_USED, ONCApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastONCApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_ONC_APPROACH_VIEW_USED, lastApproachViewUsed);
+	}
+
+	public int getLastONCSegmentInventoryViewItemUsed() {
+		return prefs.getInt(LAST_ONC_SEGMENT_INVENTORY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCSegmentInventoryViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_SEGMENT_INVENTORY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCSonorityHierarchyViewItemUsed() {
+		return prefs.getInt(LAST_ONC_SONORITY_HIERARCHY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCSonorityHierarchyViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_SONORITY_HIERARCHY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCWordsViewItemUsed() {
+		return prefs.getInt(LAST_ONC_WORDS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCWordsViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_WORDS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCWordsPredictedVsCorrectViewItemUsed() {
+		return prefs.getInt(LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCWordsPredictedVsCorrectViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastONCTryAWordUsed() {
+		return prefs.get(LAST_ONC_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastONCTryAWordUsed(String lastONCTryAWordUsed) {
+		setPreferencesKey(LAST_ONC_TRY_A_WORD_USED, lastONCTryAWordUsed);
+	}
+
+	public int getLastONCGraphemeNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_ONC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCGraphemeNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCEnvironmentsViewItemUsed() {
+		return prefs.getInt(LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCEnvironmentsViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED, value);
 	}
 
 	public String getLastSHApproachViewUsed() {

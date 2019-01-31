@@ -24,6 +24,7 @@ import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
 import org.sil.environmentparser.EnvironmentConstants;
@@ -673,6 +674,32 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		}
 	}
 
+	public void setData(ONCApproach oncApproachData) {
+		oncApproach = oncApproachData;
+		languageProject = oncApproach.getLanguageProject();
+		iRepresentationCaretPosition = 6;
+		fGncChoicesUsingMouse = false;
+
+		// Add observable list data to the table
+		environmentTable.setItems(oncApproachData.getLanguageProject().getEnvironments());
+		int max = environmentTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastONCEnvironmentsViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					// select the last one used
+					environmentTable.requestFocus();
+					environmentTable.getSelectionModel().select(iLastIndex);
+					environmentTable.getFocusModel().focus(iLastIndex);
+					environmentTable.scrollTo(iLastIndex);
+				}
+			});
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -744,5 +771,4 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			forceTableRowToRedisplayPerActiveSetting(env);
 		}
 	}
-
 }

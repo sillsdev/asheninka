@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -8,6 +8,7 @@ package org.sil.syllableparser.view;
 
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import javafx.fxml.Initializable;
@@ -27,6 +28,7 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 	protected LanguageProject languageProject;
 	protected CVApproach cvApproach;
 	protected SHApproach shApproach;
+	protected ONCApproach oncApproach;
 
 	protected void makeColumnHeaderWrappable(@SuppressWarnings("rawtypes") TableColumn col) {
 		Label label = new Label(col.getText());

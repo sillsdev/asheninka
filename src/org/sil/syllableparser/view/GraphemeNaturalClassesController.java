@@ -20,6 +20,7 @@ import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
 
@@ -343,9 +344,12 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		addDataToTable();
+	}
 
+	private void addDataToTable() {
 		// Add observable list data to the table
-		graphemeNaturalClassTable.setItems(cvApproachData.getLanguageProject()
+		graphemeNaturalClassTable.setItems(languageProject
 				.getGraphemeNaturalClasses());
 		int max = graphemeNaturalClassTable.getItems().size();
 		if (max > 0) {
@@ -368,26 +372,13 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		addDataToTable();
+	}
 
-		// Add observable list data to the table
-		graphemeNaturalClassTable.setItems(shApproachData.getLanguageProject()
-				.getGraphemeNaturalClasses());
-		int max = graphemeNaturalClassTable.getItems().size();
-		if (max > 0) {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastSHGraphemeNaturalClassesViewItemUsed();
-					iLastIndex = adjustIndexValue(iLastIndex, max);
-					// select the last one used
-					graphemeNaturalClassTable.requestFocus();
-					graphemeNaturalClassTable.getSelectionModel().select(iLastIndex);
-					graphemeNaturalClassTable.getFocusModel().focus(iLastIndex);
-					graphemeNaturalClassTable.scrollTo(iLastIndex);
-				}
-			});
-		}
+	public void setData(ONCApproach oncApproachData) {
+		oncApproach = oncApproachData;
+		languageProject = oncApproach.getLanguageProject();
+		addDataToTable();
 	}
 
 	/*
@@ -490,5 +481,4 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			forceTableRowToRedisplayPerActiveSetting(nc);
 		}
 	}
-
 }

@@ -25,6 +25,8 @@ public class Word extends SylParserObject {
 	protected StringProperty cvPredictedSyllabification;
 	protected StringProperty shParserResult;
 	protected StringProperty shPredictedSyllabification;
+	protected StringProperty oncParserResult;
+	protected StringProperty oncPredictedSyllabification;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
 	// case this word represents
@@ -40,6 +42,8 @@ public class Word extends SylParserObject {
 		this.cvPredictedSyllabification = new SimpleStringProperty("");
 		this.shParserResult = new SimpleStringProperty("");
 		this.shPredictedSyllabification = new SimpleStringProperty("");
+		this.oncParserResult = new SimpleStringProperty("");
+		this.oncPredictedSyllabification = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -51,6 +55,8 @@ public class Word extends SylParserObject {
 		this.cvPredictedSyllabification = new SimpleStringProperty("");
 		this.shParserResult = new SimpleStringProperty(parserResult);
 		this.shPredictedSyllabification = new SimpleStringProperty("");
+		this.oncParserResult = new SimpleStringProperty(parserResult);
+		this.oncPredictedSyllabification = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -142,10 +148,44 @@ public class Word extends SylParserObject {
 		return s;
 	}
 
+	public String getONCParserResult() {
+		return oncParserResult.get();
+	}
+
+	public StringProperty oncParserResultProperty() {
+		return oncParserResult;
+	}
+
+	public void setONCParserResult(String parserResult) {
+		this.oncParserResult.set(parserResult);
+	}
+
+	public String getONCPredictedSyllabification() {
+		return oncPredictedSyllabification.get();
+	}
+
+	public StringProperty oncPredictedSyllabificationProperty() {
+		return oncPredictedSyllabification;
+	}
+
+	@XmlElement(name = "oncPredictedSyllabification")
+	public void setONCPredictedSyllabification(String predictedSyllabification) {
+		this.oncPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public StringProperty oncPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(oncPredictedSyllabificationProperty(), "\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
 	@Override
 	public int hashCode() {
 		String sCombo = word.getValueSafe() + cvPredictedSyllabification.getValueSafe()
-				 + shPredictedSyllabification.getValueSafe() + correctSyllabification.getValueSafe();
+				+ shPredictedSyllabification.getValueSafe()
+				+ oncPredictedSyllabification.getValueSafe()
+				+ correctSyllabification.getValueSafe();
 		return sCombo.hashCode();
 	}
 
@@ -165,8 +205,14 @@ public class Word extends SylParserObject {
 			if (!getCVPredictedSyllabification().equals(otherWord.getCVPredictedSyllabification())) {
 				result = false;
 			} else {
-				if (!getSHPredictedSyllabification().equals(otherWord.getSHPredictedSyllabification())) {
+				if (!getSHPredictedSyllabification().equals(
+						otherWord.getSHPredictedSyllabification())) {
 					result = false;
+				} else {
+					if (!getONCPredictedSyllabification().equals(
+							otherWord.getONCPredictedSyllabification())) {
+						result = false;
+					}
 				}
 			}
 		}

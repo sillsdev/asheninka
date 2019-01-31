@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2016 SIL International 
+<!-- Copyright (c) 2019 SIL International 
     This software is licensed under the LGPL, version 2.1 or later 
     (http://www.gnu.org/licenses/lgpl-2.1.html) -->
 
@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.CVSegmentInventoryController">
+<StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.ONCSegmentInventoryController">
    <children>
       <SplitPane dividerPositions="0.4373040752351097" prefHeight="160.0" prefWidth="200.0">
         <items>
@@ -30,8 +30,11 @@
 <!--                         </graphic> -->
 <!--                       </TableColumn> -->
                       <TableColumn fx:id="segmentColumn" prefWidth="76.0" text="%label.segment" />
-                      <TableColumn fx:id="graphemesColumn" prefWidth="90.0" text="%label.orthographicforms" />
-                      <TableColumn fx:id="descriptionColumn" prefWidth="200.0" text="%label.description" />
+                      <TableColumn fx:id="graphemesColumn" prefWidth="85.0" text="%label.orthographicforms" />
+                      <TableColumn fx:id="descriptionColumn" prefWidth="94.0" text="%label.description" />
+                      <TableColumn fx:id="onsetColumn" prefWidth="30.0" text="%label.onsetHeader"/>
+                      <TableColumn fx:id="nucleusColumn" prefWidth="30.0" text="%label.nucleusHeader"/>
+                      <TableColumn fx:id="codaColumn" prefWidth="30.0" text="%label.codaHeader"/>
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -51,21 +54,29 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="%label.segment" />
                         <Label text="%label.description" GridPane.rowIndex="1" />
                         <Label text="%label.orthographicforms" GridPane.rowIndex="2" />
-                        <Label text="%label.active" GridPane.rowIndex="3" />
+                        <Label text="%label.onset" GridPane.rowIndex="3" />
+                        <Label text="%label.nucleus" GridPane.rowIndex="4" />
+                        <Label text="%label.coda" GridPane.rowIndex="5" />
+                        <Label text="%label.active" GridPane.rowIndex="6" />
                         <TextField fx:id="segmentField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="graphemesField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="onsetCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="nucleusCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <CheckBox fx:id="codaCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
-<!--                   <Label layoutX="5.0" layoutY="150.0" text="%label.orthographicformswithcolon" /> -->
-                  <TableView fx:id="graphemesTable" layoutX="17.0" layoutY="170.0" prefHeight="232.0" prefWidth="430.0">
+                  <TableView fx:id="graphemesTable" layoutX="17.0" layoutY="260.0" prefHeight="232.0" prefWidth="430.0">
                     <columns>
                       <TableColumn fx:id="checkBoxColumn" prefWidth="30.0">
         		       	<graphic>
