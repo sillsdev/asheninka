@@ -35,7 +35,8 @@ public class LanguageProject {
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
-	private ObservableList<GraphemeNaturalClass> graphemeNaturalClasses = FXCollections.observableArrayList();
+	private ObservableList<GraphemeNaturalClass> graphemeNaturalClasses = FXCollections
+			.observableArrayList();
 	private Language vernacularLanguage;
 	private Language analysisLanguage;
 	private HyphenationParametersListWord hyphenationParametersListWord;
@@ -43,7 +44,8 @@ public class LanguageProject {
 	private HyphenationParametersXLingPaper hyphenationParametersXLingPaper;
 	private int databaseVersion;
 	private ObservableList<Environment> environments = FXCollections.observableArrayList();
-	
+	private SyllabificationParameters syllabificationParameters;
+
 	public LanguageProject() {
 		super();
 		cvApproach = new CVApproach();
@@ -57,6 +59,7 @@ public class LanguageProject {
 		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
 		hyphenationParametersParaTExt = new HyphenationParametersParaTExt("=", 2, 2);
 		hyphenationParametersXLingPaper = new HyphenationParametersXLingPaper("-", 2, 2);
+		syllabificationParameters = new SyllabificationParameters();
 	}
 
 	/**
@@ -76,7 +79,7 @@ public class LanguageProject {
 		return databaseVersion;
 	}
 
-	@XmlAttribute(name="databaseVersion")
+	@XmlAttribute(name = "databaseVersion")
 	public void setDatabaseVersion(int databaseVersion) {
 		this.databaseVersion = databaseVersion;
 	}
@@ -116,9 +119,10 @@ public class LanguageProject {
 	public ObservableList<Segment> getSegmentInventory() {
 		return segmentInventory;
 	}
-	
+
 	public List<Segment> getActiveSegmentsInInventory() {
-		return segmentInventory.stream().filter(segment -> segment.isActive()).collect(Collectors.toList());
+		return segmentInventory.stream().filter(segment -> segment.isActive())
+				.collect(Collectors.toList());
 	}
 
 	public void setSegmentInventory(ObservableList<Segment> segmentInventoryData) {
@@ -131,7 +135,8 @@ public class LanguageProject {
 		return graphemeNaturalClasses;
 	}
 
-	public void setGraphemeNaturalClasses(ObservableList<GraphemeNaturalClass> graphemeNaturalClassesData) {
+	public void setGraphemeNaturalClasses(
+			ObservableList<GraphemeNaturalClass> graphemeNaturalClassesData) {
 		this.graphemeNaturalClasses = graphemeNaturalClassesData;
 	}
 
@@ -144,11 +149,13 @@ public class LanguageProject {
 	}
 
 	public List<GraphemeNaturalClass> getActiveGraphemeNaturalClasses() {
-		return graphemeNaturalClasses.stream().filter(gnc -> gnc.isActive()).collect(Collectors.toList());
+		return graphemeNaturalClasses.stream().filter(gnc -> gnc.isActive())
+				.collect(Collectors.toList());
 	}
 
 	public List<Environment> getActiveAndValidEnvironments() {
-		return environments.stream().filter(env -> env.isActive() && env.isValid()).collect(Collectors.toList());
+		return environments.stream().filter(env -> env.isActive() && env.isValid())
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -177,7 +184,7 @@ public class LanguageProject {
 	public void setEnvironments(ObservableList<Environment> environments) {
 		this.environments = environments;
 	}
-	
+
 	public ObservableList<Grapheme> getGraphemes() {
 		ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
 		for (Segment segment : getSegmentInventory()) {
@@ -214,16 +221,22 @@ public class LanguageProject {
 		for (Word word : wordsLoadedData) {
 			words.add(word);
 		}
-		ObservableList<GraphemeNaturalClass> graphemeNaturalClassesLoadedData = languageProjectLoaded.getGraphemeNaturalClasses();
+		ObservableList<GraphemeNaturalClass> graphemeNaturalClassesLoadedData = languageProjectLoaded
+				.getGraphemeNaturalClasses();
 		for (GraphemeNaturalClass gnc : graphemeNaturalClassesLoadedData) {
 			graphemeNaturalClasses.add(gnc);
 		}
-		ObservableList<Environment> environmentsLoadedData = languageProjectLoaded.getEnvironments();
+		ObservableList<Environment> environmentsLoadedData = languageProjectLoaded
+				.getEnvironments();
 		for (Environment environment : environmentsLoadedData) {
 			environments.add(environment);
 		}
 		analysisLanguage = languageProjectLoaded.getAnalysisLanguage();
 		vernacularLanguage = languageProjectLoaded.getVernacularLanguage();
+		hyphenationParametersListWord = languageProjectLoaded.getHyphenationParametersListWord();
+		hyphenationParametersParaTExt = languageProjectLoaded.getHyphenationParametersParaTExt();
+		hyphenationParametersXLingPaper = languageProjectLoaded.getHyphenationParametersXLingPaper();
+		syllabificationParameters = languageProjectLoaded.getSyllabificationParameters();
 	}
 
 	public void createNewWord(String word, String sUntested) {
@@ -296,7 +309,8 @@ public class LanguageProject {
 	}
 
 	/**
-	 * @param language the vernacular language to set
+	 * @param language
+	 *            the vernacular language to set
 	 */
 	public void setVernacularLanguage(Language language) {
 		this.vernacularLanguage = language;
@@ -310,7 +324,8 @@ public class LanguageProject {
 	}
 
 	/**
-	 * @param language the analysis language to set
+	 * @param language
+	 *            the analysis language to set
 	 */
 	public void setAnalysisLanguage(Language language) {
 		this.analysisLanguage = language;
@@ -343,4 +358,11 @@ public class LanguageProject {
 		this.hyphenationParametersXLingPaper = hyphenationParametersXLingPaper;
 	}
 
+	public SyllabificationParameters getSyllabificationParameters() {
+		return syllabificationParameters;
+	}
+
+	public void setSyllabificationParameters(SyllabificationParameters sylParameters) {
+		this.syllabificationParameters = sylParameters;
+	}
 }

@@ -64,6 +64,8 @@ public class ONCApproachController extends ApproachController  {
 				"handleONCSegmentInventory"));
 		views.add(new ApproachView(bundle.getString("onc.view.sonorityhierarchy"),
 				"handleONCSonorityHierarchy"));
+		views.add(new ApproachView(bundle.getString("onc.view.syllabificationparameters"),
+				"handleSyllabificationParameters"));
 		views.add(new ApproachView(bundle.getString("onc.view.words"), "handleONCWords"));
 		views.add(new ApproachView(bundle.getString("onc.view.wordspredictedvscorrect"),
 				"handleONCWordsPredictedVsCorrect"));
@@ -90,6 +92,10 @@ public class ONCApproachController extends ApproachController  {
 
 		case "org.sil.syllableparser.view.SHSonorityHierarchyController":
 			sView = ONCApproachView.SONORITY_HIERARCHY.toString();
+			break;
+
+		case "org.sil.syllableparser.view.SyllabificationParametersController":
+			sView = ONCApproachView.SYLLABIFICATION_PARAMETERS.toString();
 			break;
 
 		case "org.sil.syllableparser.view.ONCWordsController":
@@ -148,6 +154,14 @@ public class ONCApproachController extends ApproachController  {
 		SHSonorityHierarchyController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		prefs.setLastONCApproachViewUsed(getViewUsed());
+	}
+
+	public void handleSyllabificationParameters() {
+		FXMLLoader loader = createFXMLLoader("fxml/SyllabificationParameters.fxml");
+		SyllabificationParametersController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(oncApproachData.getLanguageProject());
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 	}
 
