@@ -111,11 +111,23 @@ public abstract class ApproachLanguageComparer {
 								.equals(segment.getSegment())).collect(Collectors.toList());
 		if (sameSegmentsName.size() > 0) {
 			DifferentSegment diffSeg = sameSegmentsName.get(0);
-			diffSeg.setObjectFrom2(segment);
+			if (isReallySameSegment(((Segment) diffSeg.getObjectFrom1()), segment)) {
+				segmentsWhichDiffer.remove(diffSeg);
+			} else {
+				diffSeg.setObjectFrom2(segment);
+			}
 		} else {
 			DifferentSegment diffSegment = new DifferentSegment(null, segment);
 			segmentsWhichDiffer.add(diffSegment);
 		}
+	}
+
+	protected boolean isReallySameSegment(Segment segment1, Segment segment2) {
+		// ignore ONC-specific values
+		if (segment1.baseEquals(segment2)) {
+			return true;
+		}
+		return false;
 	}
 
 	public void compareGraphemes() {

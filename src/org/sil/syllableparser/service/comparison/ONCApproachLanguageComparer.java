@@ -15,6 +15,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
@@ -148,5 +149,12 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 	protected boolean predictedSyllabificationAreSame(DifferentWord diffWord, Word word) {
 		return word.getSHPredictedSyllabification().equals(
 				((Word) diffWord.getObjectFrom1()).getSHPredictedSyllabification());
+	}
+
+	@Override
+	protected boolean isReallySameSegment(Segment segment1, Segment segment2) {
+		// TODO: when add more approach-specific items to segment (e.g., mora-bearing),
+		//  add test for onset, nucleus, coda equality here
+		return true;
 	}
 }

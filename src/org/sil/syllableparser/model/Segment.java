@@ -220,6 +220,26 @@ public class Segment extends SylParserObject {
 		}
 	}
 
+	// check equality for the properties which are common to all approaches
+	public boolean baseEquals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		boolean result = true;
+		Segment seg = (Segment) obj;
+		if (!getSegment().equals(seg.getSegment())) {
+			result = false;
+		} else if (!getActiveGraphs().equals(seg.getActiveGraphs())) {
+			result = false;
+		} else if (isChecked() != seg.isChecked()) {
+			result = false;
+		}
+		return result;
+	}
+
 	@Override
 	public int hashCode() {
 		String sCombo = segment.getValueSafe() + graphemes.getValueSafe() + checked.getValue()
@@ -239,27 +259,16 @@ public class Segment extends SylParserObject {
 		Segment seg = (Segment) obj;
 		if (!getSegment().equals(seg.getSegment())) {
 			result = false;
-		} else {
-			if (!getActiveGraphs().equals(seg.getActiveGraphs())) {
-				result = false;
-			} else {
-				if (isChecked() != seg.isChecked()) {
-					result = false;
-				} else {
-					if (isOnset() != seg.isOnset()) {
-						result = false;
-					} else {
-						if (isNucleus() != seg.isNucleus()) {
-							result = false;
-						} else {
-							if (isCoda() != seg.isCoda()) {
-								result = false;
-							}
-						}
-					}
-				}
-			}
-			
+		} else if (!getActiveGraphs().equals(seg.getActiveGraphs())) {
+			result = false;
+		} else if (isChecked() != seg.isChecked()) {
+			result = false;
+		} else if (isOnset() != seg.isOnset()) {
+			result = false;
+		} else if (isNucleus() != seg.isNucleus()) {
+			result = false;
+		} else if (isCoda() != seg.isCoda()) {
+			result = false;
 		}
 		return result;
 	}
