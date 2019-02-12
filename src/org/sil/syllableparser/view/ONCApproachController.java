@@ -20,11 +20,11 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.ApproachView;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
-import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproachView;
-import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.ONCSegmenter;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
 import org.sil.utility.view.ControllerUtilities;
 
@@ -243,10 +243,10 @@ public class ONCApproachController extends ApproachController  {
 				Scene scene = statusBar.getScene();
 				Cursor currentCursor = scene.getCursor();
 				scene.setCursor(Cursor.WAIT);
-				CVSegmenter segmenter;
+				ONCSegmenter segmenter;
 				ONCSyllabifier syllabifier;
 
-				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
+				segmenter = new ONCSegmenter(languageProject.getActiveGraphemes(),
 						languageProject.getActiveGraphemeNaturalClasses());
 				syllabifier = new ONCSyllabifier(languageProject.getONCApproach());
 
@@ -265,7 +265,7 @@ public class ONCApproachController extends ApproachController  {
 						word.setONCPredictedSyllabification("");
 						continue;
 					}
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<ONCSegmentInSyllable> segmentsInWord = segmenter.getONCSegmentsInWord();
 					fSuccess = syllabifier.syllabify(segmentsInWord);
 					if (!fSuccess) {
 						word.setONCParserResult(sSyllabificationFailure);

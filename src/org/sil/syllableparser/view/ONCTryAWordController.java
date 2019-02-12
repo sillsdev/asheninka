@@ -9,19 +9,14 @@ package org.sil.syllableparser.view;
 import java.util.List;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCTraceInfo;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceInfo;
-import org.sil.syllableparser.service.parsing.CVSegmenter;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.ONCSegmenter;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
 import org.sil.syllableparser.service.parsing.ONCSyllabifierResult;
 import org.sil.syllableparser.service.parsing.ONCTryAWordHTMLFormatter;
-import org.sil.syllableparser.service.parsing.SHSyllabifier;
-import org.sil.syllableparser.service.parsing.SHSyllabifierResult;
-import org.sil.syllableparser.service.parsing.SHTryAWordHTMLFormatter;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -69,10 +64,10 @@ public class ONCTryAWordController extends TryAWordController {
 			@Override
 			public void handle(WorkerStateEvent event) {
 
-				CVSegmenter segmenter;
+				ONCSegmenter segmenter;
 				ONCSyllabifier syllabifier;
 
-				segmenter = new CVSegmenter(oncApproach.getLanguageProject()
+				segmenter = new ONCSegmenter(oncApproach.getLanguageProject()
 						.getActiveGraphemes(), oncApproach.getLanguageProject()
 						.getActiveGraphemeNaturalClasses());
 				syllabifier = new ONCSyllabifier(oncApproach);
@@ -82,7 +77,7 @@ public class ONCTryAWordController extends TryAWordController {
 				traceInfo.setSegmenterResult(segResult);
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<ONCSegmentInSyllable> segmentsInWord = segmenter.getONCSegmentsInWord();
 						syllabifier.setDoTrace(true);
 						traceInfo.setSyllabifier(syllabifier);
 						fSuccess = syllabifier.syllabify(segmentsInWord);

@@ -13,9 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.sil.syllableparser.model.LanguageProject;
+import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.SyllabificationParameters;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
+import org.sil.syllableparser.model.oncapproach.ONCSegmentUsageType;
+import org.sil.syllableparser.model.oncapproach.ONCSyllabificationErrorType;
 import org.sil.syllableparser.model.oncapproach.ONCSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCTraceSyllabifierInfo;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
@@ -30,11 +35,19 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 public class ONCSyllabifier {
 
 	private LanguageProject languageProject;
-	private ONCApproach sonHierApproach;
-	private CVSegmenter segmenter;
+	private ONCApproach oncApproach;
+	private ONCSegmenter segmenter;
 	private SHSonorityComparer sonorityComparer;
 	private boolean fDoTrace = false;
 	private List<ONCTraceSyllabifierInfo> syllabifierTraceInfoList = new ArrayList<ONCTraceSyllabifierInfo>();
+	private SyllabificationParameters sylParams;
+	private boolean codasAllowed;
+	private boolean onsetMaximization;
+	private OnsetPrincipleType opType;
+
+	enum ONCType {
+		CODA, NUCLEUS, NUCLEUS_OR_CODA, ONSET, ONSET_OR_NUCLEUS, UNKNOWN
+	}
 
 	LinkedList<ONCSyllable> syllablesInCurrentWord = new LinkedList<ONCSyllable>(
 			Arrays.asList(new ONCSyllable(null)));
@@ -42,9 +55,13 @@ public class ONCSyllabifier {
 
 	public ONCSyllabifier(ONCApproach oncApproach) {
 		super();
-		this.sonHierApproach = oncApproach;
+		this.oncApproach = oncApproach;
 		languageProject = oncApproach.getLanguageProject();
-		segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
+		sylParams = languageProject.getSyllabificationParameters();
+		codasAllowed = sylParams.isCodasAllowed();
+		onsetMaximization = sylParams.isOnsetMaximization();
+		opType = sylParams.getOnsetPrincipleEnum();
+		segmenter = new ONCSegmenter(languageProject.getActiveGraphemes(),
 				languageProject.getActiveGraphemeNaturalClasses());
 		sonorityComparer = new SHSonorityComparer(oncApproach.getLanguageProject());
 		sSyllabifiedWord = "";
@@ -77,13 +94,14 @@ public class ONCSyllabifier {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		fSuccess = segResult.success;
 		if (fSuccess) {
-			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+			List<ONCSegmentInSyllable> segmentsInWord = (List<ONCSegmentInSyllable>) segmenter
+					.getONCSegmentsInWord();
 			fSuccess = parseIntoSyllables(segmentsInWord);
 		}
 		return fSuccess;
 	}
 
-	private boolean parseIntoSyllables(List<CVSegmentInSyllable> segmentsInWord) {
+	private boolean parseIntoSyllables(List<ONCSegmentInSyllable> segmentsInWord) {
 		if (segmentsInWord.size() == 0) {
 			return false;
 		}
@@ -91,84 +109,177 @@ public class ONCSyllabifier {
 		return fResult;
 	}
 
-	public boolean syllabify(List<CVSegmentInSyllable> segmentsInWord) {
+	public boolean syllabify(List<ONCSegmentInSyllable> segmentsInWord) {
+		ONCType currentType = ONCType.UNKNOWN;
 		syllablesInCurrentWord.clear();
 		syllabifierTraceInfoList.clear();
 		ONCTraceSyllabifierInfo traceInfo = null;
-		boolean fLastStartedSyllable = true;
 		int segmentCount = segmentsInWord.size();
 		if (segmentCount == 0) {
 			return false;
 		}
-		ONCSyllable syl = new ONCSyllable(new ArrayList<CVSegmentInSyllable>());
-		syl.add(segmentsInWord.get(0));
+		ONCSyllable syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
+		// syl.add(segmentsInWord.get(0));
 		Segment seg1 = segmentsInWord.get(0).getSegment();
-		SHNaturalClass natClass = sonHierApproach.getNaturalClassContainingSegment(seg1);
-		if (natClass == null) {
+		if (seg1 == null) {
+			return false;
+		}
+		if (opType == OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET && !seg1.isOnset()) {
 			if (fDoTrace) {
-				traceInfo = new ONCTraceSyllabifierInfo(seg1, null, null, null, SHComparisonResult.MISSING1);
+				traceInfo = new ONCTraceSyllabifierInfo(seg1,
+						ONCSyllabificationErrorType.ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET);
 				syllabifierTraceInfoList.add(traceInfo);
 			}
 			return false;
 		}
-		int i = 1;
+		SHNaturalClass natClass = oncApproach.getNaturalClassContainingSegment(seg1);
+		if (natClass == null) {
+			if (fDoTrace) {
+				traceInfo = new ONCTraceSyllabifierInfo(seg1,
+						ONCSyllabificationErrorType.NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT);
+				syllabifierTraceInfoList.add(traceInfo);
+			}
+			return false;
+		}
+		int i = 0;
 		while (i < segmentCount) {
-			seg1 = segmentsInWord.get(i - 1).getSegment();
-			Segment seg2 = segmentsInWord.get(i).getSegment();
+			seg1 = segmentsInWord.get(i).getSegment();
+			Segment seg2 = null;
+			if (i < segmentCount - 1) {
+				seg2 = segmentsInWord.get(i + 1).getSegment();
+			}
 			SHComparisonResult result = sonorityComparer.compare(seg1, seg2);
 			if (fDoTrace) {
 				traceInfo = new ONCTraceSyllabifierInfo(seg1,
-						sonHierApproach.getNaturalClassContainingSegment(seg1), seg2,
-						sonHierApproach.getNaturalClassContainingSegment(seg2), result);
-				if (fLastStartedSyllable) {
-					traceInfo.startsSyllable = true;
-					fLastStartedSyllable = false;
-				}
+						oncApproach.getNaturalClassContainingSegment(seg1), seg2,
+						oncApproach.getNaturalClassContainingSegment(seg2), result);
 				syllabifierTraceInfoList.add(traceInfo);
 			}
-			if (result == SHComparisonResult.MORE) {
-				int j = i + 1;
-				if (j < segmentCount) {
-					Segment seg3 = segmentsInWord.get(j).getSegment();
-					result = sonorityComparer.compare(seg2, seg3);
-					if (result == SHComparisonResult.EQUAL || result == SHComparisonResult.MORE) {
-						syl.add(segmentsInWord.get(i));
-						i++;
-						if (fDoTrace) {
-							traceInfo = new ONCTraceSyllabifierInfo(seg2,
-									sonHierApproach.getNaturalClassContainingSegment(seg2), seg3,
-									sonHierApproach.getNaturalClassContainingSegment(seg3), result);
-							syllabifierTraceInfoList.add(traceInfo);
-						}
-					}
-					syllablesInCurrentWord.add(syl);
-					syl = new ONCSyllable(new ArrayList<CVSegmentInSyllable>());
+
+			switch (currentType) {
+			case UNKNOWN:
+			case ONSET:
+				if (seg1.isOnset()
+						&& (result == SHComparisonResult.LESS || result == SHComparisonResult.EQUAL)) {
+					segmentsInWord.get(i).setUsage(ONCSegmentUsageType.ONSET);
 					syl.add(segmentsInWord.get(i));
-					fLastStartedSyllable = true;
+					currentType = ONCType.ONSET_OR_NUCLEUS;
 				} else {
-					syl.add(segmentsInWord.get(i));
+					i--;
+					currentType = ONCType.NUCLEUS;
 				}
-			} else if (result == SHComparisonResult.LESS) {
-				syl.add(segmentsInWord.get(i));
-			} else if (result == SHComparisonResult.EQUAL) {
-				syl.add(segmentsInWord.get(i));
-			} else {
-				return false;
+				break;
+			case ONSET_OR_NUCLEUS:
+				if (seg1.isOnset()
+						&& (result == SHComparisonResult.LESS || result == SHComparisonResult.EQUAL)) {
+					segmentsInWord.get(i).setUsage(ONCSegmentUsageType.ONSET);
+					syl.add(segmentsInWord.get(i));
+					currentType = ONCType.ONSET_OR_NUCLEUS;
+				} else if (seg1.isNucleus()) {
+					segmentsInWord.get(i).setUsage(ONCSegmentUsageType.NUCLEUS);
+					syl.add(segmentsInWord.get(i));
+					currentType = ONCType.NUCLEUS_OR_CODA;
+				} else {
+					System.out.println("Failure:"
+							+ ONCSyllabificationErrorType.EXPECTED_ONSET_OR_NUCLEUS_NOT_FOUND);
+					return false;
+				}
+				break;
+			case NUCLEUS:
+				if (seg1.isNucleus()) {
+					segmentsInWord.get(i).setUsage(ONCSegmentUsageType.NUCLEUS);
+					syl.add(segmentsInWord.get(i));
+					currentType = ONCType.NUCLEUS_OR_CODA;
+				} else {
+					System.out.println("Failure:"
+							+ ONCSyllabificationErrorType.EXPECTED_NUCLEUS_NOT_FOUND);
+					return false;
+				}
+				break;
+			case NUCLEUS_OR_CODA:
+				if (seg1.isNucleus()) {
+					segmentsInWord.get(i).setUsage(ONCSegmentUsageType.NUCLEUS);
+					syl.add(segmentsInWord.get(i));
+					currentType = ONCType.NUCLEUS_OR_CODA;
+				} else if (seg1.isCoda() && codasAllowed) {
+					if (seg1.isOnset() && result == SHComparisonResult.LESS) {
+						if (onsetMaximization) {
+							i--;
+							syllablesInCurrentWord.add(syl);
+							syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
+							currentType = updateTypeForNewSyllable();
+						} else if (!seg2.isOnset()
+								&& opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
+							i--;
+							syllablesInCurrentWord.add(syl);
+							syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
+							currentType = ONCType.ONSET_OR_NUCLEUS;
+						} else {
+							syl = markAsCoda(segmentsInWord, syl, i);
+							currentType = updateTypeForNewSyllable();
+						}
+					} else {
+						syl = markAsCoda(segmentsInWord, syl, i);
+						currentType = updateTypeForNewSyllable();
+					}
+				} else {
+					i--;
+					syllablesInCurrentWord.add(syl);
+					syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
+					currentType = ONCType.ONSET_OR_NUCLEUS;
+					// System.out.println("Failure:" +
+					// ONCSyllabificationErrorType.EXPECTED_NUCLEUS_OR_CODA_NOT_FOUND);
+					// return false;
+				}
+				break;
+			case CODA:
+				if (codasAllowed) {
+					if (seg1.isCoda() && result == SHComparisonResult.LESS) {
+						syl = markAsCoda(segmentsInWord, syl, i);
+						currentType = ONCType.ONSET_OR_NUCLEUS;
+					} else {
+						System.out.println("Failure:"
+								+ ONCSyllabificationErrorType.EXPECTED_CODA_NOT_FOUND);
+						return false;
+					}
+				} else {
+					i--;
+					currentType = ONCType.ONSET_OR_NUCLEUS;
+				}
+				break;
 			}
 			i++;
 		}
 		if (syl.getSegmentsInSyllable().size() > 0) {
 			syllablesInCurrentWord.add(syl);
-			if (fDoTrace && fLastStartedSyllable) {
-				Segment seg = segmentsInWord.get(segmentCount -1).getSegment();
+			if (fDoTrace) {
+				Segment seg = segmentsInWord.get(segmentCount - 1).getSegment();
 				traceInfo = new ONCTraceSyllabifierInfo(seg,
-						sonHierApproach.getNaturalClassContainingSegment(seg), null,
-						null, null);
+						oncApproach.getNaturalClassContainingSegment(seg), null, null, null);
 				traceInfo.startsSyllable = true;
 				syllabifierTraceInfoList.add(traceInfo);
 			}
 		}
 		return true;
+	}
+
+	protected ONCType updateTypeForNewSyllable() {
+		ONCType currentType;
+		if (opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
+			currentType = ONCType.ONSET_OR_NUCLEUS;
+		} else {
+			currentType = ONCType.ONSET;
+		}
+		return currentType;
+	}
+
+	protected ONCSyllable markAsCoda(List<ONCSegmentInSyllable> segmentsInWord, ONCSyllable syl,
+			int i) {
+		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.CODA);
+		syl.add(segmentsInWord.get(i));
+		syllablesInCurrentWord.add(syl);
+		syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
+		return syl;
 	}
 
 	public String getSyllabificationOfCurrentWord() {
@@ -179,6 +290,22 @@ public class ONCSyllabifier {
 		for (ONCSyllable syl : syllablesInCurrentWord) {
 			for (CVSegmentInSyllable seg : syl.getSegmentsInSyllable()) {
 				sb.append(seg.getGrapheme());
+			}
+			if (i++ < iSize) {
+				sb.append(".");
+			}
+		}
+		return sb.toString();
+	}
+
+	public String getONCPatternOfCurrentWord() {
+		// TODO: figure out a lambda way to do this
+		StringBuilder sb = new StringBuilder();
+		int iSize = syllablesInCurrentWord.size();
+		int i = 1;
+		for (ONCSyllable syl : syllablesInCurrentWord) {
+			for (ONCSegmentInSyllable seg : syl.getSegmentsInSyllable()) {
+				sb.append(seg.getUsageAString());
 			}
 			if (i++ < iSize) {
 				sb.append(".");

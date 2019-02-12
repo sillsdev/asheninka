@@ -112,9 +112,7 @@ public class CVSegmenter {
 						}
 						Segment seg = grapheme.getOwningSegment();
 						if (seg != null) {
-							CVSegmentInSyllable segmentInSyllable = new CVSegmentInSyllable(seg,
-									sPotentialGrapheme);
-							segmentsInCurrentWord.add(segmentInSyllable);
+							addSegmentInSyllable(sPotentialGrapheme, seg);
 							fIsMatch = true;
 							break;
 						}
@@ -131,5 +129,11 @@ public class CVSegmenter {
 			}
 		}
 		return result;
+	}
+
+	protected void addSegmentInSyllable(String sPotentialGrapheme, Segment seg) {
+		CVSegmentInSyllable segmentInSyllable = new CVSegmentInSyllable(seg,
+				sPotentialGrapheme);
+		segmentsInCurrentWord.add(segmentInSyllable);
 	}
 }

@@ -6,6 +6,8 @@
  */
 package org.sil.syllableparser.model.oncapproach;
 
+import java.util.List;
+
 import javafx.collections.ObservableList;
 
 import org.sil.syllableparser.model.Approach;
@@ -22,6 +24,9 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 // @XmlAccessorType(XmlAccessType.FIELD)
 public class ONCApproach extends Approach {
 
+	LanguageProject langProj;
+	SHApproach shApproach;
+
 	/**
 	 * Clear out all data in this Sonority Hierarchy approach
 	 */
@@ -29,12 +34,9 @@ public class ONCApproach extends Approach {
 //		shSonorityHierarchy.clear();
 	}
 
-	public void load(ONCApproach shApproachLoaded) {
-//		ObservableList<SHNaturalClass> shSonorityHierarchyLoadedData = shApproachLoaded
-//				.getSHSonorityHierarchy();
-//		for (SHNaturalClass shNaturalClass : shSonorityHierarchyLoadedData) {
-//			shSonorityHierarchy.add(shNaturalClass);
-//		}
+	public void load(ONCApproach oncApproachLoaded) {
+		langProj = this.getLanguageProject();
+		shApproach = langProj.getSHApproach();
 	}
 
 	protected String getPredictedSyllabificationOfWord(Word word) {
@@ -45,9 +47,11 @@ public class ONCApproach extends Approach {
 		return getLanguageProject().getSHApproach().getSHSonorityHierarchy();
 	}
 
+	public List<SHNaturalClass> getActiveSHNaturalClasses() {
+		return shApproach.getActiveSHNaturalClasses();
+	}
+
 	public SHNaturalClass getNaturalClassContainingSegment(Segment seg1) {
-		LanguageProject langProj = this.getLanguageProject();
-		SHApproach shApproach = langProj.getSHApproach();
 		return shApproach.getNaturalClassContainingSegment(seg1);
 	}
 }

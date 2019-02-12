@@ -1,4 +1,4 @@
-// Copyright (c) 2018 SIL International 
+// Copyright (c) 2018-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -6,9 +6,10 @@
  */
 package org.sil.syllableparser.model.oncapproach;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
+import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 
 
 /**
@@ -20,25 +21,25 @@ import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
  */
 public class ONCSyllable extends Object {
 
-	private final List<CVSegmentInSyllable> segmentsInSyllable;
+	private final List<ONCSegmentInSyllable> segmentsInSyllable;
 
-	public ONCSyllable(List<CVSegmentInSyllable> segmentsInSyllable) {
+	public ONCSyllable(ArrayList<ONCSegmentInSyllable> arrayList) {
 		super();
-		this.segmentsInSyllable = segmentsInSyllable;
+		this.segmentsInSyllable = arrayList;
 	}
 
-	public List<CVSegmentInSyllable> getSegmentsInSyllable() {
+	public List<ONCSegmentInSyllable> getSegmentsInSyllable() {
 		return segmentsInSyllable;
 	}
 	
-	public void add(CVSegmentInSyllable seg) {
+	public void add(ONCSegmentInSyllable seg) {
 		segmentsInSyllable.add(seg);
 	}
 	
 	public String getSegmentNamesInSyllable() {
 		StringBuilder sb = new StringBuilder();
 		
-		for (CVSegmentInSyllable seg : segmentsInSyllable) {
+		for (ONCSegmentInSyllable seg : segmentsInSyllable) {
 			sb.append(seg.getSegmentName());
 		}	
 		return sb.toString();

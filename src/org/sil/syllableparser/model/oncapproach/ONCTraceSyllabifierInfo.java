@@ -20,6 +20,7 @@ public class ONCTraceSyllabifierInfo {
 	public Segment segment2 = null;
 	public SHNaturalClass naturalClass2 = null;
 	public SHComparisonResult comparisonResult;
+	private ONCSyllabificationErrorType errorType;
 	public boolean startsSyllable = false;
 	public String sMissingNaturalClass = "No Natural Class";
 	public static final String NULL_REPRESENTATION = "&#xa0;&#x2014";
@@ -94,6 +95,12 @@ public class ONCTraceSyllabifierInfo {
 
 	public ONCTraceSyllabifierInfo() {
 		super();
+	}
+
+	public ONCTraceSyllabifierInfo(Segment segment, ONCSyllabificationErrorType errorType) {
+		super();
+		this.segment1 = segment;
+		this.errorType = errorType;
 	}
 
 	public ONCTraceSyllabifierInfo(Segment segment1, SHNaturalClass naturalClass1, Segment segment2,
