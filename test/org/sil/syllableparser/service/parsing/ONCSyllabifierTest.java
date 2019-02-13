@@ -106,6 +106,7 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
 		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
 		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
+		checkSyllabification("dolnti", false, 1, "do", "on");
 	}
 
 	@Test
@@ -140,6 +141,7 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
 		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
 		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
+		checkSyllabification("dolnti", false, 1, "do", "on");
 	}
 
 	@Test
@@ -174,6 +176,7 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
 		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
 		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
+		checkSyllabification("dolnti", false, 1, "do", "on");
 	}
 
 	@Test
@@ -208,7 +211,8 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon");
 		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
 		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
-	}
+		checkSyllabification("dolnti", false, 1, "do", "on");
+}
 
 	@Test
 	public void wordToSegmentToSyllableCodasOnEveryTest() {
@@ -242,6 +246,7 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon");
 		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
 		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
+		checkSyllabification("dolnti", false, 1, "do", "on");
 	}
 
 	@Test
@@ -276,7 +281,8 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon");
 		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
 		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
-	}
+		checkSyllabification("dolnti", false, 1, "do", "on");
+}
 
 	@Test
 	public void wordToSegmentToSyllableNoCodasOnAllButFirstTest() {
@@ -310,7 +316,8 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
 		checkSyllabification("donni", true, 2, "do.nni", "on.oon");
 		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon");
-	}
+		checkSyllabification("dolnti", false, 1, "do", "on");
+}
 
 	@Test
 	public void wordToSegmentToSyllableNoCodasOnEveryTest() {
@@ -344,6 +351,7 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
 		checkSyllabification("donni", true, 2, "do.nni", "on.oon");
 		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon");
+		checkSyllabification("dolnti", false, 1, "do", "on");
 	}
 
 	@Test
@@ -378,6 +386,7 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
 		checkSyllabification("donni", true, 2, "do.nni", "on.oon");
 		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon");
+		checkSyllabification("dolnti", false, 1, "do", "on");
 	}
 
 	protected void checkSyllabification(String word, boolean success, int numberOfSyllables,
