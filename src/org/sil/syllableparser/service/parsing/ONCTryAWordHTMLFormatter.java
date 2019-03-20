@@ -137,11 +137,11 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sb.append(")&#xa0;");
 			sb.append("</span>\n");
 			sb.append("<td align='center'>");
-			if (sylInfo.startsSyllable) {
-				sb.append("&sigma;");
-			} else {
+//			if (sylInfo.startsSyllable) {
+//				sb.append("&sigma;");
+//			} else {
 				sb.append("&#xa0;");
-			}
+//			}
 			sb.append("</td>");
 			sb.append("</tr>\n");
 			i++;

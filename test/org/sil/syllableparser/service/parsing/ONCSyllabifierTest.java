@@ -25,8 +25,10 @@ import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
+import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
 import org.sil.syllableparser.model.oncapproach.ONCSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCTraceSyllabifierInfo;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 
@@ -46,7 +48,7 @@ public class ONCSyllabifierTest {
 	List<SHNaturalClass> shNaturalClasses;
 	ONCSyllabifier oncSyllabifier;
 	LanguageProject languageProject;
-	
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -63,7 +65,8 @@ public class ONCSyllabifierTest {
 				languageProject.getActiveGraphemeNaturalClasses());
 		oncApproach = languageProject.getONCApproach();
 		shNaturalClasses = oncApproach.getActiveSHNaturalClasses();
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 	}
 
@@ -78,7 +81,8 @@ public class ONCSyllabifierTest {
 	public void wordToSegmentToSyllableCodasOnMaxAllButFirstTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -113,7 +117,8 @@ public class ONCSyllabifierTest {
 	public void wordToSegmentToSyllableCodasOnMaxEveryTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -148,7 +153,8 @@ public class ONCSyllabifierTest {
 	public void wordToSegmentToSyllableCodasOnMaxNoOnsetsRequiredTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -183,7 +189,8 @@ public class ONCSyllabifierTest {
 	public void wordToSegmentToSyllableCodasOnAllButFirstTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -212,13 +219,14 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
 		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
 		checkSyllabification("dolnti", false, 1, "do", "on");
-}
+	}
 
 	@Test
 	public void wordToSegmentToSyllableCodasOnEveryTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -253,7 +261,8 @@ public class ONCSyllabifierTest {
 	public void wordToSegmentToSyllableCodasOnNoOnsetsRequiredTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -282,13 +291,14 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
 		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
 		checkSyllabification("dolnti", false, 1, "do", "on");
-}
+	}
 
 	@Test
 	public void wordToSegmentToSyllableNoCodasOnAllButFirstTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(false);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -317,13 +327,14 @@ public class ONCSyllabifierTest {
 		checkSyllabification("donni", true, 2, "do.nni", "on.oon");
 		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon");
 		checkSyllabification("dolnti", false, 1, "do", "on");
-}
+	}
 
 	@Test
 	public void wordToSegmentToSyllableNoCodasOnEveryTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(false);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -358,7 +369,8 @@ public class ONCSyllabifierTest {
 	public void wordToSegmentToSyllableNoCodasOnNoOnsetsRequiredTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(false);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
-		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		checkSyllabification("", false, 0, "", "");
@@ -405,234 +417,466 @@ public class ONCSyllabifierTest {
 				oncSyllabifier.getONCPatternOfCurrentWord());
 	}
 
-	protected void checkSyllabifyWord(String word, boolean success, String expectedNaturalClasses,
-			String expectedSonorityValues, int numberOfSyllables, String expectedSyllabification) {
+	protected void checkSyllabifyWord(String word, boolean success, int numberOfSyllables,
+			String expectedSyllabification, String expectedONCPattern) {
 		boolean fSuccess = oncSyllabifier.convertStringToSyllables(word);
 		assertEquals("word syllabified", success, fSuccess);
-		String naturalClassesInWord = oncSyllabifier.getNaturalClassesInCurrentWord();
-		assertEquals(expectedNaturalClasses, naturalClassesInWord);
-		String sonorityValues = oncSyllabifier.getSonorityValuesInCurrentWord();
-		assertEquals(expectedSonorityValues, sonorityValues);
 		List<ONCSyllable> syllablesInWord = oncSyllabifier.getSyllablesInCurrentWord();
 		assertEquals("Expect " + numberOfSyllables + " syllables in word", numberOfSyllables,
 				syllablesInWord.size());
 		assertEquals("Expected Syllabification of word", expectedSyllabification,
 				oncSyllabifier.getSyllabificationOfCurrentWord());
+		assertEquals("Expected ONC pattern", expectedONCPattern,
+				oncSyllabifier.getONCPatternOfCurrentWord());
 	}
 
-//	@Test
+	@Test
 	public void traceSyllabifyWordTest() {
 		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("", false, 0, "", "");
+		List<ONCTraceSyllabifierInfo> tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(0, tracingSteps.size());
 
-		checkSyllabifyWord("", false, "", "", 0, "");
-		List<ONCTraceSyllabifierInfo> traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(0, traceInfo.size());
+		checkSyllabifyWord("A", true, 1, "A", "n");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(3, tracingSteps.size());
+		ONCTraceSyllabifierInfo sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "a", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "a", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "a", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("A", true, "Vowels, null",  ONCTraceSyllabifierInfo.NULL_REPRESENTATION, 1, "A");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(1, traceInfo.size());
-		ONCTraceSyllabifierInfo sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
+		checkSyllabifyWord("ta", true, 1, "ta", "on");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(3, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "t", "Obstruents", "a", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "a", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "a", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("ta", true, "Obstruents, Vowels", "<", 1, "ta");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(1, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
+		checkSyllabifyWord("tan", true, 1, "tan", "onc");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(3, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "t", "Obstruents", "a", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "a", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "n", "Nasals", null, null, SHComparisonResult.MORE,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
 
-		checkSyllabifyWord("tad", true, "Obstruents, Vowels, Obstruents", "<, >", 1, "tad");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(2, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
+		checkSyllabifyWord("Chiko", true, 2, "Chi.ko", "on.on");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(6, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "ch", "Obstruents", "i", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "i", "Vowels", "k", "Obstruents", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "k", "Obstruents", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_NOT_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "k", "Obstruents", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "o", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "o", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("Chiko", true, "Obstruents, Vowels, Obstruents, Vowels",
-				"<, >, <", 2, "Chi.ko");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(3, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(true, sylInfo.startsSyllable);
+		checkSyllabifyWord("tampidon", true, 3, "tam.pi.don", "onc.on.onc");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(9, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "t", "Obstruents", "a", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "a", "Vowels", "m", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "m", "Nasals", "p", "Obstruents", SHComparisonResult.MORE,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "p", "Obstruents", "i", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "i", "Vowels", "d", "Obstruents", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "d", "Obstruents", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_NOT_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(6);
+		checkTracingStep(sylInfo, "d", "Obstruents", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(7);
+		checkTracingStep(sylInfo, "o", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(8);
+		checkTracingStep(sylInfo, "n", "Nasals", null, null, SHComparisonResult.MORE,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
 
-		checkSyllabifyWord("tampidon", true,
-				"Obstruents, Vowels, Nasals, Obstruents, Vowels, Obstruents, Vowels, Nasals",
-				"<, >, >, <, >, <, >", 3, "tam.pi.don");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(7, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(3);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(4);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(5);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(6);
-		assertEquals(false, sylInfo.startsSyllable);
+		checkSyllabifyWord("dapgek", false, 2, "da.pge", "on.oon");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(9, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "d", "Obstruents", "a", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "a", "Vowels", "p", "Obstruents", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "p", "Obstruents", "g", "Obstruents", SHComparisonResult.EQUAL,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_NOT_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "p", "Obstruents", "g", "Obstruents", SHComparisonResult.EQUAL,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "g", "Obstruents", "e", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "e", "Vowels", "k", "Obstruents", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(6);
+		checkTracingStep(sylInfo, "k", "Obstruents", null, null, SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_NOT_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(7);
+		checkTracingStep(sylInfo, "k", "Obstruents", null, null, SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET);
+		sylInfo = tracingSteps.get(8);
+		checkTracingStep(sylInfo, "k", "Obstruents", null, null, SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND);
 
-		checkSyllabifyWord("dapgek", true,
-				"Obstruents, Vowels, Obstruents, Obstruents, Vowels, Obstruents",
-				"<, >, =, <, >", 2, "dap.gek");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(5, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(3);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(4);
-		assertEquals(false, sylInfo.startsSyllable);
+		checkSyllabifyWord("doldek", false, 1, "do", "on");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(5, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "d", "Obstruents", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "o", "Vowels", "l", "Liquids", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "l", "Liquids", "d", "Obstruents", SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_NOT_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "l", "Liquids", "d", "Obstruents", SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "l", "Liquids", "d", "Obstruents", SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND);
 
-		checkSyllabifyWord("dapkgek", true,
-				"Obstruents, Vowels, Obstruents, Obstruents, Obstruents, Vowels, Obstruents",
-				"<, >, =, =, <, >", 2, "dap.kgek");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(6, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(3);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(4);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(5);
-		assertEquals(false, sylInfo.startsSyllable);
+		checkSyllabifyWord("dlofun", true, 2, "dlo.fun", "oon.onc");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(7, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "d", "Obstruents", "l", "Liquids", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "l", "Liquids", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "o", "Vowels", "f", "Obstruents", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "f", "Obstruents", "u", "Vowels", SHComparisonResult.LESS,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_NOT_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "f", "Obstruents", "u", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "u", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(6);
+		checkTracingStep(sylInfo, "n", "Nasals", null, null, SHComparisonResult.MORE,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
 
-		checkSyllabifyWord("dovdek", true,
-				"Obstruents, Vowels, Obstruents, Obstruents, Vowels, Obstruents",
-				"<, >, =, <, >", 2, "dov.dek");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(5, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(3);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(4);
-		assertEquals(false, sylInfo.startsSyllable);
+		checkSyllabifyWord("funmo", true, 2, "fun.mo", "onc.on");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(7, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "f", "Obstruents", "u", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "u", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "n", "Nasals", "m", "Nasals", SHComparisonResult.EQUAL,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "m", "Nasals", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_SYLLABLE_TO_WORD);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "m", "Nasals", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "o", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(6);
+		checkTracingStep(sylInfo, "o", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("fuhgt", true, "Obstruents, Vowels, Obstruents, Obstruents, Obstruents",
-				"<, >, =, =", 2, "fuh.gt");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(4, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(3);
-		assertEquals(true, sylInfo.startsSyllable);
+		checkSyllabifyWord("funmlo", true, 2, "fun.mlo", "onc.oon");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(8, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "f", "Obstruents", "u", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "u", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "n", "Nasals", "m", "Nasals", SHComparisonResult.EQUAL,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "m", "Nasals", "l", "Liquids", SHComparisonResult.LESS,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_SYLLABLE_TO_WORD);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "m", "Nasals", "l", "Liquids", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "l", "Liquids", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(6);
+		checkTracingStep(sylInfo, "o", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(7);
+		checkTracingStep(sylInfo, "o", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("dlofugh", true,
-				"Obstruents, Liquids, Vowels, Obstruents, Vowels, Obstruents, Obstruents, null",
-				"<, <, >, <, >, =, " + ONCTraceSyllabifierInfo.NULL_REPRESENTATION, 3, "dlo.fug.h");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(7, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(3);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(4);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(5);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(6);
-		assertEquals(true, sylInfo.startsSyllable);
+		checkSyllabifyWord("funmdo", true, 2, "funm.do", "oncc.on");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(8, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "f", "Obstruents", "u", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "u", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "n", "Nasals", "m", "Nasals", SHComparisonResult.EQUAL,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "m", "Nasals", "d", "Obstruents", SHComparisonResult.MORE,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "d", "Obstruents", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_SYLLABLE_TO_WORD);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "d", "Obstruents", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(6);
+		checkTracingStep(sylInfo, "o", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(7);
+		checkTracingStep(sylInfo, "o", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("do", true, "Obstruents, Vowels", "<", 1, "do");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(1, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
+		checkSyllabifyWord("flu", true, 1, "flu", "oon");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(4, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "f", "Obstruents", "l", "Liquids", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "l", "Liquids", "u", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "u", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "u", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("funglo", true,
-				"Obstruents, Vowels, Nasals, Obstruents, Liquids, Vowels",
-				"<, >, >, <, <", 2, "fun.glo");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(5, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(3);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(4);
-		assertEquals(false, sylInfo.startsSyllable);
+		checkSyllabifyWord("flum", true, 1, "flum", "oonc");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(4, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "f", "Obstruents", "l", "Liquids", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "l", "Liquids", "u", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "u", "Vowels", "m", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "m", "Nasals", null, null, SHComparisonResult.MORE,
+				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
 
-		checkSyllabifyWord("fugh", true, "Obstruents, Vowels, Obstruents, Obstruents, null",
-				"<, >, =, " + ONCTraceSyllabifierInfo.NULL_REPRESENTATION, 2, "fug.h");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(4, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(3);
-		assertEquals(true, sylInfo.startsSyllable);
+		checkSyllabifyWord("iae", true, 1, "iae", "nnn");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(5, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "i", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "i", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "a", "Vowels", "e", "Vowels", SHComparisonResult.EQUAL,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "e", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "e", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("flu", true, "Obstruents, Liquids, Vowels", "<, <", 1, "flu");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(2, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
+		checkSyllabifyWord("babe", false, 0, "", ""); // b not in hierarchy
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(1, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "b", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT);
 
-		checkSyllabifyWord("fluk", true, "Obstruents, Liquids, Vowels, Obstruents",
-				"<, <, >", 1, "fluk");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(3, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
-		assertEquals(false, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(2);
-		assertEquals(false, sylInfo.startsSyllable);
+		checkSyllabifyWord("ibabe", false, 1, "i", "n"); // b not in hierarchy
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(4, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "i", "Vowels", "b", null, SHComparisonResult.MISSING2,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "i", "Vowels", "b", null, SHComparisonResult.MISSING2,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "b", null, "a", "Vowels", SHComparisonResult.MISSING1,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_NOT_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "b", null, "a", "Vowels", SHComparisonResult.MISSING1,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT);
+		
+		languageProject.getSyllabificationParameters().setCodasAllowed(false);
+		oncApproach = languageProject.getONCApproach();
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("tan", false, 1, "ta", "on");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(5, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "t", "Obstruents", "a", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "a", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "n", "Nasals", null, null, SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_CODAS_NOT_ALLOWED_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "n", "Nasals", null, null, SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "n", "Nasals", null, null, SHComparisonResult.MORE,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND);
 
-		checkSyllabifyWord("iae", true, "Vowels, Vowels, Vowels", "=, =", 1, "iae");
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(2, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
-		sylInfo = traceInfo.get(1);
+		languageProject.getSyllabificationParameters().setOnsetPrinciple(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET.toString());
+		oncApproach = languageProject.getONCApproach();
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("a", false, 0, "", "");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(1, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "a", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET);
 
-		checkSyllabifyWord("babe", false, "null, null", "!!!", 0, ""); // b not in hierarchy
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(1, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(false, sylInfo.startsSyllable);
+		languageProject.getSyllabificationParameters().setCodasAllowed(true);
+		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
+		oncApproach = languageProject.getONCApproach();
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("tanlo", true, 2, "ta.nlo", "on.oon");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(7, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "t", "Obstruents", "a", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "a", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "n", "Nasals", "l", "Liquids", SHComparisonResult.LESS,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "n", "Nasals", "l", "Liquids", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "l", "Liquids", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "o", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(6);
+		checkTracingStep(sylInfo, "o", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
 
-		checkSyllabifyWord("ibabe", false, "Vowels, null", "!!!", 0, ""); // b not in hierarchy
-		traceInfo = oncSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(1, traceInfo.size());
-		sylInfo = traceInfo.get(0);
-		assertEquals(true, sylInfo.startsSyllable);
+		languageProject.getSyllabificationParameters().setCodasAllowed(true);
+		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
+		oncApproach = languageProject.getONCApproach();
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("tano", true, 2, "ta.no", "on.on");
+		tracingSteps = oncSyllabifier.getSyllabifierTraceInfo();
+		assertEquals(6, tracingSteps.size());
+		sylInfo = tracingSteps.get(0);
+		checkTracingStep(sylInfo, "t", "Obstruents", "a", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(1);
+		checkTracingStep(sylInfo, "a", "Vowels", "n", "Nasals", SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(2);
+		checkTracingStep(sylInfo, "n", "Nasals", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSETS_REQUIRED_AND_NEXT_NOT_ONSET_START_NEW_SYLLABLE);
+		sylInfo = tracingSteps.get(3);
+		checkTracingStep(sylInfo, "n", "Nasals", "o", "Vowels", SHComparisonResult.LESS,
+				ONCType.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET);
+		sylInfo = tracingSteps.get(4);
+		checkTracingStep(sylInfo, "o", "Vowels", null, null, SHComparisonResult.MORE,
+				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
+		sylInfo = tracingSteps.get(5);
+		checkTracingStep(sylInfo, "o", null, null, null, null,
+				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD);
+	}
+
+	protected void checkTracingStep(ONCTraceSyllabifierInfo sylInfo, String seg1, String nc1,
+			String seg2, String nc2, SHComparisonResult result, ONCType oncType,
+			ONCSyllabificationStatus status) {
+		if (seg1 == null) {
+			assertNull(sylInfo.getSegment1());
+		} else {
+			assertEquals(seg1, sylInfo.getSegment1().getSegment());
+		}
+		if (nc1 == null) {
+			assertNull(sylInfo.getNaturalClass1());
+		} else {
+			assertEquals(nc1, sylInfo.getNaturalClass1().getNCName());
+		}
+		if (seg2 == null) {
+			assertNull(sylInfo.getSegment2());
+		} else {
+			assertEquals(seg2, sylInfo.getSegment2().getSegment());
+		}
+		if (nc2 == null) {
+			assertNull(sylInfo.getNaturalClass2());
+		} else {
+			assertEquals(nc2, sylInfo.getNaturalClass2().getNCName());
+		}
+		assertEquals(result, sylInfo.comparisonResult);
+		assertEquals(oncType, sylInfo.getOncType());
+		assertEquals(status, sylInfo.getStatus());
 	}
 }
