@@ -133,7 +133,7 @@ public class Grapheme extends SylParserObject {
 	}
 
 	public void recalulateEnvsRepresentation() {
-		String sEnvs = envs.stream().filter(env -> env.isActiveCheckBox())
+		String sEnvs = envs.stream().filter(env -> env.isActive())
 				.map(Environment::getEnvironmentRepresentation).collect(Collectors.joining("; "));
 		setEnvsRepresentation(sEnvs);
 		envsRepresentationProperty().setValue(sEnvs);

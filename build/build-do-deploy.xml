@@ -5,7 +5,7 @@
 	<import file="${basedir}/build-do-compile.xml" as="nested"/>
 
 	<property name="appName" value="Asheninka Syllable Parser"/>
-	<property name="version" value="0.5.0.0"/>
+	<property name="version" value="0.5.1.0"/>
 
 	<target name="do-deploy" depends="nested.setup-staging-area, nested.do-compile, nested.init-fx-tasks">
 		<delete file="dist" />
@@ -70,7 +70,7 @@
 				<fx:jvmarg value="-Xmx1024m" />
 			</fx:platform>
 			<fx:info category="Education"
-			title="Asheninka (a Syllable Parser)" vendor="SIL International" license="LGPL" copyright="© 2016-2017 SIL International" description="A tool for exploring syllabification algorithms and for inserting discretionay hyphens in word lists." />
+			title="Asheninka (a Syllable Parser)" vendor="SIL International" license="LGPL" copyright="© 2016-2019 SIL International" description="A tool for exploring syllabification algorithms and for inserting discretionay hyphens in word lists." />
 
 			<fx:application refId="fxApplication" />
 			<fx:resources refid="appRes" />
