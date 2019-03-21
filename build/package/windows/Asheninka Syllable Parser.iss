@@ -3,8 +3,8 @@
 [Setup]
 AppId={{fxApplication}}
 AppName=Asheninka Syllable Parser
-AppVersion=0.6.0.0
-AppVerName=Asheninka Syllable Parser version 0.6.0.0
+AppVersion=0.6.1.0
+AppVerName=Asheninka Syllable Parser version 0.6.1.0
 AppPublisher=SIL International
 AppComments=Asheninka Syllable Parser
 AppCopyright=Copyright ﾩ 2016-2018 SIL International
@@ -23,13 +23,13 @@ DefaultGroupName=SIL International
 LicenseFile=
 ;WinXP or above
 MinVersion=0,5.1 
-OutputBaseFilename=Asheninka Syllable Parser-0.6.0.0
+OutputBaseFilename=Asheninka Syllable Parser-0.6.1.0
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=admin
 SetupIconFile=Asheninka Syllable Parser\Asheninka Syllable Parser.ico
 UninstallDisplayIcon={app}\Asheninka Syllable Parser.ico
-UninstallDisplayName=Asheninka Syllable Parser version 0.6.0.0
+UninstallDisplayName=Asheninka Syllable Parser version 0.6.1.0
 WizardImageStretch=No
 WizardSmallImageFile=Asheninka Syllable Parser-setup-icon.bmp   
 ArchitecturesInstallIn64BitMode=x64
