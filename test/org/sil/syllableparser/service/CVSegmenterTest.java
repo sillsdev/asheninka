@@ -108,6 +108,18 @@ public class CVSegmenterTest {
 				"tl, a, k, a", "tl, a, q, a", 4, true, 0);
 		checkSegmentation("tliqa", "Expect q environment to fail: it is not after /tla/", "tl, i", "tl, i",
 				2, false, 3);
+		checkSegmentation("azol", "Expect graphemes to be /a/, /z/, /o/, and /l/",
+				"a, z, o, l", "a, z, o, l", 4, true, 0);
+		checkSegmentation("azool", "Expect graphemes to be /a/, /z/, /oo/, and /l/",
+				"a, z, oo, l", "a, z, oo, l", 4, true, 0);
+		checkSegmentation("azlo", "Expect graphemes to be /a/",
+				"a", "a", 1, false, 1);
+		checkSegmentation("aZol", "Expect graphemes to be /a/, /Z/, /o/, and /l/",
+				"a, z, o, l", "a, Z, o, l", 4, true, 0);
+		checkSegmentation("aaZol", "Expect graphemes to be /a/, /z/, /oo/, and /l/",
+				"aa, z, o, l", "aa, Z, o, l", 4, true, 0);
+		checkSegmentation("alZo", "Expect graphemes to be /a/, /l/",
+				"a, l", "a, l", 2, false, 2);
 	}
 
 	protected void checkSegmentation(String word, String comment, String expectedSegments,

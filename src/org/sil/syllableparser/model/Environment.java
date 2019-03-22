@@ -208,6 +208,9 @@ public class Environment extends SylParserObject {
 					final String sNewClassName = ((GraphemeNaturalClass) spo).getNCName();
 					fMatches = matchClassLeftContext(iItemToTest, sStringToMatch, classes,
 							sNewClassName);
+					if (fMatches) {
+						break;
+					}
 				}
 			}
 			if (fMatches) {
@@ -278,6 +281,9 @@ public class Environment extends SylParserObject {
 					final String sNewClassName = ((GraphemeNaturalClass) spo).getNCName();
 					fMatches = matchClassRightContext(iItemToTest, iNumberOfItems, sStringToMatch,
 							classes, sNewClassName);
+					if (fMatches) {
+						break;
+					}
 				}
 			}
 			if (fMatches) {
