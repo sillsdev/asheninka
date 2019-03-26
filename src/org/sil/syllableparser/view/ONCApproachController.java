@@ -265,7 +265,7 @@ public class ONCApproachController extends ApproachController  {
 						word.setONCPredictedSyllabification("");
 						continue;
 					}
-					List<ONCSegmentInSyllable> segmentsInWord = segmenter.getONCSegmentsInWord();
+					List<ONCSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					fSuccess = syllabifier.syllabify(segmentsInWord);
 					if (!fSuccess) {
 						word.setONCParserResult(sSyllabificationFailure);

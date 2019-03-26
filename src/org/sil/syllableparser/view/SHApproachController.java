@@ -248,7 +248,7 @@ public class SHApproachController extends ApproachController {
 						word.setSHPredictedSyllabification("");
 						continue;
 					}
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					fSuccess = syllabifier.syllabify(segmentsInWord);
 					if (!fSuccess) {
 						word.setSHParserResult(sSyllabificationFailure);

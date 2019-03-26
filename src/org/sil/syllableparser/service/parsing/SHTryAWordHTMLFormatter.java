@@ -12,7 +12,7 @@ import java.util.Locale;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceInfo;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifierInfo;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
 
 /**
  * @author Andy Black
@@ -59,13 +59,13 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 
 		sb.append("<p>" + formatDetailsStringWithColorWords("report.tawshdetails") + "</p>\n");
 		sb.append("<div>");
-		List<SHTraceSyllabifierInfo> traceList = syllabifier.getSyllabifierTraceInfo();
+		List<SHTracingStep> traceList = syllabifier.getSyllabifierTraceInfo();
 		formatSonoritySyllabificationDetails(sb, traceList);
 		sb.append("</div>");
 	}
 
 	protected void formatSonoritySyllabificationDetails(StringBuilder sb,
-			List<SHTraceSyllabifierInfo> traceList) {
+			List<SHTracingStep> traceList) {
 		if (traceList.size() == 0) {
 			return;
 		}
@@ -88,7 +88,7 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		sb.append("</th>\n");
 		sb.append("</tr>\n");
 		int i = 0;
-		for (SHTraceSyllabifierInfo sylInfo : traceList) {
+		for (SHTracingStep sylInfo : traceList) {
 			if (sylInfo.comparisonResult == SHComparisonResult.MISSING1) {
 				sylInfo.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
 				row1Status = FAILURE;

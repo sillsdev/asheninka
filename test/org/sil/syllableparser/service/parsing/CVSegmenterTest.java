@@ -123,7 +123,7 @@ public class CVSegmenterTest {
 
 	protected void checkSegmentation(String word, String comment, String expectedSegments,
 			String expectedGraphemes, int numberOfSegments, boolean success, int iPositionOfFailure) {
-		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+		List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		CVSegmenterResult result = segmenter.segmentWord(word);
 		boolean fSuccess = result.success;
 		assertEquals("Expected word to parse", success, fSuccess);

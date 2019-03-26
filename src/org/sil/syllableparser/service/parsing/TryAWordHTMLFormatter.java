@@ -138,12 +138,12 @@ public abstract class TryAWordHTMLFormatter {
 			appendSuccessMessage(sb);
 			sb.append("<table class='" + SUCCESS + "' border='1' cellpadding='4pt'><tbody><tr>");
 			sb.append("<th align='left'>" + bundle.getString("report.tawgrapheme") + "</th>");
-			for (CVSegmentInSyllable seg : segmenter.segmentsInCurrentWord) {
+			for (CVSegmentInSyllable seg : segmenter.getSegmentsInWord()) {
 				formatSegmentInfo(sb, seg, true);
 			}
 			sb.append("</tr><tr>\n");
 			sb.append("<th align='left'>" + bundle.getString("report.tawsegment") + "</th>");
-			for (CVSegmentInSyllable seg : segmenter.segmentsInCurrentWord) {
+			for (CVSegmentInSyllable seg : segmenter.getSegmentsInWord()) {
 				formatSegmentInfo(sb, seg, false);
 			}
 			sb.append("</tr></tbody></table>\n");

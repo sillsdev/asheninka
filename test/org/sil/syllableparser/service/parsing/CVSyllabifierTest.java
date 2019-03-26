@@ -111,7 +111,7 @@ public class CVSyllabifierTest {
 			String expectedCVPatternsUsed, String expectedSyllabification) {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		boolean fSuccess = segResult.success;
-		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+		List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		CVNaturalClasserResult ncResult = naturalClasser
 				.convertSegmentsToNaturalClasses(segmentsInWord);
 		fSuccess = ncResult.success;

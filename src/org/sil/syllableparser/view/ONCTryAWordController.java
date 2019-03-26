@@ -77,7 +77,7 @@ public class ONCTryAWordController extends TryAWordController {
 				traceInfo.setSegmenterResult(segResult);
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
-					List<ONCSegmentInSyllable> segmentsInWord = segmenter.getONCSegmentsInWord();
+					List<ONCSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 						syllabifier.setDoTrace(true);
 						traceInfo.setSyllabifier(syllabifier);
 						fSuccess = syllabifier.syllabify(segmentsInWord);

@@ -30,7 +30,7 @@ public class ONCSegmenter extends CVSegmenter {
 		super(activeGraphemes, activeClasses);
 	}
 
-	public List<ONCSegmentInSyllable> getONCSegmentsInWord() {
+	public List<ONCSegmentInSyllable> getSegmentsInWord() {
 		return oncSegmentsInCurrentWord;
 	}
 

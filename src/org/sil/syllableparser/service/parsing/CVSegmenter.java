@@ -65,7 +65,7 @@ public class CVSegmenter {
 		}
 	}
 
-	public List<CVSegmentInSyllable> getSegmentsInWord() {
+	public List<? extends CVSegmentInSyllable> getSegmentsInWord() {
 		return segmentsInCurrentWord;
 	}
 

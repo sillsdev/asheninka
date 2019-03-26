@@ -94,7 +94,7 @@ public class CVTryAWordController extends TryAWordController {
 				traceInfo.setSegmenterResult(segResult);
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					CVNaturalClasserResult ncResult = naturalClasser
 							.convertSegmentsToNaturalClasses(segmentsInWord);
 					traceInfo.setNaturalClasserResult(ncResult);

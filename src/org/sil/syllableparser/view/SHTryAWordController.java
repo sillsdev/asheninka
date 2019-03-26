@@ -77,7 +77,7 @@ public class SHTryAWordController extends TryAWordController {
 				traceInfo.setSegmenterResult(segResult);
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 						syllabifier.setDoTrace(true);
 						traceInfo.setSyllabifier(syllabifier);
 						fSuccess = syllabifier.syllabify(segmentsInWord);

@@ -11,7 +11,7 @@ import org.sil.syllableparser.model.Segment;
  * @author Andy Black
  *
  */
-public class SHTraceSyllabifierInfo {
+public class SHTracingStep {
 
 	public Segment segment1 = null;
 	public SHNaturalClass naturalClass1 = null;
@@ -90,11 +90,11 @@ public class SHTraceSyllabifierInfo {
 		}
 	}
 
-	public SHTraceSyllabifierInfo() {
+	public SHTracingStep() {
 		super();
 	}
 
-	public SHTraceSyllabifierInfo(Segment segment1, SHNaturalClass naturalClass1, Segment segment2,
+	public SHTracingStep(Segment segment1, SHNaturalClass naturalClass1, Segment segment2,
 			SHNaturalClass naturalClass2, SHComparisonResult comparisonResult) {
 		super();
 		this.segment1 = segment1;

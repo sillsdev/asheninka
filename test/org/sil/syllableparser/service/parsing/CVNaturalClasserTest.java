@@ -104,7 +104,7 @@ public class CVNaturalClasserTest {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		boolean fSuccess = segResult.success;
 		assertEquals("word segmented", true, fSuccess);
-		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+		List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		CVNaturalClasserResult ncResult = naturalClasser
 				.convertSegmentsToNaturalClasses(segmentsInWord);
 		fSuccess = ncResult.success;

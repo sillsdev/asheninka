@@ -116,7 +116,7 @@ public class CVSyllabifier {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		fSuccess = segResult.success;
 		if (fSuccess) {
-			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+			List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 			CVNaturalClasserResult ncResult = naturalClasser
 					.convertSegmentsToNaturalClasses(segmentsInWord);
 			fSuccess = ncResult.success;

@@ -283,7 +283,7 @@ public class CVApproachController extends ApproachController {
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					CVNaturalClasserResult ncResult = naturalClasser
 							.convertSegmentsToNaturalClasses(segmentsInWord);
 					fSuccess = ncResult.success;

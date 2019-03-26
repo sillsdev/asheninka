@@ -11,7 +11,7 @@ import java.util.Locale;
 
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.oncapproach.ONCTraceInfo;
-import org.sil.syllableparser.model.oncapproach.ONCTraceSyllabifierInfo;
+import org.sil.syllableparser.model.oncapproach.ONCTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 
 /**
@@ -58,20 +58,19 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			}
 		}
 
-		sb.append("<p>" + formatDetailsStringWithColorWords("report.tawshdetails") + "</p>\n");
+		sb.append("<p>" + formatDetailsStringWithColorWords("report.tawoncdetails") + "</p>\n");
 		sb.append("<div>");
-		List<ONCTraceSyllabifierInfo> traceList = syllabifier.getSyllabifierTraceInfo();
-		formatSonoritySyllabificationDetails(sb, traceList);
+		List<ONCTracingStep> tracingSteps = syllabifier.getTracingSteps();
+		formatONCSyllabificationDetails(sb, tracingSteps);
 		sb.append("</div>");
 	}
 
-	protected void formatSonoritySyllabificationDetails(StringBuilder sb,
-			List<ONCTraceSyllabifierInfo> traceList) {
-		if (traceList.size() == 0) {
+	protected void formatONCSyllabificationDetails(StringBuilder sb,
+			List<ONCTracingStep> tracingSteps) {
+		if (tracingSteps.size() == 0) {
 			return;
 		}
-		String row1Status;
-		String row2Status;
+		String rowStatus;
 
 		sb.append("<table border='1'>\n");
 		sb.append("<tr valign='top'>");
@@ -85,68 +84,76 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		sb.append(bundle.getString("report.tawshsegment2"));
 		sb.append("</th>\n");
 		sb.append("<th>");
-		sb.append(bundle.getString("report.tawshstartssyllable"));
+		sb.append(bundle.getString("report.tawonctype"));
+		sb.append("</th>\n");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawoncstatus"));
 		sb.append("</th>\n");
 		sb.append("</tr>\n");
 		int i = 0;
-		for (ONCTraceSyllabifierInfo sylInfo : traceList) {
-			if (sylInfo.comparisonResult == SHComparisonResult.MISSING1) {
-				sylInfo.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
-				row1Status = FAILURE;
+		for (ONCTracingStep tracingStep : tracingSteps) {
+			tracingStep.setBundle(bundle);
+			if (tracingStep.comparisonResult == SHComparisonResult.MISSING1) {
+				tracingStep.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
 			} else {
-				row1Status = SUCCESS;
 			}
-			if (sylInfo.comparisonResult == SHComparisonResult.MISSING2) {
-				sylInfo.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
-				row2Status = FAILURE;
+			if (tracingStep.comparisonResult == SHComparisonResult.MISSING2) {
+				tracingStep.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
 			} else {
-				row2Status = SUCCESS;
+			}
+			if (tracingStep.isSuccessful()) {
+				rowStatus = SUCCESS;
+			} else {
+				rowStatus = FAILURE;
 			}
 			sb.append("<tr valign='top'>");
 			sb.append("<td>");
 			sb.append("<span class='");
-			sb.append(row1Status);
+			sb.append(rowStatus);
 			sb.append("'>&#xa0;");
-			sb.append(sylInfo.getSegment1Result());
+			sb.append(tracingStep.getSegment1Result());
 			sb.append(" (");
-			sb.append(sylInfo.getNaturalClass1Result());
+			sb.append(tracingStep.getNaturalClass1Result());
 			sb.append(")&#xa0;");
 			sb.append("</span>\n");
 			sb.append("</td>");
 
 			sb.append("<td align=\"center\">");
 			sb.append("<span class='");
-			if (sylInfo.comparisonResult == SHComparisonResult.MISSING1
-					|| sylInfo.comparisonResult == SHComparisonResult.MISSING2) {
+			if (tracingStep.comparisonResult == SHComparisonResult.MISSING1
+					|| tracingStep.comparisonResult == SHComparisonResult.MISSING2) {
 				sb.append(FAILURE);
 			} else {
 				sb.append(SUCCESS);
 			}
 			sb.append("'>");
-			sb.append(sylInfo.getComparisonResult());
+			sb.append(tracingStep.getComparisonResult());
 			sb.append("</span>\n");
 			sb.append("</td>");
 
 			sb.append("<td>");
 			sb.append("<span class='");
-			sb.append(row2Status);
+			sb.append(rowStatus);
 			sb.append("'>&#xa0;");
-			sb.append(sylInfo.getSegment2Result());
+			sb.append(tracingStep.getSegment2Result());
 			sb.append(" (");
-			sb.append(sylInfo.getNaturalClass2Result());
+			sb.append(tracingStep.getNaturalClass2Result());
 			sb.append(")&#xa0;");
 			sb.append("</span>\n");
-			sb.append("<td align='center'>");
-//			if (sylInfo.startsSyllable) {
-//				sb.append("&sigma;");
-//			} else {
-				sb.append("&#xa0;");
-//			}
+			sb.append("<td class='");
+			sb.append(rowStatus);
+			sb.append("'>&#xa0;");
+			sb.append(tracingStep.getOncTypeLocalized());
+			sb.append("</td>");
+			sb.append("<td class='");
+			sb.append(rowStatus);
+			sb.append("'>&#xa0;");
+			sb.append(tracingStep.getStatusLocalized());
 			sb.append("</td>");
 			sb.append("</tr>\n");
 			i++;
-			if (i < traceList.size()) {
-				sb.append("<tr><td colspan=\"4\"/></td>\n");
+			if (i < tracingSteps.size()) {
+				sb.append("<tr><td colspan=\"5\"/></td>\n");
 			}
 		}
 		sb.append("</table>\n");

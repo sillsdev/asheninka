@@ -26,7 +26,8 @@ import org.sil.syllableparser.model.cvapproach.*;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifierInfo;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
 import org.sil.syllableparser.service.parsing.CVSegmenter;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.SHSyllabifier;
@@ -100,7 +101,7 @@ public class SHSyllabifierTest {
 			String expectedSyllabification) {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		boolean fSuccess = segResult.success;
-		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+		List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		fSuccess = shSyllabifier.syllabify(segmentsInWord);
 		assertEquals("word syllabified", success, fSuccess);
 		List<SHSyllable> syllablesInWord = shSyllabifier.getSyllablesInCurrentWord();
@@ -130,13 +131,13 @@ public class SHSyllabifierTest {
 		shSyllabifier.setDoTrace(true);
 
 		checkSyllabifyWord("", false, "", "", 0, "");
-		List<SHTraceSyllabifierInfo> traceInfo = shSyllabifier.getSyllabifierTraceInfo();
+		List<SHTracingStep> traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(0, traceInfo.size());
 
-		checkSyllabifyWord("A", true, "Vowels, null",  SHTraceSyllabifierInfo.NULL_REPRESENTATION, 1, "A");
+		checkSyllabifyWord("A", true, "Vowels, null",  SHTracingStep.NULL_REPRESENTATION, 1, "A");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(1, traceInfo.size());
-		SHTraceSyllabifierInfo sylInfo = traceInfo.get(0);
+		SHTracingStep sylInfo = traceInfo.get(0);
 		assertEquals(true, sylInfo.startsSyllable);
 
 		checkSyllabifyWord("ta", true, "Obstruents, Vowels", "<", 1, "ta");
@@ -249,7 +250,7 @@ public class SHSyllabifierTest {
 
 		checkSyllabifyWord("dlofugh", true,
 				"Obstruents, Liquids, Vowels, Obstruents, Vowels, Obstruents, Obstruents, null",
-				"<, <, >, <, >, =, " + SHTraceSyllabifierInfo.NULL_REPRESENTATION, 3, "dlo.fug.h");
+				"<, <, >, <, >, =, " + SHTracingStep.NULL_REPRESENTATION, 3, "dlo.fug.h");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(7, traceInfo.size());
 		sylInfo = traceInfo.get(0);
@@ -290,7 +291,7 @@ public class SHSyllabifierTest {
 		assertEquals(false, sylInfo.startsSyllable);
 
 		checkSyllabifyWord("fugh", true, "Obstruents, Vowels, Obstruents, Obstruents, null",
-				"<, >, =, " + SHTraceSyllabifierInfo.NULL_REPRESENTATION, 2, "fug.h");
+				"<, >, =, " + SHTracingStep.NULL_REPRESENTATION, 2, "fug.h");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(4, traceInfo.size());
 		sylInfo = traceInfo.get(0);
