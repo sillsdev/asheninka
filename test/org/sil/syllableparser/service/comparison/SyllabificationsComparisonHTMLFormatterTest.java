@@ -55,6 +55,9 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		cva = languageProject.getCVApproach();
 		sha = languageProject.getSHApproach();
 		comparer = new SyllabificationsComparer(languageProject);
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(true);
+		comparer.setUseONCApproach(false);
 		dateTime = LocalDateTime.of(2019, Month.JANUARY, 24, 8, 7, 3);
 	}
 
