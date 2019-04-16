@@ -65,6 +65,14 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	// request it.
 	static final String LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastONCWordPredictedVsCorrectViewItemUsed";
 
+	// Syllabification comparison options
+	static String LAST_USE_CV_APPROACH_VALUE = "lastUseCVApproachValueUsed";
+	static String LAST_USE_SH_APPROACH_VALUE = "lastUseSHApproachValueUsed";
+	static String LAST_USE_ONC_APPROACH_VALUE = "lastUseONCApproachValueUsed";
+	static String LAST_USE_MORAIC_APPROACH_VALUE = "lastUseMoraicApproachValueUsed";
+	static String LAST_USE_NUCLEAR_PROJECTION_APPROACH_VALUE = "lastUseNuclearProjectionApproachValueUsed";
+	static String LAST_USE_OT_APPROACH_VALUE = "lastUseOTApproachValueUsed";
+
 	// Window parameters to remember
 	static final String POSITION_X = "PositionX";
 	static final String POSITION_Y = "PositionY";
@@ -349,6 +357,55 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastSHEnvironmentsViewItemUsed(int value) {
 		setPreferencesKey(LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastUseCVApproachValue() {
+		return LAST_USE_CV_APPROACH_VALUE;
+	}
+
+	public void setLastUseCVApproachValue(String lastUseCvApproachValue) {
+		LAST_USE_CV_APPROACH_VALUE = lastUseCvApproachValue;
+	}
+
+	public String getLastUseSHApproachValue() {
+		return LAST_USE_SH_APPROACH_VALUE;
+	}
+
+	public void setLastUseSHApproachValue(String lastUseShApproachValue) {
+		LAST_USE_SH_APPROACH_VALUE = lastUseShApproachValue;
+	}
+
+	public String getLastUseONCApproachValue() {
+		return LAST_USE_ONC_APPROACH_VALUE;
+	}
+
+	public void setLastUseONCApproachValue(String lastUseOncApproachValue) {
+		LAST_USE_ONC_APPROACH_VALUE = lastUseOncApproachValue;
+	}
+
+	public String getLastUseMoraicApproachValue() {
+		return LAST_USE_MORAIC_APPROACH_VALUE;
+	}
+
+	public void setLastUseMoraicApproachValue(String lastUseMoraicApproachValue) {
+		LAST_USE_MORAIC_APPROACH_VALUE = lastUseMoraicApproachValue;
+	}
+
+	public String getLastUseNuclearProjectionApproachValue() {
+		return LAST_USE_NUCLEAR_PROJECTION_APPROACH_VALUE;
+	}
+
+	public void setLastUseNuclearProjectionApproachValue(
+			String lastUseNuclearProjectionApproachValue) {
+		LAST_USE_NUCLEAR_PROJECTION_APPROACH_VALUE = lastUseNuclearProjectionApproachValue;
+	}
+
+	public String getLastUseOTApproachValue() {
+		return LAST_USE_OT_APPROACH_VALUE;
+	}
+
+	public void setLastUseOTApproachValue(String lastUseOtApproachValue) {
+		LAST_USE_OT_APPROACH_VALUE = lastUseOtApproachValue;
 	}
 
 	public Stage getLastWindowParameters(String sWindow, Stage stage, Double defaultHeight, Double defaultWidth) {
