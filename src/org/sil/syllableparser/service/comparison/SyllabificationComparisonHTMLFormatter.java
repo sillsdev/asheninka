@@ -17,22 +17,19 @@ import org.sil.utility.StringUtilities;
  * @author Andy Black
  *
  */
-public class SyllabificationComparisonHTMLFormatter extends
-		ApproachLanguageComparisonHTMLFormatter
-{
+public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComparisonHTMLFormatter {
 
 	SyllabificationsComparer sylComparer;
 
-	public SyllabificationComparisonHTMLFormatter(SyllabificationsComparer comparer,
-			Locale locale) {
+	public SyllabificationComparisonHTMLFormatter(SyllabificationsComparer comparer, Locale locale) {
 		super(comparer, comparer.getLanguageProject(), comparer.getLanguageProject(), locale);
 		initialize(comparer, locale, LocalDateTime.now());
 		this.sylComparer = comparer;
 	}
 
 	// Used for testing so the date time can be constant
-	public SyllabificationComparisonHTMLFormatter(SyllabificationsComparer comparer,
-			Locale locale, LocalDateTime dateTime) {
+	public SyllabificationComparisonHTMLFormatter(SyllabificationsComparer comparer, Locale locale,
+			LocalDateTime dateTime) {
 		super(comparer, comparer.getLanguageProject(), comparer.getLanguageProject(), locale);
 		initialize(comparer, locale, dateTime);
 		this.sylComparer = comparer;
@@ -47,7 +44,24 @@ public class SyllabificationComparisonHTMLFormatter extends
 		formatHTMLEnding(sb);
 		return sb.toString();
 	}
-	
+
+	protected void formatRowLabelDescriptions(StringBuilder sb) {
+		sb.append("<p/>\n<table>\n<tbody>\n");
+		if (sylComparer.isUseCVApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.cvapproachabbreviation"),
+					bundle.getString("approach.cv"));
+		}
+		if (sylComparer.isUseSHApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.shapproachabbreviation"),
+					bundle.getString("approach.sonorityhierarchy"));
+		}
+		if (sylComparer.isUseONCApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.oncapproachabbreviation"),
+					bundle.getString("approach.onc"));
+		}
+		sb.append("</tbody>\n</table>\n<p/>\n");
+	}
+
 	protected void formatSyllabifications(StringBuilder sb) {
 		sb.append("<h3>" + bundle.getString("report.syllabifications") + "</h3>\n");
 		SortedSet<Word> diffWords = sylComparer.getSyllabificationsWhichDiffer();
@@ -55,37 +69,52 @@ public class SyllabificationComparisonHTMLFormatter extends
 			sb.append("<p>" + bundle.getString("report.samesyllabifications") + "</p>\n");
 		} else {
 			sb.append("<p>" + bundle.getString("report.syllabificationswhichdiffer") + "</p>\n");
-			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
-			sb.append(bundle.getString("approach.cv"));
-			sb.append("</th>\n<th>");
-			sb.append(bundle.getString("approach.sonorityhierarchy"));
-			sb.append("</th>\n<th>");
-			sb.append(bundle.getString("report.syllabification"));
-			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			formatRowLabelDescriptions(sb);
+			sb.append("<table border=\"1\">\n");
+			sb.append("<tbody>\n");
 			for (Word differentWord : diffWords) {
-				sb.append("<tr>\n<td rowspan=\"2\" valign=\"top\" class=\"");
-				sb.append(VERNACULAR_1);
-				sb.append("\">");
-				String cv = differentWord.getCVPredictedSyllabification();
-				formatWordInfo(sb, cv);
-				sb.append("</td>\n<td rowspan=\"2\" valign=\"bottom\" class=\"");
-				sb.append(VERNACULAR_2);
-				sb.append("\">");
-				String sh = differentWord.getSHPredictedSyllabification();
-				formatWordInfo(sb, sh);
-				sb.append("</td>\n<td class=\"");
-				sb.append(VERNACULAR_1);
-				sb.append("\">");
-				formatSyllabificationInfo(sb, cv);
-				sb.append("</td>\n</tr>\n");
-				sb.append("<tr>\n<td class=\"");
-				sb.append(VERNACULAR_2);
-				sb.append("\">");
-				formatSyllabificationInfo(sb, sh);
-				sb.append("</td>\n</tr>\n");
+				sb.append("<tr><td colspan=\"2\"/></tr>\n");
+				if (sylComparer.isUseCVApproach()) {
+					formatApproachRow(sb, bundle.getString("report.cvapproachabbreviation"),
+							differentWord.getCVPredictedSyllabification());
+				}
+				if (sylComparer.isUseSHApproach()) {
+					formatApproachRow(sb, bundle.getString("report.shapproachabbreviation"),
+							differentWord.getSHPredictedSyllabification());
+				}
+				if (sylComparer.isUseONCApproach()) {
+					formatApproachRow(sb, bundle.getString("report.oncapproachabbreviation"),
+							differentWord.getONCPredictedSyllabification());
+				}
+//				sb.append("</tr>\n");
 			}
 			sb.append("</tbody>\n</table>\n");
 		}
+	}
+
+	protected void formatApproachLabelDescription(StringBuilder sb, String approachAbbreviation,
+			String approachName) {
+		sb.append("<tr>\n<td>");
+		sb.append(approachAbbreviation);
+		sb.append("&#xa0;");
+		sb.append("</td>\n");
+		sb.append("<td>&#xa0;=&#xa0;</td>\n");
+		sb.append("<td>&#xa0;");
+		formatWordInfo(sb, approachName);
+		sb.append("</td>\n</tr>\n");
+	}
+
+	protected void formatApproachRow(StringBuilder sb, String approachAbbreviation,
+			String approachSyllabification) {
+		sb.append("<tr>\n<td>");
+		sb.append(approachAbbreviation);
+		sb.append("&#xa0;");
+		sb.append("</td>\n");
+		sb.append("<td class=\"");
+		sb.append(VERNACULAR_1);
+		sb.append("\">&#xa0;");
+		formatWordInfo(sb, approachSyllabification);
+		sb.append("</td>\n</tr>\n");
 	}
 
 	protected void formatWordInfo(StringBuilder sb, String syllabification) {
@@ -110,6 +139,6 @@ public class SyllabificationComparisonHTMLFormatter extends
 
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
-		// we don't use this for this formatter		
+		// we don't use this for this formatter
 	}
 }

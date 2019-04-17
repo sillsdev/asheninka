@@ -75,12 +75,12 @@ public class SyllabificationComparisonController implements Initializable {
 		this.mainApp = mainApp;
 		preferences = mainApp.getApplicationPreferences();
 		dialogStage = preferences.getLastWindowParameters(sWindowParams, dialogStage, 533.0, 637.0);
-		useCVApproach.setSelected(Boolean.parseBoolean(preferences.getLastUseCVApproachValue()));
-		useSHApproach.setSelected(Boolean.parseBoolean(preferences.getLastUseSHApproachValue()));
-		useONCApproach.setSelected(Boolean.parseBoolean(preferences.getLastUseONCApproachValue()));
-		useMoraicApproach.setSelected(Boolean.parseBoolean(preferences.getLastUseMoraicApproachValue()));
-		useNuclearProjectionApproach.setSelected(Boolean.parseBoolean(preferences.getLastUseNuclearProjectionApproachValue()));
-		useOTApproach.setSelected(Boolean.parseBoolean(preferences.getLastUseOTApproachValue()));
+		useCVApproach.setSelected(preferences.getLastUseCVApproachValue());
+		useSHApproach.setSelected(preferences.getLastUseSHApproachValue());
+		useONCApproach.setSelected(preferences.getLastUseONCApproachValue());
+		useMoraicApproach.setSelected(preferences.getLastUseMoraicApproachValue());
+		useNuclearProjectionApproach.setSelected(preferences.getLastUseNuclearProjectionApproachValue());
+		useOTApproach.setSelected(preferences.getLastUseOTApproachValue());
 	}
 
 	public void setData(LanguageProject langProj) {
@@ -280,12 +280,12 @@ public class SyllabificationComparisonController implements Initializable {
 	 */
 	@FXML
 	protected void handleCancel() {
-		preferences.setLastUseCVApproachValue(Boolean.toString(useCVApproach.isSelected()));
-		preferences.setLastUseSHApproachValue(Boolean.toString(useSHApproach.isSelected()));
-		preferences.setLastUseONCApproachValue(Boolean.toString(useONCApproach.isSelected()));
-		preferences.setLastUseMoraicApproachValue(Boolean.toString(useMoraicApproach.isSelected()));
-		preferences.setLastUseNuclearProjectionApproachValue(Boolean.toString(useNuclearProjectionApproach.isSelected()));
-		preferences.setLastUseOTApproachValue(Boolean.toString(useOTApproach.isSelected()));
+		preferences.setLastUseCVApproachValue(useCVApproach.isSelected());
+		preferences.setLastUseSHApproachValue(useSHApproach.isSelected());
+		preferences.setLastUseONCApproachValue(useONCApproach.isSelected());
+		preferences.setLastUseMoraicApproachValue(useMoraicApproach.isSelected());
+		preferences.setLastUseNuclearProjectionApproachValue(useNuclearProjectionApproach.isSelected());
+		preferences.setLastUseOTApproachValue(useOTApproach.isSelected());
 		preferences.setLastWindowParameters(sWindowParams, dialogStage);
 		dialogStage.close();
 	}
