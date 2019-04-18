@@ -28,7 +28,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 
 	public ONCApproachLanguageComparisonHTMLFormatter(ONCApproachLanguageComparer comparer,
 			Locale locale) {
-		super(comparer, comparer.getSha1().getLanguageProject(), comparer.getSha2()
+		super(comparer, comparer.getOnca1().getLanguageProject(), comparer.getOnca2()
 				.getLanguageProject(), locale);
 		initialize(comparer, locale, LocalDateTime.now());
 		this.oncComparer = comparer;
@@ -37,7 +37,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 	// Used for testing so the date time can be constant
 	public ONCApproachLanguageComparisonHTMLFormatter(ONCApproachLanguageComparer comparer,
 			Locale locale, LocalDateTime dateTime) {
-		super(comparer, comparer.getSha1().getLanguageProject(), comparer.getSha2()
+		super(comparer, comparer.getOnca1().getLanguageProject(), comparer.getOnca2()
 				.getLanguageProject(), locale);
 		initialize(comparer, locale, dateTime);
 		this.oncComparer = comparer;
@@ -107,8 +107,8 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 			sb.append("</th>\n<th>");
 			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
 			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
-			List<SHNaturalClass> sonorityHierarchy1 = oncComparer.getSha1().getONCSonorityHierarchy();
-			List<SHNaturalClass> sonorityHierarchy2 = oncComparer.getSha2().getONCSonorityHierarchy();
+			List<SHNaturalClass> sonorityHierarchy1 = oncComparer.getOnca1().getONCSonorityHierarchy();
+			List<SHNaturalClass> sonorityHierarchy2 = oncComparer.getOnca2().getONCSonorityHierarchy();
 			int size1 = sonorityHierarchy1.size();
 			int size2 = sonorityHierarchy2.size();
 			int maxSize = Math.max(size1, size2);

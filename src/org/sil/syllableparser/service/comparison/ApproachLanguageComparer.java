@@ -18,7 +18,9 @@ import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
+import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.SyllabificationParameters;
 import org.sil.syllableparser.model.Word;
 import org.sil.utility.StringUtilities;
 
@@ -44,6 +46,16 @@ public abstract class ApproachLanguageComparer {
 			Comparator.comparing(DifferentGraphemeNaturalClass::getSortingValue));
 	SortedSet<DifferentWord> wordsWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentWord::getSortingValue));
+
+	boolean codasAllowedDiffer = true;
+	boolean langProj1CodasAllowed = false;
+	boolean langProj2CodasAllowed = false;
+	boolean onsetMaximizationDiffers = true;
+	boolean langProj1OnsetMaximization = false;
+	boolean langProj2OnsetMaximization = false;
+	boolean onsetPrincipleDiffers = true;
+	OnsetPrincipleType langProj1OnsetPrinciple = OnsetPrincipleType.ONSETS_NOT_REQUIRED;
+	OnsetPrincipleType langProj2OnsetPrinciple = OnsetPrincipleType.ONSETS_NOT_REQUIRED;
 
 	public ApproachLanguageComparer(LanguageProject lang1, LanguageProject lang2) {
 		langProj1 = lang1;
@@ -84,6 +96,42 @@ public abstract class ApproachLanguageComparer {
 
 	public SortedSet<DifferentWord> getWordsWhichDiffer() {
 		return wordsWhichDiffer;
+	}
+
+	public boolean isCodasAllowedDifferent() {
+		return codasAllowedDiffer;
+	}
+
+	public boolean isLangProj1CodasAllowed() {
+		return langProj1CodasAllowed;
+	}
+
+	public boolean isLangProj2CodasAllowed() {
+		return langProj2CodasAllowed;
+	}
+
+	public boolean isLangProj1OnsetMaximization() {
+		return langProj1OnsetMaximization;
+	}
+
+	public boolean isLangProj2OnsetMaximization() {
+		return langProj2OnsetMaximization;
+	}
+
+	public boolean isOnsetMaximizationDifferent() {
+		return onsetMaximizationDiffers;
+	}
+
+	public boolean isOnsetPrincipleDifferent() {
+		return onsetPrincipleDiffers;
+	}
+
+	public OnsetPrincipleType getLangProj1OnsetPrinciple() {
+		return langProj1OnsetPrinciple;
+	}
+
+	public OnsetPrincipleType getLangProj2OnsetPrinciple() {
+		return langProj2OnsetPrinciple;
 	}
 
 	public abstract void compare();
@@ -263,5 +311,19 @@ public abstract class ApproachLanguageComparer {
 			DifferentWord diffWord = new DifferentWord(null, word);
 			wordsWhichDiffer.add(diffWord);
 		}
+	}
+
+	public void compareSyllabificationParameters() {
+		SyllabificationParameters sp1 = langProj1.getSyllabificationParameters();
+		SyllabificationParameters sp2 = langProj2.getSyllabificationParameters();
+		langProj1CodasAllowed = sp1.isCodasAllowed();
+		langProj2CodasAllowed = sp2.isCodasAllowed();
+		codasAllowedDiffer = (langProj1CodasAllowed != langProj2CodasAllowed);
+		langProj1OnsetMaximization = sp1.isOnsetMaximization();
+		langProj2OnsetMaximization = sp2.isOnsetMaximization();
+		onsetMaximizationDiffers = (langProj1OnsetMaximization != langProj2OnsetMaximization);
+		langProj1OnsetPrinciple = sp1.getOnsetPrincipleEnum();
+		langProj2OnsetPrinciple = sp2.getOnsetPrincipleEnum();
+		onsetPrincipleDiffers = (langProj1OnsetPrinciple != langProj2OnsetPrinciple);
 	}
 }

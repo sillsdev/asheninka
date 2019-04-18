@@ -30,8 +30,8 @@ import name.fraser.neil.plaintext.diff_match_patch.Diff;
  */
 public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 
-	ONCApproach sha1;
-	ONCApproach sha2;
+	ONCApproach onca1;
+	ONCApproach onca2;
 
 	SortedSet<DifferentSHNaturalClass> naturalClassesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentSHNaturalClass::getSortingValue));
@@ -39,24 +39,24 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 
 	public ONCApproachLanguageComparer(ONCApproach sha1, ONCApproach sha2) {
 		super(sha1.getLanguageProject(), sha2.getLanguageProject());
-		this.sha1 = sha1;
-		this.sha2 = sha2;
+		this.onca1 = sha1;
+		this.onca2 = sha2;
 	}
 
-	public ONCApproach getSha1() {
-		return sha1;
+	public ONCApproach getOnca1() {
+		return onca1;
 	}
 
-	public void setSha1(ONCApproach sha1) {
-		this.sha1 = sha1;
+	public void setOnca1(ONCApproach onca1) {
+		this.onca1 = onca1;
 	}
 
-	public ONCApproach getSha2() {
-		return sha2;
+	public ONCApproach getOnca2() {
+		return onca2;
 	}
 
-	public void setSha2(ONCApproach sha2) {
-		this.sha2 = sha2;
+	public void setOnca2(ONCApproach onca2) {
+		this.onca2 = onca2;
 	}
 
 	public SortedSet<DifferentSHNaturalClass> getNaturalClassesWhichDiffer() {
@@ -75,12 +75,13 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 		compareEnvironments();
 		compareSonorityHierarchy();
 		compareSonorityHierarchyOrder();
+		compareSyllabificationParameters();
 		compareWords();
 	}
 
 	public void compareSonorityHierarchy() {
-		List<SHNaturalClass> naturalClasses1 = sha1.getONCSonorityHierarchy();
-		List<SHNaturalClass> naturalClasses2 = sha2.getONCSonorityHierarchy();
+		List<SHNaturalClass> naturalClasses1 = onca1.getONCSonorityHierarchy();
+		List<SHNaturalClass> naturalClasses2 = onca2.getONCSonorityHierarchy();
 
 		Set<SHNaturalClass> difference1from2 = new HashSet<SHNaturalClass>(naturalClasses1);
 		// use set difference (removeAll)
@@ -113,8 +114,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 
 	@Override
 	protected void syllabifyWords(List<Word> words1, List<Word> words2) {
-		syllabifyWords(sha1, words1);
-		syllabifyWords(sha2, words2);
+		syllabifyWords(onca1, words1);
+		syllabifyWords(onca2, words2);
 	}
 
 	protected void syllabifyWords(ONCApproach sha, List<Word> words) {
@@ -129,8 +130,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 
 	public void compareSonorityHierarchyOrder() {
 		diff_match_patch dmp = new diff_match_patch();
-		String sonorityHierarchy1 = createTextFromSonorityHierarchy(sha1);
-		String sonorityHierarchy2 = createTextFromSonorityHierarchy(sha2);
+		String sonorityHierarchy1 = createTextFromSonorityHierarchy(onca1);
+		String sonorityHierarchy2 = createTextFromSonorityHierarchy(onca2);
 		sonorityHierarchyOrderDifferences = dmp.diff_main(sonorityHierarchy1, sonorityHierarchy2);
 	}
 
@@ -153,8 +154,14 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 
 	@Override
 	protected boolean isReallySameSegment(Segment segment1, Segment segment2) {
-		// TODO: when add more approach-specific items to segment (e.g., mora-bearing),
-		//  add test for onset, nucleus, coda equality here
-		return true;
+		boolean result = super.isReallySameSegment(segment1, segment2);
+		if (result) {
+			if ((segment1.isCoda() != segment2.isCoda()) ||
+				(segment1.isNucleus() != segment2.isNucleus()) ||
+				(segment1.isOnset() != segment2.isOnset())) {
+				return false;
+			}
+		}
+		return result;
 	}
 }
