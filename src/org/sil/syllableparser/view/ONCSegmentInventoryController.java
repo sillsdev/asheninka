@@ -15,11 +15,12 @@ import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
-import javafx.beans.property.BooleanProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.input.MouseEvent;
 
 /**
  * @author Andy Black
@@ -52,35 +53,28 @@ public class ONCSegmentInventoryController extends CVSegmentInventoryController 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
-		
-		onsetColumn.setCellValueFactory(cellData -> {
-			Segment segment = cellData.getValue();
-			BooleanProperty bp = segment.onsetProperty();
-			cellData.getValue().setOnset(bp.get());
-			return bp;
-		});
+
+		onsetColumn.setCellValueFactory(cellData -> cellData.getValue().onsetProperty());
 		onsetColumn.setCellFactory(CheckBoxTableCell.forTableColumn(onsetColumn));
 		onsetColumn.setEditable(true);
 
-		nucleusColumn.setCellValueFactory(cellData -> {
-			Segment segment = cellData.getValue();
-			BooleanProperty bp = segment.nucleusProperty();
-			cellData.getValue().setNucleus(bp.get());
-			return bp;
-		});
+		nucleusColumn.setCellValueFactory(cellData -> cellData.getValue().nucleusProperty());
 		nucleusColumn.setCellFactory(CheckBoxTableCell.forTableColumn(nucleusColumn));
 		nucleusColumn.setEditable(true);
 
-		codaColumn.setCellValueFactory(cellData -> {
-			Segment segment = cellData.getValue();
-			BooleanProperty bp = segment.codaProperty();
-			cellData.getValue().setCoda(bp.get());
-			return bp;
-		});
+		codaColumn.setCellValueFactory(cellData -> cellData.getValue().codaProperty());
 		codaColumn.setCellFactory(CheckBoxTableCell.forTableColumn(codaColumn));
 		codaColumn.setEditable(true);
 
-		
+		cvSegmentTable.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Object o = event.getTarget();
+				handleClickOnCheckBoxInTable(o);
+			}
+
+		});
+
 		onsetCheckBox.setOnAction((event) -> {
 			if (currentSegment != null) {
 				currentSegment.setOnset(onsetCheckBox.isSelected());
@@ -104,6 +98,37 @@ public class ONCSegmentInventoryController extends CVSegmentInventoryController 
 		});
 	}
 
+	protected void handleClickOnCheckBoxInTable(Object o) {
+		if (o instanceof CheckBoxTableCell) {
+			@SuppressWarnings("unchecked")
+			CheckBoxTableCell<Segment, Boolean> cbtc = (CheckBoxTableCell<Segment, Boolean>) o;
+			int index = cbtc.getIndex();
+			if (index < 0) {
+				return;
+			}
+			Segment segment = cvSegmentTable.getItems().get(index);
+			boolean value;
+			if (segment != null) {
+				switch (cbtc.getId()) {
+				case "onsetColumn":
+					value = !segment.isOnset();
+					segment.setOnset(value);
+					onsetCheckBox.setSelected(value);
+					break;
+				case "nucleusColumn":
+					value = !segment.isNucleus();
+					segment.setNucleus(value);
+					nucleusCheckBox.setSelected(value);
+					break;
+				case "codaColumn":
+					value = !segment.isCoda();
+					segment.setCoda(value);
+					codaCheckBox.setSelected(value);
+					break;
+				}
+			}
+		}
+	}
 
 	/**
 	 * Fills all text fields to show details about the CV segment. If the
