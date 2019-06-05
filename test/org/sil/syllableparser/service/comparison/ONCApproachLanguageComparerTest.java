@@ -107,6 +107,7 @@ public class ONCApproachLanguageComparerTest {
 		compareGraphemeNaturalClasses(comparer);
 		compareEnvironments(comparer);
 		compareSonorityHierarchy(comparer);
+		compareSyllabificationParameters(comparer);
 		compareWords(comparer);
 	}
 
@@ -118,6 +119,13 @@ public class ONCApproachLanguageComparerTest {
 		compareSameGraphemeNaturalClasses(comparer);
 		compareSameEnvironments(comparer);
 		compareSameNaturalClasses(comparer);
+		comparer.compareSonorityHierarchy();
+		SortedSet<DifferentSHNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
+		assertEquals("number of different natural classes", 0, diffs.size());
+		comparer.compareSyllabificationParameters();
+		assertEquals(false, comparer.isCodasAllowedDifferent());
+		assertEquals(false, comparer.isOnsetMaximizationDifferent());
+		assertEquals(false, comparer.isOnsetPrincipleDifferent());
 		compareSameWords(comparer);
 	}
 

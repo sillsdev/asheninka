@@ -52,6 +52,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 		formatEnvironments(sb);
 		formatSonorityHierarchy(sb);
 		formatSonorityHierarchyOrder(sb);
+		formatSyllabifcationParameters(sb);
 		formatWords(sb);
 		formatHTMLEnding(sb);
 		return sb.toString();
@@ -143,10 +144,10 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
-		if (word == null || word.getSHPredictedSyllabification().length() == 0) {
+		if (word == null || word.getONCPredictedSyllabification().length() == 0) {
 			sb.append("&#xa0;");
 		} else {
-			sb.append(word.getSHPredictedSyllabification());
+			sb.append(word.getONCPredictedSyllabification());
 		}
 	}
 }

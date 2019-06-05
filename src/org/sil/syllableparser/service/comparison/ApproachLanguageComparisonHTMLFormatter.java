@@ -298,6 +298,85 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		}
 	}
 
+	protected void formatSyllabifcationParameters(StringBuilder sb) {
+		String s1 = "";
+		String s2 = "";
+		sb.append("<h3>" + bundle.getString("report.syllabificationparameters") + "</h3>\n");
+		if (comparer.codasAllowedDiffer) {
+			if (comparer.langProj1CodasAllowed) {
+				s1 = bundle.getString("label.yes");
+				s2 = bundle.getString("label.no");
+			} else {
+				s1 = bundle.getString("label.no");
+				s2 = bundle.getString("label.yes");
+			}
+			formatSyllabificationParameterInfo(sb, bundle.getString("report.codasalloweddiffers"), s1, s2);
+		} else {
+			sb.append("<p>" + bundle.getString("report.samecodasallowed") + "</p>\n");
+		}
+		if (comparer.onsetMaximizationDiffers) {
+			if (comparer.langProj1OnsetMaximization) {
+					s1 = bundle.getString("label.yes");
+					s2 = bundle.getString("label.no");
+				} else {
+					s1 = bundle.getString("label.no");
+					s2 = bundle.getString("label.yes");
+				}
+				formatSyllabificationParameterInfo(sb, bundle.getString("report.onsetmaximizationdiffers"), s1, s2);
+		} else {
+			sb.append("<p>" + bundle.getString("report.sameonsetmaximization") + "</p>\n");
+		}
+		if (comparer.onsetPrincipleDiffers) {
+			switch (comparer.langProj1OnsetPrinciple)
+			{
+			case ALL_BUT_FIRST_HAS_ONSET:
+				s1 = bundle.getString("radio.allbutfirst");
+				break;
+			case EVERY_SYLLABLE_HAS_ONSET:
+				s1 = bundle.getString("radio.everysyllable");
+				break;
+			case ONSETS_NOT_REQUIRED:
+				s1 = bundle.getString("radio.onsetsnotrequired");
+				break;
+			}
+			switch (comparer.langProj2OnsetPrinciple)
+			{
+			case ALL_BUT_FIRST_HAS_ONSET:
+				s2 = bundle.getString("radio.allbutfirst");
+				break;
+			case EVERY_SYLLABLE_HAS_ONSET:
+				s2 = bundle.getString("radio.everysyllable");
+				break;
+			case ONSETS_NOT_REQUIRED:
+				s2 = bundle.getString("radio.onsetsnotrequired");
+				break;
+			}
+			formatSyllabificationParameterInfo(sb, bundle.getString("report.onsetprinciplediffers"), s1, s2);
+		} else {
+			sb.append("<p>" + bundle.getString("report.sameonsetprinciple") + "</p>\n");
+		}
+	}
+
+	protected void formatSyllabificationParameterInfo(StringBuilder sb, String sTitle, String s1,
+			String s2) {
+		sb.append("<p>" + sTitle + "</p>\n");
+		sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+		sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
+		sb.append("</th>\n<th>");
+		sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
+		sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			sb.append("<tr>\n<td class=\"");
+			sb.append(ANALYSIS_1);
+			sb.append("\">");
+			sb.append(s1);
+			sb.append("</td>\n<td class=\"");
+			sb.append(ANALYSIS_2);
+			sb.append("\">");
+			sb.append(s2);
+			sb.append("</td>\n</tr>\n");
+		sb.append("</tbody>\n</table>\n");
+	}
+
 	protected void formatWordInfo(StringBuilder sb, Word word) {
 		if (word == null) {
 			sb.append("&#xa0;");

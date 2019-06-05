@@ -118,6 +118,9 @@ public class SHApproachLanguageComparerTest {
 		compareSameGraphemeNaturalClasses(comparer);
 		compareSameEnvironments(comparer);
 		compareSameNaturalClasses(comparer);
+		comparer.compareSonorityHierarchy();
+		SortedSet<DifferentSHNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
+		assertEquals("number of different natural classes", 0, diffs.size());
 		compareSameWords(comparer);
 	}
 
