@@ -115,11 +115,11 @@ public class ONCSyllabifier {
 		if (segmentCount == 0) {
 			return false;
 		}
-		ONCSyllable syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
 		Segment seg1 = segmentsInWord.get(0).getSegment();
 		if (seg1 == null) {
 			return false;
 		}
+		ONCSyllable syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
 		if (opType == OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET && !seg1.isOnset()) {
 			if (fDoTrace) {
 				tracingStep.setSegment1(seg1);
@@ -153,6 +153,7 @@ public class ONCSyllabifier {
 				tracingStep.setNaturalClass2(oncApproach.getNaturalClassContainingSegment(seg2));
 				tracingStep.setComparisonResult(result);
 				tracingStep.setStatus(ONCSyllabificationStatus.UNKNOWN);
+				tracingStep.setOncType(currentType);
 			}
 
 			switch (currentType) {
@@ -246,7 +247,15 @@ public class ONCSyllabifier {
 					} else {
 						if (result == SHComparisonResult.EQUAL) {
 							currentType = addSegmentToSyllableAsCoda(segmentsInWord, syl, i);
-						} else {
+						} else if (result == SHComparisonResult.MISSING2) {
+							if (fDoTrace) {
+								tracingStep
+										.setStatus(ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND);
+								tracingSteps.add(tracingStep);
+							}
+							return false;
+						}
+						else {
 							syl = addSegmentToSyllableAsCodaStartNewSyllable(segmentsInWord, syl, i);
 							currentType = updateTypeForNewSyllable();
 						}
