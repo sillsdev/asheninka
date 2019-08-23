@@ -73,18 +73,26 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 			sb.append("<table border=\"1\">\n");
 			sb.append("<tbody>\n");
 			for (Word differentWord : diffWords) {
-				sb.append("<tr><td colspan=\"2\"/></tr>\n");
+				// extra gap between words:
+				sb.append("<tr><td colspan=\"3\"/></tr>\n");
+				sb.append("<tr><td rowspan=\"3\">");
+				sb.append(differentWord.getWord());
+				sb.append("</td>");
+				boolean isFirstRow = true;
 				if (sylComparer.isUseCVApproach()) {
 					formatApproachRow(sb, bundle.getString("report.cvapproachabbreviation"),
-							differentWord.getCVPredictedSyllabification());
+							differentWord.getCVPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
 				}
 				if (sylComparer.isUseSHApproach()) {
 					formatApproachRow(sb, bundle.getString("report.shapproachabbreviation"),
-							differentWord.getSHPredictedSyllabification());
+							differentWord.getSHPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
 				}
 				if (sylComparer.isUseONCApproach()) {
 					formatApproachRow(sb, bundle.getString("report.oncapproachabbreviation"),
-							differentWord.getONCPredictedSyllabification());
+							differentWord.getONCPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
 				}
 //				sb.append("</tr>\n");
 			}
@@ -105,8 +113,11 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 	}
 
 	protected void formatApproachRow(StringBuilder sb, String approachAbbreviation,
-			String approachSyllabification) {
-		sb.append("<tr>\n<td>");
+			String approachSyllabification, boolean isFirstRow) {
+		if (!isFirstRow) {
+			sb.append("<tr>\n");
+		}
+		sb.append("<td>");
 		sb.append(approachAbbreviation);
 		sb.append("&#xa0;");
 		sb.append("</td>\n");
