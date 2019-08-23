@@ -157,6 +157,18 @@ id="iFailureSHSegmenter"
 id="iONCFailures"
 ><term
 >ONC approach</term
+><indexTerms
+><indexTerm
+id="iFailureONCNaturalClasser"
+><term
+>Parse into natural classes</term
+></indexTerm
+><indexTerm
+id="iFailureONCSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ></indexTerms
 ></indexTerm
@@ -293,6 +305,68 @@ id="iNuclearProjectionApproach"
 id="iONCApproach"
 ><term
 >Onset-nucleus-coda approach</term
+><indexTerms
+><indexTerm
+id="iONCPatternAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iONCCompare2Implementstions"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iONCEnvironments"
+><term
+>Environments</term
+></indexTerm
+><indexTerm
+id="iONCGraphemeNaturalClasses"
+><term
+>Grapheme natural classes</term
+></indexTerm
+><indexTerm
+id="iONCGraphemes"
+><term
+>Graphemes</term
+></indexTerm
+><indexTerm
+id="iONCNaturalClasses"
+><term
+>Natural classes</term
+></indexTerm
+><indexTerm
+id="iONCPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="iONCSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iONCSonorityHierarchy"
+><term
+>Sonority hierarchy</term
+></indexTerm
+><indexTerm
+id="iONCSyllabificationParameters"
+><term
+>Syllabification parameters</term
+></indexTerm
+><indexTerm
+id="iONCTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iONCWords"
+><term
+>Words</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iOpenProject"
@@ -520,6 +594,45 @@ id="iSyllabification"
 see="iIntroduction"
 ><term
 >Syllabification</term
+></indexTerm
+><indexTerm
+id="iSyllabificationParameters"
+><term
+>Syllabification parameters</term
+><indexTerms
+><indexTerm
+id="iCodasAllowed"
+><term
+>Codas allowed</term
+></indexTerm
+><indexTerm
+id="iOnsetMaximization"
+><term
+>Onset maximization</term
+></indexTerm
+><indexTerm
+id="iOnsetPrinciple"
+><term
+>Onset principle</term
+><indexTerms
+><indexTerm
+id="iAllButFirst"
+><term
+>All but first syllable</term
+></indexTerm
+><indexTerm
+id="iEverySyllable"
+><term
+>Every syllable</term
+></indexTerm
+><indexTerm
+id="iOnsetsNotRequired"
+><term
+>Onsets not required</term
+></indexTerm
+></indexTerms
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iTryAWord"
