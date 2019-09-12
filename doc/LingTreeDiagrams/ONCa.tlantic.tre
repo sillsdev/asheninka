@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <lingTreeTree dbversion="2">
     <backgroundColor>#ffffff</backgroundColor>
-    <description>(\O (\O σ (R (N (\L ə)))) (\O σ (O (\L t) (\L ɹ)) (R (N (\L o) (\L ʊ)))) (\O σ (O (\L ʃ)) (R (N (\L ɪ)) (C (\L s)))) )</description>
+    <description>(\O (\O σ (R (N (\L æ)))) (\O σ (O (\L t) (\L l)) (R (N (\L æ)) (C (\L n)))) (\O σ (O (\L t)) (R (N (\L ɪ)) (C (\L k)))) )</description>
     <emptyElementFontInfo>
         <color>#0000ff</color>
         <fontFamily>Charis SIL</fontFamily>
@@ -15,7 +15,7 @@
         <fontType>Bold</fontType>
     </glossFontInfo>
     <horizontalGap>18.43</horizontalGap>
-    <horizontalOffset>225.43937500000004</horizontalOffset>
+    <horizontalOffset>226.40031250000004</horizontalOffset>
     <initialXCoordinate>6.14</initialXCoordinate>
     <initialYCoordinate>-10.0</initialYCoordinate>
     <lexGlossGapAdjustment>0.0</lexGlossGapAdjustment>
@@ -33,7 +33,7 @@
         <fontSize>12.0</fontSize>
         <fontType>Bold</fontType>
     </nonTerminalFontInfo>
-    <saveAsPng>true</saveAsPng>
+    <saveAsPng>false</saveAsPng>
     <saveAsSVG>true</saveAsSVG>
     <showFlatView>true</showFlatView>
     <useRightToLeftOrientation>false</useRightToLeftOrientation>
