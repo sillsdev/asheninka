@@ -27,26 +27,4 @@ public class ONCSegmentInSyllable extends CVSegmentInSyllable {
 	public void setUsage(ONCSegmentUsageType usage) {
 		this.usage = usage;
 	}
-
-	public String getUsageAString() {
-		switch (usage) {
-		case CODA:
-			return "c";
-		case ONSET:
-			return "o";
-		case NUCLEUS:
-			return "n";
-		case RIME:
-			return "r";
-		case SYLLABLE:
-			return "s";
-		case WORD_FINAL:
-			return "f";
-		case WORD_INITIAL:
-			return "i";
-		default:
-			break;
-		}
-		return "u";
-	}
 }

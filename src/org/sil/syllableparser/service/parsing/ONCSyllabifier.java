@@ -12,17 +12,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SyllabificationParameters;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
+import org.sil.syllableparser.model.oncapproach.Coda;
+import org.sil.syllableparser.model.oncapproach.Nucleus;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentUsageType;
 import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
 import org.sil.syllableparser.model.oncapproach.ONCSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCTracingStep;
+import org.sil.syllableparser.model.oncapproach.Onset;
+import org.sil.syllableparser.model.oncapproach.Rime;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -336,6 +341,7 @@ public class ONCSyllabifier {
 		ONCType currentType;
 		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.CODA);
 		syl.add(segmentsInWord.get(i));
+		syl.getRime().getCoda().add(segmentsInWord.get(i));
 		currentType = ONCType.CODA_OR_ONSET;
 		if (fDoTrace) {
 			tracingStep.setSegment1(segmentsInWord.get(i).getSegment());
@@ -352,6 +358,7 @@ public class ONCSyllabifier {
 		ONCType currentType;
 		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.NUCLEUS);
 		syl.add(segmentsInWord.get(i));
+		syl.getRime().getNucleus().add(segmentsInWord.get(i));
 		currentType = ONCType.NUCLEUS_OR_CODA;
 		if (fDoTrace) {
 			tracingStep.setOncType(ONCType.NUCLEUS);
@@ -367,6 +374,7 @@ public class ONCSyllabifier {
 		ONCType currentType;
 		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.ONSET);
 		syl.add(segmentsInWord.get(i));
+		syl.getOnset().add(segmentsInWord.get(i));
 		currentType = ONCType.ONSET_OR_NUCLEUS;
 		if (fDoTrace) {
 			tracingStep.setOncType(ONCType.ONSET);
@@ -391,6 +399,7 @@ public class ONCSyllabifier {
 			List<ONCSegmentInSyllable> segmentsInWord, ONCSyllable syl, int i) {
 		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.CODA);
 		syl.add(segmentsInWord.get(i));
+		syl.getRime().getCoda().add(segmentsInWord.get(i));
 		syllablesInCurrentWord.add(syl);
 		syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
 		if (fDoTrace) {
@@ -420,18 +429,33 @@ public class ONCSyllabifier {
 	}
 
 	public String getONCPatternOfCurrentWord() {
-		// TODO: figure out a lambda way to do this
 		StringBuilder sb = new StringBuilder();
 		int iSize = syllablesInCurrentWord.size();
 		int i = 1;
 		for (ONCSyllable syl : syllablesInCurrentWord) {
-			for (ONCSegmentInSyllable seg : syl.getSegmentsInSyllable()) {
-				sb.append(seg.getUsageAString());
-			}
+			Onset onset = syl.getOnset();
+			onset.getONCPattern(sb);
+			Rime rime = syl.getRime();
+			rime.getONCPattern(sb);
 			if (i++ < iSize) {
 				sb.append(".");
 			}
 		}
+		return sb.toString();
+	}
+
+	public String getLingTreeDescriptinOfCurrentWord() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("(W");
+		for (ONCSyllable syl : syllablesInCurrentWord) {
+			sb.append("(σ");
+			Onset onset = syl.getOnset();
+			onset.createLingTreeDescription(sb);
+			Rime rime = syl.getRime();
+			rime.createLingTreeDescription(sb);
+			sb.append(")");
+		}
+		sb.append(")");
 		return sb.toString();
 	}
 

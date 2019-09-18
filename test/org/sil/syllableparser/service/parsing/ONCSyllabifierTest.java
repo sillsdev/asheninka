@@ -85,32 +85,46 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", true, 1, "A", "n");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc");
-		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc");
-		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fun", "onc");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon");
-		checkSyllabification("funi", true, 2, "fu.ni", "on.on");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", true, 1, "iae", "nnn");
-		checkSyllabification("ibabe", false, 1, "i", "n"); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "do.nli", "on.oon");
-		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
-		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
-		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", true, 1, "A", "n", "(W(σ(R(N(\\L a(\\G A))))))");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L k(\\G k))(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L m(\\G m)))))(σ(O(\\L p(\\G p)))(R(N(\\L i(\\G i)))))(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fun", "onc", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", true, 1, "iae", "nnn", "(W(σ(R(N(\\L i(\\G i))(\\L a(\\G a))(\\L e(\\G e))))))");
+		checkSyllabification("ibabe", false, 1, "i", "n", "(W(σ(R(N(\\L i(\\G i))))))"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "do.nli", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "don.ni", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	@Test
@@ -121,32 +135,46 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", false, 0, "", "");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc");
-		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc");
-		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fun", "onc");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon");
-		checkSyllabification("funi", true, 2, "fu.ni", "on.on");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", false, 0, "", "");
-		checkSyllabification("ibabe", false, 0, "", ""); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "do.nli", "on.oon");
-		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
-		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
-		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", false, 0, "", "", "(W)");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L k(\\G k))(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L m(\\G m)))))(σ(O(\\L p(\\G p)))(R(N(\\L i(\\G i)))))(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fun", "onc", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", false, 0, "", "", "(W)");
+		checkSyllabification("ibabe", false, 0, "", "", "(W)"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "do.nli", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "don.ni", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	@Test
@@ -157,32 +185,46 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", true, 1, "A", "n");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc");
-		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc");
-		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fun", "onc");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon");
-		checkSyllabification("funi", true, 2, "fu.ni", "on.on");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", true, 1, "iae", "nnn");
-		checkSyllabification("ibabe", false, 1, "i", "n"); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "do.nli", "on.oon");
-		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
-		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
-		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", true, 1, "A", "n", "(W(σ(R(N(\\L a(\\G A))))))");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L k(\\G k))(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L m(\\G m)))))(σ(O(\\L p(\\G p)))(R(N(\\L i(\\G i)))))(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fun", "onc", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", true, 1, "iae", "nnn", "(W(σ(R(N(\\L i(\\G i))(\\L a(\\G a))(\\L e(\\G e))))))");
+		checkSyllabification("ibabe", false, 1, "i", "n", "(W(σ(R(N(\\L i(\\G i))))))"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "do.nli", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "don.ni", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	@Test
@@ -193,32 +235,46 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", true, 1, "A", "n");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc");
-		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc");
-		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fun", "onc");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon");
-		checkSyllabification("funi", true, 2, "fu.ni", "on.on");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", true, 1, "iae", "nnn");
-		checkSyllabification("ibabe", false, 1, "i", "n"); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "don.li", "onc.on");
-		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon");
-		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
-		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", true, 1, "A", "n", "(W(σ(R(N(\\L a(\\G A))))))");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L k(\\G k))(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L m(\\G m)))))(σ(O(\\L p(\\G p)))(R(N(\\L i(\\G i)))))(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fun", "onc", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", true, 1, "iae", "nnn", "(W(σ(R(N(\\L i(\\G i))(\\L a(\\G a))(\\L e(\\G e))))))");
+		checkSyllabification("ibabe", false, 1, "i", "n", "(W(σ(R(N(\\L i(\\G i))))))"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "don.li", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "don.ni", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	@Test
@@ -229,32 +285,50 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", false, 0, "", "");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc");
-		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc");
-		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fun", "onc");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon");
-		checkSyllabification("funi", true, 2, "fu.ni", "on.on");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", false, 0, "", "");
-		checkSyllabification("ibabe", false, 0, "", ""); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "don.li", "onc.on");
-		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon");
-		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
-		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", false, 0, "", "", "(W)");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L k(\\G k))(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L m(\\G m)))))(σ(O(\\L p(\\G p)))(R(N(\\L i(\\G i)))))(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fun", "onc",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("do", true, 1, "do", "on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", false, 0, "", "", "(W)");
+		checkSyllabification("ibabe", false, 0, "", "", "(W)"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "don.li", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "don.ni", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	@Test
@@ -265,32 +339,46 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", true, 1, "A", "n");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc");
-		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc");
-		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fun", "onc");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon");
-		checkSyllabification("funi", true, 2, "fun.i", "onc.n");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", true, 1, "iae", "nnn");
-		checkSyllabification("ibabe", false, 1, "i", "n"); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "don.li", "onc.on");
-		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon");
-		checkSyllabification("donni", true, 2, "don.ni", "onc.on");
-		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", true, 1, "A", "n", "(W(σ(R(N(\\L a(\\G A))))))");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", true, 2, "dan.gem", "onc.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dankgem", true, 2, "dan.kgem", "onc.oonc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L k(\\G k))(\\L g(\\G g)))(R(N(\\L e(\\G e)))(C(\\L m(\\G m))))))");
+		checkSyllabification("dampidon", true, 3, "dam.pi.don", "onc.on.onc",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))(C(\\L m(\\G m)))))(σ(O(\\L p(\\G p)))(R(N(\\L i(\\G i)))))(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fun", "onc", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", true, 2, "dlo.fun", "oon.onc",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
+		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funi", true, 2, "fun.i", "onc.n",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", true, 1, "iae", "nnn", "(W(σ(R(N(\\L i(\\G i))(\\L a(\\G a))(\\L e(\\G e))))))");
+		checkSyllabification("ibabe", false, 1, "i", "n", "(W(σ(R(N(\\L i(\\G i))))))"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "don.li", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "don.lyi", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "don.ni", "onc.on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "don.nli", "onc.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	@Test
@@ -301,32 +389,42 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", true, 1, "A", "n");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", false, 1, "da", "on");
-		checkSyllabification("dankgem", false, 1, "da", "on");
-		checkSyllabification("dampidon", false, 1, "da", "on");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fu", "on");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", false, 1, "fu", "on");
-		checkSyllabification("funi", true, 2, "fu.ni", "on.on");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", true, 1, "iae", "nnn");
-		checkSyllabification("ibabe", false, 1, "i", "n"); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "do.nli", "on.oon");
-		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
-		checkSyllabification("donni", true, 2, "do.nni", "on.oon");
-		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", true, 1, "A", "n", "(W(σ(R(N(\\L a(\\G A))))))");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dankgem", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dampidon", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", true, 1, "iae", "nnn", "(W(σ(R(N(\\L i(\\G i))(\\L a(\\G a))(\\L e(\\G e))))))");
+		checkSyllabification("ibabe", false, 1, "i", "n", "(W(σ(R(N(\\L i(\\G i))))))"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "do.nli", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "do.nni", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	@Test
@@ -337,32 +435,42 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", false, 0, "", "");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", false, 1, "da", "on");
-		checkSyllabification("dankgem", false, 1, "da", "on");
-		checkSyllabification("dampidon", false, 1, "da", "on");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fu", "on");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", false, 1, "fu", "on");
-		checkSyllabification("funi", true, 2, "fu.ni", "on.on");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", false, 0, "", "");
-		checkSyllabification("ibabe", false, 0, "", ""); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "do.nli", "on.oon");
-		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
-		checkSyllabification("donni", true, 2, "do.nni", "on.oon");
-		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", false, 0, "", "", "(W)");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dankgem", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dampidon", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", false, 0, "", "", "(W)");
+		checkSyllabification("ibabe", false, 0, "", "", "(W)"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "do.nli", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "do.nni", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	@Test
@@ -373,36 +481,46 @@ public class ONCSyllabifierTest {
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
-		checkSyllabification("", false, 0, "", "");
-		checkSyllabification("b", false, 0, "", "");
-		checkSyllabification("A", true, 1, "A", "n");
-		checkSyllabification("ta", true, 1, "ta", "on");
-		checkSyllabification("tad", false, 1, "ta", "on");
-		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on");
-		checkSyllabification("dangem", false, 1, "da", "on");
-		checkSyllabification("dankgem", false, 1, "da", "on");
-		checkSyllabification("dampidon", false, 1, "da", "on");
-		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon");
-		checkSyllabification("fuhgt", false, 1, "fu", "on");
-		checkSyllabification("fungt", false, 1, "fu", "on");
-		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("dlofun", false, 2, "dlo.fu", "oon.on");
-		checkSyllabification("do", true, 1, "do", "on");
-		checkSyllabification("funglo", false, 1, "fu", "on");
-		checkSyllabification("funi", true, 2, "fu.ni", "on.on");
-		checkSyllabification("flu", true, 1, "flu", "oon");
-		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on");
-		checkSyllabification("iae", true, 1, "iae", "nnn");
-		checkSyllabification("ibabe", false, 1, "i", "n"); // b not in hierarchy
-		checkSyllabification("donli", true, 2, "do.nli", "on.oon");
-		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon");
-		checkSyllabification("donni", true, 2, "do.nni", "on.oon");
-		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon");
-		checkSyllabification("dolnti", false, 1, "do", "on");
+		checkSyllabification("", false, 0, "", "", "(W)");
+		checkSyllabification("b", false, 0, "", "", "(W)");
+		checkSyllabification("A", true, 1, "A", "n", "(W(σ(R(N(\\L a(\\G A))))))");
+		checkSyllabification("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("tad", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("dangem", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dankgem", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dampidon", false, 1, "da", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("dovdek", false, 2, "do.vde", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L v(\\G v))(\\L d(\\G d)))(R(N(\\L e(\\G e))))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fungt", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofugh", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("dlofun", false, 2, "dlo.fu", "oon.on",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("funglo", false, 1, "fu", "on", "(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
+		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");
+		checkSyllabification("iae", true, 1, "iae", "nnn", "(W(σ(R(N(\\L i(\\G i))(\\L a(\\G a))(\\L e(\\G e))))))");
+		checkSyllabification("ibabe", false, 1, "i", "n", "(W(σ(R(N(\\L i(\\G i))))))"); // b not in hierarchy
+		checkSyllabification("donli", true, 2, "do.nli", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donlyi", true, 2, "do.nlyi", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donni", true, 2, "do.nni", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("donnli", true, 2, "do.nnli", "on.ooon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))");
+		checkSyllabification("dolnti", false, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 	}
 
 	protected void checkSyllabification(String word, boolean success, int numberOfSyllables,
-			String expectedSyllabification, String expectedONCPattern) {
+			String expectedSyllabification, String expectedONCPattern, String expectedLTDescription) {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		boolean fSuccess = segResult.success;
 		List<ONCSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
@@ -415,10 +533,12 @@ public class ONCSyllabifierTest {
 				oncSyllabifier.getSyllabificationOfCurrentWord());
 		assertEquals("ONC Pattern of word", expectedONCPattern,
 				oncSyllabifier.getONCPatternOfCurrentWord());
+		assertEquals("LingTree Description of word", expectedLTDescription,
+				oncSyllabifier.getLingTreeDescriptinOfCurrentWord());
 	}
 
 	protected void checkSyllabifyWord(String word, boolean success, int numberOfSyllables,
-			String expectedSyllabification, String expectedONCPattern) {
+			String expectedSyllabification, String expectedONCPattern, String expectedLTDescription) {
 		boolean fSuccess = oncSyllabifier.convertStringToSyllables(word);
 		assertEquals("word syllabified", success, fSuccess);
 		List<ONCSyllable> syllablesInWord = oncSyllabifier.getSyllablesInCurrentWord();
@@ -428,16 +548,18 @@ public class ONCSyllabifierTest {
 				oncSyllabifier.getSyllabificationOfCurrentWord());
 		assertEquals("Expected ONC pattern", expectedONCPattern,
 				oncSyllabifier.getONCPatternOfCurrentWord());
+		assertEquals("LingTree Description of word", expectedLTDescription,
+				oncSyllabifier.getLingTreeDescriptinOfCurrentWord());
 	}
 
 	@Test
 	public void traceSyllabifyWordTest() {
 		oncSyllabifier.setDoTrace(true);
-		checkSyllabifyWord("", false, 0, "", "");
+		checkSyllabifyWord("", false, 0, "", "", "(W)");
 		List<ONCTracingStep> tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(0, tracingSteps.size());
 
-		checkSyllabifyWord("A", true, 1, "A", "n");
+		checkSyllabifyWord("A", true, 1, "A", "n", "(W(σ(R(N(\\L a(\\G A))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(3, tracingSteps.size());
 		ONCTracingStep tracingStep = tracingSteps.get(0);
@@ -450,7 +572,7 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "a", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("ta", true, 1, "ta", "on");
+		checkSyllabifyWord("ta", true, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(3, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -463,7 +585,7 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "a", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("tan", true, 1, "tan", "onc");
+		checkSyllabifyWord("tan", true, 1, "tan", "onc", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(3, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -476,7 +598,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "n", "Nasals", null, null, SHComparisonResult.MORE,
 				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE, true);
 
-		checkSyllabifyWord("Chiko", true, 2, "Chi.ko", "on.on");
+		checkSyllabifyWord("Chiko", true, 2, "Chi.ko", "on.on",
+				"(W(σ(O(\\L ch(\\G Ch)))(R(N(\\L i(\\G i)))))(σ(O(\\L k(\\G k)))(R(N(\\L o(\\G o))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(6, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -498,7 +621,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "o", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("tampidon", true, 3, "tam.pi.don", "onc.on.onc");
+		checkSyllabifyWord("tampidon", true, 3, "tam.pi.don", "onc.on.onc",
+				"(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a)))(C(\\L m(\\G m)))))(σ(O(\\L p(\\G p)))(R(N(\\L i(\\G i)))))(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))(C(\\L n(\\G n))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(9, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -529,7 +653,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "n", "Nasals", null, null, SHComparisonResult.MORE,
 				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE, true);
 
-		checkSyllabifyWord("dapgek", false, 2, "da.pge", "on.oon");
+		checkSyllabifyWord("dapgek", false, 2, "da.pge", "on.oon",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L a(\\G a)))))(σ(O(\\L p(\\G p))(\\L g(\\G g)))(R(N(\\L e(\\G e))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(9, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -560,7 +685,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "k", "Obstruents", null, null, SHComparisonResult.MORE,
 				ONCType.NUCLEUS, ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND, false);
 
-		checkSyllabifyWord("doldek", false, 1, "do", "on");
+		checkSyllabifyWord("doldek", false, 1, "do", "on",
+				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -579,7 +705,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "l", "Liquids", "d", "Obstruents", SHComparisonResult.MORE,
 				ONCType.NUCLEUS, ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND, false);
 
-		checkSyllabifyWord("dlofun", true, 2, "dlo.fun", "oon.onc");
+		checkSyllabifyWord("dlofun", true, 2, "dlo.fun", "oon.onc",
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(R(N(\\L o(\\G o)))))(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(7, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -604,7 +731,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "n", "Nasals", null, null, SHComparisonResult.MORE,
 				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE, true);
 
-		checkSyllabifyWord("funmo", true, 2, "fun.mo", "onc.on");
+		checkSyllabifyWord("funmo", true, 2, "fun.mo", "onc.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L m(\\G m)))(R(N(\\L o(\\G o))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(7, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -629,7 +757,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "o", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("funmlo", true, 2, "fun.mlo", "onc.oon");
+		checkSyllabifyWord("funmlo", true, 2, "fun.mlo", "onc.oon",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L m(\\G m))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(8, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -657,7 +786,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "o", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("funmdo", true, 2, "funm.do", "oncc.on");
+		checkSyllabifyWord("funmdo", true, 2, "funm.do", "oncc.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))(\\L m(\\G m)))))(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(8, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -685,7 +815,7 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "o", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("flu", true, 1, "flu", "oon");
+		checkSyllabifyWord("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(4, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -701,7 +831,8 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "u", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("flum", true, 1, "flum", "oonc");
+		checkSyllabifyWord("flum", true, 1, "flum", "oonc",
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))(C(\\L m(\\G m))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(4, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -717,7 +848,7 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "m", "Nasals", null, null, SHComparisonResult.MORE,
 				ONCType.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE, true);
 
-		checkSyllabifyWord("iae", true, 1, "iae", "nnn");
+		checkSyllabifyWord("iae", true, 1, "iae", "nnn", "(W(σ(R(N(\\L i(\\G i))(\\L a(\\G a))(\\L e(\\G e))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -736,14 +867,14 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "e", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("babe", false, 0, "", ""); // b not in hierarchy
+		checkSyllabifyWord("babe", false, 0, "", "", "(W)"); // b not in hierarchy
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(1, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "b", null, null, null, null,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT, false);
 
-		checkSyllabifyWord("ibabe", false, 1, "i", "n"); // b not in hierarchy
+		checkSyllabifyWord("ibabe", false, 1, "i", "n", "(W(σ(R(N(\\L i(\\G i))))))"); // b not in hierarchy
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(4, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -763,7 +894,7 @@ public class ONCSyllabifierTest {
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		oncSyllabifier.setDoTrace(true);
-		checkSyllabifyWord("tan", false, 1, "ta", "on");
+		checkSyllabifyWord("tan", false, 1, "ta", "on", "(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -786,7 +917,7 @@ public class ONCSyllabifierTest {
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		oncSyllabifier.setDoTrace(true);
-		checkSyllabifyWord("a", false, 0, "", "");
+		checkSyllabifyWord("a", false, 0, "", "", "(W)");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(1, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -798,7 +929,8 @@ public class ONCSyllabifierTest {
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		oncSyllabifier.setDoTrace(true);
-		checkSyllabifyWord("tanlo", true, 2, "ta.nlo", "on.oon");
+		checkSyllabifyWord("tanlo", true, 2, "ta.nlo", "on.oon",
+				"(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a)))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(7, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -829,7 +961,8 @@ public class ONCSyllabifierTest {
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		oncSyllabifier.setDoTrace(true);
-		checkSyllabifyWord("tano", true, 2, "ta.no", "on.on");
+		checkSyllabifyWord("tano", true, 2, "ta.no", "on.on",
+				"(W(σ(O(\\L t(\\G t)))(R(N(\\L a(\\G a)))))(σ(O(\\L n(\\G n)))(R(N(\\L o(\\G o))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(6, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -856,7 +989,7 @@ public class ONCSyllabifierTest {
 		List<SHNaturalClass> natClasses = languageProject.getSHApproach().getActiveSHNaturalClasses();
 		SHNaturalClass vowels = natClasses.get(0);
 		vowels.getSegments().remove(0);
-		checkSyllabifyWord("tan", false, 0, "", "");
+		checkSyllabifyWord("tan", false, 0, "", "", "(W)");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(2, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -872,7 +1005,7 @@ public class ONCSyllabifierTest {
 		oncApproach = languageProject.getONCApproach();
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
 		oncSyllabifier.setDoTrace(true);
-		checkSyllabifyWord("etan", false, 1, "e", "n");
+		checkSyllabifyWord("etan", false, 1, "e", "n", "(W(σ(R(N(\\L e(\\G e))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -891,7 +1024,7 @@ public class ONCSyllabifierTest {
 		checkTracingStep(tracingStep, "t", "Obstruents", "a", null, SHComparisonResult.MISSING2,
 				ONCType.NUCLEUS, ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND, false);
 
-		checkSyllabifyWord("eb", false, 1, "e", "n");
+		checkSyllabifyWord("eb", false, 1, "e", "n", "(W(σ(R(N(\\L e(\\G e))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
