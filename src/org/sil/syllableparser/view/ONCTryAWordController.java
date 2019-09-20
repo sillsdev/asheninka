@@ -17,6 +17,7 @@ import org.sil.syllableparser.service.parsing.ONCSegmenter;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
 import org.sil.syllableparser.service.parsing.ONCSyllabifierResult;
 import org.sil.syllableparser.service.parsing.ONCTryAWordHTMLFormatter;
+import org.sil.syllableparser.service.parsing.TryAWordHTMLFormatter;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -75,6 +76,7 @@ public class ONCTryAWordController extends TryAWordController {
 
 				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
 				traceInfo.setSegmenterResult(segResult);
+				String sLingTreeDescription = "";
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
 					List<ONCSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
@@ -84,9 +86,11 @@ public class ONCTryAWordController extends TryAWordController {
 						ONCSyllabifierResult syllabifierResult = new ONCSyllabifierResult();
 						syllabifierResult.success = fSuccess;
 						traceInfo.setSyllabifierResult(syllabifierResult);
+						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
 				}
 				ONCTryAWordHTMLFormatter formatter = new ONCTryAWordHTMLFormatter(traceInfo,
 						oncApproach.getLanguageProject(), locale);
+				formatter.setLingTreeDescription(sLingTreeDescription);
 				String sResult = formatter.format();
 				webEngine.loadContent(sResult);
 			}

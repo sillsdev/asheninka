@@ -534,7 +534,7 @@ public class ONCSyllabifierTest {
 		assertEquals("ONC Pattern of word", expectedONCPattern,
 				oncSyllabifier.getONCPatternOfCurrentWord());
 		assertEquals("LingTree Description of word", expectedLTDescription,
-				oncSyllabifier.getLingTreeDescriptinOfCurrentWord());
+				oncSyllabifier.getLingTreeDescriptionOfCurrentWord());
 	}
 
 	protected void checkSyllabifyWord(String word, boolean success, int numberOfSyllables,
@@ -549,7 +549,7 @@ public class ONCSyllabifierTest {
 		assertEquals("Expected ONC pattern", expectedONCPattern,
 				oncSyllabifier.getONCPatternOfCurrentWord());
 		assertEquals("LingTree Description of word", expectedLTDescription,
-				oncSyllabifier.getLingTreeDescriptinOfCurrentWord());
+				oncSyllabifier.getLingTreeDescriptionOfCurrentWord());
 	}
 
 	@Test

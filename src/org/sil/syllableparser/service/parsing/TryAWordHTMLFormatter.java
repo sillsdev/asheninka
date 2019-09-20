@@ -14,6 +14,12 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javafx.scene.paint.Color;
+
+import org.sil.lingtree.model.FontInfo;
+import org.sil.lingtree.model.LingTreeTree;
+import org.sil.lingtree.service.TreeBuilder;
+import org.sil.lingtree.service.TreeDrawer;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
@@ -53,6 +59,7 @@ public abstract class TryAWordHTMLFormatter {
 	protected String sWord;
 	protected CVSegmenter segmenter;
 	protected CVSegmenterResult segmenterResult;
+	protected String lingTreeDescription;
 
 	public TryAWordHTMLFormatter(LanguageProject language, Locale locale) {
 		super();
@@ -203,5 +210,46 @@ public abstract class TryAWordHTMLFormatter {
 		msgFormatter.setLocale(locale);
 		msgFormatter.applyPattern(bundle.getString(mainProperty));
 		return msgFormatter.format(args);
+	}
+
+	public String getLingTreeDescription() {
+		return lingTreeDescription;
+	}
+
+	public void setLingTreeDescription(String lingTreeDescription) {
+		this.lingTreeDescription = lingTreeDescription;
+	}
+
+	public String createLingTreeSVG(boolean fSuccess) {
+		String result = "";
+		if (lingTreeDescription.length() > 0) {
+			LingTreeTree origTree = new LingTreeTree();
+			FontInfo fia = new FontInfo(language.getAnalysisLanguage().getFont());
+			fia.setColor(Color.BLACK);
+			origTree.setNonTerminalFontInfo(fia);
+			origTree.setEmptyElementFontInfo(fia);
+			FontInfo fiv = new FontInfo(language.getVernacularLanguage().getFontFamily(),
+					language.getVernacularLanguage().getFontSize(),
+					language.getVernacularLanguage().getFontType());
+			if (fSuccess)
+				fiv.setColor(Color.GREEN);
+			else
+				fiv.setColor(Color.RED);
+			origTree.setLexicalFontInfo(fiv);
+			origTree.setGlossFontInfo(fiv);
+			origTree.setShowFlatView(true);
+			origTree.setLineWidth(1.0);
+			origTree.setInitialXCoordinate(0.0);
+			origTree.setInitialYCoordinate(10.0);
+			origTree.setHorizontalGap(20.0);
+			origTree.setVerticalGap(20.0);
+			origTree.setLexGlossGapAdjustment(0.0);
+			origTree.setFontsAndColors();
+			LingTreeTree ltTree = TreeBuilder.parseAString(lingTreeDescription, origTree);
+			TreeDrawer drawer = new TreeDrawer(ltTree);
+			StringBuilder sb = drawer.drawAsSVG();
+			result = sb.toString();
+		}
+		return result;
 	}
 }

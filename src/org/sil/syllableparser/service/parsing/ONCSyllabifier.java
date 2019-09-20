@@ -444,7 +444,7 @@ public class ONCSyllabifier {
 		return sb.toString();
 	}
 
-	public String getLingTreeDescriptinOfCurrentWord() {
+	public String getLingTreeDescriptionOfCurrentWord() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("(W");
 		for (ONCSyllable syl : syllablesInCurrentWord) {

@@ -13,6 +13,7 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.oncapproach.ONCTraceInfo;
 import org.sil.syllableparser.model.oncapproach.ONCTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
+import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -21,7 +22,6 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult
 public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 
 	ONCTraceInfo traceInfo;
-
 	// TODO: make sure this is right and refactor any common code with SH one
 	public ONCTryAWordHTMLFormatter(ONCTraceInfo traceInfo2, LanguageProject language, Locale locale) {
 		super(language, locale);
@@ -51,10 +51,16 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 				appendSuccessMessage(sb);
 				sb.append("<p class='" + SUCCESS + "'>");
 				sb.append(traceInfo.getSyllabifier().getSyllabificationOfCurrentWord());
+				sb.append("</p>");
 			} else {
 				sb.append("<p class='" + FAILURE + "'>");
 				sb.append(bundle.getString("label.shsyllabificationfailure"));
 				sb.append("</p>\n");
+			}
+			if (!StringUtilities.isNullOrEmpty(lingTreeDescription) && !lingTreeDescription.equals("(W)")) {
+				sb.append("<div style=\"text-align:left\">");
+				sb.append(createLingTreeSVG(sylResult.success));
+				sb.append("</div>");
 			}
 		}
 
@@ -95,11 +101,9 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			tracingStep.setBundle(bundle);
 			if (tracingStep.comparisonResult == SHComparisonResult.MISSING1) {
 				tracingStep.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
-			} else {
 			}
 			if (tracingStep.comparisonResult == SHComparisonResult.MISSING2) {
 				tracingStep.sMissingNaturalClass = bundle.getString("report.tawshmissingnc");
-			} else {
 			}
 			if (tracingStep.isSuccessful()) {
 				rowStatus = SUCCESS;
