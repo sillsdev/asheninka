@@ -59,7 +59,7 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			}
 			if (!StringUtilities.isNullOrEmpty(lingTreeDescription) && !lingTreeDescription.equals("(W)")) {
 				sb.append("<div style=\"text-align:left\">");
-				sb.append(createLingTreeSVG(sylResult.success));
+				sb.append(ltInteractor.createSVG(lingTreeDescription, sylResult.success));
 				sb.append("</div>");
 			}
 		}
