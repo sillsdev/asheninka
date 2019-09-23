@@ -48,7 +48,8 @@ public class LingTreeInteractor {
 		origTree.setShowFlatView(true);
 		origTree.setLineWidth(1.0);
 		origTree.setInitialXCoordinate(0.0);
-		origTree.setInitialYCoordinate(10.0);
+		double dinit = fiAnalysis.getFontSize() *.65;// attempt to keep the top from getting too far down
+		origTree.setInitialYCoordinate(dinit);
 		origTree.setHorizontalGap(20.0);
 		origTree.setVerticalGap(20.0);
 		origTree.setLexGlossGapAdjustment(0.0);

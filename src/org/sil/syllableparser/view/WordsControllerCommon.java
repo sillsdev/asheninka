@@ -7,16 +7,28 @@
 package org.sil.syllableparser.view;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
+import org.sil.syllableparser.model.oncapproach.ONCTraceInfo;
+import org.sil.syllableparser.service.LingTreeInteractor;
+import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.ONCSegmenter;
+import org.sil.syllableparser.service.parsing.ONCSyllabifier;
+import org.sil.syllableparser.service.parsing.ONCSyllabifierResult;
+import org.sil.syllableparser.service.parsing.ONCTryAWordHTMLFormatter;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -24,6 +36,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 /**
  * @author Andy Black
@@ -70,13 +84,19 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	protected TextField correctSyllabificationField;
 	@FXML
 	protected TextField parserResultField;
+	@FXML
+	protected WebView parserLingTreeSVG;
+	@FXML
+	protected WebEngine webEngine;
 
 	protected ObservableList<Word> words = FXCollections.observableArrayList();
 
 	protected Word currentWord;
+	protected LingTreeInteractor ltInteractor;
+	protected String ltSVG = "";
 
 	public WordsControllerCommon() {
-
+		ltInteractor = LingTreeInteractor.getInstance();
 	}
 
 	public void setWordsTable(TableView<Word> tableView) {
@@ -90,6 +110,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	public void initialize(URL location, ResourceBundle resources) {
 		// public void initialize() {
 		this.bundle = resources;
+		webEngine = parserLingTreeSVG.getEngine();
 
 		// Initialize the table with the three columns.
 		wordColumn.setCellValueFactory(cellData -> cellData.getValue().wordProperty());
@@ -180,6 +201,16 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 				}
 			});
 		}
+	}
+
+	protected void showLingTreeSVG() {
+		ltInteractor.initializeParameters(languageProject);
+		StringBuilder sb = new StringBuilder();
+		sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head>");
+		sb.append("<body><div style=\"text-align:left\">");
+		sb.append(ltSVG);
+		sb.append("</div></body></html>");
+		webEngine.loadContent(sb.toString());
 	}
 
 	/*

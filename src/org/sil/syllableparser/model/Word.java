@@ -27,6 +27,7 @@ public class Word extends SylParserObject {
 	protected StringProperty shPredictedSyllabification;
 	protected StringProperty oncParserResult;
 	protected StringProperty oncPredictedSyllabification;
+	protected StringProperty oncLingTreeDescription;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
 	// case this word represents
@@ -44,6 +45,7 @@ public class Word extends SylParserObject {
 		this.shPredictedSyllabification = new SimpleStringProperty("");
 		this.oncParserResult = new SimpleStringProperty("");
 		this.oncPredictedSyllabification = new SimpleStringProperty("");
+		this.oncLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -57,6 +59,7 @@ public class Word extends SylParserObject {
 		this.shPredictedSyllabification = new SimpleStringProperty("");
 		this.oncParserResult = new SimpleStringProperty(parserResult);
 		this.oncPredictedSyllabification = new SimpleStringProperty("");
+		this.oncLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -171,6 +174,18 @@ public class Word extends SylParserObject {
 	@XmlElement(name = "oncPredictedSyllabification")
 	public void setONCPredictedSyllabification(String predictedSyllabification) {
 		this.oncPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public String getONCLingTreeDescription() {
+		return oncLingTreeDescription.get();
+	}
+
+	public StringProperty oncLingTreeDescriptionProperty() {
+		return oncLingTreeDescription;
+	}
+
+	public void setONCLingTreeDescription(String ltDescription) {
+		this.oncLingTreeDescription.set(ltDescription);
 	}
 
 	public StringProperty oncPredictedVsCorrectSyllabificationProperty() {

@@ -61,6 +61,7 @@ public class ONCWordsController extends WordsControllerCommon {
 	public void initialize(URL location, ResourceBundle resources) {
 		super.setWordsTable(oncWordsTable);
 		super.initialize(location, resources);
+
 		parserResultColumn.setCellFactory(column -> {
 			return new ParserResultWrappingTableCell();
 		});
@@ -131,12 +132,23 @@ public class ONCWordsController extends WordsControllerCommon {
 			correctSyllabificationField.setText(oncWord.getCorrectSyllabification());
 			parserResultField.setText(oncWord.getONCParserResult());
 			parserResultField.getStyleClass().clear();
+			boolean fSuccess;
 			if (oncWord.getONCPredictedSyllabification().length() == 0
 					&& oncWord.getONCParserResult().length() > 0) {
 				parserResultField.getStyleClass().add("failedsyllabification");
+				fSuccess = false;
 			} else {
 				parserResultField.getStyleClass().add("successfullsyllabification");
+				fSuccess = true;
 			}
+			if (oncWord.getONCLingTreeDescription().length() == 0
+					|| oncWord.getONCLingTreeDescription().equals("(W)")) {
+				ltSVG = "";
+			} else {
+				ltInteractor.initializeParameters(languageProject);
+				ltSVG = ltInteractor.createSVG(oncWord.getONCLingTreeDescription(), fSuccess);
+			}
+			showLingTreeSVG();
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");
