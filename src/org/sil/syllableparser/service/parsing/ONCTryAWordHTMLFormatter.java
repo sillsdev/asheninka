@@ -47,7 +47,8 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		ONCSyllabifier syllabifier = traceInfo.getSyllabifier();
 		ONCSyllabifierResult sylResult = traceInfo.getSyllabifierResult();
 		if (sylResult != null) {
-			if (sylResult.success) {
+			boolean fSuccess = sylResult.success;
+			if (fSuccess) {
 				appendSuccessMessage(sb);
 				sb.append("<p class='" + SUCCESS + "'>");
 				sb.append(traceInfo.getSyllabifier().getSyllabificationOfCurrentWord());
@@ -57,11 +58,7 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 				sb.append(bundle.getString("label.shsyllabificationfailure"));
 				sb.append("</p>\n");
 			}
-			if (!StringUtilities.isNullOrEmpty(lingTreeDescription) && !lingTreeDescription.equals("(W)")) {
-				sb.append("<div style=\"text-align:left\">");
-				sb.append(ltInteractor.createSVG(lingTreeDescription, sylResult.success));
-				sb.append("</div>");
-			}
+			createSVGOfTree(sb, fSuccess);
 		}
 
 		sb.append("<p>" + formatDetailsStringWithColorWords("report.tawoncdetails") + "</p>\n");

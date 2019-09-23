@@ -92,6 +92,7 @@ public class CVTryAWordController extends TryAWordController {
 
 				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
 				traceInfo.setSegmenterResult(segResult);
+				String sLingTreeDescription = "";
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
 					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
@@ -109,10 +110,12 @@ public class CVTryAWordController extends TryAWordController {
 						CVSyllabifierResult syllabifierResult = new CVSyllabifierResult();
 						syllabifierResult.success = fSuccess;
 						traceInfo.setSyllabifierResult(syllabifierResult);
+						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
 					}
 				}
 				CVTryAWordHTMLFormatter formatter = new CVTryAWordHTMLFormatter(traceInfo, cva
 						.getLanguageProject(), locale);
+				formatter.setLingTreeDescription(sLingTreeDescription);
 				String sResult = formatter.format();
 				webEngine.loadContent(sResult);
 			}

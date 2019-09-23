@@ -217,4 +217,12 @@ public abstract class TryAWordHTMLFormatter {
 	public void setLingTreeDescription(String lingTreeDescription) {
 		this.lingTreeDescription = lingTreeDescription;
 	}
+
+	protected void createSVGOfTree(StringBuilder sb, boolean fSuccess) {
+		if (!StringUtilities.isNullOrEmpty(lingTreeDescription) && !lingTreeDescription.equals("(W)")) {
+			sb.append("<div style=\"text-align:left\">");
+			sb.append(ltInteractor.createSVG(lingTreeDescription, fSuccess));
+			sb.append("</div>");
+		}
+	}
 }

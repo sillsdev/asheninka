@@ -46,7 +46,8 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		SHSyllabifier syllabifier = traceInfo.getSyllabifier();
 		SHSyllabifierResult sylResult = traceInfo.getSyllabifierResult();
 		if (sylResult != null) {
-			if (sylResult.success) {
+			boolean fSuccess = sylResult.success;
+			if (fSuccess) {
 				appendSuccessMessage(sb);
 				sb.append("<p class='" + SUCCESS + "'>");
 				sb.append(traceInfo.getSyllabifier().getSyllabificationOfCurrentWord());
@@ -55,6 +56,7 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 				sb.append(bundle.getString("label.shsyllabificationfailure"));
 				sb.append("</p>\n");
 			}
+			createSVGOfTree(sb, fSuccess);
 		}
 
 		sb.append("<p>" + formatDetailsStringWithColorWords("report.tawshdetails") + "</p>\n");

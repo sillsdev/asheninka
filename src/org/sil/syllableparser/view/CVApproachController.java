@@ -307,6 +307,7 @@ public class CVApproachController extends ApproachController {
 					}
 					word.setCVPredictedSyllabification(syllabifier
 							.getSyllabificationOfCurrentWord());
+					word.setCVLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
 					word.setCVParserResult(sSuccess);
 				}
 				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");

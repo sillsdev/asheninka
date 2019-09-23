@@ -250,6 +250,7 @@ public class SHApproachController extends ApproachController {
 					}
 					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					fSuccess = syllabifier.syllabify(segmentsInWord);
+					word.setSHLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
 					if (!fSuccess) {
 						word.setSHParserResult(sSyllabificationFailure);
 						word.setSHPredictedSyllabification("");

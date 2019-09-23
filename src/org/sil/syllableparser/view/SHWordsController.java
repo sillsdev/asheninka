@@ -131,12 +131,8 @@ public class SHWordsController extends WordsControllerCommon {
 			correctSyllabificationField.setText(shWord.getCorrectSyllabification());
 			parserResultField.setText(shWord.getSHParserResult());
 			parserResultField.getStyleClass().clear();
-			if (shWord.getSHPredictedSyllabification().length() == 0
-					&& shWord.getSHParserResult().length() > 0) {
-				parserResultField.getStyleClass().add("failedsyllabification");
-			} else {
-				parserResultField.getStyleClass().add("successfullsyllabification");
-			}
+			showParserResultAndLingTree(shWord.getSHPredictedSyllabification(), shWord.getSHParserResult(),
+					shWord.getSHLingTreeDescription());
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");

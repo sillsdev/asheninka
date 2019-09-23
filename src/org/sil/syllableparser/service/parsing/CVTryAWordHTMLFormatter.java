@@ -71,7 +71,8 @@ public class CVTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		List<CVTraceSyllabifierInfo> syllabifierInfo = syllabifier.getSyllabifierTraceInfo();
 		CVSyllabifierResult sylResult = traceInfo.getSyllabifierResult();
 		if (sylResult != null) {
-			if (sylResult.success) {
+			boolean fSuccess = sylResult.success;
+			if (fSuccess) {
 				appendSuccessMessage(sb);
 				sb.append("<p class='" + SUCCESS + "'>");
 				sb.append(traceInfo.getSyllabifier().getSyllabificationOfCurrentWord());
@@ -80,8 +81,8 @@ public class CVTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 				sb.append(bundle.getString("label.cvsyllabificationfailure"));
 				sb.append("</p>\n");
 			}
+			createSVGOfTree(sb, fSuccess);
 		}
-		
 		sb.append("<p>" + formatDetailsStringWithColorWords("report.tawcvdetails") + "</p>\n");
 		sb.append("<div>");
 		List<CVTraceSyllabifierInfo> traceList = syllabifier.getSyllabifierTraceInfo();

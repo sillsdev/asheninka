@@ -259,4 +259,24 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		return new TextField[] { wordField, predictedSyllabificationField,
 				correctSyllabificationField, parserResultField };
 	}
+
+	protected void showParserResultAndLingTree(String sPredictedSyllabification, String sParserResult, String sLingTreeDescription) {
+		boolean fSuccess;
+		if (sPredictedSyllabification.length() == 0
+				&& sParserResult.length() > 0) {
+			parserResultField.getStyleClass().add("failedsyllabification");
+			fSuccess = false;
+		} else {
+			parserResultField.getStyleClass().add("successfullsyllabification");
+			fSuccess = true;
+		}
+		if (sLingTreeDescription.length() == 0
+				|| sLingTreeDescription.equals("(W)")) {
+			ltSVG = "";
+		} else {
+			ltInteractor.initializeParameters(languageProject);
+			ltSVG = ltInteractor.createSVG(sLingTreeDescription, fSuccess);
+		}
+		showLingTreeSVG();
+	}
 }

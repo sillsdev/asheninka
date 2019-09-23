@@ -37,7 +37,7 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
  *         a Service Takes a sequence of natural classes and parses them into a
  *         sequence of syllables
  */
-public class ONCSyllabifier {
+public class ONCSyllabifier implements Syllabifiable {
 
 	private LanguageProject languageProject;
 	private ONCApproach oncApproach;
@@ -444,6 +444,7 @@ public class ONCSyllabifier {
 		return sb.toString();
 	}
 
+	@Override
 	public String getLingTreeDescriptionOfCurrentWord() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("(W");

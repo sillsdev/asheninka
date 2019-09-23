@@ -138,12 +138,8 @@ public class CVWordsController extends WordsControllerCommon {
 			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
 			parserResultField.setText(cvWord.getCVParserResult());
 			parserResultField.getStyleClass().clear();
-			if (cvWord.getCVPredictedSyllabification().length() == 0
-					&& cvWord.getCVParserResult().length() > 0) {
-				parserResultField.getStyleClass().add("failedsyllabification");
-			} else {
-				parserResultField.getStyleClass().add("successfullsyllabification");
-			}
+			showParserResultAndLingTree(cvWord.getCVPredictedSyllabification(), cvWord.getCVParserResult(),
+					cvWord.getCVLingTreeDescription());
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");

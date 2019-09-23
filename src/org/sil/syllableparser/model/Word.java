@@ -27,6 +27,8 @@ public class Word extends SylParserObject {
 	protected StringProperty shPredictedSyllabification;
 	protected StringProperty oncParserResult;
 	protected StringProperty oncPredictedSyllabification;
+	protected StringProperty cvLingTreeDescription;
+	protected StringProperty shLingTreeDescription;
 	protected StringProperty oncLingTreeDescription;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
@@ -45,6 +47,8 @@ public class Word extends SylParserObject {
 		this.shPredictedSyllabification = new SimpleStringProperty("");
 		this.oncParserResult = new SimpleStringProperty("");
 		this.oncPredictedSyllabification = new SimpleStringProperty("");
+		this.cvLingTreeDescription = new SimpleStringProperty("");
+		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
@@ -59,6 +63,8 @@ public class Word extends SylParserObject {
 		this.shPredictedSyllabification = new SimpleStringProperty("");
 		this.oncParserResult = new SimpleStringProperty(parserResult);
 		this.oncPredictedSyllabification = new SimpleStringProperty("");
+		this.cvLingTreeDescription = new SimpleStringProperty("");
+		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
@@ -176,6 +182,37 @@ public class Word extends SylParserObject {
 		this.oncPredictedSyllabification.set(predictedSyllabification);
 	}
 
+	public StringProperty oncPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(oncPredictedSyllabificationProperty(), "\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
+	public String getCVLingTreeDescription() {
+		return cvLingTreeDescription.get();
+	}
+
+	public StringProperty cvLingTreeDescriptionProperty() {
+		return cvLingTreeDescription;
+	}
+
+	public void setCVLingTreeDescription(String ltDescription) {
+		this.cvLingTreeDescription.set(ltDescription);
+	}
+
+	public String getSHLingTreeDescription() {
+		return shLingTreeDescription.get();
+	}
+
+	public StringProperty shLingTreeDescriptionProperty() {
+		return shLingTreeDescription;
+	}
+
+	public void setSHLingTreeDescription(String ltDescription) {
+		this.shLingTreeDescription.set(ltDescription);
+	}
+
 	public String getONCLingTreeDescription() {
 		return oncLingTreeDescription.get();
 	}
@@ -186,13 +223,6 @@ public class Word extends SylParserObject {
 
 	public void setONCLingTreeDescription(String ltDescription) {
 		this.oncLingTreeDescription.set(ltDescription);
-	}
-
-	public StringProperty oncPredictedVsCorrectSyllabificationProperty() {
-		SimpleStringProperty s = new SimpleStringProperty();
-		s.bind(Bindings.concat(oncPredictedSyllabificationProperty(), "\n",
-				correctSyllabificationProperty()));
-		return s;
 	}
 
 	@Override

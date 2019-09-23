@@ -27,7 +27,7 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
  *         a Service Takes a sequence of natural classes and parses them into a
  *         sequence of syllables
  */
-public class SHSyllabifier {
+public class SHSyllabifier implements Syllabifiable {
 
 	private LanguageProject languageProject;
 	private SHApproach sonHierApproach;
@@ -184,6 +184,25 @@ public class SHSyllabifier {
 				sb.append(".");
 			}
 		}
+		return sb.toString();
+	}
+
+	@Override
+	public String getLingTreeDescriptionOfCurrentWord() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("(W");
+		for (SHSyllable syl : syllablesInCurrentWord) {
+			sb.append("(σ");
+			for (CVSegmentInSyllable seg : syl.getSegmentsInSyllable()) {
+				sb.append("(\\L ");
+				sb.append(seg.getSegmentName());
+				sb.append("(\\G ");
+				sb.append(seg.getGrapheme());
+				sb.append("))");
+			}
+			sb.append(")");
+		}
+		sb.append(")");
 		return sb.toString();
 	}
 
