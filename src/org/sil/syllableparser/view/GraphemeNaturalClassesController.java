@@ -423,6 +423,9 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 
 	@FXML
 	void handleLaunchGNCChooser() {
+		if (cvApproach == null) {
+			cvApproach = languageProject.getCVApproach();
+		}
 		showGNCChooser();
 		showGraphemeOrNaturalClassContent();
 	}
