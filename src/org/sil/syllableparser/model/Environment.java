@@ -1,24 +1,22 @@
-package org.sil.syllableparser.model;
+// Copyright (c) 2019 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
+/**
+ *
+ */package org.sil.syllableparser.model;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlIDREF;
-import javax.xml.bind.annotation.XmlList;
-import javax.xml.bind.annotation.XmlTransient;
-
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.utility.StringUtilities;
 
+/**
+ * @author Andy Black
+ *
+ * an Entity
+ */
 public class Environment extends SylParserObject {
 
 	private final StringProperty envName;
