@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->12 September 2019</date
+>24 September 2019</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -1206,7 +1206,16 @@ type="tParserResult"
 ></li
 ></ol
 ><pc
->When you click on a word in the middle pane, the same fields are shown on the right where you can edit them.</pc
+>When you click on a word in the middle pane, the same fields are shown on the right where you can edit them.  If the parse of the given word is successful, then a tree diagram of the parse is also shown as <object
+type="tParserTreeDiagram"
+></object
+>. The <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>σ</object
+> constituent indicates a syllable.  The constituents below the syllable are the natural classes used.  Below these are the segment and then its grapheme.</pc
 ><p
 >Please note that until you either manually add words to the project or until you import a set of words, the list will be empty. See <sectionRef
 sec="sWordsImport"
@@ -1423,6 +1432,14 @@ width="500"
 ></chart
 ></example
 ><pc
+>When the parse succeeds, it shows the syllabification as well as a tree diagram indicating the structure of the word parsed into its syllables.  The <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>σ</object
+> constituent indicates a syllable.  The constituents below the syllable are the natural classes used.  Below these are the segment and then its grapheme.</pc
+><p
 >In the last part, it shows which syllable patterns were tried in the order they were tried. Successful ones are shown in <object
 type="tGreen"
 ></object
@@ -1435,7 +1452,7 @@ type="tRed"
 > (and begin with a small box with a minus sign in it). Whenever a particular pattern matched the word at a particular point in the parsing process but it did not ultimately lead to a successful parse, it is shown in <object
 type="tBlue"
 ></object
-> (and begins with a small box with a plus sign in it).</pc
+> (and begins with a small box with a plus sign in it).</p
 ><p
 >To examine a particular path, click on the small box with a plus sign in it. This will expand that path and show the next set of syllable patterns tried, in the order they were tried.</p
 ><p
@@ -1860,13 +1877,16 @@ type="tCVPatternApproach"
 >, except that the <object
 type="tPredictedSyllableBreaks"
 ></object
-> values and the <object
+> values, the <object
 type="tParserResult"
 ></object
-> values are the result of the <object
+> values, and the <object
+type="tParserTreeDiagram"
+></object
+> are the result of the <object
 type="tSHApproach"
 ></object
-> algorithm. See <sectionRef
+> algorithm. In the tree diagram, there is no intervening structure between the syllable and the segment.  See <sectionRef
 sec="sCVWords"
 ></sectionRef
 > for more on this view.</p
@@ -1984,7 +2004,7 @@ term="iFailureSHSegmenter"
 >The parsing into segments part is exactly the same as it is for the <object
 type="tCVPatternApproach"
 ></object
->.</p
+>, although the tree diagram is simpler.</p
 ><p
 >Scrolling the results window down shows the last part:</p
 ><example
@@ -2523,13 +2543,31 @@ type="tCVPatternApproach"
 >, except that the <object
 type="tPredictedSyllableBreaks"
 ></object
-> values and the <object
+> values, the <object
 type="tParserResult"
 ></object
-> values are the result of the <object
+> values, and the <object
+type="tParserTreeDiagram"
+></object
+> are the result of the <object
 type="tONCApproach"
 ></object
-> algorithm. See <sectionRef
+> algorithm. If the parse fails and some word structure was built, then this partial word structure is shown by <object
+type="tParserTreeDiagram"
+></object
+>.  In the tree diagram, a syllable may have an <object
+type="tCategory"
+>O</object
+> (onset) and a required <object
+type="tCategory"
+>R</object
+> (rime) constituent.  A rime has an <object
+type="tCategory"
+>N</object
+> (nucleus) and an optional <object
+type="tCategory"
+>C</object
+> (coda) constituent.  See <sectionRef
 sec="sCVWords"
 ></sectionRef
 > for more on this view.</p
@@ -2543,7 +2581,7 @@ id="sONCPredicitedVsCorrect"
 term="iONCPredictedVsCorrect"
 ></indexedItem
 ><indexedItem
-term="iONCCompare2Implementstions"
+term="iONCPredictedSyllabificationCompare"
 ></indexedItem
 >The <object
 type="tONCPredictedVsCorrectWords"
@@ -2695,7 +2733,7 @@ num="xONCTryAWordahwiyak1"
 num="xONCTryAWordahwiyak1"
 ><chart
 ><img
-src="resources/ONCTryAWord1.png"
+src="resources/ONCTryAWord2.png"
 width="500"
 ></img
 ></chart
@@ -2707,14 +2745,32 @@ term="iFailureONCSegmenter"
 >The parsing into segments part is exactly the same as it is for the <object
 type="tCVPatternApproach"
 ></object
->.</p
+>.  If any constituent structure was built during the parse, the tree diagram is also shown. The <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>σ</object
+> constituent indicates a syllable.  A syllable may have an <object
+type="tCategory"
+>O</object
+> (onset) and a required <object
+type="tCategory"
+>R</object
+> (rime) constituent.  A rime has an <object
+type="tCategory"
+>N</object
+> (nucleus) and an optional <object
+type="tCategory"
+>C</object
+> (coda) constituent.  Below these are the segment and then its grapheme.  If the parse succeeded, then the segments and their graphemes are shown in green.  If the parse failed but some of the tree was built, then the segments and their graphemes are shown in red.</p
 ><p
 >Scrolling the results window down shows the last part:</p
 ><example
 num="xONCTryAWordahwiyak2"
 ><chart
 ><img
-src="resources/ONCTryAWord2.png"
+src="resources/ONCTryAWord3.png"
 width="500"
 ></img
 ></chart

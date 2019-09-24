@@ -425,6 +425,11 @@ id="iCVPredictedSyllabificationCompare"
 >Comparing with correct (CV)</term
 ></indexTerm
 ><indexTerm
+id="iONCPredictedSyllabificationCompare"
+><term
+>Comparing with correct (ONC)</term
+></indexTerm
+><indexTerm
 id="iSHPredictedSyllabificationCompare"
 ><term
 >Comparing with correct (Son. Hier.)</term

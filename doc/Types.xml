@@ -108,6 +108,10 @@ font-weight="bold"
 id="tButton"
 ></type
 ><type
+font-family="Courier New"
+id="tCategory"
+></type
+><type
 before="Codas Allowed"
 id="tCodasAllowed"
 ></type
@@ -260,6 +264,11 @@ id="tParatext"
 ><type
 before="Parser Result"
 id="tParserResult"
+types="tView"
+></type
+><type
+before="Tree Diagram"
+id="tParserTreeDiagram"
 types="tView"
 ></type
 ><type
