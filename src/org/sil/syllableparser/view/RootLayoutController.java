@@ -1299,11 +1299,15 @@ public class RootLayoutController implements Initializable {
 		String sLastONCApproachViewUsed = applicationPreferences.getLastONCApproachViewUsed();
 		switch (sLastONCApproachViewUsed) {
 		case "ENVIRONMENTS":
-			selectApproachViewItem(7);
+			selectApproachViewItem(9);
+			break;
+
+		case "FILTERS":
+			selectApproachViewItem(5);
 			break;
 
 		case "GRAPHEME_NATURAL_CLASSES":
-			selectApproachViewItem(6);
+			selectApproachViewItem(8);
 			break;
 
 		case "NATURAL_CLASSES":
@@ -1311,7 +1315,7 @@ public class RootLayoutController implements Initializable {
 			break;
 
 		case "PREDICTED_VS_CORRECT_WORDS":
-			selectApproachViewItem(5);
+			selectApproachViewItem(7);
 			break;
 
 		case "SEGMENT_INVENTORY":
@@ -1326,8 +1330,12 @@ public class RootLayoutController implements Initializable {
 			selectApproachViewItem(2);
 			break;
 
-		case "WORDS":
+		case "TEMPLATES":
 			selectApproachViewItem(4);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(6);
 			break;
 
 		default:

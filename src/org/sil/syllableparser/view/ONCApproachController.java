@@ -69,6 +69,8 @@ public class ONCApproachController extends ApproachController  {
 				"handleSyllabificationParameters"));
 		views.add(new ApproachView(bundle.getString("cv.view.naturalclass"),
 				"handleCVNaturalClasses"));
+		views.add(new ApproachView(bundle.getString("onc.view.templates"), "handleTemplates"));
+		views.add(new ApproachView(bundle.getString("onc.view.filters"), "handleFilters"));
 		views.add(new ApproachView(bundle.getString("onc.view.words"), "handleONCWords"));
 		views.add(new ApproachView(bundle.getString("onc.view.wordspredictedvscorrect"),
 				"handleONCWordsPredictedVsCorrect"));
@@ -103,6 +105,14 @@ public class ONCApproachController extends ApproachController  {
 
 		case "org.sil.syllableparser.view.CVNaturalClassesController":
 			sView = ONCApproachView.NATURAL_CLASSES.toString();
+			break;
+
+		case "org.sil.syllableparser.view.TemplatesController":
+			sView = ONCApproachView.TEMPLATES.toString();
+			break;
+
+		case "org.sil.syllableparser.view.FiltersController":
+			sView = ONCApproachView.FILTERS.toString();
 			break;
 
 		case "org.sil.syllableparser.view.ONCWordsController":
@@ -179,6 +189,26 @@ public class ONCApproachController extends ApproachController  {
 		controller.setData(oncApproachData.getLanguageProject().getCVApproach(),
 				ApproachType.ONSET_NUCLEUS_CODA);
 		int i = prefs.getLastONCCVNaturalClassesViewItemUsed();
+		controller.setViewItemUsed(i);
+		prefs.setLastONCApproachViewUsed(getViewUsed());
+	}
+
+	public void handleTemplates() {
+		FXMLLoader loader = createFXMLLoader("fxml/Environments.fxml");
+		EnvironmentsController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(oncApproachData);
+		int i = prefs.getLastONCTemplatesViewItemUsed();
+		controller.setViewItemUsed(i);
+		prefs.setLastONCApproachViewUsed(getViewUsed());
+	}
+
+	public void handleFilters() {
+		FXMLLoader loader = createFXMLLoader("fxml/Environments.fxml");
+		EnvironmentsController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(oncApproachData);
+		int i = prefs.getLastONCFiltersViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 	}

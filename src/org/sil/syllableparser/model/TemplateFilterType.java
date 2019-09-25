@@ -3,14 +3,18 @@
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
-package org.sil.syllableparser.model.oncapproach;
+package org.sil.syllableparser.model;
 
 /**
  * @author Andy Black
  *
  */
-public enum ONCTemplateType {
+public enum TemplateFilterType {
+	WORDFINAL,
+	WORDINITIAL,
+	SYLLABLE,
 	ONSET,
+	RIME,
 	NUCLEUS,
 	CODA,
 	UNKNOWN

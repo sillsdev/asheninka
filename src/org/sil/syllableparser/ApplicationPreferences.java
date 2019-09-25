@@ -61,6 +61,8 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_ONC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastONCGraphemeNaturalClassesViewItemUsed";
 	static final String LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED = "lastONCEnvironmentsViewItemUsed";
 	static final String LAST_ONC_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastONCCVNaturalClassesViewItemUsed";
+	static final String LAST_ONC_TEMPLATES_VIEW_ITEM_USED = "lastONCTemplatesViewItemUsed";
+	static final String LAST_ONC_FILTERS_VIEW_ITEM_USED = "lastONCFiltersViewItemUsed";
 	// We have a last item used for predicted vs. correct words, but we're not
 	// setting it because it is not clear why it would be useful. We'll use it if users
 	// request it.
@@ -302,6 +304,22 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastONCCVNaturalClassesViewItemUsed(int value) {
 		setPreferencesKey(LAST_ONC_CV_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCTemplatesViewItemUsed() {
+		return prefs.getInt(LAST_ONC_TEMPLATES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCTemplatesViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_TEMPLATES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCFiltersViewItemUsed() {
+		return prefs.getInt(LAST_ONC_FILTERS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCFiltersViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_FILTERS_VIEW_ITEM_USED, value);
 	}
 
 	public String getLastSHApproachViewUsed() {
