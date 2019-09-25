@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
@@ -22,21 +23,15 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -127,6 +122,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	private CheckBox activeCheckBox;
 
 	private CVNaturalClass currentNaturalClass;
+	private ApproachType approachType = ApproachType.CV;
 
 	public CVNaturalClassesController() {
 
@@ -276,9 +272,17 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ cvNaturalClassTable.getItems().size() + " ");
 			// remember the selection
-			mainApp.getApplicationPreferences().setLastCVNaturalClassesViewItemUsed(iCurrentIndex);
+			switch (approachType) {
+			case ONSET_NUCLEUS_CODA:
+				mainApp.getApplicationPreferences().setLastONCCVNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+			default:
+				mainApp.getApplicationPreferences().setLastCVNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+			}
 		}
-
 	}
 
 	private void showSegmentOrNaturalClassContent() {
@@ -327,12 +331,13 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 *
-	 * @param cvApproachController
+	 * @param approachType = which approach invoked this
+	 * @param cvApproachController = CV data
 	 */
-	public void setData(CVApproach cvApproachData) {
+	public void setData(CVApproach cvApproachData, ApproachType approachType) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		this.approachType = approachType;
 
 		// Add observable list data to the table
 		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
@@ -341,8 +346,18 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVNaturalClassesViewItemUsed();
+					// retrieve selection
+					int iLastIndex = 0;
+					switch (approachType) {
+					case ONSET_NUCLEUS_CODA:
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastONCCVNaturalClassesViewItemUsed();
+						break;
+					default:
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastCVNaturalClassesViewItemUsed();
+						break;
+					}
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					// select the last one used
 					cvNaturalClassTable.requestFocus();

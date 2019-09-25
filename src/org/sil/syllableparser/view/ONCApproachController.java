@@ -17,6 +17,7 @@ import org.controlsfx.control.StatusBar;
 import org.controlsfx.control.textfield.TextFields;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.ApproachView;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
@@ -66,6 +67,8 @@ public class ONCApproachController extends ApproachController  {
 				"handleONCSonorityHierarchy"));
 		views.add(new ApproachView(bundle.getString("onc.view.syllabificationparameters"),
 				"handleSyllabificationParameters"));
+		views.add(new ApproachView(bundle.getString("cv.view.naturalclass"),
+				"handleCVNaturalClasses"));
 		views.add(new ApproachView(bundle.getString("onc.view.words"), "handleONCWords"));
 		views.add(new ApproachView(bundle.getString("onc.view.wordspredictedvscorrect"),
 				"handleONCWordsPredictedVsCorrect"));
@@ -96,6 +99,10 @@ public class ONCApproachController extends ApproachController  {
 
 		case "org.sil.syllableparser.view.SyllabificationParametersController":
 			sView = ONCApproachView.SYLLABIFICATION_PARAMETERS.toString();
+			break;
+
+		case "org.sil.syllableparser.view.CVNaturalClassesController":
+			sView = ONCApproachView.NATURAL_CLASSES.toString();
 			break;
 
 		case "org.sil.syllableparser.view.ONCWordsController":
@@ -162,6 +169,17 @@ public class ONCApproachController extends ApproachController  {
 		SyllabificationParametersController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData.getLanguageProject());
+		prefs.setLastONCApproachViewUsed(getViewUsed());
+	}
+
+	public void handleCVNaturalClasses() {
+		FXMLLoader loader = createFXMLLoader("fxml/CVNaturalClasses.fxml");
+		CVNaturalClassesController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(oncApproachData.getLanguageProject().getCVApproach(),
+				ApproachType.ONSET_NUCLEUS_CODA);
+		int i = prefs.getLastONCCVNaturalClassesViewItemUsed();
+		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 	}
 

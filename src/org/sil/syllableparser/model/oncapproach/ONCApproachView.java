@@ -12,6 +12,7 @@ package org.sil.syllableparser.model.oncapproach;
 public enum ONCApproachView {
 	ENVIRONMENTS,
 	GRAPHEME_NATURAL_CLASSES,
+	NATURAL_CLASSES,
 	PREDICTED_VS_CORRECT_WORDS,
 	SEGMENT_INVENTORY,
 	SONORITY_HIERARCHY,

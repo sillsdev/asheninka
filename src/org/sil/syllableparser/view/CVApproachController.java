@@ -154,7 +154,7 @@ public class CVApproachController extends ApproachController {
 		FXMLLoader loader = createFXMLLoader("fxml/CVNaturalClasses.fxml");
 		CVNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(cvApproachData);
+		controller.setData(cvApproachData, ApproachType.CV);
 		int i = prefs.getLastCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastCVApproachViewUsed(getViewUsed());
