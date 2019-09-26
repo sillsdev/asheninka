@@ -1469,6 +1469,28 @@ public class RootLayoutController implements Initializable {
 		return sApproach;
 	}
 
+	public ApproachType getCurrentApproach() {
+		ApproachType approach = ApproachType.CV;
+		String sClass = currentApproachController.getClass().getName();
+		switch (sClass) {
+		case "org.sil.syllableparser.view.CVApproachController":
+			approach = ApproachType.CV;
+			break;
+
+		case "org.sil.syllableparser.view.SHApproachController":
+			approach = ApproachType.SONORITY_HIERARCHY;
+			break;
+
+		case "org.sil.syllableparser.view.ONCApproachController":
+			approach = ApproachType.ONSET_NUCLEUS_CODA;
+			break;
+
+		default:
+			break;
+		}
+		return approach;
+	}
+
 	public String getViewUsed() {
 		return currentApproachController.getViewUsed();
 	}

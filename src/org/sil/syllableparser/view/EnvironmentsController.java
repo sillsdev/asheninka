@@ -605,16 +605,26 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ environmentTable.getItems().size() + " ");
 			// remember the selection
-			String sApproach = this.rootController.getApproachUsed();
-			if (sApproach.equals(ApproachType.CV.name())) {
-				mainApp.getApplicationPreferences().setLastCVEnvironmentsViewItemUsed(
-						iCurrentIndex);
-			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+			ApproachType approach = this.rootController.getCurrentApproach();
+			switch (approach) {
+			case CV:
+				mainApp.getApplicationPreferences()
+						.setLastCVEnvironmentsViewItemUsed(iCurrentIndex);
+				break;
+
+			case SONORITY_HIERARCHY:
 				mainApp.getApplicationPreferences().setLastSHEnvironmentsViewItemUsed(
 						iCurrentIndex);
+				break;
+
+			case ONSET_NUCLEUS_CODA:
+				mainApp.getApplicationPreferences().setLastONCEnvironmentsViewItemUsed(
+						iCurrentIndex);
+				break;
+			default:
+				break;
 			}
 		}
-
 	}
 
 	public void setEnvironment(Environment environment) {

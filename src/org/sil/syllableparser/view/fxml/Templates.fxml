@@ -23,7 +23,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView fx:id="environmentTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="templateFilterTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
 <!--                       <TableColumn fx:id="checkBoxColumn" prefWidth="4.0"> -->
 <!--                         <graphic> -->
@@ -31,7 +31,7 @@
 <!--                         </graphic> -->
 <!--                       </TableColumn> -->
                       <TableColumn fx:id="nameColumn" prefWidth="63.0" text="%label.name" />
-                      <TableColumn fx:id="representationColumn" prefWidth="119.0" text="%label.environmentrepresentation" />
+                      <TableColumn fx:id="representationColumn" prefWidth="119.0" text="%label.templaterepresentation" />
                       <TableColumn fx:id="descriptionColumn" prefWidth="-1.0" text="%label.description" />
                     </columns>
                      <columnResizePolicy>
@@ -42,7 +42,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="383.0">
                <children>
-                  <Label layoutX="1.0" layoutY="7.0" text="%label.environments" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <Label layoutX="1.0" layoutY="7.0" text="%label.templates" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                   <GridPane layoutX="5.0" layoutY="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="35.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="70.0" />
@@ -59,14 +59,14 @@
                      <children>
                         <Label text="%label.name" GridPane.hgrow="SOMETIMES" />
                         <Label text="%label.description" GridPane.rowIndex="1" />
-                        <Label text="%label.environmentrepresentation" GridPane.rowIndex="2" />
+                        <Label text="%label.templaterepresentation" GridPane.rowIndex="2" />
                         <Label text="%label.active" GridPane.rowIndex="3" />
                         <TextField fx:id="nameField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES" />
                         <TextField fx:id="representationField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" GridPane.vgrow="SOMETIMES" />
                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="environmentErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <ComboBox fx:id="gncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="5" promptText="Choose class" />
+                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="5" promptText="Choose class" />
                      </children>
                   </GridPane>
                </children>

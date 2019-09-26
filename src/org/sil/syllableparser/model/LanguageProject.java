@@ -44,6 +44,8 @@ public class LanguageProject {
 	private HyphenationParametersXLingPaper hyphenationParametersXLingPaper;
 	private int databaseVersion;
 	private ObservableList<Environment> environments = FXCollections.observableArrayList();
+	private ObservableList<TemplateFilter> templates = FXCollections.observableArrayList();
+	private ObservableList<TemplateFilter> filters = FXCollections.observableArrayList();
 	private SyllabificationParameters syllabificationParameters;
 
 	public LanguageProject() {
@@ -73,6 +75,8 @@ public class LanguageProject {
 		words.clear();
 		environments.clear();
 		graphemeNaturalClasses.clear();
+		templates.clear();
+		filters.clear();
 	}
 
 	public int getDatabaseVersion() {
@@ -158,6 +162,16 @@ public class LanguageProject {
 				.collect(Collectors.toList());
 	}
 
+	public List<TemplateFilter> getActiveAndValidTemplates() {
+		return templates.stream().filter(template -> template.isActive() && template.isValid())
+				.collect(Collectors.toList());
+	}
+
+	public List<TemplateFilter> getActiveAndValidFilters() {
+		return filters.stream().filter(filter -> filter.isActive() && filter.isValid())
+				.collect(Collectors.toList());
+	}
+
 	/**
 	 * @return the word Data
 	 */
@@ -191,6 +205,26 @@ public class LanguageProject {
 			graphemes.addAll(segment.getGraphs());
 		}
 		return graphemes;
+	}
+
+	@XmlElementWrapper(name = "templates")
+	@XmlElement(name = "template")
+	public ObservableList<TemplateFilter> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(ObservableList<TemplateFilter> templates) {
+		this.templates = templates;
+	}
+
+	@XmlElementWrapper(name = "filters")
+	@XmlElement(name = "filter")
+	public ObservableList<TemplateFilter> getFilters() {
+		return filters;
+	}
+
+	public void setFilters(ObservableList<TemplateFilter> filters) {
+		this.filters = filters;
 	}
 
 	public String getParaTExtHyphenatedWordsPreamble() {
@@ -230,6 +264,16 @@ public class LanguageProject {
 				.getEnvironments();
 		for (Environment environment : environmentsLoadedData) {
 			environments.add(environment);
+		}
+		ObservableList<TemplateFilter> templatesLoadedData = languageProjectLoaded
+				.getTemplates();
+		for (TemplateFilter template : templatesLoadedData) {
+			templates.add(template);
+		}
+		ObservableList<TemplateFilter> filtersLoadedData = languageProjectLoaded
+				.getFilters();
+		for (TemplateFilter filter : filtersLoadedData) {
+			filters.add(filter);
 		}
 		analysisLanguage = languageProjectLoaded.getAnalysisLanguage();
 		vernacularLanguage = languageProjectLoaded.getVernacularLanguage();

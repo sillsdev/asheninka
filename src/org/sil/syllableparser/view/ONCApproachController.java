@@ -194,8 +194,8 @@ public class ONCApproachController extends ApproachController  {
 	}
 
 	public void handleTemplates() {
-		FXMLLoader loader = createFXMLLoader("fxml/Environments.fxml");
-		EnvironmentsController controller = loader.getController();
+		FXMLLoader loader = createFXMLLoader("fxml/Templates.fxml");
+		TemplatesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
 		int i = prefs.getLastONCTemplatesViewItemUsed();
@@ -204,8 +204,8 @@ public class ONCApproachController extends ApproachController  {
 	}
 
 	public void handleFilters() {
-		FXMLLoader loader = createFXMLLoader("fxml/Environments.fxml");
-		EnvironmentsController controller = loader.getController();
+		FXMLLoader loader = createFXMLLoader("fxml/Filters.fxml");
+		FiltersController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
 		int i = prefs.getLastONCFiltersViewItemUsed();
