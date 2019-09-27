@@ -24,12 +24,13 @@ import javafx.collections.ObservableList;
 public class TemplateFilter extends SylParserObject {
 
 	private final StringProperty templateFilterName;
+	private final StringProperty type;
 	private final StringProperty description;
 	private final StringProperty templateFilterRepresentation;
 	private SimpleListProperty<TemplateFilterSlotSegmentOrNaturalClass> segmentsAndNaturalClasses = 
 			new SimpleListProperty<TemplateFilterSlotSegmentOrNaturalClass>();
 	ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots = FXCollections.observableArrayList();
-	private TemplateFilterType templateFilterType = TemplateFilterType.UNKNOWN;
+	private TemplateFilterType templateFilterType = TemplateFilterType.SYLLABLE;
 
 	private boolean valid = false;
 	private final String ksSlash = "/ ";
@@ -44,15 +45,17 @@ public class TemplateFilter extends SylParserObject {
 	public TemplateFilter() {
 		super();
 		this.templateFilterName = new SimpleStringProperty("");
+		this.type = new SimpleStringProperty("");
 		this.description = new SimpleStringProperty("");
 		this.templateFilterRepresentation = new SimpleStringProperty("");
 		createUUID();
 	}
 
-	public TemplateFilter(String templateFilterName, String description, String templateFilterRepresentation,
+	public TemplateFilter(String templateFilterName, String sType, String description, String templateFilterRepresentation,
 			ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots, TemplateFilterType type) {
 		super();
 		this.templateFilterName = new SimpleStringProperty(templateFilterName);
+		this.type = new SimpleStringProperty(sType);
 		this.description = new SimpleStringProperty(description);
 		this.templateFilterRepresentation = new SimpleStringProperty(templateFilterRepresentation);
 		this.slots = slots;
@@ -70,6 +73,18 @@ public class TemplateFilter extends SylParserObject {
 
 	public void setTemplateFilterName(String templateFilterName) {
 		this.templateFilterName.set(templateFilterName);
+	}
+
+	public String getType() {
+		return type.get();
+	}
+
+	public StringProperty typeProperty() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type.set(type);
 	}
 
 	public String getDescription() {

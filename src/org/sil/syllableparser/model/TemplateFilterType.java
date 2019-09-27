@@ -10,12 +10,11 @@ package org.sil.syllableparser.model;
  *
  */
 public enum TemplateFilterType {
-	WORDFINAL,
-	WORDINITIAL,
-	SYLLABLE,
+	CODA,
+	NUCLEUS,
 	ONSET,
 	RIME,
-	NUCLEUS,
-	CODA,
-	UNKNOWN
+	SYLLABLE,
+	WORDFINAL,
+	WORDINITIAL,
 }

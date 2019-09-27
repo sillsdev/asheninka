@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.TemplateFilter;
+import org.sil.syllableparser.model.TemplateFilterType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 
@@ -35,6 +36,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 
 /**
  * @author Andy Black
@@ -100,6 +102,8 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	@FXML
 	private TableColumn<TemplateFilter, String> nameColumn;
 	@FXML
+	private TableColumn<TemplateFilter, String> typeColumn;
+	@FXML
 	private TableColumn<TemplateFilter, String> representationColumn;
 	@FXML
 	private TableColumn<TemplateFilter, String> descriptionColumn;
@@ -110,6 +114,8 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 
 	@FXML
 	private TextField nameField;
+	@FXML
+	private ComboBox<TemplateFilterType> typeComboBox;
 	@FXML
 	private TextField representationField;
 	@FXML
@@ -145,6 +151,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 
 		this.bundle = resources;
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().templateFilterNameProperty());
+		typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
 		representationColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.templateFilterRepresentationProperty());
 		descriptionColumn
@@ -152,6 +159,9 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
+			return new AnalysisWrappingTableCell();
+		});
+		typeColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
 		representationColumn.setCellFactory(column -> {
@@ -162,6 +172,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		});
 
 		makeColumnHeaderWrappable(nameColumn);
+		makeColumnHeaderWrappable(typeColumn);
 		makeColumnHeaderWrappable(representationColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
 
@@ -352,6 +363,37 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 				});
 		String sChooseClass = resources.getString("label.chooseclass");
 		sncChoicesComboBox.setPromptText(sChooseClass);
+
+		typeComboBox.setConverter(new StringConverter<TemplateFilterType>() {
+			@Override
+			public String toString(TemplateFilterType object) {
+				String localizedName = bundle.getString("templatefilter.type." + object.toString().toLowerCase());
+				if (currentTemplateFilter != null)
+					currentTemplateFilter.setType(localizedName);
+				return localizedName;
+			}
+
+			@Override
+			public TemplateFilterType fromString(String string) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+		typeComboBox.getSelectionModel().selectedItemProperty()
+		.addListener(new ChangeListener<TemplateFilterType>() {
+			@Override
+			public void changed(ObservableValue<? extends TemplateFilterType> selected,
+					TemplateFilterType oldValue, TemplateFilterType selectedValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+//						System.out.println("SelectedValue="	+ selectedValue);
+						currentTemplateFilter.setTemplateFilterType(selectedValue);
+					}
+				});
+			}
+		});
+		typeComboBox.setPromptText(resources.getString("label.choosetype"));
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -574,6 +616,9 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 			ObservableList<String> choices2 = FXCollections.observableArrayList(choices);
 			sncChoicesComboBox.setItems(choices2);
 			sncChoicesComboBox.setVisible(false);
+			typeComboBox.getItems().setAll(TemplateFilterType.values());
+			typeComboBox.getSelectionModel().select(tf.getTemplateFilterType());
+
 		} else {
 			// TemplateFilter is null, remove all the text.
 			nameField.setText("");
@@ -588,28 +633,11 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ templateFilterTable.getItems().size() + " ");
 			// remember the selection
-			ApproachType approach = this.rootController.getCurrentApproach();
-			switch (approach) {
-			case CV:
-				mainApp.getApplicationPreferences()
-						.setLastCVEnvironmentsViewItemUsed(iCurrentIndex);
-				break;
-			
-			case SONORITY_HIERARCHY:
-				mainApp.getApplicationPreferences().setLastSHEnvironmentsViewItemUsed(
-						iCurrentIndex);
-				break;
-				
-			case ONSET_NUCLEUS_CODA:
-				mainApp.getApplicationPreferences().setLastONCEnvironmentsViewItemUsed(
-						iCurrentIndex);
-				break;
-			default:
-				break;
-			}
+			rememberSelection(iCurrentIndex);
 		}
-
 	}
+
+	protected abstract void rememberSelection(int iCurrentIndex);
 
 	public void setTemplateFilter(TemplateFilter templateFilter) {
 		nameField.setText(templateFilter.getTemplateFilterName());

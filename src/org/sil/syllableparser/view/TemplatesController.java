@@ -19,4 +19,9 @@ public class TemplatesController extends TemplatesFiltersController {
 		contentList = languageProject.getTemplates();
 		super.setData(oncApproachData);
 	}
+
+	protected void rememberSelection(int iCurrentIndex) {
+		mainApp.getApplicationPreferences().setLastONCTemplatesViewItemUsed(
+				iCurrentIndex);
+	}
 }
