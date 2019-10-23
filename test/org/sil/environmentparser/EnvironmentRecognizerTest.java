@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -27,8 +27,8 @@ import org.sil.environmentparser.CheckGraphemeAndClassListener;
 import org.sil.environmentparser.EnvironmentConstants;
 import org.sil.environmentparser.EnvironmentErrorInfo;
 import org.sil.environmentparser.EnvironmentErrorListener;
-import org.sil.environmentparser.EnvironmentLexer;
-import org.sil.environmentparser.EnvironmentParser;
+import org.sil.environmentparser.antlr4generated.EnvironmentLexer;
+import org.sil.environmentparser.antlr4generated.EnvironmentParser;
 import org.sil.environmentparser.GraphemeErrorInfo;
 import org.sil.environmentparser.EnvironmentErrorListener.VerboseListener;
 

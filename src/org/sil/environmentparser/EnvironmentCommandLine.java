@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -10,6 +10,8 @@ package org.sil.environmentparser;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
+import org.sil.environmentparser.antlr4generated.EnvironmentLexer;
+import org.sil.environmentparser.antlr4generated.EnvironmentParser;
 
 public class EnvironmentCommandLine {
 	

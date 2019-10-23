@@ -32,8 +32,8 @@ import org.sil.environmentparser.EnvironmentErrorInfo;
 import org.sil.environmentparser.EnvironmentErrorListener;
 import org.sil.environmentparser.GraphemeErrorInfo;
 import org.sil.environmentparser.EnvironmentErrorListener.VerboseListener;
-import org.sil.environmentparser.EnvironmentLexer;
-import org.sil.environmentparser.EnvironmentParser;
+import org.sil.environmentparser.antlr4generated.EnvironmentLexer;
+import org.sil.environmentparser.antlr4generated.EnvironmentParser;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -11,7 +11,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.sil.environmentparser.antlr4generated.EnvironmentBaseListener;
+import org.sil.environmentparser.antlr4generated.EnvironmentParser;
 
 public class CheckGraphemeAndClassListener extends EnvironmentBaseListener {
 	protected EnvironmentParser parser;

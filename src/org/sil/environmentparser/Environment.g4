@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------
-// Copyright (c) 2017 SIL International
+// Copyright (c) 2017-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 //
@@ -15,7 +15,7 @@
 grammar Environment;
 
 @header {
-	package org.sil.environmentparser;
+	package org.sil.environmentparser.antlr4generated;
 }
 environment : '/'             '_' rightContext EOF
 			| '/' leftContext '_'              EOF
