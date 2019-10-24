@@ -1,22 +1,22 @@
-// Copyright (c) 2016-2017 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
  * @author Andy Black
  * 
  */
-package org.sil.environmentparser;
+package org.sil.antlr4;
 
 import org.antlr.v4.runtime.RecognitionException;
 
-public class EnvironmentErrorInfo {
+public class CommonErrorInfo {
 		Object offendingSymbol;
         int line;
         int charPositionInLine;
         String msg;
         RecognitionException e;
 		
-        public EnvironmentErrorInfo(Object offendingSymbol, int line, int charPositionInLine, String msg,
+        public CommonErrorInfo(Object offendingSymbol, int line, int charPositionInLine, String msg,
 				RecognitionException e) {
 			super();
 			this.offendingSymbol = offendingSymbol;
@@ -26,7 +26,7 @@ public class EnvironmentErrorInfo {
 			this.e = e;
 		}
 
-		public EnvironmentErrorInfo() {
+		public CommonErrorInfo() {
 			this.offendingSymbol = null;
 			this.line = -1;
 			this.charPositionInLine = -1;

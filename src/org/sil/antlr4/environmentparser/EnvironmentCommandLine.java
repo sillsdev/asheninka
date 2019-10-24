@@ -6,12 +6,12 @@
  * 
  */
 
-package org.sil.environmentparser;
+package org.sil.antlr4.environmentparser;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
-import org.sil.environmentparser.antlr4generated.EnvironmentLexer;
-import org.sil.environmentparser.antlr4generated.EnvironmentParser;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentLexer;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
 public class EnvironmentCommandLine {
 	

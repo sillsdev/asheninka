@@ -14,10 +14,9 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.EnvironmentContextGraphemeOrNaturalClass;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
-
-import org.sil.environmentparser.CheckGraphemeAndClassListener;
-import org.sil.environmentparser.antlr4generated.EnvironmentParser;
-import org.sil.environmentparser.GraphemeErrorInfo;
+import org.sil.antlr4.environmentparser.CheckGraphemeAndClassListener;
+import org.sil.antlr4.environmentparser.GraphemeErrorInfo;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
 public class AsheninkaGraphemeAndClassListener extends CheckGraphemeAndClassListener {
 

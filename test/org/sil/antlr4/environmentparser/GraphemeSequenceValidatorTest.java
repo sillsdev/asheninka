@@ -5,7 +5,7 @@
  * @author Andy Black
  * 
  */
-package org.sil.environmentparser;
+package org.sil.antlr4.environmentparser;
 
 import static org.junit.Assert.*;
 
@@ -15,8 +15,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.sil.environmentparser.GraphemeSequenceValidator;
+import org.sil.antlr4.environmentparser.GraphemeSequenceValidator;
 
 public class GraphemeSequenceValidatorTest {
 	List<String> graphemesMasterList = Arrays.asList("a", "ai", "b", "c", "d", "e", "f", "fl",

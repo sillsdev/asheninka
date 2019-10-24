@@ -5,7 +5,7 @@
  * @author Andy Black
  * 
  */
-package org.sil.environmentparser;
+package org.sil.antlr4.environmentparser;
 
 import static org.junit.Assert.*;
 
@@ -22,15 +22,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
-
-import org.sil.environmentparser.CheckGraphemeAndClassListener;
-import org.sil.environmentparser.EnvironmentConstants;
-import org.sil.environmentparser.EnvironmentErrorInfo;
-import org.sil.environmentparser.EnvironmentErrorListener;
-import org.sil.environmentparser.antlr4generated.EnvironmentLexer;
-import org.sil.environmentparser.antlr4generated.EnvironmentParser;
-import org.sil.environmentparser.GraphemeErrorInfo;
-import org.sil.environmentparser.EnvironmentErrorListener.VerboseListener;
+import org.sil.antlr4.environmentparser.CheckGraphemeAndClassListener;
+import org.sil.antlr4.environmentparser.EnvironmentConstants;
+import org.sil.antlr4.environmentparser.EnvironmentErrorInfo;
+import org.sil.antlr4.environmentparser.EnvironmentErrorListener;
+import org.sil.antlr4.environmentparser.GraphemeErrorInfo;
+import org.sil.antlr4.environmentparser.EnvironmentErrorListener.VerboseListener;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentLexer;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
 public class EnvironmentRecognizerTest {
 

@@ -27,7 +27,7 @@ import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-import org.sil.environmentparser.antlr4generated.EnvironmentParser;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
 public class EnvironmentContextsBuilderTest extends EnvironmentParsingBase {
 

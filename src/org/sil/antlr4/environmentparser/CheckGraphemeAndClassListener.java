@@ -5,7 +5,7 @@
  * @author Andy Black
  * 
  */
-package org.sil.environmentparser;
+package org.sil.antlr4.environmentparser;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.sil.environmentparser.antlr4generated.EnvironmentBaseListener;
-import org.sil.environmentparser.antlr4generated.EnvironmentParser;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentBaseListener;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
 public class CheckGraphemeAndClassListener extends EnvironmentBaseListener {
 	protected EnvironmentParser parser;
