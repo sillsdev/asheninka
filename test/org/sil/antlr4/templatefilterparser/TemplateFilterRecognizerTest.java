@@ -54,34 +54,58 @@ public class TemplateFilterRecognizerTest {
 	public void validTemplateFiltersTest() {
 		checkValidTemplateFilter("a"); // segment
 		checkValidTemplateFilter("b");
+		checkValidTemplateFilter("*a"); // -ssp segment
+		checkValidTemplateFilter("*b");
+		checkValidTemplateFilter("* a");
+		checkValidTemplateFilter("* b");
 		checkValidTemplateFilter("a b");
 		checkValidTemplateFilter("a b ai d");
 		checkValidTemplateFilter("a b a b");
+		checkValidTemplateFilter("*a b");
+		checkValidTemplateFilter("a *b ai *d");
+		checkValidTemplateFilter("a b *a *b");
 		checkValidTemplateFilter("ab"); // segments without intervening spaces
 		checkValidTemplateFilter("ab ab");
 		checkValidTemplateFilter("abab");
 		checkValidTemplateFilter("flaid");
 		checkValidTemplateFilter("flaidflaid");
+		checkValidTemplateFilter("a*b");
+		checkValidTemplateFilter("ab* a*b");
+		checkValidTemplateFilter("ab*a*b");
+		checkValidTemplateFilter("fl*aid");
+		checkValidTemplateFilter("f*lai*dfl*aid");
 		checkValidTemplateFilter("(a) b"); // optionality
 		checkValidTemplateFilter("(a)b");
 		checkValidTemplateFilter("(c) d (a) b");
-		checkValidTemplateFilter("(f) (fl)");
-		checkValidTemplateFilter("(d) (c)");
-		checkValidTemplateFilter("(f) (fl) (d) (c)");
+		checkValidTemplateFilter("(*a) *b");
+		checkValidTemplateFilter("(a)*b");
+		checkValidTemplateFilter("(c) *d (*a) b");
+		checkValidTemplateFilter("(f) f*l");
+		checkValidTemplateFilter("d (*c)");
+		checkValidTemplateFilter("(f) (*fl) d (*c)");
 		checkValidTemplateFilter("[V]"); // Natural Classes
 		checkValidTemplateFilter("[V] [V]");
+		checkValidTemplateFilter("*[V]");
+		checkValidTemplateFilter("*[V] [V]");
 		checkValidTemplateFilter("[+lab, +vd]"); // Natural Classes with
 											  	 // spaces in the name
 		checkValidTemplateFilter("[+lab, +vd] [+lab, +vd]");
 		checkValidTemplateFilter("[+ant, -cor, -vd]");
 		checkValidTemplateFilter("[+ant, -cor, -vd][+ant, -cor, -vd]");
+		checkValidTemplateFilter("*[+lab, +vd] * [+lab, +vd]");
+		checkValidTemplateFilter("*[+ant, -cor, -vd]");
+		checkValidTemplateFilter("*[+ant, -cor, -vd]*[+ant, -cor, -vd]");
 		checkValidTemplateFilter("([C]) [V]"); // Natural Classes with
 											   // optionality
 		checkValidTemplateFilter("([C])[V]");
 		checkValidTemplateFilter("[V] ([C])([C]) [V]");
 		checkValidTemplateFilter("([V]) b fr [C] a (c)"); // Combo
+		checkValidTemplateFilter("(*[C])*[V]");
+		checkValidTemplateFilter("[V] (*[C])([C]) *[V]");
+		checkValidTemplateFilter("([V]) b *fr [C] a (*c)"); // Combo
 		checkValidTemplateFilter("\u00ED"); // single combined Unicode acute i
 												// (í)
+		checkValidTemplateFilter("*\u00ED");
 		checkValidTemplateFilter("i\u0301"); // Unicode i followed by combining
 												// acute (í)
 		checkValidTemplateFilter("H");
@@ -96,7 +120,7 @@ public class TemplateFilterRecognizerTest {
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
-		// begin parsing at rule 'environment'
+		// begin parsing at rule 'description'
 		ParseTree tree = parser.description();
 		int numErrors = parser.getNumberOfSyntaxErrors();
 		ParseTreeWalker walker = new ParseTreeWalker(); // create standard
@@ -104,6 +128,7 @@ public class TemplateFilterRecognizerTest {
 		CheckSegmentAndClassListener validator = new CheckSegmentAndClassListener(parser,
 				segmentsMasterList, classesMasterList);
 		walker.walk(validator, tree); // initiate walk of tree with listener
+		assertEquals(true, validator.isObligatorySegmentFound());
 		return numErrors;
 	}
 
@@ -119,45 +144,59 @@ public class TemplateFilterRecognizerTest {
 		VerboseListener errListener = new TemplateFilterErrorListener.VerboseListener();
 		errListener.clearErrorMessageList();
 		parser.addErrorListener(errListener);
-		// begin parsing at rule 'environment'
+		// begin parsing at rule 'description'
 		ParseTree tree = parser.description();
 		//int iNumErrors = parser.getNumberOfSyntaxErrors();
-		// List<EnvironmentErrorInfo> errors = errListener.getErrorMessages();
-		// System.out.println(errors.size());
-		// String sTree = tree.toStringTree(parser);
+//		List<TemplateFilterErrorInfo> errors = errListener.getErrorMessages();
+//		System.out.println(errors.size());
+//		String sTree = tree.toStringTree(parser);
+//		System.out.println("tree=" + sTree);
 		return parser;
 	}
 
 	@Test
 	public void invalidTemplateFiltersTest() {
-		// missing closing paren
-		checkInvalidTemplateFilter("(", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 1);
 		// missing segment or class
+		checkInvalidTemplateFilter("*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 1);
+		checkInvalidTemplateFilter("(", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 1);
 		checkInvalidTemplateFilter("()", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 2, 1);
+		checkInvalidTemplateFilter("(*", TemplateFilterConstants.MISSING_CLOSING_PAREN, 2, 2);
+		checkInvalidTemplateFilter("(*)", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 2, 1);
 		// missing closing paren
 		checkInvalidTemplateFilter("(a", TemplateFilterConstants.MISSING_CLOSING_PAREN, 2, 1);
+		checkInvalidTemplateFilter("(*a", TemplateFilterConstants.MISSING_CLOSING_PAREN, 3, 1);
 		// missing opening paren
 		checkInvalidTemplateFilter("a)", TemplateFilterConstants.MISSING_OPENING_PAREN, 2, 1);
+		checkInvalidTemplateFilter("*a)", TemplateFilterConstants.MISSING_OPENING_PAREN, 3, 1);
 		// missing class
 		checkInvalidTemplateFilter("[", TemplateFilterConstants.MISSING_CLASS_AFTER_OPENING_SQUARE_BRACKET, 1, 1);
 		// missing class
 		checkInvalidTemplateFilter("[]", TemplateFilterConstants.MISSING_CLASS_AFTER_OPENING_SQUARE_BRACKET, 2, 1);
 		// missing closing bracket
 		checkInvalidTemplateFilter("[C", TemplateFilterConstants.MISSING_CLOSING_SQUARE_BRACKET, 2, 1);
+		checkInvalidTemplateFilter("*[C", TemplateFilterConstants.MISSING_CLOSING_SQUARE_BRACKET, 3, 1);
 		// missing opening bracket
 		checkInvalidTemplateFilter(" ]", TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET, 2, 1);
 		// missing opening bracket
 		checkInvalidTemplateFilter(" C]", TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET, 3, 1);
-		// missing closing bracket
-		checkInvalidTemplateFilter("[C", TemplateFilterConstants.MISSING_CLOSING_SQUARE_BRACKET, 2, 1);
 		// missing closing bracket before closing paren
 		checkInvalidTemplateFilter("([C)", TemplateFilterConstants.MISSING_CLOSING_SQUARE_BRACKET, 3, 1);
+		checkInvalidTemplateFilter("(*[C)", TemplateFilterConstants.MISSING_CLOSING_SQUARE_BRACKET, 4, 1);
 		// missing closing paren after closing bracket
 		checkInvalidTemplateFilter("([C]", TemplateFilterConstants.MISSING_CLOSING_PAREN, 4, 1);
+		checkInvalidTemplateFilter("(*[C]", TemplateFilterConstants.MISSING_CLOSING_PAREN, 5, 1);
 		// missing opening bracket and missing closing paren
 		checkInvalidTemplateFilter("(C]", TemplateFilterConstants.MISSING_CLOSING_PAREN, 3, 2);
 		// missing closing bracket and closing paren
 		checkInvalidTemplateFilter("([C", TemplateFilterConstants.MISSING_CLOSING_PAREN, 3, 2);
+		checkInvalidTemplateFilter("(*[C", TemplateFilterConstants.MISSING_CLOSING_PAREN, 4, 2);
+		// asterisk in wrong position
+		checkInvalidTemplateFilter("a*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 2, 1);
+		checkInvalidTemplateFilter("(a*)", TemplateFilterConstants.MISSING_OPENING_PAREN, 4, 3);
+		checkInvalidTemplateFilter("(a)*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 4, 1);
+		checkInvalidTemplateFilter("[*C]", TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET, 4, 2);
+		checkInvalidTemplateFilter("[C*]", TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET, 4, 2);
+		checkInvalidTemplateFilter("[C]*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 4, 1);		
 	}
 
 	private void checkInvalidTemplateFilter(String sDesc, String sFailedPortion, int iPos,
@@ -195,7 +234,7 @@ public class TemplateFilterRecognizerTest {
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
-		// begin parsing at rule 'environment'
+		// begin parsing at rule 'description'
 		ParseTree tree = parser.description();
 		ParseTreeWalker walker = new ParseTreeWalker(); // create standard
 														// walker
@@ -236,5 +275,30 @@ public class TemplateFilterRecognizerTest {
 			assertEquals(sFailedPortion, sMsg);
 		}
 	}
+
+	@Test
+	public void validSyntaxButAllOptionalTemplateFilterTest() {
+		checkValidSyntaxButAllOptional("(t) ");
+		checkValidSyntaxButAllOptional("(fr) (a) (g) (e)");
+		checkValidSyntaxButAllOptional("( [+lab])");
+		checkValidSyntaxButAllOptional("([X]) (e) ([Y])");
+	}
+
+	private void checkValidSyntaxButAllOptional(String sInput) {
+		CharStream input = CharStreams.fromString(sInput);
+		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		TemplateFilterParser parser = new TemplateFilterParser(tokens);
+		// begin parsing at rule 'description'
+		ParseTree tree = parser.description();
+		int numErrors = parser.getNumberOfSyntaxErrors();
+		ParseTreeWalker walker = new ParseTreeWalker(); // create standard
+														// walker
+		CheckSegmentAndClassListener validator = new CheckSegmentAndClassListener(parser,
+				segmentsMasterList, classesMasterList);
+		walker.walk(validator, tree); // initiate walk of tree with listener
+		assertEquals(false, validator.isObligatorySegmentFound());
+	}
+
 
 }

@@ -18,6 +18,7 @@ import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterParser;
 
 public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 	protected TemplateFilterParser parser;
+	protected boolean obligatorySegmentFound = false;
 
 	protected List<String> segmentsMasterList;
 	protected List<String> classesMasterList;
@@ -32,6 +33,13 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 		this.segmentsMasterList = segmentsMasterList;
 		this.classesMasterList = classesMasterList;
 		validator = new SegmentSequenceValidator(segmentsMasterList);
+	}
+
+	@Override
+	public void exitTerm(TemplateFilterParser.TermContext ctx) {
+		if (ctx.segment() != null) {
+			obligatorySegmentFound = true;
+		}
 	}
 
 	@Override
@@ -81,5 +89,9 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 
 	public LinkedList<String> getBadClasses() {
 		return badClasses;
+	}
+
+	public boolean isObligatorySegmentFound() {
+		return obligatorySegmentFound;
 	}
 }

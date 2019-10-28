@@ -15,7 +15,7 @@
 grammar TemplateFilter;
 
 @header {
-	package org.sil.templatefilterparser.antlr4generated;
+	package org.sil.antlr4.templatefilterparser.antlr4generated;
 }
 
 description : termSequence
@@ -40,6 +40,7 @@ segment : '*' natClass
 		| natClass
 		| '*' literal
 		| literal
+		| '*'			{notifyErrorListeners("missingClassOrSegment");}
 		;
 		
 natClass : '[' ID+ ']'
