@@ -527,7 +527,6 @@ public class EnvironmentContextsBuilderTest extends EnvironmentParsingBase {
 		if (iMatches > 0) {
 			GraphemeNaturalClass gnClassFound = matches.get(0);
 			gnc.setGraphemeNaturalClass(gnClassFound);
-			gnc.setGraphemeNaturalClass(matches.get(0));
 			GraphemeNaturalClass gnClassStored = gnc.getGraphemeNaturalClass();
 			assertEquals(gnClassFound.getID(), gnClassStored.getID());
 		}

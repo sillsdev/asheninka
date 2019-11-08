@@ -157,6 +157,7 @@ public class TemplateFilterRecognizerTest {
 	@Test
 	public void invalidTemplateFiltersTest() {
 		// missing segment or class
+		checkInvalidTemplateFilter("", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 0, 1);
 		checkInvalidTemplateFilter("*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 1);
 		checkInvalidTemplateFilter("(", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 1);
 		checkInvalidTemplateFilter("()", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 2, 1);

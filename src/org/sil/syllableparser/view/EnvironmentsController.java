@@ -661,6 +661,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 
@@ -687,6 +688,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 

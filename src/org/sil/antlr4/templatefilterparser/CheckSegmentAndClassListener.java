@@ -15,12 +15,14 @@ import java.util.stream.Collectors;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterBaseListener;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterParser;
+import org.sil.syllableparser.model.Segment;
 
 public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 	protected TemplateFilterParser parser;
 	protected boolean obligatorySegmentFound = false;
 
-	protected List<String> segmentsMasterList;
+	protected List<String> segmentsAsStringMasterList;
+	protected List<Segment> segmentsMasterList;
 	protected List<String> classesMasterList;
 	protected LinkedList<SegmentErrorInfo> badSegments = new LinkedList<SegmentErrorInfo>(Arrays.asList());
 	protected LinkedList<String> badClasses = new LinkedList<String>(Arrays.asList());
@@ -30,7 +32,7 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 			List<String> segmentsMasterList, List<String> classesMasterList) {
 		super();
 		this.parser = parser;
-		this.segmentsMasterList = segmentsMasterList;
+		this.segmentsAsStringMasterList = segmentsMasterList;
 		this.classesMasterList = classesMasterList;
 		validator = new SegmentSequenceValidator(segmentsMasterList);
 	}
@@ -45,7 +47,7 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 	@Override
 	public void enterLiteral(TemplateFilterParser.LiteralContext ctx) {
 		String sSegment = ctx.ID().getText();
-		if (!segmentsMasterList.contains(sSegment)) {
+		if (!segmentsAsStringMasterList.contains(sSegment)) {
 			boolean fSequenceFound = validator.findSequenceOfSegments(sSegment);
 			if (!fSequenceFound) {
 				int iMaxDepth = validator.getMaxDepth();
@@ -67,12 +69,21 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 		}
 	}
 
-	public List<String> getSegmentsMasterList() {
+	public List<String> getSegmentsAsStringsMasterList() {
+		return segmentsAsStringMasterList;
+	}
+
+	public void setSegmentsAsStringsMasterList(List<String> segmentsMasterList) {
+		this.segmentsAsStringMasterList = segmentsMasterList;
+	}
+
+	public List<Segment> getSegmentsMasterList() {
 		return segmentsMasterList;
 	}
 
-	public void setSegmentsMasterList(List<String> segmentsMasterList) {
+	public void setSegmentsMasterList(List<Segment> segmentsMasterList) {
 		this.segmentsMasterList = segmentsMasterList;
+		validator.setSegmentsMasterList(segmentsMasterList);
 	}
 
 	public List<String> getClassesMasterList() {

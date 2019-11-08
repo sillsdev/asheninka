@@ -19,6 +19,7 @@ grammar TemplateFilter;
 }
 
 description : termSequence
+			| EOF {notifyErrorListeners("missingClassOrSegment");}
 	 ;
 
 termSequence : term
@@ -36,12 +37,15 @@ optionalSegment : '(' segment ')'
 				|     segment ')' {notifyErrorListeners("missingOpeningParen");}
 				;
 				
-segment : '*' natClass
+segment : ssp natClass
 		| natClass
-		| '*' literal
+		| ssp literal
 		| literal
-		| '*'			{notifyErrorListeners("missingClassOrSegment");}
+		| ssp			{notifyErrorListeners("missingClassOrSegment");}
 		;
+
+ssp : '*'
+	;
 		
 natClass : '[' ID+ ']'
  	      | '[' ID      {notifyErrorListeners("missingClosingSquareBracket");}

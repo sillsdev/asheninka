@@ -7,16 +7,33 @@
 package org.sil.syllableparser.view;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.sil.antlr4.environmentparser.GraphemeErrorInfo;
+import org.sil.antlr4.templatefilterparser.SegmentErrorInfo;
+import org.sil.antlr4.templatefilterparser.TemplateFilterConstants;
+import org.sil.antlr4.templatefilterparser.TemplateFilterErrorInfo;
+import org.sil.antlr4.templatefilterparser.TemplateFilterErrorListener;
+import org.sil.antlr4.templatefilterparser.TemplateFilterErrorListener.VerboseListener;
+import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterLexer;
+import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterParser;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.ApproachType;
+import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.service.AsheninkaSegmentAndClassListener;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -46,7 +63,7 @@ import javafx.util.StringConverter;
 public abstract class TemplatesFiltersController extends SylParserBaseController implements Initializable {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<TemplateFilter, String> {
-		private Text text;
+		protected Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
@@ -72,7 +89,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	}
 
 	protected final class VernacularWrappingTableCell extends TableCell<TemplateFilter, String> {
-		private Text text;
+		protected Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
@@ -100,32 +117,32 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	@FXML
 	protected TableView<TemplateFilter> templateFilterTable;
 	@FXML
-	private TableColumn<TemplateFilter, String> nameColumn;
+	protected TableColumn<TemplateFilter, String> nameColumn;
 	@FXML
-	private TableColumn<TemplateFilter, String> typeColumn;
+	protected TableColumn<TemplateFilter, String> typeColumn;
 	@FXML
-	private TableColumn<TemplateFilter, String> representationColumn;
+	protected TableColumn<TemplateFilter, String> representationColumn;
 	@FXML
-	private TableColumn<TemplateFilter, String> descriptionColumn;
+	protected TableColumn<TemplateFilter, String> descriptionColumn;
 	@FXML
-	private TableColumn<TemplateFilter, Boolean> checkBoxColumn;
+	protected TableColumn<TemplateFilter, Boolean> checkBoxColumn;
 	@FXML
-	private CheckBox checkBoxColumnHead;
+	protected CheckBox checkBoxColumnHead;
 
 	@FXML
-	private TextField nameField;
+	protected TextField nameField;
 	@FXML
-	private ComboBox<TemplateFilterType> typeComboBox;
+	protected ComboBox<TemplateFilterType> typeComboBox;
 	@FXML
-	private TextField representationField;
+	protected TextField representationField;
 	@FXML
-	private TextField descriptionField;
+	protected TextField descriptionField;
 	@FXML
-	private CheckBox activeCheckBox;
+	protected CheckBox activeCheckBox;
 	@FXML
-	private Label slotsErrorMessage;
+	protected Label slotsErrorMessage;
 	@FXML
-	private ComboBox<String> sncChoicesComboBox;
+	protected ComboBox<String> sncChoicesComboBox;
 
 	protected TemplateFilter currentTemplateFilter;
 	protected int iRepresentationCaretPosition = 6;
@@ -407,7 +424,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 
 	}
 
-	private void updateRepresentationFieldPerClassChoice(String selectedValue) {
+	protected void updateRepresentationFieldPerClassChoice(String selectedValue) {
 		if (selectedValue != null) {
 			String sLeftOfCaret = representationField.getText().substring(0,
 					iRepresentationCaretPosition);
@@ -418,150 +435,121 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		}
 	}
 
-	private boolean parseSlotsRepresentation(String sRep) {
-		return false;
-//		CharStream input = CharStreams.fromString(sRep);
-//		EnvironmentLexer lexer = new EnvironmentLexer(input);
-//		CommonTokenStream tokens = new CommonTokenStream(lexer);
-//		EnvironmentParser parser = new EnvironmentParser(tokens);
-//		parser.removeErrorListeners();
-//		VerboseListener errListener = new EnvironmentErrorListener.VerboseListener();
-//		errListener.clearErrorMessageList();
-//		parser.addErrorListener(errListener);
-//		ParseTree tree = parser.environment();
-//		int iNumErrors = parser.getNumberOfSyntaxErrors();
-//		if (iNumErrors > 0) {
-//			reportEnvironmentSyntaxError(errListener, iNumErrors);
-//			return false;
-//		}
-//
-//		return buildEnvironmentContexts(parser, tree);
+	protected boolean parseSlotsRepresentation(String sRep) {
+		CharStream input = CharStreams.fromString(sRep);
+		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		TemplateFilterParser parser = new TemplateFilterParser(tokens);
+		parser.removeErrorListeners();
+		VerboseListener errListener = new TemplateFilterErrorListener.VerboseListener();
+		errListener.clearErrorMessageList();
+		parser.addErrorListener(errListener);
+		ParseTree tree = parser.description();
+		int iNumErrors = parser.getNumberOfSyntaxErrors();
+		if (iNumErrors > 0) {
+			reportTemplateFilterSyntaxError(errListener, iNumErrors);
+			return false;
+		}
+
+		return buildTemplateFilter(parser, tree);
 
 	}
 
-//	private boolean buildEnvironmentContexts(EnvironmentParser parser, ParseTree tree) {
-//		ParseTreeWalker walker = new ParseTreeWalker();
-//		List<String> graphemes = this.languageProject.getActiveGraphemes().stream()
-//				.map(Grapheme::getForm).collect(Collectors.toList());
-//		List<String> graphemeNaturalClasses = this.languageProject
-//				.getActiveGraphemeNaturalClasses().stream().map(GraphemeNaturalClass::getNCName)
-//				.collect(Collectors.toList());
-//		AsheninkaGraphemeAndClassListener validator = new AsheninkaGraphemeAndClassListener(parser,
-//				graphemes, graphemeNaturalClasses);
-//		validator.setClasses(languageProject.getActiveGraphemeNaturalClasses());
-//		validator.setEnvironment(currentTemplateFilter);
-//		validator.setCheckForReduplication(false);
-//		walker.walk(validator, tree); // initiate walk of tree with listener
-//		parser.removeParseListeners();
-//		parser.addParseListener(validator);
-//		AsheninkaGraphemeAndClassListener listener = (AsheninkaGraphemeAndClassListener) parser
-//				.getParseListeners().get(0);
-//		String sMessage = "";
-//		sMessage = buildAnyMissingItems(listener, sMessage);
-//		if (sMessage.length() > 0) {
-//			slotsErrorMessage.setText(sMessage);
-//			return false;
-//		}
-//		TemplateFilter env = validator.getEnvironment();
-//		currentTemplateFilter.setLeftContext(env.getLeftContext());
-//		currentTemplateFilter.setRightContext(env.getRightContext());
-//		return true;
-//	}
+	protected boolean buildTemplateFilter(TemplateFilterParser parser, ParseTree tree) {
+		ParseTreeWalker walker = new ParseTreeWalker();
+		List<String> segments = this.languageProject.getActiveSegmentsInInventory()
+				.stream().map(Segment::getSegment)
+				.collect(Collectors.toList());
+		List<String> naturalClasses = this.languageProject.getCVApproach().getActiveCVNaturalClasses()
+				.stream().map(CVNaturalClass::getNCName)
+				.collect(Collectors.toList());
+		AsheninkaSegmentAndClassListener validator = new AsheninkaSegmentAndClassListener(parser,
+				segments, naturalClasses);
+		validator.setupSegmentsMasterList(languageProject.getActiveSegmentsInInventory());
+		validator.setClasses(languageProject.getCVApproach().getActiveCVNaturalClasses());
+		validator.setTemplateFilter(currentTemplateFilter);
+		walker.walk(validator, tree); // initiate walk of tree with listener
+		parser.removeParseListeners();
+		parser.addParseListener(validator);
+		AsheninkaSegmentAndClassListener listener = (AsheninkaSegmentAndClassListener) parser
+				.getParseListeners().get(0);
+		String sMessage = "";
+		sMessage = buildAnyMissingItems(listener, sMessage);
+		if (sMessage.length() > 0) {
+			slotsErrorMessage.setText(sMessage);
+			return false;
+		}
+		TemplateFilter tf = validator.getTemplateFilter();
+		currentTemplateFilter.setSlots(tf.getSlots());
+		return true;
+	}
 
-//	private String buildAnyMissingItems(AsheninkaGraphemeAndClassListener listener, String sMessage) {
-//		List<GraphemeErrorInfo> badGraphemes = listener.getBadGraphemes();
-//		int iBadGraphemes = badGraphemes.size();
-//		if (iBadGraphemes > 0) {
-//			String sMsg = badGraphemes.stream().map(GraphemeErrorInfo::getGrapheme)
-//					.collect(Collectors.joining(", "));
-//			Optional<GraphemeErrorInfo> info = badGraphemes.stream().collect(
-//					Collectors.maxBy(Comparator.comparing(GraphemeErrorInfo::getMaxDepth)));
-//			int iMax = (info.isPresent() ? info.get().getMaxDepth() : -1);
-//			String sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.unknowngrapheme");
-//			sMessage = sSyntaxErrorMessage.replace("{0}", sMsg.substring(iMax));
-//		}
-//		List<String> badClasses = listener.getBadClasses();
-//		int iBadClasses = badClasses.size();
-//		if (iBadClasses > 0) {
-//			String sMsg = badClasses.stream().collect(Collectors.joining(", "));
-//			String sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.unknowngraphemenaturalclass");
-//			sMessage = sMessage + "  " + sSyntaxErrorMessage.replace("{0}", sMsg);
-//		}
-//		return sMessage;
-//	}
+	protected String buildAnyMissingItems(AsheninkaSegmentAndClassListener listener, String sMessage) {
+		List<SegmentErrorInfo> badSegments = listener.getBadSegments();
+		int iBadSegments = badSegments.size();
+		if (iBadSegments > 0) {
+			String sMsg = badSegments.stream().map(SegmentErrorInfo::getSegment)
+					.collect(Collectors.joining(", "));
+			Optional<SegmentErrorInfo> info = badSegments.stream().collect(
+					Collectors.maxBy(Comparator.comparing(SegmentErrorInfo::getMaxDepth)));
+			int iMax = (info.isPresent() ? info.get().getMaxDepth() : -1);
+			String sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.unknownsegment");
+			sMessage = sSyntaxErrorMessage.replace("{0}", sMsg.substring(iMax));
+		}
+		List<String> badClasses = listener.getBadClasses();
+		int iBadClasses = badClasses.size();
+		if (iBadClasses > 0) {
+			String sMsg = badClasses.stream().collect(Collectors.joining(", "));
+			String sSyntaxErrorMessage = bundle
+					.getString("templatefiltersyntaxerror.unknownnaturalclass");
+			sMessage = sMessage + "  " + sSyntaxErrorMessage.replace("{0}", sMsg);
+		}
+		return sMessage;
+	}
 
-//	private void reportEnvironmentSyntaxError(VerboseListener errListener, int iNumErrors) {
-//		int i = errListener.getErrorMessages().size();
-//		EnvironmentErrorInfo info = errListener.getErrorMessages().get(i - 1);
-//		String sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.unknown");
-//
-//		switch (info.getMsg()) {
-//		case EnvironmentConstants.CONTENT_AFTER_WORD_FINAL_BOUNDARY:
-//			sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.content_after_word_final_boundary");
-//			break;
-//
-//		case EnvironmentConstants.CONTENT_BEFORE_WORD_INITIAL_BOUNDARY:
-//			sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.content_before_word_initial_boundary");
-//			break;
-//
-//		case EnvironmentConstants.MISSING_CLASS_AFTER_OPENING_SQUARE_BRACKET:
-//			sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.missing_class_after_opening_square_bracket");
-//			break;
-//
-//		case EnvironmentConstants.MISSING_CLASS_OR_GRAPHEME:
-//			sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.missing_class_or_grapheme");
-//			break;
-//
-//		case EnvironmentConstants.MISSING_CLOSING_PAREN:
-//			sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.missing_closing_paren");
-//			break;
-//
-//		case EnvironmentConstants.MISSING_CLOSING_SQUARE_BRACKET:
-//			sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.missing_closing_square_bracket");
-//			break;
-//
-//		case EnvironmentConstants.MISSING_OPENING_PAREN:
-//			sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.missing_opening_paren");
-//			break;
-//
-//		case EnvironmentConstants.MISSING_OPENING_SQUARE_BRACKET:
-//			sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.missing_opening_square_bracket");
-//			break;
-//
-//		case EnvironmentConstants.TOO_MANY_SLASHES:
-//			sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.too_many_slashes");
-//			break;
-//
-//		case EnvironmentConstants.TOO_MANY_UNDERSCORES:
-//			sSyntaxErrorMessage = bundle.getString("environmentsyntaxerror.too_many_underscores");
-//			break;
-//
-//		case EnvironmentConstants.TOO_MANY_WORD_FINAL_BOUNDARIES:
-//			sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.too_many_word_final_boundaries");
-//			break;
-//
-//		case EnvironmentConstants.TOO_MANY_WORD_INITIAL_BOUNDARIES:
-//			sSyntaxErrorMessage = bundle
-//					.getString("environmentsyntaxerror.too_many_word_initial_boundaries");
-//			break;
-//
-//		default:
-//			System.out.println("error was: " + info.getMsg());
-//			System.out.println("number of errors was: " + iNumErrors);
-//			break;
-//		}
-//		int iPos = info.getCharPositionInLine();
-//		String sMessage = sSyntaxErrorMessage.replace("{0}", String.valueOf(iPos));
-//		slotsErrorMessage.setText(sMessage);
-//	}
+	protected void reportTemplateFilterSyntaxError(VerboseListener errListener, int iNumErrors) {
+		int i = errListener.getErrorMessages().size();
+		TemplateFilterErrorInfo info = errListener.getErrorMessages().get(i - 1);
+		String sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.unknown");
+
+		switch (info.getMsg()) {
+		case TemplateFilterConstants.MISSING_CLASS_AFTER_OPENING_SQUARE_BRACKET:
+			sSyntaxErrorMessage = bundle
+					.getString("templatefiltersyntaxerror.missing_class_after_opening_square_bracket");
+			break;
+
+		case TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT:
+			sSyntaxErrorMessage = bundle
+					.getString("templatefiltersyntaxerror.missing_class_or_segment");
+			break;
+
+			case TemplateFilterConstants.MISSING_CLOSING_PAREN:
+			sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.missing_closing_paren");
+			break;
+
+		case TemplateFilterConstants.MISSING_CLOSING_SQUARE_BRACKET:
+			sSyntaxErrorMessage = bundle
+					.getString("templatefiltersyntaxerror.missing_closing_square_bracket");
+			break;
+
+		case TemplateFilterConstants.MISSING_OPENING_PAREN:
+			sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.missing_opening_paren");
+			break;
+
+		case TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET:
+			sSyntaxErrorMessage = bundle
+					.getString("templatefiltersyntaxerror.missing_opening_square_bracket");
+			break;
+
+		default:
+			System.out.println("error was: " + info.getMsg());
+			System.out.println("number of errors was: " + iNumErrors);
+			break;
+		}
+		int iPos = info.getCharPositionInLine();
+		String sMessage = sSyntaxErrorMessage.replace("{0}", String.valueOf(iPos));
+		slotsErrorMessage.setText(sMessage);
+	}
 
 	public void displayFieldsPerActiveSetting(TemplateFilter tf) {
 		boolean fIsActive;
@@ -603,10 +591,10 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	 * @param tf = the template/filter
 	 *
 	 */
-	private void showTemplateFilterDetails(TemplateFilter tf) {
+	protected void showTemplateFilterDetails(TemplateFilter tf) {
 		currentTemplateFilter = tf;
 		if (tf != null) {
-			// Fill the text fields with info from the person object.
+			// Fill the text fields with info from the object.
 			nameField.setText(tf.getTemplateFilterName());
 			descriptionField.setText(tf.getDescription());
 			representationField.setText(tf.getTemplateFilterRepresentation());

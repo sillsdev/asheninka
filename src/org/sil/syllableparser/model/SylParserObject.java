@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -14,11 +14,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableBooleanValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.scene.control.CheckBox;
 
 /**
  * @author Andy Black
@@ -47,9 +43,7 @@ public abstract class SylParserObject {
 	public BooleanProperty activeCheckBoxProperty() {
 		return activeCheckBox;
 	}
-//	public ObservableBooleanValue isActiveCheckBox() {
-//	    return activeCheckBox;
-//	}
+
 	@XmlTransient
 	public boolean isActiveCheckBox() {
 		return activeCheckBox.get();

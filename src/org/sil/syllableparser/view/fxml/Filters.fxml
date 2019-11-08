@@ -68,8 +68,8 @@
                         <ComboBox fx:id="typeComboBox" prefHeight="2.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Choose type" />
                         <TextField fx:id="representationField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" GridPane.vgrow="SOMETIMES" />
                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="6" promptText="Choose class" />
+                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="5" promptText="Choose class" />
                      </children>
                   </GridPane>
                </children>

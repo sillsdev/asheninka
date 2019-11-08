@@ -6,8 +6,12 @@
  */
 package org.sil.syllableparser.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlIDREF;
+
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.Segment;
 
 /**
  * @author Andy Black
@@ -16,20 +20,31 @@ import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
  */
 public class TemplateFilterSlotSegmentOrNaturalClass {
 	private String segmentString;
+	private Segment referringSegment;
 	private CVNaturalClass cvNaturalClass;
 	private boolean isSegment = true;
 	private boolean isOptional = false;
-	private boolean obeysSSP = false;
+	private boolean obeysSSP = true;
 
 	public TemplateFilterSlotSegmentOrNaturalClass() {
-		this(null, true);
 	}
 
-	public TemplateFilterSlotSegmentOrNaturalClass(String segmentString, boolean isSegment) {
+	public TemplateFilterSlotSegmentOrNaturalClass(String segmentString) {
 		this.segmentString = segmentString;
-		this.isSegment = isSegment;
+		this.isSegment = true;
 	}
-	
+
+	public TemplateFilterSlotSegmentOrNaturalClass(Segment segment) {
+		this.referringSegment = segment;
+		this.isSegment = true;
+		this.segmentString = segment.getSegment();
+	}
+
+	public TemplateFilterSlotSegmentOrNaturalClass(CVNaturalClass natClass) {
+		this.cvNaturalClass = natClass;
+		this.isSegment = false;
+	}
+
 	/**
 	 * Properties
 	 */
@@ -45,7 +60,6 @@ public class TemplateFilterSlotSegmentOrNaturalClass {
 	/**
 	 * @return the cvNaturalClass
 	 */
-	@XmlElement(name = "cvNaturalClass")
 	public CVNaturalClass getCVNaturalClass() {
 		return cvNaturalClass;
 	}
@@ -53,8 +67,28 @@ public class TemplateFilterSlotSegmentOrNaturalClass {
 	/**
 	 * @param cvNaturalClass the cvNaturalClass to set
 	 */
+	@XmlAttribute(name="natclass")
+	@XmlIDREF
 	public void setCVNaturalClass(CVNaturalClass cvNaturalClass) {
 		this.cvNaturalClass = cvNaturalClass;
+		this.isSegment = false;
+	}
+
+	/**
+	 * @return the segment
+	 */
+	public Segment getReferringSegment() {
+		return referringSegment;
+	}
+
+	/**
+	 * @param referringSegment the segment to set
+	 */
+	@XmlAttribute(name="segment")
+	@XmlIDREF
+	public void setReferringSegment(Segment referringSegment) {
+		this.referringSegment = referringSegment;
+		this.isSegment = true;
 	}
 
 	@XmlElement(name="isSegment")
@@ -62,8 +96,8 @@ public class TemplateFilterSlotSegmentOrNaturalClass {
 		return isSegment;
 	}
 
-	public void setSegment(boolean isGrapheme) {
-		this.isSegment = isGrapheme;
+	public void setIsSegment(boolean isSegment) {
+		this.isSegment = isSegment;
 	}
 
 	@XmlElement(name="isOptional")
@@ -82,5 +116,4 @@ public class TemplateFilterSlotSegmentOrNaturalClass {
 	public void setObeysSSP(boolean obeysSSP) {
 		this.obeysSSP = obeysSSP;
 	}
-
 }
