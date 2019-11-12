@@ -141,9 +141,7 @@ public class SHSyllabifier implements Syllabifiable {
 							syllabifierTraceInfoList.add(traceInfo);
 						}
 					}
-					syllablesInCurrentWord.add(syl);
-					syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
-					syl.add(segmentsInWord.get(i));
+					syl = endThisSyllableStartNew(segmentsInWord, syl, i);
 					fLastStartedSyllable = true;
 				} else {
 					syl.add(segmentsInWord.get(i));
@@ -151,7 +149,8 @@ public class SHSyllabifier implements Syllabifiable {
 			} else if (result == SHComparisonResult.LESS) {
 				syl.add(segmentsInWord.get(i));
 			} else if (result == SHComparisonResult.EQUAL) {
-				syl.add(segmentsInWord.get(i));
+				syl = endThisSyllableStartNew(segmentsInWord, syl, i);
+				fLastStartedSyllable = true;
 			} else {
 				return false;
 			}
@@ -169,6 +168,14 @@ public class SHSyllabifier implements Syllabifiable {
 			}
 		}
 		return true;
+	}
+
+	protected SHSyllable endThisSyllableStartNew(
+			List<? extends CVSegmentInSyllable> segmentsInWord, SHSyllable syl, int i) {
+		syllablesInCurrentWord.add(syl);
+		syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
+		syl.add(segmentsInWord.get(i));
+		return syl;
 	}
 
 	public String getSyllabificationOfCurrentWord() {

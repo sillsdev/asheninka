@@ -105,7 +105,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseONCApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 2122, diffs.size());
+		assertEquals("number of different words", 2134, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -123,10 +123,10 @@ public class SyllabificationsComparerTest {
 				diffWord.getCVPredictedSyllabification());
 		assertEquals("258's sh is ''", "",
 				diffWord.getSHPredictedSyllabification());
-		diffWord = listOfDiffs.get(1060);
-		assertEquals("1060's cv is mo.ti.yah.wan", "mo.ti.yah.wan",
+		diffWord = listOfDiffs.get(1062);
+		assertEquals("1062's cv is mo.ti.yah.wan", "mo.ti.yah.wan",
 				diffWord.getCVPredictedSyllabification());
-		assertEquals("1060's sh is mo.ti.ya.hwan", "mo.ti.ya.hwan",
+		assertEquals("1062's sh is mo.ti.ya.hwan", "mo.ti.ya.hwan",
 				diffWord.getSHPredictedSyllabification());
 	}
 
@@ -137,7 +137,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseONCApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 3285, diffs.size());
+		assertEquals("number of different words", 3040, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -145,20 +145,20 @@ public class SyllabificationsComparerTest {
 				diffWord.getCVPredictedSyllabification());
 		assertEquals("10's onc is ''", "",
 				diffWord.getONCPredictedSyllabification());
-		diffWord = listOfDiffs.get(312);
-		assertEquals("312's cv is 'kik.wa.la.ni.li.ti.yas.ke'", "kik.wa.la.ni.li.ti.yas.ke",
+		diffWord = listOfDiffs.get(290);
+		assertEquals("290's cv is 'kik.wa.la.ni.li.ti.yas.ke'", "kik.wa.la.ni.li.ti.yas.ke",
 				diffWord.getCVPredictedSyllabification());
-		assertEquals("312's onc is 'ki.kwa.la.ni.li.ti.ya.ske'", "ki.kwa.la.ni.li.ti.ya.ske",
+		assertEquals("290's onc is 'ki.kwa.la.ni.li.ti.ya.ske'", "",
 				diffWord.getONCPredictedSyllabification());
-		diffWord = listOfDiffs.get(254);
-		assertEquals("254's cv is 'kih.ne.kis.ke'", "kih.ne.kis.ke",
+		diffWord = listOfDiffs.get(240);
+		assertEquals("240's cv is 'kih.ne.kis.ke'", "kih.ne.kis.ke",
 				diffWord.getCVPredictedSyllabification());
-		assertEquals("254's onc is 'ki.hne.ki.ske'", "ki.hne.ki.ske",
+		assertEquals("240's onc is 'ki.hne.ki.ske'", "",
 				diffWord.getONCPredictedSyllabification());
-		diffWord = listOfDiffs.get(1060);
-		assertEquals("1060's cv is 'mi.yak'", "mi.yak",
+		diffWord = listOfDiffs.get(946);
+		assertEquals("946's cv is 'mi.yak'", "mi.yak",
 				diffWord.getCVPredictedSyllabification());
-		assertEquals("1060's onc is ''", "",
+		assertEquals("946's onc is ''", "",
 				diffWord.getONCPredictedSyllabification());
 	}
 	
@@ -169,7 +169,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseONCApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 3645, diffs.size());
+		assertEquals("number of different words", 3723, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -177,10 +177,10 @@ public class SyllabificationsComparerTest {
 				diffWord.getONCPredictedSyllabification());
 		assertEquals("10's sh is 'a.hwi.yak'", "a.hwi.yak",
 				diffWord.getSHPredictedSyllabification());
-		diffWord = listOfDiffs.get(262);
-		assertEquals("262's onc is 'chi.chi.wa.li.ste'", "chi.chi.wa.li.ste",
+		diffWord = listOfDiffs.get(263);
+		assertEquals("263's onc is ''", "",
 				diffWord.getONCPredictedSyllabification());
-		assertEquals("262's sh is 'chi.chi.wa.lis.te'", "chi.chi.wa.lis.te",
+		assertEquals("263's sh is 'chih.chi.pa.wak'", "chih.chi.pa.wak",
 				diffWord.getSHPredictedSyllabification());
 	}
 
@@ -191,7 +191,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseONCApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4225, diffs.size());
+		assertEquals("number of different words", 4233, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -204,7 +204,7 @@ public class SyllabificationsComparerTest {
 		diffWord = listOfDiffs.get(315);
 		assertEquals("315's cv is ''", "",
 				diffWord.getCVPredictedSyllabification());
-		assertEquals("315's onc is 'cho.ka.skya'", "cho.ka.skya",
+		assertEquals("315's onc is ''", "",
 				diffWord.getONCPredictedSyllabification());
 		assertEquals("315's sh is 'cho.kas.kya'", "cho.kas.kya",
 				diffWord.getSHPredictedSyllabification());

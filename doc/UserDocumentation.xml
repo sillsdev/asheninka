@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->24 September 2019</date
+>11 November 2019</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -1206,7 +1206,7 @@ type="tParserResult"
 ></li
 ></ol
 ><pc
->When you click on a word in the middle pane, the same fields are shown on the right where you can edit them.  If the parse of the given word is successful, then a tree diagram of the parse is also shown as <object
+>When you click on a word in the middle pane, the same fields are shown on the right where you can edit them. If the parse of the given word is successful, then a tree diagram of the parse is also shown as <object
 type="tParserTreeDiagram"
 ></object
 >. The <object
@@ -1215,7 +1215,7 @@ type="tCategory"
 > constituent is the word and the <object
 type="tCategory"
 >σ</object
-> constituent indicates a syllable.  The constituents below the syllable are the natural classes used.  Below these are the segment and then its grapheme.</pc
+> constituent indicates a syllable. The constituents below the syllable are the natural classes used. Below these are the segment and then its grapheme.</pc
 ><p
 >Please note that until you either manually add words to the project or until you import a set of words, the list will be empty. See <sectionRef
 sec="sWordsImport"
@@ -1432,13 +1432,13 @@ width="500"
 ></chart
 ></example
 ><pc
->When the parse succeeds, it shows the syllabification as well as a tree diagram indicating the structure of the word parsed into its syllables.  The <object
+>When the parse succeeds, it shows the syllabification as well as a tree diagram indicating the structure of the word parsed into its syllables. The <object
 type="tCategory"
 >W</object
 > constituent is the word and the <object
 type="tCategory"
 >σ</object
-> constituent indicates a syllable.  The constituents below the syllable are the natural classes used.  Below these are the segment and then its grapheme.</pc
+> constituent indicates a syllable. The constituents below the syllable are the natural classes used. Below these are the segment and then its grapheme.</pc
 ><p
 >In the last part, it shows which syllable patterns were tried in the order they were tried. Successful ones are shown in <object
 type="tGreen"
@@ -1731,12 +1731,7 @@ sec="sSHTryAWord"
 ><li
 >If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited. It places the first segment of the word in the first syllable. It then tries to find the natural class of the current segment and the natural class of the following segment (unless the current segment is at the end of the word and also not already in a syllable; in this case, it adds the current segment to the current syllable). It then compares the “level” in the sonority hierarchy of these two natural classes and processes them as follows:<ol
 ><li
->If they are at the same level, it adds the following segment to the current syllable.<endnote
-id="nSameLevel"
-><p
->One implication of this is that if all vowels are in the same natural class, then a sequence of two or more vowels will all be put in the same syllable.</p
-></endnote
-></li
+>If they are at the same level, a new syllable is created and the second segment is added to this new syllable.</li
 ><li
 >If the natural class of the current segment is less sonorous than the natural class of the following segment, then it adds the following segment to the current syllable.</li
 ><li
@@ -1886,7 +1881,7 @@ type="tParserTreeDiagram"
 > are the result of the <object
 type="tSHApproach"
 ></object
-> algorithm. In the tree diagram, there is no intervening structure between the syllable and the segment.  See <sectionRef
+> algorithm. In the tree diagram, there is no intervening structure between the syllable and the segment. See <sectionRef
 sec="sCVWords"
 ></sectionRef
 > for more on this view.</p
@@ -2283,7 +2278,7 @@ type="tErrorMessage"
 ><li
 >Onset:<ol
 ><li
->If the segment can be an onset and its sonority is less than or equal to the sonority of the following segment, it adds the segment to the syllable as an onset. The type is set to be an onset or a nucleus.</li
+>If the segment can be an onset and its sonority is less than the sonority of the following segment, it adds the segment to the syllable as an onset. The type is set to be an onset or a nucleus.</li
 ><li
 >Otherwise, it sets the type to be a nucleus.</li
 ></ol
@@ -2291,7 +2286,7 @@ type="tErrorMessage"
 ><li
 >Onset or nucleus:<ol
 ><li
->If the segment can be an onset and its sonority is less than or equal to the sonority of the following segment, it adds the segment to the syllable as an onset. The type is set to be an onset or a nucleus.</li
+>If the segment can be an onset and its sonority is less than the sonority of the following segment, it adds the segment to the syllable as an onset. The type is set to be an onset or a nucleus.</li
 ><li
 >Otherwise, if the segment can be a nucleus, it adds it to the syllable as a nucleus. The type is set to be a nucleus or a coda.</li
 ><li
@@ -2349,9 +2344,7 @@ type="tOPOnsetsNotRequired"
 ><li
 >Otherwise: <ol
 ><li
->If the sonority of the following segment is equal to the segment, it adds the segment to the syllable as a coda. The type is set to be a coda or an onset.</li
-><li
->Otherwise, the segment is added to the syllable as a coda and a new syllable is started. The type is set to onset or nucleus if the <object
+>The segment is added to the syllable as a coda and a new syllable is started. The type is set to onset or nucleus if the <object
 type="tOnsetPrinciple"
 ></object
 > is set to <object
@@ -2555,19 +2548,19 @@ type="tONCApproach"
 > algorithm. If the parse fails and some word structure was built, then this partial word structure is shown by <object
 type="tParserTreeDiagram"
 ></object
->.  In the tree diagram, a syllable may have an <object
+>. In the tree diagram, a syllable may have an <object
 type="tCategory"
 >O</object
 > (onset) and a required <object
 type="tCategory"
 >R</object
-> (rime) constituent.  A rime has an <object
+> (rime) constituent. A rime has an <object
 type="tCategory"
 >N</object
 > (nucleus) and an optional <object
 type="tCategory"
 >C</object
-> (coda) constituent.  See <sectionRef
+> (coda) constituent. See <sectionRef
 sec="sCVWords"
 ></sectionRef
 > for more on this view.</p
@@ -2745,25 +2738,25 @@ term="iFailureONCSegmenter"
 >The parsing into segments part is exactly the same as it is for the <object
 type="tCVPatternApproach"
 ></object
->.  If any constituent structure was built during the parse, the tree diagram is also shown. The <object
+>. If any constituent structure was built during the parse, the tree diagram is also shown. The <object
 type="tCategory"
 >W</object
 > constituent is the word and the <object
 type="tCategory"
 >σ</object
-> constituent indicates a syllable.  A syllable may have an <object
+> constituent indicates a syllable. A syllable may have an <object
 type="tCategory"
 >O</object
 > (onset) and a required <object
 type="tCategory"
 >R</object
-> (rime) constituent.  A rime has an <object
+> (rime) constituent. A rime has an <object
 type="tCategory"
 >N</object
 > (nucleus) and an optional <object
 type="tCategory"
 >C</object
-> (coda) constituent.  Below these are the segment and then its grapheme.  If the parse succeeded, then the segments and their graphemes are shown in green.  If the parse failed but some of the tree was built, then the segments and their graphemes are shown in red.</p
+> (coda) constituent. Below these are the segment and then its grapheme. If the parse succeeded, then the segments and their graphemes are shown in green. If the parse failed but some of the tree was built, then the segments and their graphemes are shown in red.</p
 ><p
 >Scrolling the results window down shows the last part:</p
 ><example

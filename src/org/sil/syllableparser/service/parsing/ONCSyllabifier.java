@@ -165,7 +165,7 @@ public class ONCSyllabifier implements Syllabifiable {
 			case UNKNOWN:
 			case ONSET:
 				if (seg1.isOnset()
-						&& (result == SHComparisonResult.LESS || result == SHComparisonResult.EQUAL)) {
+						&& (result == SHComparisonResult.LESS)) {
 					currentType = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
 				} else {
 					i--;
@@ -192,7 +192,7 @@ public class ONCSyllabifier implements Syllabifiable {
 				break;
 			case ONSET_OR_NUCLEUS:
 				if (seg1.isOnset()
-						&& (result == SHComparisonResult.LESS || result == SHComparisonResult.EQUAL)) {
+						&& (result == SHComparisonResult.LESS)) {
 					currentType = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
 				} else if (seg1.isNucleus()) {
 					currentType = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
@@ -250,9 +250,7 @@ public class ONCSyllabifier implements Syllabifiable {
 							currentType = updateTypeForNewSyllable();
 						}
 					} else {
-						if (result == SHComparisonResult.EQUAL) {
-							currentType = addSegmentToSyllableAsCoda(segmentsInWord, syl, i);
-						} else if (result == SHComparisonResult.MISSING2) {
+						if (result == SHComparisonResult.MISSING2) {
 							if (fDoTrace) {
 								tracingStep
 										.setStatus(ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND);
