@@ -294,7 +294,7 @@ public class ONCApproachLanguageComparerTest {
 	protected void compareWords(ApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
-		assertEquals("number of different words", 1536, diffs.size());
+		assertEquals("number of different words", 2863, diffs.size());
 		List<DifferentWord> listOfDiffs = new ArrayList<DifferentWord>();
 		listOfDiffs.addAll(diffs);
 		DifferentWord diffWord = listOfDiffs.get(0);

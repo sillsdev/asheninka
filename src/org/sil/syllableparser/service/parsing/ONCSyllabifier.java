@@ -259,8 +259,12 @@ public class ONCSyllabifier implements Syllabifiable {
 							return false;
 						}
 						else {
-							syl = addSegmentToSyllableAsCodaStartNewSyllable(segmentsInWord, syl, i);
-							currentType = updateTypeForNewSyllable();
+							if (result == SHComparisonResult.MORE) {
+								currentType = addSegmentToSyllableAsCoda(segmentsInWord, syl, i);
+							} else {
+								syl = addSegmentToSyllableAsCodaStartNewSyllable(segmentsInWord, syl, i);
+								currentType = updateTypeForNewSyllable();
+							}
 						}
 					}
 				} else {
@@ -282,7 +286,9 @@ public class ONCSyllabifier implements Syllabifiable {
 				}
 				break;
 			case CODA_OR_ONSET:
-				if (seg1.isCoda() && codasAllowed && result == SHComparisonResult.MORE) {
+				if (seg1.isCoda()
+						&& codasAllowed
+						&& (result == SHComparisonResult.MORE || result == SHComparisonResult.EQUAL)) {
 					currentType = addSegmentToSyllableAsCoda(segmentsInWord, syl, i);
 				} else {
 					i--;

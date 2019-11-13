@@ -118,12 +118,12 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 		syllabifyWords(onca2, words2);
 	}
 
-	protected void syllabifyWords(ONCApproach sha, List<Word> words) {
-		ONCSyllabifier shSyllabifier = new ONCSyllabifier(sha);
+	protected void syllabifyWords(ONCApproach onc, List<Word> words) {
+		ONCSyllabifier oncSyllabifier = new ONCSyllabifier(onc);
 		for (Word word : words) {
-			boolean fSuccess = shSyllabifier.convertStringToSyllables(word.getWord());
+			boolean fSuccess = oncSyllabifier.convertStringToSyllables(word.getWord());
 			if (fSuccess) {
-				word.setSHPredictedSyllabification(shSyllabifier.getSyllabificationOfCurrentWord());
+				word.setONCPredictedSyllabification(oncSyllabifier.getSyllabificationOfCurrentWord());
 			}
 		}
 	}
@@ -148,8 +148,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 
 	@Override
 	protected boolean predictedSyllabificationAreSame(DifferentWord diffWord, Word word) {
-		return word.getSHPredictedSyllabification().equals(
-				((Word) diffWord.getObjectFrom1()).getSHPredictedSyllabification());
+		return word.getONCPredictedSyllabification().equals(
+				((Word) diffWord.getObjectFrom1()).getONCPredictedSyllabification());
 	}
 
 	@Override
