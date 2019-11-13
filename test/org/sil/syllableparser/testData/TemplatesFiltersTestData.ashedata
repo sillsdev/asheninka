@@ -1,0 +1,2496 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<languageProject databaseVersion="2">
+    <analysisLanguage>
+        <fontFamily>Times New Roman</fontFamily>
+        <fontSize>14.0</fontSize>
+        <fontType>Regular</fontType>
+    </analysisLanguage>
+    <cvApproach>
+        <cvNaturalClasses>
+            <cvNaturalClass snc="000e634b-5e9e-479d-82e6-f44ab9e27879 0c349a88-de1d-4bd8-8845-18775f142719 399e1b20-f7ed-4952-82dd-68b44485673a 309bc43b-27b1-43d8-a88d-0d53db07720e 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 6bc43a79-0aac-42aa-994e-6368a05bc29a 101d2651-cd84-4671-a286-0d37e22759e4 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b 65be3575-5c87-4a7d-8560-d1f32a816b2f 0da358b2-1156-4614-96dd-10a9964fe3c7 518cf26f-42ab-4555-ac4d-af1667774959 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 76e0b311-b742-4eb5-98f9-8670dfce5149 d4d9613d-4213-471e-986f-e39e8d5452bd cd228d00-8c1d-41b8-a612-aa7d96411f5e 852e04da-3f03-4ada-9cf9-51909b1115b8 e651a3d3-98cd-4d89-a5e4-d971c7356808 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" active="true" id="b500749a-9617-444c-ae28-7552cb3236ec">
+                <description>consonants</description>
+                <NCName>C</NCName>
+                <SNCRepresentation>b, d, d͡ʒ, ð, f, g, h, j, k, l, p, s, t, t͡ʃ, v, w, z, ɹ, ʃ, ʒ, ʔ, θ, [N]</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="de664190-dd3c-4bb3-892e-16dc596255ce 0186c74d-21d4-4b40-a454-775bffc53db5 fa281dae-0223-4601-b7b7-8ea213dc4728 231de858-2cbe-4d68-8f19-58caa3627557 92284e25-50b0-4c3a-9043-c5a67c6cfcff 39943262-c22f-4113-abe5-de17518c4bed 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 008bb81a-5594-45ee-ae2a-457a058cee16 4a539f3c-316e-4c42-b913-18c96654020c 24c712f5-8a88-4650-97ca-bfe6a2724cb3 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f 76ffa354-3bdf-4006-99a9-9c910a4d7b4f e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced a0860c8f-bbb8-4142-a267-44a4ac2cccaf ac6479e8-5229-493c-a2eb-76d748784091 66b79ebe-57b6-44b2-ae4d-dca2a3dbf999" active="true" id="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                <description>vowels</description>
+                <NCName>V</NCName>
+                <SNCRepresentation>a, æ, aɪ, aʊ, e, eɪ, i, o, oɪ, oʊ, u, ɑ, ə, ɛ, ɪ, ʊ</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" active="true" id="6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
+                <description>nasals</description>
+                <NCName>N</NCName>
+                <SNCRepresentation>m, n, ŋ</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="0c349a88-de1d-4bd8-8845-18775f142719 309bc43b-27b1-43d8-a88d-0d53db07720e 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a 25bdfcdf-242a-49d8-94d2-74e2f666f88b 65be3575-5c87-4a7d-8560-d1f32a816b2f 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 e651a3d3-98cd-4d89-a5e4-d971c7356808" active="true" id="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                <description>coronal</description>
+                <NCName>Coronal</NCName>
+                <SNCRepresentation>d, ð, n, s, t, z, θ</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="6bc43a79-0aac-42aa-994e-6368a05bc29a 91c1f393-497a-4345-9fcd-cd67fbb5575b 65be3575-5c87-4a7d-8560-d1f32a816b2f" active="true" id="45577aa3-2c85-4cc6-9aa2-49e999b84c3d">
+                <description>set of voiceless non-continuant consonants</description>
+                <NCName>VoicelessNonCont</NCName>
+                <SNCRepresentation>k, p, t</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="de664190-dd3c-4bb3-892e-16dc596255ce 0186c74d-21d4-4b40-a454-775bffc53db5 fa281dae-0223-4601-b7b7-8ea213dc4728 231de858-2cbe-4d68-8f19-58caa3627557 92284e25-50b0-4c3a-9043-c5a67c6cfcff 39943262-c22f-4113-abe5-de17518c4bed 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 101d2651-cd84-4671-a286-0d37e22759e4 008bb81a-5594-45ee-ae2a-457a058cee16 4a539f3c-316e-4c42-b913-18c96654020c 24c712f5-8a88-4650-97ca-bfe6a2724cb3 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df 76ffa354-3bdf-4006-99a9-9c910a4d7b4f e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced a0860c8f-bbb8-4142-a267-44a4ac2cccaf ac6479e8-5229-493c-a2eb-76d748784091 76e0b311-b742-4eb5-98f9-8670dfce5149 66b79ebe-57b6-44b2-ae4d-dca2a3dbf999" active="true" id="54c75767-1978-4982-8143-bad6358b27fe">
+                <description>Sonorant consonants and vowels</description>
+                <NCName>SonorantCV</NCName>
+                <SNCRepresentation>a, æ, aɪ, aʊ, e, eɪ, i, j, l, o, oɪ, oʊ, u, w, ɑ, ə, ɛ, ɪ, ɹ, ʊ</SNCRepresentation>
+            </cvNaturalClass>
+        </cvNaturalClasses>
+        <cvSyllablePatterns>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="5059b228-2994-4195-a881-e62958bff0c5">
+                <description>Basic syllable pattern</description>
+                <NCSRepresentation>C, V</NCSRepresentation>
+                <SPName>CV</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" active="true" id="ef542169-8f0c-45ee-9613-0ca0efcc1ec9">
+                <description>Closed syllable pattern</description>
+                <NCSRepresentation>C, V, C</NCSRepresentation>
+                <SPName>CVC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" active="true" id="ad516e02-d5ae-4c06-b643-bd3105d3abc2">
+                <description>Nasal coda</description>
+                <NCSRepresentation>C, V, N</NCSRepresentation>
+                <SPName>CVN</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" active="true" id="ed8f00a6-81a8-4390-9b0d-dd7086cc2faf">
+                <description>Onsetless closed syllable</description>
+                <NCSRepresentation>V, C</NCSRepresentation>
+                <SPName>VC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="e9126200-ddc4-41fc-b5ef-33cbe3dccc9d">
+                <description>Onsetless open syllable</description>
+                <NCSRepresentation>V</NCSRepresentation>
+                <SPName>V</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+        </cvSyllablePatterns>
+    </cvApproach>
+    <environments/>
+    <filters>
+        <filter active="true" id="10614b97-84bb-4388-870d-9abe2734278d">
+            <description>Example: ætlæntɪk should be æt.læn.tɪk, not æ.tlæn.tɪk</description>
+            <slots>
+                <slot segment="65be3575-5c87-4a7d-8560-d1f32a816b2f">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <isSegment>true</isSegment>
+                    <segmentString>t</segmentString>
+                </slot>
+                <slot segment="101d2651-cd84-4671-a286-0d37e22759e4">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <isSegment>true</isSegment>
+                    <segmentString>l</segmentString>
+                </slot>
+            </slots>
+            <templateFilterName>Disallow tl in onset</templateFilterName>
+            <templateFilterRepresentation>t l</templateFilterRepresentation>
+            <templateFilterType>ONSET</templateFilterType>
+            <type>Onset</type>
+            <valid>true</valid>
+        </filter>
+    </filters>
+    <graphemeNaturalClassess/>
+    <hyphenationParametersListWord>
+        <discretionaryHyphen>=</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>0</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>0</stopBeforeCharactersFromEnd>
+    </hyphenationParametersListWord>
+    <hyphenationParametersParaTExt>
+        <discretionaryHyphen>=</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
+    </hyphenationParametersParaTExt>
+    <hyphenationParametersXLingPaper>
+        <discretionaryHyphen>-</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
+    </hyphenationParametersXLingPaper>
+    <oncApproach/>
+    <shApproach>
+        <shSonorityHierarchy>
+            <shNaturalClass segs="de664190-dd3c-4bb3-892e-16dc596255ce 0186c74d-21d4-4b40-a454-775bffc53db5 fa281dae-0223-4601-b7b7-8ea213dc4728 231de858-2cbe-4d68-8f19-58caa3627557 92284e25-50b0-4c3a-9043-c5a67c6cfcff 39943262-c22f-4113-abe5-de17518c4bed 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf ac8a96e0-51ea-4415-a7e3-954ecd56a972 008bb81a-5594-45ee-ae2a-457a058cee16 4a539f3c-316e-4c42-b913-18c96654020c 24c712f5-8a88-4650-97ca-bfe6a2724cb3 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f 76ffa354-3bdf-4006-99a9-9c910a4d7b4f e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced a0860c8f-bbb8-4142-a267-44a4ac2cccaf ac6479e8-5229-493c-a2eb-76d748784091 66b79ebe-57b6-44b2-ae4d-dca2a3dbf999" active="true" id="6ecb1c02-a28c-43c3-8cbf-9f2c45e291c7">
+                <description></description>
+                <NCName>Vowels</NCName>
+                <segmentsRepresentation>a, æ, aɪ, aʊ, e, eɪ, i, l̩, o, oɪ, oʊ, u, ɑ, ə, ɛ, ɪ, ʊ</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="5b00fb26-005d-4e73-a7c0-5ffac83a3a97 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df" active="true" id="5779fca3-5ec9-4a0d-9399-b5d92e17d9a2">
+                <description></description>
+                <NCName>Glides</NCName>
+                <segmentsRepresentation>j, w</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="101d2651-cd84-4671-a286-0d37e22759e4 76e0b311-b742-4eb5-98f9-8670dfce5149" active="true" id="46db5b03-5a5c-40c6-ac01-a095a6a0dfe6">
+                <description></description>
+                <NCName>Liquids</NCName>
+                <segmentsRepresentation>l, ɹ</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" active="true" id="2cac4f95-88bd-4394-a5ce-b3cbbc60d1af">
+                <description></description>
+                <NCName>Nasals</NCName>
+                <segmentsRepresentation>m, n, ŋ</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="000e634b-5e9e-479d-82e6-f44ab9e27879 0c349a88-de1d-4bd8-8845-18775f142719 399e1b20-f7ed-4952-82dd-68b44485673a 309bc43b-27b1-43d8-a88d-0d53db07720e 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b 65be3575-5c87-4a7d-8560-d1f32a816b2f 0da358b2-1156-4614-96dd-10a9964fe3c7 518cf26f-42ab-4555-ac4d-af1667774959 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 d4d9613d-4213-471e-986f-e39e8d5452bd cd228d00-8c1d-41b8-a612-aa7d96411f5e 852e04da-3f03-4ada-9cf9-51909b1115b8 e651a3d3-98cd-4d89-a5e4-d971c7356808" active="true" id="3c96b85a-9240-4416-8264-39522b180de6">
+                <description></description>
+                <NCName>Obstruents</NCName>
+                <segmentsRepresentation>b, d, d͡ʒ, ð, f, g, h, k, p, s, t, t͡ʃ, v, z, ʃ, ʒ, ʔ, θ</segmentsRepresentation>
+            </shNaturalClass>
+        </shSonorityHierarchy>
+    </shApproach>
+    <segments>
+        <segment active="true" id="de664190-dd3c-4bb3-892e-16dc596255ce">
+            <coda>false</coda>
+            <description>low central unrounded vowel</description>
+            <graphemes>a</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" active="true" id="68687cd5-bf63-4a65-9ea5-3257a9c225c4">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>a</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>a</segment>
+        </segment>
+        <segment active="true" id="0186c74d-21d4-4b40-a454-775bffc53db5">
+            <coda>false</coda>
+            <description>low front unrounded vowel</description>
+            <graphemes>æ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0186c74d-21d4-4b40-a454-775bffc53db5" active="true" id="509e0004-1532-42ad-ad5b-74e7088fdd46">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>æ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>æ</segment>
+        </segment>
+        <segment active="true" id="fa281dae-0223-4601-b7b7-8ea213dc4728">
+            <coda>false</coda>
+            <description>low central-front unrounded diphthong</description>
+            <graphemes>aɪ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="fa281dae-0223-4601-b7b7-8ea213dc4728" active="true" id="411ad636-03f5-4383-a365-afd337c48015">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aɪ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>aɪ</segment>
+        </segment>
+        <segment active="true" id="231de858-2cbe-4d68-8f19-58caa3627557">
+            <coda>false</coda>
+            <description>low back diphthong</description>
+            <graphemes>aʊ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="231de858-2cbe-4d68-8f19-58caa3627557" active="true" id="d42d0393-a573-4017-915b-8bf6d63d418c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aʊ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>aʊ</segment>
+        </segment>
+        <segment active="true" id="000e634b-5e9e-479d-82e6-f44ab9e27879">
+            <coda>true</coda>
+            <description>voiced bilabial stop</description>
+            <graphemes>b B</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="000e634b-5e9e-479d-82e6-f44ab9e27879" active="true" id="a782643f-8eda-43fc-930d-445b8769ff53">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>b</form>
+                </grapheme>
+                <grapheme envs="" segment="000e634b-5e9e-479d-82e6-f44ab9e27879" active="true" id="83aa70ea-a88e-4b09-b889-7f76c4bce6fe">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>B</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>b</segment>
+        </segment>
+        <segment active="true" id="0c349a88-de1d-4bd8-8845-18775f142719">
+            <coda>true</coda>
+            <description>voiced alveolar stop</description>
+            <graphemes>d</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0c349a88-de1d-4bd8-8845-18775f142719" active="true" id="cc017a8d-09c9-4615-b4e9-f76b7a115e8c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>d</form>
+                </grapheme>
+                <grapheme envs="" segment="0c349a88-de1d-4bd8-8845-18775f142719" active="true" id="c85fb1ee-09f7-4eb0-928f-875942a65905">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>D</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>d</segment>
+        </segment>
+        <segment active="true" id="399e1b20-f7ed-4952-82dd-68b44485673a">
+            <coda>true</coda>
+            <description>voiced post-alveolar affricate</description>
+            <graphemes>d͡ʒ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="399e1b20-f7ed-4952-82dd-68b44485673a" active="true" id="52b132a6-16fe-4aad-9f35-b20b667b2f8a">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>d͡ʒ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>d͡ʒ</segment>
+        </segment>
+        <segment active="true" id="309bc43b-27b1-43d8-a88d-0d53db07720e">
+            <coda>true</coda>
+            <description>voiced inter-dental fricative</description>
+            <graphemes>ð</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="309bc43b-27b1-43d8-a88d-0d53db07720e" active="true" id="f2b8f848-38da-400f-b6e4-de41fcd741c2">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ð</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ð</segment>
+        </segment>
+        <segment active="true" id="92284e25-50b0-4c3a-9043-c5a67c6cfcff">
+            <coda>false</coda>
+            <description>mid front unrounded vowel</description>
+            <graphemes>e</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" active="true" id="fb6349b1-ea12-4f2d-88fb-c8cbcc4ed6bc">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>e</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>e</segment>
+        </segment>
+        <segment active="true" id="39943262-c22f-4113-abe5-de17518c4bed">
+            <coda>false</coda>
+            <description>mid front unrounded diphtong</description>
+            <graphemes>eɪ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="39943262-c22f-4113-abe5-de17518c4bed" active="true" id="f89d3b49-a6c6-4027-8660-706f97c9a3b5">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eɪ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>eɪ</segment>
+        </segment>
+        <segment active="true" id="0701fe22-3ac3-43a9-8d0d-78940f0ec514">
+            <coda>true</coda>
+            <description>voiceless interdental fricative</description>
+            <graphemes>f</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514" active="true" id="016ff681-17a2-48a9-86a9-97ee30d6f448">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>f</form>
+                </grapheme>
+                <grapheme envs="" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514" active="true" id="c37e1378-ec1e-41d2-a5b3-b3f7b84f674c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>F</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>f</segment>
+        </segment>
+        <segment active="true" id="bad3c040-9306-423c-95d0-58b3678b40ee">
+            <coda>true</coda>
+            <description>voiced velar stop</description>
+            <graphemes>g</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="bad3c040-9306-423c-95d0-58b3678b40ee" active="true" id="9bd8953f-b37c-403c-977c-d63751116f69">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>g</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>g</segment>
+        </segment>
+        <segment active="true" id="60765d81-b40d-42b2-ace5-9d476355270c">
+            <coda>false</coda>
+            <description>voiceless glottal fricative</description>
+            <graphemes>h</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="60765d81-b40d-42b2-ace5-9d476355270c" active="true" id="fc16b3f0-d043-4f6c-a444-b1e1e0831ba7">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>h</form>
+                </grapheme>
+                <grapheme envs="" segment="60765d81-b40d-42b2-ace5-9d476355270c" active="true" id="1b3b9567-f82a-456c-a994-490d4d796b77">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>H</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>h</segment>
+        </segment>
+        <segment active="true" id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf">
+            <coda>false</coda>
+            <description>high front unrounded vowel</description>
+            <graphemes>i</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" active="true" id="4c2ad2fd-db57-4a38-9c01-886e6432e7b9">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>i</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>i</segment>
+        </segment>
+        <segment active="true" id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
+            <coda>false</coda>
+            <description>voiced palatal approximate</description>
+            <graphemes>j</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97" active="true" id="ba23baae-403e-4740-b6c6-2f29d15ea697">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>j</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>j</segment>
+        </segment>
+        <segment active="true" id="6bc43a79-0aac-42aa-994e-6368a05bc29a">
+            <coda>true</coda>
+            <description>voiceless velar stop</description>
+            <graphemes>k</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="6bc43a79-0aac-42aa-994e-6368a05bc29a" active="true" id="09da19f3-da93-4e98-beae-a68419fa4661">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>k</form>
+                </grapheme>
+                <grapheme envs="" segment="6bc43a79-0aac-42aa-994e-6368a05bc29a" active="true" id="7de24f13-1dd1-4527-a703-b201c6d2759f">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>K</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>k</segment>
+        </segment>
+        <segment active="true" id="101d2651-cd84-4671-a286-0d37e22759e4">
+            <coda>true</coda>
+            <description>voiced lateral approximant</description>
+            <graphemes>l</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="101d2651-cd84-4671-a286-0d37e22759e4" active="true" id="5100229d-7083-4cfc-9119-d321634df8c5">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>l</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>l</segment>
+        </segment>
+        <segment active="true" id="ac8a96e0-51ea-4415-a7e3-954ecd56a972">
+            <coda>false</coda>
+            <description>voiced syllabic lateral</description>
+            <graphemes>l̩</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="ac8a96e0-51ea-4415-a7e3-954ecd56a972" active="true" id="6f15c4a3-5b0c-4d7c-b8f9-4f4a319d6d7f">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>l̩</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>l̩</segment>
+        </segment>
+        <segment active="true" id="a09371d4-f079-42ff-a2f6-25c2dcab0b95">
+            <coda>true</coda>
+            <description>bilabial nasal</description>
+            <graphemes>m M</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95" active="true" id="684ede41-4a48-4fae-b2cf-795d30980cbb">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>m</form>
+                </grapheme>
+                <grapheme envs="" segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95" active="true" id="df570210-43d3-4b03-88b1-1b0bf8c36cd2">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>M</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>m</segment>
+        </segment>
+        <segment active="true" id="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
+            <coda>true</coda>
+            <description>alveolar nasal</description>
+            <graphemes>n</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a" active="true" id="9935904c-53e6-4479-a5dc-8da929fa21b2">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>n</form>
+                </grapheme>
+                <grapheme envs="" segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a" active="true" id="d031b019-e127-4a22-b736-7d6aa2d7e128">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>N</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>n</segment>
+        </segment>
+        <segment active="true" id="008bb81a-5594-45ee-ae2a-457a058cee16">
+            <coda>false</coda>
+            <description>mid back rounded vowel</description>
+            <graphemes>o</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" active="true" id="ccf2c768-6462-436d-bdc4-b119a231e8f4">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>o</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>o</segment>
+        </segment>
+        <segment active="true" id="4a539f3c-316e-4c42-b913-18c96654020c">
+            <coda>false</coda>
+            <description>high back unrounded diphthong</description>
+            <graphemes>oɪ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="4a539f3c-316e-4c42-b913-18c96654020c" active="true" id="c38c4b9d-101e-4ab1-b571-5c5a9c68259a">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oɪ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>oɪ</segment>
+        </segment>
+        <segment active="true" id="24c712f5-8a88-4650-97ca-bfe6a2724cb3">
+            <coda>false</coda>
+            <description>mid back rounded diphthong</description>
+            <graphemes>oʊ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="24c712f5-8a88-4650-97ca-bfe6a2724cb3" active="true" id="2f97607f-3372-4450-a2e3-eb938311654f">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oʊ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>oʊ</segment>
+        </segment>
+        <segment active="true" id="91c1f393-497a-4345-9fcd-cd67fbb5575b">
+            <coda>true</coda>
+            <description>voiceless bilabial stop</description>
+            <graphemes>p</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="91c1f393-497a-4345-9fcd-cd67fbb5575b" active="true" id="fdb45313-b109-422a-a078-2bcee9a2a62d">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>p</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>p</segment>
+        </segment>
+        <segment active="true" id="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
+            <coda>true</coda>
+            <description>voiceless alveolar fricative</description>
+            <graphemes>s</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b" active="true" id="abe37dc8-ea72-4942-8ce4-0482c1172078">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>s</form>
+                </grapheme>
+                <grapheme envs="" segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b" active="true" id="8cbcce16-1b8d-4571-9fb2-419a749f208f">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>S</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>s</segment>
+        </segment>
+        <segment active="true" id="65be3575-5c87-4a7d-8560-d1f32a816b2f">
+            <coda>true</coda>
+            <description>voiceless alveolar stop</description>
+            <graphemes>t T</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="65be3575-5c87-4a7d-8560-d1f32a816b2f" active="true" id="e74a5ce7-9fbd-4835-abcb-ca0c59556043">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>t</form>
+                </grapheme>
+                <grapheme envs="" segment="65be3575-5c87-4a7d-8560-d1f32a816b2f" active="true" id="242e854d-9826-4e55-8791-f8e106ee8ee4">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>T</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>t</segment>
+        </segment>
+        <segment active="true" id="0da358b2-1156-4614-96dd-10a9964fe3c7">
+            <coda>true</coda>
+            <description>voiceless post-alveolar affricate</description>
+            <graphemes>t͡ʃ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0da358b2-1156-4614-96dd-10a9964fe3c7" active="true" id="fa414686-323e-4fbd-bc54-b915cce79456">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>t͡ʃ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>t͡ʃ</segment>
+        </segment>
+        <segment active="true" id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f">
+            <coda>false</coda>
+            <description>high back rounded vowel</description>
+            <graphemes>u</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true" id="23cf60ba-dea7-4c51-b8fa-c2ee745c129c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>u</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>u</segment>
+        </segment>
+        <segment active="true" id="518cf26f-42ab-4555-ac4d-af1667774959">
+            <coda>true</coda>
+            <description>voiced interdental fricative</description>
+            <graphemes>v</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="518cf26f-42ab-4555-ac4d-af1667774959" active="true" id="e9c461d5-9739-4c39-bfb2-08a785b0ecd1">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>v</form>
+                </grapheme>
+                <grapheme envs="" segment="518cf26f-42ab-4555-ac4d-af1667774959" active="true" id="7ae71050-ef1d-49e2-8e49-43ef7355b48f">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>V</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>v</segment>
+        </segment>
+        <segment active="true" id="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df">
+            <coda>true</coda>
+            <description>labio-velar aproximate</description>
+            <graphemes>w</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df" active="true" id="4915f98b-944c-418c-9d04-580c32ff8ff3">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>w</form>
+                </grapheme>
+                <grapheme envs="" segment="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df" active="true" id="1c6ec7c6-aa9e-471f-a2b0-18c70af81a44">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>W</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>w</segment>
+        </segment>
+        <segment active="true" id="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422">
+            <coda>true</coda>
+            <description>voiced alveolar fricative</description>
+            <graphemes>z</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" active="true" id="ca01be70-966b-4453-b6f0-65f60f3e459c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>z</form>
+                </grapheme>
+                <grapheme envs="" segment="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" active="true" id="289ea331-5da7-4c21-95d4-e266d57ec982">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Z</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>z</segment>
+        </segment>
+        <segment active="true" id="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c">
+            <coda>true</coda>
+            <description>velar nasal</description>
+            <graphemes>ŋ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" active="true" id="9f8c1ccd-ffb7-4383-99cb-10181cca44f4">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ŋ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>false</onset>
+            <segment>ŋ</segment>
+        </segment>
+        <segment active="true" id="76ffa354-3bdf-4006-99a9-9c910a4d7b4f">
+            <coda>false</coda>
+            <description>low back unrounded vowel</description>
+            <graphemes>ɑ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="76ffa354-3bdf-4006-99a9-9c910a4d7b4f" active="true" id="2cc7fac6-d793-4f70-8038-d42563d8a226">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ɑ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ɑ</segment>
+        </segment>
+        <segment active="true" id="e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced">
+            <coda>false</coda>
+            <description>mid central unrounded vowel</description>
+            <graphemes>ə</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced" active="true" id="83150f74-0636-47ac-a1d3-4b88df5a8633">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ə</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ə</segment>
+        </segment>
+        <segment active="true" id="a0860c8f-bbb8-4142-a267-44a4ac2cccaf">
+            <coda>false</coda>
+            <description>mid-low front unrounded vowel</description>
+            <graphemes>ɛ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a0860c8f-bbb8-4142-a267-44a4ac2cccaf" active="true" id="dfc90ff1-b0ee-4b90-9395-4d871429f787">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ɛ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ɛ</segment>
+        </segment>
+        <segment active="true" id="ac6479e8-5229-493c-a2eb-76d748784091">
+            <coda>false</coda>
+            <description>mid-high front unrounded vowel</description>
+            <graphemes>ɪ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="ac6479e8-5229-493c-a2eb-76d748784091" active="true" id="9597371e-22f3-4123-bd5e-6bff3b938502">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ɪ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ɪ</segment>
+        </segment>
+        <segment active="true" id="76e0b311-b742-4eb5-98f9-8670dfce5149">
+            <coda>true</coda>
+            <description>voiced alveolar approximant</description>
+            <graphemes>ɹ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="76e0b311-b742-4eb5-98f9-8670dfce5149" active="true" id="017547a0-e666-441d-a6a3-51902db22f24">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ɹ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ɹ</segment>
+        </segment>
+        <segment active="true" id="d4d9613d-4213-471e-986f-e39e8d5452bd">
+            <coda>true</coda>
+            <description>voiceless post-alveolar fricative</description>
+            <graphemes>ʃ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="d4d9613d-4213-471e-986f-e39e8d5452bd" active="true" id="0af3f03a-ec8f-4689-b5ab-bdc6b9cd6463">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ʃ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ʃ</segment>
+        </segment>
+        <segment active="true" id="66b79ebe-57b6-44b2-ae4d-dca2a3dbf999">
+            <coda>false</coda>
+            <description>mid-high back rounded vowel</description>
+            <graphemes>ʊ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="66b79ebe-57b6-44b2-ae4d-dca2a3dbf999" active="true" id="45946f10-c1f7-4d74-861e-31e72c9e9210">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ʊ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ʊ</segment>
+        </segment>
+        <segment active="true" id="cd228d00-8c1d-41b8-a612-aa7d96411f5e">
+            <coda>false</coda>
+            <description>voiced post-alveolar fricative</description>
+            <graphemes>ʒ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="cd228d00-8c1d-41b8-a612-aa7d96411f5e" active="true" id="9501e92e-f8b4-4c5c-844a-d9a04e6df52c">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ʒ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ʒ</segment>
+        </segment>
+        <segment active="true" id="852e04da-3f03-4ada-9cf9-51909b1115b8">
+            <coda>true</coda>
+            <description>voiceless glottal stop</description>
+            <graphemes>ʔ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="852e04da-3f03-4ada-9cf9-51909b1115b8" active="true" id="3dc22277-eadf-49ca-b30b-87d4825a1049">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ʔ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ʔ</segment>
+        </segment>
+        <segment active="true" id="e651a3d3-98cd-4d89-a5e4-d971c7356808">
+            <coda>true</coda>
+            <description>voiceless inter-dental fricative</description>
+            <graphemes>θ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="e651a3d3-98cd-4d89-a5e4-d971c7356808" active="true" id="af63b1ff-3e40-44da-abcb-96d68bc118f9">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>θ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>θ</segment>
+        </segment>
+    </segments>
+    <syllabificationParameters>
+        <codasAllowed>true</codasAllowed>
+        <onsetMaximization>true</onsetMaximization>
+        <onsetPrinciple>ONSETS_NOT_REQUIRED</onsetPrinciple>
+        <onsetPrincipleEnum>ONSETS_NOT_REQUIRED</onsetPrincipleEnum>
+    </syllabificationParameters>
+    <templates>
+        <template active="true" id="957dfbc1-511c-448a-b874-6c21abcb53d0">
+            <description>Appendix to allow for sɪksθs,, etc.</description>
+            <slots>
+                <slot natclass="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Word final</templateFilterName>
+            <templateFilterRepresentation>*[Coronal] (*[Coronal]) (*[Coronal])</templateFilterRepresentation>
+            <templateFilterType>WORDFINAL</templateFilterType>
+            <type>Word final</type>
+            <valid>true</valid>
+        </template>
+        <template active="true" id="b364b517-5938-466e-b707-db5191821765">
+            <description>Allow s in an onset which violates the SSP</description>
+            <slots>
+                <slot segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <isSegment>true</isSegment>
+                    <segmentString>s</segmentString>
+                </slot>
+                <slot natclass="45577aa3-2c85-4cc6-9aa2-49e999b84c3d">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="54c75767-1978-4982-8143-bad6358b27fe">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Onset Template</templateFilterName>
+            <templateFilterRepresentation>*s [VoicelessNonCont] ([SonorantCV])</templateFilterRepresentation>
+            <templateFilterType>ONSET</templateFilterType>
+            <type>Onset</type>
+            <valid>true</valid>
+        </template>
+    </templates>
+    <vernacularLanguage>
+        <fontFamily>Charis SIL</fontFamily>
+        <fontSize>14.0</fontSize>
+        <fontType>Regular</fontType>
+    </vernacularLanguage>
+    <words>
+        <word active="true" id="e020002f-a3f4-4adb-bf46-36b77247c854">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription></ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse into segments beginning at 'rist'.</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>prist</word>
+        </word>
+        <word active="true" id="8f9101fe-761b-4b39-a3b1-4bb0e41b8653">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L d(\G d))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>ædz</word>
+        </word>
+        <word active="true" id="5f72618b-3c38-40fc-8cf0-c644225a6dc0">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>ækt</word>
+        </word>
+        <word active="true" id="7032a741-fa8f-4676-867b-b26e446ab3ac">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>æps</word>
+        </word>
+        <word active="true" id="5190f7a6-2a7d-43b3-8de3-7bc4c73aff99">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>æpt</word>
+        </word>
+        <word active="true" id="bb33e29a-871d-446d-b5b5-2593acd95a73">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L ɛ(\G ɛ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>dɛpθ</word>
+        </word>
+        <word active="true" id="a01fd304-031f-48d2-838c-cabe5a1b727b">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L v(\G v))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>faɪvz</word>
+        </word>
+        <word active="true" id="87d30316-ca01-4070-bed2-1ba0624a27d9">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L ɪ(\G ɪ)))(C(\L f(\G f))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L f(\G f))(\L ɪ(\G ɪ))(\L f(\G f)))(σ(\L θ(\G θ))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>fɪf.θ</shPredictedSyllabification>
+            <word>fɪfθ</word>
+        </word>
+        <word active="true" id="537e0464-3b52-411e-adfb-6f9e663d2077">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L ɪ(\G ɪ)))(C(\L f(\G f))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>fɪfθs</word>
+        </word>
+        <word active="true" id="a1157619-26c8-4e06-bfb2-973565c2c9e7">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L g(\G g)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>gɛɹ.l</shPredictedSyllabification>
+            <word>gɛɹl</word>
+        </word>
+        <word active="true" id="898211b1-9003-4b76-a41b-822ba71f6e05">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>kɛɹ.l</shPredictedSyllabification>
+            <word>kɛɹl</word>
+        </word>
+        <word active="true" id="f14f7c24-7848-450b-bcd8-f6980d6400bd">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>skju</word>
+        </word>
+        <word active="true" id="c6eda8a4-c968-4726-836b-40b16d14f538">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>sklɛɹoʊsɪs</word>
+        </word>
+        <word active="true" id="2fedebeb-c3c0-417a-9435-9f6b15d1bba1">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>skwiz</word>
+        </word>
+        <word active="true" id="a11b9406-9a67-4f0b-a289-d932b385bcfe">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>skəlptɛɹ</word>
+        </word>
+        <word active="true" id="da93f9ff-0bd1-403f-9634-95d31f10f7b0">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>skɪp</word>
+        </word>
+        <word active="true" id="8ce283c8-bd7e-4f26-912a-917816626934">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>skɹim</word>
+        </word>
+        <word active="true" id="895f5162-96ae-4b87-9ed8-2c3a8f247b61">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>spa</word>
+        </word>
+        <word active="true" id="5550915e-c896-49bf-b251-1adb9622c2a9">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>spjum</word>
+        </word>
+        <word active="true" id="100c6f6f-b90c-4501-973b-99eca3963326">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>splin</word>
+        </word>
+        <word active="true" id="e1834db9-a350-43a3-8cba-f0dc660a37fd">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>spɹeɪ</word>
+        </word>
+        <word active="true" id="a34a028b-e852-469d-8afd-f60aaf7642f0">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>stupɪd</word>
+        </word>
+        <word active="true" id="fbe5981f-63cb-4b91-bb99-c1724768a554">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>stɛm</word>
+        </word>
+        <word active="true" id="9fff6bb7-dee8-4198-9c28-dabe3c1c6068">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L s(\G s))(\L t(\G t))(\L ɹ(\G ɹ))(\L æ(\G æ))(\L p(\G p))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>stɹæp</shPredictedSyllabification>
+            <word>stɹæp</word>
+        </word>
+        <word active="true" id="88360219-3e5b-49d0-a7cb-c0e667bc2ef4">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>stɹɪp</word>
+        </word>
+        <word active="true" id="684e0809-3fb8-4ade-ba73-102dffd83cf3">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L s(\G s))(\L ɪ(\G ɪ))(\L k(\G k)))(σ(\L s(\G s))(\L θ(\G θ))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>sɪk.sθ</shPredictedSyllabification>
+            <word>sɪksθ</word>
+        </word>
+        <word active="true" id="97b1e25b-edd3-4ca9-a166-43f3f08689e4">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L s(\G s))(\L ɪ(\G ɪ))(\L k(\G k)))(σ(\L s(\G s))(\L θ(\G θ))(\L s(\G s))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>sɪk.sθs</shPredictedSyllabification>
+            <word>sɪksθs</word>
+        </word>
+        <word active="true" id="d830022a-d3b8-49a5-b600-e1c24d04b7c7">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L ɛ(\G ɛ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>tɛkstjuɹ</word>
+        </word>
+        <word active="true" id="f61e8a7c-55ea-4887-8a17-69b94d6be5dc">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L g(\G g))(\L n(\G n)))(R(N(\L a(\G a)))(C(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>æ.gnas.tɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>æ.gnas.tɪk</shPredictedSyllabification>
+            <word>ægnastɪk</word>
+        </word>
+        <word active="true" id="8430050b-58fb-4c68-a1f1-df7e346ca6df">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L m(\G m)))))(σ(O(\L b(\G b)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L g(\G g))(\L j(\G j)))(R(N(\L u(\G u))(\L ɪ(\G ɪ)))))(σ(O(\L t(\G t)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>æm.bɪ.gjuɪ.ti</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>æm.bɪ.gjuɪ.ti</shPredictedSyllabification>
+            <word>æmbɪgjuɪti</word>
+        </word>
+        <word active="true" id="7c9e6927-1e2d-4040-a614-057a14fc73c5">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t))(\L l(\G l)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>æn.tlɛɹ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>æn.tlɛɹ</shPredictedSyllabification>
+            <word>æntlɛɹ</word>
+        </word>
+        <word active="true" id="6c775bb7-948a-47c3-9f57-8744f6fded25">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L p(\G p))(\L n(\G n)))(R(N(\L i(\G i))(\L ə(\G ə))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>æ.pniə</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>æ.pniə</shPredictedSyllabification>
+            <word>æpniə</word>
+        </word>
+        <word active="true" id="5da25610-948f-496f-9944-108da61f0671">
+            <CVLingTreeDescription>(W(σ( V(\L æ(\G æ)))( C(\L t(\G t))))(σ( C(\L l(\G l)))( V(\L æ(\G æ)))( C(\L n(\G n))))(σ( C(\L t(\G t)))( V(\L ɪ(\G ɪ)))( C(\L k(\G k)))))</CVLingTreeDescription>
+            <CVParserResult>Success</CVParserResult>
+            <cvPredictedSyllabification>æt.læn.tɪk</cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>æ.tlæn.tɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L æ(\G æ)))(σ(\L t(\G t))(\L l(\G l))(\L æ(\G æ))(\L n(\G n)))(σ(\L t(\G t))(\L ɪ(\G ɪ))(\L k(\G k))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>æ.tlæn.tɪk</shPredictedSyllabification>
+            <word>ætlæntɪk</word>
+        </word>
+        <word active="true" id="153ff08c-9a9b-41de-b631-537e6ac28c1b">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>æ.təm</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>æ.təm</shPredictedSyllabification>
+            <word>ætəm</word>
+        </word>
+        <word active="true" id="fc3321e7-2a7a-4a1d-93dc-f990e6bca771">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>aɹ.tɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>aɹ.tɪk</shPredictedSyllabification>
+            <word>aɹtɪk</word>
+        </word>
+        <word active="true" id="9ba6c770-7db9-417b-9f73-80e186c756bb">
+            <CVLingTreeDescription>(W(σ( C(\L b(\G b)))( V(\L aɪ(\G aɪ)))))</CVLingTreeDescription>
+            <CVParserResult>Success</CVParserResult>
+            <cvPredictedSyllabification>baɪ</cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L aɪ(\G aɪ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>baɪ</oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L b(\G b))(\L aɪ(\G aɪ))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>baɪ</shPredictedSyllabification>
+            <word>baɪ</word>
+        </word>
+        <word active="true" id="911b6cc6-0e4e-438f-9458-7df569d96e53">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L eɪ(\G eɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>beɪl</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>beɪl</shPredictedSyllabification>
+            <word>beɪl</word>
+        </word>
+        <word active="true" id="a86deedc-4325-47dd-be5c-f11d2cf842af">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L i(\G i)))))(σ(O(\L t(\G t)))(R(N(\L l̩(\G l̩))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bi.tl̩</oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L b(\G b))(\L i(\G i)))(σ(\L t(\G t))(\L l(\G l))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>bi.tl</shPredictedSyllabification>
+            <word>bitl̩</word>
+        </word>
+        <word active="true" id="3c043bf8-8d14-4b73-87c3-03c7b5bca2c6">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L j(\G j)))(R(N(\L u(\G u)))))(σ(O(\L t(\G t)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bju.ti</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>bju.ti</shPredictedSyllabification>
+            <word>bjuti</word>
+        </word>
+        <word active="true" id="3cde81e2-ff74-4b67-b0eb-a504de4e29d6">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>blæk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>blæk</shPredictedSyllabification>
+            <word>blæk</word>
+        </word>
+        <word active="true" id="01b0c9f2-a185-49bc-941f-c620c60c3fb0">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ə(\G ə)))(C(\L l(\G l))(\L t͡ʃ(\G t͡ʃ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bəlt͡ʃ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>bəlt͡ʃ</shPredictedSyllabification>
+            <word>bəlt͡ʃ</word>
+        </word>
+        <word active="true" id="0c59b70e-dc64-49ba-8515-77695e8d2ace">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bɛl</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>bɛl</shPredictedSyllabification>
+            <word>bɛl</word>
+        </word>
+        <word active="true" id="58e7303d-bbcc-4239-b7ee-d5e4eacaba12">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bɛlt</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>bɛlt</shPredictedSyllabification>
+            <word>bɛlt</word>
+        </word>
+        <word active="true" id="c70dfa24-0405-44d8-af4d-05c33758ff6a">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))(\L t͡ʃ(\G t͡ʃ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bɛnt͡ʃ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>bɛnt͡ʃ</shPredictedSyllabification>
+            <word>bɛnt͡ʃ</word>
+        </word>
+        <word active="true" id="2dd0e567-d526-49c8-926e-e83efd7f2d86">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bɹɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>bɹɪk</shPredictedSyllabification>
+            <word>bɹɪk</word>
+        </word>
+        <word active="true" id="39c88057-9a00-4ee5-ab5e-6fc3e3e0a06e">
+            <CVLingTreeDescription>(W(σ( C(\L b(\G b)))( V(\L ʊ(\G ʊ)))( C(\L k(\G k)))))</CVLingTreeDescription>
+            <CVParserResult>Success</CVParserResult>
+            <cvPredictedSyllabification>bʊk</cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ʊ(\G ʊ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bʊk</oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L b(\G b))(\L ʊ(\G ʊ))(\L k(\G k))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>bʊk</shPredictedSyllabification>
+            <word>bʊk</word>
+        </word>
+        <word active="true" id="2058b130-2f78-4746-a946-d4907dfc00e6">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L u(\G u)))(C(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>dun</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>dun</shPredictedSyllabification>
+            <word>dun</word>
+        </word>
+        <word active="true" id="c3b0d18f-0d05-458f-9381-9a2a616679d9">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L w(\G w)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>dwɛl</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>dwɛl</shPredictedSyllabification>
+            <word>dwɛl</word>
+        </word>
+        <word active="true" id="2700227f-88b7-4740-ae35-0e2d19f6e5c5">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L ɑ(\G ɑ))(\L i(\G i)))(C(\L k(\G k)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>dɑik.tɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>dɑik.tɪk</shPredictedSyllabification>
+            <word>dɑiktɪk</word>
+        </word>
+        <word active="true" id="7cbeb51f-8294-4eea-9639-90d954a25b73">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L i(\G i)))(C(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>dɹim</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>dɹim</shPredictedSyllabification>
+            <word>dɹim</word>
+        </word>
+        <word active="true" id="febd3cfb-ba65-48f3-bba1-f0996e738c53">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L i(\G i)))(C(\L m(\G m))(\L d(\G d))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>dɹimd</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>dɹimd</shPredictedSyllabification>
+            <word>dɹimd</word>
+        </word>
+        <word active="true" id="52f9b596-7e4a-484d-8924-2f7a9c102166">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>dɹɛmt</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>dɹɛmt</shPredictedSyllabification>
+            <word>dɹɛmt</word>
+        </word>
+        <word active="true" id="420cde5b-95fd-4b50-88f5-26682ccd9c06">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>dɹɪp</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>dɹɪp</shPredictedSyllabification>
+            <word>dɹɪp</word>
+        </word>
+        <word active="true" id="26454df4-9437-48c6-8fd3-cb4888022670">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L eɪ(\G eɪ)))(C(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>eɪm</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>eɪm</shPredictedSyllabification>
+            <word>eɪm</word>
+        </word>
+        <word active="true" id="a41a2087-26c7-4661-98ed-67a3e73e177f">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>faɪl</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>faɪl</shPredictedSyllabification>
+            <word>faɪl</word>
+        </word>
+        <word active="true" id="64f20022-4e92-49a5-a339-6cb2d7340aba">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L v(\G v))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>faɪv</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>faɪv</shPredictedSyllabification>
+            <word>faɪv</word>
+        </word>
+        <word active="true" id="906fa2de-05ed-44de-ab88-6e8364dd685a">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>fjum</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>fjum</shPredictedSyllabification>
+            <word>fjum</word>
+        </word>
+        <word active="true" id="6da046b3-1f87-47fe-b11b-17265691e862">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L l(\G l)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>floʊ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>floʊ</shPredictedSyllabification>
+            <word>floʊ</word>
+        </word>
+        <word active="true" id="03a3c675-3164-4e7a-8ddf-ad0293a0e4ae">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L ɹ(\G ɹ)))(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>fɹæn.tɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L f(\G f))(\L ɹ(\G ɹ))(\L æ(\G æ))(\L n(\G n)))(σ(\L t(\G t))(\L ɪ(\G ɪ))(\L k(\G k))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>fɹæn.tɪk</shPredictedSyllabification>
+            <word>fɹæntɪk</word>
+        </word>
+        <word active="true" id="c2a96c38-7745-4ec5-8fd4-df0608bbf39b">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L ɹ(\G ɹ)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>fɹi</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>fɹi</shPredictedSyllabification>
+            <word>fɹi</word>
+        </word>
+        <word active="true" id="bcb2f79a-f2dc-4f68-bf57-4646a923168d">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L d(\G d))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>glæd</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>glæd</shPredictedSyllabification>
+            <word>glæd</word>
+        </word>
+        <word active="true" id="47d305a5-2587-46f5-891e-0992a120e643">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L w(\G w)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>gwɛn</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>gwɛn</shPredictedSyllabification>
+            <word>gwɛn</word>
+        </word>
+        <word active="true" id="c1f0a415-a707-448c-946e-6e36783e88b5">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>gɹɪp</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>gɹɪp</shPredictedSyllabification>
+            <word>gɹɪp</word>
+        </word>
+        <word active="true" id="1193cc5f-6b8a-42ad-8918-3316ca07c3ce">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>hɛlm</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>hɛlm</shPredictedSyllabification>
+            <word>hɛlm</word>
+        </word>
+        <word active="true" id="98269253-2f28-430c-8749-d634b4a02353">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>hɛlp</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>hɛlp</shPredictedSyllabification>
+            <word>hɛlp</word>
+        </word>
+        <word active="true" id="7de756c5-bae2-43a9-857c-a562489aafc1">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L θ(\G θ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>hɛlθ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>hɛlθ</shPredictedSyllabification>
+            <word>hɛlθ</word>
+        </word>
+        <word active="true" id="b6917085-991a-4c56-adca-8186f37677ed">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>hɛm</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>hɛm</shPredictedSyllabification>
+            <word>hɛm</word>
+        </word>
+        <word active="true" id="7ecb5e37-807a-4e86-89ed-57e7dcd3d9cc">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>hɛmp</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>hɛmp</shPredictedSyllabification>
+            <word>hɛmp</word>
+        </word>
+        <word active="true" id="05e23b8c-2a72-4fb5-a9ba-c295a9fdc357">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɪ(\G ɪ)))(C(\L n(\G n))(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>hɪnt</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>hɪnt</shPredictedSyllabification>
+            <word>hɪnt</word>
+        </word>
+        <word active="true" id="bd084c93-226f-4afb-8127-9e99df3d7d08">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L j(\G j)))(R(N(\L ə(\G ə)))(C(\L ɹ(\G ɹ))(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>jəɹn</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>jəɹn</shPredictedSyllabification>
+            <word>jəɹn</word>
+        </word>
+        <word active="true" id="eeff01f8-2f69-4389-8cbf-b33dc440bacb">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>kaɹt</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>kaɹt</shPredictedSyllabification>
+            <word>kaɹt</word>
+        </word>
+        <word active="true" id="add9b66b-08ec-4dd7-8df8-a8819d3b78c8">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L aʊ(\G aʊ)))(C(\L n(\G n)))))(σ(O(\L s(\G s)))(R(N(\L ə(\G ə)))(C(\L l(\G l))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>kaʊn.səl</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>kaʊn.səl</shPredictedSyllabification>
+            <word>kaʊnsəl</word>
+        </word>
+        <word active="true" id="468b82eb-3368-41fb-82ea-7f284defccb6">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L i(\G i)))(C(\L l(\G l))(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>kiln</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>kiln</shPredictedSyllabification>
+            <word>kiln</word>
+        </word>
+        <word active="true" id="b8a69f14-eed7-4ea7-bae8-61b4c1f79848">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>kjut</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>kjut</shPredictedSyllabification>
+            <word>kjut</word>
+        </word>
+        <word active="true" id="6a975b42-fc0c-477f-bb92-2d37a78dd2f1">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L l(\G l)))(R(N(\L i(\G i)))(C(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>klin</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>klin</shPredictedSyllabification>
+            <word>klin</word>
+        </word>
+        <word active="true" id="20a5171e-0f76-4b89-a96c-3ca670e5e4c7">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L oɪ(\G oɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>koɪn</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>koɪn</shPredictedSyllabification>
+            <word>koɪn</word>
+        </word>
+        <word active="true" id="56bc6998-9400-4e24-963f-af13e8551da4">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L w(\G w)))(R(N(\L ɪ(\G ɪ)))(C(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>kwɪt</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>kwɪt</shPredictedSyllabification>
+            <word>kwɪt</word>
+        </word>
+        <word active="true" id="22cb1456-802d-4ae9-8ce6-d32c742fc106">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L ɹ(\G ɹ)))(R(N(\L a(\G a)))(C(\L l(\G l))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>kɹal</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>kɹal</shPredictedSyllabification>
+            <word>kɹal</word>
+        </word>
+        <word active="true" id="502cf46b-33d4-449c-ab75-5b88c4e2eeeb">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L l(\G l)))(R(N(\L aʊ(\G aʊ)))(C(\L s(\G s))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>laʊs</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>laʊs</shPredictedSyllabification>
+            <word>laʊs</word>
+        </word>
+        <word active="true" id="b5b37ac8-60a8-4c5f-9b7d-f6034a21979b">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Failure: could not parse natural classes into syllables</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L a(\G a)))(C(\L n(\G n))(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>mans.təɹ</oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L m(\G m))(\L a(\G a))(\L n(\G n)))(σ(\L s(\G s))(\L t(\G t))(\L ə(\G ə))(\L ɹ(\G ɹ))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>mans.təɹ</shPredictedSyllabification>
+            <word>manstəɹ</word>
+        </word>
+        <word active="true" id="34e02c5f-a74d-4028-821a-667c08c819e2">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>meɪn.teɪn</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>meɪn.teɪn</shPredictedSyllabification>
+            <word>meɪnteɪn</word>
+        </word>
+        <word active="true" id="57f9f822-8e79-43d5-824b-7e8fa1ba4f27">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L l(\G l))(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>mɪlk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>mɪlk</shPredictedSyllabification>
+            <word>mɪlk</word>
+        </word>
+        <word active="true" id="7705f1f7-c72e-4f44-b0fe-f4763fef48a3">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L n(\G n)))(R(N(\L a(\G a)))(C(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>nas.tɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>nas.tɪk</shPredictedSyllabification>
+            <word>nastɪk</word>
+        </word>
+        <word active="true" id="dcc35c31-e073-4ee7-898e-53d92f12d036">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L n(\G n)))(R(N(\L u(\G u)))))(σ(O(\L m(\G m)))(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>nu.mæ.tɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>nu.mæ.tɪk</shPredictedSyllabification>
+            <word>numætɪk</word>
+        </word>
+        <word active="true" id="b4bf9459-45a5-421d-9c5e-f22f2ac8e57c">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L a(\G a)))(C(\L l(\G l))(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>palm</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>palm</shPredictedSyllabification>
+            <word>palm</word>
+        </word>
+        <word active="true" id="731e2dd4-8e68-4a61-b196-e845acc83e09">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>peɪnt</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>peɪnt</shPredictedSyllabification>
+            <word>peɪnt</word>
+        </word>
+        <word active="true" id="3bd4f81b-afe1-4c80-902a-875e6bdfcc49">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L p(\G p))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>pjuk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>pjuk</shPredictedSyllabification>
+            <word>pjuk</word>
+        </word>
+        <word active="true" id="bf24eab5-7e38-4abd-9736-8c5f2231e23d">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L p(\G p))(\L l(\G l)))(R(N(\L e(\G e))(\L i(\G i)))(C(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>pleit</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>pleit</shPredictedSyllabification>
+            <word>pleit</word>
+        </word>
+        <word active="true" id="af8e3602-81f4-439a-ae73-97e12d242ec1">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L ɛ(\G ɛ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>pɛp</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>pɛp</shPredictedSyllabification>
+            <word>pɛp</word>
+        </word>
+        <word active="true" id="7671ad3d-c782-4cda-8b03-4c3ccfdd1b08">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L l(\G l)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>sloʊ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>sloʊ</shPredictedSyllabification>
+            <word>sloʊ</word>
+        </word>
+        <word active="true" id="1b629d50-57ce-4b78-abbe-c0b9da0d32e1">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L l(\G l)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>slɪp</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>slɪp</shPredictedSyllabification>
+            <word>slɪp</word>
+        </word>
+        <word active="true" id="3136b0b7-7db9-461f-9ea7-f7aed66216a9">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L m(\G m)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>smɛl</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>smɛl</shPredictedSyllabification>
+            <word>smɛl</word>
+        </word>
+        <word active="true" id="366be065-adbb-4328-bd44-b076826b18bb">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L n(\G n)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>snoʊ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>snoʊ</shPredictedSyllabification>
+            <word>snoʊ</word>
+        </word>
+        <word active="true" id="f0025797-e60c-4c9c-9090-38e4a913001f">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L u(\G u)))(C(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>sut</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>sut</shPredictedSyllabification>
+            <word>sut</word>
+        </word>
+        <word active="true" id="40d09ff3-0626-423a-9c32-6924b37e7006">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L w(\G w)))(R(N(\L i(\G i)))(C(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>swit</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>swit</shPredictedSyllabification>
+            <word>swit</word>
+        </word>
+        <word active="true" id="9d652695-f7eb-4047-9a90-d28fbaedd2aa">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L m(\G m))(\L p(\G p)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>sɪmp.təm</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>sɪmp.təm</shPredictedSyllabification>
+            <word>sɪmptəm</word>
+        </word>
+        <word active="true" id="53f34944-189e-4f9a-9c14-ea77c733df58">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L m(\G m)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>sɪm.təm</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>sɪm.təm</shPredictedSyllabification>
+            <word>sɪmtəm</word>
+        </word>
+        <word active="true" id="32faad33-027b-4204-8764-d43a497e6328">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L eɪ(\G eɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>teɪp</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>teɪp</shPredictedSyllabification>
+            <word>teɪp</word>
+        </word>
+        <word active="true" id="998282c4-2540-46df-86d6-2b5462d3bc26">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L u(\G u)))(C(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>tun</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>tun</shPredictedSyllabification>
+            <word>tun</word>
+        </word>
+        <word active="true" id="c953c8bb-2a51-4041-9762-f8b7d88f9b1d">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L w(\G w)))(R(N(\L ɪ(\G ɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>twɪn</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>twɪn</shPredictedSyllabification>
+            <word>twɪn</word>
+        </word>
+        <word active="true" id="4f609863-24f5-48d5-bed7-eb84a0555205">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))(\L θ(\G θ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>tɛnθ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>tɛnθ</shPredictedSyllabification>
+            <word>tɛnθ</word>
+        </word>
+        <word active="true" id="f8f7d816-294e-4c5e-8165-4939419691b8">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>tɹæp</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>tɹæp</shPredictedSyllabification>
+            <word>tɹæp</word>
+        </word>
+        <word active="true" id="7498c951-9937-4caf-bc28-1ed4963e6fdf">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L aɪ(\G aɪ))(\L ə(\G ə)))(C(\L m(\G m))(\L f(\G f))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>tɹaɪəmf</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>tɹaɪəmf</shPredictedSyllabification>
+            <word>tɹaɪəmf</word>
+        </word>
+        <word active="true" id="d5bb311e-2587-49a2-bc90-43fe1c1e438b">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L t͡ʃ(\G t͡ʃ)))(R(N(\L eɪ(\G eɪ)))(C(\L m(\G m)))))(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>t͡ʃeɪm.bɛɹ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>t͡ʃeɪm.bɛɹ</shPredictedSyllabification>
+            <word>t͡ʃeɪmbɛɹ</word>
+        </word>
+        <word active="true" id="5a5ff9fe-56d2-48ee-b5b3-74ac50c4f443">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L w(\G w)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L m(\G m))(\L θ(\G θ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>waɹmθ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>waɹmθ</shPredictedSyllabification>
+            <word>waɹmθ</word>
+        </word>
+        <word active="true" id="fa4ea5c0-e17e-4ead-9c38-3624886c636a">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L w(\G w)))(R(N(\L ɑ(\G ɑ))(\L ɪ(\G ɪ)))(C(\L l(\G l))(\L d(\G d))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>wɑɪld</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>wɑɪld</shPredictedSyllabification>
+            <word>wɑɪld</word>
+        </word>
+        <word active="true" id="c37727c0-e0eb-43c5-8802-83641cd5a24e">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))(C(\L s(\G s)))))(σ(O(\L p(\G p)))(R(N(\L eɪ(\G eɪ)))))(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L g(\G g)))(R(N(\L ə(\G ə)))(C(\L s(\G s))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>əs.peɪ.ɹɪ.gəs</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>əs.peɪ.ɹɪ.gəs</shPredictedSyllabification>
+            <word>əspeɪɹɪgəs</word>
+        </word>
+        <word active="true" id="e200c24c-55b6-44c9-ad63-516960d99ebb">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))))(σ(O(\L t(\G t)))(R(N(\L a(\G a)))))(σ(O(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>ə.ta.mɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>ə.ta.mɪk</shPredictedSyllabification>
+            <word>ətamɪk</word>
+        </word>
+        <word active="true" id="3544285a-1c93-4ca8-90c3-b5d20ba449b7">
+            <CVLingTreeDescription>(W(σ( V(\L ə(\G ə)))( C(\L t(\G t))))(σ( C(\L ɹ(\G ɹ)))( V(\L oʊ(\G oʊ))))(σ( C(\L ʃ(\G ʃ)))( V(\L ɪ(\G ɪ)))( C(\L s(\G s)))))</CVLingTreeDescription>
+            <CVParserResult>Success</CVParserResult>
+            <cvPredictedSyllabification>ət.ɹoʊ.ʃɪs</cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))))(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L oʊ(\G oʊ)))))(σ(O(\L ʃ(\G ʃ)))(R(N(\L ɪ(\G ɪ)))(C(\L s(\G s))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>ə.tɹoʊ.ʃɪs</oncPredictedSyllabification>
+            <SHLingTreeDescription>(W(σ(\L ə(\G ə)))(σ(\L t(\G t))(\L ɹ(\G ɹ))(\L oʊ(\G oʊ)))(σ(\L ʃ(\G ʃ))(\L ɪ(\G ɪ))(\L s(\G s))))</SHLingTreeDescription>
+            <SHParserResult>Success</SHParserResult>
+            <shPredictedSyllabification>ə.tɹoʊ.ʃɪs</shPredictedSyllabification>
+            <word>ətɹoʊʃɪs</word>
+        </word>
+        <word active="true" id="df998001-f7db-41e6-9a9f-d772f25ba1af">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L f(\G f))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>ɛlf</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>ɛlf</shPredictedSyllabification>
+            <word>ɛlf</word>
+        </word>
+        <word active="true" id="65751cbb-bd63-4d95-9dc8-5a415c16731e">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L f(\G f))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>ɛlf</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>ɛlf</shPredictedSyllabification>
+            <word>ɛlf</word>
+        </word>
+        <word active="true" id="8ba5dfb9-07b3-4019-b61b-01fe70224039">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n)))))(σ(O(\L θ(\G θ)))(R(N(\L u(\G u)))(C(\L z(\G z))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>ɛn.θuz</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>ɛn.θuz</shPredictedSyllabification>
+            <word>ɛnθuz</word>
+        </word>
+        <word active="true" id="74e75314-6eb3-4228-98ee-e0afd3683b57">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L ð(\G ð))(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>ɹɪ.ðmɪk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>ɹɪ.ðmɪk</shPredictedSyllabification>
+            <word>ɹɪðmɪk</word>
+        </word>
+        <word active="true" id="df2b751d-5ad4-44eb-94cc-5811c19aa732">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L ð(\G ð)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>ɹɪ.ðəm</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>ɹɪ.ðəm</shPredictedSyllabification>
+            <word>ɹɪðəm</word>
+        </word>
+        <word active="true" id="3507ea8e-a0ee-4e2a-bf18-58577c6fa896">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L ʃ(\G ʃ))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>ʃɹɪl</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>ʃɹɪl</shPredictedSyllabification>
+            <word>ʃɹɪl</word>
+        </word>
+        <word active="true" id="dd572cdf-41a2-41a2-8f8c-f0dd81e264a3">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))(\L k(\G k))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>θeɪnk</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>θeɪnk</shPredictedSyllabification>
+            <word>θeɪnk</word>
+        </word>
+        <word active="true" id="42a3e447-018a-4343-96e6-7330ecd54c34">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ))(\L w(\G w)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L t(\G t))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>θwaɹt</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>θwaɹt</shPredictedSyllabification>
+            <word>θwaɹt</word>
+        </word>
+        <word active="true" id="c10efa6f-7735-448d-8245-567880b8476f">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ))(\L ɹ(\G ɹ)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>θɹi</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>θɹi</shPredictedSyllabification>
+            <word>θɹi</word>
+        </word>
+    </words>
+</languageProject>
