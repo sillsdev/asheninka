@@ -45,7 +45,7 @@ public class LanguageProject {
 	private int databaseVersion;
 	private ObservableList<Environment> environments = FXCollections.observableArrayList();
 	private ObservableList<TemplateFilter> templates = FXCollections.observableArrayList();
-	private ObservableList<TemplateFilter> filters = FXCollections.observableArrayList();
+	private ObservableList<Filter> filters = FXCollections.observableArrayList();
 	private SyllabificationParameters syllabificationParameters;
 
 	public LanguageProject() {
@@ -219,11 +219,11 @@ public class LanguageProject {
 
 	@XmlElementWrapper(name = "filters")
 	@XmlElement(name = "filter")
-	public ObservableList<TemplateFilter> getFilters() {
+	public ObservableList<Filter> getFilters() {
 		return filters;
 	}
 
-	public void setFilters(ObservableList<TemplateFilter> filters) {
+	public void setFilters(ObservableList<Filter> filters) {
 		this.filters = filters;
 	}
 
@@ -270,9 +270,9 @@ public class LanguageProject {
 		for (TemplateFilter template : templatesLoadedData) {
 			templates.add(template);
 		}
-		ObservableList<TemplateFilter> filtersLoadedData = languageProjectLoaded
+		ObservableList<Filter> filtersLoadedData = languageProjectLoaded
 				.getFilters();
-		for (TemplateFilter filter : filtersLoadedData) {
+		for (Filter filter : filtersLoadedData) {
 			filters.add(filter);
 		}
 		analysisLanguage = languageProjectLoaded.getAnalysisLanguage();

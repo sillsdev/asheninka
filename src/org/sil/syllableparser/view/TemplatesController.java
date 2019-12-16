@@ -5,6 +5,9 @@
  */
 package org.sil.syllableparser.view;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 
 /**
@@ -18,6 +21,16 @@ public class TemplatesController extends TemplatesFiltersController {
 		languageProject = oncApproach.getLanguageProject();
 		contentList = languageProject.getTemplates();
 		super.setData(oncApproachData);
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		super.initialize(location, resources);
+
+		// Listen for selection changes and show the details when changed.
+		templateFilterTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showFilterDetails(newValue));
+
 	}
 
 	protected void rememberSelection(int iCurrentIndex) {

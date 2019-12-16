@@ -194,11 +194,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		makeColumnHeaderWrappable(descriptionColumn);
 
 		// Clear  details.
-		showTemplateFilterDetails(null);
-
-		// Listen for selection changes and show the details when changed.
-		templateFilterTable.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> showTemplateFilterDetails(newValue));
+		showFilterDetails(null);
 
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -561,6 +557,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		nameField.setDisable(!fIsActive);
 		descriptionField.setDisable(!fIsActive);
 		representationField.setDisable(!fIsActive);
+		typeComboBox.setDisable(!fIsActive);
 	}
 
 	protected void forceTableRowToRedisplayPerActiveSetting(TemplateFilter tf) {
@@ -591,7 +588,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	 * @param tf = the template/filter
 	 *
 	 */
-	protected void showTemplateFilterDetails(TemplateFilter tf) {
+	protected void showFilterDetails(TemplateFilter tf) {
 		currentTemplateFilter = tf;
 		if (tf != null) {
 			// Fill the text fields with info from the object.
@@ -643,7 +640,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 				@Override
 				public void run() {
 					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastONCEnvironmentsViewItemUsed();
+							.getLastONCTemplatesViewItemUsed();
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					selectAndScrollToItem(iLastIndex);
 				}
@@ -690,21 +687,6 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		templateFilterTable.refresh();
 	}
 	
-//	protected void removeItem(ObservableList<TemplateFilter> list) {
-//		int i = list.indexOf(currentTemplateFilter);
-//		i = contentList.indexOf(currentTemplateFilter);
-//		currentTemplateFilter = null;
-//		if (i >= 0) {
-//			//list.remove(i);
-//			contentList.remove(i);
-//			int max = templateFilterTable.getItems().size();
-//			i = adjustIndexValue(i, max);
-//			selectAndScrollToItem(i);
-//		}
-//		templateFilterTable.refresh();
-//
-//	}
-
 	// code taken from
 	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
@@ -713,27 +695,27 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	}
 
 	protected void handleCheckBoxSelectAll() {
-	for (TemplateFilter tf : contentList) {
-		tf.setActive(true);
-		forceTableRowToRedisplayPerActiveSetting(tf);
-	}
-}
-
-protected void handleCheckBoxClearAll() {
-	for (TemplateFilter tf : contentList) {
-		tf.setActive(false);
-		forceTableRowToRedisplayPerActiveSetting(tf);
-	}
-}
-
-protected void handleCheckBoxToggle() {
-	for (TemplateFilter tf : contentList) {
-		if (tf.isActive()) {
-			tf.setActive(false);
-		} else {
+		for (TemplateFilter tf : contentList) {
 			tf.setActive(true);
+			forceTableRowToRedisplayPerActiveSetting(tf);
 		}
-		forceTableRowToRedisplayPerActiveSetting(tf);
 	}
-}
+
+	protected void handleCheckBoxClearAll() {
+		for (TemplateFilter tf : contentList) {
+			tf.setActive(false);
+			forceTableRowToRedisplayPerActiveSetting(tf);
+		}
+	}
+
+	protected void handleCheckBoxToggle() {
+		for (TemplateFilter tf : contentList) {
+			if (tf.isActive()) {
+				tf.setActive(false);
+			} else {
+				tf.setActive(true);
+			}
+			forceTableRowToRedisplayPerActiveSetting(tf);
+		}
+	}
 }

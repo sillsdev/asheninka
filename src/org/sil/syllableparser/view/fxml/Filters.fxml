@@ -16,6 +16,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 
 <StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.FiltersController">
    <children>
@@ -23,7 +25,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView fx:id="templateFilterTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="filterTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
 <!--                       <TableColumn fx:id="checkBoxColumn" prefWidth="4.0"> -->
 <!--                         <graphic> -->
@@ -61,15 +63,24 @@
                         <Label text="%label.name" GridPane.hgrow="SOMETIMES" />
                         <Label text="%label.description" GridPane.rowIndex="1" />
                         <Label text="%label.filtertype" GridPane.rowIndex="2" />
-                        <Label text="%label.filterrepresentation" GridPane.rowIndex="3" />
-                        <Label text="%label.active" GridPane.rowIndex="4" />
+                        <Label text="%label.filterrepresentation" GridPane.rowIndex="5" />
+                        <Label text="%label.action" GridPane.rowIndex="3" />
+                        <Label text="%label.filterrepairstartposition" GridPane.rowIndex="6" />
+                        <Label text="%label.active" GridPane.rowIndex="7" />
                         <TextField fx:id="nameField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES" />
                         <ComboBox fx:id="typeComboBox" prefHeight="2.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Choose type" />
-                        <TextField fx:id="representationField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" GridPane.vgrow="SOMETIMES" />
-                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="5" promptText="Choose class" />
+                        <TextField fx:id="representationField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="5" GridPane.vgrow="SOMETIMES" />
+						<RadioButton fx:id="repairRadioButton" mnemonicParsing="false" onAction="#handleRepairRadioButton" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="3" text="%radio.repairaction">
+               				<toggleGroup>
+                  				<ToggleGroup fx:id="group" />
+               				</toggleGroup>
+               			</RadioButton>
+						<RadioButton fx:id="failRadioButton" mnemonicParsing="false" onAction="#handleFailRadioButton" GridPane.columnIndex="1" GridPane.rowIndex="4" text="%radio.failaction" toggleGroup="$group"/>
+						<TextField fx:id="repairStartPositionField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="8" promptText="Choose class" />
                      </children>
                   </GridPane>
                </children>

@@ -27,21 +27,21 @@ import javafx.collections.ObservableList;
  */
 public class TemplateFilter extends SylParserObject {
 
-	private final StringProperty templateFilterName;
-	private final StringProperty type;
-	private final StringProperty description;
-	private final StringProperty templateFilterRepresentation;
-	private SimpleListProperty<TemplateFilterSlotSegmentOrNaturalClass> segmentsAndNaturalClasses = 
+	protected final StringProperty templateFilterName;
+	protected final StringProperty type;
+	protected final StringProperty description;
+	protected final StringProperty templateFilterRepresentation;
+	protected SimpleListProperty<TemplateFilterSlotSegmentOrNaturalClass> segmentsAndNaturalClasses =
 			new SimpleListProperty<TemplateFilterSlotSegmentOrNaturalClass>();
-	ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots = FXCollections.observableArrayList();
-	private TemplateFilterType templateFilterType = TemplateFilterType.SYLLABLE;
+	protected ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots = FXCollections.observableArrayList();
+	protected TemplateFilterType templateFilterType = TemplateFilterType.SYLLABLE;
 
-	private boolean valid = false;
-	private final String ksClassOpen = "[";
-	private final String ksClassClose = "]";
-	private final String ksOptionalOpen = "(";
-	private final String ksOptionalClose = ")";
-	private final String ksSpace = " ";
+	protected boolean valid = false;
+	protected final String ksClassOpen = "[";
+	protected final String ksClassClose = "]";
+	protected final String ksOptionalOpen = "(";
+	protected final String ksOptionalClose = ")";
+	protected final String ksSpace = " ";
 
 	public TemplateFilter() {
 		super();
@@ -165,7 +165,7 @@ public class TemplateFilter extends SylParserObject {
 	}
 
 
-	private void rebuildSegmentOrClass(StringBuilder sb,
+	protected void rebuildSegmentOrClass(StringBuilder sb,
 			TemplateFilterSlotSegmentOrNaturalClass ecgnc) {
 		if (ecgnc.isOptional()) {
 			sb.append(ksOptionalOpen);
@@ -183,7 +183,7 @@ public class TemplateFilter extends SylParserObject {
 		}
 	}
 
-	private void rebuildRightContext(StringBuilder sb) {
+	protected void rebuildRightContext(StringBuilder sb) {
 		for (TemplateFilterSlotSegmentOrNaturalClass ecgnc : slots) {
 			sb.append(" ");
 			rebuildSegmentOrClass(sb, ecgnc);
