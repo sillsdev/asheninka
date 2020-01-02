@@ -16,4 +16,5 @@ public class TemplateFilterConstants {
 	public static final String MISSING_CLOSING_SQUARE_BRACKET = "missingClosingSquareBracket";
 	public static final String MISSING_OPENING_PAREN = "missingOpeningParen";
 	public static final String MISSING_OPENING_SQUARE_BRACKET = "missingOpeningSquareBracket";
+	public static final String EXTRA_SLOT_POSITION_INDICATOR = "extraSlotPositionIndicator";
 }

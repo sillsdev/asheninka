@@ -500,51 +500,75 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 					.getString("templatefiltersyntaxerror.unknownnaturalclass");
 			sMessage = sMessage + "  " + sSyntaxErrorMessage.replace("{0}", sMsg);
 		}
+
+		if (listener.getSlotPositionIndicatorsFound() > 1) {
+			sMessage = bundle.getString("templatefiltersyntaxerror.extra_slot_position_indicator");
+		}
+
+		if (!listener.isObligatorySegmentFound()) {
+			sMessage = bundle.getString("templatefiltersyntaxerror.all_slots_optional");
+		}
+
 		return sMessage;
 	}
 
 	protected void reportTemplateFilterSyntaxError(VerboseListener errListener, int iNumErrors) {
-		int i = errListener.getErrorMessages().size();
-		TemplateFilterErrorInfo info = errListener.getErrorMessages().get(i - 1);
-		String sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.unknown");
+		StringBuilder sMessagesToReport = new StringBuilder();
+		for (TemplateFilterErrorInfo info : errListener.getErrorMessages()) {
+			String sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.unknown");
 
-		switch (info.getMsg()) {
-		case TemplateFilterConstants.MISSING_CLASS_AFTER_OPENING_SQUARE_BRACKET:
-			sSyntaxErrorMessage = bundle
-					.getString("templatefiltersyntaxerror.missing_class_after_opening_square_bracket");
-			break;
+			switch (info.getMsg()) {
+			case TemplateFilterConstants.MISSING_CLASS_AFTER_OPENING_SQUARE_BRACKET:
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.missing_class_after_opening_square_bracket");
+				break;
 
-		case TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT:
-			sSyntaxErrorMessage = bundle
-					.getString("templatefiltersyntaxerror.missing_class_or_segment");
-			break;
+			case TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT:
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.missing_class_or_segment");
+				break;
 
 			case TemplateFilterConstants.MISSING_CLOSING_PAREN:
-			sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.missing_closing_paren");
-			break;
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.missing_closing_paren");
+				break;
 
-		case TemplateFilterConstants.MISSING_CLOSING_SQUARE_BRACKET:
-			sSyntaxErrorMessage = bundle
-					.getString("templatefiltersyntaxerror.missing_closing_square_bracket");
-			break;
+			case TemplateFilterConstants.MISSING_CLOSING_SQUARE_BRACKET:
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.missing_closing_square_bracket");
+				break;
 
-		case TemplateFilterConstants.MISSING_OPENING_PAREN:
-			sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.missing_opening_paren");
-			break;
+			case TemplateFilterConstants.MISSING_OPENING_PAREN:
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.missing_opening_paren");
+				break;
 
-		case TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET:
-			sSyntaxErrorMessage = bundle
-					.getString("templatefiltersyntaxerror.missing_opening_square_bracket");
-			break;
+			case TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET:
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.missing_opening_square_bracket");
+				break;
 
-		default:
-			System.out.println("error was: " + info.getMsg());
-			System.out.println("number of errors was: " + iNumErrors);
-			break;
+			case TemplateFilterConstants.EXTRA_SLOT_POSITION_INDICATOR:
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.extra_slot_position_indicator");
+				break;
+
+			default:
+				if (info.getMsg().endsWith("'|'")) {
+					sSyntaxErrorMessage = bundle
+							.getString("templatefiltersyntaxerror.slot_position_needs_segment_or_class_after_it");
+					break;
+				}
+				System.out.println("error was: " + info.getMsg());
+				System.out.println("number of errors was: " + iNumErrors);
+				break;
+			}
+			int iPos = info.getCharPositionInLine();
+			String sMessage = sSyntaxErrorMessage.replace("{0}", String.valueOf(iPos));
+			sMessagesToReport.append(sMessage);
+			sMessagesToReport.append("\n");
 		}
-		int iPos = info.getCharPositionInLine();
-		String sMessage = sSyntaxErrorMessage.replace("{0}", String.valueOf(iPos));
-		slotsErrorMessage.setText(sMessage);
+		slotsErrorMessage.setText(sMessagesToReport.toString());
 	}
 
 	public void displayFieldsPerActiveSetting(TemplateFilter tf) {

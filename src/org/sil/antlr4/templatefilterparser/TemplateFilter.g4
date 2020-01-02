@@ -22,9 +22,14 @@ description : termSequence
 			| EOF {notifyErrorListeners("missingClassOrSegment");}
 	 ;
 
-termSequence : term
+termSequence : slotPositionTerm
+			 | slotPositionTerm termSequence
+			 | term
 			 | term termSequence
 			 ;
+
+slotPositionTerm : '|' term
+	             ;
 
 term : optionalSegment
 	 |  segment
@@ -60,4 +65,4 @@ literal : ID
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
-ID : [,.;:^!?@$%&'"a-zA-Z\u0080-\uFFFF0-9+-]+ ; // Identifier
+ID : [\\~`=_|/<>#{},.;:^!?@$%&'"a-zA-Z\u0080-\uFFFF0-9+-]+ ; // Identifier

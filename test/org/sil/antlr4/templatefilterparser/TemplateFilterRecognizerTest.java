@@ -109,6 +109,8 @@ public class TemplateFilterRecognizerTest {
 		checkValidTemplateFilter("i\u0301"); // Unicode i followed by combining
 												// acute (í)
 		checkValidTemplateFilter("H");
+		checkValidTemplateFilter("a|b");
+		checkValidTemplateFilter("a [C] | [V]");
 	}
 
 	private void checkValidTemplateFilter(String sDesc) {
@@ -197,7 +199,7 @@ public class TemplateFilterRecognizerTest {
 		checkInvalidTemplateFilter("(a)*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 4, 1);
 		checkInvalidTemplateFilter("[*C]", TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET, 4, 2);
 		checkInvalidTemplateFilter("[C*]", TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET, 4, 2);
-		checkInvalidTemplateFilter("[C]*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 4, 1);		
+		checkInvalidTemplateFilter("[C]*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 4, 1);
 	}
 
 	private void checkInvalidTemplateFilter(String sDesc, String sFailedPortion, int iPos,
@@ -217,17 +219,19 @@ public class TemplateFilterRecognizerTest {
 	@Test
 	public void validSyntaxBadContentTemplateFilterTest() {
 		// chr not in segment list
-		checkValidSyntaxBadContent("chr ", "chr", 1, 0, 1, 0, 1);
+		checkValidSyntaxBadContent("chr ", "chr", 1, 0, 1, 0, 1, 0);
 		// g is not in segment list
-		checkValidSyntaxBadContent("frage", "frage", 1, 0, 1, 0, 3);
+		checkValidSyntaxBadContent("frage", "frage", 1, 0, 1, 0, 3, 0);
 		// +lab not in class list
-		checkValidSyntaxBadContent(" [+lab]", "+lab", 3, 0, 0, 1, 1);
+		checkValidSyntaxBadContent(" [+lab]", "+lab", 3, 0, 0, 1, 1, 0);
 		// +lab, -vd not in class list
-		checkValidSyntaxBadContent("[+lab, -vd]", "+lab, -vd", 3, 0, 0, 1, 1);
+		checkValidSyntaxBadContent("[+lab, -vd]", "+lab, -vd", 3, 0, 0, 1, 1, 0);
 		// +lab, -vd -cor not in class list
-		checkValidSyntaxBadContent(" [+lab, +vd, -cor] ", "+lab, +vd, -cor", 3, 0, 0, 1, 1);
+		checkValidSyntaxBadContent(" [+lab, +vd, -cor] ", "+lab, +vd, -cor", 3, 0, 0, 1, 1, 0);
 		// X not in class list
-		checkValidSyntaxBadContent("[X][Y]", "X, Y", 5, 0, 0, 2, 1);
+		checkValidSyntaxBadContent("[X][Y]", "X, Y", 5, 0, 0, 2, 1, 0);
+		// too many slot position indicators
+		checkValidSyntaxBadContent("a | b | f", "f", 7, 0, 0, 0, 1, 2);
 	}
 
 	private TemplateFilterParser parseAStringWithContentError(String sInput) {
@@ -247,7 +251,7 @@ public class TemplateFilterRecognizerTest {
 	}
 
 	private void checkValidSyntaxBadContent(String sDesc, String sFailedPortion, int iPosInDesc,
-			int iNumSyntaxErrors, int iNumSegmentErrors, int iNumClassErrors, int IPosInFailed) {
+			int iNumSyntaxErrors, int iNumSegmentErrors, int iNumClassErrors, int iPosInFailed, int iSlotPositionsFound) {
 		// TODO: check position and message
 		TemplateFilterParser parser = parseAStringWithContentError(sDesc);
 		assertEquals(iNumSyntaxErrors, parser.getNumberOfSyntaxErrors());
@@ -266,7 +270,7 @@ public class TemplateFilterRecognizerTest {
 			Optional<SegmentErrorInfo> info = badSegments.stream().collect(
 					Collectors.maxBy(Comparator.comparing(SegmentErrorInfo::getMaxDepth)));
 			int iMax = (info.isPresent() ? info.get().getMaxDepth() : -1);
-			assertEquals(IPosInFailed, iMax);
+			assertEquals(iPosInFailed, iMax);
 		}
 		List<String> badClasses = listener.getBadClasses();
 		int iBadClasses = badClasses.size();
@@ -275,6 +279,7 @@ public class TemplateFilterRecognizerTest {
 			String sMsg = badClasses.stream().collect(Collectors.joining(", "));
 			assertEquals(sFailedPortion, sMsg);
 		}
+		assertEquals(iSlotPositionsFound, listener.getSlotPositionIndicatorsFound());
 	}
 
 	@Test

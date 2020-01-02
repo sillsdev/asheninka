@@ -20,6 +20,7 @@ import org.sil.syllableparser.model.Segment;
 public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 	protected TemplateFilterParser parser;
 	protected boolean obligatorySegmentFound = false;
+	protected int slotPositionIndicatorsFound = 0;
 
 	protected List<String> segmentsAsStringMasterList;
 	protected List<Segment> segmentsMasterList;
@@ -35,6 +36,11 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 		this.segmentsAsStringMasterList = segmentsMasterList;
 		this.classesMasterList = classesMasterList;
 		validator = new SegmentSequenceValidator(segmentsMasterList);
+	}
+
+	@Override
+	public void exitSlotPositionTerm(TemplateFilterParser.SlotPositionTermContext ctx) {
+		slotPositionIndicatorsFound++;
 	}
 
 	@Override
@@ -104,5 +110,9 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 
 	public boolean isObligatorySegmentFound() {
 		return obligatorySegmentFound;
+	}
+
+	public int getSlotPositionIndicatorsFound() {
+		return slotPositionIndicatorsFound;
 	}
 }

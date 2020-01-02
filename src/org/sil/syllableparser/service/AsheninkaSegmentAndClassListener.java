@@ -57,7 +57,9 @@ public class AsheninkaSegmentAndClassListener extends CheckSegmentAndClassListen
 
 	@Override
 	public void exitOptionalSegment(TemplateFilterParser.OptionalSegmentContext ctx) {
-		currentSlot.setOptional(true);
+		if (currentSlot != null) {
+			currentSlot.setOptional(true);
+		}
 }
 
 	@Override
