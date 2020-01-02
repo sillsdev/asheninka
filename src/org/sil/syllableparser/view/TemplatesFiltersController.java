@@ -481,6 +481,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	}
 
 	protected String buildAnyMissingItems(AsheninkaSegmentAndClassListener listener, String sMessage) {
+		StringBuilder sb = new StringBuilder();
 		List<SegmentErrorInfo> badSegments = listener.getBadSegments();
 		int iBadSegments = badSegments.size();
 		if (iBadSegments > 0) {
@@ -491,6 +492,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 			int iMax = (info.isPresent() ? info.get().getMaxDepth() : -1);
 			String sSyntaxErrorMessage = bundle.getString("templatefiltersyntaxerror.unknownsegment");
 			sMessage = sSyntaxErrorMessage.replace("{0}", sMsg.substring(iMax));
+			appendMessage(sMessage, sb);
 		}
 		List<String> badClasses = listener.getBadClasses();
 		int iBadClasses = badClasses.size();
@@ -499,17 +501,25 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 			String sSyntaxErrorMessage = bundle
 					.getString("templatefiltersyntaxerror.unknownnaturalclass");
 			sMessage = sMessage + "  " + sSyntaxErrorMessage.replace("{0}", sMsg);
+			appendMessage(sMessage, sb);
 		}
 
 		if (listener.getSlotPositionIndicatorsFound() > 1) {
 			sMessage = bundle.getString("templatefiltersyntaxerror.extra_slot_position_indicator");
+			appendMessage(sMessage, sb);
 		}
 
 		if (!listener.isObligatorySegmentFound()) {
 			sMessage = bundle.getString("templatefiltersyntaxerror.all_slots_optional");
+			appendMessage(sMessage, sb);
 		}
 
-		return sMessage;
+		return sb.toString();
+	}
+
+	protected void appendMessage(String sMessage, StringBuilder sb) {
+		sb.append(sMessage);
+		sb.append("\n");
 	}
 
 	protected void reportTemplateFilterSyntaxError(VerboseListener errListener, int iNumErrors) {
@@ -565,8 +575,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 			}
 			int iPos = info.getCharPositionInLine();
 			String sMessage = sSyntaxErrorMessage.replace("{0}", String.valueOf(iPos));
-			sMessagesToReport.append(sMessage);
-			sMessagesToReport.append("\n");
+			appendMessage(sMessage, sMessagesToReport);
 		}
 		slotsErrorMessage.setText(sMessagesToReport.toString());
 	}
