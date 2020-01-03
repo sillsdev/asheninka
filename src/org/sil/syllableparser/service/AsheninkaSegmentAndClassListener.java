@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -108,6 +108,18 @@ public class AsheninkaSegmentAndClassListener extends CheckSegmentAndClassListen
 	public void exitSegment(TemplateFilterParser.SegmentContext ctx) {
 		if (ctx.getChildCount() > 1) {
 			currentSlot.setObeysSSP(false);
+		}
+	}
+
+	@Override
+	public void enterSlotPositionTerm(TemplateFilterParser.SlotPositionTermContext ctx) {
+		if (currentSlot != null) {
+			currentSlot.setRepairLeftwardFromHere(true);
+			for (TemplateFilterSlotSegmentOrNaturalClass slot : templateFilter.getSlots()) {
+				if (slot != currentSlot) {
+					slot.setRepairLeftwardFromHere(false);
+				}
+			}
 		}
 	}
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -25,6 +25,7 @@ public class TemplateFilterSlotSegmentOrNaturalClass {
 	private boolean isSegment = true;
 	private boolean isOptional = false;
 	private boolean obeysSSP = true;
+	private boolean repairLeftwardFromHere = false;
 
 	public TemplateFilterSlotSegmentOrNaturalClass() {
 	}
@@ -115,5 +116,13 @@ public class TemplateFilterSlotSegmentOrNaturalClass {
 
 	public void setObeysSSP(boolean obeysSSP) {
 		this.obeysSSP = obeysSSP;
+	}
+
+	public boolean isRepairLeftwardFromHere() {
+		return repairLeftwardFromHere;
+	}
+
+	public void setRepairLeftwardFromHere(boolean repairLeftwardFromHere) {
+		this.repairLeftwardFromHere = repairLeftwardFromHere;
 	}
 }
