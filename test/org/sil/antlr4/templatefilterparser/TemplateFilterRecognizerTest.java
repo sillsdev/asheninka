@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -41,6 +41,8 @@ public class TemplateFilterRecognizerTest {
 
 	List<String> classesMasterList = Arrays.asList("V", "Vowels", "C", "+son", "C", "+lab, +vd",
 			"+ant, -cor, -vd");
+
+	boolean fAllowSlotPosition = false;
 
 	@Before
 	public void setUp() throws Exception {
@@ -120,6 +122,7 @@ public class TemplateFilterRecognizerTest {
 	private int parseAString(String sInput) {
 		CharStream input = CharStreams.fromString(sInput);
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
+		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
 		// begin parsing at rule 'description'
@@ -231,6 +234,7 @@ public class TemplateFilterRecognizerTest {
 		// X not in class list
 		checkValidSyntaxBadContent("[X][Y]", "X, Y", 5, 0, 0, 2, 1, 0);
 		// too many slot position indicators
+		fAllowSlotPosition = true;
 		checkValidSyntaxBadContent("a | b | f", "f", 7, 0, 0, 0, 1, 2);
 	}
 
@@ -253,6 +257,7 @@ public class TemplateFilterRecognizerTest {
 	private void checkValidSyntaxBadContent(String sDesc, String sFailedPortion, int iPosInDesc,
 			int iNumSyntaxErrors, int iNumSegmentErrors, int iNumClassErrors, int iPosInFailed, int iSlotPositionsFound) {
 		// TODO: check position and message
+		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
 		TemplateFilterParser parser = parseAStringWithContentError(sDesc);
 		assertEquals(iNumSyntaxErrors, parser.getNumberOfSyntaxErrors());
 		CheckSegmentAndClassListener listener = (CheckSegmentAndClassListener) parser

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 SIL International
+ * Copyright (c) 2019-2020 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -76,6 +76,7 @@ public class FiltersController extends TemplatesFiltersController {
 			// Fill the text fields with info from the object.
 			nameField.setText(tf.getTemplateFilterName());
 			descriptionField.setText(tf.getDescription());
+			fAllowSlotPosition = tf.getAction().isDoRepair();
 			representationField.setText(tf.getTemplateFilterRepresentation());
 			repairRadioButton.setSelected(tf.getAction().isDoRepair());
 			failRadioButton.setSelected(!tf.getAction().isDoRepair());
@@ -175,6 +176,8 @@ public class FiltersController extends TemplatesFiltersController {
 		f.getAction().setDoRepair(!currentValue);
 		repairRadioButton.setSelected(true); // needed by test for some
 													// reason...
+		fAllowSlotPosition = true;
+		processRepresentationFieldContents();
 	}
 
 	@FXML
@@ -185,6 +188,8 @@ public class FiltersController extends TemplatesFiltersController {
 		f.getAction().setDoRepair(!currentValue);
 		failRadioButton.setSelected(true); // needed by test for some
 													// reason...
+		fAllowSlotPosition = false;
+		processRepresentationFieldContents();
 	}
 
 	@Override
@@ -215,6 +220,4 @@ public class FiltersController extends TemplatesFiltersController {
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField, representationField };
 	}
-
-
 }

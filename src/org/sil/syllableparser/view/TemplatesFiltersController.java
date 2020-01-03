@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -154,6 +154,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	protected boolean fJustSwitchedFocusFromSncComboBoxToRepField = false;
 	
 	protected ObservableList<TemplateFilter> contentList = FXCollections.observableArrayList();
+	protected boolean fAllowSlotPosition = false;
 
 	public TemplatesFiltersController() {
 
@@ -220,11 +221,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 
 		representationField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentTemplateFilter != null) {
-				String sRep = representationField.getText();
-				currentTemplateFilter.setTemplateFilterRepresentation(sRep);
-				boolean fParseSucceeded = parseSlotsRepresentation(sRep);
-				currentTemplateFilter.setValid(fParseSucceeded);
-				slotsErrorMessage.setVisible(!fParseSucceeded);
+				processRepresentationFieldContents();
 			}
 			if (languageProject != null) {
 				representationField.setFont(languageProject.getAnalysisLanguage().getFont());
@@ -420,6 +417,16 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 
 	}
 
+	protected void processRepresentationFieldContents() {
+		if (currentTemplateFilter != null) {
+			String sRep = representationField.getText();
+			currentTemplateFilter.setTemplateFilterRepresentation(sRep);
+			boolean fParseSucceeded = parseSlotsRepresentation(sRep);
+			currentTemplateFilter.setValid(fParseSucceeded);
+			slotsErrorMessage.setVisible(!fParseSucceeded);
+		}
+	}
+
 	protected void updateRepresentationFieldPerClassChoice(String selectedValue) {
 		if (selectedValue != null) {
 			String sLeftOfCaret = representationField.getText().substring(0,
@@ -434,6 +441,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	protected boolean parseSlotsRepresentation(String sRep) {
 		CharStream input = CharStreams.fromString(sRep);
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
+		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
 		parser.removeErrorListeners();
