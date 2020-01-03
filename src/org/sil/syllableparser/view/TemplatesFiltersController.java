@@ -512,7 +512,12 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 			appendMessage(sMessage, sb);
 		}
 
-		if (listener.getSlotPositionIndicatorsFound() > 1) {
+		if (fAllowSlotPosition && listener.getSlotPositionIndicatorsFound() == 0) {
+			sMessage = bundle.getString("templatefiltersyntaxerror.required_slot_position_indicator");
+			appendMessage(sMessage, sb);
+		}
+
+		if (fAllowSlotPosition && listener.getSlotPositionIndicatorsFound() > 1) {
 			sMessage = bundle.getString("templatefiltersyntaxerror.extra_slot_position_indicator");
 			appendMessage(sMessage, sb);
 		}
@@ -521,7 +526,6 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 			sMessage = bundle.getString("templatefiltersyntaxerror.all_slots_optional");
 			appendMessage(sMessage, sb);
 		}
-
 		return sb.toString();
 	}
 
