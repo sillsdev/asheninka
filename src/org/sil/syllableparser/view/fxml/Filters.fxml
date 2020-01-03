@@ -65,8 +65,7 @@
                         <Label text="%label.filtertype" GridPane.rowIndex="2" />
                         <Label text="%label.filterrepresentation" GridPane.rowIndex="5" />
                         <Label text="%label.action" GridPane.rowIndex="3" />
-                        <Label text="%label.filterrepairstartposition" GridPane.rowIndex="6" />
-                        <Label text="%label.active" GridPane.rowIndex="7" />
+                        <Label text="%label.active" GridPane.rowIndex="6" />
                         <TextField fx:id="nameField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES" />
                         <ComboBox fx:id="typeComboBox" prefHeight="2.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Choose type" />
@@ -77,10 +76,9 @@
                				</toggleGroup>
                			</RadioButton>
 						<RadioButton fx:id="failRadioButton" mnemonicParsing="false" onAction="#handleFailRadioButton" GridPane.columnIndex="1" GridPane.rowIndex="4" text="%radio.failaction" toggleGroup="$group"/>
-						<TextField fx:id="repairStartPositionField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="8" promptText="Choose class" />
+                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="7" promptText="Choose class" />
                      </children>
                   </GridPane>
                </children>

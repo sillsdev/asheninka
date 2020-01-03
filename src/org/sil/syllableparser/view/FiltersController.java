@@ -41,9 +41,6 @@ public class FiltersController extends TemplatesFiltersController {
 	private RadioButton repairRadioButton;
 	@FXML
 	private RadioButton failRadioButton;
-	@FXML
-	protected TextField repairStartPositionField;
-	private UnaryOperator<TextFormatter.Change> numberFilter;
 
 	protected ObservableList<Filter> filterList = FXCollections.observableArrayList();
 
@@ -80,7 +77,6 @@ public class FiltersController extends TemplatesFiltersController {
 			representationField.setText(tf.getTemplateFilterRepresentation());
 			repairRadioButton.setSelected(tf.getAction().isDoRepair());
 			failRadioButton.setSelected(!tf.getAction().isDoRepair());
-			repairStartPositionField.setText(String.valueOf(tf.getAction().getRepairStartingSlotPosition()));
 
 			activeCheckBox.setSelected(tf.isActive());
 			List<String> choices = languageProject.getCVApproach().getActiveCVNaturalClasses().stream()
@@ -145,19 +141,6 @@ public class FiltersController extends TemplatesFiltersController {
 		// Listen for selection changes and show the details when changed.
 		filterTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showFilterDetails(newValue));
-		numberFilter = new UnaryOperator<TextFormatter.Change>() {
-			@Override
-			public TextFormatter.Change apply(TextFormatter.Change change) {
-				String text = change.getText();
-				for (int i = 0; i < text.length(); i++) {
-					if (!Character.isDigit(text.charAt(i)))
-						return null;
-				}
-				return change;
-			}
-		};
-		repairStartPositionField.setTextFormatter(new TextFormatter<String>(numberFilter));
-
 	}
 
 	@Override
