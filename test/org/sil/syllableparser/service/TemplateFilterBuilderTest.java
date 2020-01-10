@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -23,6 +23,7 @@ import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.EnvironmentContext;
 import org.sil.syllableparser.model.EnvironmentContextGraphemeOrNaturalClass;
+import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
@@ -295,7 +296,7 @@ public class TemplateFilterBuilderTest extends TemplateFilterParsingBase {
 	}
 
 	private TemplateFilter checkValidDescription(String sEnv, int iItems) {
-		TemplateFilterParser parser = parseDescriptionString(sEnv, activeSegments);
+		TemplateFilterParser parser = parseDescriptionString(sEnv, activeSegments, new TemplateFilter(), false);
 		int iNumErrors = parser.getNumberOfSyntaxErrors();
 		assertEquals(0, iNumErrors);
 		AsheninkaSegmentAndClassListener listener = (AsheninkaSegmentAndClassListener) parser
@@ -309,4 +310,61 @@ public class TemplateFilterBuilderTest extends TemplateFilterParsingBase {
 		assertEquals(iItems, slots.size());
 		return tf;
 	}
+
+	@Test
+	public void FiltersTest() {
+		TemplateFilter tfilter;
+		List<TemplateFilterSlotSegmentOrNaturalClass> slots;
+		TemplateFilterSlotSegmentOrNaturalClass slot;
+
+		tfilter = checkFilterDescription("", 0, 1, true);
+
+		tfilter = checkFilterDescription("|", 0, 1, true);
+
+		tfilter = checkFilterDescription("|", 0, 0, false);
+
+		tfilter = checkFilterDescription("| t", 1, 0, true);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("| t", 1, 0, false);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("t l |", 2, 1, true);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+		slot = tfilter.getSlots().get(1);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("t l |", 2, 0, false);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+		slot = tfilter.getSlots().get(1);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("t | l", 2, 0, true);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(true, slot.isRepairLeftwardFromHere());
+		slot = tfilter.getSlots().get(1);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+	}
+
+	private TemplateFilter checkFilterDescription(String sEnv, int iItems, int iErrors, boolean useSlotPosition) {
+		TemplateFilterParser parser = parseDescriptionString(sEnv, activeSegments, new Filter(), useSlotPosition);
+		int iNumErrors = parser.getNumberOfSyntaxErrors();
+		assertEquals(iErrors, iNumErrors);
+		AsheninkaSegmentAndClassListener listener = (AsheninkaSegmentAndClassListener) parser
+				.getParseListeners().get(0);
+		assertNotNull(listener);
+		listener.setupSegmentsMasterList(activeSegments);
+		TemplateFilter tf = listener.getTemplateFilter();
+		assertNotNull(tf);
+		assertTrue(tf instanceof Filter);
+		List<TemplateFilterSlotSegmentOrNaturalClass> slots;
+		slots = tf.getSlots();
+		assertEquals(iItems, slots.size());
+		return tf;
+	}
+
 }

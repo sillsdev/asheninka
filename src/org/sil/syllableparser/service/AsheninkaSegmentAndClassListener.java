@@ -52,7 +52,9 @@ public class AsheninkaSegmentAndClassListener extends CheckSegmentAndClassListen
 
 	@Override
 	public void enterDescription(TemplateFilterParser.DescriptionContext ctx) {
-		templateFilter = new TemplateFilter();
+		if (templateFilter == null) {
+			templateFilter = new TemplateFilter();
+		}
 	}
 
 	@Override

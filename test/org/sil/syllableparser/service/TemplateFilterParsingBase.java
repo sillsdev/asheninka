@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 SIL International
+ * Copyright (c) 2019-2020 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -14,6 +14,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.sil.syllableparser.model.Environment;
+import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
@@ -49,9 +50,10 @@ public class TemplateFilterParsingBase {
 		this.classes = classes;
 	}
 
-	protected TemplateFilterParser parseDescriptionString(String sInput, List<Segment> activeSegments) {
+	protected TemplateFilterParser parseDescriptionString(String sInput, List<Segment> activeSegments, TemplateFilter tf, boolean useSlotPosition) {
 		CharStream input = CharStreams.fromString(sInput);
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
+		TemplateFilterLexer.slotPosition = useSlotPosition;
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
 		// begin parsing at rule 'description'
@@ -61,7 +63,6 @@ public class TemplateFilterParsingBase {
 		AsheninkaSegmentAndClassListener validator = new AsheninkaSegmentAndClassListener(parser,
 				segmentsMasterList, classesMasterList);
 		validator.setupSegmentsMasterList(activeSegments);
-		TemplateFilter tf = new TemplateFilter();
 		validator.setTemplateFilter(tf);
 		validator.setClasses(classes);
 		walker.walk(validator, tree); // initiate walk of tree with listener
