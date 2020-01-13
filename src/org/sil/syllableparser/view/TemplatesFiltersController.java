@@ -421,6 +421,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		if (currentTemplateFilter != null) {
 			String sRep = representationField.getText();
 			currentTemplateFilter.setTemplateFilterRepresentation(sRep);
+			currentTemplateFilter.getSlots().clear();
 			boolean fParseSucceeded = parseSlotsRepresentation(sRep);
 			currentTemplateFilter.setValid(fParseSucceeded);
 			slotsErrorMessage.setVisible(!fParseSucceeded);
