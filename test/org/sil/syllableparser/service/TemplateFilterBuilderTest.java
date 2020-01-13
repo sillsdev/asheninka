@@ -319,11 +319,15 @@ public class TemplateFilterBuilderTest extends TemplateFilterParsingBase {
 
 		tfilter = checkFilterDescription("", 0, 1, true);
 
-		tfilter = checkFilterDescription("|", 0, 1, true);
+		tfilter = checkFilterDescription("|", 0, 2, true);
 
 		tfilter = checkFilterDescription("|", 0, 0, false);
 
-		tfilter = checkFilterDescription("| t", 1, 0, true);
+		tfilter = checkFilterDescription("| t", 1, 1, true);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("| [C]", 1, 1, true);
 		slot = tfilter.getSlots().get(0);
 		assertEquals(false, slot.isRepairLeftwardFromHere());
 
@@ -331,11 +335,21 @@ public class TemplateFilterBuilderTest extends TemplateFilterParsingBase {
 		slot = tfilter.getSlots().get(0);
 		assertEquals(false, slot.isRepairLeftwardFromHere());
 
+		tfilter = checkFilterDescription("| [C]", 1, 0, false);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
 		tfilter = checkFilterDescription("t l |", 2, 1, true);
 		slot = tfilter.getSlots().get(0);
 		assertEquals(false, slot.isRepairLeftwardFromHere());
 		slot = tfilter.getSlots().get(1);
+		assertEquals(true, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("[C] l |", 2, 1, true);
+		slot = tfilter.getSlots().get(0);
 		assertEquals(false, slot.isRepairLeftwardFromHere());
+		slot = tfilter.getSlots().get(1);
+		assertEquals(true, slot.isRepairLeftwardFromHere());
 
 		tfilter = checkFilterDescription("t l |", 2, 0, false);
 		slot = tfilter.getSlots().get(0);
@@ -343,7 +357,31 @@ public class TemplateFilterBuilderTest extends TemplateFilterParsingBase {
 		slot = tfilter.getSlots().get(1);
 		assertEquals(false, slot.isRepairLeftwardFromHere());
 
+		tfilter = checkFilterDescription("[C] l |", 2, 0, false);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+		slot = tfilter.getSlots().get(1);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
 		tfilter = checkFilterDescription("t | l", 2, 0, true);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(true, slot.isRepairLeftwardFromHere());
+		slot = tfilter.getSlots().get(1);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("t | [C]", 2, 0, true);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(true, slot.isRepairLeftwardFromHere());
+		slot = tfilter.getSlots().get(1);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("[C] | [C]", 2, 0, true);
+		slot = tfilter.getSlots().get(0);
+		assertEquals(true, slot.isRepairLeftwardFromHere());
+		slot = tfilter.getSlots().get(1);
+		assertEquals(false, slot.isRepairLeftwardFromHere());
+
+		tfilter = checkFilterDescription("[C] | l", 2, 0, true);
 		slot = tfilter.getSlots().get(0);
 		assertEquals(true, slot.isRepairLeftwardFromHere());
 		slot = tfilter.getSlots().get(1);

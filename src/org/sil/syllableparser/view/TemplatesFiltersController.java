@@ -575,12 +575,17 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 						.getString("templatefiltersyntaxerror.extra_slot_position_indicator");
 				break;
 
+			case "extraneous input '|' expecting {<EOF>, '(', '*', '[', ']', ID}":
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.slot_position_needs_segment_or_class_before_it");
+				break;
+
+			case "mismatched input '<EOF>' expecting {'(', '*', '[', ']', ID}":
+				sSyntaxErrorMessage = bundle
+						.getString("templatefiltersyntaxerror.slot_position_needs_segment_or_class_after_it");
+				break;
+
 			default:
-				if (info.getMsg().endsWith("'|'")) {
-					sSyntaxErrorMessage = bundle
-							.getString("templatefiltersyntaxerror.slot_position_needs_segment_or_class_after_it");
-					break;
-				}
 				System.out.println("error was: " + info.getMsg());
 				System.out.println("number of errors was: " + iNumErrors);
 				break;

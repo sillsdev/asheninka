@@ -23,13 +23,12 @@ description : termSequence
 			| EOF {notifyErrorListeners("missingClassOrSegment");}
 	 ;
 
-termSequence : slotPositionTerm
-			 | slotPositionTerm termSequence
+termSequence : termSequence slotPositionTerm termSequence
 			 | term
 			 | term termSequence
 			 ;
 
-slotPositionTerm : SLOT_POSITION term
+slotPositionTerm : SLOT_POSITION
 	             ;
 
 term : optionalSegment
