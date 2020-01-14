@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 public class Filter extends TemplateFilter {
 
 	protected FilterAction action;
+	protected FilterType templateFilterType = FilterType.SYLLABLE;
 	
 	public Filter() {
 		super();
@@ -24,8 +25,9 @@ public class Filter extends TemplateFilter {
 
 	public Filter(String templateFilterName, String sType, String description,
 			String templateFilterRepresentation,
-			ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots, TemplateFilterType type) {
-		super(templateFilterName, sType, description, templateFilterRepresentation, slots, type);
+			ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots, FilterType type) {
+		super(templateFilterName, sType, description, templateFilterRepresentation, slots);
+		templateFilterType = type;
 		action = new FilterAction(0, true);
 	}
 
@@ -36,5 +38,43 @@ public class Filter extends TemplateFilter {
 
 	public void setAction(FilterAction action) {
 		this.action = action;
+	}
+
+	public FilterType getTemplateFilterType() {
+		return templateFilterType;
+	}
+
+	public void setTemplateFilterType(FilterType templateFilterType) {
+		this.templateFilterType = templateFilterType;
+	}
+
+	@Override
+	public int hashCode() {
+		String sCombo = templateFilterName.getValueSafe() + templateFilterRepresentation.getValueSafe();
+		return sCombo.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		boolean result = true;
+		Filter tf = (Filter) obj;
+		if (!getTemplateFilterName().equals(tf.getTemplateFilterName())) {
+			result = false;
+		} else {
+			if (!getTemplateFilterRepresentation().equals(tf.getTemplateFilterRepresentation())) {
+				result = false;
+			} else {
+				if (!getTemplateFilterType().equals(tf.getTemplateFilterType())) {
+					result = false;
+				}
+			}
+		}
+		return result;
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 SIL International
+ * Copyright (c) 2019-2020 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -8,7 +8,6 @@ package org.sil.syllableparser.service;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -26,7 +25,6 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
-import org.sil.syllableparser.model.TemplateFilterType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
@@ -118,7 +116,7 @@ public class TemplateFilterMatcherTest {
 		checkMatch("slap", 4, false);
 		
 		ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots = FXCollections.observableArrayList();		
-		tf = new TemplateFilter("test initial optional slot", "Onset", "", "(t) l", slots, TemplateFilterType.ONSET);
+		tf = new TemplateFilter("test initial optional slot", "Onset", "", "(t) l", slots);
 		Optional<Segment> seg = activeSegments.stream().filter(s -> s.getSegment().equals("t")).findFirst();
 		TemplateFilterSlotSegmentOrNaturalClass slot1 = new TemplateFilterSlotSegmentOrNaturalClass(seg.get());
 		slot1.setOptional(true);

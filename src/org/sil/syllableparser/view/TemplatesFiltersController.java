@@ -18,7 +18,6 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.sil.antlr4.environmentparser.GraphemeErrorInfo;
 import org.sil.antlr4.templatefilterparser.SegmentErrorInfo;
 import org.sil.antlr4.templatefilterparser.TemplateFilterConstants;
 import org.sil.antlr4.templatefilterparser.TemplateFilterErrorInfo;
@@ -27,12 +26,10 @@ import org.sil.antlr4.templatefilterparser.TemplateFilterErrorListener.VerboseLi
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterLexer;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterParser;
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
-import org.sil.syllableparser.model.TemplateFilterType;
+import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.service.AsheninkaSegmentAndClassListener;
 
 import javafx.application.Platform;
@@ -53,7 +50,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.util.StringConverter;
 
 /**
  * @author Andy Black
@@ -132,7 +128,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	@FXML
 	protected TextField nameField;
 	@FXML
-	protected ComboBox<TemplateFilterType> typeComboBox;
+	protected ComboBox<TemplateType> typeComboBox;
 	@FXML
 	protected TextField representationField;
 	@FXML
@@ -193,9 +189,6 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		makeColumnHeaderWrappable(typeColumn);
 		makeColumnHeaderWrappable(representationColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
-
-		// Clear  details.
-		showFilterDetails(null);
 
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -373,37 +366,6 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 				});
 		String sChooseClass = resources.getString("label.chooseclass");
 		sncChoicesComboBox.setPromptText(sChooseClass);
-
-		typeComboBox.setConverter(new StringConverter<TemplateFilterType>() {
-			@Override
-			public String toString(TemplateFilterType object) {
-				String localizedName = bundle.getString("templatefilter.type." + object.toString().toLowerCase());
-				if (currentTemplateFilter != null)
-					currentTemplateFilter.setType(localizedName);
-				return localizedName;
-			}
-
-			@Override
-			public TemplateFilterType fromString(String string) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		});
-		typeComboBox.getSelectionModel().selectedItemProperty()
-		.addListener(new ChangeListener<TemplateFilterType>() {
-			@Override
-			public void changed(ObservableValue<? extends TemplateFilterType> selected,
-					TemplateFilterType oldValue, TemplateFilterType selectedValue) {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-//						System.out.println("SelectedValue="	+ selectedValue);
-						currentTemplateFilter.setTemplateFilterType(selectedValue);
-					}
-				});
-			}
-		});
-		typeComboBox.setPromptText(resources.getString("label.choosetype"));
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -626,53 +588,6 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		tf.setDescription(temp);
 	}
 
-	@Override
-	public void setViewItemUsed(int value) {
-		int max = templateFilterTable.getItems().size();
-		value = adjustIndexValue(value, max);
-		templateFilterTable.getSelectionModel().clearAndSelect(value);
-	}
-
-	/**
-	 * Fills all text fields to show details about the environment.
-	 *
-	 * @param tf = the template/filter
-	 *
-	 */
-	protected void showFilterDetails(TemplateFilter tf) {
-		currentTemplateFilter = tf;
-		if (tf != null) {
-			// Fill the text fields with info from the object.
-			nameField.setText(tf.getTemplateFilterName());
-			descriptionField.setText(tf.getDescription());
-			representationField.setText(tf.getTemplateFilterRepresentation());
-			activeCheckBox.setSelected(tf.isActive());
-			List<String> choices = languageProject.getCVApproach().getActiveCVNaturalClasses().stream()
-					.map(CVNaturalClass::getNCName).collect(Collectors.toList());
-			ObservableList<String> choices2 = FXCollections.observableArrayList(choices);
-			sncChoicesComboBox.setItems(choices2);
-			sncChoicesComboBox.setVisible(false);
-			typeComboBox.getItems().setAll(TemplateFilterType.values());
-			typeComboBox.getSelectionModel().select(tf.getTemplateFilterType());
-
-		} else {
-			// TemplateFilter is null, remove all the text.
-			nameField.setText("");
-			descriptionField.setText("");
-			representationField.setText("");
-			activeCheckBox.setSelected(false);
-		}
-		displayFieldsPerActiveSetting(tf);
-
-		if (tf != null) {
-			int iCurrentIndex = templateFilterTable.getItems().indexOf(currentTemplateFilter);
-			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
-					+ templateFilterTable.getItems().size() + " ");
-			// remember the selection
-			rememberSelection(iCurrentIndex);
-		}
-	}
-
 	protected abstract void rememberSelection(int iCurrentIndex);
 
 	public void setTemplateFilter(TemplateFilter templateFilter) {
@@ -680,64 +595,6 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		descriptionField.setText(templateFilter.getDescription());
 	}
 
-	protected void setData(ONCApproach oncApproachData) {
-		iRepresentationCaretPosition = 6;
-		fSncChoicesUsingMouse = false;
-		// Add observable list data to the table
-		templateFilterTable.setItems(contentList);
-		int max = templateFilterTable.getItems().size();
-		if (max > 0) {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastONCTemplatesViewItemUsed();
-					iLastIndex = adjustIndexValue(iLastIndex, max);
-					selectAndScrollToItem(iLastIndex);
-				}
-			});
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
-	@Override
-	protected void handleInsertNewItem() {
-		TemplateFilter newTemplateFilter = new TemplateFilter();
-		contentList.add(newTemplateFilter);
-		newTemplateFilter.setTemplateFilterRepresentation("");
-		int i = oncApproach.getLanguageProject().getTemplates().size() - 1;
-		selectAndScrollToItem(i);
-	}
-
-	protected void selectAndScrollToItem(int index) {
-		templateFilterTable.requestFocus();
-		templateFilterTable.getSelectionModel().select(index);
-		templateFilterTable.getFocusModel().focus(index);
-		templateFilterTable.scrollTo(index);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
-	@Override
-	void handleRemoveItem() {
-		int i = contentList.indexOf(currentTemplateFilter);
-		currentTemplateFilter = null;
-		if (i >= 0) {
-			contentList.remove(i);
-			int max = templateFilterTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			selectAndScrollToItem(i);
-		}
-		templateFilterTable.refresh();
-	}
-	
 	// code taken from
 	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override

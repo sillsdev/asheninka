@@ -1,18 +1,14 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
  *
  */package org.sil.syllableparser.model;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.utility.StringUtilities;
 
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -34,8 +30,6 @@ public class TemplateFilter extends SylParserObject {
 	protected SimpleListProperty<TemplateFilterSlotSegmentOrNaturalClass> segmentsAndNaturalClasses =
 			new SimpleListProperty<TemplateFilterSlotSegmentOrNaturalClass>();
 	protected ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots = FXCollections.observableArrayList();
-	protected TemplateFilterType templateFilterType = TemplateFilterType.SYLLABLE;
-
 	protected boolean valid = false;
 	protected final String ksClassOpen = "[";
 	protected final String ksClassClose = "]";
@@ -53,14 +47,13 @@ public class TemplateFilter extends SylParserObject {
 	}
 
 	public TemplateFilter(String templateFilterName, String sType, String description, String templateFilterRepresentation,
-			ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots, TemplateFilterType type) {
+			ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots) {
 		super();
 		this.templateFilterName = new SimpleStringProperty(templateFilterName);
 		this.type = new SimpleStringProperty(sType);
 		this.description = new SimpleStringProperty(description);
 		this.templateFilterRepresentation = new SimpleStringProperty(templateFilterRepresentation);
 		this.slots = slots;
-		templateFilterType = type;
 		createUUID();
 	}
 
@@ -117,14 +110,6 @@ public class TemplateFilter extends SylParserObject {
 	 */
 	public StringProperty templateFilterProperty() {
 		return this.templateFilterName;
-	}
-
-	public TemplateFilterType getTemplateFilterType() {
-		return templateFilterType;
-	}
-
-	public void setTemplateFilterType(TemplateFilterType templateFilterType) {
-		this.templateFilterType = templateFilterType;
 	}
 
 	public ObservableList<TemplateFilterSlotSegmentOrNaturalClass> getSegmentsAndNaturalClasses() {
@@ -196,33 +181,17 @@ public class TemplateFilter extends SylParserObject {
 		return matches;
 	}
 
-	@Override
-	public int hashCode() {
-		String sCombo = templateFilterName.getValueSafe() + templateFilterRepresentation.getValueSafe();
-		return sCombo.hashCode();
+	/**
+	 * @param selectedValue
+	 */
+	public  void setTemplateFilterType(TemplateType selectedValue) {
+		// sub-classes implement this
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		boolean result = true;
-		TemplateFilter tf = (TemplateFilter) obj;
-		if (!getTemplateFilterName().equals(tf.getTemplateFilterName())) {
-			result = false;
-		} else {
-			if (!getTemplateFilterRepresentation().equals(tf.getTemplateFilterRepresentation())) {
-				result = false;
-			} else {
-				if (!getTemplateFilterType().equals(tf.getTemplateFilterType())) {
-					result = false;
-				}
-			}
-		}
-		return result;
+	/**
+	 * @param selectedValue
+	 */
+	public void setTemplateFilterType(FilterType selectedValue) {
+		// sub-classes implement this
 	}
 }

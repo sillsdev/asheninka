@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -44,7 +44,7 @@ public class LanguageProject {
 	private HyphenationParametersXLingPaper hyphenationParametersXLingPaper;
 	private int databaseVersion;
 	private ObservableList<Environment> environments = FXCollections.observableArrayList();
-	private ObservableList<TemplateFilter> templates = FXCollections.observableArrayList();
+	private ObservableList<Template> templates = FXCollections.observableArrayList();
 	private ObservableList<Filter> filters = FXCollections.observableArrayList();
 	private SyllabificationParameters syllabificationParameters;
 
@@ -167,7 +167,7 @@ public class LanguageProject {
 				.collect(Collectors.toList());
 	}
 
-	public List<TemplateFilter> getActiveAndValidFilters() {
+	public List<Filter> getActiveAndValidFilters() {
 		return filters.stream().filter(filter -> filter.isActive() && filter.isValid())
 				.collect(Collectors.toList());
 	}
@@ -209,11 +209,11 @@ public class LanguageProject {
 
 	@XmlElementWrapper(name = "templates")
 	@XmlElement(name = "template")
-	public ObservableList<TemplateFilter> getTemplates() {
+	public ObservableList<Template> getTemplates() {
 		return templates;
 	}
 
-	public void setTemplates(ObservableList<TemplateFilter> templates) {
+	public void setTemplates(ObservableList<Template> templates) {
 		this.templates = templates;
 	}
 
@@ -265,9 +265,9 @@ public class LanguageProject {
 		for (Environment environment : environmentsLoadedData) {
 			environments.add(environment);
 		}
-		ObservableList<TemplateFilter> templatesLoadedData = languageProjectLoaded
+		ObservableList<Template> templatesLoadedData = languageProjectLoaded
 				.getTemplates();
-		for (TemplateFilter template : templatesLoadedData) {
+		for (Template template : templatesLoadedData) {
 			templates.add(template);
 		}
 		ObservableList<Filter> filtersLoadedData = languageProjectLoaded

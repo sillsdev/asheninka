@@ -8,22 +8,24 @@ package org.sil.syllableparser.view;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
+import javafx.util.StringConverter;
 
 import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.TemplateFilter;
-import org.sil.syllableparser.model.TemplateFilterType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 
@@ -33,6 +35,8 @@ import org.sil.syllableparser.model.oncapproach.ONCApproach;
  */
 public class FiltersController extends TemplatesFiltersController {
 
+	@FXML
+	protected ComboBox<FilterType> typeComboBox;
 	@FXML
 	protected TableView<Filter> filterTable;
 	@FXML
@@ -84,7 +88,7 @@ public class FiltersController extends TemplatesFiltersController {
 			ObservableList<String> choices2 = FXCollections.observableArrayList(choices);
 			sncChoicesComboBox.setItems(choices2);
 			sncChoicesComboBox.setVisible(false);
-			typeComboBox.getItems().setAll(TemplateFilterType.values());
+			typeComboBox.getItems().setAll(FilterType.values());
 			typeComboBox.getSelectionModel().select(tf.getTemplateFilterType());
 
 		} else {
@@ -141,7 +145,39 @@ public class FiltersController extends TemplatesFiltersController {
 		// Listen for selection changes and show the details when changed.
 		filterTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showFilterDetails(newValue));
-	}
+
+		typeComboBox.setConverter(new StringConverter<FilterType>() {
+			@Override
+			public String toString(FilterType object) {
+				String localizedName = bundle.getString("templatefilter.type." + object.toString().toLowerCase());
+				if (currentTemplateFilter != null)
+					currentTemplateFilter.setType(localizedName);
+				return localizedName;
+			}
+
+			@Override
+			public FilterType fromString(String string) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+		typeComboBox.getSelectionModel().selectedItemProperty()
+		.addListener(new ChangeListener<FilterType>() {
+			@Override
+			public void changed(ObservableValue<? extends FilterType> selected,
+					FilterType oldValue, FilterType selectedValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+//						System.out.println("SelectedValue="	+ selectedValue);
+						currentTemplateFilter.setTemplateFilterType(selectedValue);
+					}
+				});
+			}
+		});
+		typeComboBox.setPromptText(resources.getString("label.choosetype"));
+
+}
 
 	@Override
 	public void setViewItemUsed(int value) {
@@ -203,4 +239,5 @@ public class FiltersController extends TemplatesFiltersController {
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField, representationField };
 	}
+
 }
