@@ -1,9 +1,11 @@
 /**
- * Copyright (c) 2019 SIL International
+ * Copyright (c) 2019-2020 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
 package org.sil.syllableparser.model.oncapproach;
+
+import java.util.List;
 
 /**
  * @author Andy Black
@@ -13,9 +15,16 @@ package org.sil.syllableparser.model.oncapproach;
  *         A value object
  *
  */
-public class Rime {
+public class Rime extends ONCConstituent {
 	private Nucleus nucleus = new Nucleus();
 	private Coda coda = new Coda();
+
+	public List<ONCSegmentInSyllable> getGraphemes() {
+		graphemes.clear();
+		graphemes.addAll(nucleus.getGraphemes());
+		graphemes.addAll(coda.getGraphemes());
+		return graphemes;
+	}
 
 	public Nucleus getNucleus() {
 		return nucleus;

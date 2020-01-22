@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2019 SIL International 
+// Copyright (c) 2018-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -19,11 +19,15 @@ import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
  *
  * A value object
  */
-public class ONCSyllable extends Object {
+public class ONCSyllable extends ONCConstituent {
 
 	private final List<ONCSegmentInSyllable> segmentsInSyllable;
 	private Onset onset = new Onset();
 	private Rime rime = new Rime();
+
+	public List<ONCSegmentInSyllable> getGraphemes() {
+		return segmentsInSyllable;
+	}
 
 	public ONCSyllable(ArrayList<ONCSegmentInSyllable> arrayList) {
 		super();

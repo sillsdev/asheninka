@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 SIL International
+ * Copyright (c) 2019-2020 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -23,8 +23,8 @@ public abstract class ONCConstituent {
 		return graphemes;
 	}
 
-	public void setGraphemes(List<ONCSegmentInSyllable> graphemesInOnset) {
-		this.graphemes = graphemesInOnset;
+	public void setGraphemes(List<ONCSegmentInSyllable> graphemesInConstituent) {
+		this.graphemes = graphemesInConstituent;
 	}
 	
 	public boolean exists() {

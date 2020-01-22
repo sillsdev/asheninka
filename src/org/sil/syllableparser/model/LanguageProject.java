@@ -162,7 +162,7 @@ public class LanguageProject {
 				.collect(Collectors.toList());
 	}
 
-	public List<TemplateFilter> getActiveAndValidTemplates() {
+	public List<Template> getActiveAndValidTemplates() {
 		return templates.stream().filter(template -> template.isActive() && template.isValid())
 				.collect(Collectors.toList());
 	}

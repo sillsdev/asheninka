@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 SIL International
+ * Copyright (c) 2019-2020 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -8,6 +8,7 @@ package org.sil.syllableparser.model.oncapproach;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.service.parsing.ONCType;
@@ -25,6 +26,7 @@ public class ONCTracingStep {
 	public SHComparisonResult comparisonResult = null;
 	private ONCSyllabificationStatus status = ONCSyllabificationStatus.UNKNOWN;
 	private ONCType oncType = ONCType.UNKNOWN;
+	private TemplateFilter templateFilterUsed;
 	public String sMissingNaturalClass = "No Natural Class";
 	public static final String NULL_REPRESENTATION = "&#xa0;&#x2014";
 	protected ResourceBundle bundle;
@@ -233,6 +235,10 @@ public class ONCTracingStep {
 		case UNKNOWN:
 			result = bundle.getString("label.onctypeunknown");
 			break;
+		case FILTER_FAILED:
+			break;
+		default:
+			break;
 		}
 		return result;
 	}
@@ -258,6 +264,9 @@ public class ONCTracingStep {
 		case ADDING_SYLLABLE_TO_WORD:
 			result = bundle.getString("label.oncstiaddingsyllabletoword");
 			break;
+		case CODA_FILTER_FAILED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodafilterfailed"));
+			break;
 		case EXPECTED_NUCLEUS_NOT_FOUND:
 			result = bundle.getString("label.oncstiexpectednucleusnotfound");
 			break;
@@ -275,8 +284,17 @@ public class ONCTracingStep {
 		case NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT:
 			result = bundle.getString("label.oncstinaturalclassnotfoundforsegment");
 			break;
+		case NUCLEUS_FILTER_FAILED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleusfilterfailed"));
+			break;
+		case ONSET_FILTER_FAILED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetfilterfailed"));
+			break;
 		case ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET:
 			result = bundle.getString("label.oncstionsetrequiredbutsegmentnotanonset");
+			break;
+		case RIME_FILTER_FAILED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstirimefilterfailed"));
 			break;
 		case SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE:
 			result = bundle
@@ -296,10 +314,26 @@ public class ONCTracingStep {
 		case SUCCESS:
 			result = bundle.getString("label.oncstisuccess");
 			break;
+		case SYLLABLE_FILTER_FAILED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstisyllablefilterfailed"));
+			break;
 		case UNKNOWN:
 			result = bundle.getString("label.oncstiunknown");
 			break;
 		}
 		return result;
+	}
+
+	private String addTemplateFilterIDToStatus(String statusMessage) {
+		return statusMessage.replace("{0}", templateFilterUsed.getTemplateFilterName() + " ("
+				+ templateFilterUsed.getTemplateFilterRepresentation() + ")");
+	}
+
+	public TemplateFilter getTemplateFilterUsed() {
+		return templateFilterUsed;
+	}
+
+	public void setTemplateFilterUsed(TemplateFilter templateFilterUsed) {
+		this.templateFilterUsed = templateFilterUsed;
 	}
 }
