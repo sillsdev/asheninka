@@ -237,6 +237,8 @@ public class ONCTracingStep {
 			break;
 		case FILTER_FAILED:
 			break;
+		case FILTER_REPAIR_APPLIED:
+			break;
 		default:
 			break;
 		}

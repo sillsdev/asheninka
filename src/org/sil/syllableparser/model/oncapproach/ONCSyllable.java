@@ -7,6 +7,7 @@
 package org.sil.syllableparser.model.oncapproach;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
@@ -65,5 +66,11 @@ public class ONCSyllable extends ONCConstituent {
 			sb.append(seg.getSegmentName());
 		}	
 		return sb.toString();
+	}
+
+	@Override
+	public void checkRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
+			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord) {
+		// TODO: flesh out
 	}
 }

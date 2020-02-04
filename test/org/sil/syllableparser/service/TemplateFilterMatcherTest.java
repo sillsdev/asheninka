@@ -39,7 +39,7 @@ public class TemplateFilterMatcherTest {
 	LanguageProject languageProject;
 	Approach cva;
 	List<Segment> activeSegments;
-	List<CVNaturalClass> classes;
+	List<CVNaturalClass> activeClasses;
 	TemplateFilter tf;
 	ONCSegmenter segmenter;
 	List<ONCSegmentInSyllable> segmentsInWord;
@@ -57,10 +57,12 @@ public class TemplateFilterMatcherTest {
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
 		activeSegments = languageProject.getActiveSegmentsInInventory();
-		classes = languageProject.getCVApproach().getActiveCVNaturalClasses();
+		activeClasses = languageProject.getCVApproach().getActiveCVNaturalClasses();
 		segmenter = new ONCSegmenter(languageProject.getActiveGraphemes(),
 				languageProject.getActiveGraphemeNaturalClasses());
-		matcher = new TemplateFilterMatcher(activeSegments, classes);
+		matcher = TemplateFilterMatcher.getInstance();
+		matcher.setActiveSegments(activeSegments);
+		matcher.setActiveClasses(activeClasses);
 		}
 
 	/**

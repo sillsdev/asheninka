@@ -12,6 +12,7 @@ package org.sil.syllableparser.service.parsing;
 public enum ONCType {
 	CODA,
 	FILTER_FAILED,
+	FILTER_REPAIR_APPLIED,
 	NUCLEUS,
 	NUCLEUS_OR_CODA,
 	ONSET,

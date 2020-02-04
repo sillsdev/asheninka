@@ -5,6 +5,7 @@
  */
 package org.sil.syllableparser.model.oncapproach;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -58,5 +59,11 @@ public class Rime extends ONCConstituent {
 	public void getONCPattern(StringBuilder sb) {
 		nucleus.getONCPattern(sb);
 		coda.getONCPattern(sb);
+	}
+
+	@Override
+	public void checkRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
+			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord) {
+		// TODO: flesh out
 	}
 }

@@ -6,7 +6,10 @@
 package org.sil.syllableparser.model.oncapproach;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.sil.syllableparser.model.Filter;
 
 /**
  * @author Andy Black
@@ -18,6 +21,7 @@ import java.util.List;
  */
 public abstract class ONCConstituent {
 	protected List<ONCSegmentInSyllable> graphemes = new ArrayList<ONCSegmentInSyllable>();
+	protected List<Filter> repairFilters = new ArrayList<Filter>(); 
 
 	public List<ONCSegmentInSyllable> getGraphemes() {
 		return graphemes;
@@ -27,6 +31,14 @@ public abstract class ONCConstituent {
 		this.graphemes = graphemesInConstituent;
 	}
 	
+	public List<Filter> getRepairFilters() {
+		return repairFilters;
+	}
+
+	public void setRepairFilters(List<Filter> repairFilters) {
+		this.repairFilters = repairFilters;
+	}
+
 	public boolean exists() {
 		if (graphemes.size() > 0)
 			return true;
@@ -57,4 +69,7 @@ public abstract class ONCConstituent {
 			sb.append(sType);
 		}
 	}
+	
+	public abstract void checkRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
+			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord);
 }

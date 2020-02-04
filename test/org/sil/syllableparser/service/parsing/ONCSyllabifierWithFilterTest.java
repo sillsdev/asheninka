@@ -240,13 +240,15 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 		assertEquals(f, tracingStep.getTemplateFilterUsed());
 	}
 
-	@Test @Ignore
+	@Test
 	public void filterRepairTest() {
 		assertEquals(2, languageProject.getActiveAndValidFilters().size());
 		Filter f = languageProject.getActiveAndValidFilters().get(0);
 		assertEquals(true, f.getAction().isDoRepair());
 		assertEquals(FilterType.ONSET, f.getTemplateFilterType());
 		checkSyllabification("ætlæntɪk", true, 3, "æt.læn.tɪk", "nc.onc.onc",
-				"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
+				"(W(σ(R(N(\\L æ(\\G æ)))(C(\\L t(\\G t)))))(σ(O(\\L l(\\G l)))(R(N(\\L æ(\\G æ)))(C(\\L n(\\G n)))))(σ(O(\\L t(\\G t)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
+		checkSyllabification("tlæntɪk", true, 2, "tlæn.tɪk", "oonc.onc",
+				"(W(σ(O(\\L t(\\G t))(\\L l(\\G l)))(R(N(\\L æ(\\G æ)))(C(\\L n(\\G n)))))(σ(O(\\L t(\\G t)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
 	}
 }

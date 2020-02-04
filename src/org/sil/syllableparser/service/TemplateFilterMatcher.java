@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 SIL International
+ * Copyright (c) 2019-2020 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -18,15 +18,37 @@ import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 /**
  * @author Andy Black
  *
+ * Singleton (which needs to have its values initialized)
  */
 public class TemplateFilterMatcher {
 
+	private static TemplateFilterMatcher instance;
 	List<Segment> activeSegments = new ArrayList<>();
 	List<CVNaturalClass> activeClasses = new ArrayList<>();
 
-	public TemplateFilterMatcher(List<Segment> activeSegments, List<CVNaturalClass> activeClasses) {
-		super();
+	public static TemplateFilterMatcher getInstance() {
+		if (instance == null) {
+			instance = new TemplateFilterMatcher();
+		}
+		return instance;
+	}
+
+	public TemplateFilterMatcher() {
+	}
+
+	public List<Segment> getActiveSegments() {
+		return activeSegments;
+	}
+
+	public void setActiveSegments(List<Segment> activeSegments) {
 		this.activeSegments = activeSegments;
+	}
+
+	public List<CVNaturalClass> getActiveClasses() {
+		return activeClasses;
+	}
+
+	public void setActiveClasses(List<CVNaturalClass> activeClasses) {
 		this.activeClasses = activeClasses;
 	}
 
