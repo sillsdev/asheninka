@@ -10,6 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.service.TemplateFilterMatcher;
+import org.sil.syllableparser.service.parsing.ONCTracer;
+import org.sil.syllableparser.service.parsing.ONCType;
 
 /**
  * @author Andy Black
@@ -21,7 +24,8 @@ import org.sil.syllableparser.model.Filter;
  */
 public abstract class ONCConstituent {
 	protected List<ONCSegmentInSyllable> graphemes = new ArrayList<ONCSegmentInSyllable>();
-	protected List<Filter> repairFilters = new ArrayList<Filter>(); 
+	protected List<Filter> failFilters = new ArrayList<Filter>();
+	protected List<Filter> repairFilters = new ArrayList<Filter>();
 
 	public List<ONCSegmentInSyllable> getGraphemes() {
 		return graphemes;
@@ -31,6 +35,14 @@ public abstract class ONCConstituent {
 		this.graphemes = graphemesInConstituent;
 	}
 	
+	public List<Filter> getFailFilters() {
+		return failFilters;
+	}
+
+	public void setFailFilters(List<Filter> failFilters) {
+		this.failFilters = failFilters;
+	}
+
 	public List<Filter> getRepairFilters() {
 		return repairFilters;
 	}
@@ -70,6 +82,34 @@ public abstract class ONCConstituent {
 		}
 	}
 	
-	public abstract void checkRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
+	public abstract void applyAnyRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
 			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord);
+
+	public ONCType applyAnyFailFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
+			ONCType currentType, ONCSyllable syl, ONCSyllabificationStatus status,
+			LinkedList<ONCSyllable> syllablesInCurrentWord) {
+		ONCTracer tracer = ONCTracer.getInstance();
+		TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();
+		for (Filter f : failFilters) {
+			int iItemsInFilter = f.getSlots().size();
+			int iSegmentsInConstituent = getGraphemes().size();
+			if (iSegmentsInConstituent >= iItemsInFilter) {
+				int iStart = iSegmentInWord - (iItemsInFilter - 1);
+				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1))) {
+					currentType = ONCType.FILTER_FAILED;
+					if (!syllablesInCurrentWord.contains(syl)) {
+						if (syl.getSegmentsInSyllable().size() > 0) {
+							syllablesInCurrentWord.add(syl);
+						}
+					}
+					tracer.setOncType(ONCType.FILTER_FAILED);
+					tracer.setStatus(status);
+					tracer.setTemplateFilterUsed(f);
+					tracer.setSuccessful(false);
+					tracer.recordStep();
+				}
+			}
+		}
+		return currentType;
+	}
 }

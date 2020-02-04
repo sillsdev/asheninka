@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -143,8 +144,9 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 		assertEquals(true, fSuccess);
 		List<ONCSegmentInSyllable> segmentsInWord = (List<ONCSegmentInSyllable>) segmenter
 				.getSegmentsInWord();
-		ONCType returnType = oncSyllabifier.checkFailFilters(segmentsInWord, iSegmentInWord,
-				currentType, failFilters, constituent, syl, tracingStatus);
+		constituent.setFailFilters(failFilters);
+		ONCType returnType = constituent.applyAnyFailFilters(segmentsInWord, iSegmentInWord,
+				currentType, syl, tracingStatus, (LinkedList<ONCSyllable>) oncSyllabifier.getSyllablesInCurrentWord());
 		assertEquals(expectedType, returnType);
 	}
 

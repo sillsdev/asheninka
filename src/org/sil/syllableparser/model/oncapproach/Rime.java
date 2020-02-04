@@ -62,7 +62,7 @@ public class Rime extends ONCConstituent {
 	}
 
 	@Override
-	public void checkRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
+	public void applyAnyRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
 			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord) {
 		// TODO: flesh out
 	}

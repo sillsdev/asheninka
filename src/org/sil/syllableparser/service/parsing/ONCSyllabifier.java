@@ -79,7 +79,8 @@ public class ONCSyllabifier implements Syllabifiable {
 
 	public ONCSyllabifier(ONCApproach oncApproach) {
 		super();
-		tracer = new ONCTracer();
+		tracer = ONCTracer.getInstance();
+		tracer.resetSteps();
 		this.oncApproach = oncApproach;
 		languageProject = oncApproach.getLanguageProject();
 		sylParams = languageProject.getSyllabificationParameters();
@@ -333,12 +334,12 @@ public class ONCSyllabifier implements Syllabifiable {
 						if (onsetMaximization) {
 							i--;
 							syllablesInCurrentWord.add(syl);
-							currentType = checkFailFilters(segmentsInWord, i, currentType,
-									rimeFailFilters, syl, syl,
-									ONCSyllabificationStatus.RIME_FILTER_FAILED);
-							currentType = checkFailFilters(segmentsInWord, i, currentType,
-									syllableFailFilters, syl, syl,
-									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED);
+							currentType = syl.getRime().applyAnyFailFilters(segmentsInWord, i,
+									currentType, syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
+									syllablesInCurrentWord);
+							currentType = syl.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
+									syllablesInCurrentWord);
 							if (currentType != ONCType.FILTER_FAILED) {
 								syl = createNewSyllable();
 								currentType = updateTypeForNewSyllable();
@@ -349,12 +350,12 @@ public class ONCSyllabifier implements Syllabifiable {
 								&& opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
 							i--;
 							syllablesInCurrentWord.add(syl);
-							currentType = checkFailFilters(segmentsInWord, i, currentType,
-									rimeFailFilters, syl,
-									syl, ONCSyllabificationStatus.RIME_FILTER_FAILED);
-							currentType = checkFailFilters(segmentsInWord, i, currentType,
-									syllableFailFilters, syl,
-									syl, ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED);
+							currentType = syl.getRime().applyAnyFailFilters(segmentsInWord, i,
+									currentType, syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
+									syllablesInCurrentWord);
+							currentType = syl.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
+									syllablesInCurrentWord);
 							if (currentType != ONCType.FILTER_FAILED) {
 								syl = createNewSyllable();
 								currentType = ONCType.ONSET_OR_NUCLEUS;
@@ -389,11 +390,13 @@ public class ONCSyllabifier implements Syllabifiable {
 				} else {
 					i--;
 					syllablesInCurrentWord.add(syl);
-					currentType = checkFailFilters(segmentsInWord, i, currentType, rimeFailFilters,
-							syl, syl, ONCSyllabificationStatus.RIME_FILTER_FAILED);
-					currentType = checkFailFilters(segmentsInWord, i, currentType,
-							syllableFailFilters, syl,
-							syl, ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED);
+					currentType = syl.getRime().applyAnyFailFilters(segmentsInWord, i, currentType,
+							syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
+							syllablesInCurrentWord);
+					currentType = syl
+							.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
+									syllablesInCurrentWord);
 					if (currentType != ONCType.FILTER_FAILED) {
 						syl = createNewSyllable();
 						currentType = ONCType.ONSET;
@@ -414,11 +417,13 @@ public class ONCSyllabifier implements Syllabifiable {
 				} else {
 					i--;
 					syllablesInCurrentWord.add(syl);
-					currentType = checkFailFilters(segmentsInWord, i, currentType, rimeFailFilters,
-							syl, syl, ONCSyllabificationStatus.RIME_FILTER_FAILED);
-					currentType = checkFailFilters(segmentsInWord, i, currentType,
-							syllableFailFilters, syl,
-							syl, ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED);
+					currentType = syl.getRime().applyAnyFailFilters(segmentsInWord, i, currentType,
+							syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
+							syllablesInCurrentWord);
+					currentType = syl
+							.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
+									syllablesInCurrentWord);
 					if (currentType != ONCType.FILTER_FAILED) {
 						syl = createNewSyllable();
 						currentType = ONCType.ONSET_OR_NUCLEUS;
@@ -467,12 +472,17 @@ public class ONCSyllabifier implements Syllabifiable {
 
 	public ONCSyllable createNewSyllable() {
 		ONCSyllable syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
+		syl.setFailFilters(syllableFailFilters);
 		syl.setRepairFilters(syllableRepairFilters);
+		syl.getOnset().setFailFilters(onsetFailFilters);
 		syl.getOnset().setRepairFilters(onsetRepairFilters);
 		syl.getOnset().setCodasAllowed(codasAllowed);
 		syl.getOnset().setOpType(opType);
+		syl.getRime().setFailFilters(rimeFailFilters);
 		syl.getRime().setRepairFilters(rimeRepairFilters);
+		syl.getRime().getNucleus().setFailFilters(nucleusFailFilters);
 		syl.getRime().getNucleus().setRepairFilters(nucleusRepairFilters);
+		syl.getRime().getCoda().setFailFilters(codaFailFilters);
 		syl.getRime().getCoda().setRepairFilters(codaRepairFilters);
 		return syl;
 	}
@@ -489,8 +499,8 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setOncType(ONCType.CODA);
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA);
 		tracer.recordStep();
-		currentType = checkFailFilters(segmentsInWord, i, currentType, codaFailFilters, coda,
-				syl, ONCSyllabificationStatus.CODA_FILTER_FAILED);
+		currentType = coda.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+				ONCSyllabificationStatus.CODA_FILTER_FAILED, syllablesInCurrentWord);
 		return currentType;
 	}
 
@@ -505,136 +515,9 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setOncType(ONCType.NUCLEUS);
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
 		tracer.recordStep();
-		currentType = checkFailFilters(segmentsInWord, i, currentType, nucleusFailFilters, nucleus,
-				syl, ONCSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+		currentType = nucleus.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+				ONCSyllabificationStatus.NUCLEUS_FILTER_FAILED, syllablesInCurrentWord);
 		return currentType;
-	}
-
-	public ONCType checkFailFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
-			ONCType currentType, List<Filter> failFilters, ONCConstituent constituent, ONCSyllable syl, ONCSyllabificationStatus status) {
-		for (Filter f : failFilters) {
-			int iItemsInFilter = f.getSlots().size();
-			int iSegmentsInConstituent = constituent.getGraphemes().size();
-			if (iSegmentsInConstituent >= iItemsInFilter) {
-				int iStart = iSegmentInWord - (iItemsInFilter - 1);
-				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1))) {
-					currentType = ONCType.FILTER_FAILED;
-					if (!syllablesInCurrentWord.contains(syl)) {
-						if (syl.getSegmentsInSyllable().size() > 0) {
-							syllablesInCurrentWord.add(syl);
-						}
-					}
-					tracer.setOncType(ONCType.FILTER_FAILED);
-					tracer.setStatus(status);
-					tracer.setTemplateFilterUsed(f);
-					tracer.setSuccessful(false);
-					tracer.recordStep();
-				}
-			}
-		}
-		return currentType;
-	}
-
-	public void checkRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
-			List<Filter> repairFilters, ONCConstituent constituent, ONCSyllable syl) {
-		for (Filter f : repairFilters) {
-			int iItemsInFilter = f.getSlots().size();
-			int iSegmentsInConstituent = constituent.getGraphemes().size();
-			if (iSegmentsInConstituent >= iItemsInFilter) {
-				int iStart = iSegmentInWord - (iItemsInFilter - 1);
-				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1))) {
-					if (syllablesInCurrentWord.size() <= 0) {
-						tracer.initStep(
-								ONCType.FILTER_FAILED,
-								ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_NO_PREVIOUS_SYLLABLE,
-								f);
-						tracer.recordStep();
-						break;
-					}
-					ONCSyllable previousSyl = syllablesInCurrentWord.getLast();
-					TemplateFilterSlotSegmentOrNaturalClass slot = f.getSlots().stream()
-							.findFirst().filter(s -> s.isRepairLeftwardFromHere()).get();
-					int iSlotPos = f.getSlots().indexOf(slot);
-					ONCSegmentInSyllable segment = segmentsInWord.get(iStart + iSlotPos);
-					Onset onset = (Onset) constituent;
-					if (codasAllowed && segment.getSegment().isCoda()) {
-						if (onset.getGraphemes().size() > 1) {
-							syllablesInCurrentWord.getLast().getRime().getCoda().add(segment);
-							syllablesInCurrentWord.getLast().getSegmentsInSyllable().add(segment);
-							((Onset)constituent).getGraphemes().remove(0);
-							syl.getSegmentsInSyllable().remove(0);
-							tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
-									ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-							tracer.recordStep();
-						} else {
-							switch (opType) {
-							case ALL_BUT_FIRST_HAS_ONSET:
-								if (syllablesInCurrentWord.indexOf(previousSyl) != 0) {
-									Coda coda = previousSyl.getRime().getCoda();
-									coda.add(segment);
-									onset.getGraphemes().remove(0);
-									tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
-											ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-									tracer.recordStep();
-								} else {
-									tracer.initStep(
-											ONCType.FILTER_FAILED,
-											ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE,
-											f);
-									tracer.recordStep();
-								}
-								break;
-							case EVERY_SYLLABLE_HAS_ONSET:
-								break;
-							case ONSETS_NOT_REQUIRED:
-								Coda coda = previousSyl.getRime().getCoda();
-								coda.add(segment);
-								onset.getGraphemes().remove(0);
-								tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
-										ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-								tracer.recordStep();
-								break;
-							}
-						}
-					} else if (segment.getSegment().isNucleus()) {
-						switch (opType) {
-						case ALL_BUT_FIRST_HAS_ONSET:
-							if (syllablesInCurrentWord.indexOf(previousSyl) != 0) {
-								Nucleus nuc = previousSyl.getRime().getNucleus();
-								nuc.add(segment);
-								onset.getGraphemes().remove(0);
-								tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
-										ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-								tracer.recordStep();
-							} else {
-								tracer.initStep(
-										ONCType.FILTER_FAILED,
-										ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE,
-										f);
-								tracer.recordStep();
-							}
-							break;
-						case EVERY_SYLLABLE_HAS_ONSET:
-							break;
-						case ONSETS_NOT_REQUIRED:
-							Nucleus nuc = previousSyl.getRime().getNucleus();
-							nuc.add(segment);
-							onset.getGraphemes().remove(0);
-								tracer.initStep(ONCType.FILTER_REPAIR_APPLIED, ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-								tracer.recordStep();
-							break;
-						}
-					} else {
-						tracer.initStep(
-								ONCType.FILTER_FAILED,
-								ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_COULD_NOT_GO_IN_PREVIOUS_SYLLABLE,
-								f);
-						tracer.recordStep();
-						break;
-					}
-				}
-			}
-		}
 	}
 
 	protected ONCType addSegmentToSyllableAsOnset(List<ONCSegmentInSyllable> segmentsInWord,
@@ -648,10 +531,10 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setOncType(ONCType.ONSET);
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_ONSET);
 		tracer.recordStep();
-		onset.checkRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord);
+		onset.applyAnyRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord);
 
-		currentType = checkFailFilters(segmentsInWord, i, currentType, codaFailFilters, onset,
-				syl, ONCSyllabificationStatus.ONSET_FILTER_FAILED);
+		currentType = onset.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+				ONCSyllabificationStatus.ONSET_FILTER_FAILED, syllablesInCurrentWord);
 		return currentType;
 	}
 
@@ -676,12 +559,12 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setOncType(ONCType.CODA);
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
 		tracer.recordStep();
-		currentType = checkFailFilters(segmentsInWord, i, currentType, codaFailFilters, coda,
-				syl, ONCSyllabificationStatus.CODA_FILTER_FAILED);
-		currentType = checkFailFilters(segmentsInWord, i, currentType, rimeFailFilters, syl,
-			syl, ONCSyllabificationStatus.RIME_FILTER_FAILED);
-		currentType = checkFailFilters(segmentsInWord, i, currentType, syllableFailFilters, syl,
-				syl, ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED);
+		currentType = coda.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+				ONCSyllabificationStatus.CODA_FILTER_FAILED, syllablesInCurrentWord);
+		currentType = syl.getRime().applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+				ONCSyllabificationStatus.RIME_FILTER_FAILED, syllablesInCurrentWord);
+		currentType = syl.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
+				ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED, syllablesInCurrentWord);
 		return currentType;
 	}
 
@@ -731,13 +614,5 @@ public class ONCSyllabifier implements Syllabifiable {
 		}
 		sb.append(")");
 		return sb.toString();
-	}
-
-	private String getNCName(SHNaturalClass natClass) {
-		if (natClass == null) {
-			return "null";
-		} else {
-			return natClass.getNCName();
-		}
 	}
 }
