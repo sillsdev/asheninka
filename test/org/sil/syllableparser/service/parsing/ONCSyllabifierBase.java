@@ -106,32 +106,32 @@ public class ONCSyllabifierBase {
 						oncSyllabifier.getLingTreeDescriptionOfCurrentWord());
 			}
 
-	protected void checkTracingStep(ONCTracingStep sylInfo, String seg1, String nc1, String seg2,
+	protected void checkTracingStep(ONCTracingStep tracingStep, String seg1, String nc1, String seg2,
 			String nc2, SHComparisonResult result, ONCType oncType, ONCSyllabificationStatus status, boolean success) {
 				if (seg1 == null) {
-					assertNull(sylInfo.getSegment1());
+					assertNull(tracingStep.getSegment1());
 				} else {
-					assertEquals(seg1, sylInfo.getSegment1().getSegment());
+					assertEquals(seg1, tracingStep.getSegment1().getSegment());
 				}
 				if (nc1 == null) {
-					assertNull(sylInfo.getNaturalClass1());
+					assertNull(tracingStep.getNaturalClass1());
 				} else {
-					assertEquals(nc1, sylInfo.getNaturalClass1().getNCName());
+					assertEquals(nc1, tracingStep.getNaturalClass1().getNCName());
 				}
 				if (seg2 == null) {
-					assertNull(sylInfo.getSegment2());
+					assertNull(tracingStep.getSegment2());
 				} else {
-					assertEquals(seg2, sylInfo.getSegment2().getSegment());
+					assertEquals(seg2, tracingStep.getSegment2().getSegment());
 				}
 				if (nc2 == null) {
-					assertNull(sylInfo.getNaturalClass2());
+					assertNull(tracingStep.getNaturalClass2());
 				} else {
-					assertEquals(nc2, sylInfo.getNaturalClass2().getNCName());
+					assertEquals(nc2, tracingStep.getNaturalClass2().getNCName());
 				}
-				assertEquals(result, sylInfo.comparisonResult);
-				assertEquals(oncType, sylInfo.getOncType());
-				assertEquals(status, sylInfo.getStatus());
-				assertEquals(success, sylInfo.isSuccessful());
+				assertEquals(result, tracingStep.comparisonResult);
+				assertEquals(oncType, tracingStep.getOncType());
+				assertEquals(status, tracingStep.getStatus());
+				assertEquals(success, tracingStep.isSuccessful());
 			}
 
 }

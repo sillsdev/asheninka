@@ -78,53 +78,33 @@ public class Onset extends ONCConstituent {
 					ONCSegmentInSyllable segment = segmentsInWord.get(iStart + iSlotPos);
 					if (codasAllowed && segment.getSegment().isCoda()) {
 						if (getGraphemes().size() > 1) {
-							syllablesInCurrentWord.getLast().getRime().getCoda().add(segment);
-							syllablesInCurrentWord.getLast().getSegmentsInSyllable().add(segment);
-							getGraphemes().remove(0);
-							syl.getSegmentsInSyllable().remove(0);
-							tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
-									ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-							tracer.recordStep();
+							applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segment);
 						} else {
 							switch (opType) {
-							case ALL_BUT_FIRST_HAS_ONSET:
-								if (syllablesInCurrentWord.indexOf(previousSyl) != 0) {
-									Coda coda = previousSyl.getRime().getCoda();
-									coda.add(segment);
-									getGraphemes().remove(0);
-									tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
-											ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-									tracer.recordStep();
-								} else {
-									tracer.initStep(
-											ONCType.FILTER_FAILED,
-											ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE,
-											f);
-									tracer.recordStep();
-								}
-								break;
+							case ALL_BUT_FIRST_HAS_ONSET:  // fall through
 							case EVERY_SYLLABLE_HAS_ONSET:
+								tracer.initStep(
+										ONCType.FILTER_FAILED,
+										ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE,
+										f);
+								tracer.recordStep();
 								break;
 							case ONSETS_NOT_REQUIRED:
-								Coda coda = previousSyl.getRime().getCoda();
-								coda.add(segment);
-								getGraphemes().remove(0);
-								tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
-										ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-								tracer.recordStep();
+								applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segment);
 								break;
 							}
 						}
 					} else if (segment.getSegment().isNucleus()) {
+						// NOTE: this code has not been tested via a unit test
+						// Until we have templates working which can place a
+						// segment which can be either an onset or a nucleus as
+						// an onset, we will no get here; the segment is always
+						// added as a nucleus
 						switch (opType) {
-						case ALL_BUT_FIRST_HAS_ONSET:
+						case ALL_BUT_FIRST_HAS_ONSET:  // fall through
+						case EVERY_SYLLABLE_HAS_ONSET:
 							if (syllablesInCurrentWord.indexOf(previousSyl) != 0) {
-								Nucleus nuc = previousSyl.getRime().getNucleus();
-								nuc.add(segment);
-								getGraphemes().remove(0);
-								tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
-										ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-								tracer.recordStep();
+								applyRepairToNucleus(syl, tracer, f, previousSyl, segment);
 							} else {
 								tracer.initStep(
 										ONCType.FILTER_FAILED,
@@ -133,14 +113,8 @@ public class Onset extends ONCConstituent {
 								tracer.recordStep();
 							}
 							break;
-						case EVERY_SYLLABLE_HAS_ONSET:
-							break;
 						case ONSETS_NOT_REQUIRED:
-							Nucleus nuc = previousSyl.getRime().getNucleus();
-							nuc.add(segment);
-							getGraphemes().remove(0);
-								tracer.initStep(ONCType.FILTER_REPAIR_APPLIED, ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
-								tracer.recordStep();
+							applyRepairToNucleus(syl, tracer, f, previousSyl, segment);
 							break;
 						}
 					} else {
@@ -154,5 +128,29 @@ public class Onset extends ONCConstituent {
 				}
 			}
 		}
+	}
+
+	public void applyRepairToNucleus(ONCSyllable syl, ONCTracer tracer, Filter f,
+			ONCSyllable previousSyl, ONCSegmentInSyllable segment) {
+		Nucleus nuc = previousSyl.getRime().getNucleus();
+		nuc.add(segment);
+		getGraphemes().remove(0);
+		syl.getSegmentsInSyllable().remove(0);
+		tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
+				ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
+		tracer.setSuccessful(true);
+		tracer.recordStep();
+	}
+
+	public void applyRepairToCoda(ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord,
+			ONCTracer tracer, Filter f, ONCSegmentInSyllable segment) {
+		syllablesInCurrentWord.getLast().getRime().getCoda().add(segment);
+		syllablesInCurrentWord.getLast().getSegmentsInSyllable().add(segment);
+		getGraphemes().remove(0);
+		syl.getSegmentsInSyllable().remove(0);
+		tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
+				ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
+		tracer.setSuccessful(true);
+		tracer.recordStep();
 	}
 }
