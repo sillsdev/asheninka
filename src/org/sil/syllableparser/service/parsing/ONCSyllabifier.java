@@ -457,6 +457,8 @@ public class ONCSyllabifier implements Syllabifiable {
 				break;
 			case FILTER_FAILED:
 				return false;
+			default:
+				break;
 			}
 			i++;
 		}

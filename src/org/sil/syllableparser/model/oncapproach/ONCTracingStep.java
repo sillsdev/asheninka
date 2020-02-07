@@ -220,6 +220,12 @@ public class ONCTracingStep {
 		case CODA_OR_ONSET:
 			result = bundle.getString("label.onctypecodaoronset");
 			break;
+		case FILTER_FAILED:
+			result = bundle.getString("label.onctypefilterfailed");
+			break;
+		case FILTER_REPAIR_APPLIED:
+			result = bundle.getString("label.onctypefilterrepairapplied");
+			break;
 		case NUCLEUS:
 			result = bundle.getString("label.onctypenucleus");
 			break;
@@ -234,10 +240,6 @@ public class ONCTracingStep {
 			break;
 		case UNKNOWN:
 			result = bundle.getString("label.onctypeunknown");
-			break;
-		case FILTER_FAILED:
-			break;
-		case FILTER_REPAIR_APPLIED:
 			break;
 		default:
 			break;
@@ -269,6 +271,9 @@ public class ONCTracingStep {
 		case CODA_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodafilterfailed"));
 			break;
+		case CODA_FILTER_REPAIR_COULD_NOT_APPLY:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodarepairnotapply"));
+			break;
 		case EXPECTED_NUCLEUS_NOT_FOUND:
 			result = bundle.getString("label.oncstiexpectednucleusnotfound");
 			break;
@@ -289,14 +294,32 @@ public class ONCTracingStep {
 		case NUCLEUS_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleusfilterfailed"));
 			break;
+		case NUCLEUS_FILTER_REPAIR_COULD_NOT_APPLY:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleusrepairnotapply"));
+			break;
 		case ONSET_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetfilterfailed"));
+			break;
+		case ONSET_FILTER_REPAIR_APPLIED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetrepairapplied"));
+			break;
+		case ONSET_FILTER_REPAIR_COULD_NOT_APPLY_NO_PREVIOUS_SYLLABLE:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetrepairnotapplynoprevioussyllable"));
+			break;
+		case ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_COULD_NOT_GO_IN_PREVIOUS_SYLLABLE:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetrepairnotapplynotgoinprevioussyllable"));
+			break;
+		case ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetrepairnotapplyonsetrequiredbutwontbeone"));
 			break;
 		case ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET:
 			result = bundle.getString("label.oncstionsetrequiredbutsegmentnotanonset");
 			break;
 		case RIME_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstirimefilterfailed"));
+			break;
+		case RIME_FILTER_REPAIR_COULD_NOT_APPLY:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstirimerepairnotapply"));
 			break;
 		case SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE:
 			result = bundle
@@ -319,8 +342,13 @@ public class ONCTracingStep {
 		case SYLLABLE_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstisyllablefilterfailed"));
 			break;
+		case SYLLABLE_FILTER_REPAIR_COULD_NOT_APPLY:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstisyllablerepairnotapply"));
+			break;
 		case UNKNOWN:
 			result = bundle.getString("label.oncstiunknown");
+			break;
+		default:
 			break;
 		}
 		return result;
