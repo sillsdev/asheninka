@@ -171,9 +171,9 @@ public class TemplatesController extends TemplatesFiltersController {
 	 */
 	@Override
 	protected void handleInsertNewItem() {
-		TemplateFilter newTemplateFilter = new TemplateFilter();
-		contentList.add(newTemplateFilter);
-		newTemplateFilter.setTemplateFilterRepresentation("");
+		Template newTemplate = new Template();
+		templateList.add(newTemplate);
+		newTemplate.setTemplateFilterRepresentation("");
 		int i = oncApproach.getLanguageProject().getTemplates().size() - 1;
 		selectAndScrollToItem(i);
 	}
@@ -185,10 +185,10 @@ public class TemplatesController extends TemplatesFiltersController {
 	 */
 	@Override
 	void handleRemoveItem() {
-		int i = contentList.indexOf(currentTemplateFilter);
+		int i = templateList.indexOf(currentTemplateFilter);
 		currentTemplateFilter = null;
 		if (i >= 0) {
-			contentList.remove(i);
+			templateList.remove(i);
 			int max = templateTable.getItems().size();
 			i = adjustIndexValue(i, max);
 			selectAndScrollToItem(i);
