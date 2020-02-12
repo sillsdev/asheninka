@@ -98,7 +98,7 @@ public class ONCTracingStep {
 		}
 	}
 
-	public String getComparisonResult() {
+	public String getComparisonResultAsString() {
 		String result = "";
 		if (comparisonResult == null) {
 			return NULL_REPRESENTATION;
@@ -137,16 +137,17 @@ public class ONCTracingStep {
 
 	protected void setSuccessBasedOnStatus(ONCSyllabificationStatus status) {
 		switch (status) {
-		case EXPECTED_NUCLEUS_NOT_FOUND:
-		case EXPECTED_ONSET_OR_NUCLEUS_NOT_FOUND:
-		case NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT:
-		case ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET:
-		case SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET:
-		case SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET:
-			successful = false;
+		case ADDED_AS_NUCLEUS:
+		case ADDED_AS_ONSET:
+		case ADDED_AS_CODA:
+		case ADDED_AS_CODA_START_NEW_SYLLABLE:
+		case ADDING_FINAL_SYLLABLE_TO_WORD:
+		case ADDING_SYLLABLE_TO_WORD:
+		case ONSET_FILTER_REPAIR_APPLIED:
+			successful = true;
 			break;
 		default:
-			successful = true;
+			successful = false;
 			break;
 		}
 	}
@@ -189,6 +190,10 @@ public class ONCTracingStep {
 
 	public void setOncType(ONCType oncType) {
 		this.oncType = oncType;
+	}
+
+	public SHComparisonResult getComparisonResult() {
+		return comparisonResult;
 	}
 
 	public void setComparisonResult(SHComparisonResult comparisonResult) {
@@ -296,6 +301,15 @@ public class ONCTracingStep {
 			break;
 		case NUCLEUS_FILTER_REPAIR_COULD_NOT_APPLY:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleusrepairnotapply"));
+			break;
+		case NUCLEUS_TEMPLATE_BLOCKS_ADDING_ANOTHER_NUCLEUS_CREATE_NEW_SYLLABLE:
+			result = bundle.getString("label.oncstinucleustemplateblocksadding");
+			break;
+		case NUCLEUS_TEMPLATE_BLOCKS_ADDING_NUCLEUS_ONSET_REQUIRED_BUT_WONT_BE_ONE:
+			result = bundle.getString("label.oncstinucleustemplateblocksaddingonsetrequiredbutwontbeone");
+			break;
+		case NUCLEUS_TEMPLATES_ALL_FAIL:
+			result = bundle.getString("label.oncstinucleustemplatesallfail");
 			break;
 		case ONSET_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetfilterfailed"));

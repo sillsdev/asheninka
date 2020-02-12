@@ -21,6 +21,7 @@ import org.sil.syllableparser.model.SyllabificationParameters;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.TemplateType;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.Coda;
 import org.sil.syllableparser.model.oncapproach.Nucleus;
@@ -54,6 +55,7 @@ public class ONCSyllabifier implements Syllabifiable {
 	private boolean codasAllowed;
 	private boolean onsetMaximization;
 	private OnsetPrincipleType opType;
+	private ONCType currentType;
 
 	LinkedList<ONCSyllable> syllablesInCurrentWord = new LinkedList<ONCSyllable>(
 			Arrays.asList(new ONCSyllable(null)));
@@ -117,7 +119,9 @@ public class ONCSyllabifier implements Syllabifiable {
 		wordFinalTemplates = languageProject.getActiveAndValidTemplates().stream()
 				.filter(t -> t.getTemplateFilterType() == TemplateType.WORDFINAL)
 				.collect(Collectors.toList());
-		wordInitialTemplates = languageProject.getActiveAndValidTemplates().stream().filter(t -> t.getTemplateFilterType() == TemplateType.WORDINITIAL).collect(Collectors.toList());
+		wordInitialTemplates = languageProject.getActiveAndValidTemplates().stream()
+				.filter(t -> t.getTemplateFilterType() == TemplateType.WORDINITIAL)
+				.collect(Collectors.toList());
 	}
 
 	protected void initializeFilters() {
@@ -245,7 +249,7 @@ public class ONCSyllabifier implements Syllabifiable {
 	}
 
 	public boolean syllabify(List<ONCSegmentInSyllable> segmentsInWord) {
-		ONCType currentType = ONCType.UNKNOWN;
+		currentType = ONCType.UNKNOWN;
 		syllablesInCurrentWord.clear();
 		tracer.resetSteps();
 		int segmentCount = segmentsInWord.size();
@@ -309,7 +313,7 @@ public class ONCSyllabifier implements Syllabifiable {
 						&& (result == SHComparisonResult.LESS)) {
 					currentType = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
 				} else if (seg1.isNucleus()) {
-					currentType = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
+					syl = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
 				} else {
 					// Probably never get here, but just in case...
 					tracer.setStatus(ONCSyllabificationStatus.EXPECTED_ONSET_OR_NUCLEUS_NOT_FOUND);
@@ -319,7 +323,7 @@ public class ONCSyllabifier implements Syllabifiable {
 				break;
 			case NUCLEUS:
 				if (seg1.isNucleus()) {
-					currentType = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
+					syl = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
 				} else {
 					tracer.setStatus(ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND);
 					tracer.recordStep();
@@ -328,7 +332,7 @@ public class ONCSyllabifier implements Syllabifiable {
 				break;
 			case NUCLEUS_OR_CODA:
 				if (seg1.isNucleus()) {
-					currentType = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
+					syl = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
 				} else if (seg1.isCoda() && codasAllowed) {
 					if (seg1.isOnset() && result == SHComparisonResult.LESS) {
 						if (onsetMaximization) {
@@ -457,6 +461,8 @@ public class ONCSyllabifier implements Syllabifiable {
 				break;
 			case FILTER_FAILED:
 				return false;
+			case TEMPLATE_FAILED:
+				return false;
 			default:
 				break;
 			}
@@ -506,9 +512,53 @@ public class ONCSyllabifier implements Syllabifiable {
 		return currentType;
 	}
 
-	protected ONCType addSegmentToSyllableAsNucleus(List<ONCSegmentInSyllable> segmentsInWord,
+	protected ONCSyllable addSegmentToSyllableAsNucleus(List<ONCSegmentInSyllable> segmentsInWord,
 			ONCSyllable syl, Segment seg1, int i) {
-		ONCType currentType;
+		if (nucleusTemplates.size() > 0) {
+			boolean templateIsGood = false;
+			boolean startNewSyllable = false;
+			int iSegmentsInWord = segmentsInWord.size();
+			int iSegmentsInConstituent = syl.getRime().getNucleus().getGraphemes().size();
+			for (Template t: nucleusTemplates) {
+				int iItemsInTemplate = t.getSlots().size();
+				if (iSegmentsInConstituent < iItemsInTemplate) {
+					int iStart = i - iSegmentsInConstituent;
+					int iEnd = Math.min(iStart + iItemsInTemplate, iSegmentsInWord);
+					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd))) {
+						templateIsGood = true;
+						break;
+					}
+				} else {
+					startNewSyllable = true;
+				}
+			}
+			if (!templateIsGood) {
+				if (startNewSyllable) {
+					syllablesInCurrentWord.add(syl);
+					if (opType == OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
+						syl = createNewSyllable();
+						if (tracer.isTracing())
+							createTemplateTracerStep(
+									seg1,
+									ONCSyllabificationStatus.NUCLEUS_TEMPLATE_BLOCKS_ADDING_ANOTHER_NUCLEUS_CREATE_NEW_SYLLABLE);
+					} else {
+						currentType = ONCType.TEMPLATE_FAILED;
+						if (tracer.isTracing()) {
+							tracer.setStatus(ONCSyllabificationStatus.NUCLEUS_TEMPLATE_BLOCKS_ADDING_NUCLEUS_ONSET_REQUIRED_BUT_WONT_BE_ONE);
+							tracer.recordStep();
+						}
+						return syl;
+					}
+				} else {
+					currentType = ONCType.TEMPLATE_FAILED;
+					if (tracer.isTracing()) {
+						tracer.setStatus(ONCSyllabificationStatus.NUCLEUS_TEMPLATES_ALL_FAIL);
+						tracer.recordStep();
+					}
+					return syl;
+				}
+			}
+		}
 		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.NUCLEUS);
 		syl.add(segmentsInWord.get(i));
 		Nucleus nucleus = syl.getRime().getNucleus();
@@ -519,7 +569,24 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.recordStep();
 		currentType = nucleus.applyAnyFailFilters(segmentsInWord, i, currentType, syl,
 				ONCSyllabificationStatus.NUCLEUS_FILTER_FAILED, syllablesInCurrentWord);
-		return currentType;
+		return syl;
+	}
+
+	public void createTemplateTracerStep(Segment seg1, ONCSyllabificationStatus newStatus) {
+		// Need to remember segments, natural classes, and comparison
+		SHNaturalClass nc1 = tracer.getTracingStep().getNaturalClass1();
+		Segment seg2 = tracer.getTracingStep().getSegment2();
+		SHNaturalClass nc2 = tracer.getTracingStep().getNaturalClass2();
+		SHComparisonResult comparisonResult = tracer.getTracingStep().getComparisonResult();
+		// create new step
+		tracer.setStatus(newStatus);
+		tracer.recordStep();
+		// reset the values
+		tracer.getTracingStep().setSegment1(seg1);
+		tracer.getTracingStep().setNaturalClass1(nc1);
+		tracer.getTracingStep().setSegment2(seg2);
+		tracer.getTracingStep().setNaturalClass2(nc2);
+		tracer.getTracingStep().setComparisonResult(comparisonResult);
 	}
 
 	protected ONCType addSegmentToSyllableAsOnset(List<ONCSegmentInSyllable> segmentsInWord,

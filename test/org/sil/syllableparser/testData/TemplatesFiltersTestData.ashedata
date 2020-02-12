@@ -98,10 +98,10 @@
             </slots>
             <templateFilterName>Disallow tl in onset</templateFilterName>
             <templateFilterRepresentation> t | l</templateFilterRepresentation>
-            <templateFilterType>ONSET</templateFilterType>
             <type>Onset</type>
             <valid>true</valid>
             <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
         </filter>
         <filter active="true" id="4102eee1-30b1-4770-8e6f-ffb6e55e4b50">
             <description>Must be dipthong or separate syllables; e.g., eɪ.oɹ.tə</description>
@@ -121,10 +121,39 @@
             </slots>
             <templateFilterName>Can't have a sequence of vowels in nucleus</templateFilterName>
             <templateFilterRepresentation>[V] [V]</templateFilterRepresentation>
-            <templateFilterType>NUCLEUS</templateFilterType>
             <type>Nucleus</type>
             <valid>true</valid>
             <action doRepair="false" repairStartPos="0"/>
+            <templateFilterType>NUCLEUS</templateFilterType>
+        </filter>
+        <filter active="false" id="b45acd2f-240e-492b-bc04-4b669fc882fb">
+            <description></description>
+            <slots>
+                <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Rime can't have two vowels and a consonant</templateFilterName>
+            <templateFilterRepresentation>[V] [V] [C]</templateFilterRepresentation>
+            <type>Rime</type>
+            <valid>true</valid>
+            <action doRepair="false" repairStartPos="0"/>
+            <templateFilterType>RIME</templateFilterType>
         </filter>
     </filters>
     <graphemeNaturalClassess/>
@@ -950,9 +979,9 @@
             </slots>
             <templateFilterName>Word final appendix</templateFilterName>
             <templateFilterRepresentation>*[Coronal] (*[Coronal]) (*[Coronal])</templateFilterRepresentation>
-            <templateFilterType>WORDFINAL</templateFilterType>
             <type>Word final</type>
             <valid>true</valid>
+            <templateFilterType>WORDFINAL</templateFilterType>
         </template>
         <template active="true" id="b364b517-5938-466e-b707-db5191821765">
             <description>Allow s in an onset which violates the SSP</description>
@@ -979,9 +1008,25 @@
             </slots>
             <templateFilterName>/s/ in onset</templateFilterName>
             <templateFilterRepresentation>*s [VoicelessNonCont] ([SonorantCV])</templateFilterRepresentation>
-            <templateFilterType>ONSET</templateFilterType>
             <type>Onset</type>
             <valid>true</valid>
+            <templateFilterType>ONSET</templateFilterType>
+        </template>
+        <template active="true" id="748b9c38-b42c-4f18-acdc-aed453d1c5f4">
+            <description>A nucleus has only one vowel (which may be a diphthong)</description>
+            <slots>
+                <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Single vowel nucleus</templateFilterName>
+            <templateFilterRepresentation>[V]</templateFilterRepresentation>
+            <type>Nucleus</type>
+            <valid>true</valid>
+            <templateFilterType>NUCLEUS</templateFilterType>
         </template>
     </templates>
     <vernacularLanguage>
@@ -1198,19 +1243,6 @@
             <shPredictedSyllabification>blæk</shPredictedSyllabification>
             <word>blæk</word>
         </word>
-        <word active="true" id="01b0c9f2-a185-49bc-941f-c620c60c3fb0">
-            <CVLingTreeDescription></CVLingTreeDescription>
-            <CVParserResult>Untested</CVParserResult>
-            <cvPredictedSyllabification></cvPredictedSyllabification>
-            <correctSyllabification></correctSyllabification>
-            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ə(\G ə)))(C(\L l(\G l))(\L t͡ʃ(\G t͡ʃ))))))</ONCLingTreeDescription>
-            <ONCParserResult>Success</ONCParserResult>
-            <oncPredictedSyllabification>bəlt͡ʃ</oncPredictedSyllabification>
-            <SHLingTreeDescription></SHLingTreeDescription>
-            <SHParserResult></SHParserResult>
-            <shPredictedSyllabification>bəlt͡ʃ</shPredictedSyllabification>
-            <word>bəlt͡ʃ</word>
-        </word>
         <word active="true" id="0c59b70e-dc64-49ba-8515-77695e8d2ace">
             <CVLingTreeDescription></CVLingTreeDescription>
             <CVParserResult>Untested</CVParserResult>
@@ -1236,6 +1268,19 @@
             <SHParserResult></SHParserResult>
             <shPredictedSyllabification>bɛlt</shPredictedSyllabification>
             <word>bɛlt</word>
+        </word>
+        <word active="true" id="01b0c9f2-a185-49bc-941f-c620c60c3fb0">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ə(\G ə)))(C(\L l(\G l))(\L t͡ʃ(\G t͡ʃ))))))</ONCLingTreeDescription>
+            <ONCParserResult>Success</ONCParserResult>
+            <oncPredictedSyllabification>bɛlt͡ʃ</oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification>bəlt͡ʃ</shPredictedSyllabification>
+            <word>bɛlt͡ʃ</word>
         </word>
         <word active="true" id="c70dfa24-0405-44d8-af4d-05c33758ff6a">
             <CVLingTreeDescription></CVLingTreeDescription>
@@ -1560,7 +1605,7 @@
             <SHLingTreeDescription></SHLingTreeDescription>
             <SHParserResult></SHParserResult>
             <shPredictedSyllabification>gɛɹ.l</shPredictedSyllabification>
-            <word>gɛɹl</word>
+            <word>gəɹl</word>
         </word>
         <word active="true" id="c1f0a415-a707-448c-946e-6e36783e88b5">
             <CVLingTreeDescription></CVLingTreeDescription>
@@ -1768,7 +1813,7 @@
             <SHLingTreeDescription></SHLingTreeDescription>
             <SHParserResult></SHParserResult>
             <shPredictedSyllabification>kɛɹ.l</shPredictedSyllabification>
-            <word>kɛɹl</word>
+            <word>kəɹl</word>
         </word>
         <word active="true" id="22cb1456-802d-4ae9-8ce6-d32c742fc106">
             <CVLingTreeDescription></CVLingTreeDescription>
@@ -1913,19 +1958,6 @@
             <shPredictedSyllabification>pleit</shPredictedSyllabification>
             <word>pleit</word>
         </word>
-        <word active="true" id="e020002f-a3f4-4adb-bf46-36b77247c854">
-            <CVLingTreeDescription></CVLingTreeDescription>
-            <CVParserResult>Untested</CVParserResult>
-            <cvPredictedSyllabification></cvPredictedSyllabification>
-            <correctSyllabification></correctSyllabification>
-            <ONCLingTreeDescription></ONCLingTreeDescription>
-            <ONCParserResult>Failure: could not parse into segments beginning at 'rist'.</ONCParserResult>
-            <oncPredictedSyllabification></oncPredictedSyllabification>
-            <SHLingTreeDescription></SHLingTreeDescription>
-            <SHParserResult></SHParserResult>
-            <shPredictedSyllabification></shPredictedSyllabification>
-            <word>prist</word>
-        </word>
         <word active="true" id="af8e3602-81f4-439a-ae73-97e12d242ec1">
             <CVLingTreeDescription></CVLingTreeDescription>
             <CVParserResult>Untested</CVParserResult>
@@ -1938,6 +1970,19 @@
             <SHParserResult></SHParserResult>
             <shPredictedSyllabification>pɛp</shPredictedSyllabification>
             <word>pɛp</word>
+        </word>
+        <word active="true" id="e020002f-a3f4-4adb-bf46-36b77247c854">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription></ONCLingTreeDescription>
+            <ONCParserResult>Failure: could not parse into segments beginning at 'rist'.</ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>pɹist</word>
         </word>
         <word active="true" id="f14f7c24-7848-450b-bcd8-f6980d6400bd">
             <CVLingTreeDescription></CVLingTreeDescription>
@@ -1989,7 +2034,7 @@
             <SHLingTreeDescription></SHLingTreeDescription>
             <SHParserResult></SHParserResult>
             <shPredictedSyllabification></shPredictedSyllabification>
-            <word>skəlptɛɹ</word>
+            <word>skəlptəɹ</word>
         </word>
         <word active="true" id="da93f9ff-0bd1-403f-9634-95d31f10f7b0">
             <CVLingTreeDescription></CVLingTreeDescription>
@@ -2238,19 +2283,6 @@
             <shPredictedSyllabification>sɪmp.təm</shPredictedSyllabification>
             <word>sɪmptəm</word>
         </word>
-        <word active="true" id="53f34944-189e-4f9a-9c14-ea77c733df58">
-            <CVLingTreeDescription></CVLingTreeDescription>
-            <CVParserResult>Untested</CVParserResult>
-            <cvPredictedSyllabification></cvPredictedSyllabification>
-            <correctSyllabification></correctSyllabification>
-            <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L m(\G m)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
-            <ONCParserResult>Success</ONCParserResult>
-            <oncPredictedSyllabification>sɪm.təm</oncPredictedSyllabification>
-            <SHLingTreeDescription></SHLingTreeDescription>
-            <SHParserResult></SHParserResult>
-            <shPredictedSyllabification>sɪm.təm</shPredictedSyllabification>
-            <word>sɪmtəm</word>
-        </word>
         <word active="true" id="32faad33-027b-4204-8764-d43a497e6328">
             <CVLingTreeDescription></CVLingTreeDescription>
             <CVParserResult>Untested</CVParserResult>
@@ -2420,19 +2452,6 @@
             <shPredictedSyllabification>ə.tɹoʊ.ʃɪs</shPredictedSyllabification>
             <word>ətɹoʊʃɪs</word>
         </word>
-        <word active="true" id="df998001-f7db-41e6-9a9f-d772f25ba1af">
-            <CVLingTreeDescription></CVLingTreeDescription>
-            <CVParserResult>Untested</CVParserResult>
-            <cvPredictedSyllabification></cvPredictedSyllabification>
-            <correctSyllabification></correctSyllabification>
-            <ONCLingTreeDescription>(W(σ(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L f(\G f))))))</ONCLingTreeDescription>
-            <ONCParserResult>Success</ONCParserResult>
-            <oncPredictedSyllabification>ɛlf</oncPredictedSyllabification>
-            <SHLingTreeDescription></SHLingTreeDescription>
-            <SHParserResult></SHParserResult>
-            <shPredictedSyllabification>ɛlf</shPredictedSyllabification>
-            <word>ɛlf</word>
-        </word>
         <word active="true" id="65751cbb-bd63-4d95-9dc8-5a415c16731e">
             <CVLingTreeDescription></CVLingTreeDescription>
             <CVParserResult>Untested</CVParserResult>
@@ -2445,6 +2464,19 @@
             <SHParserResult></SHParserResult>
             <shPredictedSyllabification>ɛlf</shPredictedSyllabification>
             <word>ɛlf</word>
+        </word>
+        <word active="true" id="3981a665-9f8a-491f-b1f5-5d2cac57c372">
+            <CVLingTreeDescription></CVLingTreeDescription>
+            <CVParserResult>Untested</CVParserResult>
+            <cvPredictedSyllabification></cvPredictedSyllabification>
+            <correctSyllabification></correctSyllabification>
+            <ONCLingTreeDescription></ONCLingTreeDescription>
+            <ONCParserResult></ONCParserResult>
+            <oncPredictedSyllabification></oncPredictedSyllabification>
+            <SHLingTreeDescription></SHLingTreeDescription>
+            <SHParserResult></SHParserResult>
+            <shPredictedSyllabification></shPredictedSyllabification>
+            <word>ɛlfɪn</word>
         </word>
         <word active="true" id="8ba5dfb9-07b3-4019-b61b-01fe70224039">
             <CVLingTreeDescription></CVLingTreeDescription>

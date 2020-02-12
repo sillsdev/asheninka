@@ -128,7 +128,7 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 				sb.append(SUCCESS);
 			}
 			sb.append("'>");
-			sb.append(tracingStep.getComparisonResult());
+			sb.append(tracingStep.getComparisonResultAsString());
 			sb.append("</span>\n");
 			sb.append("</td>");
 

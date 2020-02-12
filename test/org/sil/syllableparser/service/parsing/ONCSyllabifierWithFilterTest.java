@@ -23,6 +23,7 @@ import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.oncapproach.Coda;
 import org.sil.syllableparser.model.oncapproach.Nucleus;
 import org.sil.syllableparser.model.oncapproach.ONCConstituent;
@@ -51,7 +52,14 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 		syl = new ONCSyllable(segsInSyllable);
 		this.projectFile = Constants.UNIT_TEST_DATA_FILE_TEMPLATES_FILTERS;
 		super.setUp();
-	}
+		// turn off the nucleus template that allows only one vowel in a nucleus
+		Optional<Template> nucSingleVowel = languageProject.getActiveAndValidTemplates().stream()
+				.filter(t -> t.getID().equals("748b9c38-b42c-4f18-acdc-aed453d1c5f4")).findFirst();
+		if (nucSingleVowel.isPresent()) {
+			nucSingleVowel.get().setActive(false);
+		}
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		}
 
 	/*
 	 * (non-Javadoc)
@@ -321,7 +329,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 		tracingStep = tracingSteps.get(2);
 		checkTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids", SHComparisonResult.LESS,
-				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, true);
+				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, false);
 		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids", SHComparisonResult.LESS, ONCType.ONSET,
 				ONCSyllabificationStatus.ADDED_AS_ONSET, true);
@@ -351,7 +359,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 		tracingStep = tracingSteps.get(2);
 		checkTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids", SHComparisonResult.LESS,
-				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_CODAS_NOT_ALLOWED_START_NEW_SYLLABLE, true);
+				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_CODAS_NOT_ALLOWED_START_NEW_SYLLABLE, false);
 		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids", SHComparisonResult.LESS, ONCType.ONSET,
 				ONCSyllabificationStatus.ADDED_AS_ONSET, true);
@@ -382,7 +390,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 		tracingStep = tracingSteps.get(2);
 		checkTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids", SHComparisonResult.LESS,
-				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, true);
+				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, false);
 		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids", SHComparisonResult.LESS, ONCType.ONSET,
 				ONCSyllabificationStatus.ADDED_AS_ONSET, true);
@@ -413,7 +421,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 		tracingStep = tracingSteps.get(2);
 		checkTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids", SHComparisonResult.LESS,
-				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, true);
+				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, false);
 		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids", SHComparisonResult.LESS, ONCType.ONSET,
 				ONCSyllabificationStatus.ADDED_AS_ONSET, true);
@@ -444,7 +452,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 		tracingStep = tracingSteps.get(2);
 		checkTracingStep(tracingStep, "t", "Obstruents", "æ", "Vowels", SHComparisonResult.LESS,
-				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, true);
+				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, false);
 		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "t", "Obstruents", "æ", "Vowels", SHComparisonResult.LESS, ONCType.ONSET,
 				ONCSyllabificationStatus.ADDED_AS_ONSET, true);
@@ -463,14 +471,15 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierBase {
 		tracingSteps = oncSyllabifier.getTracingSteps();
 		assertEquals(13, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
-		checkTracingStep(tracingStep, "æ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
+		checkTracingStep(tracingStep, "æ", "Vowels", "t", "Obstruent"
+				+ "s", SHComparisonResult.MORE,
 				ONCType.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
 		tracingStep = tracingSteps.get(1);
 		checkTracingStep(tracingStep, "æ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
 				ONCType.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 		tracingStep = tracingSteps.get(2);
 		checkTracingStep(tracingStep, "t", "Obstruents", "æ", "Vowels", SHComparisonResult.LESS,
-				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, true);
+				ONCType.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, false);
 		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "t", "Obstruents", "æ", "Vowels", SHComparisonResult.LESS, ONCType.ONSET,
 				ONCSyllabificationStatus.ADDED_AS_ONSET, true);
