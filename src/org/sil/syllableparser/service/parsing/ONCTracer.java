@@ -14,7 +14,6 @@ import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
 import org.sil.syllableparser.model.oncapproach.ONCTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
-import org.sil.syllableparser.service.LingTreeInteractor;
 
 /**
  * @author Andy Black
@@ -64,9 +63,9 @@ public class ONCTracer {
 		tracingSteps.clear();
 	}
 
-	public void initStep(ONCType oncType, ONCSyllabificationStatus status, TemplateFilter filter) {
+	public void initStep(ONCSyllabifierState oncState, ONCSyllabificationStatus status, TemplateFilter filter) {
 		if (tracing) {
-			tracingStep.setOncType(oncType);
+			tracingStep.setOncState(oncState);
 			tracingStep.setStatus(status);
 			tracingStep.setTemplateFilterUsed(filter);
 			tracingStep.setSuccessful(false);
@@ -74,7 +73,7 @@ public class ONCTracer {
 	}
 
 	public void initStep(Segment seg1, SHNaturalClass nc1, Segment seg2, SHNaturalClass nc2,
-			SHComparisonResult result, ONCSyllabificationStatus status, ONCType oncType) {
+			SHComparisonResult result, ONCSyllabificationStatus status, ONCSyllabifierState oncState) {
 		if (tracing) {
 			tracingStep.setSegment1(seg1);
 			tracingStep.setNaturalClass1(nc1);
@@ -82,7 +81,7 @@ public class ONCTracer {
 			tracingStep.setNaturalClass2(nc2);
 			tracingStep.setComparisonResult(result);
 			tracingStep.setStatus(status);
-			tracingStep.setOncType(oncType);
+			tracingStep.setOncState(oncState);
 		}
 	}
 
@@ -98,9 +97,9 @@ public class ONCTracer {
 		}
 	}
 
-	public void setOncType(ONCType oncType) {
+	public void setOncState(ONCSyllabifierState oncState) {
 		if (tracing) {
-			tracingStep.setOncType(oncType);
+			tracingStep.setOncState(oncState);
 		}
 	}
 

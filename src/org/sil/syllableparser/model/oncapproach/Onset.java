@@ -13,7 +13,7 @@ import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.service.TemplateFilterMatcher;
 import org.sil.syllableparser.service.parsing.ONCTracer;
-import org.sil.syllableparser.service.parsing.ONCType;
+import org.sil.syllableparser.service.parsing.ONCSyllabifierState;
 
 /**
  * @author Andy Black
@@ -65,7 +65,7 @@ public class Onset extends ONCConstituent {
 				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1))) {
 					if (syllablesInCurrentWord.size() <= 0) {
 						tracer.initStep(
-								ONCType.FILTER_FAILED,
+								ONCSyllabifierState.FILTER_FAILED,
 								ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_NO_PREVIOUS_SYLLABLE,
 								f);
 						tracer.recordStep();
@@ -84,7 +84,7 @@ public class Onset extends ONCConstituent {
 							case ALL_BUT_FIRST_HAS_ONSET:  // fall through
 							case EVERY_SYLLABLE_HAS_ONSET:
 								tracer.initStep(
-										ONCType.FILTER_FAILED,
+										ONCSyllabifierState.FILTER_FAILED,
 										ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE,
 										f);
 								tracer.recordStep();
@@ -107,7 +107,7 @@ public class Onset extends ONCConstituent {
 								applyRepairToNucleus(syl, tracer, f, previousSyl, segment);
 							} else {
 								tracer.initStep(
-										ONCType.FILTER_FAILED,
+										ONCSyllabifierState.FILTER_FAILED,
 										ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE,
 										f);
 								tracer.recordStep();
@@ -119,7 +119,7 @@ public class Onset extends ONCConstituent {
 						}
 					} else {
 						tracer.initStep(
-								ONCType.FILTER_FAILED,
+								ONCSyllabifierState.FILTER_FAILED,
 								ONCSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_COULD_NOT_GO_IN_PREVIOUS_SYLLABLE,
 								f);
 						tracer.recordStep();
@@ -136,7 +136,7 @@ public class Onset extends ONCConstituent {
 		nuc.add(segment);
 		getGraphemes().remove(0);
 		syl.getSegmentsInSyllable().remove(0);
-		tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
+		tracer.initStep(ONCSyllabifierState.FILTER_REPAIR_APPLIED,
 				ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
 		tracer.setSuccessful(true);
 		tracer.recordStep();
@@ -148,7 +148,7 @@ public class Onset extends ONCConstituent {
 		syllablesInCurrentWord.getLast().getSegmentsInSyllable().add(segment);
 		getGraphemes().remove(0);
 		syl.getSegmentsInSyllable().remove(0);
-		tracer.initStep(ONCType.FILTER_REPAIR_APPLIED,
+		tracer.initStep(ONCSyllabifierState.FILTER_REPAIR_APPLIED,
 				ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
 		tracer.setSuccessful(true);
 		tracer.recordStep();

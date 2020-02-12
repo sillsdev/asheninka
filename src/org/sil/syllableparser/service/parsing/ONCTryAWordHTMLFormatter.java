@@ -144,7 +144,7 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sb.append("<td class='");
 			sb.append(rowStatus);
 			sb.append("'>&#xa0;");
-			sb.append(tracingStep.getOncTypeLocalized());
+			sb.append(tracingStep.getOncStateLocalized());
 			sb.append("</td>");
 			sb.append("<td class='");
 			sb.append(rowStatus);

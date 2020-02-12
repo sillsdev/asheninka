@@ -11,7 +11,7 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
-import org.sil.syllableparser.service.parsing.ONCType;
+import org.sil.syllableparser.service.parsing.ONCSyllabifierState;
 
 /**
  * @author Andy Black
@@ -25,7 +25,7 @@ public class ONCTracingStep {
 	public SHNaturalClass naturalClass2 = null;
 	public SHComparisonResult comparisonResult = null;
 	private ONCSyllabificationStatus status = ONCSyllabificationStatus.UNKNOWN;
-	private ONCType oncType = ONCType.UNKNOWN;
+	private ONCSyllabifierState oncState = ONCSyllabifierState.UNKNOWN;
 	private TemplateFilter templateFilterUsed;
 	public String sMissingNaturalClass = "No Natural Class";
 	public static final String NULL_REPRESENTATION = "&#xa0;&#x2014";
@@ -42,10 +42,10 @@ public class ONCTracingStep {
 		this.status = status;
 	}
 
-	public ONCTracingStep(Segment segment, ONCType oncType) {
+	public ONCTracingStep(Segment segment, ONCSyllabifierState oncState) {
 		super();
 		this.segment1 = segment;
-		this.oncType = oncType;
+		this.oncState = oncState;
 	}
 
 	public ONCTracingStep(Segment segment1, SHNaturalClass naturalClass1, Segment segment2,
@@ -184,12 +184,12 @@ public class ONCTracingStep {
 		this.naturalClass2 = naturalClass2;
 	}
 
-	public ONCType getOncType() {
-		return oncType;
+	public ONCSyllabifierState getOncState() {
+		return oncState;
 	}
 
-	public void setOncType(ONCType oncType) {
-		this.oncType = oncType;
+	public void setOncState(ONCSyllabifierState oncState) {
+		this.oncState = oncState;
 	}
 
 	public SHComparisonResult getComparisonResult() {
@@ -216,35 +216,38 @@ public class ONCTracingStep {
 		this.successful = successful;
 	}
 
-	public String getOncTypeLocalized() {
+	public String getOncStateLocalized() {
 		String result = "";
-		switch (oncType) {
+		switch (oncState) {
 		case CODA:
-			result = bundle.getString("label.onctypecoda");
+			result = bundle.getString("label.oncstatecoda");
 			break;
 		case CODA_OR_ONSET:
-			result = bundle.getString("label.onctypecodaoronset");
+			result = bundle.getString("label.oncstatecodaoronset");
 			break;
 		case FILTER_FAILED:
-			result = bundle.getString("label.onctypefilterfailed");
+			result = bundle.getString("label.oncstatefilterfailed");
 			break;
 		case FILTER_REPAIR_APPLIED:
-			result = bundle.getString("label.onctypefilterrepairapplied");
+			result = bundle.getString("label.oncstatefilterrepairapplied");
 			break;
 		case NUCLEUS:
-			result = bundle.getString("label.onctypenucleus");
+			result = bundle.getString("label.oncstatenucleus");
 			break;
 		case NUCLEUS_OR_CODA:
-			result = bundle.getString("label.onctypenucleusorcoda");
+			result = bundle.getString("label.oncstatenucleusorcoda");
 			break;
 		case ONSET:
-			result = bundle.getString("label.onctypeonset");
+			result = bundle.getString("label.oncstateonset");
 			break;
 		case ONSET_OR_NUCLEUS:
-			result = bundle.getString("label.onctypeonsetornucleus");
+			result = bundle.getString("label.oncstateonsetornucleus");
+			break;
+		case TEMPLATE_FAILED:
+			result = bundle.getString("label.oncstatetemplatefailed");
 			break;
 		case UNKNOWN:
-			result = bundle.getString("label.onctypeunknown");
+			result = bundle.getString("label.oncstateunknown");
 			break;
 		default:
 			break;

@@ -12,7 +12,7 @@ import java.util.List;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.service.TemplateFilterMatcher;
 import org.sil.syllableparser.service.parsing.ONCTracer;
-import org.sil.syllableparser.service.parsing.ONCType;
+import org.sil.syllableparser.service.parsing.ONCSyllabifierState;
 
 /**
  * @author Andy Black
@@ -85,8 +85,8 @@ public abstract class ONCConstituent {
 	public abstract void applyAnyRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
 			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord);
 
-	public ONCType applyAnyFailFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
-			ONCType currentType, ONCSyllable syl, ONCSyllabificationStatus status,
+	public ONCSyllabifierState applyAnyFailFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
+			ONCSyllabifierState currentState, ONCSyllable syl, ONCSyllabificationStatus status,
 			LinkedList<ONCSyllable> syllablesInCurrentWord) {
 		ONCTracer tracer = ONCTracer.getInstance();
 		TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();
@@ -96,13 +96,13 @@ public abstract class ONCConstituent {
 			if (iSegmentsInConstituent >= iItemsInFilter) {
 				int iStart = iSegmentInWord - (iItemsInFilter - 1);
 				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1))) {
-					currentType = ONCType.FILTER_FAILED;
+					currentState = ONCSyllabifierState.FILTER_FAILED;
 					if (!syllablesInCurrentWord.contains(syl)) {
 						if (syl.getSegmentsInSyllable().size() > 0) {
 							syllablesInCurrentWord.add(syl);
 						}
 					}
-					tracer.setOncType(ONCType.FILTER_FAILED);
+					tracer.setOncState(ONCSyllabifierState.FILTER_FAILED);
 					tracer.setStatus(status);
 					tracer.setTemplateFilterUsed(f);
 					tracer.setSuccessful(false);
@@ -110,6 +110,6 @@ public abstract class ONCConstituent {
 				}
 			}
 		}
-		return currentType;
+		return currentState;
 	}
 }

@@ -33,7 +33,7 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
  * @author Andy Black
  *
  */
-public class ONCSyllabifierBase {
+public class ONCSyllabifierTestBase {
 
 	protected ONCApproach oncApproach;
 	protected ObservableList<SHNaturalClass> naturalClasses;
@@ -107,7 +107,7 @@ public class ONCSyllabifierBase {
 			}
 
 	protected void checkTracingStep(ONCTracingStep tracingStep, String seg1, String nc1, String seg2,
-			String nc2, SHComparisonResult result, ONCType oncType, ONCSyllabificationStatus status, boolean success) {
+			String nc2, SHComparisonResult result, ONCSyllabifierState oncState, ONCSyllabificationStatus status, boolean success) {
 				if (seg1 == null) {
 					assertNull(tracingStep.getSegment1());
 				} else {
@@ -129,7 +129,7 @@ public class ONCSyllabifierBase {
 					assertEquals(nc2, tracingStep.getNaturalClass2().getNCName());
 				}
 				assertEquals(result, tracingStep.comparisonResult);
-				assertEquals(oncType, tracingStep.getOncType());
+				assertEquals(oncState, tracingStep.getOncState());
 				assertEquals(status, tracingStep.getStatus());
 				assertEquals(success, tracingStep.isSuccessful());
 			}

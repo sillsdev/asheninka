@@ -9,7 +9,7 @@ package org.sil.syllableparser.service.parsing;
  * @author Andy Black
  *
  */
-public enum ONCType {
+public enum ONCSyllabifierState {
 	CODA,
 	FILTER_FAILED,
 	FILTER_REPAIR_APPLIED,
