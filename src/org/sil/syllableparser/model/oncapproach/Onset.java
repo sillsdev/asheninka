@@ -7,6 +7,7 @@ package org.sil.syllableparser.model.oncapproach;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.OnsetPrincipleType;
@@ -72,8 +73,11 @@ public class Onset extends ONCConstituent {
 						break;
 					}
 					ONCSyllable previousSyl = syllablesInCurrentWord.getLast();
-					TemplateFilterSlotSegmentOrNaturalClass slot = f.getSlots().stream()
-							.findFirst().filter(s -> s.isRepairLeftwardFromHere()).get();
+					Optional<TemplateFilterSlotSegmentOrNaturalClass> oSlot = f.getSlots().stream()
+							.filter(s -> s.isRepairLeftwardFromHere()).findFirst();
+					if (!oSlot.isPresent())
+						continue;
+					TemplateFilterSlotSegmentOrNaturalClass slot = oSlot.get();
 					int iSlotPos = f.getSlots().indexOf(slot);
 					ONCSegmentInSyllable segment = segmentsInWord.get(iStart + iSlotPos);
 					if (codasAllowed && segment.getSegment().isCoda()) {

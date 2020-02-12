@@ -466,6 +466,9 @@ public class ONCSyllabifier implements Syllabifiable {
 			}
 			i++;
 		}
+		if (currentState == ONCSyllabifierState.TEMPLATE_FAILED ||
+				currentState == ONCSyllabifierState.FILTER_FAILED)
+			return false;
 		if (syl.getSegmentsInSyllable().size() > 0) {
 			syllablesInCurrentWord.add(syl);
 			Segment seg = segmentsInWord.get(segmentCount - 1).getSegment();

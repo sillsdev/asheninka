@@ -86,6 +86,8 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 				"(W(σ(R(N(\\L æ(\\G æ)))))(σ(O(\\L l(\\G l)))(R(N(\\L æ(\\G æ)))))(σ(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L t(\\G t)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
 		checkSyllabification("ælæntɪak", true, 4, "æ.læn.tɪ.ak", "n.onc.on.nc",
 				"(W(σ(R(N(\\L æ(\\G æ)))))(σ(O(\\L l(\\G l)))(R(N(\\L æ(\\G æ)))(C(\\L n(\\G n)))))(σ(O(\\L t(\\G t)))(R(N(\\L ɪ(\\G ɪ)))))(σ(R(N(\\L a(\\G a)))(C(\\L k(\\G k))))))");
+		checkSyllabification("bitl̩", false, 1, "bi", "on",
+				"(W(σ(O(\\L b(\\G b)))(R(N(\\L i(\\G i))))))");
 
 		// all but first has onset, nucleus can be only one vowel
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
