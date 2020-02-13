@@ -144,6 +144,7 @@ public class ONCTracingStep {
 		case ADDING_FINAL_SYLLABLE_TO_WORD:
 		case ADDING_SYLLABLE_TO_WORD:
 		case ONSET_FILTER_REPAIR_APPLIED:
+		case NUCLEUS_TEMPLATE_MATCHED:
 			successful = true;
 			break;
 		default:
@@ -310,6 +311,9 @@ public class ONCTracingStep {
 			break;
 		case NUCLEUS_TEMPLATE_BLOCKS_ADDING_NUCLEUS_ONSET_REQUIRED_BUT_WONT_BE_ONE:
 			result = bundle.getString("label.oncstinucleustemplateblocksaddingonsetrequiredbutwontbeone");
+			break;
+		case NUCLEUS_TEMPLATE_MATCHED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleustemplatematched"));
 			break;
 		case NUCLEUS_TEMPLATES_ALL_FAIL:
 			result = bundle.getString("label.oncstinucleustemplatesallfail");

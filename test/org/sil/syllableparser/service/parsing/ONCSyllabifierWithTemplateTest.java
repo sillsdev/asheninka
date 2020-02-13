@@ -178,12 +178,15 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		checkSyllabifyWord("ælæntɪk", true, 3, "æ.læn.tɪk", "n.onc.onc",
 				"(W(σ(R(N(\\L æ(\\G æ)))))(σ(O(\\L l(\\G l)))(R(N(\\L æ(\\G æ)))(C(\\L n(\\G n)))))(σ(O(\\L t(\\G t)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
 		List<ONCTracingStep> tracingSteps = oncSyllabifier.getTracingSteps();
-		assertEquals(11, tracingSteps.size());
+		assertEquals(14, tracingSteps.size());
 		ONCTracingStep tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "æ", "Vowels", "l", "Liquids", SHComparisonResult.MORE,
 				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET,
 				false);
 		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "æ", "Vowels", "l", "Liquids", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
+				ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED, true);
+		tracingStep = tracingSteps.get(2);
 		checkTracingStep(tracingStep, "æ", "Vowels", "l", "Liquids", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
 				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 		// rest is tested elsewhere
@@ -191,21 +194,24 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		checkSyllabifyWord("æalæntɪk", true, 4, "æ.a.læn.tɪk", "n.n.onc.onc",
 				"(W(σ(R(N(\\L æ(\\G æ)))))(σ(R(N(\\L a(\\G a)))))(σ(O(\\L l(\\G l)))(R(N(\\L æ(\\G æ)))(C(\\L n(\\G n)))))(σ(O(\\L t(\\G t)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
-		assertEquals(13, tracingSteps.size());
+		assertEquals(16, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "æ", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL,
 				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET,
 				false);
 		tracingStep = tracingSteps.get(1);
 		checkTracingStep(tracingStep, "æ", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL, ONCSyllabifierState.NUCLEUS,
-				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
+				ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED, true);
 		tracingStep = tracingSteps.get(2);
-		checkTracingStep(tracingStep, "a", "Vowels", "l", "Liquids", SHComparisonResult.MORE,
-				ONCSyllabifierState.NUCLEUS_OR_CODA, ONCSyllabificationStatus.NUCLEUS_TEMPLATE_BLOCKS_ADDING_ANOTHER_NUCLEUS_CREATE_NEW_SYLLABLE, false);
+		checkTracingStep(tracingStep, "æ", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL, ONCSyllabifierState.NUCLEUS,
+				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "a", "Vowels", "l", "Liquids", SHComparisonResult.MORE,
-				ONCSyllabifierState.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
+				ONCSyllabifierState.NUCLEUS_OR_CODA, ONCSyllabificationStatus.NUCLEUS_TEMPLATE_BLOCKS_ADDING_ANOTHER_NUCLEUS_CREATE_NEW_SYLLABLE, false);
 		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "a", "Vowels", "l", "Liquids", SHComparisonResult.MORE,
+				ONCSyllabifierState.NUCLEUS, ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
+		tracingStep = tracingSteps.get(5);
 		checkTracingStep(tracingStep, "l", "Liquids", "æ", "Vowels", SHComparisonResult.LESS,
 				ONCSyllabifierState.NUCLEUS_OR_CODA, ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE, false);
 
@@ -217,15 +223,18 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		checkSyllabifyWord("æalæntɪk", false, 1, "æ", "n",
 				"(W(σ(R(N(\\L æ(\\G æ))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
-		assertEquals(3, tracingSteps.size());
+		assertEquals(4, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "æ", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL,
 				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET,
 				false);
 		tracingStep = tracingSteps.get(1);
 		checkTracingStep(tracingStep, "æ", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL, ONCSyllabifierState.NUCLEUS,
-				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
+				ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED, true);
 		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "æ", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL, ONCSyllabifierState.NUCLEUS,
+				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
+		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "a", "Vowels", "l", "Liquids", SHComparisonResult.MORE,
 				ONCSyllabifierState.NUCLEUS_OR_CODA, ONCSyllabificationStatus.NUCLEUS_TEMPLATE_BLOCKS_ADDING_NUCLEUS_ONSET_REQUIRED_BUT_WONT_BE_ONE, false);
 
@@ -237,15 +246,18 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		checkSyllabifyWord("tæalæntɪk", false, 1, "tæ", "on",
 				"(W(σ(O(\\L t(\\G t)))(R(N(\\L æ(\\G æ))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
-		assertEquals(3, tracingSteps.size());
+		assertEquals(4, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "t", "Obstruents", "æ", "Vowels", SHComparisonResult.LESS,
 				ONCSyllabifierState.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET,
 				true);
 		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "æ", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL, ONCSyllabifierState.ONSET_OR_NUCLEUS,
+				ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED, true);
+		tracingStep = tracingSteps.get(2);
 		checkTracingStep(tracingStep, "æ", "Vowels", "a", "Vowels", SHComparisonResult.EQUAL, ONCSyllabifierState.NUCLEUS,
 				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
-		tracingStep = tracingSteps.get(2);
+		tracingStep = tracingSteps.get(3);
 		checkTracingStep(tracingStep, "a", "Vowels", "l", "Liquids", SHComparisonResult.MORE,
 				ONCSyllabifierState.NUCLEUS_OR_CODA, ONCSyllabificationStatus.NUCLEUS_TEMPLATE_BLOCKS_ADDING_NUCLEUS_ONSET_REQUIRED_BUT_WONT_BE_ONE, false);
 		

@@ -516,7 +516,7 @@ public class ONCSyllabifier implements Syllabifiable {
 	protected ONCSyllable addSegmentToSyllableAsNucleus(List<ONCSegmentInSyllable> segmentsInWord,
 			ONCSyllable syl, Segment seg1, int i) {
 		if (nucleusTemplates.size() > 0) {
-			boolean templateIsGood = false;
+			Template templateMatched = null;
 			boolean startNewSyllable = false;
 			int iSegmentsInWord = segmentsInWord.size();
 			int iSegmentsInConstituent = syl.getRime().getNucleus().getGraphemes().size();
@@ -526,14 +526,14 @@ public class ONCSyllabifier implements Syllabifiable {
 					int iStart = i - iSegmentsInConstituent;
 					int iEnd = Math.min(iStart + iItemsInTemplate, iSegmentsInWord);
 					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd))) {
-						templateIsGood = true;
+						templateMatched = t;
 						break;
 					}
 				} else {
 					startNewSyllable = true;
 				}
 			}
-			if (!templateIsGood) {
+			if (templateMatched == null) {
 				if (startNewSyllable) {
 					syllablesInCurrentWord.add(syl);
 					if (opType == OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
@@ -558,6 +558,12 @@ public class ONCSyllabifier implements Syllabifiable {
 					}
 					return syl;
 				}
+			} else {
+				if (tracer.isTracing())
+					tracer.setTemplateFilterUsed(templateMatched);
+					createTemplateTracerStep(
+							seg1,
+							ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED);
 			}
 		}
 		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.NUCLEUS);
