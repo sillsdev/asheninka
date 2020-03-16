@@ -49,12 +49,14 @@
                         <Label text="%label.predictedsyllabification" GridPane.rowIndex="1" />
                         <Label text="%label.correctsyllabification" GridPane.rowIndex="2" />
                         <Label text="%label.parserresult" GridPane.rowIndex="3" />
-                        <Label text="%label.parsertree" GridPane.rowIndex="4" />
+                        <Label text="%label.comment" GridPane.rowIndex="4" />
+                        <Label text="%label.parsertree" GridPane.rowIndex="5" />
                         <TextField fx:id="wordField" GridPane.columnIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
                         <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
                         <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
                         <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="true" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
-                        <AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+                        <TextField fx:id="commentField" GridPane.columnIndex="1" GridPane.rowIndex="4" editable="true" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
                            <children>
                               <WebView fx:id="parserLingTreeSVG" prefHeight="400.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                            </children>

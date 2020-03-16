@@ -127,6 +127,7 @@ public class SHWordsController extends WordsControllerCommon {
 		if (shWord != null) {
 			// Fill the text fields with info from the segment object.
 			wordField.setText(shWord.getWord());
+			commentField.setText(shWord.getComment());
 			predictedSyllabificationField.setText(shWord.getSHPredictedSyllabification());
 			correctSyllabificationField.setText(shWord.getCorrectSyllabification());
 			parserResultField.setText(shWord.getSHParserResult());
@@ -134,8 +135,9 @@ public class SHWordsController extends WordsControllerCommon {
 			showParserResultAndLingTree(shWord.getSHPredictedSyllabification(), shWord.getSHParserResult(),
 					shWord.getSHLingTreeDescription());
 		} else {
-			// Segment is null, remove all the text.
+			// Word is null, remove all the text.
 			wordField.setText("");
+			commentField.setText("");
 			predictedSyllabificationField.setText("");
 			correctSyllabificationField.setText("");
 			parserResultField.setText("");

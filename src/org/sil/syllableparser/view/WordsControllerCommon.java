@@ -79,6 +79,8 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	@FXML
 	protected TextField wordField;
 	@FXML
+	protected TextField commentField;
+	@FXML
 	protected TextField predictedSyllabificationField;
 	@FXML
 	protected TextField correctSyllabificationField;
@@ -157,6 +159,14 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 										.getVernacularLanguage().getFont());
 							}
 						});
+		commentField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentWord != null) {
+				currentWord.setComment(commentField.getText());
+			}
+			if (languageProject != null) {
+				commentField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
 
 		// not so happy with making it smaller
 		// parserResultColumn.getStyleClass().add("syllabification-result");
@@ -185,6 +195,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		wordField.setText(cvWord.getWord());
 		predictedSyllabificationField.setText(cvWord.getCVPredictedSyllabification());
 		correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
+		commentField.setText(cvWord.getComment());
 		parserResultField.setText(cvWord.getCVParserResult());
 	}
 
@@ -257,7 +268,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { wordField, predictedSyllabificationField,
-				correctSyllabificationField, parserResultField };
+				correctSyllabificationField, parserResultField, commentField };
 	}
 
 	protected void showParserResultAndLingTree(String sPredictedSyllabification, String sParserResult, String sLingTreeDescription) {

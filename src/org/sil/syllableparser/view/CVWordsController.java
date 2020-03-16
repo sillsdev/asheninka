@@ -134,6 +134,7 @@ public class CVWordsController extends WordsControllerCommon {
 		if (cvWord != null) {
 			// Fill the text fields with info from the segment object.
 			wordField.setText(cvWord.getWord());
+			commentField.setText(cvWord.getComment());
 			predictedSyllabificationField.setText(cvWord.getCVPredictedSyllabification());
 			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
 			parserResultField.setText(cvWord.getCVParserResult());
@@ -143,6 +144,7 @@ public class CVWordsController extends WordsControllerCommon {
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");
+			commentField.setText("");
 			predictedSyllabificationField.setText("");
 			correctSyllabificationField.setText("");
 			parserResultField.setText("");

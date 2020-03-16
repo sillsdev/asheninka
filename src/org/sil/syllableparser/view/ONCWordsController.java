@@ -128,6 +128,7 @@ public class ONCWordsController extends WordsControllerCommon {
 		if (oncWord != null) {
 			// Fill the text fields with info from the segment object.
 			wordField.setText(oncWord.getWord());
+			commentField.setText(oncWord.getComment());
 			predictedSyllabificationField.setText(oncWord.getONCPredictedSyllabification());
 			correctSyllabificationField.setText(oncWord.getCorrectSyllabification());
 			parserResultField.setText(oncWord.getONCParserResult());
@@ -137,6 +138,7 @@ public class ONCWordsController extends WordsControllerCommon {
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");
+			commentField.setText("");
 			predictedSyllabificationField.setText("");
 			correctSyllabificationField.setText("");
 			parserResultField.setText("");

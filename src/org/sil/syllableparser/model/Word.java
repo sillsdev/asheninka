@@ -21,6 +21,7 @@ import javafx.beans.property.StringProperty;
 public class Word extends SylParserObject {
 	protected final StringProperty word;
 	protected final StringProperty correctSyllabification;
+	protected StringProperty comment;
 	protected StringProperty cvParserResult;
 	protected StringProperty cvPredictedSyllabification;
 	protected StringProperty shParserResult;
@@ -41,6 +42,7 @@ public class Word extends SylParserObject {
 		super();
 		this.word = new SimpleStringProperty("");
 		this.correctSyllabification = new SimpleStringProperty("");
+		this.comment = new SimpleStringProperty("");
 		this.cvParserResult = new SimpleStringProperty("");
 		this.cvPredictedSyllabification = new SimpleStringProperty("");
 		this.shParserResult = new SimpleStringProperty("");
@@ -57,6 +59,7 @@ public class Word extends SylParserObject {
 		super();
 		this.word = new SimpleStringProperty(word);
 		this.correctSyllabification = new SimpleStringProperty(correctHyphenation);
+		this.comment = new SimpleStringProperty("");
 		this.cvParserResult = new SimpleStringProperty(parserResult);
 		this.cvPredictedSyllabification = new SimpleStringProperty("");
 		this.shParserResult = new SimpleStringProperty(parserResult);
@@ -69,16 +72,16 @@ public class Word extends SylParserObject {
 		createUUID();
 	}
 
-	public String getWord() {
-		return word.get();
+	public String getComment() {
+		return comment.get();
 	}
 
-	public StringProperty wordProperty() {
-		return word;
+	public StringProperty commentProperty() {
+		return comment;
 	}
 
-	public void setWord(String word) {
-		this.word.set(word);
+	public void setComment(String comment) {
+		this.comment.set(comment);
 	}
 
 	public String getCorrectSyllabification() {
@@ -91,6 +94,18 @@ public class Word extends SylParserObject {
 
 	public void setCorrectSyllabification(String correctSyllabification) {
 		this.correctSyllabification.set(correctSyllabification);
+	}
+
+	public String getWord() {
+		return word.get();
+	}
+
+	public StringProperty wordProperty() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word.set(word);
 	}
 
 	public String getCVParserResult() {
@@ -227,7 +242,8 @@ public class Word extends SylParserObject {
 
 	@Override
 	public int hashCode() {
-		String sCombo = word.getValueSafe() + cvPredictedSyllabification.getValueSafe()
+		String sCombo = word.getValueSafe() + comment.getValueSafe()
+				+ cvPredictedSyllabification.getValueSafe()
 				+ shPredictedSyllabification.getValueSafe()
 				+ oncPredictedSyllabification.getValueSafe()
 				+ correctSyllabification.getValueSafe();
