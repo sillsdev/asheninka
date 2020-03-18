@@ -282,4 +282,67 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		checkTracingStep(tracingStep, "æ", "Vowels", "l", "Liquids", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
 				ONCSyllabificationStatus.NUCLEUS_TEMPLATES_ALL_FAIL, false);
 	}
+
+	@Test
+	public void wordFinalTemplateTest() {
+		// get the word final template
+		Optional<Template> wordFinalTemplate = languageProject.getActiveAndValidTemplates().stream()
+				.filter(t -> t.getID().equals("957dfbc1-511c-448a-b874-6c21abcb53d0")).findFirst();
+		assertTrue(wordFinalTemplate.isPresent());
+		Template wfTemplate = wordFinalTemplate.get();
+		assertEquals(TemplateType.WORDFINAL, wfTemplate.getTemplateFilterType());
+
+		// onsets not required, nucleus can be only one vowel
+		languageProject.getSyllabificationParameters().setCodasAllowed(true);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		checkSyllabification("moʊst", true, 1, "moʊst", "onca",
+				"(W(σ(O(\\L m(\\G m)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L s(\\G s)))))(A(\\L t(\\G t))))");
+		checkSyllabification("ətmoʊst", true, 2, "ət.moʊst", "nc.onca",
+				"(W(σ(R(N(\\L ə(\\G ə)))(C(\\L t(\\G t)))))(σ(O(\\L m(\\G m)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L s(\\G s)))))(A(\\L t(\\G t))))");
+		checkSyllabification("sɪks", true, 1, "sɪks", "onca",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k)))))(A(\\L s(\\G s))))");
+		checkSyllabification("sɪksθ", true, 1, "sɪksθ", "oncaa",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k)))))(A(\\L s(\\G s))(\\L θ(\\G θ))))");
+		checkSyllabification("sɪksθs", true, 1, "sɪksθs", "oncaaa",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k)))))(A(\\L s(\\G s))(\\L θ(\\G θ))(\\L s(\\G s))))");
+		checkSyllabification("sɪlk", true, 1, "sɪlk", "oncc", "(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L l(\\G l))(\\L k(\\G k))))))");
+		checkSyllabification("sɪlks", true, 1, "sɪlks", "oncca",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L l(\\G l))(\\L k(\\G k)))))(A(\\L s(\\G s))))");
+	}
+	@Test
+	public void traceWordFinalTemplateTest() {
+		// get the word final template
+		Optional<Template> wordFinalTemplate = languageProject.getActiveAndValidTemplates().stream()
+				.filter(t -> t.getID().equals("957dfbc1-511c-448a-b874-6c21abcb53d0")).findFirst();
+		assertTrue(wordFinalTemplate.isPresent());
+		Template wfTemplate = wordFinalTemplate.get();
+		assertEquals(TemplateType.WORDFINAL, wfTemplate.getTemplateFilterType());
+
+		// onsets not required, nucleus can be only one vowel
+		languageProject.getSyllabificationParameters().setCodasAllowed(true);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("moʊst", true, 1, "moʊst", "onca",
+				"(W(σ(O(\\L m(\\G m)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L s(\\G s)))))(A(\\L t(\\G t))))");
+		List<ONCTracingStep> tracingSteps = oncSyllabifier.getTracingSteps();
+		assertEquals(5, tracingSteps.size());
+		ONCTracingStep tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "m", "Nasals", "oʊ", "Vowels", SHComparisonResult.LESS,
+				ONCSyllabifierState.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "s", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.ONSET_OR_NUCLEUS,
+				ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED, true);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "s", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
+				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "s", "Obstruents", "t", "Obstruents", SHComparisonResult.EQUAL, ONCSyllabifierState.CODA,
+				ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE, true);
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "t", "Obstruents", null, null, null, ONCSyllabifierState.WORD_FINAL_TEMPLATE_APPLIED,
+				ONCSyllabificationStatus.ADDED_AS_WORD_FINAL_APPENDIX, true);
+		assertEquals("957dfbc1-511c-448a-b874-6c21abcb53d0", tracingStep.getTemplateFilterUsed().getID());
+	}
 }

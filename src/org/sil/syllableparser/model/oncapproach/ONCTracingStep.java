@@ -141,6 +141,7 @@ public class ONCTracingStep {
 		case ADDED_AS_ONSET:
 		case ADDED_AS_CODA:
 		case ADDED_AS_CODA_START_NEW_SYLLABLE:
+		case ADDED_AS_WORD_FINAL_APPENDIX:
 		case ADDING_FINAL_SYLLABLE_TO_WORD:
 		case ADDING_SYLLABLE_TO_WORD:
 		case ONSET_FILTER_REPAIR_APPLIED:
@@ -270,6 +271,9 @@ public class ONCTracingStep {
 			break;
 		case ADDED_AS_ONSET:
 			result = bundle.getString("label.oncstiaddedasonset");
+			break;
+		case ADDED_AS_WORD_FINAL_APPENDIX:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstiaddedaswordfinalappendix"));
 			break;
 		case ADDING_FINAL_SYLLABLE_TO_WORD:
 			result = bundle.getString("label.oncstiaddingfinalsyllabletoword");

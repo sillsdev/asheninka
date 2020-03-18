@@ -37,6 +37,11 @@
                 <NCName>SonorantCV</NCName>
                 <SNCRepresentation>a, æ, aɪ, aʊ, e, eɪ, i, j, l, o, oɪ, oʊ, u, w, ɑ, ə, ɛ, ɪ, ɹ, ʊ</SNCRepresentation>
             </cvNaturalClass>
+            <cvNaturalClass snc="000e634b-5e9e-479d-82e6-f44ab9e27879 0c349a88-de1d-4bd8-8845-18775f142719 bad3c040-9306-423c-95d0-58b3678b40ee 6bc43a79-0aac-42aa-994e-6368a05bc29a 91c1f393-497a-4345-9fcd-cd67fbb5575b 65be3575-5c87-4a7d-8560-d1f32a816b2f" active="true" id="e8f6af08-9f56-43a3-9d86-993c9235df20">
+                <description></description>
+                <NCName>Stop</NCName>
+                <SNCRepresentation>b, d, g, k, p, t</SNCRepresentation>
+            </cvNaturalClass>
         </cvNaturalClasses>
         <cvSyllablePatterns>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true" id="5059b228-2994-4195-a881-e62958bff0c5">
@@ -154,6 +159,29 @@
             <valid>true</valid>
             <action doRepair="false" repairStartPos="0"/>
             <templateFilterType>RIME</templateFilterType>
+        </filter>
+        <filter active="true" id="6504d1b5-18a5-402a-9805-b4c8a0252085">
+            <description>Example: æpniə should be æp.ni.ə, not æ.pni.ə</description>
+            <slots>
+                <slot natclass="e8f6af08-9f56-43a3-9d86-993c9235df20">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>true</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Disallow stop/nasal in onset</templateFilterName>
+            <templateFilterRepresentation>[Stop] | [N]</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
         </filter>
     </filters>
     <graphemeNaturalClassess/>
