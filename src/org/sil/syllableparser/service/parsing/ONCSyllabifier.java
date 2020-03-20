@@ -291,6 +291,8 @@ public class ONCSyllabifier implements Syllabifiable {
 			case ONSET:
 				if (seg1.isOnset() && (result == SHComparisonResult.LESS)) {
 					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
+				} else if (applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, i)) {
+					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
 				} else {
 					i--;
 					currentState = ONCSyllabifierState.NUCLEUS;
@@ -423,7 +425,14 @@ public class ONCSyllabifier implements Syllabifiable {
 						&& codasAllowed
 						&& resultBack == SHComparisonResult.MORE
 						&& (result == SHComparisonResult.MORE || result ==SHComparisonResult.EQUAL)) {
-					currentState = addSegmentToSyllableAsCoda(segmentsInWord, syl, i);
+					if (applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, i)) {
+						syllablesInCurrentWord.add(syl);
+						syl = createNewSyllable();
+						i--;
+						currentState = ONCSyllabifierState.ONSET;
+					} else {
+						currentState = addSegmentToSyllableAsCoda(segmentsInWord, syl, i);
+					}
 				} else {
 					i--;
 					syllablesInCurrentWord.add(syl);
@@ -657,10 +666,34 @@ public class ONCSyllabifier implements Syllabifiable {
 		return currentState;
 	}
 
+	public boolean applyAnyOnsetTemplates(Segment seg1, Segment seg2, SHComparisonResult result, List<ONCSegmentInSyllable> segmentsInWord, int i) {
+		if (!seg1.isOnset() || result != SHComparisonResult.EQUAL || !seg2.isOnset())
+			return false;
+		if (onsetTemplates.size() > 0) {
+			int iSegmentsInWord = segmentsInWord.size();
+			for (Template t: onsetTemplates) {
+				int iItemsInTemplate = t.getSlots().size();
+				if (iItemsInTemplate >= 2) {
+					if (matcher.matches(t, segmentsInWord.subList(i, iSegmentsInWord))) {
+							if (tracer.isTracing()) {
+								tracer.setSegment1(seg1);
+								tracer.getTracingStep().setNaturalClass1(oncApproach.getNaturalClassContainingSegment(seg1));
+								tracer.setOncState(ONCSyllabifierState.ONSET_TEMPLATE_APPLIED);
+								tracer.setStatus(ONCSyllabificationStatus.ONSET_TEMPLATE_APPLIED);
+								tracer.setTemplateFilterUsed(t);
+								tracer.recordStep();
+							}
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean applyAnyWordFinalTemplates(List<ONCSegmentInSyllable> segmentsInWord,
 			int i) {
 		if (wordFinalTemplates.size() > 0) {
-			Template templateMatched = null;
 			int iSegmentsInWord = segmentsInWord.size();
 			for (Template t: wordFinalTemplates) {
 				int iItemsInTemplate = t.getSlots().size();
@@ -682,7 +715,6 @@ public class ONCSyllabifier implements Syllabifiable {
 								tracer.recordStep();
 							}
 						}
-						templateMatched = t;
 						return true;
 					}
 				}

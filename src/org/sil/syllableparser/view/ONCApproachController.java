@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -257,25 +257,24 @@ public class ONCApproachController extends ApproachController  {
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	void handleInsertNewItem() {
 		currentONCApproachController.handleInsertNewItem();
-
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
 		currentONCApproachController.handleRemoveItem();
+	}
+
+	@Override
+	void handlePreviousItem() {
+		currentONCApproachController.handlePreviousItem();
+	}
+
+	@Override
+	void handleNextItem() {
+		currentONCApproachController.handleNextItem();
 	}
 
 	@Override

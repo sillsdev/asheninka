@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -522,35 +522,26 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	protected void handleInsertNewItem() {
 		Segment newSegment = new Segment();
 		languageProject.getSegmentInventory().add(newSegment);
-		int i = languageProject.getSegmentInventory().size() - 1;
-		cvSegmentTable.requestFocus();
-		cvSegmentTable.getSelectionModel().select(i);
-		cvSegmentTable.getFocusModel().focus(i);
-		cvSegmentTable.scrollTo(i);
+		handleInsertNewItem(languageProject.getSegmentInventory(), cvSegmentTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	protected void handleRemoveItem() {
-		int i = languageProject.getSegmentInventory().indexOf(currentSegment);
-		currentSegment = null;
-		if (i >= 0) {
-			languageProject.getSegmentInventory().remove(i);
-		}
-		cvSegmentTable.refresh();
+		handleRemoveItem(languageProject.getSegmentInventory(), currentSegment, cvSegmentTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(languageProject.getSegmentInventory(), currentSegment, cvSegmentTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(languageProject.getSegmentInventory(), currentSegment, cvSegmentTable);
 	}
 
 	protected void handleCheckBoxSelectAll() {

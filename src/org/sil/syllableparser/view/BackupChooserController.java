@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 SIL International 
+ * Copyright (c) 2016-2020 SIL International 
  * This software is licensed under the LGPL, version 2.1 or later 
  * (http://www.gnu.org/licenses/lgpl-2.1.html) 
  */
@@ -256,6 +256,15 @@ public class BackupChooserController extends SylParserBaseController implements 
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	void handlePreviousItem() {
+	}
+
+	@Override
+	void handleNextItem() {
+	}
+
 
 	// code taken from
 	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html

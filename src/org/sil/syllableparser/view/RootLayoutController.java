@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -159,6 +159,10 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private MenuItem menuItemEditRemove;
 	@FXML
+	private MenuItem menuItemEditPrevious;
+	@FXML
+	private MenuItem menuItemEditNext;
+	@FXML
 	private MenuItem menuItemSyllabify;
 	@FXML
 	private MenuItem menuItemTryAWord;
@@ -271,6 +275,16 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleRemoveItem() {
 		currentApproachController.handleRemoveItem();
+	}
+
+	@FXML
+	private void handlePreviousItem() {
+		currentApproachController.handlePreviousItem();
+	}
+
+	@FXML
+	private void handleNextItem() {
+		currentApproachController.handleNextItem();
 	}
 
 	@FXML

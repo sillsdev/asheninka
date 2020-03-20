@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -372,53 +372,37 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
 		addDataToTable();
 	}
 
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
 		addDataToTable();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	void handleInsertNewItem() {
 		GraphemeNaturalClass newNaturalClass = new GraphemeNaturalClass();
 		cvApproach.getLanguageProject().getGraphemeNaturalClasses().add(newNaturalClass);
-		int i = cvApproach.getLanguageProject().getGraphemeNaturalClasses().size() - 1;
-		graphemeNaturalClassTable.requestFocus();
-		graphemeNaturalClassTable.getSelectionModel().select(i);
-		graphemeNaturalClassTable.getFocusModel().focus(i);
-		graphemeNaturalClassTable.scrollTo(i);
+		handleInsertNewItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), graphemeNaturalClassTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		// need to deal with all pointers to this natural class
-		int i = cvApproach.getLanguageProject().getGraphemeNaturalClasses()
-				.indexOf(currentNaturalClass);
-		currentNaturalClass = null;
-		if (i >= 0) {
-			cvApproach.getLanguageProject().getGraphemeNaturalClasses().remove(i);
-			int max = graphemeNaturalClassTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			graphemeNaturalClassTable.requestFocus();
-			graphemeNaturalClassTable.getSelectionModel().select(i);
-			graphemeNaturalClassTable.getFocusModel().focus(i);
-			graphemeNaturalClassTable.scrollTo(i);
-		}
-		graphemeNaturalClassTable.refresh();
+		handleRemoveItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), currentNaturalClass, graphemeNaturalClassTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), currentNaturalClass, graphemeNaturalClassTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), currentNaturalClass, graphemeNaturalClassTable);
 	}
 
 	@FXML

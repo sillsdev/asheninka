@@ -164,37 +164,28 @@ public class TemplatesController extends TemplatesFiltersController {
 		templateTable.scrollTo(index);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	protected void handleInsertNewItem() {
 		Template newTemplate = new Template();
 		templateList.add(newTemplate);
 		newTemplate.setTemplateFilterRepresentation("");
-		int i = oncApproach.getLanguageProject().getTemplates().size() - 1;
-		selectAndScrollToItem(i);
+		handleInsertNewItem(templateList, templateTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		int i = templateList.indexOf(currentTemplateFilter);
-		currentTemplateFilter = null;
-		if (i >= 0) {
-			templateList.remove(i);
-			int max = templateTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			selectAndScrollToItem(i);
-		}
-		templateTable.refresh();
+		handleRemoveItem(templateList, currentTemplateFilter, templateTable);
 	}
-	
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(templateList, currentTemplateFilter, templateTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(templateList, currentTemplateFilter, templateTable);
+	}
+
 
 }

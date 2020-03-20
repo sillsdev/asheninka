@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,6 +15,7 @@ import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.utility.*;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.IndexRange;
 import javafx.scene.control.TableView;
@@ -45,8 +46,9 @@ public abstract class ApproachEditorController {
 	protected ToolBarCutCopyPasteDelegate toolBarDelegate;
 
 	abstract void handleInsertNewItem();
-
 	abstract void handleRemoveItem();
+	abstract void handlePreviousItem();
+	abstract void handleNextItem();
 
 	abstract TextField[] createTextFields();
 

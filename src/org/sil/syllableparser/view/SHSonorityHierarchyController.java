@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2019 SIL International
+// Copyright (c) 2018-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -380,42 +380,26 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 		setData(oncApproachData.getLanguageProject().getSHApproach());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	void handleInsertNewItem() {
 		SHNaturalClass newNaturalCLass = new SHNaturalClass();
 		shApproach.getSHSonorityHierarchy().add(newNaturalCLass);
-		int i = shApproach.getSHSonorityHierarchy().size() - 1;
-		shSonorityHierarchyTable.requestFocus();
-		shSonorityHierarchyTable.getSelectionModel().select(i);
-		shSonorityHierarchyTable.getFocusModel().focus(i);
-		shSonorityHierarchyTable.scrollTo(i);
+		handleInsertNewItem(shApproach.getSHSonorityHierarchy(), shSonorityHierarchyTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		int i = shApproach.getSHSonorityHierarchy().indexOf(currentNaturalClass);
-		currentNaturalClass = null;
-		if (i >= 0) {
-			shApproach.getSHSonorityHierarchy().remove(i);
-			int max = shSonorityHierarchyTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			shSonorityHierarchyTable.requestFocus();
-			shSonorityHierarchyTable.getSelectionModel().select(i);
-			shSonorityHierarchyTable.getFocusModel().focus(i);
-			shSonorityHierarchyTable.scrollTo(i);
-		}
-		shSonorityHierarchyTable.refresh();
+		handleRemoveItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
 	}
 
 	@FXML

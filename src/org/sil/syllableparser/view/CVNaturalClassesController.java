@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -369,43 +369,26 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	void handleInsertNewItem() {
 		CVNaturalClass newNaturalClass = new CVNaturalClass();
 		cvApproach.getCVNaturalClasses().add(newNaturalClass);
-		int i = cvApproach.getCVNaturalClasses().size() - 1;
-		cvNaturalClassTable.requestFocus();
-		cvNaturalClassTable.getSelectionModel().select(i);
-		cvNaturalClassTable.getFocusModel().focus(i);
-		cvNaturalClassTable.scrollTo(i);
+		handleInsertNewItem(cvApproach.getCVNaturalClasses(), cvNaturalClassTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		// need to deal with all pointers to this natural class
-		int i = cvApproach.getCVNaturalClasses().indexOf(currentNaturalClass);
-		currentNaturalClass = null;
-		if (i >= 0) {
-			cvApproach.getCVNaturalClasses().remove(i);
-			int max = cvNaturalClassTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			cvNaturalClassTable.requestFocus();
-			cvNaturalClassTable.getSelectionModel().select(i);
-			cvNaturalClassTable.getFocusModel().focus(i);
-			cvNaturalClassTable.scrollTo(i);
-		}
-		cvNaturalClassTable.refresh();
+		handleRemoveItem(cvApproach.getCVNaturalClasses(), currentNaturalClass, cvNaturalClassTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(cvApproach.getCVNaturalClasses(), currentNaturalClass, cvNaturalClassTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(cvApproach.getCVNaturalClasses(), currentNaturalClass, cvNaturalClassTable);
 	}
 
 	@FXML

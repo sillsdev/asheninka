@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) 2016 SIL International This software is licensed under 
+<!-- Copyright (c) 2016-2020 SIL International This software is licensed under 
 	the LGPL, version 2.1 or later (http://www.gnu.org/licenses/lgpl-2.1.html) -->
     
 <?import javafx.scene.image.*?>
@@ -84,6 +84,11 @@
 								text="%menu.insertnew" fx:id="menuItemEditInsert" accelerator="ctrl+i" />
 							<MenuItem mnemonicParsing="true" onAction="#handleRemoveItem"
 								text="%menu.remove" fx:id="menuItemEditRemove" accelerator="ctrl+d" />
+							<SeparatorMenuItem />
+							<MenuItem mnemonicParsing="true" onAction="#handlePreviousItem"
+								text="%menu.previousitem" fx:id="menuItemEditPrevious" accelerator="ctrl+shift+p" />
+							<MenuItem mnemonicParsing="true" onAction="#handleNextItem"
+								text="%menu.nextitem" fx:id="menuItemEditNext" accelerator="ctrl+shift+n" />
 						</items>
 					</Menu>
 					<Menu mnemonicParsing="true" text="%menu.view">

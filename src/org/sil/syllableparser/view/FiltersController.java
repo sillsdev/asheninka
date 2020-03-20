@@ -216,21 +216,22 @@ public class FiltersController extends TemplatesFiltersController {
 		Filter newFilter = new Filter();
 		filterList.add(newFilter);
 		newFilter.setTemplateFilterRepresentation("");
-		int i = oncApproach.getLanguageProject().getFilters().size() - 1;
-		selectAndScrollToItem(i);
+		handleInsertNewItem(filterList, filterTable);
 	}
 
 	@Override
 	void handleRemoveItem() {
-		int i = filterList.indexOf(currentTemplateFilter);
-		currentTemplateFilter = null;
-		if (i >= 0) {
-			filterList.remove(i);
-			int max = filterTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			selectAndScrollToItem(i);
-		}
-		filterTable.refresh();
+		handleRemoveItem(filterList, currentTemplateFilter, filterTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(filterList, currentTemplateFilter, filterTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(filterList, currentTemplateFilter, filterTable);
 	}
 
 	// code taken from

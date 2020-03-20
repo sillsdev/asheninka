@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -712,44 +712,27 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	void handleInsertNewItem() {
 		Environment newEnvironment = new Environment();
 		cvApproach.getLanguageProject().getEnvironments().add(newEnvironment);
 		newEnvironment.setEnvironmentRepresentation("/  _  ");
-		int i = cvApproach.getLanguageProject().getEnvironments().size() - 1;
-		environmentTable.requestFocus();
-		environmentTable.getSelectionModel().select(i);
-		environmentTable.getFocusModel().focus(i);
-		environmentTable.scrollTo(i);
+		handleInsertNewItem(cvApproach.getLanguageProject().getEnvironments(), environmentTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		// need to deal with all pointers to this environment
-		int i = cvApproach.getLanguageProject().getEnvironments().indexOf(currentEnvironment);
-		currentEnvironment = null;
-		if (i >= 0) {
-			cvApproach.getLanguageProject().getEnvironments().remove(i);
-			int max = environmentTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			environmentTable.requestFocus();
-			environmentTable.getSelectionModel().select(i);
-			environmentTable.getFocusModel().focus(i);
-			environmentTable.scrollTo(i);
-		}
-		environmentTable.refresh();
+		handleRemoveItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
 	}
 
 	// code taken from

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) 2016-2019 SIL International
+<!-- Copyright (c) 2016-2020 SIL International
     This software is licensed under the LGPL, version 2.1 or later 
     (http://www.gnu.org/licenses/lgpl-2.1.html) -->
     
@@ -19,6 +19,7 @@
                   <TableView fx:id="cvWordsTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="wordColumn" prefWidth="63.0" text="%label.word" />
+                      <TableColumn fx:id="commentColumn" prefWidth="63.0" text="%label.comment" />
                       <TableColumn fx:id="predictedSyllabificationColumn" prefWidth="119.0" text="%label.predictedsyllabification" />
                       <TableColumn fx:id="correctSyllabificationColumn" prefWidth="120.0" text="%label.correctsyllabification" />
                       <TableColumn fx:id="parserResultColumn" prefWidth="-1.0" text="%label.parserresult" editable="false" />
@@ -46,16 +47,16 @@
                     </rowConstraints>
                      <children>
                         <Label text="%label.word" />
-                        <Label text="%label.predictedsyllabification" GridPane.rowIndex="1" />
-                        <Label text="%label.correctsyllabification" GridPane.rowIndex="2" />
-                        <Label text="%label.parserresult" GridPane.rowIndex="3" />
-                        <Label text="%label.comment" GridPane.rowIndex="4" />
+                        <Label text="%label.comment" GridPane.rowIndex="1" />
+                        <Label text="%label.predictedsyllabification" GridPane.rowIndex="2" />
+                        <Label text="%label.correctsyllabification" GridPane.rowIndex="3" />
+                        <Label text="%label.parserresult" GridPane.rowIndex="4" />
                         <Label text="%label.parsertree" GridPane.rowIndex="5" />
                         <TextField fx:id="wordField" GridPane.columnIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
-                        <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="1" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
-                        <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
-                        <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="3" editable="true" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
-                        <TextField fx:id="commentField" GridPane.columnIndex="1" GridPane.rowIndex="4" editable="true" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="commentField" GridPane.columnIndex="1" GridPane.rowIndex="1" editable="true" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="predictedSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="correctSyllabificationField" GridPane.columnIndex="1" GridPane.rowIndex="3" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
+                        <TextField fx:id="parserResultField" GridPane.columnIndex="1" GridPane.rowIndex="4" editable="true" onMouseReleased="#toolBarMouseReleased" onKeyReleased="#keyboardReleased" />
                         <AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
                            <children>
                               <WebView fx:id="parserLingTreeSVG" prefHeight="400.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
