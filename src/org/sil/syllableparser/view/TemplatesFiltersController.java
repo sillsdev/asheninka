@@ -586,6 +586,9 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		temp = tf.getDescription();
 		tf.setDescription("");
 		tf.setDescription(temp);
+		temp = tf.getType();
+		tf.setType("");
+		tf.setType(temp);
 	}
 
 	protected abstract void rememberSelection(int iCurrentIndex);
