@@ -21,7 +21,6 @@ import javafx.scene.control.TableView;
 import javafx.util.StringConverter;
 
 import org.sil.syllableparser.model.Template;
-import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
@@ -126,7 +125,7 @@ public class TemplatesController extends TemplatesFiltersController {
 			sncChoicesComboBox.setVisible(false);
 			typeComboBox.getItems().setAll(TemplateType.values());
 			typeComboBox.getSelectionModel().select(tf.getTemplateFilterType());
-
+			setUpDownButtonDisabled(templateList);
 		} else {
 			// TemplateFilter is null, remove all the text.
 			nameField.setText("");
@@ -187,5 +186,14 @@ public class TemplatesController extends TemplatesFiltersController {
 		handleNextItem(templateList, currentTemplateFilter, templateTable);
 	}
 
+	@FXML
+	void handleMoveDown() {
+		handleMoveDown(templateList);
+	}
+
+	@FXML
+	void handleMoveUp() {
+		handleMoveUp(templateList);
+	}
 
 }

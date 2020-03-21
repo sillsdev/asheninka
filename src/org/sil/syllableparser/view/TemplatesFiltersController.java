@@ -7,6 +7,7 @@
 package org.sil.syllableparser.view;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,7 @@ import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.service.AsheninkaSegmentAndClassListener;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -40,6 +42,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -47,6 +50,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -126,6 +130,14 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	protected CheckBox checkBoxColumnHead;
 
 	@FXML
+	private Button buttonMoveUp;
+	@FXML
+	private Button buttonMoveDown;
+	@FXML
+	private Tooltip tooltipMoveUp;
+	@FXML
+	private Tooltip tooltipMoveDown;
+	@FXML
 	protected TextField nameField;
 	@FXML
 	protected ComboBox<TemplateType> typeComboBox;
@@ -164,6 +176,14 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	public void initialize(URL location, ResourceBundle resources) {
 
 		this.bundle = resources;
+		// Initialize the button icons
+		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",
+				buttonMoveUp, tooltipMoveUp, bundle.getString("sh.view.sonorityhierarchy.up"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipMoveDown = ControllerUtilities.createToolbarButtonWithImage("DownArrow.png",
+				buttonMoveDown, tooltipMoveDown, bundle.getString("sh.view.sonorityhierarchy.down"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().templateFilterNameProperty());
 		typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
 		representationColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -596,6 +616,35 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 	public void setTemplateFilter(TemplateFilter templateFilter) {
 		nameField.setText(templateFilter.getTemplateFilterName());
 		descriptionField.setText(templateFilter.getDescription());
+	}
+
+	protected void handleMoveDown(ObservableList<? extends TemplateFilter> list) {
+		int i = list.indexOf(currentTemplateFilter);
+		if ((i + 1) < list.size()) {
+			Collections.swap(list, i, i + 1);
+		}
+	}
+
+	protected void handleMoveUp(ObservableList<? extends TemplateFilter> list) {
+		int i = list.indexOf(currentTemplateFilter);
+		if (i > 0) {
+			Collections.swap(list, i, i - 1);
+		}
+	}
+
+	protected void setUpDownButtonDisabled(ObservableList<? extends TemplateFilter> list) {
+		int iThis = list.indexOf(currentTemplateFilter) + 1;
+		int iSize = list.size();
+		if (iThis > 1) {
+			buttonMoveUp.setDisable(false);
+		} else {
+			buttonMoveUp.setDisable(true);
+		}
+		if (iThis == iSize) {
+			buttonMoveDown.setDisable(true);
+		} else {
+			buttonMoveDown.setDisable(false);
+		}
 	}
 
 	// code taken from

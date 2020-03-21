@@ -90,7 +90,7 @@ public class FiltersController extends TemplatesFiltersController {
 			sncChoicesComboBox.setVisible(false);
 			typeComboBox.getItems().setAll(FilterType.values());
 			typeComboBox.getSelectionModel().select(tf.getTemplateFilterType());
-
+			setUpDownButtonDisabled(filterList);
 		} else {
 			// TemplateFilter is null, remove all the text.
 			nameField.setText("");
@@ -232,6 +232,16 @@ public class FiltersController extends TemplatesFiltersController {
 	@Override
 	void handleNextItem() {
 		handleNextItem(filterList, currentTemplateFilter, filterTable);
+	}
+
+	@FXML
+	void handleMoveDown() {
+		handleMoveDown(filterList);
+	}
+
+	@FXML
+	void handleMoveUp() {
+		handleMoveUp(filterList);
 	}
 
 	// code taken from

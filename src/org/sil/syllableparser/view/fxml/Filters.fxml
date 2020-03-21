@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2019 SIL International
+<!-- Copyright (c) 2019-2020 SIL International
     This software is licensed under the LGPL, version 2.1 or later
     (http://www.gnu.org/licenses/lgpl-2.1.html) -->
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -41,6 +42,12 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane maxWidth="-Infinity" prefHeight="395.0" prefWidth="22.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Button fx:id="buttonMoveDown" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleMoveDown" />
+                  <Button fx:id="buttonMoveUp" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="58.0" mnemonicParsing="false" onAction="#handleMoveUp" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="383.0">
