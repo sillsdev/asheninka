@@ -91,6 +91,12 @@ public class ONCTracer {
 		}
 	}
 
+	public void setSegment2(Segment seg) {
+		if (tracing) {
+			tracingStep.setSegment2(seg);
+		}
+	}
+
 	public void setStatus(ONCSyllabificationStatus status) {
 		if (tracing) {
 			tracingStep.setStatus(status);

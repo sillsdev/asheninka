@@ -1056,6 +1056,28 @@
             <valid>true</valid>
             <templateFilterType>NUCLEUS</templateFilterType>
         </template>
+        <template active="true" id="f49276fd-27fc-49be-86a7-7dc93a96e813">
+            <description></description>
+            <slots>
+                <slot natclass="45577aa3-2c85-4cc6-9aa2-49e999b84c3d">
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Word final appendix for /sp/ and /sk/</templateFilterName>
+            <templateFilterRepresentation>*[VoicelessNonCont] ([Coronal])</templateFilterRepresentation>
+            <type>Word final</type>
+            <valid>true</valid>
+            <templateFilterType>WORDFINAL</templateFilterType>
+        </template>
     </templates>
     <vernacularLanguage>
         <fontFamily>Charis SIL</fontFamily>

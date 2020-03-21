@@ -677,11 +677,19 @@ public class ONCSyllabifier implements Syllabifiable {
 					if (matcher.matches(t, segmentsInWord.subList(i, iSegmentsInWord))) {
 							if (tracer.isTracing()) {
 								tracer.setSegment1(seg1);
-								tracer.getTracingStep().setNaturalClass1(oncApproach.getNaturalClassContainingSegment(seg1));
-								tracer.setOncState(ONCSyllabifierState.ONSET_TEMPLATE_APPLIED);
+								SHNaturalClass shClass = oncApproach.getNaturalClassContainingSegment(seg1);
+								tracer.getTracingStep().setNaturalClass1(shClass);
+								tracer.setOncState(currentState);
 								tracer.setStatus(ONCSyllabificationStatus.ONSET_TEMPLATE_APPLIED);
 								tracer.setTemplateFilterUsed(t);
+								tracer.setSuccessful(true);
 								tracer.recordStep();
+								tracer.setSegment1(seg1);
+								tracer.getTracingStep().setNaturalClass1(shClass);
+								tracer.setSegment2(seg2);
+								tracer.getTracingStep().setComparisonResult(result);
+								tracer.getTracingStep().setNaturalClass2(oncApproach.getNaturalClassContainingSegment(seg2));
+								tracer.setOncState(currentState);
 							}
 						return true;
 					}
@@ -697,16 +705,16 @@ public class ONCSyllabifier implements Syllabifiable {
 			int iSegmentsInWord = segmentsInWord.size();
 			for (Template t: wordFinalTemplates) {
 				int iItemsInTemplate = t.getSlots().size();
-				int iStart = ++i;
+				int iStart = i + 1;
 				if (iSegmentsInWord - iStart <= iItemsInTemplate) {
 					int iEnd = Math.min(iStart + iItemsInTemplate, iSegmentsInWord);
 					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd))) {
-						for (i = iStart;  i < iEnd; i++) {
-							ONCSegmentInSyllable segInSyl = segmentsInWord.get(i);
+						for (int index = iStart;  index < iEnd; index++) {
+							ONCSegmentInSyllable segInSyl = segmentsInWord.get(index);
 							segInSyl.setUsage(ONCSegmentUsageType.WORD_FINAL);
 							segmentsInWordFinalAppendx.add(segInSyl);
 							if (tracer.isTracing()) {
-								Segment seg = segmentsInWord.get(i).getSegment();
+								Segment seg = segmentsInWord.get(index).getSegment();
 								tracer.setSegment1(seg);
 								tracer.getTracingStep().setNaturalClass1(oncApproach.getNaturalClassContainingSegment(seg));
 								tracer.setOncState(ONCSyllabifierState.WORD_FINAL_TEMPLATE_APPLIED);

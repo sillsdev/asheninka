@@ -340,6 +340,9 @@ public class ONCTracingStep {
 		case ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET:
 			result = bundle.getString("label.oncstionsetrequiredbutsegmentnotanonset");
 			break;
+		case ONSET_TEMPLATE_APPLIED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsettemplateapplied"));
+			break;
 		case RIME_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstirimefilterfailed"));
 			break;
