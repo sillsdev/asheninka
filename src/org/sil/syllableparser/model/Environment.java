@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 import org.sil.utility.StringUtilities;
 
 /**
@@ -382,6 +383,11 @@ public class Environment extends SylParserObject {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public String getSortingValue() {
+		return getEnvironmentRepresentation();
 	}
 
 }

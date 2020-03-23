@@ -280,6 +280,7 @@ public class Word extends SylParserObject {
 		return result;
 	}
 
+	@Override
 	public String getSortingValue() {
 		return getWord();
 	}

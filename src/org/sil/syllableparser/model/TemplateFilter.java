@@ -8,6 +8,7 @@
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 
 import javafx.beans.property.SimpleListProperty;
@@ -193,5 +194,16 @@ public class TemplateFilter extends SylParserObject {
 	 */
 	public void setTemplateFilterType(FilterType selectedValue) {
 		// sub-classes implement this
+	}
+
+	@Override
+	public String getSortingValue() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getType());
+		sb.append(Constants.SORT_VALUE_DIVIDER);
+		sb.append(getTemplateFilterName());
+		sb.append(Constants.SORT_VALUE_DIVIDER);
+		sb.append(getTemplateFilterRepresentation());
+		return sb.toString();
 	}
 }

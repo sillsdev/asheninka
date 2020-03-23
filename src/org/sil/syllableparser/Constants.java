@@ -57,7 +57,7 @@ public class Constants {
 	public static final String PLEASE_WAIT_HTML_ENDING = "</p>\n</body>\n</html>\n";
 	public static final String NATURAL_CLASS_PREFIX = "[";
 	public static final String NATURAL_CLASS_SUFFIX = "]";
-	
+	public static final String SORT_VALUE_DIVIDER = ";";
 
 	// Unit Testing constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/org/sil/syllableparser/testData/CVTestData.";

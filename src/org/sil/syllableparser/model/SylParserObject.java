@@ -58,6 +58,10 @@ public abstract class SylParserObject {
 	public String getID() {
 		return id;
 	}
+	
+	public String getSortingValue() {
+		return "";
+	}
 
 	public void setID(String id) {
 		this.id = id;
