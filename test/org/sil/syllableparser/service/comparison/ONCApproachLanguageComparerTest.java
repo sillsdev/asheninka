@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
@@ -23,11 +24,15 @@ import org.junit.Test;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.Environment;
+import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.Template;
+import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
@@ -37,7 +42,6 @@ import org.sil.syllableparser.service.comparison.DifferentGrapheme;
 import org.sil.syllableparser.service.comparison.DifferentGraphemeNaturalClass;
 import org.sil.syllableparser.service.comparison.DifferentSegment;
 import org.sil.syllableparser.service.comparison.DifferentWord;
-import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -90,6 +94,16 @@ public class ONCApproachLanguageComparerTest {
 		assertEquals("Sonority Hierarchy size", 6, sonorityHierarchy.size());
 		sonorityHierarchy = onca2.getONCSonorityHierarchy();
 		assertEquals("Sonority Hierarchy size", 5, sonorityHierarchy.size());
+		// filters
+		ObservableList<Filter> filters = onca1.getLanguageProject().getFilters();
+		assertEquals("Filter count", 4, filters.size());
+		filters = onca2.getLanguageProject().getFilters();
+		assertEquals("Filter count", 3, filters.size());
+		// templates
+		ObservableList<Template> templates = onca1.getLanguageProject().getTemplates();
+		assertEquals("Template count", 8, templates.size());
+		templates = onca2.getLanguageProject().getTemplates();
+		assertEquals("Template count", 4, templates.size());
 		// words
 		ObservableList<Word> words;
 		words = onca1.getWords();
@@ -108,6 +122,8 @@ public class ONCApproachLanguageComparerTest {
 		compareEnvironments(comparer);
 		compareSonorityHierarchy(comparer);
 		compareSyllabificationParameters(comparer);
+		compareFilters(comparer);
+		compareTemplates(comparer);
 		compareWords(comparer);
 	}
 
@@ -291,6 +307,91 @@ public class ONCApproachLanguageComparerTest {
 		assertEquals("b, d, g, z", ((SHNaturalClass) diffNaturalClass.getObjectFrom1()).getSegmentsRepresentation());
 	}
 
+	protected void compareFilters(ONCApproachLanguageComparer comparer) {
+		comparer.compareFilters();
+		SortedSet<DifferentFilter> diffs = comparer.getFiltersWhichDiffer();
+		assertEquals("number of different filters", 5, diffs.size());
+		List<DifferentFilter> listOfDiffs = new ArrayList<DifferentFilter>();
+		listOfDiffs.addAll(diffs);
+		DifferentFilter diffFilter = listOfDiffs.get(0);
+		Filter f1 = (Filter) diffFilter.getObjectFrom1();
+		Filter f2 = (Filter) diffFilter.getObjectFrom2();
+		assertEquals("Coda", f1.getTemplateFilterName());
+		assertEquals("Coda", f2.getTemplateFilterName());
+		assertEquals(FilterType.CODA, f1.getTemplateFilterType());
+		assertEquals(FilterType.CODA, f2.getTemplateFilterType());
+		assertEquals(true, f1.getAction().isDoRepair());
+		assertEquals(false, f2.getAction().isDoRepair());
+		assertEquals("t d b k | p", f1.getTemplateFilterRepresentation());
+		assertEquals("s a e i o u", f2.getTemplateFilterRepresentation());
+		diffFilter = listOfDiffs.get(1);
+		f1 = (Filter) diffFilter.getObjectFrom1();
+		f2 = (Filter) diffFilter.getObjectFrom2();
+		assertNull(f1);
+		assertEquals("Nucleus repair", f2.getTemplateFilterName());
+		assertEquals(true, f2.getAction().isDoRepair());
+		assertEquals(FilterType.NUCLEUS, f2.getTemplateFilterType());
+		assertEquals("x [V] t s d | i", f2.getTemplateFilterRepresentation());
+		diffFilter = listOfDiffs.get(2);
+		f1 = (Filter) diffFilter.getObjectFrom1();
+		f2 = (Filter) diffFilter.getObjectFrom2();
+		assertEquals("Onset repair", f1.getTemplateFilterName());
+		assertEquals("Onset repair", f2.getTemplateFilterName());
+		assertEquals(true, f1.getAction().isDoRepair());
+		assertEquals(true, f2.getAction().isDoRepair());
+		assertEquals(FilterType.ONSET, f1.getTemplateFilterType());
+		assertEquals(FilterType.ONSET, f2.getTemplateFilterType());
+		assertEquals("s d g h t | l", f1.getTemplateFilterRepresentation());
+		assertEquals("s d g h t | l h", f2.getTemplateFilterRepresentation());
+		diffFilter = listOfDiffs.get(3);
+		f1 = (Filter) diffFilter.getObjectFrom1();
+		f2 = (Filter) diffFilter.getObjectFrom2();
+		assertNull(f2);
+		assertEquals("Coda fail", f1.getTemplateFilterName());
+		assertEquals(false, f1.getAction().isDoRepair());
+		assertEquals(FilterType.CODA, f1.getTemplateFilterType());
+		assertEquals("d d d d", f1.getTemplateFilterRepresentation());
+		diffFilter = listOfDiffs.get(4);
+		f1 = (Filter) diffFilter.getObjectFrom1();
+		f2 = (Filter) diffFilter.getObjectFrom2();
+		assertNull(f2);
+		assertEquals("Syllable fail", f1.getTemplateFilterName());
+		assertEquals(false, f1.getAction().isDoRepair());
+		assertEquals(FilterType.SYLLABLE, f1.getTemplateFilterType());
+		assertEquals("s a e i o u", f1.getTemplateFilterRepresentation());
+	}
+
+	protected void compareTemplates(ONCApproachLanguageComparer comparer) {
+		comparer.compareTemplates();
+		SortedSet<DifferentTemplate> diffs = comparer.getTemplatesWhichDiffer();
+		assertEquals("number of different templates", 9, diffs.size());
+		List<DifferentTemplate> listOfDiffs = new ArrayList<DifferentTemplate>();
+		listOfDiffs.addAll(diffs);
+		DifferentTemplate diffTemplate = listOfDiffs.get(0);
+		Template t1 = (Template) diffTemplate.getObjectFrom1();
+		Template t2 = (Template) diffTemplate.getObjectFrom2();
+		assertEquals("Coda template", t1.getTemplateFilterName());
+		assertEquals("Coda template", t2.getTemplateFilterName());
+		assertEquals(TemplateType.CODA, t1.getTemplateFilterType());
+		assertEquals(TemplateType.CODA, t2.getTemplateFilterType());
+		assertEquals("x y z", t1.getTemplateFilterRepresentation());
+		assertEquals("[C] ([C]) ([C])", t2.getTemplateFilterRepresentation());
+		diffTemplate = listOfDiffs.get(1);
+		t1 = (Template) diffTemplate.getObjectFrom1();
+		t2 = (Template) diffTemplate.getObjectFrom2();
+		assertNull(t2);
+		assertEquals("Nucleus template", t1.getTemplateFilterName());
+		assertEquals(TemplateType.NUCLEUS, t1.getTemplateFilterType());
+		assertEquals("[V] ([V]) ([V])", t1.getTemplateFilterRepresentation());
+		diffTemplate = listOfDiffs.get(4);
+		t1 = (Template) diffTemplate.getObjectFrom1();
+		t2 = (Template) diffTemplate.getObjectFrom2();
+		assertNull(t1);
+		assertEquals("Word fianl appendix", t2.getTemplateFilterName());
+		assertEquals(TemplateType.WORDFINAL, t2.getTemplateFilterType());
+		assertEquals("s x t", t2.getTemplateFilterRepresentation());
+	}
+
 	protected void compareWords(ApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
@@ -336,6 +437,22 @@ public class ONCApproachLanguageComparerTest {
 //		comparer.compareSyllablePatternOrder();
 //		LinkedList<Diff> differences = comparer.getSyllablePatternOrderDifferences();
 //		assertEquals(7, differences.size());
+	}
+
+	@Test
+	public void compareFiltersOrderTest() {
+		ONCApproachLanguageComparer comparer = new ONCApproachLanguageComparer(onca1, onca2);
+		comparer.compareFilterOrder();
+		LinkedList<Diff> differences = comparer.getFilterOrderDifferences();
+		assertEquals(59, differences.size());
+	}
+
+	@Test
+	public void compareTemplatesOrderTest() {
+		ONCApproachLanguageComparer comparer = new ONCApproachLanguageComparer(onca1, onca2);
+		comparer.compareTemplateOrder();
+		LinkedList<Diff> differences = comparer.getTemplateOrderDifferences();
+		assertEquals(51, differences.size());
 	}
 
 	protected void compareSameSegments(ApproachLanguageComparer comparer) {

@@ -202,8 +202,6 @@ public class TemplateFilter extends SylParserObject {
 		sb.append(getType());
 		sb.append(Constants.SORT_VALUE_DIVIDER);
 		sb.append(getTemplateFilterName());
-		sb.append(Constants.SORT_VALUE_DIVIDER);
-		sb.append(getTemplateFilterRepresentation());
 		return sb.toString();
 	}
 }

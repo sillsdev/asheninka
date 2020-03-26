@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -15,7 +15,10 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.Template;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
@@ -36,6 +39,12 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 	SortedSet<DifferentSHNaturalClass> naturalClassesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentSHNaturalClass::getSortingValue));
 	LinkedList<Diff> sonorityHierarchyOrderDifferences = new LinkedList<>();
+	SortedSet<DifferentFilter> filtersWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentFilter::getSortingValue));
+	LinkedList<Diff> filterOrderDifferences = new LinkedList<>();
+	SortedSet<DifferentTemplate> templatesWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentTemplate::getSortingValue));
+	LinkedList<Diff> templateOrderDifferences = new LinkedList<>();
 
 	public ONCApproachLanguageComparer(ONCApproach sha1, ONCApproach sha2) {
 		super(sha1.getLanguageProject(), sha2.getLanguageProject());
@@ -67,6 +76,22 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 		return sonorityHierarchyOrderDifferences;
 	}
 
+	public SortedSet<DifferentFilter> getFiltersWhichDiffer() {
+		return filtersWhichDiffer;
+	}
+
+	public LinkedList<Diff> getFilterOrderDifferences() {
+		return filterOrderDifferences;
+	}
+
+	public SortedSet<DifferentTemplate> getTemplatesWhichDiffer() {
+		return templatesWhichDiffer;
+	}
+
+	public LinkedList<Diff> getTemplateOrderDifferences() {
+		return templateOrderDifferences;
+	}
+
 	@Override
 	public void compare() {
 		compareSegmentInventory();
@@ -75,6 +100,10 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 		compareEnvironments();
 		compareSonorityHierarchy();
 		compareSonorityHierarchyOrder();
+		compareFilters();
+		compareFilterOrder();
+		compareTemplates();
+		compareTemplateOrder();
 		compareSyllabificationParameters();
 		compareWords();
 	}
@@ -112,6 +141,107 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 		}
 	}
 
+	public void compareFilters() {
+		List<Filter> filters1 = onca1.getLanguageProject().getFilters();
+		List<Filter> filters2 = onca2.getLanguageProject().getFilters();
+
+		Set<Filter> difference1from2 = new HashSet<Filter>(filters1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(filters2);
+		difference1from2.stream().forEach(
+				filter -> filtersWhichDiffer.add(new DifferentFilter(
+						filter, null)));
+
+		Set<Filter> difference2from1 = new HashSet<Filter>(filters2);
+		difference2from1.removeAll(filters1);
+		difference2from1.stream().forEach(
+				filter -> mergeSimilarFilters(filter));
+	}
+
+	protected void mergeSimilarFilters(Filter filter) {
+		List<DifferentFilter> sameFilterRepresentation = filtersWhichDiffer
+				.stream()
+				.filter(f -> f.getObjectFrom1() != null
+						&& ((Filter) f.getObjectFrom1()).getTemplateFilterName().equals(
+								filter.getTemplateFilterName())).collect(Collectors.toList());
+		if (sameFilterRepresentation.size() > 0) {
+			DifferentFilter diffFilter = sameFilterRepresentation.get(0);
+			diffFilter.setObjectFrom2(filter);
+		} else {
+			DifferentFilter diffFilter = new DifferentFilter(null,
+					filter);
+			filtersWhichDiffer.add(diffFilter);
+		}
+	}
+
+	public void compareFilterOrder() {
+		diff_match_patch dmp = new diff_match_patch();
+		String filters1 = createTextFromFilters(onca1);
+		String filters2 = createTextFromFilters(onca2);
+		filterOrderDifferences = dmp.diff_main(filters1, filters2);
+	}
+
+	protected String createTextFromFilters(ONCApproach onca) {
+		return createTextFromTemplateFilter(onca.getLanguageProject().getActiveAndValidFilters());
+	}
+
+	public void compareTemplates() {
+		List<Template> templates1 = onca1.getLanguageProject().getTemplates();
+		List<Template> templates2 = onca2.getLanguageProject().getTemplates();
+
+		Set<Template> difference1from2 = new HashSet<Template>(templates1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(templates2);
+		difference1from2.stream().forEach(
+				template -> templatesWhichDiffer.add(new DifferentTemplate(
+						template, null)));
+
+		Set<Template> difference2from1 = new HashSet<Template>(templates2);
+		difference2from1.removeAll(templates1);
+		difference2from1.stream().forEach(
+				template -> mergeSimilarTemplates(template));
+	}
+
+	protected void mergeSimilarTemplates(Template template) {
+		List<DifferentTemplate> sameTemplateRepresentation = templatesWhichDiffer
+				.stream()
+				.filter(t -> t.getObjectFrom1() != null
+						&& ((Template) t.getObjectFrom1()).getTemplateFilterName().equals(
+								template.getTemplateFilterName())).collect(Collectors.toList());
+		if (sameTemplateRepresentation.size() > 0) {
+			DifferentTemplate diffTemplate = sameTemplateRepresentation.get(0);
+			diffTemplate.setObjectFrom2(template);
+		} else {
+			DifferentTemplate diffTemplate = new DifferentTemplate(null,
+					template);
+			templatesWhichDiffer.add(diffTemplate);
+		}
+	}
+
+	public void compareTemplateOrder() {
+		diff_match_patch dmp = new diff_match_patch();
+		String templates1 = createTextFromTemplates(onca1);
+		String templates2 = createTextFromTemplates(onca2);
+		templateOrderDifferences = dmp.diff_main(templates1, templates2);
+	}
+
+	protected String createTextFromTemplates(ONCApproach onca) {
+		return createTextFromTemplateFilter(onca.getLanguageProject().getActiveAndValidTemplates());
+	}
+
+	protected String createTextFromTemplateFilter(List<? extends TemplateFilter> list) {
+		StringBuilder sb = new StringBuilder();
+		list.stream().forEach(tf -> {
+			sb.append(tf.getTemplateFilterName());
+			sb.append("\t");
+			sb.append(tf.getTemplateFilterRepresentation());
+			sb.append("\t");
+			sb.append(tf.getType());
+			sb.append("\n");
+		});
+		return sb.toString();
+
+	}
 	@Override
 	protected void syllabifyWords(List<Word> words1, List<Word> words2) {
 		syllabifyWords(onca1, words1);
