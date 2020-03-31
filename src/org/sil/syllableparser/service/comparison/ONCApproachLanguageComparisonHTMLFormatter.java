@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -14,6 +14,10 @@ import java.util.SortedSet;
 
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
+import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.SylParserObject;
+import org.sil.syllableparser.model.Template;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -53,6 +57,11 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 		formatSonorityHierarchy(sb);
 		formatSonorityHierarchyOrder(sb);
 		formatSyllabifcationParameters(sb);
+		formatNaturalClasses(sb, oncComparer.getCVNaturalClassesWhichDiffer());
+		formatTemplates(sb);
+		formatTemplateOrder(sb);
+		formatFilters(sb);
+		formatFilterOrder(sb);
 		formatWords(sb);
 		formatHTMLEnding(sb);
 		return sb.toString();
@@ -117,13 +126,13 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 				sb.append("<tr>\n<td class=\"");
 				sb.append(ANALYSIS_1);
 				sb.append("\">");
-				SHNaturalClass naturalClass = formatSonorityHierarchyInOrder(sonorityHierarchy1,
+				SHNaturalClass naturalClass = (SHNaturalClass) formatSylParserObjectInOrder(sonorityHierarchy1,
 						size1, i);
 				formatNaturalClassInfo(sb, naturalClass);
 				sb.append("</td>\n<td class=\"");
 				sb.append(ANALYSIS_2);
 				sb.append("\">");
-				naturalClass = formatSonorityHierarchyInOrder(sonorityHierarchy2, size2, i);
+				naturalClass = (SHNaturalClass) formatSylParserObjectInOrder(sonorityHierarchy2, size2, i);
 				formatNaturalClassInfo(sb, naturalClass);
 				sb.append("</td>\n</tr>\n");
 			}
@@ -131,15 +140,168 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 		}
 	}
 
-	protected SHNaturalClass formatSonorityHierarchyInOrder(List<SHNaturalClass> naturalClasses,
-			int size1, int i) {
-		SHNaturalClass naturalClass;
-		if (i < size1) {
-			naturalClass = (SHNaturalClass) naturalClasses.get(i);
+	protected void formatTemplates(StringBuilder sb) {
+		sb.append("<h3>" + bundle.getString("report.templates") + "</h3>\n");
+		SortedSet<DifferentTemplate> diffTemplates = oncComparer
+				.getTemplatesWhichDiffer();
+		if (diffTemplates.size() == 0) {
+			sb.append("<p>" + bundle.getString("report.sametemplates") + "</p>\n");
 		} else {
-			naturalClass = null;
+			sb.append("<p>" + bundle.getString("report.templateswhichdiffer") + "</p>\n");
+			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
+			sb.append("</th>\n<th>");
+			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
+			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			for (DifferentTemplate differentTemplate : diffTemplates) {
+				sb.append("<tr>\n<td class=\"");
+				sb.append(ANALYSIS_1);
+				sb.append("\">");
+				Template template = (Template) differentTemplate.objectFrom1;
+				formatTemplateInfo(sb, template);
+				sb.append("</td>\n<td class=\"");
+				sb.append(ANALYSIS_2);
+				sb.append("\">");
+				template = (Template) differentTemplate.objectFrom2;
+				formatTemplateInfo(sb, template);
+				sb.append("</td>\n</tr>\n");
+			}
+			sb.append("</tbody>\n</table>\n");
 		}
-		return naturalClass;
+	}
+
+	protected void formatTemplateInfo(StringBuilder sb, Template template) {
+		if (template == null) {
+			sb.append("&#xa0;");
+		} else {
+			sb.append(template.getTemplateFilterName());
+			sb.append(" [");
+			sb.append(template.getType());
+			sb.append("] (");
+			sb.append(template.getTemplateFilterRepresentation());
+			sb.append(")");
+		}
+	}
+
+	protected void formatTemplateOrder(StringBuilder sb) {
+		LinkedList<Diff> diffs = oncComparer.getTemplateOrderDifferences();
+		if (diffs.size() > 1) {
+			sb.append("<p>" + bundle.getString("report.templateinorder") + "</p>\n");
+			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
+			sb.append("</th>\n<th>");
+			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
+			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			List<Template> templates1 = oncComparer.getOnca1().getLanguageProject().getActiveAndValidTemplates();
+			List<Template> templates2 = oncComparer.getOnca2().getLanguageProject().getActiveAndValidTemplates();
+			int size1 = templates1.size();
+			int size2 = templates2.size();
+			int maxSize = Math.max(size1, size2);
+			for (int i = 0; i < maxSize; i++) {
+				sb.append("<tr>\n<td class=\"");
+				sb.append(ANALYSIS_1);
+				sb.append("\">");
+				Template template = (Template) formatSylParserObjectInOrder(templates1,
+						size1, i);
+				formatTemplateInfo(sb, template);
+				sb.append("</td>\n<td class=\"");
+				sb.append(ANALYSIS_2);
+				sb.append("\">");
+				template = (Template) formatSylParserObjectInOrder(templates2, size2, i);
+				formatTemplateInfo(sb, template);
+				sb.append("</td>\n</tr>\n");
+			}
+			sb.append("</tbody>\n</table>\n");
+		}
+	}
+
+	protected SylParserObject formatSylParserObjectInOrder(List<? extends SylParserObject> items,
+			int size1, int i) {
+		SylParserObject item;
+		if (i < size1) {
+			item = items.get(i);
+		} else {
+			item = null;
+		}
+		return item;
+	}
+
+	protected void formatFilters(StringBuilder sb) {
+		sb.append("<h3>" + bundle.getString("report.filters") + "</h3>\n");
+		SortedSet<DifferentFilter> diffFilters = oncComparer
+				.getFiltersWhichDiffer();
+		if (diffFilters.size() == 0) {
+			sb.append("<p>" + bundle.getString("report.samefilters") + "</p>\n");
+		} else {
+			sb.append("<p>" + bundle.getString("report.filterswhichdiffer") + "</p>\n");
+			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
+			sb.append("</th>\n<th>");
+			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
+			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			for (DifferentFilter differentFilters : diffFilters) {
+				sb.append("<tr>\n<td class=\"");
+				sb.append(ANALYSIS_1);
+				sb.append("\">");
+				Filter filter = (Filter) differentFilters.objectFrom1;
+				formatFilterInfo(sb, filter);
+				sb.append("</td>\n<td class=\"");
+				sb.append(ANALYSIS_2);
+				sb.append("\">");
+				filter = (Filter) differentFilters.objectFrom2;
+				formatFilterInfo(sb, filter);
+				sb.append("</td>\n</tr>\n");
+			}
+			sb.append("</tbody>\n</table>\n");
+		}
+	}
+
+	protected void formatFilterInfo(StringBuilder sb, Filter filter) {
+		if (filter == null) {
+			sb.append("&#xa0;");
+		} else {
+			sb.append(filter.getTemplateFilterName());
+			sb.append(" {");
+			boolean isRepair = filter.getAction().isDoRepair();
+			sb.append(isRepair ? bundle.getString("radio.repairaction") : bundle.getString("radio.failaction"));
+			sb.append("} [");
+			sb.append(filter.getType());
+			sb.append("] (");
+			sb.append(filter.getTemplateFilterRepresentation());
+			sb.append(")");
+		}
+	}
+
+	protected void formatFilterOrder(StringBuilder sb) {
+		LinkedList<Diff> diffs = oncComparer.getFilterOrderDifferences();
+		if (diffs.size() > 1) {
+			sb.append("<p>" + bundle.getString("report.filterinorder") + "</p>\n");
+			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
+			sb.append("</th>\n<th>");
+			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
+			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			List<Filter> sonorityHierarchy1 = oncComparer.getOnca1().getLanguageProject().getActiveAndValidFilters();
+			List<Filter> sonorityHierarchy2 = oncComparer.getOnca2().getLanguageProject().getActiveAndValidFilters();
+			int size1 = sonorityHierarchy1.size();
+			int size2 = sonorityHierarchy2.size();
+			int maxSize = Math.max(size1, size2);
+			for (int i = 0; i < maxSize; i++) {
+				sb.append("<tr>\n<td class=\"");
+				sb.append(ANALYSIS_1);
+				sb.append("\">");
+				Filter naturalClass = (Filter) formatSylParserObjectInOrder(sonorityHierarchy1,
+						size1, i);
+				formatFilterInfo(sb, naturalClass);
+				sb.append("</td>\n<td class=\"");
+				sb.append(ANALYSIS_2);
+				sb.append("\">");
+				naturalClass = (Filter) formatSylParserObjectInOrder(sonorityHierarchy2, size2, i);
+				formatFilterInfo(sb, naturalClass);
+				sb.append("</td>\n</tr>\n");
+			}
+			sb.append("</tbody>\n</table>\n");
+		}
 	}
 
 	@Override

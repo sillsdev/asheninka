@@ -1,5 +1,5 @@
 
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -14,7 +14,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Comparator;
 import java.util.Locale;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,12 +40,14 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 
 	LanguageProject languageProject1;
 	LanguageProject languageProject2;
-	ONCApproach sha1;
-	ONCApproach sha2;
+	ONCApproach onca1;
+	ONCApproach onca2;
 	ONCApproachLanguageComparer comparer;
 	ONCApproachLanguageComparer comparerSame;
 	private Locale locale;
 	private LocalDateTime dateTime;
+	SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
 
 	/**
 	 * @throws java.lang.Exception
@@ -54,15 +59,15 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
 		File file1 = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file1);
-		sha1 = languageProject1.getONCApproach();
+		onca1 = languageProject1.getONCApproach();
 		languageProject2 = new LanguageProject();
 		xmlBackEndProvider = new XMLBackEndProvider(languageProject2, locale);
 		File file2 = new File(Constants.UNIT_TEST_DATA_FILE_2);
 		xmlBackEndProvider.loadLanguageDataFromFile(file2);
-		sha2 = languageProject2.getONCApproach();
-		comparer = new ONCApproachLanguageComparer(sha1, sha2);
+		onca2 = languageProject2.getONCApproach();
+		comparer = new ONCApproachLanguageComparer(onca1, onca2);
 		invokeComparison(comparer, file1, file2);
-		comparerSame = new ONCApproachLanguageComparer(sha1, sha1);
+		comparerSame = new ONCApproachLanguageComparer(onca1, onca1);
 		invokeComparison(comparerSame, file1, file1);
 		dateTime = LocalDateTime.of(2016, Month.APRIL, 9, 8, 7, 3);
 	}
@@ -77,6 +82,12 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 		comparer.compareSonorityHierarchy();
 		comparer.compareSonorityHierarchyOrder();
 		comparer.compareSyllabificationParameters();
+		comparer.compareCVNaturalClasses(comparer.getOnca1().getActiveCVNaturalClasses(), comparer
+				.getOnca2().getActiveCVNaturalClasses(), cvNaturalClassesWhichDiffer);
+		comparer.compareTemplates();
+		comparer.compareTemplateOrder();
+		comparer.compareFilters();
+		comparer.compareFilterOrder();
 		comparer.compareWords();
 	}
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -22,6 +22,7 @@ import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SyllabificationParameters;
 import org.sil.syllableparser.model.Word;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.utility.StringUtilities;
 
 /**
@@ -325,5 +326,39 @@ public abstract class ApproachLanguageComparer {
 		langProj1OnsetPrinciple = sp1.getOnsetPrincipleEnum();
 		langProj2OnsetPrinciple = sp2.getOnsetPrincipleEnum();
 		onsetPrincipleDiffers = (langProj1OnsetPrinciple != langProj2OnsetPrinciple);
+	}
+
+	public void compareCVNaturalClasses(List<CVNaturalClass> naturalClasses1,
+			List<CVNaturalClass> naturalClasses2,
+			SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer) {
+		Set<CVNaturalClass> difference1from2 = new HashSet<CVNaturalClass>(naturalClasses1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(naturalClasses2);
+		difference1from2.stream().forEach(
+				naturalClass -> cvNaturalClassesWhichDiffer.add(new DifferentCVNaturalClass(
+						naturalClass, null)));
+
+		Set<CVNaturalClass> difference2from1 = new HashSet<CVNaturalClass>(naturalClasses2);
+		difference2from1.removeAll(naturalClasses1);
+		difference2from1.stream().forEach(
+				naturalClass -> mergeSimilarCVNaturalClasses(naturalClass,
+						cvNaturalClassesWhichDiffer));
+	}
+
+	protected void mergeSimilarCVNaturalClasses(CVNaturalClass naturalClass,
+			SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer) {
+		List<DifferentCVNaturalClass> sameNaturalClassesName = cvNaturalClassesWhichDiffer
+				.stream()
+				.filter(dnc -> dnc.getObjectFrom1() != null
+						&& ((CVNaturalClass) dnc.getObjectFrom1()).getNCName().equals(
+								naturalClass.getNCName())).collect(Collectors.toList());
+		if (sameNaturalClassesName.size() > 0) {
+			DifferentCVNaturalClass diffNaturalClass = sameNaturalClassesName.get(0);
+			diffNaturalClass.setObjectFrom2(naturalClass);
+		} else {
+			DifferentCVNaturalClass diffNaturalClass = new DifferentCVNaturalClass(null,
+					naturalClass);
+			cvNaturalClassesWhichDiffer.add(diffNaturalClass);
+		}
 	}
 }

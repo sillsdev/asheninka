@@ -14,6 +14,7 @@ import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -53,5 +54,9 @@ public class ONCApproach extends Approach {
 
 	public SHNaturalClass getNaturalClassContainingSegment(Segment seg1) {
 		return shApproach.getNaturalClassContainingSegment(seg1);
+	}
+
+	public List<CVNaturalClass> getActiveCVNaturalClasses() {
+		return getLanguageProject().getCVApproach().getActiveCVNaturalClasses();
 	}
 }

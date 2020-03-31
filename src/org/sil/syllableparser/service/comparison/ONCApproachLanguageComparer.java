@@ -39,6 +39,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 	SortedSet<DifferentSHNaturalClass> naturalClassesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentSHNaturalClass::getSortingValue));
 	LinkedList<Diff> sonorityHierarchyOrderDifferences = new LinkedList<>();
+	SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer = new TreeSet<>(
+			Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
 	SortedSet<DifferentFilter> filtersWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentFilter::getSortingValue));
 	LinkedList<Diff> filterOrderDifferences = new LinkedList<>();
@@ -72,6 +74,10 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 		return naturalClassesWhichDiffer;
 	}
 
+	public SortedSet<DifferentCVNaturalClass> getCVNaturalClassesWhichDiffer() {
+		return cvNaturalClassesWhichDiffer;
+	}
+
 	public LinkedList<Diff> getSonorityHierarchyOrderDifferences() {
 		return sonorityHierarchyOrderDifferences;
 	}
@@ -100,6 +106,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 		compareEnvironments();
 		compareSonorityHierarchy();
 		compareSonorityHierarchyOrder();
+		compareCVNaturalClasses(onca1.getActiveCVNaturalClasses(), onca2.getActiveCVNaturalClasses(),
+				cvNaturalClassesWhichDiffer);
 		compareFilters();
 		compareFilterOrder();
 		compareTemplates();

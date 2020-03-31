@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -21,6 +21,7 @@ import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.utility.DateTimeNormalizer;
 
 /**
@@ -397,5 +398,46 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		msgFormatter.setLocale(locale);
 		msgFormatter.applyPattern(bundle.getString(mainProperty));
 		return msgFormatter.format(args);
+	}
+
+	protected void formatNaturalClasses(StringBuilder sb, SortedSet<? extends DifferentCVNaturalClass> diffNaturalClasses) {
+		sb.append("<h3>" + bundle.getString("report.cvnaturalclasses") + "</h3>\n");
+		if (diffNaturalClasses.size() == 0) {
+			sb.append("<p>" + bundle.getString("report.samecvnaturalclasses") + "</p>\n");
+		} else {
+			sb.append("<p>" + bundle.getString("report.cvnaturalclasseswhichdiffer") + "</p>\n");
+			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingf"));
+			sb.append("</th>\n<th>");
+			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingf"));
+			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			for (DifferentCVNaturalClass differentNaturalClass : diffNaturalClasses) {
+				sb.append("<tr>\n<td class=\"");
+				sb.append(ANALYSIS_1);
+				sb.append("\">");
+				CVNaturalClass naturalClass = (CVNaturalClass) differentNaturalClass.objectFrom1;
+				formatNaturalClassInfo(sb, naturalClass, VERNACULAR_1);
+				sb.append("</td>\n<td class=\"");
+				sb.append(ANALYSIS_2);
+				sb.append("\">");
+				naturalClass = (CVNaturalClass) differentNaturalClass.objectFrom2;
+				formatNaturalClassInfo(sb, naturalClass, VERNACULAR_2);
+				sb.append("</td>\n</tr>\n");
+			}
+			sb.append("</tbody>\n</table>\n");
+		}
+	}
+
+	protected void formatNaturalClassInfo(StringBuilder sb, CVNaturalClass naturalClass, String vernacularCSS) {
+		if (naturalClass == null) {
+			sb.append("&#xa0;");
+		} else {
+			sb.append(naturalClass.getNCName());
+			sb.append(" (<span class=\"");
+			sb.append(vernacularCSS);
+			sb.append("\">");
+			sb.append(naturalClass.getSNCRepresentation());
+			sb.append("</span>)");
+		}
 	}
 }

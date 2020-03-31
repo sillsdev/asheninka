@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,10 +10,12 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javafx.collections.ObservableList;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
@@ -130,7 +132,7 @@ public class CVApproachLanguageComparerTest {
 		compareSameWords(comparer);
 	}
 
-	protected void compareSegments(CVApproachLanguageComparer comparer) {
+	protected void compareSegments(ApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
 		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
 		assertEquals("number of different segments", 18, diffs.size());
@@ -165,7 +167,7 @@ public class CVApproachLanguageComparerTest {
 				((Segment) diffSeg.getObjectFrom1()).getGraphemes());
 	}
 
-	protected void compareGraphemes(CVApproachLanguageComparer comparer) {
+	protected void compareGraphemes(ApproachLanguageComparer comparer) {
 		comparer.compareGraphemes();;
 		SortedSet<DifferentGrapheme> diffs = comparer.getGraphemesWhichDiffer();
 		assertEquals("number of different graphemes", 33, diffs.size());
@@ -191,7 +193,7 @@ public class CVApproachLanguageComparerTest {
 		assertEquals(0, grapheme1.getEnvs().size());
 	}
 
-	protected void compareGraphemeNaturalClasses(CVApproachLanguageComparer comparer) {
+	protected void compareGraphemeNaturalClasses(ApproachLanguageComparer comparer) {
 		comparer.compareGraphemeNaturalClasses();
 		SortedSet<DifferentGraphemeNaturalClass> diffs = comparer.getGraphemeNaturalClassesWhichDiffer();
 		assertEquals("number of different grapheme natural classes", 3, diffs.size());
@@ -204,7 +206,7 @@ public class CVApproachLanguageComparerTest {
 		assertNull(gnc2);
 	}
 	
-	protected void compareEnvironments(CVApproachLanguageComparer comparer) {
+	protected void compareEnvironments(ApproachLanguageComparer comparer) {
 		comparer.compareEnvironments();
 		SortedSet<DifferentEnvironment> diffs = comparer.getEnvironmentsWhichDiffer();
 		assertEquals(5, diffs.size());
@@ -218,8 +220,10 @@ public class CVApproachLanguageComparerTest {
 	}
 
 	protected void compareNaturalClasses(CVApproachLanguageComparer comparer) {
-		comparer.compareNaturalClasses();
-		SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
+		SortedSet<DifferentCVNaturalClass> diffs = new TreeSet<>(
+				Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
+		comparer.compareCVNaturalClasses(cva1.getActiveCVNaturalClasses(), cva2.getActiveCVNaturalClasses(), diffs);
+		//SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
 		assertEquals("number of different natural classes", 6, diffs.size());
 		List<DifferentCVNaturalClass> listOfDiffs = new ArrayList<DifferentCVNaturalClass>();
 		listOfDiffs.addAll(diffs);
@@ -279,7 +283,7 @@ public class CVApproachLanguageComparerTest {
 				((CVSyllablePattern) diffSyllablePattern.getObjectFrom1()).getNCSRepresentation());
 	}
 
-	protected void compareWords(CVApproachLanguageComparer comparer) {
+	protected void compareWords(ApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
 		assertEquals("number of different words", 6345, diffs.size());
@@ -329,33 +333,34 @@ public class CVApproachLanguageComparerTest {
 		assertEquals(7, differences.size());
 	}
 
-	protected void compareSameSegments(CVApproachLanguageComparer comparer) {
+	protected void compareSameSegments(ApproachLanguageComparer comparer) {
 		comparer.compareSegmentInventory();
 		SortedSet<DifferentSegment> diffs = comparer.getSegmentsWhichDiffer();
 		assertEquals("number of different segments", 0, diffs.size());
 	}
 
-	protected void compareSameGraphemes(CVApproachLanguageComparer comparer) {
+	protected void compareSameGraphemes(ApproachLanguageComparer comparer) {
 		comparer.compareGraphemes();;
 		SortedSet<DifferentGrapheme> diffs = comparer.getGraphemesWhichDiffer();
 		assertEquals("number of different graphemes", 0, diffs.size());
 	}
 
-	protected void compareSameGraphemeNaturalClasses(CVApproachLanguageComparer comparer) {
+	protected void compareSameGraphemeNaturalClasses(ApproachLanguageComparer comparer) {
 		comparer.compareGraphemeNaturalClasses();;
 		SortedSet<DifferentGraphemeNaturalClass> diffs = comparer.getGraphemeNaturalClassesWhichDiffer();
 		assertEquals("number of different grapheme natural classes", 0, diffs.size());
 	}
 
-	protected void compareSameEnvironments(CVApproachLanguageComparer comparer) {
+	protected void compareSameEnvironments(ApproachLanguageComparer comparer) {
 		comparer.compareEnvironments();;
 		SortedSet<DifferentEnvironment> diffs = comparer.getEnvironmentsWhichDiffer();
 		assertEquals("number of different environments", 0, diffs.size());
 	}
 
 	protected void compareSameNaturalClasses(CVApproachLanguageComparer comparer) {
-		comparer.compareNaturalClasses();
-		SortedSet<DifferentCVNaturalClass> diffs = comparer.getNaturalClassesWhichDiffer();
+		SortedSet<DifferentCVNaturalClass> diffs = new TreeSet<>(
+				Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
+		comparer.compareCVNaturalClasses(cva1.getActiveCVNaturalClasses(), cva1.getActiveCVNaturalClasses(), diffs);
 		assertEquals("number of different natural classes", 0, diffs.size());
 	}
 
@@ -365,7 +370,7 @@ public class CVApproachLanguageComparerTest {
 		assertEquals("number of different syllable patterns", 0, diffs.size());
 	}
 
-	protected void compareSameWords(CVApproachLanguageComparer comparer) {
+	protected void compareSameWords(ApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
 		assertEquals("number of different words", 0, diffs.size());
