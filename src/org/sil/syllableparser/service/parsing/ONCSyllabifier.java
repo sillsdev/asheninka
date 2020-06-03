@@ -24,7 +24,6 @@ import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.Coda;
 import org.sil.syllableparser.model.oncapproach.Nucleus;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
-import org.sil.syllableparser.model.oncapproach.ONCConstituent;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentUsageType;
 import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
@@ -343,10 +342,10 @@ public class ONCSyllabifier implements Syllabifiable {
 							syllablesInCurrentWord.add(syl);
 							currentState = syl.getRime().applyAnyFailFilters(segmentsInWord, i,
 									currentState, syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
-									syllablesInCurrentWord);
+									syllablesInCurrentWord, sonorityComparer, null);
 							currentState = syl.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
 									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
-									syllablesInCurrentWord);
+									syllablesInCurrentWord, sonorityComparer, null);
 							if (currentState != ONCSyllabifierState.FILTER_FAILED) {
 								syl = createNewSyllable();
 								currentState = updateTypeForNewSyllable();
@@ -359,10 +358,10 @@ public class ONCSyllabifier implements Syllabifiable {
 							syllablesInCurrentWord.add(syl);
 							currentState = syl.getRime().applyAnyFailFilters(segmentsInWord, i,
 									currentState, syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
-									syllablesInCurrentWord);
+									syllablesInCurrentWord, sonorityComparer, null);
 							currentState = syl.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
 									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
-									syllablesInCurrentWord);
+									syllablesInCurrentWord, sonorityComparer, null);
 							if (currentState != ONCSyllabifierState.FILTER_FAILED) {
 								syl = createNewSyllable();
 								currentState = ONCSyllabifierState.ONSET_OR_NUCLEUS;
@@ -401,11 +400,11 @@ public class ONCSyllabifier implements Syllabifiable {
 					syllablesInCurrentWord.add(syl);
 					currentState = syl.getRime().applyAnyFailFilters(segmentsInWord, i, currentState,
 							syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
-							syllablesInCurrentWord);
+							syllablesInCurrentWord, sonorityComparer, null);
 					currentState = syl
 							.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
 									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
-									syllablesInCurrentWord);
+									syllablesInCurrentWord, sonorityComparer, null);
 					if (currentState != ONCSyllabifierState.FILTER_FAILED) {
 						syl = createNewSyllable();
 						currentState = ONCSyllabifierState.ONSET;
@@ -438,11 +437,11 @@ public class ONCSyllabifier implements Syllabifiable {
 					syllablesInCurrentWord.add(syl);
 					currentState = syl.getRime().applyAnyFailFilters(segmentsInWord, i, currentState,
 							syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
-							syllablesInCurrentWord);
+							syllablesInCurrentWord, sonorityComparer, null);
 					currentState = syl
 							.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
 									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
-									syllablesInCurrentWord);
+									syllablesInCurrentWord, sonorityComparer, null);
 					if (currentState != ONCSyllabifierState.FILTER_FAILED) {
 						syl = createNewSyllable();
 						currentState = ONCSyllabifierState.ONSET_OR_NUCLEUS;
@@ -528,7 +527,7 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA);
 		tracer.recordStep();
 		currentState = coda.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
-				ONCSyllabificationStatus.CODA_FILTER_FAILED, syllablesInCurrentWord);
+				ONCSyllabificationStatus.CODA_FILTER_FAILED, syllablesInCurrentWord, sonorityComparer, SHComparisonResult.MORE);
 		return currentState;
 	}
 
@@ -544,7 +543,7 @@ public class ONCSyllabifier implements Syllabifiable {
 				if (iSegmentsInConstituent < iItemsInTemplate) {
 					int iStart = i - iSegmentsInConstituent;
 					int iEnd = Math.min(iStart + iItemsInTemplate, iSegmentsInWord);
-					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd))) {
+					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd), sonorityComparer, null)) {
 						templateMatched = t;
 						break;
 					}
@@ -594,7 +593,7 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_NUCLEUS);
 		tracer.recordStep();
 		currentState = nucleus.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
-				ONCSyllabificationStatus.NUCLEUS_FILTER_FAILED, syllablesInCurrentWord);
+				ONCSyllabificationStatus.NUCLEUS_FILTER_FAILED, syllablesInCurrentWord, sonorityComparer, SHComparisonResult.EQUAL);
 		return syl;
 	}
 
@@ -615,8 +614,8 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.getTracingStep().setComparisonResult(comparisonResult);
 	}
 
-	protected ONCSyllabifierState addSegmentToSyllableAsOnset(List<ONCSegmentInSyllable> segmentsInWord,
-			ONCSyllable syl, Segment seg1, int i) {
+	protected ONCSyllabifierState addSegmentToSyllableAsOnset(
+			List<ONCSegmentInSyllable> segmentsInWord, ONCSyllable syl, Segment seg1, int i) {
 		ONCSyllabifierState currentState;
 		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.ONSET);
 		syl.add(segmentsInWord.get(i));
@@ -626,10 +625,12 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setOncState(ONCSyllabifierState.ONSET);
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_ONSET);
 		tracer.recordStep();
-		onset.applyAnyRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord);
+		onset.applyAnyRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord,
+				sonorityComparer, SHComparisonResult.LESS);
 
 		currentState = onset.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
-				ONCSyllabificationStatus.ONSET_FILTER_FAILED, syllablesInCurrentWord);
+				ONCSyllabificationStatus.ONSET_FILTER_FAILED, syllablesInCurrentWord,
+				sonorityComparer, SHComparisonResult.LESS);
 		return currentState;
 	}
 
@@ -655,11 +656,11 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
 		tracer.recordStep();
 		currentState = coda.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
-				ONCSyllabificationStatus.CODA_FILTER_FAILED, syllablesInCurrentWord);
+				ONCSyllabificationStatus.CODA_FILTER_FAILED, syllablesInCurrentWord, sonorityComparer, SHComparisonResult.MORE);
 		currentState = syl.getRime().applyAnyFailFilters(segmentsInWord, i, currentState, syl,
-				ONCSyllabificationStatus.RIME_FILTER_FAILED, syllablesInCurrentWord);
+				ONCSyllabificationStatus.RIME_FILTER_FAILED, syllablesInCurrentWord, sonorityComparer, SHComparisonResult.EQUAL);
 		currentState = syl.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
-				ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED, syllablesInCurrentWord);
+				ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED, syllablesInCurrentWord, sonorityComparer, null);
 		if (applyAnyWordFinalTemplates(segmentsInWord, i)) {
 			currentState = ONCSyllabifierState.WORD_FINAL_TEMPLATE_APPLIED;
 		}
@@ -674,7 +675,7 @@ public class ONCSyllabifier implements Syllabifiable {
 			for (Template t: onsetTemplates) {
 				int iItemsInTemplate = t.getSlots().size();
 				if (iItemsInTemplate >= 2) {
-					if (matcher.matches(t, segmentsInWord.subList(i, iSegmentsInWord))) {
+					if (matcher.matches(t, segmentsInWord.subList(i, iSegmentsInWord), sonorityComparer, null)) {
 							if (tracer.isTracing()) {
 								tracer.setSegment1(seg1);
 								SHNaturalClass shClass = oncApproach.getNaturalClassContainingSegment(seg1);
@@ -708,7 +709,7 @@ public class ONCSyllabifier implements Syllabifiable {
 				int iStart = i + 1;
 				if (iSegmentsInWord - iStart <= iItemsInTemplate) {
 					int iEnd = Math.min(iStart + iItemsInTemplate, iSegmentsInWord);
-					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd))) {
+					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd), sonorityComparer, null)) {
 						for (int index = iStart;  index < iEnd; index++) {
 							ONCSegmentInSyllable segInSyl = segmentsInWord.get(index);
 							segInSyl.setUsage(ONCSegmentUsageType.WORD_FINAL);

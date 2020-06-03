@@ -27,8 +27,10 @@ import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.ONCSegmenter;
+import org.sil.syllableparser.service.parsing.SHSonorityComparer;
 
 /**
  * @author Andy Black
@@ -44,6 +46,7 @@ public class TemplateFilterMatcherTest {
 	ONCSegmenter segmenter;
 	List<ONCSegmentInSyllable> segmentsInWord;
 	TemplateFilterMatcher matcher;
+	SHSonorityComparer sonorityComparer;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -63,6 +66,7 @@ public class TemplateFilterMatcherTest {
 		matcher = TemplateFilterMatcher.getInstance();
 		matcher.setActiveSegments(activeSegments);
 		matcher.setActiveClasses(activeClasses);
+		sonorityComparer = new SHSonorityComparer(languageProject);
 		}
 
 	/**
@@ -116,7 +120,17 @@ public class TemplateFilterMatcherTest {
 		checkMatch("askɪp", 5, false);
 		checkMatch("askɹɪp", 6, false);
 		checkMatch("slap", 4, false);
-		
+
+		tf.getSlots().get(2).setOptional(false);
+		tf.getSlots().get(2).setObeysSSP(true);
+		checkMatch("stɹ", 3, true, SHComparisonResult.LESS);
+		checkMatch("stl", 3, true, SHComparisonResult.LESS);
+		checkMatch("stn", 3, false, SHComparisonResult.LESS);
+		checkMatch("stɹ", 3, false, SHComparisonResult.EQUAL);
+		checkMatch("stl", 3, false, SHComparisonResult.MORE);
+		tf.getSlots().get(2).setOptional(true);
+		tf.getSlots().get(2).setObeysSSP(false);
+
 		ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots = FXCollections.observableArrayList();		
 		tf = new TemplateFilter("test initial optional slot", "Onset", "", "(t) l", slots);
 		Optional<Segment> seg = activeSegments.stream().filter(s -> s.getSegment().equals("t")).findFirst();
@@ -140,7 +154,16 @@ public class TemplateFilterMatcherTest {
 		assertEquals(true, segResult.success);
 		segmentsInWord = (List<ONCSegmentInSyllable>) segmenter.getSegmentsInWord();
 		assertEquals(numberOfSegments, segmentsInWord.size());
-		boolean fResult = matcher.matches(tf, segmentsInWord);
+		boolean fResult = matcher.matches(tf, segmentsInWord, sonorityComparer, null);
+		assertEquals(fExpectedResult, fResult);
+	}
+
+	protected void checkMatch(String word, int numberOfSegments, boolean fExpectedResult, SHComparisonResult sspComparisonNeeded) {
+		CVSegmenterResult segResult = segmenter.segmentWord(word);
+		assertEquals(true, segResult.success);
+		segmentsInWord = (List<ONCSegmentInSyllable>) segmenter.getSegmentsInWord();
+		assertEquals(numberOfSegments, segmentsInWord.size());
+		boolean fResult = matcher.matches(tf, segmentsInWord, sonorityComparer, sspComparisonNeeded);
 		assertEquals(fExpectedResult, fResult);
 	}
 

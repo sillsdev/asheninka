@@ -41,6 +41,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierTestBase {
 	ArrayList<ONCSegmentInSyllable> segsInSyllable = new ArrayList<ONCSegmentInSyllable>(
 			Arrays.asList());
 	ONCSyllable syl = new ONCSyllable(null);
+	SHSonorityComparer sonorityComparer;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -58,6 +59,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierTestBase {
 			nucSingleVowel.get().setActive(false);
 		}
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		sonorityComparer = new SHSonorityComparer(oncApproach.getLanguageProject());
 		}
 
 	/*
@@ -154,7 +156,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierTestBase {
 				.getSegmentsInWord();
 		constituent.setFailFilters(failFilters);
 		ONCSyllabifierState returnType = constituent.applyAnyFailFilters(segmentsInWord, iSegmentInWord,
-				currentState, syl, tracingStatus, (LinkedList<ONCSyllable>) oncSyllabifier.getSyllablesInCurrentWord());
+				currentState, syl, tracingStatus, (LinkedList<ONCSyllable>) oncSyllabifier.getSyllablesInCurrentWord(), sonorityComparer, null);
 		assertEquals(expectedState, returnType);
 	}
 

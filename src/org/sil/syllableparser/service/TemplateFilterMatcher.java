@@ -11,9 +11,12 @@ import java.util.List;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.TemplateFilter;
+import org.sil.syllableparser.model.TemplateFilterSlotSegment;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
+import org.sil.syllableparser.service.parsing.SHSonorityComparer;
 
 /**
  * @author Andy Black
@@ -52,7 +55,8 @@ public class TemplateFilterMatcher {
 		this.activeClasses = activeClasses;
 	}
 
-	public boolean matches(TemplateFilter tf, List<ONCSegmentInSyllable> segmentsToMatch) {
+	public boolean matches(TemplateFilter tf, List<ONCSegmentInSyllable> segmentsToMatch, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
+		List<TemplateFilterSlotSegment> slotAndSegment = new ArrayList<>();
 		int iSlot = 0;
 		List<TemplateFilterSlotSegmentOrNaturalClass> slots = tf.getSlots();
 		int iSeg = 0;
@@ -85,6 +89,8 @@ public class TemplateFilterMatcher {
 				}
 			}
 			iSlot++;
+			TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
+			slotAndSegment.add(ss);
 		}
 		while (iSlot < slots.size()) {
 			// not all slots were tested; remaining slots must be optional
@@ -95,8 +101,38 @@ public class TemplateFilterMatcher {
 			iSlot++;
 		}
 		if (iSlot == slots.size()) {
-			return true;
+			// now check for sonority requirements
+			return sonorityIsValid(sonorityComparer, sspComparisonNeeded, slotAndSegment);
 		}	
 		return false;
+	}
+
+	private boolean sonorityIsValid(SHSonorityComparer sonorityComparer,
+			SHComparisonResult sspComparisonNeeded, List<TemplateFilterSlotSegment> slotAndSegment) {
+		TemplateFilterSlotSegmentOrNaturalClass slot;
+		if (sspComparisonNeeded != null && slotAndSegment.size() > 1) {
+			TemplateFilterSlotSegment ssPrevious = slotAndSegment.get(0);
+			for (int i = 1; i < slotAndSegment.size(); i++) {
+				TemplateFilterSlotSegment ssCurrent = slotAndSegment.get(i);
+				slot = ssCurrent.getSlot();
+				if (slot.isObeysSSP()) {
+					TemplateFilterSlotSegmentOrNaturalClass slotPrevious = ssPrevious.getSlot();
+					if (slotPrevious.isObeysSSP()) {
+						Segment segPrevious = ssPrevious.getSegment();
+						Segment segCurrent = ssCurrent.getSegment();
+						SHComparisonResult result = sonorityComparer.compare(segPrevious,
+								segCurrent);
+						if (result != SHComparisonResult.MISSING1
+								&& result != SHComparisonResult.MISSING2) {
+							if (result != sspComparisonNeeded) {
+								return false;
+							}
+						}
+					}
+					ssPrevious = ssCurrent;
+				}
+			}
+		}
+		return true;
 	}
 }

@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
+import org.sil.syllableparser.service.parsing.SHSonorityComparer;
 
 
 /**
@@ -70,7 +72,7 @@ public class ONCSyllable extends ONCConstituent {
 
 	@Override
 	public void applyAnyRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
-			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord) {
+			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
 		// TODO: flesh out
 	}
 }

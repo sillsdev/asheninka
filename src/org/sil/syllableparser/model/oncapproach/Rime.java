@@ -8,6 +8,9 @@ package org.sil.syllableparser.model.oncapproach;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
+import org.sil.syllableparser.service.parsing.SHSonorityComparer;
+
 /**
  * @author Andy Black
  *
@@ -63,7 +66,7 @@ public class Rime extends ONCConstituent {
 
 	@Override
 	public void applyAnyRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
-			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord) {
+			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
 		// TODO: flesh out
 	}
 }

@@ -10,9 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.service.TemplateFilterMatcher;
 import org.sil.syllableparser.service.parsing.ONCTracer;
 import org.sil.syllableparser.service.parsing.ONCSyllabifierState;
+import org.sil.syllableparser.service.parsing.SHSonorityComparer;
 
 /**
  * @author Andy Black
@@ -82,12 +84,14 @@ public abstract class ONCConstituent {
 		}
 	}
 	
-	public abstract void applyAnyRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
-			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord);
+	public abstract void applyAnyRepairFilters(List<ONCSegmentInSyllable> segmentsInWord,
+			int iSegmentInWord, ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord,
+			SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded);
 
-	public ONCSyllabifierState applyAnyFailFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
-			ONCSyllabifierState currentState, ONCSyllable syl, ONCSyllabificationStatus status,
-			LinkedList<ONCSyllable> syllablesInCurrentWord) {
+	public ONCSyllabifierState applyAnyFailFilters(List<ONCSegmentInSyllable> segmentsInWord,
+			int iSegmentInWord, ONCSyllabifierState currentState, ONCSyllable syl,
+			ONCSyllabificationStatus status, LinkedList<ONCSyllable> syllablesInCurrentWord,
+			SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
 		ONCTracer tracer = ONCTracer.getInstance();
 		TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();
 		for (Filter f : failFilters) {
@@ -95,7 +99,8 @@ public abstract class ONCConstituent {
 			int iSegmentsInConstituent = getGraphemes().size();
 			if (iSegmentsInConstituent >= iItemsInFilter) {
 				int iStart = iSegmentInWord - (iItemsInFilter - 1);
-				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1))) {
+				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1),
+						sonorityComparer, sspComparisonNeeded)) {
 					currentState = ONCSyllabifierState.FILTER_FAILED;
 					if (!syllablesInCurrentWord.contains(syl)) {
 						if (syl.getSegmentsInSyllable().size() > 0) {

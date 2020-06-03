@@ -12,9 +12,11 @@ import java.util.Optional;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.service.TemplateFilterMatcher;
 import org.sil.syllableparser.service.parsing.ONCTracer;
 import org.sil.syllableparser.service.parsing.ONCSyllabifierState;
+import org.sil.syllableparser.service.parsing.SHSonorityComparer;
 
 /**
  * @author Andy Black
@@ -55,7 +57,7 @@ public class Onset extends ONCConstituent {
 
 	@Override
 	public void applyAnyRepairFilters(List<ONCSegmentInSyllable> segmentsInWord, int iSegmentInWord,
-			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord) {
+			ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
 		ONCTracer tracer = ONCTracer.getInstance();
 		TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();
 		for (Filter f : repairFilters) {
@@ -63,7 +65,7 @@ public class Onset extends ONCConstituent {
 			int iSegmentsInConstituent = getGraphemes().size();
 			if (iSegmentsInConstituent >= iItemsInFilter) {
 				int iStart = iSegmentInWord - (iItemsInFilter - 1);
-				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1))) {
+				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1), sonorityComparer, null)) {
 					if (syllablesInCurrentWord.size() <= 0) {
 						tracer.initStep(
 								ONCSyllabifierState.FILTER_FAILED,
