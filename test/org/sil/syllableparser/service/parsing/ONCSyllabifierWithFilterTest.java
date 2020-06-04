@@ -22,7 +22,9 @@ import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Template;
+import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.oncapproach.Coda;
 import org.sil.syllableparser.model.oncapproach.Nucleus;
 import org.sil.syllableparser.model.oncapproach.ONCConstituent;
@@ -491,4 +493,63 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierTestBase {
 		checkTracingStep(tracingStep, "æ", "Vowels", "n", "Nasals", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
 				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
 	}
+
+	@Test
+	public void codaFilterRepairTest() {
+		assertEquals(3, languageProject.getActiveAndValidFilters().size());
+		Filter f = languageProject.getActiveAndValidFilters().get(0);
+		Filter fOriginal = f;
+		assertEquals(true, f.getAction().isDoRepair());
+		assertEquals(FilterType.ONSET, f.getTemplateFilterType());
+		f.setTemplateFilterType(FilterType.CODA);
+		TemplateFilterSlotSegmentOrNaturalClass slot0 = f.getSlots().get(0);
+		TemplateFilterSlotSegmentOrNaturalClass slot1 = f.getSlots().get(1);
+		slot0.setRepairLeftwardFromHere(false);
+		slot1.setRepairLeftwardFromHere(true);
+		f.getSlots().clear();
+		f.getSlots().add(slot1);
+		f.getSlots().add(slot0);
+		languageProject.getActiveAndValidFilters().set(0, f);
+		int index = SylParserObject.findIndexInListByUuid(
+				languageProject.getSegmentInventory(), "101d2651-cd84-4671-a286-0d37e22759e4");
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+
+		// the repair filter does not apply because /l/ cannot be a nucleus
+		checkSyllabification("sælkpɪk", true, 2, "sælk.pɪk", "oncc.onc",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L æ(\\G æ)))(C(\\L l(\\G l))(\\L k(\\G k)))))(σ(O(\\L p(\\G p)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("sælkpɪk", true, 2, "sælk.pɪk", "oncc.onc",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L æ(\\G æ)))(C(\\L l(\\G l))(\\L k(\\G k)))))(σ(O(\\L p(\\G p)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
+		List<ONCTracingStep> tracingSteps = oncSyllabifier.getTracingSteps();
+		assertEquals(10, tracingSteps.size());
+		ONCTracingStep tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.FILTER_FAILED, ONCSyllabificationStatus.CODA_FILTER_REPAIR_COULD_NOT_APPLY, false);
+
+		// codas allowed, /l/ is onset or coda, lt splits to l.t
+		checkSyllabification("sæltpɪk", true, 2, "sælt.pɪk", "onnc.onc",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L æ(\\G æ))(\\L l(\\G l)))(C(\\L t(\\G t)))))(σ(O(\\L p(\\G p)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("sæltpɪk", true, 2, "sælt.pɪk", "onnc.onc",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L æ(\\G æ))(\\L l(\\G l)))(C(\\L t(\\G t)))))(σ(O(\\L p(\\G p)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
+		tracingSteps = oncSyllabifier.getTracingSteps();
+		assertEquals(10, tracingSteps.size());
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.FILTER_REPAIR_APPLIED, ONCSyllabificationStatus.CODA_FILTER_REPAIR_APPLIED, true);
+
+		// restore what we changed so after the test, the filter is back to how it was
+		f.setType("Onset");
+		slot0.setRepairLeftwardFromHere(true);
+		slot1.setRepairLeftwardFromHere(false);
+		f.getSlots().clear();
+		f.getSlots().add(slot0);
+		f.getSlots().add(slot1);
+		f.setTemplateFilterType(FilterType.ONSET);
+		languageProject.getActiveAndValidFilters().set(0, fOriginal);
+		languageProject.getSegmentInventory().get(index).setNucleus(false);
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+	}
+
+
 }

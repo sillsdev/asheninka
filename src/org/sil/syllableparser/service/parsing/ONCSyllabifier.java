@@ -526,6 +526,8 @@ public class ONCSyllabifier implements Syllabifiable {
 		tracer.setOncState(ONCSyllabifierState.CODA);
 		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA);
 		tracer.recordStep();
+		coda.applyAnyRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord,
+				sonorityComparer, SHComparisonResult.MORE);
 		currentState = coda.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
 				ONCSyllabificationStatus.CODA_FILTER_FAILED, syllablesInCurrentWord, sonorityComparer, SHComparisonResult.MORE);
 		return currentState;
@@ -650,6 +652,8 @@ public class ONCSyllabifier implements Syllabifiable {
 		syl.add(segmentsInWord.get(i));
 		Coda coda = syl.getRime().getCoda();
 		coda.add(segmentsInWord.get(i));
+		coda.applyAnyRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord,
+				sonorityComparer, SHComparisonResult.LESS);
 		syllablesInCurrentWord.add(syl);
 		tracer.setSegment1(segmentsInWord.get(i).getSegment());
 		tracer.setOncState(ONCSyllabifierState.CODA);

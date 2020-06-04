@@ -284,6 +284,9 @@ public class ONCTracingStep {
 		case CODA_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodafilterfailed"));
 			break;
+		case CODA_FILTER_REPAIR_APPLIED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodarepairapplied"));
+			break;
 		case CODA_FILTER_REPAIR_COULD_NOT_APPLY:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodarepairnotapply"));
 			break;
