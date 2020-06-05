@@ -832,10 +832,16 @@ public class ONCSyllabifierTest extends ONCSyllabifierTestBase {
 
 		checkSyllabifyWord("babe", false, 0, "", "", "(W)"); // b not in hierarchy
 		tracingSteps = oncSyllabifier.getTracingSteps();
-		assertEquals(1, tracingSteps.size());
+		assertEquals(3, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "b", null, null, null, null,
 				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT, false);
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SYLLABIFICATION_OF_FIRST_SYLLABLE_FAILED_TRYING_WORD_INITIAL_TEMPLATES, false);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.NO_WORD_INITIAL_TEMPLATE_MATCHED, false);
 
 		checkSyllabifyWord("ibabe", false, 1, "i", "n", "(W(σ(R(N(\\L i(\\G i))))))"); // b not in hierarchy
 		tracingSteps = oncSyllabifier.getTracingSteps();
@@ -888,10 +894,16 @@ public class ONCSyllabifierTest extends ONCSyllabifierTestBase {
 		oncSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("a", false, 0, "", "", "(W)");
 		tracingSteps = oncSyllabifier.getTracingSteps();
-		assertEquals(1, tracingSteps.size());
+		assertEquals(3, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "a", null, null, null, null,
 				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SYLLABIFICATION_OF_FIRST_SYLLABLE_FAILED_TRYING_WORD_INITIAL_TEMPLATES, false);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.NO_WORD_INITIAL_TEMPLATE_MATCHED, false);
 
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
@@ -972,13 +984,19 @@ public class ONCSyllabifierTest extends ONCSyllabifierTestBase {
 		vowels.getSegments().remove(0);
 		checkSyllabifyWord("tan", false, 0, "", "", "(W)");
 		tracingSteps = oncSyllabifier.getTracingSteps();
-		assertEquals(2, tracingSteps.size());
+		assertEquals(4, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "t", "Obstruents", "a", null, SHComparisonResult.MISSING2,
 				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET, false);
 		tracingStep = tracingSteps.get(1);
 		checkTracingStep(tracingStep, "t", "Obstruents", "a", null, SHComparisonResult.MISSING2,
 				ONCSyllabifierState.NUCLEUS, ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND, false);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SYLLABIFICATION_OF_FIRST_SYLLABLE_FAILED_TRYING_WORD_INITIAL_TEMPLATES, false);
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.NO_WORD_INITIAL_TEMPLATE_MATCHED, false);
 
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);

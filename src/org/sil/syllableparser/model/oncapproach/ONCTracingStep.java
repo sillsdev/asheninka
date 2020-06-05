@@ -142,6 +142,7 @@ public class ONCTracingStep {
 		case ADDED_AS_CODA:
 		case ADDED_AS_CODA_START_NEW_SYLLABLE:
 		case ADDED_AS_WORD_FINAL_APPENDIX:
+		case ADDED_AS_WORD_INITIAL_APPENDIX:
 		case ADDING_FINAL_SYLLABLE_TO_WORD:
 		case ADDING_SYLLABLE_TO_WORD:
 		case ONSET_FILTER_REPAIR_APPLIED:
@@ -275,6 +276,9 @@ public class ONCTracingStep {
 		case ADDED_AS_WORD_FINAL_APPENDIX:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstiaddedaswordfinalappendix"));
 			break;
+		case ADDED_AS_WORD_INITIAL_APPENDIX:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstiaddedaswordinitialappendix"));
+			break;
 		case ADDING_FINAL_SYLLABLE_TO_WORD:
 			result = bundle.getString("label.oncstiaddingfinalsyllabletoword");
 			break;
@@ -306,6 +310,9 @@ public class ONCTracingStep {
 			break;
 		case NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT:
 			result = bundle.getString("label.oncstinaturalclassnotfoundforsegment");
+			break;
+		case NO_WORD_INITIAL_TEMPLATE_MATCHED:
+			result = bundle.getString("label.oncstinowordinitialtemplatematched");
 			break;
 		case NUCLEUS_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleusfilterfailed"));
@@ -369,6 +376,9 @@ public class ONCTracingStep {
 			break;
 		case SUCCESS:
 			result = bundle.getString("label.oncstisuccess");
+			break;
+		case SYLLABIFICATION_OF_FIRST_SYLLABLE_FAILED_TRYING_WORD_INITIAL_TEMPLATES:
+			result = bundle.getString("label.oncstisyllabificationoffirstsyllablefailedtryingwordinitialtemplates");
 			break;
 		case SYLLABLE_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstisyllablefilterfailed"));

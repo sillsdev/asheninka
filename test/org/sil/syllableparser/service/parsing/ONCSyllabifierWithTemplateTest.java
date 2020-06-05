@@ -309,6 +309,69 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 	}
 
 	@Test
+	public void wordInitialTemplateTest() {
+		String templateGuid = "f49276fd-27fc-49be-86a7-7dc93a96e813";
+		// get the word final template
+		Optional<Template> wordInitialTemplate = languageProject.getActiveAndValidTemplates().stream()
+				.filter(t -> t.getID().equals(templateGuid)).findFirst();
+		assertTrue(wordInitialTemplate.isPresent());
+		Template wiTemplate = wordInitialTemplate.get();
+		assertEquals(TemplateType.WORDFINAL, wiTemplate.getTemplateFilterType());
+		wiTemplate.setTemplateFilterType(TemplateType.WORDINITIAL);
+
+		// onsets not required, nucleus can be only one vowel
+		languageProject.getSyllabificationParameters().setCodasAllowed(true);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		checkSyllabification("psoʊt", true, 1, "psoʊt", "aanc",
+				"(W(A(\\L p(\\G p))(\\L s(\\G s)))(σ(R(N(\\L oʊ(\\G oʊ)))(C(\\L t(\\G t))))))");
+		checkSyllabification("poʊt", true, 1, "poʊt", "onc",
+				"(W(σ(O(\\L p(\\G p)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L t(\\G t))))))");
+		checkSyllabification("snoʊt", true, 1, "snoʊt", "oonc",
+				"(W(σ(O(\\L s(\\G s))(\\L n(\\G n)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L t(\\G t))))))");
+
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("psoʊt", true, 1, "psoʊt", "aanc",
+				"(W(A(\\L p(\\G p))(\\L s(\\G s)))(σ(R(N(\\L oʊ(\\G oʊ)))(C(\\L t(\\G t))))))");
+		List<ONCTracingStep> tracingSteps = oncSyllabifier.getTracingSteps();
+		assertEquals(10, tracingSteps.size());
+		ONCTracingStep tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "p", "Obstruents", "s", "Obstruents", SHComparisonResult.EQUAL,
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET, false);
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "p", "Obstruents", "s", "Obstruents", SHComparisonResult.EQUAL, ONCSyllabifierState.NUCLEUS,
+				ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND, false);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, null, null, null, null, null,
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.SYLLABIFICATION_OF_FIRST_SYLLABLE_FAILED_TRYING_WORD_INITIAL_TEMPLATES, false);
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "p", "Obstruents", null, null, null,
+				ONCSyllabifierState.WORD_INITIAL_TEMPLATE_APPLIED, ONCSyllabificationStatus.ADDED_AS_WORD_INITIAL_APPENDIX, true);
+		assertEquals(templateGuid, tracingStep.getTemplateFilterUsed().getID());
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "s", "Obstruents", null, null, null, ONCSyllabifierState.WORD_INITIAL_TEMPLATE_APPLIED,
+				ONCSyllabificationStatus.ADDED_AS_WORD_INITIAL_APPENDIX, true);
+		assertEquals(templateGuid, tracingStep.getTemplateFilterUsed().getID());
+		tracingStep = tracingSteps.get(5);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.UNKNOWN,
+				ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(6);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
+				ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED, true);
+		tracingStep = tracingSteps.get(7);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
+				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
+		tracingStep = tracingSteps.get(8);
+		checkTracingStep(tracingStep, "t", "Obstruents", null, null, SHComparisonResult.MORE, ONCSyllabifierState.CODA,
+				ONCSyllabificationStatus.ADDED_AS_CODA, true);
+		tracingStep = tracingSteps.get(9);
+		checkTracingStep(tracingStep, "t", null, null, null, null, ONCSyllabifierState.UNKNOWN,
+				ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
+		// restore template to be word final
+		wiTemplate.setTemplateFilterType(TemplateType.WORDFINAL);
+	}
+
+	@Test
 	public void wordFinalTemplateTest() {
 		// get the word final template
 		Optional<Template> wordFinalTemplate = languageProject.getActiveAndValidTemplates().stream()

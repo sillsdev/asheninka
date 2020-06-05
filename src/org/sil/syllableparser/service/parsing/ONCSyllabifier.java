@@ -56,7 +56,8 @@ public class ONCSyllabifier implements Syllabifiable {
 
 	LinkedList<ONCSyllable> syllablesInCurrentWord = new LinkedList<ONCSyllable>(
 			Arrays.asList(new ONCSyllable(null)));
-	List<ONCSegmentInSyllable> segmentsInWordFinalAppendx = new LinkedList<ONCSegmentInSyllable>();
+	List<ONCSegmentInSyllable> segmentsInWordInitialAppendix = new LinkedList<ONCSegmentInSyllable>();
+	List<ONCSegmentInSyllable> segmentsInWordFinalAppendix = new LinkedList<ONCSegmentInSyllable>();
 	String sSyllabifiedWord;
 	private List<Filter> codaFailFilters = new ArrayList<Filter>();
 	private List<Filter> codaRepairFilters = new ArrayList<Filter>();
@@ -247,10 +248,23 @@ public class ONCSyllabifier implements Syllabifiable {
 	}
 
 	public boolean syllabify(List<ONCSegmentInSyllable> segmentsInWord) {
+		boolean result = performSyllabification(segmentsInWord, false);
+		if (wordInitialTemplates.size() > 0 && !result && syllablesInCurrentWord.size() == 0) {
+			tracer.setStatus(ONCSyllabificationStatus.SYLLABIFICATION_OF_FIRST_SYLLABLE_FAILED_TRYING_WORD_INITIAL_TEMPLATES);
+			tracer.recordStep();
+			result = performSyllabification(segmentsInWord, true);
+		}
+		return result;
+	}
+
+	private boolean performSyllabification(List<ONCSegmentInSyllable> segmentsInWord, boolean tryWordInitialTemplates) {
 		currentState = ONCSyllabifierState.UNKNOWN;
 		syllablesInCurrentWord.clear();
-		segmentsInWordFinalAppendx.clear();
-		tracer.resetSteps();
+		segmentsInWordInitialAppendix.clear();
+		segmentsInWordFinalAppendix.clear();
+		if (!tryWordInitialTemplates) {
+			tracer.resetSteps();
+		}
 		int segmentCount = segmentsInWord.size();
 		if (segmentCount == 0) {
 			return false;
@@ -260,6 +274,15 @@ public class ONCSyllabifier implements Syllabifiable {
 			return false;
 		}
 		ONCSyllable syl = createNewSyllable();
+		int i = 0;
+		if (tryWordInitialTemplates) {
+			i = applyAnyWordInitialTemplates(segmentsInWord);
+			if (i == 0) {
+				tracer.setStatus(ONCSyllabificationStatus.NO_WORD_INITIAL_TEMPLATE_MATCHED);
+				tracer.recordStep();
+				return false;
+			}
+		}
 		if (opType == OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET && !seg1.isOnset()) {
 			tracer.setSegment1(seg1);
 			tracer.setStatus(ONCSyllabificationStatus.ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET);
@@ -273,7 +296,6 @@ public class ONCSyllabifier implements Syllabifiable {
 			tracer.recordStep();
 			return false;
 		}
-		int i = 0;
 		while (i < segmentCount) {
 			seg1 = segmentsInWord.get(i).getSegment();
 			Segment seg2 = null;
@@ -451,27 +473,6 @@ public class ONCSyllabifier implements Syllabifiable {
 				}
 				break;
 			case CODA: // never actually used...
-//				if (codasAllowed) {
-//					if (seg1.isCoda() && result == SHComparisonResult.LESS) {
-//						syl = addSegmentToSyllableAsCodaStartNewSyllable(segmentsInWord, syl, i);
-//						currentState = ONCType.ONSET_OR_NUCLEUS;
-//					} else {
-//						if (fDoTrace) {
-//							traceInfo.setStatus(ONCSyllabificationStatus.EXPECTED_CODA_NOT_FOUND);
-//							syllabifierTraceInfoList.add(traceInfo);
-//						}
-//						return false;
-//					}
-//				} else {
-//					i--;
-//					currentState = ONCType.ONSET_OR_NUCLEUS;
-//					if (fDoTrace) {
-//						traceInfo
-//								.setStatus(ONCSyllabificationStatus.EXPECTED_CODA_BUT_CODAS_NOT_ALLOWED);
-//						syllabifierTraceInfoList.add(traceInfo);
-//						traceInfo = new ONCTracingStep();
-//					}
-//				}
 				break;
 			case FILTER_FAILED:
 				return false;
@@ -717,7 +718,7 @@ public class ONCSyllabifier implements Syllabifiable {
 						for (int index = iStart;  index < iEnd; index++) {
 							ONCSegmentInSyllable segInSyl = segmentsInWord.get(index);
 							segInSyl.setUsage(ONCSegmentUsageType.WORD_FINAL);
-							segmentsInWordFinalAppendx.add(segInSyl);
+							segmentsInWordFinalAppendix.add(segInSyl);
 							if (tracer.isTracing()) {
 								Segment seg = segmentsInWord.get(index).getSegment();
 								tracer.setSegment1(seg);
@@ -736,11 +737,45 @@ public class ONCSyllabifier implements Syllabifiable {
 		return false;
 	}
 
+	public int applyAnyWordInitialTemplates(List<ONCSegmentInSyllable> segmentsInWord) {
+		if (wordInitialTemplates.size() > 0) {
+			int iSegmentsInWord = segmentsInWord.size();
+			for (Template t: wordInitialTemplates) {
+				int iItemsInTemplate = t.getSlots().size();
+				int iStart = 0;
+				if (iSegmentsInWord > iItemsInTemplate) {
+					int iEnd = Math.min(iStart + iItemsInTemplate, iSegmentsInWord);
+					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd), sonorityComparer, null)) {
+						for (int index = iStart;  index < iEnd; index++) {
+							ONCSegmentInSyllable segInSyl = segmentsInWord.get(index);
+							segInSyl.setUsage(ONCSegmentUsageType.WORD_INITIAL);
+							segmentsInWordInitialAppendix.add(segInSyl);
+							if (tracer.isTracing()) {
+								Segment seg = segmentsInWord.get(index).getSegment();
+								tracer.setSegment1(seg);
+								tracer.getTracingStep().setNaturalClass1(oncApproach.getNaturalClassContainingSegment(seg));
+								tracer.setOncState(ONCSyllabifierState.WORD_INITIAL_TEMPLATE_APPLIED);
+								tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_WORD_INITIAL_APPENDIX);
+								tracer.setTemplateFilterUsed(t);
+								tracer.recordStep();
+							}
+						}
+						return iEnd;
+					}
+				}
+			}
+		}
+		return 0;
+	}
 	public String getSyllabificationOfCurrentWord() {
 		// TODO: figure out a lambda way to do this
 		StringBuilder sb = new StringBuilder();
 		int iSize = syllablesInCurrentWord.size();
 		int i = 1;
+		// Begin with any segments in the word initial appendix
+		for (CVSegmentInSyllable seg : segmentsInWordInitialAppendix) {
+			sb.append(seg.getGrapheme());
+		}
 		for (ONCSyllable syl : syllablesInCurrentWord) {
 			for (CVSegmentInSyllable seg : syl.getSegmentsInSyllable()) {
 				sb.append(seg.getGrapheme());
@@ -750,7 +785,7 @@ public class ONCSyllabifier implements Syllabifiable {
 			}
 		}
 		// Append any segments in the word final appendix
-		for (CVSegmentInSyllable seg : segmentsInWordFinalAppendx) {
+		for (CVSegmentInSyllable seg : segmentsInWordFinalAppendix) {
 			sb.append(seg.getGrapheme());
 		}
 		return sb.toString();
@@ -760,6 +795,10 @@ public class ONCSyllabifier implements Syllabifiable {
 		StringBuilder sb = new StringBuilder();
 		int iSize = syllablesInCurrentWord.size();
 		int i = 1;
+		// Begin with any segments in the word initial appendix
+		for (CVSegmentInSyllable seg : segmentsInWordInitialAppendix) {
+			sb.append("a");
+		}
 		for (ONCSyllable syl : syllablesInCurrentWord) {
 			Onset onset = syl.getOnset();
 			onset.getONCPattern(sb);
@@ -770,7 +809,7 @@ public class ONCSyllabifier implements Syllabifiable {
 			}
 		}
 		// Append any segments in the word final appendix
-		for (CVSegmentInSyllable seg : segmentsInWordFinalAppendx) {
+		for (CVSegmentInSyllable seg : segmentsInWordFinalAppendix) {
 			sb.append("a");
 		}
 		return sb.toString();
@@ -780,6 +819,9 @@ public class ONCSyllabifier implements Syllabifiable {
 	public String getLingTreeDescriptionOfCurrentWord() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("(W");
+		if (segmentsInWordInitialAppendix.size() > 0) {
+			addAppendixSegmentsToLingTreeDescription(sb, segmentsInWordInitialAppendix);
+		}
 		for (ONCSyllable syl : syllablesInCurrentWord) {
 			sb.append("(σ");
 			Onset onset = syl.getOnset();
@@ -788,18 +830,23 @@ public class ONCSyllabifier implements Syllabifiable {
 			rime.createLingTreeDescription(sb);
 			sb.append(")");
 		}
-		if (segmentsInWordFinalAppendx.size() > 0) {
-			sb.append("(A");
-			for (CVSegmentInSyllable seg : segmentsInWordFinalAppendx) {
-				sb.append("(\\L ");
-				sb.append(seg.getSegmentName());
-				sb.append("(\\G ");
-				sb.append(seg.getGrapheme());
-				sb.append("))");
-			}
-			sb.append(")");
+		if (segmentsInWordFinalAppendix.size() > 0) {
+			addAppendixSegmentsToLingTreeDescription(sb, segmentsInWordFinalAppendix);
 		}
 		sb.append(")");
 		return sb.toString();
+	}
+
+	private void addAppendixSegmentsToLingTreeDescription(StringBuilder sb,
+			List<ONCSegmentInSyllable> segmentsInWordAppendix) {
+		sb.append("(A");
+		for (CVSegmentInSyllable seg : segmentsInWordAppendix) {
+			sb.append("(\\L ");
+			sb.append(seg.getSegmentName());
+			sb.append("(\\G ");
+			sb.append(seg.getGrapheme());
+			sb.append("))");
+		}
+		sb.append(")");
 	}
 }
