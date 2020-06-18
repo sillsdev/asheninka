@@ -309,6 +309,55 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 	}
 
 	@Test
+	public void codaTemplateTest() {
+		initializeCodaTest();
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		checkSyllabification("moʊst", true, 1, "moʊst", "oncc",
+				"(W(σ(O(\\L m(\\G m)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L s(\\G s))(\\L t(\\G t))))))");
+		checkSyllabification("ətmoʊst", true, 2, "ət.moʊst", "nc.oncc",
+				"(W(σ(R(N(\\L ə(\\G ə)))(C(\\L t(\\G t)))))(σ(O(\\L m(\\G m)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L s(\\G s))(\\L t(\\G t))))))");
+		checkSyllabification("sɪks", false, 1, "sɪk", "onc",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L k(\\G k))))))");
+		checkSyllabification("sɪlk", true, 1, "sɪlk", "oncc", "(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L l(\\G l))(\\L k(\\G k))))))");
+		checkSyllabification("sɪlks", false, 1, "sɪlk", "oncc",
+				"(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L l(\\G l))(\\L k(\\G k))))))");
+		checkSyllabification("gæsp", false, 1, "gæs", "onc", "(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L s(\\G s))))))");
+		checkSyllabification("gæspo", true, 2, "gæs.po", "onc.on",
+				"(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L s(\\G s)))))(σ(O(\\L p(\\G p)))(R(N(\\L o(\\G o))))))");
+		checkSyllabification("gæsg", false, 1, "gæs", "onc", "(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L s(\\G s))))))");
+		checkSyllabification("gæstmog", true, 2, "gæst.mog", "oncc.onc",
+				"(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L s(\\G s))(\\L t(\\G t)))))(σ(O(\\L m(\\G m)))(R(N(\\L o(\\G o)))(C(\\L g(\\G g))))))");
+		checkSyllabification("gætstmog", true, 2, "gætst.mog", "onccc.onc",
+				"(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L t(\\G t))(\\L s(\\G s))(\\L t(\\G t)))))(σ(O(\\L m(\\G m)))(R(N(\\L o(\\G o)))(C(\\L g(\\G g))))))");
+		checkSyllabification("gæstog", true, 2, "gæst.og", "oncc.nc",
+				"(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L s(\\G s))(\\L t(\\G t)))))(σ(R(N(\\L o(\\G o)))(C(\\L g(\\G g))))))");
+		checkSyllabification("gætstog", true, 2, "gætst.og", "onccc.nc",
+				"(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L t(\\G t))(\\L s(\\G s))(\\L t(\\G t)))))(σ(R(N(\\L o(\\G o)))(C(\\L g(\\G g))))))");
+		}
+
+	public void initializeCodaTest() {
+		// get the nucleus template that allows only one vowel in a nucleus
+		Optional<Template> sInCoda = languageProject.getActiveAndValidTemplates().stream()
+				.filter(t -> t.getID().equals("957dfbc1-511c-448a-b874-6c21abcb53d0")).findFirst();
+		assertTrue(sInCoda.isPresent());
+		Template codaTemplate = sInCoda.get();
+		assertEquals(TemplateType.WORDFINAL, codaTemplate.getTemplateFilterType());
+		codaTemplate.setTemplateFilterType(TemplateType.CODA);
+		assertEquals(TemplateType.CODA, codaTemplate.getTemplateFilterType());
+
+		Optional<Template> wordFinalTemplate = languageProject.getActiveAndValidTemplates().stream()
+				.filter(t -> t.getID().equals("f49276fd-27fc-49be-86a7-7dc93a96e813")).findFirst();
+		assertTrue(wordFinalTemplate.isPresent());
+		Template wfTemplate = wordFinalTemplate.get();
+		assertEquals(TemplateType.WORDFINAL, wfTemplate.getTemplateFilterType());
+		wfTemplate.setActive(false);
+
+		// onsets not required, codas OK
+		languageProject.getSyllabificationParameters().setCodasAllowed(true);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+	}
+
+	@Test
 	public void wordInitialTemplateTest() {
 		String templateGuid = "f49276fd-27fc-49be-86a7-7dc93a96e813";
 		// get the word final template
@@ -399,6 +448,8 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 				"(W(σ(O(\\L s(\\G s)))(R(N(\\L ɪ(\\G ɪ)))(C(\\L l(\\G l))(\\L k(\\G k)))))(A(\\L s(\\G s))))");
 		checkSyllabification("gæsg", false, 1, "gæs", "onc", "(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L s(\\G s))))))");
 		checkSyllabification("gæsp", true, 1, "gæsp", "onca", "(W(σ(O(\\L g(\\G g)))(R(N(\\L æ(\\G æ)))(C(\\L s(\\G s)))))(A(\\L p(\\G p))))");
+		checkSyllabification("moʊtdto", false, 1, "moʊt", "onc",
+				"(W(σ(O(\\L m(\\G m)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L t(\\G t))))))");
 	}
 
 	@Test
@@ -457,7 +508,7 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		assertEquals(7, tracingSteps.size());
 		ONCTracingStep tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "s", "Obstruents", "p", "Obstruents", SHComparisonResult.EQUAL,
-				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.ONSET_TEMPLATE_APPLIED, true);
+				ONCSyllabifierState.UNKNOWN, ONCSyllabificationStatus.ONSET_TEMPLATE_MATCHED, true);
 		assertEquals("b364b517-5938-466e-b707-db5191821765", tracingStep.getTemplateFilterUsed().getID());
 		tracingStep = tracingSteps.get(1);
 		checkTracingStep(tracingStep, "s", "Obstruents", "p", "Obstruents", SHComparisonResult.EQUAL, ONCSyllabifierState.ONSET,
@@ -477,5 +528,36 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		tracingStep = tracingSteps.get(6);
 		checkTracingStep(tracingStep, "t", null, null, null, null, ONCSyllabifierState.UNKNOWN,
 				ONCSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
+	}
+
+	@Test
+	public void traceCodaTemplateTest() {
+		initializeCodaTest();
+		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		oncSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("moʊst", true, 1, "moʊst", "oncc",
+				"(W(σ(O(\\L m(\\G m)))(R(N(\\L oʊ(\\G oʊ)))(C(\\L s(\\G s))(\\L t(\\G t))))))");
+		List<ONCTracingStep> tracingSteps = oncSyllabifier.getTracingSteps();
+		assertEquals(6, tracingSteps.size());
+		ONCTracingStep tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "m", "Nasals", "oʊ", "Vowels", SHComparisonResult.LESS,
+				ONCSyllabifierState.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "s", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.ONSET_OR_NUCLEUS,
+				ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED, true);
+		assertEquals("748b9c38-b42c-4f18-acdc-aed453d1c5f4", tracingStep.getTemplateFilterUsed().getID());
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "s", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
+				ONCSyllabificationStatus.ADDED_AS_NUCLEUS, true);
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "s", "Obstruents", "t", "Obstruents", SHComparisonResult.EQUAL, ONCSyllabifierState.NUCLEUS_OR_CODA,
+				ONCSyllabificationStatus.CODA_TEMPLATE_MATCHED, true);
+		assertEquals("957dfbc1-511c-448a-b874-6c21abcb53d0", tracingStep.getTemplateFilterUsed().getID());
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "s", null, null, null, null, ONCSyllabifierState.CODA,
+				ONCSyllabificationStatus.ADDED_AS_CODA, true);
+		tracingStep = tracingSteps.get(5);
+		checkTracingStep(tracingStep, "t", null, null, null, null, ONCSyllabifierState.ONSET_OR_NUCLEUS,
+				ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE, true);
 	}
 }

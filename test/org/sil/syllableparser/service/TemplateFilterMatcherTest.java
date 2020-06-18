@@ -81,53 +81,53 @@ public class TemplateFilterMatcherTest {
 		tf = languageProject.getFilters().get(0);
 		// t l
 		assertNotNull(tf);
-		checkMatch("tl", 2, true);
-		checkMatch("tladi", 5, true);
-		checkMatch("atl", 3, false);
-		checkMatch("tal", 3, false);
-		checkMatch("t", 1, false);
+		checkMatch("tl", 2, true, 2);
+		checkMatch("tladi", 5, true, 2);
+		checkMatch("atl", 3, false, 0);
+		checkMatch("tal", 3, false, 1);
+		checkMatch("t", 1, false, 1);
 
 		tf = languageProject.getTemplates().get(0);
 		// [Coronal] ([Coronal]) ([Coronal])
-		checkMatch("sa", 2, true);
-		checkMatch("ta", 2, true);
-		checkMatch("da", 2, true);
-		checkMatch("ða", 2, true);
-		checkMatch("na", 2, true);
-		checkMatch("za", 2, true);
-		checkMatch("θa", 2, true);
-		checkMatch("s", 1, true);
-		checkMatch("t", 1, true);
-		checkMatch("d", 1, true);
-		checkMatch("ð", 1, true);
-		checkMatch("n", 1, true);
-		checkMatch("z", 1, true);
-		checkMatch("θa", 2, true);
-		checkMatch("dθs", 3, true);
-		checkMatch("sθs", 3, true);
-		checkMatch("dts", 3, true);
-		checkMatch("adθs", 4, false);
-		checkMatch("ka", 2, false);
+		checkMatch("sa", 2, true, 1);
+		checkMatch("ta", 2, true, 1);
+		checkMatch("da", 2, true, 1);
+		checkMatch("ða", 2, true, 1);
+		checkMatch("na", 2, true, 1);
+		checkMatch("za", 2, true, 1);
+		checkMatch("θa", 2, true, 1);
+		checkMatch("s", 1, true, 1);
+		checkMatch("t", 1, true, 1);
+		checkMatch("d", 1, true, 1);
+		checkMatch("ð", 1, true, 1);
+		checkMatch("n", 1, true, 1);
+		checkMatch("z", 1, true, 1);
+		checkMatch("θa", 2, true, 1);
+		checkMatch("dθs", 3, true, 3);
+		checkMatch("sθs", 3, true, 3);
+		checkMatch("dts", 3, true, 3);
+		checkMatch("adθs", 4, false, 0);
+		checkMatch("ka", 2, false, 0);
 
 		tf = languageProject.getTemplates().get(1);
 		// s [VoicelessNonCont] ([SonorantCV])
-		checkMatch("stap", 4, true);
-		checkMatch("stɹæp", 5, true);
-		checkMatch("skɪp", 4, true);
-		checkMatch("skɹɪp", 5, true);
-		checkMatch("astap", 5, false);
-		checkMatch("astɹæp", 6, false);
-		checkMatch("askɪp", 5, false);
-		checkMatch("askɹɪp", 6, false);
-		checkMatch("slap", 4, false);
+		checkMatch("stap", 4, true, 3);
+		checkMatch("stɹæp", 5, true, 3);
+		checkMatch("skɪp", 4, true, 3);
+		checkMatch("skɹɪp", 5, true, 3);
+		checkMatch("astap", 5, false, 0);
+		checkMatch("astɹæp", 6, false, 0);
+		checkMatch("askɪp", 5, false, 0);
+		checkMatch("askɹɪp", 6, false, 0);
+		checkMatch("slap", 4, false, 1);
 
 		tf.getSlots().get(2).setOptional(false);
 		tf.getSlots().get(2).setObeysSSP(true);
-		checkMatch("stɹ", 3, true, SHComparisonResult.LESS);
-		checkMatch("stl", 3, true, SHComparisonResult.LESS);
-		checkMatch("stn", 3, false, SHComparisonResult.LESS);
-		checkMatch("stɹ", 3, false, SHComparisonResult.EQUAL);
-		checkMatch("stl", 3, false, SHComparisonResult.MORE);
+		checkMatch("stɹ", 3, true, SHComparisonResult.LESS, 3);
+		checkMatch("stl", 3, true, SHComparisonResult.LESS, 3);
+		checkMatch("stn", 3, false, SHComparisonResult.LESS, 2);
+		checkMatch("stɹ", 3, false, SHComparisonResult.EQUAL, 3);
+		checkMatch("stl", 3, false, SHComparisonResult.MORE, 3);
 		tf.getSlots().get(2).setOptional(true);
 		tf.getSlots().get(2).setObeysSSP(false);
 
@@ -141,30 +141,34 @@ public class TemplateFilterMatcherTest {
 		TemplateFilterSlotSegmentOrNaturalClass slot2 = new TemplateFilterSlotSegmentOrNaturalClass(seg.get());
 		slot2.setOptional(false);
 		tf.getSlots().add(slot2);
-		checkMatch("tl", 2, true);
-		checkMatch("l", 1, true);
-		checkMatch("tla", 3, true);
-		checkMatch("la", 2, true);
-		checkMatch("atl", 3, false);
-		checkMatch("al", 2, false);
+		checkMatch("tl", 2, true, 2);
+		checkMatch("l", 1, true, 1);
+		checkMatch("tla", 3, true, 2);
+		checkMatch("la", 2, true, 1);
+		checkMatch("atl", 3, false, 0);
+		checkMatch("al", 2, false, 0);
 	}
 
-	protected void checkMatch(String word, int numberOfSegments, boolean fExpectedResult) {
+	protected void checkMatch(String word, int numberOfSegments, boolean fExpectedResult, int expectedMatchCount) {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		assertEquals(true, segResult.success);
 		segmentsInWord = (List<ONCSegmentInSyllable>) segmenter.getSegmentsInWord();
 		assertEquals(numberOfSegments, segmentsInWord.size());
 		boolean fResult = matcher.matches(tf, segmentsInWord, sonorityComparer, null);
 		assertEquals(fExpectedResult, fResult);
+		assertEquals(expectedMatchCount, matcher.getMatchCount());
 	}
 
-	protected void checkMatch(String word, int numberOfSegments, boolean fExpectedResult, SHComparisonResult sspComparisonNeeded) {
+	protected void checkMatch(String word, int numberOfSegments, boolean fExpectedResult,
+			SHComparisonResult sspComparisonNeeded, int expectedMatchCount) {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		assertEquals(true, segResult.success);
 		segmentsInWord = (List<ONCSegmentInSyllable>) segmenter.getSegmentsInWord();
 		assertEquals(numberOfSegments, segmentsInWord.size());
-		boolean fResult = matcher.matches(tf, segmentsInWord, sonorityComparer, sspComparisonNeeded);
+		boolean fResult = matcher
+				.matches(tf, segmentsInWord, sonorityComparer, sspComparisonNeeded);
 		assertEquals(fExpectedResult, fResult);
+		assertEquals(expectedMatchCount, matcher.getMatchCount());
 	}
 
 }

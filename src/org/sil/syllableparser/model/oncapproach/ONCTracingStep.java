@@ -145,6 +145,7 @@ public class ONCTracingStep {
 		case ADDED_AS_WORD_INITIAL_APPENDIX:
 		case ADDING_FINAL_SYLLABLE_TO_WORD:
 		case ADDING_SYLLABLE_TO_WORD:
+		case CODA_TEMPLATE_MATCHED:
 		case ONSET_FILTER_REPAIR_APPLIED:
 		case NUCLEUS_TEMPLATE_MATCHED:
 			successful = true;
@@ -294,6 +295,9 @@ public class ONCTracingStep {
 		case CODA_FILTER_REPAIR_COULD_NOT_APPLY:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodarepairnotapply"));
 			break;
+		case CODA_TEMPLATE_MATCHED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodatemplatematched"));
+			break;
 		case EXPECTED_NUCLEUS_NOT_FOUND:
 			result = bundle.getString("label.oncstiexpectednucleusnotfound");
 			break;
@@ -350,8 +354,8 @@ public class ONCTracingStep {
 		case ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET:
 			result = bundle.getString("label.oncstionsetrequiredbutsegmentnotanonset");
 			break;
-		case ONSET_TEMPLATE_APPLIED:
-			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsettemplateapplied"));
+		case ONSET_TEMPLATE_MATCHED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsettemplatematched"));
 			break;
 		case RIME_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstirimefilterfailed"));

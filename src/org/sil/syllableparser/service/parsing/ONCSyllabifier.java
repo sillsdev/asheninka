@@ -408,11 +408,21 @@ public class ONCSyllabifier implements Syllabifiable {
 							if (result == SHComparisonResult.MORE) {
 								currentState = addSegmentToSyllableAsCoda(segmentsInWord, syl, i);
 							} else {
-								currentState = addSegmentToSyllableAsCodaStartNewSyllable(segmentsInWord, syl, i, currentState);
-								if (currentState != ONCSyllabifierState.FILTER_FAILED
-										&& currentState != ONCSyllabifierState.WORD_FINAL_TEMPLATE_APPLIED) {
+								int iApplied = applyAnyCodaTemplates(seg1, seg2, result, segmentsInWord, i, syl);
+								if (iApplied > 0) {
+									syllablesInCurrentWord.add(syl);
 									syl = createNewSyllable();
-									currentState = updateTypeForNewSyllable();
+									currentState = ONCSyllabifierState.ONSET_OR_NUCLEUS;
+									i = iApplied;
+									tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
+								} else {
+									currentState = addSegmentToSyllableAsCodaStartNewSyllable(
+											segmentsInWord, syl, i, currentState);
+									if (currentState != ONCSyllabifierState.FILTER_FAILED
+											&& currentState != ONCSyllabifierState.WORD_FINAL_TEMPLATE_APPLIED) {
+										syl = createNewSyllable();
+										currentState = updateTypeForNewSyllable();
+									}
 								}
 							}
 						}
@@ -686,7 +696,7 @@ public class ONCSyllabifier implements Syllabifiable {
 								SHNaturalClass shClass = oncApproach.getNaturalClassContainingSegment(seg1);
 								tracer.getTracingStep().setNaturalClass1(shClass);
 								tracer.setOncState(currentState);
-								tracer.setStatus(ONCSyllabificationStatus.ONSET_TEMPLATE_APPLIED);
+								tracer.setStatus(ONCSyllabificationStatus.ONSET_TEMPLATE_MATCHED);
 								tracer.setTemplateFilterUsed(t);
 								tracer.setSuccessful(true);
 								tracer.recordStep();
@@ -705,6 +715,55 @@ public class ONCSyllabifier implements Syllabifiable {
 		return false;
 	}
 
+	public int applyAnyCodaTemplates(Segment seg1, Segment seg2, SHComparisonResult result,
+			List<ONCSegmentInSyllable> segmentsInWord, int i, ONCSyllable syl) {
+		if (!seg1.isCoda() || seg2 == null || !seg2.isCoda())
+			return 0;
+		if (codaTemplates.size() > 0) {
+			int iSegmentsInWord = segmentsInWord.size();
+			for (Template t : codaTemplates) {
+				int iItemsInTemplate = t.getSlots().size();
+				if (iItemsInTemplate >= 2) {
+					if (matcher.matches(t, segmentsInWord.subList(i, iSegmentsInWord),
+							sonorityComparer, null)) {
+						if (tracer.isTracing()) {
+							tracer.setSegment1(seg1);
+							SHNaturalClass shClass = oncApproach
+									.getNaturalClassContainingSegment(seg1);
+							tracer.getTracingStep().setNaturalClass1(shClass);
+							tracer.setOncState(currentState);
+							tracer.setStatus(ONCSyllabificationStatus.CODA_TEMPLATE_MATCHED);
+							tracer.setTemplateFilterUsed(t);
+							tracer.setSuccessful(true);
+							tracer.recordStep();
+						}
+						int iMatchCount = matcher.getMatchCount();
+						int iEnd = Math.min(i + iMatchCount, iSegmentsInWord);
+						for (int index = i; index < iEnd; index++) {
+							segmentsInWord.get(index).setUsage(ONCSegmentUsageType.CODA);
+							syl.add(segmentsInWord.get(index));
+							Coda coda = syl.getRime().getCoda();
+							coda.add(segmentsInWord.get(index));
+							if (tracer.isTracing()) {
+								tracer.setSegment1(segmentsInWord.get(index).getSegment());
+								if (index == (iEnd-1)) {
+									tracer.setOncState(ONCSyllabifierState.ONSET_OR_NUCLEUS);
+									tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
+								} else {
+									tracer.setOncState(ONCSyllabifierState.CODA);
+									tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA);
+								}
+								tracer.setSuccessful(true);
+								tracer.recordStep();
+							}
+						}
+						return iEnd - 1;
+					}
+				}
+			}
+		}
+		return 0;
+	}
 	public boolean applyAnyWordFinalTemplates(List<ONCSegmentInSyllable> segmentsInWord,
 			int i) {
 		if (wordFinalTemplates.size() > 0) {
@@ -715,6 +774,12 @@ public class ONCSyllabifier implements Syllabifiable {
 				if (iSegmentsInWord - iStart <= iItemsInTemplate) {
 					int iEnd = Math.min(iStart + iItemsInTemplate, iSegmentsInWord);
 					if (matcher.matches(t, segmentsInWord.subList(iStart, iEnd), sonorityComparer, null)) {
+						int iMatchCount = matcher.getMatchCount();
+						if ((iStart + iMatchCount) < iSegmentsInWord) {
+							// word final template must match entire rest of the word
+							continue;
+						}
+						iEnd = Math.min(iStart + iMatchCount, iSegmentsInWord);
 						for (int index = iStart;  index < iEnd; index++) {
 							ONCSegmentInSyllable segInSyl = segmentsInWord.get(index);
 							segInSyl.setUsage(ONCSegmentUsageType.WORD_FINAL);

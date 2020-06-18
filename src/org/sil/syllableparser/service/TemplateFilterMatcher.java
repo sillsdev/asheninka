@@ -28,6 +28,7 @@ public class TemplateFilterMatcher {
 	private static TemplateFilterMatcher instance;
 	List<Segment> activeSegments = new ArrayList<>();
 	List<CVNaturalClass> activeClasses = new ArrayList<>();
+	int iSegMatchCount = 0;
 
 	public static TemplateFilterMatcher getInstance() {
 		if (instance == null) {
@@ -55,15 +56,19 @@ public class TemplateFilterMatcher {
 		this.activeClasses = activeClasses;
 	}
 
+	public int getMatchCount() {
+		return iSegMatchCount;
+	}
+
 	public boolean matches(TemplateFilter tf, List<ONCSegmentInSyllable> segmentsToMatch, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
 		List<TemplateFilterSlotSegment> slotAndSegment = new ArrayList<>();
 		int iSlot = 0;
 		List<TemplateFilterSlotSegmentOrNaturalClass> slots = tf.getSlots();
-		int iSeg = 0;
+		iSegMatchCount = 0;
 		TemplateFilterSlotSegmentOrNaturalClass slot;
-		while (iSlot < slots.size() && iSeg < segmentsToMatch.size()) {
+		while (iSlot < slots.size() && iSegMatchCount < segmentsToMatch.size()) {
 			slot = slots.get(iSlot);
-			ONCSegmentInSyllable segInSyl = segmentsToMatch.get(iSeg);
+			ONCSegmentInSyllable segInSyl = segmentsToMatch.get(iSegMatchCount);
 			Segment seg = segInSyl.getSegment();
 			if (slot.isSegment()) {
 				Segment referringSegment = slot.getReferringSegment();
@@ -71,7 +76,7 @@ public class TemplateFilterMatcher {
 					return false;
 				}
 				if (seg.equals(referringSegment)) {
-					iSeg++;
+					iSegMatchCount++;
 				} else if (!slot.isOptional()) {
 					return false;
 				}
@@ -83,7 +88,7 @@ public class TemplateFilterMatcher {
 				int index = SylParserObject.findIndexInListByUuid(
 						natClass.getSegmentsOrNaturalClasses(), seg.getID());
 				if (index >= 0) {
-					iSeg++;
+					iSegMatchCount++;
 				} else if (!slot.isOptional()) {
 					return false;
 				}
