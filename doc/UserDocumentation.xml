@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->11 November 2019</date
+>13 August 2020</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -2163,6 +2163,25 @@ sec="sONCEnvironments"
 >)</li
 ></ol
 ><p
+>If needed to successfully parse your language, you may also need to define these items:</p
+><ol
+><li
+>CV Natural Classes which are used in the next two (section <sectionRef
+sec="sONCCVNaturalClasses"
+></sectionRef
+>)</li
+><li
+>templates (section <sectionRef
+sec="sONCTemplates"
+></sectionRef
+>)</li
+><li
+>filters section <sectionRef
+sec="sONCFilters"
+></sectionRef
+>)</li
+></ol
+><p
 >After that, you either use a existing word list, import a word list (see <sectionRef
 sec="sWords"
 ></sectionRef
@@ -2197,200 +2216,10 @@ type="tAsheninka"
 ></object
 > is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes) and the syllabification parameters so that one gets most, if not all, words to syllabify correctly.</p
 ><p
-><indexedItem
-term="iONCPatternAlgorithm"
-></indexedItem
-><indexedItem
-term="iParsingResult"
-></indexedItem
->The main algorithm is as follows:</p
-><ol
-><li
->It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
-sec="sCVSegmentInventory"
-></sectionRef
-> for more on this. <indexedItem
-term="iFailureCVSegmenter"
-></indexedItem
->If it cannot find a sequence that covers the whole word, it reports an error of <object
-type="tErrorMessage"
->Failure: could not parse into segments beginning at '<object
-type="tItalic"
->some characters</object
-></object
-> and quits. The '<object
-type="tItalic"
->some characters</object
->' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
-id="nONCSegSameAsCV"
-><p
->This is the exact same algorithm used by the <object
-type="tCVPatternApproach"
-></object
->.</p
-></endnote
-> You can use the <object
-type="tTryAWord"
-></object
-> tool to get more details (see <sectionRef
-sec="sONCTryAWord"
-></sectionRef
->).</li
-><li
->If it succeeded in finding a sequence of segments, it then looks at the first segment. If it is not an onset and the <object
-type="tOnsetPrinciple"
-></object
-> is set to <object
-type="tOPEverySyllableHasOnset"
-></object
->, then it reports an error of <object
-type="tErrorMessage"
->Onsets are required but segment 1 was not an onset.</object
-> and quits.</li
-><li
->Otherwise, it performs a left-to-right sweep of the segments. For each segment, it compares the sonority of this onset to the sonority of the following segment. What happens next depends on the onset, nucleus, or coda status of the segment.</li
-><li
->it looks at the classification of the segment (onset, nucleus, and/or coda).<ol
-><li
->If it can be an onset, it compares the sonority of this onset to the sonority of the following segment. If the following segment's sonority is less than or equal to this segment's sonority, this segment is added to the current syllable.</li
-><li
->Otherwise, it compares the sonority of the segment to the sonority of the following segment. It also assigns a type (or state) to the segment's position, depending on what the last segment was. The types are:<ol
-><li
->Onset</li
-><li
->Onset or nucleus</li
-><li
->Nucleus</li
-><li
->Nucleus or coda</li
-><li
->Coda</li
-><li
->Coda or onset</li
-><li
->Unknown</li
-></ol
-><pc
->The initial type is set to unknown.</pc
-></li
-><li
->Here is what it does for each type:<ol
-><li
->Onset:<ol
-><li
->If the segment can be an onset and its sonority is less than the sonority of the following segment, it adds the segment to the syllable as an onset. The type is set to be an onset or a nucleus.</li
-><li
->Otherwise, it sets the type to be a nucleus.</li
-></ol
-></li
-><li
->Onset or nucleus:<ol
-><li
->If the segment can be an onset and its sonority is less than the sonority of the following segment, it adds the segment to the syllable as an onset. The type is set to be an onset or a nucleus.</li
-><li
->Otherwise, if the segment can be a nucleus, it adds it to the syllable as a nucleus. The type is set to be a nucleus or a coda.</li
-><li
->Otherwise, the parsing quits as a failure.</li
-></ol
-></li
-><li
->Nucleus:<ol
-><li
->If the segment can be a nucleus, it is added to the syllable as a nucleus. The type is set to be a nucleus or a coda.</li
-><li
->Otherwise, the parsing quits as a failure.</li
-></ol
-></li
-><li
->Nucleus or coda:<ol
-><li
->If the segment can be a nucleus, it is added to the syllable as a nucleus. The type is set to be a nucleus or a coda.</li
-><li
->Otherwise, if the segment can be a coda and the <object
-type="tCodasAllowed"
-></object
-> parameter is set, then<ol
-><li
->If the segment can also be an onset and it is less sonorous than the following segment:<ol
-><li
->If the <object
-type="tOnsetMaximization"
-></object
-> parameter is set, the syllable is added to the word and new a syllable is created. The type is set to onset or nucleus if the <object
-type="tOnsetPrinciple"
-></object
-> is set to <object
-type="tOPOnsetsNotRequired"
-></object
->; otherwise the type is set to onset.</li
-><li
->Otherwise, if the following segment is not an onset and the <object
-type="tOnsetPrinciple"
-></object
-> is not set to <object
-type="tOPOnsetsNotRequired"
-></object
->, the syllable is added to the word and new a syllable is created. The type is set to onset or nucleus.</li
-><li
->Otherwise, the segment is added to the syllable as a coda and a new syllable is started. The type is set to onset or nucleus if the <object
-type="tOnsetPrinciple"
-></object
-> is set to <object
-type="tOPOnsetsNotRequired"
-></object
->; otherwise it is set to onset.</li
-></ol
-></li
-><li
->Otherwise: <ol
-><li
->The segment is added to the syllable as a coda and a new syllable is started. The type is set to onset or nucleus if the <object
-type="tOnsetPrinciple"
-></object
-> is set to <object
-type="tOPOnsetsNotRequired"
-></object
->; otherwise the type is set to onset.</li
-></ol
-></li
-></ol
-></li
-><li
->Otherwise, the syllable is added to the word, a new syllable is created and the type is set to be an onset.</li
-></ol
-></li
-><li
->Coda or onset:<ol
-><li
->If the segment can be a coda, the <object
-type="tCodasAllowed"
-></object
-> parameter is set, and the segment is more sonorous than the following segment, it adds the segment to the syllable as a coda. The type is set to be a coda or an onset.</li
-><li
->Otherwise, the segment is added to the syllable as a coda and a new syllable is started. The type is set to onset or nucleus if the <object
-type="tOnsetPrinciple"
-></object
-> is set to <object
-type="tOPOnsetsNotRequired"
-></object
->; otherwise the type is set to onset.</li
-></ol
-></li
-><li
->Coda: (This never happens actually.)</li
-></ol
-></li
-></ol
-></li
-><li
->If it succeeded in processing all the segments in the word, it outputs the syllabification into the <object
-type="tPredictedSyllableBreaks"
-></object
-> field and reports <object
-type="tSuccessMessage"
-></object
->.</li
-></ol
+>In rough terms, it tries to find all possible sequences of segments in the word.  If it can do that, it then seeks to find sequences of onset, nucleus, and coda segments that can be placed in a syllable, modulo the parsing parameters.  See appendix <appendixRef
+app="aONCAlgorithmInDetail"
+></appendixRef
+> for details.</p
 ><p
 >We now give more information on the various views available in the user interface for the <object
 type="tONCApproach"
@@ -2518,6 +2347,291 @@ term="iOnsetsNotRequired"
 ></indexedItem
 >Onsets are not required</li
 ></ol
+></section2
+><section2
+id="sONCCVNaturalClasses"
+><secTitle
+>CV natural classes</secTitle
+><p
+>The <object
+type="tCVNaturalClasses"
+></object
+> view is exactly the same as the <object
+type="tCVNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>.  See section <sectionRef
+sec="sCVNaturalClasses"
+></sectionRef
+> for details. </p
+></section2
+><section2
+id="sONCTemplates"
+><secTitle
+>ONC templates</secTitle
+><p
+><indexedItem
+term="iONCTemplates"
+></indexedItem
+>Templates can be used in two situations currently in <object
+type="tAsheninka"
+></object
+>:</p
+><ol
+><li
+>For a nucleus, it requires the set of slots to be present.</li
+><li
+>For all others, it provides a way to override <object
+type="tSHSonorityHierarchy"
+></object
+> violations.</li
+></ol
+><p
+>When defining a template, you fill in the fields.  The “Name” field is for you to remember this template.</p
+><p
+>Its "Description” field lets you define it more fully, perhaps including some example words as to why you added the template in the first place.</p
+><p
+>The “Type” field lets you select the constituent structure the template is for.</p
+><p
+>The “Slots” field is where you define the pattern for when the template will apply.  You can use segment names or CV natural class names (see <sectionRef
+sec="sONCCVNaturalClasses"
+></sectionRef
+>) enclosed in square brackets (e.g., "[C]”).  If the segment or the natural class can violate the <object
+type="tSHSonorityHierarchy"
+></object
+>, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses.</p
+><p
+><indexedItem
+term="iEnglish"
+></indexedItem
+>Example <exampleRef
+letter="xTemplatesEnglish"
+num="xTemplatesEnglish"
+></exampleRef
+> has some examples from an English project.</p
+><example
+num="xTemplatesEnglish"
+><table
+border="1"
+><tr
+><th
+>Type</th
+><th
+>Slots</th
+><th
+>Description</th
+></tr
+><tr
+><td
+>Onset</td
+><td
+>*s [VoicelessNonCont] ([SonorantCV])</td
+><td
+>Allow /<langData
+lang="lIPA"
+>s</langData
+>/ in an onset which violates the SSP</td
+></tr
+><tr
+><td
+> </td
+><td
+> </td
+><td
+> </td
+></tr
+><tr
+><td
+>Word final</td
+><td
+>*[Coronal] (*[Coronal]) (*[Coronal])</td
+><td
+>Appendix to allow for <langData
+lang="lIPA"
+>sɪksθs</langData
+>, etc.</td
+></tr
+><tr
+><td
+> </td
+><td
+> </td
+><td
+> </td
+></tr
+><tr
+><td
+>Word final</td
+><td
+>*[VoicelessNonCont] ([Coronal])</td
+><td
+>Word final appendix for /<langData
+lang="lIPA"
+>sp</langData
+>/ and /<langData
+lang="lIPA"
+>sk</langData
+>/</td
+></tr
+></table
+></example
+></section2
+><section2
+id="sONCFilters"
+><secTitle
+>ONC filters</secTitle
+><p
+><indexedItem
+term="iONCFilter"
+></indexedItem
+>Filters can be used in four situations currently in <object
+type="tAsheninka"
+></object
+>:</p
+><ol
+><li
+>onset,</li
+><li
+>nucleus,</li
+><li
+>coda, and</li
+><li
+>rime.</li
+></ol
+><p
+>Filters come in two varieties: fail and repair. When a filter is matched and is marked as fail, then the syllable parsing stops at that point and seeks other possibilities, if any. When the filter matches and is marked as repair, it will seek to fix up the syllable constituents around it to fix the situation. For example, for English, a word such as <langData
+lang="lEnglishExmple"
+>Atlantic</langData
+> (<langData
+lang="lIPA"
+>ætlæntɪk</langData
+>) will normally syllabify as <langData
+lang="lIPA"
+>æ.tlæn.tɪk</langData
+> but it needs to syllabify as <langData
+lang="lIPA"
+>æt.læn.tɪk</langData
+>. By adding an onset repair filter that matches the <langData
+lang="lIPA"
+>tl</langData
+> sequence, one can obtain the correct result.</p
+><p
+>When defining a filter, you fill in the fields. The “Name” field is for you to remember this filter.</p
+><p
+>Its "Description” field lets you define it more fully, perhaps including some example words as to why you added the filter in the first place.</p
+><p
+>The “Scope” field lets you select the constituent structure the filter has scope over.</p
+><p
+>The “Action” radio buttons let you specify whether the filter will fail when matched or attempt a repair.</p
+><p
+>The “Slots” field is where you define the pattern for when the filter will apply. You can use segment names or CV natural class names (see section <sectionRef
+sec="sONCCVNaturalClasses"
+></sectionRef
+>) enclosed in square brackets (e.g., "[C]”). If the segment or the natural class can violate the <object
+type="tSHSonorityHierarchy"
+></object
+>, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses.  If it is a repair filter, then key a vertical line (|) at the point where the repair will occur.</p
+><p
+><indexedItem
+term="iEnglish"
+></indexedItem
+>Example <exampleRef
+letter="xFiltersEnglish"
+num="xFiltersEnglish"
+></exampleRef
+> has some examples from an English project.  They are all repair filters.</p
+><example
+num="xFiltersEnglish"
+><table
+border="1"
+><tr
+><th
+>Type</th
+><th
+>Slots</th
+><th
+>Description</th
+></tr
+><tr
+><td
+>Onset</td
+><td
+>[Non-stridentCoronal] | l</td
+><td
+>Disallow non-strident coronal before labial in an onset.  Example:  <langData
+lang="lIPA"
+>ætlæntɪk</langData
+> (<langData
+lang="lEnglishExmple"
+>Atlantic</langData
+>) should be <langData
+lang="lIPA"
+>æt.læn.tɪk</langData
+>, not <langData
+lang="lIPA"
+>æ.tlæn.tɪk</langData
+>.</td
+></tr
+><tr
+><td
+> </td
+><td
+> </td
+><td
+> </td
+></tr
+><tr
+><td
+>Onset</td
+><td
+>[Stop] | [N]</td
+><td
+>Disallow stop/nasal in a onset.  Example: <langData
+lang="lIPA"
+>æpniə</langData
+> (<langData
+lang="lEnglishExmple"
+>apnea</langData
+>) should be <langData
+lang="lIPA"
+>æp.ni.ə</langData
+>, not <langData
+lang="lIPA"
+>æ.pni.ə</langData
+>.</td
+></tr
+><tr
+><td
+> </td
+><td
+> </td
+><td
+> </td
+></tr
+><tr
+><td
+>Onset</td
+><td
+>[Labial] | [Labial]</td
+><td
+>Disallow two labials in an onset.  Exampleː <langData
+lang="lIPA"
+>ʃapwoɹn</langData
+> (<langData
+lang="lEnglishExmple"
+>shopworn</langData
+>) should be <langData
+lang="lIPA"
+>ʃap.woɹn</langData
+>, not <langData
+lang="lIPA"
+>ʃa.pwoɹn</langData
+>.</td
+></tr
+></table
+></example
 ></section2
 ><section2
 id="sONCWords"
@@ -3679,6 +3793,248 @@ src="CushmaSmall.jpg"
 ></img
 ></chart
 ></example
+></appendix
+><appendix
+id="aONCAlgorithmInDetail"
+><secTitle
+>ONC algorithm in detail</secTitle
+><p
+><indexedItem
+term="iONCPatternAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm for the <object
+type="tONCApproach"
+></object
+> is as follows:</p
+><ol
+><li
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
+></object
+> and quits. The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
+id="nONCSegSameAsCV"
+><p
+>This is the exact same algorithm used by the <object
+type="tCVPatternApproach"
+></object
+>.</p
+></endnote
+> You can use the <object
+type="tTryAWord"
+></object
+> tool to get more details (see <sectionRef
+sec="sONCTryAWord"
+></sectionRef
+>).</li
+><li
+>If it succeeded in finding a sequence of segments, it then looks at the first segment. If it is not an onset and the <object
+type="tOnsetPrinciple"
+></object
+> is set to <object
+type="tOPEverySyllableHasOnset"
+></object
+>, then it reports an error of <object
+type="tErrorMessage"
+>Onsets are required but segment 1 was not an onset.</object
+> and quits.</li
+><li
+>Otherwise, it performs a left-to-right sweep of the segments. For each segment, it compares the sonority of this onset to the sonority of the following segment. What happens next depends on the onset, nucleus, or coda status of the segment.</li
+><li
+>it looks at the classification of the segment (onset, nucleus, and/or coda).<ol
+><li
+>If it can be an onset, it compares the sonority of this onset to the sonority of the following segment. If the following segment's sonority is less than or equal to this segment's sonority, this segment is added to the current syllable.</li
+><li
+>Otherwise, it compares the sonority of the segment to the sonority of the following segment. It also assigns a type (or state) to the segment's position, depending on what the last segment was. The types are:<ol
+><li
+>Onset</li
+><li
+>Onset or nucleus</li
+><li
+>Nucleus</li
+><li
+>Nucleus or coda</li
+><li
+>Coda</li
+><li
+>Coda or onset</li
+><li
+>Unknown</li
+></ol
+><pc
+>The initial type is set to unknown.</pc
+></li
+><li
+>Here is what it does for each type:<ol
+><li
+>Onset:<ol
+><li
+>If the segment can be an onset and its sonority is less than the sonority of the following segment, it adds the segment to the syllable as an onset. The type is set to be an onset or a nucleus.</li
+><li
+>Otherwise, it sets the type to be a nucleus.</li
+></ol
+></li
+><li
+>Onset or nucleus:<ol
+><li
+>If the segment can be an onset and its sonority is less than the sonority of the following segment, it adds the segment to the syllable as an onset. The type is set to be an onset or a nucleus.</li
+><li
+>Otherwise, if the segment can be a nucleus, it adds it to the syllable as a nucleus. The type is set to be a nucleus or a coda.</li
+><li
+>Otherwise, the parsing quits as a failure.</li
+></ol
+></li
+><li
+>Nucleus:<ol
+><li
+>If the segment can be a nucleus, it is added to the syllable as a nucleus. The type is set to be a nucleus or a coda.</li
+><li
+>Otherwise, the parsing quits as a failure.</li
+></ol
+></li
+><li
+>Nucleus or coda:<ol
+><li
+>If the segment can be a nucleus, it is added to the syllable as a nucleus. The type is set to be a nucleus or a coda.</li
+><li
+>Otherwise, if the segment can be a coda and the <object
+type="tCodasAllowed"
+></object
+> parameter is set, then<ol
+><li
+>If the segment can also be an onset and it is less sonorous than the following segment:<ol
+><li
+>If the <object
+type="tOnsetMaximization"
+></object
+> parameter is set, the syllable is added to the word and new a syllable is created. The type is set to onset or nucleus if the <object
+type="tOnsetPrinciple"
+></object
+> is set to <object
+type="tOPOnsetsNotRequired"
+></object
+>; otherwise the type is set to onset.</li
+><li
+>Otherwise, if the following segment is not an onset and the <object
+type="tOnsetPrinciple"
+></object
+> is not set to <object
+type="tOPOnsetsNotRequired"
+></object
+>, the syllable is added to the word and new a syllable is created. The type is set to onset or nucleus.</li
+><li
+>Otherwise, the segment is added to the syllable as a coda and a new syllable is started. The type is set to onset or nucleus if the <object
+type="tOnsetPrinciple"
+></object
+> is set to <object
+type="tOPOnsetsNotRequired"
+></object
+>; otherwise it is set to onset.</li
+></ol
+></li
+><li
+>Otherwise: <ol
+><li
+>The segment is added to the syllable as a coda and a new syllable is started. The type is set to onset or nucleus if the <object
+type="tOnsetPrinciple"
+></object
+> is set to <object
+type="tOPOnsetsNotRequired"
+></object
+>; otherwise the type is set to onset.</li
+></ol
+></li
+></ol
+></li
+><li
+>Otherwise, the syllable is added to the word, a new syllable is created and the type is set to be an onset.</li
+></ol
+></li
+><li
+>Coda or onset:<ol
+><li
+>If the segment can be a coda, the <object
+type="tCodasAllowed"
+></object
+> parameter is set, and the segment is more sonorous than the following segment, it adds the segment to the syllable as a coda. The type is set to be a coda or an onset.</li
+><li
+>Otherwise, the segment is added to the syllable as a coda and a new syllable is started. The type is set to onset or nucleus if the <object
+type="tOnsetPrinciple"
+></object
+> is set to <object
+type="tOPOnsetsNotRequired"
+></object
+>; otherwise the type is set to onset.</li
+></ol
+></li
+><li
+>Coda: (This never happens actually.)</li
+></ol
+></li
+></ol
+></li
+><li
+>If it succeeded in processing all the segments in the word, it outputs the syllabification into the <object
+type="tPredictedSyllableBreaks"
+></object
+> field and reports <object
+type="tSuccessMessage"
+></object
+>.</li
+></ol
+><p
+><indexedItem
+term="iONCFilter"
+></indexedItem
+><indexedItem
+term="iONCTemplates"
+></indexedItem
+>If you have defined any filters or templates, then these also are applied during this process.  In particular, filters are only applied for onset, nucleus, coda, and rime constituents.</p
+><p
+><indexedItem
+term="iONCFilter"
+></indexedItem
+>Filters come in two varieties: fail and repair.  When a filter is matched and is marked as fail, then the syllable parsing stops at that point and seeks other possibilities, if any.  When the filter matches and is marked as repair, it will seek to fix up the syllable constituents around it to fix the situation.  <indexedItem
+term="iEnglish"
+></indexedItem
+>For example, for English, a word such as <langData
+lang="lEnglishExmple"
+>Atlantic</langData
+> (<langData
+lang="lIPA"
+>ætlæntɪk</langData
+>) will normally syllabify as <langData
+lang="lIPA"
+>æ.tlæn.tɪk</langData
+> but it needs to syllabify as <langData
+lang="lIPA"
+>æt.læn.tɪk</langData
+>.  By adding an onset repair filter that matches the <langData
+lang="lIPA"
+>tl</langData
+> sequence, one can obtain the correct result.</p
+><p
+><indexedItem
+term="iONCTemplates"
+></indexedItem
+>Templates can be applied to onset, nucleus, coda, word initial, and word final constituents.  For nucleus, the set of slots must match.  For the others, the set of slots can override the <object
+type="tSHSonorityHierarchy"
+></object
+>.</p
 ></appendix
 ><endnotes
 ></endnotes

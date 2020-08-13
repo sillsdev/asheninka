@@ -9,6 +9,19 @@ id="lVernacular"
 name="vernacular"
 ></language
 ><language
+color="blue"
+font-family="Charis SIL"
+id="lIPA"
+name="vernacular"
+></language
+><language
+color="green"
+font-family="Charis SIL"
+font-style="italic"
+id="lEnglishExmple"
+name="vernacular"
+></language
+><language
 color="green"
 id="lGloss"
 name="gloss"

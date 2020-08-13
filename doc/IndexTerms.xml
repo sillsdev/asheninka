@@ -104,6 +104,12 @@ see="iHPDiscretionaryHyphen"
 >Discretionary hyphen character(s)</term
 ></indexTerm
 ><indexTerm
+id="iEnglish"
+see="iUIEnglish"
+><term
+>English</term
+></indexTerm
+><indexTerm
 id="iExportWords"
 see="iExport"
 ><term
@@ -171,6 +177,12 @@ id="iFailureONCSegmenter"
 ></indexTerms
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iFilters"
+see="iONCFilter"
+><term
+>Filters</term
 ></indexTerm
 ><indexTerm
 id="iFonts"
@@ -322,6 +334,11 @@ id="iONCEnvironments"
 >Environments</term
 ></indexTerm
 ><indexTerm
+id="iONCFilter"
+><term
+>Filters</term
+></indexTerm
+><indexTerm
 id="iONCGraphemeNaturalClasses"
 ><term
 >Grapheme natural classes</term
@@ -355,6 +372,11 @@ id="iONCSonorityHierarchy"
 id="iONCSyllabificationParameters"
 ><term
 >Syllabification parameters</term
+></indexTerm
+><indexTerm
+id="iONCTemplates"
+><term
+>Templates</term
 ></indexTerm
 ><indexTerm
 id="iONCTryAWord"
@@ -638,6 +660,12 @@ id="iOnsetsNotRequired"
 ></indexTerms
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iTemplates"
+see="iONCTemplates"
+><term
+>Templates</term
 ></indexTerm
 ><indexTerm
 id="iTryAWord"
