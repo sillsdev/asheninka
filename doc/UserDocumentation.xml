@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->13 August 2020</date
+>14 August 2020</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -2216,7 +2216,7 @@ type="tAsheninka"
 ></object
 > is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes) and the syllabification parameters so that one gets most, if not all, words to syllabify correctly.</p
 ><p
->In rough terms, it tries to find all possible sequences of segments in the word.  If it can do that, it then seeks to find sequences of onset, nucleus, and coda segments that can be placed in a syllable, modulo the parsing parameters.  See appendix <appendixRef
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to find sequences of onset, nucleus, and coda segments that can be placed in a syllable, modulo the parsing parameters. See appendix <appendixRef
 app="aONCAlgorithmInDetail"
 ></appendixRef
 > for details.</p
@@ -2362,10 +2362,10 @@ type="tCVNaturalClasses"
 > view for the <object
 type="tCVPatternApproach"
 ></object
->.  See section <sectionRef
+>. See section <sectionRef
 sec="sCVNaturalClasses"
 ></sectionRef
-> for details. </p
+> for details.</p
 ></section2
 ><section2
 id="sONCTemplates"
@@ -2389,16 +2389,16 @@ type="tSHSonorityHierarchy"
 > violations.</li
 ></ol
 ><p
->When defining a template, you fill in the fields.  The “Name” field is for you to remember this template.</p
+>When defining a template, you fill in the fields. The “Name” field is for you to remember this template.</p
 ><p
 >Its "Description” field lets you define it more fully, perhaps including some example words as to why you added the template in the first place.</p
 ><p
 >The “Type” field lets you select the constituent structure the template is for.</p
 ><p
->The “Slots” field is where you define the pattern for when the template will apply.  You can use segment names or CV natural class names (see <sectionRef
+>The “Slots” field is where you define the pattern for when the template will apply. You can use segment names or CV natural class names (see <sectionRef
 sec="sONCCVNaturalClasses"
 ></sectionRef
->) enclosed in square brackets (e.g., "[C]”).  If the segment or the natural class can violate the <object
+>) enclosed in square brackets (e.g., "[C]”). If the segment or the natural class can violate the <object
 type="tSHSonorityHierarchy"
 ></object
 >, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses.</p
@@ -2477,6 +2477,8 @@ lang="lIPA"
 ></tr
 ></table
 ></example
+><p
+>Finally, the order in which the templates occur is important. The items are in order of priority: the first to be tried (of a given type) is higher and the last to be tried (of that type) is lower. You control the order of the templates by clicking on a template in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
 ></section2
 ><section2
 id="sONCFilters"
@@ -2532,7 +2534,7 @@ sec="sONCCVNaturalClasses"
 >) enclosed in square brackets (e.g., "[C]”). If the segment or the natural class can violate the <object
 type="tSHSonorityHierarchy"
 ></object
->, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses.  If it is a repair filter, then key a vertical line (|) at the point where the repair will occur.</p
+>, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses. If it is a repair filter, then key a vertical line (|) at the point where the repair will occur.</p
 ><p
 ><indexedItem
 term="iEnglish"
@@ -2541,7 +2543,7 @@ term="iEnglish"
 letter="xFiltersEnglish"
 num="xFiltersEnglish"
 ></exampleRef
-> has some examples from an English project.  They are all repair filters.</p
+> has some examples from an English project. They are all repair filters.</p
 ><example
 num="xFiltersEnglish"
 ><table
@@ -2560,7 +2562,7 @@ border="1"
 ><td
 >[Non-stridentCoronal] | l</td
 ><td
->Disallow non-strident coronal before labial in an onset.  Example:  <langData
+>Disallow non-strident coronal before labial in an onset. Example: <langData
 lang="lIPA"
 >ætlæntɪk</langData
 > (<langData
@@ -2588,7 +2590,7 @@ lang="lIPA"
 ><td
 >[Stop] | [N]</td
 ><td
->Disallow stop/nasal in a onset.  Example: <langData
+>Disallow stop/nasal in a onset. Example: <langData
 lang="lIPA"
 >æpniə</langData
 > (<langData
@@ -2616,7 +2618,7 @@ lang="lIPA"
 ><td
 >[Labial] | [Labial]</td
 ><td
->Disallow two labials in an onset.  Exampleː <langData
+>Disallow two labials in an onset. Exampleː <langData
 lang="lIPA"
 >ʃapwoɹn</langData
 > (<langData
@@ -2632,6 +2634,8 @@ lang="lIPA"
 ></tr
 ></table
 ></example
+><p
+>Finally, the order in which the filters occur is important. The items are in order of priority: the first to be tried (of a given scope) is higher and the last to be tried (of that scope) is lower. You control the order of the filters by clicking on a filter in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
 ></section2
 ><section2
 id="sONCWords"
@@ -4003,12 +4007,12 @@ term="iONCFilter"
 ><indexedItem
 term="iONCTemplates"
 ></indexedItem
->If you have defined any filters or templates, then these also are applied during this process.  In particular, filters are only applied for onset, nucleus, coda, and rime constituents.</p
+>If you have defined any filters or templates, then these also are applied during this process. In particular, filters are only applied for onset, nucleus, coda, and rime constituents.</p
 ><p
 ><indexedItem
 term="iONCFilter"
 ></indexedItem
->Filters come in two varieties: fail and repair.  When a filter is matched and is marked as fail, then the syllable parsing stops at that point and seeks other possibilities, if any.  When the filter matches and is marked as repair, it will seek to fix up the syllable constituents around it to fix the situation.  <indexedItem
+>Filters come in two varieties: fail and repair. When a filter is matched and is marked as fail, then the syllable parsing stops at that point and seeks other possibilities, if any. When the filter matches and is marked as repair, it will seek to fix up the syllable constituents around it to fix the situation. <indexedItem
 term="iEnglish"
 ></indexedItem
 >For example, for English, a word such as <langData
@@ -4023,7 +4027,7 @@ lang="lIPA"
 > but it needs to syllabify as <langData
 lang="lIPA"
 >æt.læn.tɪk</langData
->.  By adding an onset repair filter that matches the <langData
+>. By adding an onset repair filter that matches the <langData
 lang="lIPA"
 >tl</langData
 > sequence, one can obtain the correct result.</p
@@ -4031,7 +4035,7 @@ lang="lIPA"
 ><indexedItem
 term="iONCTemplates"
 ></indexedItem
->Templates can be applied to onset, nucleus, coda, word initial, and word final constituents.  For nucleus, the set of slots must match.  For the others, the set of slots can override the <object
+>Templates can be applied to onset, nucleus, coda, word initial, and word final constituents. For nucleus, the set of slots must match. For the others, the set of slots can override the <object
 type="tSHSonorityHierarchy"
 ></object
 >.</p

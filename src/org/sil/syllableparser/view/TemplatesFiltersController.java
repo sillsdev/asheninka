@@ -210,6 +210,13 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		makeColumnHeaderWrappable(representationColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
 
+		// Since template/filter items are sorted manually, we do not
+		// want the user to be able to click on a column header and sort it
+		nameColumn.setSortable(false);
+		typeColumn.setSortable(false);
+		representationColumn.setSortable(false);
+		descriptionColumn.setSortable(false);
+
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentTemplateFilter != null) {

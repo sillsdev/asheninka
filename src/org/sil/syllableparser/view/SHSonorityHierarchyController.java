@@ -162,13 +162,13 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 		makeColumnHeaderWrappable(naturalClassColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
 
-		// Since syllable patterns are sorted manually, we do not
+		// Since sonority items are sorted manually, we do not
 		// want the user to be able to click on a column header and sort it
 		nameColumn.setSortable(false);
 		naturalClassColumn.setSortable(false);
 		descriptionColumn.setSortable(false);
 
-		// Clear cv syllable pattern details.
+		// Clear sonority hierarchy details.
 		showSHNaturalClassDetails(null);
 
 		// Listen for selection changes and show the details when changed.
