@@ -1,4 +1,4 @@
-// Copyright (c) 2018 SIL International 
+// Copyright (c) 2018-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -11,19 +11,13 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 /**
@@ -133,19 +127,17 @@ public class SHWordsController extends WordsControllerCommon {
 		if (shWord != null) {
 			// Fill the text fields with info from the segment object.
 			wordField.setText(shWord.getWord());
+			commentField.setText(shWord.getComment());
 			predictedSyllabificationField.setText(shWord.getSHPredictedSyllabification());
 			correctSyllabificationField.setText(shWord.getCorrectSyllabification());
 			parserResultField.setText(shWord.getSHParserResult());
 			parserResultField.getStyleClass().clear();
-			if (shWord.getSHPredictedSyllabification().length() == 0
-					&& shWord.getSHParserResult().length() > 0) {
-				parserResultField.getStyleClass().add("failedsyllabification");
-			} else {
-				parserResultField.getStyleClass().add("successfullsyllabification");
-			}
+			showParserResultAndLingTree(shWord.getSHPredictedSyllabification(), shWord.getSHParserResult(),
+					shWord.getSHLingTreeDescription());
 		} else {
-			// Segment is null, remove all the text.
+			// Word is null, remove all the text.
 			wordField.setText("");
+			commentField.setText("");
 			predictedSyllabificationField.setText("");
 			correctSyllabificationField.setText("");
 			parserResultField.setText("");

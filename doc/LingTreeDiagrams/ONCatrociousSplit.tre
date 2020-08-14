@@ -1,46 +1,41 @@
-<LingTreeTree>
-  <Version>0.7.4.24444</Version>
-  <Description>(\O (\O σ (R (N (\L ə)) (C (\L t)))) (\O σ (O (\L ɹ)) (R (N (\L oʊ)))) (\O σ (O (\L ʃ)) (R (N (\L ɪ)) (C (\L s)))) )</Description>
-  <VerticalGap>300</VerticalGap>
-  <HorizontalGap>300</HorizontalGap>
-  <InitialXCoord>100</InitialXCoord>
-  <InitialYCoord>100</InitialYCoord>
-  <HorizontalOffset>5642</HorizontalOffset>
-  <LexGlossGapAdjustment>0</LexGlossGapAdjustment>
-  <TrySmoothing>False</TrySmoothing>
-  <TryPixelOffset>False</TryPixelOffset>
-  <ShowFlatView>True</ShowFlatView>
-  <GlossFontFace>Times New Roman</GlossFontFace>
-  <GlossFontSize>12</GlossFontSize>
-  <GlossFontStyle>Bold</GlossFontStyle>
-  <LexFontFace>Charis SIL</LexFontFace>
-  <LexFontSize>12</LexFontSize>
-  <LexFontStyle>Bold</LexFontStyle>
-  <NTFontFace>Times New Roman</NTFontFace>
-  <NTFontSize>12</NTFontSize>
-  <NTFontStyle>Bold</NTFontStyle>
-  <GlossColorArgb>-16744448</GlossColorArgb>
-  <LexColorArgb>-16776961</LexColorArgb>
-  <NTColorArgb>-16777216</NTColorArgb>
-  <LinesColorArgb>-16777216</LinesColorArgb>
-  <BackgroundColorArgb>-1</BackgroundColorArgb>
-  <LineWidth>10</LineWidth>
-  <CustomColors>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-    <int>0</int>
-  </CustomColors>
-</LingTreeTree>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<lingTreeTree dbversion="2">
+    <backgroundColor>#ffffff</backgroundColor>
+    <description>(\O (\O σ (R (N (\L ə)) (C (\L t)))) (\O σ (O (\L ɹ)) (R (N (\L o) (\L ʊ)))) (\O σ (O (\L ʃ)) (R (N (\L ɪ)) (C (\L s)))) )</description>
+    <emptyElementFontInfo>
+        <color>#0000ff</color>
+        <fontFamily>Charis SIL</fontFamily>
+        <fontSize>12.0</fontSize>
+        <fontType>Bold</fontType>
+    </emptyElementFontInfo>
+    <glossFontInfo>
+        <color>#008000</color>
+        <fontFamily>Times New Roman</fontFamily>
+        <fontSize>12.0</fontSize>
+        <fontType>Bold</fontType>
+    </glossFontInfo>
+    <horizontalGap>18.43</horizontalGap>
+    <horizontalOffset>224.87687500000004</horizontalOffset>
+    <initialXCoordinate>6.14</initialXCoordinate>
+    <initialYCoordinate>-10.0</initialYCoordinate>
+    <lexGlossGapAdjustment>0.0</lexGlossGapAdjustment>
+    <lexicalFontInfo>
+        <color>#0000ff</color>
+        <fontFamily>Charis SIL</fontFamily>
+        <fontSize>12.0</fontSize>
+        <fontType>Bold</fontType>
+    </lexicalFontInfo>
+    <lineColor>#000000</lineColor>
+    <lineWidth>0.61</lineWidth>
+    <nonTerminalFontInfo>
+        <color>#000000</color>
+        <fontFamily>Times New Roman</fontFamily>
+        <fontSize>12.0</fontSize>
+        <fontType>Bold</fontType>
+    </nonTerminalFontInfo>
+    <saveAsPng>false</saveAsPng>
+    <saveAsSVG>true</saveAsSVG>
+    <showFlatView>true</showFlatView>
+    <useRightToLeftOrientation>false</useRightToLeftOrientation>
+    <verticalGap>18.43</verticalGap>
+</lingTreeTree>

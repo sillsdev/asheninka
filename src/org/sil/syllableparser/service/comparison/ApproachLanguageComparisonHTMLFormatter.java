@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -21,6 +21,7 @@ import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.utility.DateTimeNormalizer;
 
 /**
@@ -298,6 +299,85 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		}
 	}
 
+	protected void formatSyllabifcationParameters(StringBuilder sb) {
+		String s1 = "";
+		String s2 = "";
+		sb.append("<h3>" + bundle.getString("report.syllabificationparameters") + "</h3>\n");
+		if (comparer.codasAllowedDiffer) {
+			if (comparer.langProj1CodasAllowed) {
+				s1 = bundle.getString("label.yes");
+				s2 = bundle.getString("label.no");
+			} else {
+				s1 = bundle.getString("label.no");
+				s2 = bundle.getString("label.yes");
+			}
+			formatSyllabificationParameterInfo(sb, bundle.getString("report.codasalloweddiffers"), s1, s2);
+		} else {
+			sb.append("<p>" + bundle.getString("report.samecodasallowed") + "</p>\n");
+		}
+		if (comparer.onsetMaximizationDiffers) {
+			if (comparer.langProj1OnsetMaximization) {
+					s1 = bundle.getString("label.yes");
+					s2 = bundle.getString("label.no");
+				} else {
+					s1 = bundle.getString("label.no");
+					s2 = bundle.getString("label.yes");
+				}
+				formatSyllabificationParameterInfo(sb, bundle.getString("report.onsetmaximizationdiffers"), s1, s2);
+		} else {
+			sb.append("<p>" + bundle.getString("report.sameonsetmaximization") + "</p>\n");
+		}
+		if (comparer.onsetPrincipleDiffers) {
+			switch (comparer.langProj1OnsetPrinciple)
+			{
+			case ALL_BUT_FIRST_HAS_ONSET:
+				s1 = bundle.getString("radio.allbutfirst");
+				break;
+			case EVERY_SYLLABLE_HAS_ONSET:
+				s1 = bundle.getString("radio.everysyllable");
+				break;
+			case ONSETS_NOT_REQUIRED:
+				s1 = bundle.getString("radio.onsetsnotrequired");
+				break;
+			}
+			switch (comparer.langProj2OnsetPrinciple)
+			{
+			case ALL_BUT_FIRST_HAS_ONSET:
+				s2 = bundle.getString("radio.allbutfirst");
+				break;
+			case EVERY_SYLLABLE_HAS_ONSET:
+				s2 = bundle.getString("radio.everysyllable");
+				break;
+			case ONSETS_NOT_REQUIRED:
+				s2 = bundle.getString("radio.onsetsnotrequired");
+				break;
+			}
+			formatSyllabificationParameterInfo(sb, bundle.getString("report.onsetprinciplediffers"), s1, s2);
+		} else {
+			sb.append("<p>" + bundle.getString("report.sameonsetprinciple") + "</p>\n");
+		}
+	}
+
+	protected void formatSyllabificationParameterInfo(StringBuilder sb, String sTitle, String s1,
+			String s2) {
+		sb.append("<p>" + sTitle + "</p>\n");
+		sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+		sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
+		sb.append("</th>\n<th>");
+		sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
+		sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			sb.append("<tr>\n<td class=\"");
+			sb.append(ANALYSIS_1);
+			sb.append("\">");
+			sb.append(s1);
+			sb.append("</td>\n<td class=\"");
+			sb.append(ANALYSIS_2);
+			sb.append("\">");
+			sb.append(s2);
+			sb.append("</td>\n</tr>\n");
+		sb.append("</tbody>\n</table>\n");
+	}
+
 	protected void formatWordInfo(StringBuilder sb, Word word) {
 		if (word == null) {
 			sb.append("&#xa0;");
@@ -318,5 +398,46 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		msgFormatter.setLocale(locale);
 		msgFormatter.applyPattern(bundle.getString(mainProperty));
 		return msgFormatter.format(args);
+	}
+
+	protected void formatNaturalClasses(StringBuilder sb, SortedSet<? extends DifferentCVNaturalClass> diffNaturalClasses) {
+		sb.append("<h3>" + bundle.getString("report.cvnaturalclasses") + "</h3>\n");
+		if (diffNaturalClasses.size() == 0) {
+			sb.append("<p>" + bundle.getString("report.samecvnaturalclasses") + "</p>\n");
+		} else {
+			sb.append("<p>" + bundle.getString("report.cvnaturalclasseswhichdiffer") + "</p>\n");
+			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
+			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingf"));
+			sb.append("</th>\n<th>");
+			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingf"));
+			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+			for (DifferentCVNaturalClass differentNaturalClass : diffNaturalClasses) {
+				sb.append("<tr>\n<td class=\"");
+				sb.append(ANALYSIS_1);
+				sb.append("\">");
+				CVNaturalClass naturalClass = (CVNaturalClass) differentNaturalClass.objectFrom1;
+				formatNaturalClassInfo(sb, naturalClass, VERNACULAR_1);
+				sb.append("</td>\n<td class=\"");
+				sb.append(ANALYSIS_2);
+				sb.append("\">");
+				naturalClass = (CVNaturalClass) differentNaturalClass.objectFrom2;
+				formatNaturalClassInfo(sb, naturalClass, VERNACULAR_2);
+				sb.append("</td>\n</tr>\n");
+			}
+			sb.append("</tbody>\n</table>\n");
+		}
+	}
+
+	protected void formatNaturalClassInfo(StringBuilder sb, CVNaturalClass naturalClass, String vernacularCSS) {
+		if (naturalClass == null) {
+			sb.append("&#xa0;");
+		} else {
+			sb.append(naturalClass.getNCName());
+			sb.append(" (<span class=\"");
+			sb.append(vernacularCSS);
+			sb.append("\">");
+			sb.append(naturalClass.getSNCRepresentation());
+			sb.append("</span>)");
+		}
 	}
 }

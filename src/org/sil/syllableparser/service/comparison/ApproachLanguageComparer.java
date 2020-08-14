@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -18,8 +18,11 @@ import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
+import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.SyllabificationParameters;
 import org.sil.syllableparser.model.Word;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.utility.StringUtilities;
 
 /**
@@ -44,6 +47,16 @@ public abstract class ApproachLanguageComparer {
 			Comparator.comparing(DifferentGraphemeNaturalClass::getSortingValue));
 	SortedSet<DifferentWord> wordsWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentWord::getSortingValue));
+
+	boolean codasAllowedDiffer = true;
+	boolean langProj1CodasAllowed = false;
+	boolean langProj2CodasAllowed = false;
+	boolean onsetMaximizationDiffers = true;
+	boolean langProj1OnsetMaximization = false;
+	boolean langProj2OnsetMaximization = false;
+	boolean onsetPrincipleDiffers = true;
+	OnsetPrincipleType langProj1OnsetPrinciple = OnsetPrincipleType.ONSETS_NOT_REQUIRED;
+	OnsetPrincipleType langProj2OnsetPrinciple = OnsetPrincipleType.ONSETS_NOT_REQUIRED;
 
 	public ApproachLanguageComparer(LanguageProject lang1, LanguageProject lang2) {
 		langProj1 = lang1;
@@ -86,6 +99,42 @@ public abstract class ApproachLanguageComparer {
 		return wordsWhichDiffer;
 	}
 
+	public boolean isCodasAllowedDifferent() {
+		return codasAllowedDiffer;
+	}
+
+	public boolean isLangProj1CodasAllowed() {
+		return langProj1CodasAllowed;
+	}
+
+	public boolean isLangProj2CodasAllowed() {
+		return langProj2CodasAllowed;
+	}
+
+	public boolean isLangProj1OnsetMaximization() {
+		return langProj1OnsetMaximization;
+	}
+
+	public boolean isLangProj2OnsetMaximization() {
+		return langProj2OnsetMaximization;
+	}
+
+	public boolean isOnsetMaximizationDifferent() {
+		return onsetMaximizationDiffers;
+	}
+
+	public boolean isOnsetPrincipleDifferent() {
+		return onsetPrincipleDiffers;
+	}
+
+	public OnsetPrincipleType getLangProj1OnsetPrinciple() {
+		return langProj1OnsetPrinciple;
+	}
+
+	public OnsetPrincipleType getLangProj2OnsetPrinciple() {
+		return langProj2OnsetPrinciple;
+	}
+
 	public abstract void compare();
 
 	public void compareSegmentInventory() {
@@ -111,11 +160,23 @@ public abstract class ApproachLanguageComparer {
 								.equals(segment.getSegment())).collect(Collectors.toList());
 		if (sameSegmentsName.size() > 0) {
 			DifferentSegment diffSeg = sameSegmentsName.get(0);
-			diffSeg.setObjectFrom2(segment);
+			if (isReallySameSegment(((Segment) diffSeg.getObjectFrom1()), segment)) {
+				segmentsWhichDiffer.remove(diffSeg);
+			} else {
+				diffSeg.setObjectFrom2(segment);
+			}
 		} else {
 			DifferentSegment diffSegment = new DifferentSegment(null, segment);
 			segmentsWhichDiffer.add(diffSegment);
 		}
+	}
+
+	protected boolean isReallySameSegment(Segment segment1, Segment segment2) {
+		// ignore ONC-specific values
+		if (segment1.baseEquals(segment2)) {
+			return true;
+		}
+		return false;
 	}
 
 	public void compareGraphemes() {
@@ -250,6 +311,54 @@ public abstract class ApproachLanguageComparer {
 		} else {
 			DifferentWord diffWord = new DifferentWord(null, word);
 			wordsWhichDiffer.add(diffWord);
+		}
+	}
+
+	public void compareSyllabificationParameters() {
+		SyllabificationParameters sp1 = langProj1.getSyllabificationParameters();
+		SyllabificationParameters sp2 = langProj2.getSyllabificationParameters();
+		langProj1CodasAllowed = sp1.isCodasAllowed();
+		langProj2CodasAllowed = sp2.isCodasAllowed();
+		codasAllowedDiffer = (langProj1CodasAllowed != langProj2CodasAllowed);
+		langProj1OnsetMaximization = sp1.isOnsetMaximization();
+		langProj2OnsetMaximization = sp2.isOnsetMaximization();
+		onsetMaximizationDiffers = (langProj1OnsetMaximization != langProj2OnsetMaximization);
+		langProj1OnsetPrinciple = sp1.getOnsetPrincipleEnum();
+		langProj2OnsetPrinciple = sp2.getOnsetPrincipleEnum();
+		onsetPrincipleDiffers = (langProj1OnsetPrinciple != langProj2OnsetPrinciple);
+	}
+
+	public void compareCVNaturalClasses(List<CVNaturalClass> naturalClasses1,
+			List<CVNaturalClass> naturalClasses2,
+			SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer) {
+		Set<CVNaturalClass> difference1from2 = new HashSet<CVNaturalClass>(naturalClasses1);
+		// use set difference (removeAll)
+		difference1from2.removeAll(naturalClasses2);
+		difference1from2.stream().forEach(
+				naturalClass -> cvNaturalClassesWhichDiffer.add(new DifferentCVNaturalClass(
+						naturalClass, null)));
+
+		Set<CVNaturalClass> difference2from1 = new HashSet<CVNaturalClass>(naturalClasses2);
+		difference2from1.removeAll(naturalClasses1);
+		difference2from1.stream().forEach(
+				naturalClass -> mergeSimilarCVNaturalClasses(naturalClass,
+						cvNaturalClassesWhichDiffer));
+	}
+
+	protected void mergeSimilarCVNaturalClasses(CVNaturalClass naturalClass,
+			SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer) {
+		List<DifferentCVNaturalClass> sameNaturalClassesName = cvNaturalClassesWhichDiffer
+				.stream()
+				.filter(dnc -> dnc.getObjectFrom1() != null
+						&& ((CVNaturalClass) dnc.getObjectFrom1()).getNCName().equals(
+								naturalClass.getNCName())).collect(Collectors.toList());
+		if (sameNaturalClassesName.size() > 0) {
+			DifferentCVNaturalClass diffNaturalClass = sameNaturalClassesName.get(0);
+			diffNaturalClass.setObjectFrom2(naturalClass);
+		} else {
+			DifferentCVNaturalClass diffNaturalClass = new DifferentCVNaturalClass(null,
+					naturalClass);
+			cvNaturalClassesWhichDiffer.add(diffNaturalClass);
 		}
 	}
 }

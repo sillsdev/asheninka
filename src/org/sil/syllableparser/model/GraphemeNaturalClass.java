@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
-import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.SylParserObject;
 
 import javafx.beans.property.SimpleListProperty;
@@ -131,6 +130,11 @@ public class GraphemeNaturalClass extends SylParserObject {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public String getSortingValue() {
+		return getGNCRepresentation();
 	}
 
 }

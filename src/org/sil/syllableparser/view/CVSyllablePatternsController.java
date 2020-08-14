@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -387,42 +387,26 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	void handleInsertNewItem() {
 		CVSyllablePattern newSyllablePattern = new CVSyllablePattern();
 		cvApproach.getCVSyllablePatterns().add(newSyllablePattern);
-		int i = cvApproach.getCVSyllablePatterns().size() - 1;
-		cvSyllablePatternTable.requestFocus();
-		cvSyllablePatternTable.getSelectionModel().select(i);
-		cvSyllablePatternTable.getFocusModel().focus(i);
-		cvSyllablePatternTable.scrollTo(i);
+		handleInsertNewItem(cvApproach.getCVSyllablePatterns(), cvSyllablePatternTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		int i = cvApproach.getCVSyllablePatterns().indexOf(currentSyllablePattern);
-		currentSyllablePattern = null;
-		if (i >= 0) {
-			cvApproach.getCVSyllablePatterns().remove(i);
-			int max = cvSyllablePatternTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			cvSyllablePatternTable.requestFocus();
-			cvSyllablePatternTable.getSelectionModel().select(i);
-			cvSyllablePatternTable.getFocusModel().focus(i);
-			cvSyllablePatternTable.scrollTo(i);
-		}
-		cvSyllablePatternTable.refresh();
+		handleRemoveItem(cvApproach.getCVSyllablePatterns(), currentSyllablePattern, cvSyllablePatternTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(cvApproach.getCVSyllablePatterns(), currentSyllablePattern, cvSyllablePatternTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(cvApproach.getCVSyllablePatterns(), currentSyllablePattern, cvSyllablePatternTable);
 	}
 
 	@FXML

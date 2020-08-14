@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -17,6 +17,7 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.service.BackupFileRestorer;
+import org.sil.syllableparser.service.comparison.ApproachLanguageComparisonHTMLFormatter;
 import org.sil.syllableparser.service.comparison.CVApproachLanguageComparer;
 import org.sil.syllableparser.service.comparison.CVApproachLanguageComparisonHTMLFormatter;
 
@@ -88,7 +89,7 @@ public class CVComparisonController extends ComparisonController {
 				comparer.setDataSet1Info(sDataSet1Info);
 				comparer.setDataSet2Info(sDataSet2Info);
 				comparer.compare();
-				CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
+				ApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
 						comparer, locale, LocalDateTime.now());
 				String result = formatter.format();
 				webEngine.loadContent(result);

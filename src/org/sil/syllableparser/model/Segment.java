@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -12,14 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlIDREF;
-import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlTransient;
-
-import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -28,8 +23,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 /**
  * @author Andy Black
@@ -43,8 +36,9 @@ public class Segment extends SylParserObject {
 	private BooleanProperty checked;
 	private final SimpleListProperty<Grapheme> graphemesAsList;
 	ObservableList<Grapheme> graphs = FXCollections.observableArrayList();
-
-	// private final StringProperty graphsRepresentation;
+	private BooleanProperty onset;
+	private BooleanProperty nucleus;
+	private BooleanProperty coda;
 
 	public Segment() {
 		super();
@@ -53,7 +47,9 @@ public class Segment extends SylParserObject {
 		this.graphemesAsList = new SimpleListProperty<Grapheme>();
 		this.description = new SimpleStringProperty("");
 		this.checked = new SimpleBooleanProperty(false);
-		// this.graphsRepresentation = new SimpleStringProperty("");
+		this.onset = new SimpleBooleanProperty(false);
+		this.nucleus = new SimpleBooleanProperty(false);
+		this.coda = new SimpleBooleanProperty(false);
 		createUUID();
 	}
 
@@ -64,8 +60,9 @@ public class Segment extends SylParserObject {
 		this.graphemesAsList = new SimpleListProperty<Grapheme>();
 		this.description = new SimpleStringProperty(description);
 		this.checked = new SimpleBooleanProperty(false);
-		// this.graphsRepresentation = new
-		// SimpleStringProperty(graphsRepresentation);
+		this.onset = new SimpleBooleanProperty(false);
+		this.nucleus = new SimpleBooleanProperty(false);
+		this.coda = new SimpleBooleanProperty(false);
 		createUUID();
 	}
 
@@ -93,18 +90,6 @@ public class Segment extends SylParserObject {
 		this.segment.set(segment);
 	}
 
-	// public String getGraphemes() {
-	// return graphemes.get().trim();
-	// }
-	//
-	// public StringProperty graphemesProperty() {
-	// return graphemes;
-	// }
-	//
-	// public void setGraphemes(String graphemes) {
-	// this.graphemes.set(graphemes);
-	// }
-
 	public String getDescription() {
 		return description.get();
 	}
@@ -116,15 +101,54 @@ public class Segment extends SylParserObject {
 	public void setDescription(String description) {
 		this.description.set(description);
 	}
+
 	public BooleanProperty checkedProperty() {
 		return checked;
 	}
+
 	public void setChecked(boolean value) {
-		this.checked.set(value);	
+		this.checked.set(value);
 	}
+
 	@XmlTransient
 	public boolean isChecked() {
 		return checked.get();
+	}
+
+	public BooleanProperty onsetProperty() {
+		return onset;
+	}
+
+	public void setOnset(boolean value) {
+		this.onset.set(value);
+	}
+
+	public boolean isOnset() {
+		return onset.get();
+	}
+
+	public BooleanProperty nucleusProperty() {
+		return nucleus;
+	}
+
+	public void setNucleus(boolean value) {
+		this.nucleus.set(value);
+	}
+
+	public boolean isNucleus() {
+		return nucleus.get();
+	}
+
+	public BooleanProperty codaProperty() {
+		return coda;
+	}
+
+	public void setCoda(boolean value) {
+		this.coda.set(value);
+	}
+
+	public boolean isCoda() {
+		return coda.get();
 	}
 
 	@XmlElementWrapper(name = "graphemesAsList")
@@ -136,11 +160,11 @@ public class Segment extends SylParserObject {
 	public void setGraphs(ObservableList<Grapheme> graphs) {
 		this.graphs = graphs;
 		// TODO: can we do this with lambdas?
-		for	(Grapheme graph : graphs) {
+		for (Grapheme graph : graphs) {
 			graph.setOwningSegment(this);
 		}
 	}
-	
+
 	public List<Grapheme> getActiveGraphs() {
 		return graphs.stream().filter(grapheme -> grapheme.isActive()).collect(Collectors.toList());
 	}
@@ -196,9 +220,30 @@ public class Segment extends SylParserObject {
 		}
 	}
 
+	// check equality for the properties which are common to all approaches
+	public boolean baseEquals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		boolean result = true;
+		Segment seg = (Segment) obj;
+		if (!getSegment().equals(seg.getSegment())) {
+			result = false;
+		} else if (!getActiveGraphs().equals(seg.getActiveGraphs())) {
+			result = false;
+		} else if (isChecked() != seg.isChecked()) {
+			result = false;
+		}
+		return result;
+	}
+
 	@Override
 	public int hashCode() {
-		String sCombo = segment.getValueSafe() + graphemes.getValueSafe();
+		String sCombo = segment.getValueSafe() + graphemes.getValueSafe() + checked.getValue()
+				+ onset.getValue() + nucleus.getValue() + coda.getValue();
 		return sCombo.hashCode();
 	}
 
@@ -214,11 +259,22 @@ public class Segment extends SylParserObject {
 		Segment seg = (Segment) obj;
 		if (!getSegment().equals(seg.getSegment())) {
 			result = false;
-		} else {
-			if (!getActiveGraphs().equals(seg.getActiveGraphs())) {
-				result = false;
-			}
+		} else if (!getActiveGraphs().equals(seg.getActiveGraphs())) {
+			result = false;
+		} else if (isChecked() != seg.isChecked()) {
+			result = false;
+		} else if (isOnset() != seg.isOnset()) {
+			result = false;
+		} else if (isNucleus() != seg.isNucleus()) {
+			result = false;
+		} else if (isCoda() != seg.isCoda()) {
+			result = false;
 		}
 		return result;
+	}
+
+	@Override
+	public String getSortingValue() {
+		return getSegment();
 	}
 }

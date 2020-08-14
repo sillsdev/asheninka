@@ -1,5 +1,5 @@
 
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -14,7 +14,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Comparator;
 import java.util.Locale;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,6 +45,8 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 	CVApproachLanguageComparer comparerSame;
 	private Locale locale;
 	private LocalDateTime dateTime;
+	SortedSet<DifferentCVNaturalClass> diffs = new TreeSet<>(
+			Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
 
 	/**
 	 * @throws java.lang.Exception
@@ -73,7 +78,7 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 		comparer.compareGraphemes();
 		comparer.compareGraphemeNaturalClasses();
 		comparer.compareEnvironments();
-		comparer.compareNaturalClasses();
+		comparer.compareCVNaturalClasses(comparer.getCva1().getActiveCVNaturalClasses(), comparer.getCva2().getActiveCVNaturalClasses(), comparer.naturalClassesWhichDiffer);
 		comparer.compareSyllablePatterns();
 		comparer.compareSyllablePatternOrder();
 		comparer.compareWords();
@@ -88,7 +93,7 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 
 	@Test
 	public void formattingEnglishTest() {
-		CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
+		ApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/CVApproachLanguageComparisonHTMLEnglish.html");
@@ -105,7 +110,7 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 
 	@Test
 	public void formattingSameEnglishTest() {
-		CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
+		ApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
 				comparerSame, locale, dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/CVApproachLanguageComparisonSameHTMLEnglish.html");
@@ -122,7 +127,7 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 
 	@Test
 	public void formattingSpanishTest() {
-		CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
+		ApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/CVApproachLanguageComparisonHTMLSpanish.html");
@@ -139,7 +144,7 @@ public class CVApproachLanguageComparisonHTMLFormatterTest {
 
 	@Test
 	public void formattingSameSpanishTest() {
-		CVApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
+		ApproachLanguageComparisonHTMLFormatter formatter = new CVApproachLanguageComparisonHTMLFormatter(
 				comparerSame, new Locale("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/CVApproachLanguageComparisonSameHTMLSpanish.html");

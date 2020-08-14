@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -154,7 +154,7 @@ public class CVApproachController extends ApproachController {
 		FXMLLoader loader = createFXMLLoader("fxml/CVNaturalClasses.fxml");
 		CVNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(cvApproachData);
+		controller.setData(cvApproachData, ApproachType.CV);
 		int i = prefs.getLastCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastCVApproachViewUsed(getViewUsed());
@@ -234,6 +234,16 @@ public class CVApproachController extends ApproachController {
 	}
 
 	@Override
+	void handlePreviousItem() {
+		currentCVApproachController.handlePreviousItem();
+	}
+
+	@Override
+	void handleNextItem() {
+		currentCVApproachController.handleNextItem();
+	}
+
+	@Override
 	void handleSyllabifyWords(StatusBar statusBar) {
 		String sSuccess = bundle.getString("label.success");
 		String sSegmentFailure = bundle.getString("label.cvsegmentfailure");
@@ -283,7 +293,7 @@ public class CVApproachController extends ApproachController {
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					CVNaturalClasserResult ncResult = naturalClasser
 							.convertSegmentsToNaturalClasses(segmentsInWord);
 					fSuccess = ncResult.success;
@@ -307,6 +317,7 @@ public class CVApproachController extends ApproachController {
 					}
 					word.setCVPredictedSyllabification(syllabifier
 							.getSyllabificationOfCurrentWord());
+					word.setCVLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
 					word.setCVParserResult(sSuccess);
 				}
 				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");

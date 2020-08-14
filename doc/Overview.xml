@@ -17,7 +17,7 @@ version="2.20.0"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->16 June 2017</date
+>24 September 2019</date
 ><contents
 ></contents
 ></frontMatter
@@ -712,8 +712,8 @@ type="tSSP"
 num="xA.tlantic"
 ><chart
 ><img
-XeLaTeXSpecial="scaled='1250'"
-src="LingTreeDiagrams/ONCa-tlantic.svg"
+XeLaTeXSpecial="scaled='1250'  "
+src="LingTreeDiagrams/ONCa.tlantic.svg"
 ></img
 ></chart
 ></example
@@ -947,6 +947,7 @@ type="tFeature"
 >opt</object
 > means the position is optional.</p
 ><example
+XeLaTeXSpecial="pagebreak"
 num="xWordFinalTemplate"
 ><exampleHeading
 >Word Final Template:</exampleHeading

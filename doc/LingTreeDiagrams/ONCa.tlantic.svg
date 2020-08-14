@@ -1,0 +1,47 @@
+﻿<?xml version='1.0' standalone='no'?>
+<svg width='217.91757812500003' height='144.31796875' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>
+<script  id="clientEventHandlersJS">
+function OnClickLingTreeNode(node){}
+</script>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="90.104033203125" y="-10.0" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000"></text>
+<text x="7.502304687500001" y="24.3909375" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">σ</text>
+<text x="6.380234375000001" y="56.11" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">R</text>
+<line x1="10.7659765625" y1="29.986640625" x2="10.7659765625" y2="42.416640625" stroke="#000000" stroke-width="0.61"/>
+<text x="6.432968750000001" y="87.82906249999999" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">N</text>
+<line x1="10.7659765625" y1="61.705703125" x2="10.7659765625" y2="74.13570312499999" stroke="#000000" stroke-width="0.61"/>
+<text x="6.140000000000001" y="125.88796875" font-family="Charis SIL" font-size="12.0" font-weight="bold" fill="#0000ff">æ</text>
+<line x1="10.7659765625" y1="93.42476562499999" x2="10.7659765625" y2="108.5325" stroke="#000000" stroke-width="0.61"/>
+<text x="76.77017578125" y="24.3909375" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">σ</text>
+<text x="47.7039453125" y="56.11" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">O</text>
+<line x1="80.03384765625" y1="29.986640625" x2="52.3709375" y2="42.416640625" stroke="#000000" stroke-width="0.61"/>
+<text x="36.2389453125" y="125.88796875" font-family="Charis SIL" font-size="12.0" font-weight="bold" fill="#0000ff">t</text>
+<line x1="52.3709375" y1="61.705703125" x2="38.4889453125" y2="108.5325" stroke="#000000" stroke-width="0.61"/>
+<text x="64.2548828125" y="125.88796875" font-family="Charis SIL" font-size="12.0" font-weight="bold" fill="#0000ff">l</text>
+<line x1="52.3709375" y1="61.705703125" x2="66.2529296875" y2="108.5325" stroke="#000000" stroke-width="0.61"/>
+<text x="103.31101562500001" y="56.11" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">R</text>
+<line x1="80.03384765625" y1="29.986640625" x2="107.69675781250001" y2="42.416640625" stroke="#000000" stroke-width="0.61"/>
+<text x="89.642890625" y="87.82906249999999" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">N</text>
+<line x1="107.69675781250001" y1="61.705703125" x2="93.9758984375" y2="74.13570312499999" stroke="#000000" stroke-width="0.61"/>
+<text x="89.349921875" y="125.88796875" font-family="Charis SIL" font-size="12.0" font-weight="bold" fill="#0000ff">æ</text>
+<line x1="93.9758984375" y1="93.42476562499999" x2="93.9758984375" y2="108.5325" stroke="#000000" stroke-width="0.61"/>
+<text x="117.08460937500001" y="87.82906249999999" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">C</text>
+<line x1="107.69675781250001" y1="61.705703125" x2="121.41761718750001" y2="74.13570312499999" stroke="#000000" stroke-width="0.61"/>
+<text x="117.66761718750001" y="125.88796875" font-family="Charis SIL" font-size="12.0" font-weight="bold" fill="#0000ff">n</text>
+<line x1="121.41761718750001" y1="93.42476562499999" x2="121.41761718750001" y2="108.5325" stroke="#000000" stroke-width="0.61"/>
+<text x="166.17841796875" y="24.3909375" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">σ</text>
+<text x="144.23335937500002" y="56.11" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">O</text>
+<line x1="169.44208984375" y1="29.986640625" x2="148.90035156250002" y2="42.416640625" stroke="#000000" stroke-width="0.61"/>
+<text x="146.65035156250002" y="125.88796875" font-family="Charis SIL" font-size="12.0" font-weight="bold" fill="#0000ff">t</text>
+<line x1="148.90035156250002" y1="61.705703125" x2="148.90035156250002" y2="108.5325" stroke="#000000" stroke-width="0.61"/>
+<text x="185.59808593750003" y="56.11" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">R</text>
+<line x1="169.44208984375" y1="29.986640625" x2="189.98382812500003" y2="42.416640625" stroke="#000000" stroke-width="0.61"/>
+<text x="172.05007812500003" y="87.82906249999999" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">N</text>
+<line x1="189.98382812500003" y1="61.705703125" x2="176.38308593750003" y2="74.13570312499999" stroke="#000000" stroke-width="0.61"/>
+<text x="174.49343750000003" y="125.88796875" font-family="Charis SIL" font-size="12.0" font-weight="bold" fill="#0000ff">ɪ</text>
+<line x1="176.38308593750003" y1="93.42476562499999" x2="176.38308593750003" y2="108.5325" stroke="#000000" stroke-width="0.61"/>
+<text x="199.25156250000003" y="87.82906249999999" font-family="Times New Roman" font-size="12.0" font-weight="bold" fill="#000000">C</text>
+<line x1="189.98382812500003" y1="61.705703125" x2="203.58457031250003" y2="74.13570312499999" stroke="#000000" stroke-width="0.61"/>
+<text x="200.03378906250003" y="125.88796875" font-family="Charis SIL" font-size="12.0" font-weight="bold" fill="#0000ff">k</text>
+<line x1="203.58457031250003" y1="93.42476562499999" x2="203.58457031250003" y2="108.5325" stroke="#000000" stroke-width="0.61"/>
+</svg>

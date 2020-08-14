@@ -26,7 +26,8 @@ import org.sil.syllableparser.model.cvapproach.*;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifierInfo;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
 import org.sil.syllableparser.service.parsing.CVSegmenter;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.SHSyllabifier;
@@ -82,17 +83,17 @@ public class SHSyllabifierTest {
 		checkSyllabification("tad", true, 1, "tad");
 		checkSyllabification("Chiko", true, 2, "Chi.ko");
 		checkSyllabification("dapgek", true, 2, "dap.gek");
-		checkSyllabification("dapkgek", true, 2, "dap.kgek");
+		checkSyllabification("dapkgek", true, 3, "dap.k.gek");
 		checkSyllabification("dampidon", true, 3, "dam.pi.don");
 		checkSyllabification("dovdek", true, 2, "dov.dek");
-		checkSyllabification("fuhgt", true, 2, "fuh.gt");
+		checkSyllabification("fuhgt", true, 3, "fuh.g.t");
 		checkSyllabification("dlofugh", true, 3, "dlo.fug.h");
 		checkSyllabification("do", true, 1, "do");
 		checkSyllabification("funglo", true, 2, "fun.glo");
 		checkSyllabification("fugh", true, 2, "fug.h");
 		checkSyllabification("flu", true, 1, "flu");
 		checkSyllabification("fluk", true, 1, "fluk");
-		checkSyllabification("iae", true, 1, "iae");
+		checkSyllabification("iae", true, 3, "i.a.e");
 		checkSyllabification("ibabe", false, 0, ""); // b not in hierarchy
 	}
 
@@ -100,7 +101,7 @@ public class SHSyllabifierTest {
 			String expectedSyllabification) {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		boolean fSuccess = segResult.success;
-		List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+		List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		fSuccess = shSyllabifier.syllabify(segmentsInWord);
 		assertEquals("word syllabified", success, fSuccess);
 		List<SHSyllable> syllablesInWord = shSyllabifier.getSyllablesInCurrentWord();
@@ -130,13 +131,13 @@ public class SHSyllabifierTest {
 		shSyllabifier.setDoTrace(true);
 
 		checkSyllabifyWord("", false, "", "", 0, "");
-		List<SHTraceSyllabifierInfo> traceInfo = shSyllabifier.getSyllabifierTraceInfo();
+		List<SHTracingStep> traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(0, traceInfo.size());
 
-		checkSyllabifyWord("A", true, "Vowels, null",  SHTraceSyllabifierInfo.NULL_REPRESENTATION, 1, "A");
+		checkSyllabifyWord("A", true, "Vowels, null",  SHTracingStep.NULL_REPRESENTATION, 1, "A");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(1, traceInfo.size());
-		SHTraceSyllabifierInfo sylInfo = traceInfo.get(0);
+		SHTracingStep sylInfo = traceInfo.get(0);
 		assertEquals(true, sylInfo.startsSyllable);
 
 		checkSyllabifyWord("ta", true, "Obstruents, Vowels", "<", 1, "ta");
@@ -202,7 +203,7 @@ public class SHSyllabifierTest {
 
 		checkSyllabifyWord("dapkgek", true,
 				"Obstruents, Vowels, Obstruents, Obstruents, Obstruents, Vowels, Obstruents",
-				"<, >, =, =, <, >", 2, "dap.kgek");
+				"<, >, =, =, <, >", 3, "dap.k.gek");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(6, traceInfo.size());
 		sylInfo = traceInfo.get(0);
@@ -214,7 +215,7 @@ public class SHSyllabifierTest {
 		sylInfo = traceInfo.get(3);
 		assertEquals(true, sylInfo.startsSyllable);
 		sylInfo = traceInfo.get(4);
-		assertEquals(false, sylInfo.startsSyllable);
+		assertEquals(true, sylInfo.startsSyllable);
 		sylInfo = traceInfo.get(5);
 		assertEquals(false, sylInfo.startsSyllable);
 
@@ -234,10 +235,10 @@ public class SHSyllabifierTest {
 		sylInfo = traceInfo.get(4);
 		assertEquals(false, sylInfo.startsSyllable);
 
-		checkSyllabifyWord("fuhgt", true, "Obstruents, Vowels, Obstruents, Obstruents, Obstruents",
-				"<, >, =, =", 2, "fuh.gt");
+		checkSyllabifyWord("fuhgt", true, "Obstruents, Vowels, Obstruents, Obstruents, Obstruents, null",
+				"<, >, =, =, " + SHTracingStep.NULL_REPRESENTATION, 3, "fuh.g.t");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(4, traceInfo.size());
+		assertEquals(5, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertEquals(true, sylInfo.startsSyllable);
 		sylInfo = traceInfo.get(1);
@@ -246,10 +247,12 @@ public class SHSyllabifierTest {
 		assertEquals(false, sylInfo.startsSyllable);
 		sylInfo = traceInfo.get(3);
 		assertEquals(true, sylInfo.startsSyllable);
+		sylInfo = traceInfo.get(4);
+		assertEquals(true, sylInfo.startsSyllable);
 
 		checkSyllabifyWord("dlofugh", true,
 				"Obstruents, Liquids, Vowels, Obstruents, Vowels, Obstruents, Obstruents, null",
-				"<, <, >, <, >, =, " + SHTraceSyllabifierInfo.NULL_REPRESENTATION, 3, "dlo.fug.h");
+				"<, <, >, <, >, =, " + SHTracingStep.NULL_REPRESENTATION, 3, "dlo.fug.h");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(7, traceInfo.size());
 		sylInfo = traceInfo.get(0);
@@ -290,7 +293,7 @@ public class SHSyllabifierTest {
 		assertEquals(false, sylInfo.startsSyllable);
 
 		checkSyllabifyWord("fugh", true, "Obstruents, Vowels, Obstruents, Obstruents, null",
-				"<, >, =, " + SHTraceSyllabifierInfo.NULL_REPRESENTATION, 2, "fug.h");
+				"<, >, =, " + SHTracingStep.NULL_REPRESENTATION, 2, "fug.h");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
 		assertEquals(4, traceInfo.size());
 		sylInfo = traceInfo.get(0);
@@ -321,12 +324,15 @@ public class SHSyllabifierTest {
 		sylInfo = traceInfo.get(2);
 		assertEquals(false, sylInfo.startsSyllable);
 
-		checkSyllabifyWord("iae", true, "Vowels, Vowels, Vowels", "=, =", 1, "iae");
+		checkSyllabifyWord("iae", true, "Vowels, Vowels, Vowels, null", "=, =, " + SHTracingStep.NULL_REPRESENTATION, 3, "i.a.e");
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();
-		assertEquals(2, traceInfo.size());
+		assertEquals(3, traceInfo.size());
 		sylInfo = traceInfo.get(0);
 		assertEquals(true, sylInfo.startsSyllable);
 		sylInfo = traceInfo.get(1);
+		assertEquals(true, sylInfo.startsSyllable);
+		sylInfo = traceInfo.get(2);
+		assertEquals(true, sylInfo.startsSyllable);
 
 		checkSyllabifyWord("babe", false, "null, null", "!!!", 0, ""); // b not in hierarchy
 		traceInfo = shSyllabifier.getSyllabifierTraceInfo();

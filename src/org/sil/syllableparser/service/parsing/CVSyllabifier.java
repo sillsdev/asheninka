@@ -31,7 +31,7 @@ import javafx.collections.ObservableList;
  *         a Service Takes a sequence of natural classes and parses them into a
  *         sequence of syllables
  */
-public class CVSyllabifier {
+public class CVSyllabifier implements Syllabifiable {
 
 	private LanguageProject languageProject;
 	private CVApproach cva;
@@ -116,7 +116,7 @@ public class CVSyllabifier {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		fSuccess = segResult.success;
 		if (fSuccess) {
-			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+			List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 			CVNaturalClasserResult ncResult = naturalClasser
 					.convertSegmentsToNaturalClasses(segmentsInWord);
 			fSuccess = ncResult.success;
@@ -226,6 +226,28 @@ public class CVSyllabifier {
 				sb.append(".");
 			}
 		}
+		return sb.toString();
+	}
+
+	@Override
+	public String getLingTreeDescriptionOfCurrentWord() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("(W");
+		for (CVSyllable syl : syllablesInCurrentWord) {
+			sb.append("(σ");
+			for (CVNaturalClassInSyllable nc: syl.getNaturalClassesInSyllable()) {
+				sb.append("( ");
+				sb.append(nc.getNaturalClassName());
+				CVSegmentInSyllable seg = nc.getSegmentInSyllable();
+				sb.append("(\\L ");
+				sb.append(seg.getSegmentName());
+				sb.append("(\\G ");
+				sb.append(seg.getGrapheme());
+				sb.append(")))");
+			}
+			sb.append(")");
+		}
+		sb.append(")");
 		return sb.toString();
 	}
 

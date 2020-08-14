@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 SIL International
+ * Copyright (c) 2016-2019 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -19,8 +19,7 @@ import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-
-import org.sil.environmentparser.EnvironmentParser;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
 /**
  * @author Andy Black

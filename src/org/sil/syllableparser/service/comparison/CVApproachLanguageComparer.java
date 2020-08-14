@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
 import org.sil.syllableparser.service.parsing.CVSyllabifier;
 
@@ -76,45 +75,13 @@ public class CVApproachLanguageComparer extends ApproachLanguageComparer {
 	@Override
 	public void compare() {
 		compareSegmentInventory();
-		compareNaturalClasses();
+		compareCVNaturalClasses(cva1.getActiveCVNaturalClasses(), cva2.getActiveCVNaturalClasses(),
+				naturalClassesWhichDiffer);
 		compareGraphemeNaturalClasses();
 		compareEnvironments();
 		compareSyllablePatterns();
 		compareSyllablePatternOrder();
 		compareWords();
-	}
-
-	public void compareNaturalClasses() {
-		List<CVNaturalClass> naturalClasses1 = cva1.getActiveCVNaturalClasses();
-		List<CVNaturalClass> naturalClasses2 = cva2.getActiveCVNaturalClasses();
-
-		Set<CVNaturalClass> difference1from2 = new HashSet<CVNaturalClass>(naturalClasses1);
-		// use set difference (removeAll)
-		difference1from2.removeAll(naturalClasses2);
-		difference1from2.stream().forEach(
-				naturalClass -> naturalClassesWhichDiffer.add(new DifferentCVNaturalClass(
-						naturalClass, null)));
-
-		Set<CVNaturalClass> difference2from1 = new HashSet<CVNaturalClass>(naturalClasses2);
-		difference2from1.removeAll(naturalClasses1);
-		difference2from1.stream().forEach(
-				naturalClass -> mergeSimilarCVNaturalClasses(naturalClass));
-	}
-
-	protected void mergeSimilarCVNaturalClasses(CVNaturalClass naturalClass) {
-		List<DifferentCVNaturalClass> sameNaturalClassesName = naturalClassesWhichDiffer
-				.stream()
-				.filter(dnc -> dnc.getObjectFrom1() != null
-						&& ((CVNaturalClass) dnc.getObjectFrom1()).getNCName().equals(
-								naturalClass.getNCName())).collect(Collectors.toList());
-		if (sameNaturalClassesName.size() > 0) {
-			DifferentCVNaturalClass diffNaturalClass = sameNaturalClassesName.get(0);
-			diffNaturalClass.setObjectFrom2(naturalClass);
-		} else {
-			DifferentCVNaturalClass diffNaturalClass = new DifferentCVNaturalClass(null,
-					naturalClass);
-			naturalClassesWhichDiffer.add(diffNaturalClass);
-		}
 	}
 
 	public void compareSyllablePatterns() {

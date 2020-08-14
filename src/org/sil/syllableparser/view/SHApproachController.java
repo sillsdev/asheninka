@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2019 SIL International
+// Copyright (c) 2018-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -214,6 +214,16 @@ public class SHApproachController extends ApproachController {
 	}
 
 	@Override
+	void handlePreviousItem() {
+		currentSHApproachController.handlePreviousItem();
+	}
+
+	@Override
+	void handleNextItem() {
+		currentSHApproachController.handleNextItem();
+	}
+
+	@Override
 	void handleSyllabifyWords(StatusBar statusBar) {
 		String sSuccess = bundle.getString("label.success");
 		String sSegmentFailure = bundle.getString("label.cvsegmentfailure");
@@ -248,8 +258,9 @@ public class SHApproachController extends ApproachController {
 						word.setSHPredictedSyllabification("");
 						continue;
 					}
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					fSuccess = syllabifier.syllabify(segmentsInWord);
+					word.setSHLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
 					if (!fSuccess) {
 						word.setSHParserResult(sSyllabificationFailure);
 						word.setSHPredictedSyllabification("");

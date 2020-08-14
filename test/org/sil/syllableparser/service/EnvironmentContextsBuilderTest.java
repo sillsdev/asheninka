@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International 
+// Copyright (c) 2016-2019 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -10,15 +10,10 @@ package org.sil.syllableparser.service;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,15 +27,7 @@ import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
-import org.sil.environmentparser.EnvironmentConstants;
-import org.sil.environmentparser.EnvironmentErrorInfo;
-import org.sil.environmentparser.EnvironmentErrorListener;
-import org.sil.environmentparser.EnvironmentErrorListener.VerboseListener;
-import org.sil.environmentparser.EnvironmentLexer;
-import org.sil.environmentparser.EnvironmentParser;
-import org.sil.environmentparser.GraphemeErrorInfo;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
 public class EnvironmentContextsBuilderTest extends EnvironmentParsingBase {
 
@@ -540,7 +527,6 @@ public class EnvironmentContextsBuilderTest extends EnvironmentParsingBase {
 		if (iMatches > 0) {
 			GraphemeNaturalClass gnClassFound = matches.get(0);
 			gnc.setGraphemeNaturalClass(gnClassFound);
-			gnc.setGraphemeNaturalClass(matches.get(0));
 			GraphemeNaturalClass gnClassStored = gnc.getGraphemeNaturalClass();
 			assertEquals(gnClassFound.getID(), gnClassStored.getID());
 		}

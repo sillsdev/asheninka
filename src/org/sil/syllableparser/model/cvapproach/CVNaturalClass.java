@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 
 import javafx.beans.property.SimpleListProperty;
@@ -30,8 +29,6 @@ public class CVNaturalClass extends SylParserObject {
 	private final StringProperty description;
 	private final StringProperty sncRepresentation;
 	ObservableList<SylParserObject> snc = FXCollections.observableArrayList();
-//	ListChangeListener<SylParserObject> lcl;
-//	WeakListChangeListener<SylParserObject> weakListener = new WeakListChangeListener<>(lcl);
 
 	public CVNaturalClass() {
 		super();
@@ -40,7 +37,6 @@ public class CVNaturalClass extends SylParserObject {
 		this.description = new SimpleStringProperty("");
 		this.sncRepresentation = new SimpleStringProperty("");
 		createUUID();
-//		snc.addListener(weakListener);
 	}
 
 	public CVNaturalClass(String className, SimpleListProperty<Object> segmentsOrNaturalClasses,
@@ -134,6 +130,11 @@ public class CVNaturalClass extends SylParserObject {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public String getSortingValue() {
+		return getNCName();
 	}
 
 }

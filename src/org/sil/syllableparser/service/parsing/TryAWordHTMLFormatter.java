@@ -20,6 +20,7 @@ import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.TraceInfo;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
+import org.sil.syllableparser.service.LingTreeInteractor;
 import org.sil.utility.StringUtilities;
 
 /**
@@ -53,6 +54,8 @@ public abstract class TryAWordHTMLFormatter {
 	protected String sWord;
 	protected CVSegmenter segmenter;
 	protected CVSegmenterResult segmenterResult;
+	protected String lingTreeDescription;
+	protected LingTreeInteractor ltInteractor;
 
 	public TryAWordHTMLFormatter(LanguageProject language, Locale locale) {
 		super();
@@ -61,6 +64,8 @@ public abstract class TryAWordHTMLFormatter {
 		bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale);
 		getAnalysisAndVernacularLanguages();
 		sSuccess = bundle.getString("report.tawsuccess");
+		ltInteractor = LingTreeInteractor.getInstance();
+		ltInteractor.initializeParameters(language);
 		try {
 			setJAR_URI();
 		} catch (URISyntaxException e) {
@@ -138,12 +143,12 @@ public abstract class TryAWordHTMLFormatter {
 			appendSuccessMessage(sb);
 			sb.append("<table class='" + SUCCESS + "' border='1' cellpadding='4pt'><tbody><tr>");
 			sb.append("<th align='left'>" + bundle.getString("report.tawgrapheme") + "</th>");
-			for (CVSegmentInSyllable seg : segmenter.segmentsInCurrentWord) {
+			for (CVSegmentInSyllable seg : segmenter.getSegmentsInWord()) {
 				formatSegmentInfo(sb, seg, true);
 			}
 			sb.append("</tr><tr>\n");
 			sb.append("<th align='left'>" + bundle.getString("report.tawsegment") + "</th>");
-			for (CVSegmentInSyllable seg : segmenter.segmentsInCurrentWord) {
+			for (CVSegmentInSyllable seg : segmenter.getSegmentsInWord()) {
 				formatSegmentInfo(sb, seg, false);
 			}
 			sb.append("</tr></tbody></table>\n");
@@ -203,5 +208,21 @@ public abstract class TryAWordHTMLFormatter {
 		msgFormatter.setLocale(locale);
 		msgFormatter.applyPattern(bundle.getString(mainProperty));
 		return msgFormatter.format(args);
+	}
+
+	public String getLingTreeDescription() {
+		return lingTreeDescription;
+	}
+
+	public void setLingTreeDescription(String lingTreeDescription) {
+		this.lingTreeDescription = lingTreeDescription;
+	}
+
+	protected void createSVGOfTree(StringBuilder sb, boolean fSuccess) {
+		if (!StringUtilities.isNullOrEmpty(lingTreeDescription) && !lingTreeDescription.equals("(W)")) {
+			sb.append("<div style=\"text-align:left\">");
+			sb.append(ltInteractor.createSVG(lingTreeDescription, fSuccess));
+			sb.append("</div>");
+		}
 	}
 }

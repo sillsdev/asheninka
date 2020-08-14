@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 public class Constants {
 	// program wide constants
-	public static final String VERSION_NUMBER = "0.6.1.0 Alpha";
+	public static final String VERSION_NUMBER = "0.7.0.0 Alpha";
 	public static final int SAVE_DATA_PERIODICITY = 15;
 	public static final int CURRENT_DATABASE_VERSION = 2;
 
@@ -57,7 +57,7 @@ public class Constants {
 	public static final String PLEASE_WAIT_HTML_ENDING = "</p>\n</body>\n</html>\n";
 	public static final String NATURAL_CLASS_PREFIX = "[";
 	public static final String NATURAL_CLASS_SUFFIX = "]";
-	
+	public static final String SORT_VALUE_DIVIDER = ";";
 
 	// Unit Testing constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/org/sil/syllableparser/testData/CVTestData.";
@@ -77,6 +77,7 @@ public class Constants {
 	public static final String UNIT_TEST_DATA_FILE_VERSION_002 = "test/org/sil/syllableparser/testData/CVTestDataVersion002.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_VERSION_2 = "test/org/sil/syllableparser/testData/CVTestDataVersion2.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_ENVIRONMENTS = "test/org/sil/syllableparser/testData/CVTestDataEnvironments.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_TEMPLATES_FILTERS = "test/org/sil/syllableparser/testData/TemplatesFiltersTestData.ashedata";
 
 	// Text colors
 	public static final Color ACTIVE = Color.BLACK;
@@ -84,6 +85,7 @@ public class Constants {
 	public static final Color PARSER_SUCCESS = Color.GREEN;
 	public static final Color PARSER_FAILURE = Color.RED;
 	public static final Color ENVIRONMENT_ERROR_MESSAGE = Color.CRIMSON;
+	public static final Color SLOTS_ERROR_MESSAGE = Color.CRIMSON;
 	
 	// Try a Word constants
 	public static final String TRY_A_WORD_INTERBLOCK_CSS = ".interblock {\n"

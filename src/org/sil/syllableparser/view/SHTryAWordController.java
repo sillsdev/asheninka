@@ -75,18 +75,21 @@ public class SHTryAWordController extends TryAWordController {
 
 				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
 				traceInfo.setSegmenterResult(segResult);
+				String sLingTreeDescription = "";
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 						syllabifier.setDoTrace(true);
 						traceInfo.setSyllabifier(syllabifier);
 						fSuccess = syllabifier.syllabify(segmentsInWord);
 						SHSyllabifierResult syllabifierResult = new SHSyllabifierResult();
 						syllabifierResult.success = fSuccess;
 						traceInfo.setSyllabifierResult(syllabifierResult);
+						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
 				}
 				SHTryAWordHTMLFormatter formatter = new SHTryAWordHTMLFormatter(traceInfo,
 						sonHierApproach.getLanguageProject(), locale);
+				formatter.setLingTreeDescription(sLingTreeDescription);
 				String sResult = formatter.format();
 				webEngine.loadContent(sResult);
 			}

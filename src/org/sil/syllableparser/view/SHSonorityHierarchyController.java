@@ -1,4 +1,4 @@
-// Copyright (c) 2018 SIL International
+// Copyright (c) 2018-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -13,11 +13,9 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
-import org.sil.syllableparser.SyllableParserException;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.utility.view.ControllerUtilities;
@@ -34,10 +32,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -166,13 +162,13 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 		makeColumnHeaderWrappable(naturalClassColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
 
-		// Since syllable patterns are sorted manually, we do not
+		// Since sonority items are sorted manually, we do not
 		// want the user to be able to click on a column header and sort it
 		nameColumn.setSortable(false);
 		naturalClassColumn.setSortable(false);
 		descriptionColumn.setSortable(false);
 
-		// Clear cv syllable pattern details.
+		// Clear sonority hierarchy details.
 		showSHNaturalClassDetails(null);
 
 		// Listen for selection changes and show the details when changed.
@@ -380,42 +376,30 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
+	public void setData(ONCApproach oncApproachData) {
+		setData(oncApproachData.getLanguageProject().getSHApproach());
+	}
+
 	@Override
 	void handleInsertNewItem() {
 		SHNaturalClass newNaturalCLass = new SHNaturalClass();
 		shApproach.getSHSonorityHierarchy().add(newNaturalCLass);
-		int i = shApproach.getSHSonorityHierarchy().size() - 1;
-		shSonorityHierarchyTable.requestFocus();
-		shSonorityHierarchyTable.getSelectionModel().select(i);
-		shSonorityHierarchyTable.getFocusModel().focus(i);
-		shSonorityHierarchyTable.scrollTo(i);
+		handleInsertNewItem(shApproach.getSHSonorityHierarchy(), shSonorityHierarchyTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		int i = shApproach.getSHSonorityHierarchy().indexOf(currentNaturalClass);
-		currentNaturalClass = null;
-		if (i >= 0) {
-			shApproach.getSHSonorityHierarchy().remove(i);
-			int max = shSonorityHierarchyTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			shSonorityHierarchyTable.requestFocus();
-			shSonorityHierarchyTable.getSelectionModel().select(i);
-			shSonorityHierarchyTable.getFocusModel().focus(i);
-			shSonorityHierarchyTable.scrollTo(i);
-		}
-		shSonorityHierarchyTable.refresh();
+		handleRemoveItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
 	}
 
 	@FXML

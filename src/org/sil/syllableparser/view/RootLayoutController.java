@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -159,6 +159,10 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private MenuItem menuItemEditRemove;
 	@FXML
+	private MenuItem menuItemEditPrevious;
+	@FXML
+	private MenuItem menuItemEditNext;
+	@FXML
 	private MenuItem menuItemSyllabify;
 	@FXML
 	private MenuItem menuItemTryAWord;
@@ -243,6 +247,9 @@ public class RootLayoutController implements Initializable {
 		shApproachController.setMainApp(mainApp);
 		shApproachController.setPrefs(mainApp.getApplicationPreferences());
 		shApproachController.setRootLayout(this);
+		oncApproachController.setMainApp(mainApp);
+		oncApproachController.setPrefs(mainApp.getApplicationPreferences());
+		oncApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -255,6 +262,9 @@ public class RootLayoutController implements Initializable {
 		shApproachController.setSHApproachData(languageProject.getSHApproach(),
 				languageProject.getWords());
 		shApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		oncApproachController.setONCApproachData(languageProject.getONCApproach(),
+				languageProject.getWords());
+		oncApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -265,6 +275,16 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleRemoveItem() {
 		currentApproachController.handleRemoveItem();
+	}
+
+	@FXML
+	private void handlePreviousItem() {
+		currentApproachController.handlePreviousItem();
+	}
+
+	@FXML
+	private void handleNextItem() {
+		currentApproachController.handleNextItem();
 	}
 
 	@FXML
@@ -835,6 +855,8 @@ public class RootLayoutController implements Initializable {
 			applicationPreferences.setLastCVApproachViewUsed(sCurrentView);
 		} else if (currentApproachController instanceof SHApproachController) {
 			applicationPreferences.setLastSHApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof ONCApproachController) {
+			applicationPreferences.setLastONCApproachViewUsed(sCurrentView);
 		}
 	}
 
@@ -966,10 +988,12 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleONCApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonONCApproach);
-		mainApp.showNotImplementedYet();
-		// approachViews.setItems(oncApproachController.getViews());
-		// currentApproachController = oncApproachController;
+		approachViews.setItems(oncApproachController.getViews());
+		currentApproachController = oncApproachController;
+		setInitialONCView();
+		setDisableForSomeMenuAndToolbarItems();
 	}
 
 	/**
@@ -1121,7 +1145,7 @@ public class RootLayoutController implements Initializable {
 				importer.importSegments(file);
 			} catch (SegmentImporterException e) {
 				if (e instanceof ParaTExtSegmentImporterNoCharactersException) {
-					ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
+					//ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
 					// ptex.getsFileName()
 					Alert errorAlert = new Alert(AlertType.ERROR);
 					errorAlert.setTitle(bundle.getString("program.name"));
@@ -1146,7 +1170,7 @@ public class RootLayoutController implements Initializable {
 
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		shApproachController = new SHApproachController(bundle, bundle.getLocale());
-		oncApproachController = new ONCApproachController(bundle);
+		oncApproachController = new ONCApproachController(bundle, bundle.getLocale());
 
 		createToolbarButtons(bundle);
 
@@ -1196,6 +1220,7 @@ public class RootLayoutController implements Initializable {
 
 		case "ONSET_NUCLEUS_CODA":
 			handleONCApproach();
+			setInitialONCView();
 			break;
 
 		case "OPTIMALITY_THEORY":
@@ -1276,6 +1301,55 @@ public class RootLayoutController implements Initializable {
 
 		case "WORDS":
 			selectApproachViewItem(2);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
+	protected void setInitialONCView() {
+		String sLastONCApproachViewUsed = applicationPreferences.getLastONCApproachViewUsed();
+		switch (sLastONCApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(9);
+			break;
+
+		case "FILTERS":
+			selectApproachViewItem(5);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(8);
+			break;
+
+		case "NATURAL_CLASSES":
+			selectApproachViewItem(3);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(7);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(0);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(1);
+			break;
+
+		case "SYLLABIFICATION_PARAMETERS":
+			selectApproachViewItem(2);
+			break;
+
+		case "TEMPLATES":
+			selectApproachViewItem(4);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(6);
 			break;
 
 		default:
@@ -1407,6 +1481,28 @@ public class RootLayoutController implements Initializable {
 			break;
 		}
 		return sApproach;
+	}
+
+	public ApproachType getCurrentApproach() {
+		ApproachType approach = ApproachType.CV;
+		String sClass = currentApproachController.getClass().getName();
+		switch (sClass) {
+		case "org.sil.syllableparser.view.CVApproachController":
+			approach = ApproachType.CV;
+			break;
+
+		case "org.sil.syllableparser.view.SHApproachController":
+			approach = ApproachType.SONORITY_HIERARCHY;
+			break;
+
+		case "org.sil.syllableparser.view.ONCApproachController":
+			approach = ApproachType.ONSET_NUCLEUS_CODA;
+			break;
+
+		default:
+			break;
+		}
+		return approach;
 	}
 
 	public String getViewUsed() {

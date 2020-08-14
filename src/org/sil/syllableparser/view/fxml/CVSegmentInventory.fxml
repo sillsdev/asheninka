@@ -30,8 +30,8 @@
 <!--                         </graphic> -->
 <!--                       </TableColumn> -->
                       <TableColumn fx:id="segmentColumn" prefWidth="76.0" text="%label.segment" />
-                      <TableColumn fx:id="graphemesColumn" prefWidth="75.0" text="%label.orthographicforms" />
-                      <TableColumn fx:id="descriptionColumn" prefWidth="82.0" text="%label.description" />
+                      <TableColumn fx:id="graphemesColumn" prefWidth="90.0" text="%label.orthographicforms" />
+                      <TableColumn fx:id="descriptionColumn" prefWidth="200.0" text="%label.description" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

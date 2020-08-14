@@ -144,18 +144,18 @@ public class CVNaturalClasser {
 	}
 
 	public CVNaturalClasserResult convertSegmentsToNaturalClasses(
-			List<CVSegmentInSyllable> segmentsInCurrentWord) {
+			List<? extends CVSegmentInSyllable> segmentsInWord) {
 		naturalClassListsInCurrentWord.clear();
 		CVNaturalClasserResult result = new CVNaturalClasserResult();
-		for (CVSegmentInSyllable segInSyllable : segmentsInCurrentWord) {
+		for (CVSegmentInSyllable segInSyllable : segmentsInWord) {
 			String sId = segInSyllable.getSegmentId();
 			List<CVNaturalClassInSyllable> naturalClassesList = null;
 			List<CVNaturalClass> listOfNatClasses = segmentToNaturalClassesMapping.get(sId);
 			if (listOfNatClasses == null) {
 				result.success = false;
 				result.sClassesSoFar = getNaturalClassListsInCurrentWordAsString();
-				int iCurrentSegment = segmentsInCurrentWord.indexOf(segInSyllable);
-				String joined = segmentsInCurrentWord.subList(0, iCurrentSegment).stream()
+				int iCurrentSegment = segmentsInWord.indexOf(segInSyllable);
+				String joined = segmentsInWord.subList(0, iCurrentSegment).stream()
 						.map(CVSegmentInSyllable::getGrapheme).collect(Collectors.joining(""));
 				result.sGraphemesSoFar = joined;
 				return result;

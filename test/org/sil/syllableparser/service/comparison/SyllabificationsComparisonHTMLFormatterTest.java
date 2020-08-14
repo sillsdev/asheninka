@@ -66,11 +66,14 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 	}
 
 	@Test
-	public void formattingEnglishTest() {
+	public void formattingCVSHEnglishTest() {
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(true);
+		comparer.setUseONCApproach(false);
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
-		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonHTMLEnglish.html");
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHHTMLEnglish.html");
 		try {
 			Stream<String> contents = Files.lines(file.toPath());
 			String scontents = contents.collect(Collectors.joining("\n"));
@@ -83,11 +86,134 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 	}
 
 	@Test
-	public void formattingSpanishTest() {
+	public void formattingCVSHSpanishTest() {
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(true);
+		comparer.setUseONCApproach(false);
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
-		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonHTMLSpanish.html");
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHHTMLSpanish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void formattingCVONCEnglishTest() {
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(false);
+		comparer.setUseONCApproach(true);
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, locale, dateTime);
+		String result = formatter.format();
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVONCHTMLEnglish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void formattingCVONCSpanishTest() {
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(false);
+		comparer.setUseONCApproach(true);
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, new Locale("es"), dateTime);
+		String result = formatter.format();
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVONCHTMLSpanish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void formattingCVSHONCEnglishTest() {
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(true);
+		comparer.setUseONCApproach(true);
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, locale, dateTime);
+		String result = formatter.format();
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHONCHTMLEnglish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void formattingCVSHONCSpanishTest() {
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(true);
+		comparer.setUseONCApproach(true);
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, new Locale("es"), dateTime);
+		String result = formatter.format();
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHONCHTMLSpanish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void formattingSHONCEnglishTest() {
+		comparer.setUseCVApproach(false);
+		comparer.setUseSHApproach(true);
+		comparer.setUseONCApproach(true);
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, locale, dateTime);
+		String result = formatter.format();
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonSHONCHTMLEnglish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void formattingSHONCSpanishTest() {
+		comparer.setUseCVApproach(false);
+		comparer.setUseSHApproach(true);
+		comparer.setUseONCApproach(true);
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, new Locale("es"), dateTime);
+		String result = formatter.format();
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonSHONCHTMLSpanish.html");
 		try {
 			Stream<String> contents = Files.lines(file.toPath());
 			String scontents = contents.collect(Collectors.joining("\n"));

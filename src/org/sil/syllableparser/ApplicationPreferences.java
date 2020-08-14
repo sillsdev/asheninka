@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.cvapproach.CVApproachView;
+import org.sil.syllableparser.model.oncapproach.ONCApproachView;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
 import org.sil.utility.*;
 
@@ -51,6 +52,30 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	// request it.
 	static final String LAST_SH_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastSHWordPredictedVsCorrectViewItemUsed";
 
+	// last ONC view used
+	static final String LAST_ONC_APPROACH_VIEW_USED = "lastONCApproachViewUsed";
+	static final String LAST_ONC_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastONCSegmentInventoryViewItemUsed";
+	static final String LAST_ONC_SONORITY_HIERARCHY_VIEW_ITEM_USED = "lastONCSonorityHierarchViewItemUsed";
+	static final String LAST_ONC_TRY_A_WORD_USED = "lastONCTryAWordUsed";
+	static final String LAST_ONC_WORDS_VIEW_ITEM_USED = "lastONCWordsViewItemUsed";
+	static final String LAST_ONC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastONCGraphemeNaturalClassesViewItemUsed";
+	static final String LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED = "lastONCEnvironmentsViewItemUsed";
+	static final String LAST_ONC_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastONCCVNaturalClassesViewItemUsed";
+	static final String LAST_ONC_TEMPLATES_VIEW_ITEM_USED = "lastONCTemplatesViewItemUsed";
+	static final String LAST_ONC_FILTERS_VIEW_ITEM_USED = "lastONCFiltersViewItemUsed";
+	// We have a last item used for predicted vs. correct words, but we're not
+	// setting it because it is not clear why it would be useful. We'll use it if users
+	// request it.
+	static final String LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastONCWordPredictedVsCorrectViewItemUsed";
+
+	// Syllabification comparison options
+	static final String LAST_USE_CV_APPROACH_VALUE = "lastUseCVApproachValueUsed";
+	static final String LAST_USE_SH_APPROACH_VALUE = "lastUseSHApproachValueUsed";
+	static final String LAST_USE_ONC_APPROACH_VALUE = "lastUseONCApproachValueUsed";
+	static final String LAST_USE_MORAIC_APPROACH_VALUE = "lastUseMoraicApproachValueUsed";
+	static final String LAST_USE_NUCLEAR_PROJECTION_APPROACH_VALUE = "lastUseNuclearProjectionApproachValueUsed";
+	static final String LAST_USE_OT_APPROACH_VALUE = "lastUseOTApproachValueUsed";
+
 	// Window parameters to remember
 	static final String POSITION_X = "PositionX";
 	static final String POSITION_Y = "PositionY";
@@ -68,6 +93,9 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_SH_COMPARISON = "lastSHComparision";
 	public static final String LAST_SH_SEGMENT = "lastSHSegment";
 	public static final String LAST_SH_TRY_A_WORD = "lastSHTryAWord";
+	public static final String LAST_ONC_COMPARISON = "lastONCComparision";
+	public static final String LAST_ONC_SEGMENT = "lastONCSegment";
+	public static final String LAST_ONC_TRY_A_WORD = "lastONCTryAWord";
 	public static final String LAST_SYLLABIFICATION_COMPARISON = "lastSyllabificationComparision";
 	
 	Preferences prefs;
@@ -206,6 +234,94 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 		setPreferencesKey(LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED, value);
 	}
 
+	public String getLastONCApproachViewUsed() {
+		return prefs.get(LAST_ONC_APPROACH_VIEW_USED, ONCApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastONCApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_ONC_APPROACH_VIEW_USED, lastApproachViewUsed);
+	}
+
+	public int getLastONCSegmentInventoryViewItemUsed() {
+		return prefs.getInt(LAST_ONC_SEGMENT_INVENTORY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCSegmentInventoryViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_SEGMENT_INVENTORY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCSonorityHierarchyViewItemUsed() {
+		return prefs.getInt(LAST_ONC_SONORITY_HIERARCHY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCSonorityHierarchyViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_SONORITY_HIERARCHY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCWordsViewItemUsed() {
+		return prefs.getInt(LAST_ONC_WORDS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCWordsViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_WORDS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCWordsPredictedVsCorrectViewItemUsed() {
+		return prefs.getInt(LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCWordsPredictedVsCorrectViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastONCTryAWordUsed() {
+		return prefs.get(LAST_ONC_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastONCTryAWordUsed(String lastONCTryAWordUsed) {
+		setPreferencesKey(LAST_ONC_TRY_A_WORD_USED, lastONCTryAWordUsed);
+	}
+
+	public int getLastONCGraphemeNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_ONC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCGraphemeNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCEnvironmentsViewItemUsed() {
+		return prefs.getInt(LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCEnvironmentsViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCCVNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_ONC_CV_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCCVNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_CV_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCTemplatesViewItemUsed() {
+		return prefs.getInt(LAST_ONC_TEMPLATES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCTemplatesViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_TEMPLATES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastONCFiltersViewItemUsed() {
+		return prefs.getInt(LAST_ONC_FILTERS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastONCFiltersViewItemUsed(int value) {
+		setPreferencesKey(LAST_ONC_FILTERS_VIEW_ITEM_USED, value);
+	}
+
 	public String getLastSHApproachViewUsed() {
 		return prefs.get(LAST_SH_APPROACH_VIEW_USED, SHApproachView.SEGMENT_INVENTORY.toString());
 	}
@@ -268,6 +384,55 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastSHEnvironmentsViewItemUsed(int value) {
 		setPreferencesKey(LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public boolean getLastUseCVApproachValue() {
+		return prefs.getBoolean(LAST_USE_CV_APPROACH_VALUE, true);
+	}
+
+	public void setLastUseCVApproachValue(boolean lastUseCVApproachValue) {
+		setPreferencesKey(LAST_USE_CV_APPROACH_VALUE, lastUseCVApproachValue);
+	}
+
+	public boolean getLastUseSHApproachValue() {
+		return prefs.getBoolean(LAST_USE_SH_APPROACH_VALUE, false);
+	}
+
+	public void setLastUseSHApproachValue(boolean lastUseShApproachValue) {
+		setPreferencesKey(LAST_USE_SH_APPROACH_VALUE, lastUseShApproachValue);
+	}
+
+	public boolean getLastUseONCApproachValue() {
+		return prefs.getBoolean(LAST_USE_ONC_APPROACH_VALUE, true);
+	}
+
+	public void setLastUseONCApproachValue(boolean lastUseOncApproachValue) {
+		setPreferencesKey(LAST_USE_ONC_APPROACH_VALUE, lastUseOncApproachValue);
+	}
+
+	public boolean getLastUseMoraicApproachValue() {
+		return prefs.getBoolean(LAST_USE_MORAIC_APPROACH_VALUE, false);
+	}
+
+	public void setLastUseMoraicApproachValue(boolean lastUseMoraicApproachValue) {
+		setPreferencesKey(LAST_USE_MORAIC_APPROACH_VALUE, lastUseMoraicApproachValue);
+	}
+
+	public boolean getLastUseNuclearProjectionApproachValue() {
+		return prefs.getBoolean(LAST_USE_NUCLEAR_PROJECTION_APPROACH_VALUE, false);
+	}
+
+	public void setLastUseNuclearProjectionApproachValue(
+			boolean lastUseNuclearProjectionApproachValue) {
+		setPreferencesKey(LAST_USE_NUCLEAR_PROJECTION_APPROACH_VALUE, lastUseNuclearProjectionApproachValue);
+	}
+
+	public boolean getLastUseOTApproachValue() {
+		return prefs.getBoolean(LAST_USE_OT_APPROACH_VALUE, false);
+	}
+
+	public void setLastUseOTApproachValue(boolean lastUseOtApproachValue) {
+		setPreferencesKey(LAST_USE_OT_APPROACH_VALUE, lastUseOtApproachValue);
 	}
 
 	public Stage getLastWindowParameters(String sWindow, Stage stage, Double defaultHeight, Double defaultWidth) {

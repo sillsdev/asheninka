@@ -19,7 +19,7 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifierInfo;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
 
 /**
  * @author Andy Black
@@ -27,14 +27,14 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceSyllabifier
  *         a Service Takes a sequence of natural classes and parses them into a
  *         sequence of syllables
  */
-public class SHSyllabifier {
+public class SHSyllabifier implements Syllabifiable {
 
 	private LanguageProject languageProject;
 	private SHApproach sonHierApproach;
 	private CVSegmenter segmenter;
 	private SHSonorityComparer sonorityComparer;
 	private boolean fDoTrace = false;
-	private List<SHTraceSyllabifierInfo> syllabifierTraceInfoList = new ArrayList<SHTraceSyllabifierInfo>();
+	private List<SHTracingStep> syllabifierTraceInfoList = new ArrayList<SHTracingStep>();
 
 	LinkedList<SHSyllable> syllablesInCurrentWord = new LinkedList<SHSyllable>(
 			Arrays.asList(new SHSyllable(null)));
@@ -58,7 +58,7 @@ public class SHSyllabifier {
 		this.syllablesInCurrentWord = syllablesInCurrentWord;
 	}
 
-	public List<SHTraceSyllabifierInfo> getSyllabifierTraceInfo() {
+	public List<SHTracingStep> getSyllabifierTraceInfo() {
 		return syllabifierTraceInfoList;
 	}
 
@@ -77,13 +77,13 @@ public class SHSyllabifier {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		fSuccess = segResult.success;
 		if (fSuccess) {
-			List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+			List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 			fSuccess = parseIntoSyllables(segmentsInWord);
 		}
 		return fSuccess;
 	}
 
-	private boolean parseIntoSyllables(List<CVSegmentInSyllable> segmentsInWord) {
+	private boolean parseIntoSyllables(List<? extends CVSegmentInSyllable> segmentsInWord) {
 		if (segmentsInWord.size() == 0) {
 			return false;
 		}
@@ -91,10 +91,10 @@ public class SHSyllabifier {
 		return fResult;
 	}
 
-	public boolean syllabify(List<CVSegmentInSyllable> segmentsInWord) {
+	public boolean syllabify(List<? extends CVSegmentInSyllable> segmentsInWord) {
 		syllablesInCurrentWord.clear();
 		syllabifierTraceInfoList.clear();
-		SHTraceSyllabifierInfo traceInfo = null;
+		SHTracingStep traceInfo = null;
 		boolean fLastStartedSyllable = true;
 		int segmentCount = segmentsInWord.size();
 		if (segmentCount == 0) {
@@ -106,7 +106,7 @@ public class SHSyllabifier {
 		SHNaturalClass natClass = sonHierApproach.getNaturalClassContainingSegment(seg1);
 		if (natClass == null) {
 			if (fDoTrace) {
-				traceInfo = new SHTraceSyllabifierInfo(seg1, null, null, null, SHComparisonResult.MISSING1);
+				traceInfo = new SHTracingStep(seg1, null, null, null, SHComparisonResult.MISSING1);
 				syllabifierTraceInfoList.add(traceInfo);
 			}
 			return false;
@@ -117,7 +117,7 @@ public class SHSyllabifier {
 			Segment seg2 = segmentsInWord.get(i).getSegment();
 			SHComparisonResult result = sonorityComparer.compare(seg1, seg2);
 			if (fDoTrace) {
-				traceInfo = new SHTraceSyllabifierInfo(seg1,
+				traceInfo = new SHTracingStep(seg1,
 						sonHierApproach.getNaturalClassContainingSegment(seg1), seg2,
 						sonHierApproach.getNaturalClassContainingSegment(seg2), result);
 				if (fLastStartedSyllable) {
@@ -135,15 +135,13 @@ public class SHSyllabifier {
 						syl.add(segmentsInWord.get(i));
 						i++;
 						if (fDoTrace) {
-							traceInfo = new SHTraceSyllabifierInfo(seg2,
+							traceInfo = new SHTracingStep(seg2,
 									sonHierApproach.getNaturalClassContainingSegment(seg2), seg3,
 									sonHierApproach.getNaturalClassContainingSegment(seg3), result);
 							syllabifierTraceInfoList.add(traceInfo);
 						}
 					}
-					syllablesInCurrentWord.add(syl);
-					syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
-					syl.add(segmentsInWord.get(i));
+					syl = endThisSyllableStartNew(segmentsInWord, syl, i);
 					fLastStartedSyllable = true;
 				} else {
 					syl.add(segmentsInWord.get(i));
@@ -151,7 +149,8 @@ public class SHSyllabifier {
 			} else if (result == SHComparisonResult.LESS) {
 				syl.add(segmentsInWord.get(i));
 			} else if (result == SHComparisonResult.EQUAL) {
-				syl.add(segmentsInWord.get(i));
+				syl = endThisSyllableStartNew(segmentsInWord, syl, i);
+				fLastStartedSyllable = true;
 			} else {
 				return false;
 			}
@@ -161,7 +160,7 @@ public class SHSyllabifier {
 			syllablesInCurrentWord.add(syl);
 			if (fDoTrace && fLastStartedSyllable) {
 				Segment seg = segmentsInWord.get(segmentCount -1).getSegment();
-				traceInfo = new SHTraceSyllabifierInfo(seg,
+				traceInfo = new SHTracingStep(seg,
 						sonHierApproach.getNaturalClassContainingSegment(seg), null,
 						null, null);
 				traceInfo.startsSyllable = true;
@@ -169,6 +168,14 @@ public class SHSyllabifier {
 			}
 		}
 		return true;
+	}
+
+	protected SHSyllable endThisSyllableStartNew(
+			List<? extends CVSegmentInSyllable> segmentsInWord, SHSyllable syl, int i) {
+		syllablesInCurrentWord.add(syl);
+		syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
+		syl.add(segmentsInWord.get(i));
+		return syl;
 	}
 
 	public String getSyllabificationOfCurrentWord() {
@@ -187,11 +194,30 @@ public class SHSyllabifier {
 		return sb.toString();
 	}
 
+	@Override
+	public String getLingTreeDescriptionOfCurrentWord() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("(W");
+		for (SHSyllable syl : syllablesInCurrentWord) {
+			sb.append("(σ");
+			for (CVSegmentInSyllable seg : syl.getSegmentsInSyllable()) {
+				sb.append("(\\L ");
+				sb.append(seg.getSegmentName());
+				sb.append("(\\G ");
+				sb.append(seg.getGrapheme());
+				sb.append("))");
+			}
+			sb.append(")");
+		}
+		sb.append(")");
+		return sb.toString();
+	}
+
 	public String getNaturalClassesInCurrentWord() {
 		StringBuilder sb = new StringBuilder();
 		int iSize = syllabifierTraceInfoList.size();
 		for (int i = 0; i < iSize; i++) {
-			SHTraceSyllabifierInfo info = syllabifierTraceInfoList.get(i);
+			SHTracingStep info = syllabifierTraceInfoList.get(i);
 			if (i > 0) {
 				sb.append(", ");
 			}
@@ -213,7 +239,7 @@ public class SHSyllabifier {
 	}
 
 	public String getSonorityValuesInCurrentWord() {
-		return syllabifierTraceInfoList.stream().map(SHTraceSyllabifierInfo::getComparisonResult)
+		return syllabifierTraceInfoList.stream().map(SHTracingStep::getComparisonResult)
 				.collect(Collectors.joining(", "));
 	}
 }

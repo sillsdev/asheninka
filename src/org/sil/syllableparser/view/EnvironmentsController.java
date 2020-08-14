@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -24,15 +24,16 @@ import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-import org.sil.environmentparser.EnvironmentConstants;
-import org.sil.environmentparser.EnvironmentErrorInfo;
-import org.sil.environmentparser.EnvironmentErrorListener;
-import org.sil.environmentparser.GraphemeErrorInfo;
-import org.sil.environmentparser.EnvironmentErrorListener.VerboseListener;
-import org.sil.environmentparser.EnvironmentLexer;
-import org.sil.environmentparser.EnvironmentParser;
+import org.sil.antlr4.environmentparser.EnvironmentConstants;
+import org.sil.antlr4.environmentparser.EnvironmentErrorInfo;
+import org.sil.antlr4.environmentparser.EnvironmentErrorListener;
+import org.sil.antlr4.environmentparser.GraphemeErrorInfo;
+import org.sil.antlr4.environmentparser.EnvironmentErrorListener.VerboseListener;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentLexer;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -604,16 +605,26 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ environmentTable.getItems().size() + " ");
 			// remember the selection
-			String sApproach = this.rootController.getApproachUsed();
-			if (sApproach.equals(ApproachType.CV.name())) {
-				mainApp.getApplicationPreferences().setLastCVEnvironmentsViewItemUsed(
-						iCurrentIndex);
-			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+			ApproachType approach = this.rootController.getCurrentApproach();
+			switch (approach) {
+			case CV:
+				mainApp.getApplicationPreferences()
+						.setLastCVEnvironmentsViewItemUsed(iCurrentIndex);
+				break;
+
+			case SONORITY_HIERARCHY:
 				mainApp.getApplicationPreferences().setLastSHEnvironmentsViewItemUsed(
 						iCurrentIndex);
+				break;
+
+			case ONSET_NUCLEUS_CODA:
+				mainApp.getApplicationPreferences().setLastONCEnvironmentsViewItemUsed(
+						iCurrentIndex);
+				break;
+			default:
+				break;
 			}
 		}
-
 	}
 
 	public void setEnvironment(Environment environment) {
@@ -650,6 +661,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 
@@ -673,44 +685,54 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
+	public void setData(ONCApproach oncApproachData) {
+		oncApproach = oncApproachData;
+		languageProject = oncApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
+		iRepresentationCaretPosition = 6;
+		fGncChoicesUsingMouse = false;
+
+		// Add observable list data to the table
+		environmentTable.setItems(oncApproachData.getLanguageProject().getEnvironments());
+		int max = environmentTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastONCEnvironmentsViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					// select the last one used
+					environmentTable.requestFocus();
+					environmentTable.getSelectionModel().select(iLastIndex);
+					environmentTable.getFocusModel().focus(iLastIndex);
+					environmentTable.scrollTo(iLastIndex);
+				}
+			});
+		}
+	}
+
 	@Override
 	void handleInsertNewItem() {
 		Environment newEnvironment = new Environment();
 		cvApproach.getLanguageProject().getEnvironments().add(newEnvironment);
 		newEnvironment.setEnvironmentRepresentation("/  _  ");
-		int i = cvApproach.getLanguageProject().getEnvironments().size() - 1;
-		environmentTable.requestFocus();
-		environmentTable.getSelectionModel().select(i);
-		environmentTable.getFocusModel().focus(i);
-		environmentTable.scrollTo(i);
+		handleInsertNewItem(cvApproach.getLanguageProject().getEnvironments(), environmentTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		// need to deal with all pointers to this environment
-		int i = cvApproach.getLanguageProject().getEnvironments().indexOf(currentEnvironment);
-		currentEnvironment = null;
-		if (i >= 0) {
-			cvApproach.getLanguageProject().getEnvironments().remove(i);
-			int max = environmentTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			environmentTable.requestFocus();
-			environmentTable.getSelectionModel().select(i);
-			environmentTable.getFocusModel().focus(i);
-			environmentTable.scrollTo(i);
-		}
-		environmentTable.refresh();
+		handleRemoveItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
 	}
 
 	// code taken from
@@ -744,5 +766,4 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			forceTableRowToRedisplayPerActiveSetting(env);
 		}
 	}
-
 }
