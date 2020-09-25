@@ -353,6 +353,7 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		// no sorting needed
 
 		// Add observable list data to the table
 		shSonorityHierarchyTable.setItems(shApproachData.getSHSonorityHierarchy());

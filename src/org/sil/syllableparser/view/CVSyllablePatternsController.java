@@ -364,6 +364,7 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		// no sorting allowed
 
 		// Add observable list data to the table
 		cvSyllablePatternTable.setItems(cvApproachData.getCVSyllablePatterns());

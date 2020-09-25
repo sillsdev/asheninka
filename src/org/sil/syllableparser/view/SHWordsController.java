@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2019 SIL International 
+// Copyright (c) 2018-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -103,6 +103,11 @@ public class SHWordsController extends WordsControllerCommon {
 	public void setData(SHApproach shApproachData, ObservableList<Word> words) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		setColumnICURules(wordColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(commentColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(predictedSyllabificationColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(correctSyllabificationColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(parserResultColumn, languageProject.getAnalysisLanguage().getIcuRules());
 		this.words = words;
 
 		// Add observable list data to the table

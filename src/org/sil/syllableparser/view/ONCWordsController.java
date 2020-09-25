@@ -106,6 +106,9 @@ public class ONCWordsController extends WordsControllerCommon {
 		languageProject = oncApproach.getLanguageProject();
 		setColumnICURules(wordColumn, languageProject.getVernacularLanguage().getIcuRules());
 		setColumnICURules(commentColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(predictedSyllabificationColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(correctSyllabificationColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(parserResultColumn, languageProject.getAnalysisLanguage().getIcuRules());
 		this.words = words;
 
 		// Add observable list data to the table

@@ -635,6 +635,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		setColumnICURules();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 
@@ -658,10 +659,17 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		}
 	}
 
+	protected void setColumnICURules() {
+		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(representationColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getIcuRules());
+	}
+
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
 		cvApproach = languageProject.getCVApproach();
+		setColumnICURules();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 
@@ -689,6 +697,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
 		cvApproach = languageProject.getCVApproach();
+		setColumnICURules();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 

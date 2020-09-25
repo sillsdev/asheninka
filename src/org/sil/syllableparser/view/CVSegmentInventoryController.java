@@ -479,19 +479,28 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		setColumnICURules();
 		populateSegmentTable(ApproachType.CV);
 	}
 
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		setColumnICURules();
 		populateSegmentTable(ApproachType.SONORITY_HIERARCHY);
 	}
 
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
+		setColumnICURules();
 		populateSegmentTable(ApproachType.ONSET_NUCLEUS_CODA);
+	}
+
+	protected void setColumnICURules() {
+		setColumnICURules(segmentColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(graphemesColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getIcuRules());
 	}
 
 	protected void populateSegmentTable(ApproachType appType) {

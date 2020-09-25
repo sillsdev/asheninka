@@ -41,6 +41,7 @@ public class TemplatesController extends TemplatesFiltersController {
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
+		// no sorting allowed
 		templateList = languageProject.getTemplates();
 		iRepresentationCaretPosition = 6;
 		fSncChoicesUsingMouse = false;

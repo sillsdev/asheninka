@@ -344,7 +344,14 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		setColumnICURules();
 		addDataToTable();
+	}
+
+	protected void setColumnICURules() {
+		setColumnICURules(graphemeOrNaturalClassColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getIcuRules());
 	}
 
 	private void addDataToTable() {
@@ -373,6 +380,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
 		cvApproach = languageProject.getCVApproach();
+		setColumnICURules();
 		addDataToTable();
 	}
 
@@ -380,6 +388,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
 		cvApproach = languageProject.getCVApproach();
+		setColumnICURules();
 		addDataToTable();
 	}
 

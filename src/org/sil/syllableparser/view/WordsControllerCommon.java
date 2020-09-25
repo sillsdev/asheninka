@@ -86,7 +86,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	@FXML
 	protected TableColumn<Word, String> predictedSyllabificationColumn;
 	@FXML
-	private TableColumn<Word, String> correctSyllabificationColumn;
+	protected TableColumn<Word, String> correctSyllabificationColumn;
 	@FXML
 	protected TableColumn<Word, String> parserResultColumn;
 	@FXML

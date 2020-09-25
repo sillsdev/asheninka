@@ -338,6 +338,9 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
 		this.approachType = approachType;
+		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(segmentOrNaturalClassColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getIcuRules());
 
 		// Add observable list data to the table
 		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());

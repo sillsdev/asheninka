@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -12,17 +12,12 @@ import java.util.ResourceBundle;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 /**
@@ -110,6 +105,11 @@ public class CVWordsController extends WordsControllerCommon {
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		setColumnICURules(wordColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(commentColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(predictedSyllabificationColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(correctSyllabificationColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(parserResultColumn, languageProject.getAnalysisLanguage().getIcuRules());
 		this.words = words;
 
 		// Add observable list data to the table
