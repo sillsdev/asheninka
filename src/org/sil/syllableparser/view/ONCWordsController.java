@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -104,12 +104,15 @@ public class ONCWordsController extends WordsControllerCommon {
 	public void setData(ONCApproach oncApproachData, ObservableList<Word> words) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
+		setColumnICURules(wordColumn, languageProject.getVernacularLanguage().getIcuRules());
+		setColumnICURules(commentColumn, languageProject.getAnalysisLanguage().getIcuRules());
 		this.words = words;
 
 		// Add observable list data to the table
 		wordsTable.setItems(words);
 		int max = wordsTable.getItems().size();
-		if (max > 0) {
+		// mainApp null test is to make some tests work
+		if (max > 0 && mainApp != null) {
 			int iLastIndex = mainApp.getApplicationPreferences().getLastONCWordsViewItemUsed();
 			iLastIndex = adjustIndexValue(iLastIndex, max);
 			setFocusOnWord(iLastIndex);

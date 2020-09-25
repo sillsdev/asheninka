@@ -78,6 +78,7 @@ public class Constants {
 	public static final String UNIT_TEST_DATA_FILE_VERSION_2 = "test/org/sil/syllableparser/testData/CVTestDataVersion2.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_ENVIRONMENTS = "test/org/sil/syllableparser/testData/CVTestDataEnvironments.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_TEMPLATES_FILTERS = "test/org/sil/syllableparser/testData/TemplatesFiltersTestData.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_ICU_RULES = "test/org/sil/syllableparser/testData/ICURulesTestData.ashedata";
 
 	// Text colors
 	public static final Color ACTIVE = Color.BLACK;

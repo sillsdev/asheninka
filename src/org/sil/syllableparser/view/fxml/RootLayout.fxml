@@ -169,9 +169,9 @@
 					</Menu>
 					<Menu mnemonicParsing="true" text="%menu.settings">
 						<items>
-							<MenuItem mnemonicParsing="true" onAction="#handleVernacularFont"
+							<MenuItem mnemonicParsing="true" onAction="#handleVernacularWritingSystem"
 								text="%menu.vernacularfont" fx:id="menuItemVernacularFont" />
-							<MenuItem mnemonicParsing="true" onAction="#handleAnalysisFont"
+							<MenuItem mnemonicParsing="true" onAction="#handleAnalysisWritingSystem"
 								text="%menu.analysisfont" fx:id="menuItemAnalysisFont" />
 							<SeparatorMenuItem />
 							<Menu mnemonicParsing="true" text="%menu.exporthyphenationparameters">

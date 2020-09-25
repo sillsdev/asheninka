@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019 SIL International
+ * Copyright (c) 2019-2020 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -39,8 +39,8 @@ public class LingTreeInteractorTest {
 	@Before
 	public void setUp() throws Exception {
 		language = new LanguageProject();
-		al = new Language("Times", 12.0, "Regular");
-		vl = new Language("Charis SIL", 13.0, "Bold");
+		al = new Language("Times", 12.0, "Regular", null, null, null, null);
+		vl = new Language("Charis SIL", 13.0, "Bold", null, null, null, null);
 		language.setAnalysisLanguage(al);
 		language.setVernacularLanguage(vl);
 		fia = new FontInfo(al.getFont());

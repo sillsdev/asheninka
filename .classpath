@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="LibJavaDev/libjavadev-1.2.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_162"/>
 	<classpathentry kind="lib" path="lingtree/LingTree.jar" sourcepath="/LingTree/src/org/sil/lingtree/model"/>
+	<classpathentry kind="lib" path="C:/Users/Andy Black/Documents/Eclipse4.4Workspace/asheninka/ICU/icu4j-67_1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

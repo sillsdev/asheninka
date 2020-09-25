@@ -7,30 +7,16 @@
 package org.sil.syllableparser.view;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Word;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
-import org.sil.syllableparser.model.oncapproach.ONCTraceInfo;
 import org.sil.syllableparser.service.LingTreeInteractor;
-import org.sil.syllableparser.service.parsing.CVSegmenterResult;
-import org.sil.syllableparser.service.parsing.ONCSegmenter;
-import org.sil.syllableparser.service.parsing.ONCSyllabifier;
-import org.sil.syllableparser.service.parsing.ONCSyllabifierResult;
-import org.sil.syllableparser.service.parsing.ONCTryAWordHTMLFormatter;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
@@ -96,7 +82,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	@FXML
 	protected TableView<Word> wordsTable;
 	@FXML
-	private TableColumn<Word, String> wordColumn;
+	protected TableColumn<Word, String> wordColumn;
 	@FXML
 	protected TableColumn<Word, String> predictedSyllabificationColumn;
 	@FXML

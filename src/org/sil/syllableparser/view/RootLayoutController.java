@@ -395,17 +395,38 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
-	private void handleVernacularFont() {
-		handleFont(mainApp.getPrimaryStage(), languageProject.getVernacularLanguage());
+	private void handleVernacularWritingSystem() {
+		launchWritingSystemController(languageProject.getVernacularLanguage(), "label.vernacularwritingsystem");
+	}
+
+	protected void launchWritingSystemController(Language language, String titleResource) {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/WritingSystem.fxml";
+			String title = bundle.getString(titleResource);
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
+			WritingSystemController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setData(language);
+			dialogStage.setResizable(false);
+			dialogStage.showAndWait();
+		} catch (IOException | CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
-	private void handleAnalysisFont() {
-		handleFont(mainApp.getPrimaryStage(), languageProject.getAnalysisLanguage());
+	private void handleAnalysisWritingSystem() {
+		launchWritingSystemController(languageProject.getAnalysisLanguage(), "label.analysiswritingsystem");
 	}
 
 	public void handleFont(Stage stage, Language lang) {
-		FontSelectorDialog dlg = new FontSelectorDialog(lang.getFont());
+		Font tempFont = lang.getFont();
+		FontSelectorDialog dlg = new FontSelectorDialog(tempFont);
 		dlg.initOwner(stage);
 		// dlg.setResult(languageProject.getVernacularFont());
 		dlg.showAndWait();

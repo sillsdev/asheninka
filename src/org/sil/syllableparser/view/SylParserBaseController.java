@@ -6,12 +6,16 @@
  */
 package org.sil.syllableparser.view;
 
+import java.util.Comparator;
+
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+
+import com.ibm.icu.text.RuleBasedCollator;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -33,6 +37,8 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 	protected CVApproach cvApproach;
 	protected SHApproach shApproach;
 	protected ONCApproach oncApproach;
+	protected String sICURules = "";
+	protected RuleBasedCollator collatorViaRules;
 
 	protected void makeColumnHeaderWrappable(@SuppressWarnings("rawtypes") TableColumn col) {
 		Label label = new Label(col.getText());
@@ -104,5 +110,19 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 			tableView.scrollTo(i);
 		}
 		tableView.refresh();
+	}
+
+	protected void setColumnICURules(TableColumn<? extends SylParserObject, String> tableColumn, String sICURules) {
+		try {
+			collatorViaRules = new RuleBasedCollator(sICURules);
+			Comparator<String> comparatorViaRules = Comparator.comparing(String::toString,
+					collatorViaRules);
+			tableColumn.setComparator((String s1, String s2) -> {
+				return comparatorViaRules.compare(s1, s2);
+			});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
