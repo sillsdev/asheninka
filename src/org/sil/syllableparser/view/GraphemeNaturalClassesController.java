@@ -349,9 +349,9 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	}
 
 	protected void setColumnICURules() {
-		setColumnICURules(graphemeOrNaturalClassColumn, languageProject.getVernacularLanguage().getIcuRules());
-		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getIcuRules());
-		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(graphemeOrNaturalClassColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
 	}
 
 	private void addDataToTable() {

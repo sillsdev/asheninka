@@ -498,9 +498,9 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	}
 
 	protected void setColumnICURules() {
-		setColumnICURules(segmentColumn, languageProject.getVernacularLanguage().getIcuRules());
-		setColumnICURules(graphemesColumn, languageProject.getVernacularLanguage().getIcuRules());
-		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(segmentColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(graphemesColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
 	}
 
 	protected void populateSegmentTable(ApproachType appType) {

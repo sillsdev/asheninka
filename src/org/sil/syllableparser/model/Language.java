@@ -34,8 +34,8 @@ public class Language  {
 	private Color color;
 	private BooleanProperty rightToLeft;
 	private SortingOption sortingOption;
-	protected final StringProperty sortOption;
 	protected final StringProperty code;
+	protected final StringProperty useSameLanguage;
 	protected final StringProperty icuRules;
 
 	/**
@@ -129,18 +129,6 @@ public class Language  {
 		return rightToLeft.get();
 	}
 
-	public String getSortOption() {
-		return sortOption.get();
-	}
-
-	public StringProperty sortOptionProperty() {
-		return sortOption;
-	}
-
-	public void setSortOption(String option) {
-		this.sortOption.set(option);
-	}
-
 	public String getIcuRules() {
 		return icuRules.get();
 	}
@@ -152,6 +140,7 @@ public class Language  {
 	public void setIcuRules(String rules) {
 		this.icuRules.set(rules);
 	}
+
 	public String getCode() {
 		return code.get();
 	}
@@ -164,7 +153,19 @@ public class Language  {
 		this.code.set(option);
 	}
 
-	public Language(String fontFamily, double fontSize, String fontType, SortingOption option, String sortOption, String code, String icuRules) {
+	public String getUseSameLanguage() {
+		return useSameLanguage.get();
+	}
+
+	public StringProperty useSameLanguageProperty() {
+		return code;
+	}
+
+	public void setUseSameLanguage(String option) {
+		this.useSameLanguage.set(option);
+	}
+
+	public Language(String fontFamily, double fontSize, String fontType, SortingOption option, String code, String icuRules, String useSameLanguage) {
 		super();
 		this.fontFamily = fontFamily;
 		this.fontSize = fontSize;
@@ -172,9 +173,9 @@ public class Language  {
 		font = createFont(fontFamily, fontSize, fontType);
 		rightToLeft = new SimpleBooleanProperty(false);
 		sortingOption = option;
-		this.sortOption = new SimpleStringProperty(sortOption);
 		this.code = new SimpleStringProperty(code);
 		this.icuRules = new SimpleStringProperty(icuRules);
+		this.useSameLanguage = new SimpleStringProperty(useSameLanguage);
 	}
 
 	public Language() {
@@ -184,9 +185,9 @@ public class Language  {
 		font = createFont(fontFamily, fontSize, fontType);
 		rightToLeft = new SimpleBooleanProperty(false);
 		sortingOption = SortingOption.DEFAULT_ORDER;
-		sortOption = new SimpleStringProperty("");
 		code = new SimpleStringProperty("");
 		icuRules = new SimpleStringProperty("");
+		useSameLanguage = new SimpleStringProperty("");
 	}
 
 	public Font createFont(String fontFamily, double fontSize, String fontType) {
@@ -213,4 +214,10 @@ public class Language  {
 		return Font.font(fontFamily, weight, posture, fontSize);
 	}
 
+	public String getAnyIcuRules() {
+		if (sortingOption == SortingOption.DEFAULT_ORDER) {
+			return "";
+		}
+		return getIcuRules();
+	}
 }

@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,7 +26,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
+import org.sil.syllableparser.model.SortingOption;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.utility.view.JavaFXThreadingRule;
@@ -37,7 +40,9 @@ import org.sil.utility.view.JavaFXThreadingRule;
 public class ICURulesTest {
 	
 	ONCApproach onc;
-	ONCWordsController controller;
+	ONCWordsController oncWordsController;
+	WritingSystemController wsController;
+	String ksIcuRules = "& a < æ <ɑ < aɪ < aʊ\n& d < d͡ʒ < ð\n& e < eɪ < ɛ < ə\n& i < ɪ\n& l < l̩\n& m < m̩\n& n < n̩ < ŋ\n& o < oɪ < oʊ\n& r < ɹ < ɹ̩\n& s < ʃ\n& t < ɾ <t͡ʃ < θ \n& u < ʊ\n& z < ʒ < ʔ\n";
 	
 	@Rule
 	public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
@@ -54,17 +59,28 @@ public class ICURulesTest {
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		onc = languageProject.getONCApproach();
 
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(ApproachViewNavigator.class
+		FXMLLoader oncWordsLoader = new FXMLLoader();
+		oncWordsLoader.setLocation(ApproachViewNavigator.class
 				.getResource("fxml/ONCWords.fxml"));
-		loader.setResources(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
-		StackPane page = loader.load();
-		Stage dialogStage = new Stage();
-		dialogStage.initModality(Modality.WINDOW_MODAL);
-		Scene scene = new Scene(page);
-		dialogStage.setScene(scene);
-		controller = loader.getController();
-		controller.setData(onc, languageProject.getWords());
+		oncWordsLoader.setResources(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
+		StackPane oncWordsPage = oncWordsLoader.load();
+		Stage oncWordsDialogStage = new Stage();
+		oncWordsDialogStage.initModality(Modality.WINDOW_MODAL);
+		Scene ncWordsScene = new Scene(oncWordsPage);
+		oncWordsDialogStage.setScene(ncWordsScene);
+		oncWordsController = oncWordsLoader.getController();
+		oncWordsController.setData(onc, languageProject.getWords());
+
+		FXMLLoader wsLoader = new FXMLLoader();
+		wsLoader.setLocation(ApproachViewNavigator.class
+				.getResource("fxml/WritingSystem.fxml"));
+		wsLoader.setResources(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
+		AnchorPane wsPage = wsLoader.load();
+		Stage wsDialogStage = new Stage();
+		wsDialogStage.initModality(Modality.WINDOW_MODAL);
+		Scene wsScene = new Scene(wsPage);
+		wsDialogStage.setScene(wsScene);
+		wsController = wsLoader.getController();
 	}
 
 	/**
@@ -77,10 +93,10 @@ public class ICURulesTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void vernacularICUSortTest() {
-		TableView <Word> wordsTable = controller.getONCWordsTable();
+		TableView <Word> wordsTable = oncWordsController.getONCWordsTable();
 		TableColumn<Word,String> wordColumn = (TableColumn<Word, String>) wordsTable.getColumns().get(0);
 		String sICUrules = "";
-		controller.setColumnICURules(wordColumn, sICUrules);
+		oncWordsController.setColumnICURules(wordColumn, sICUrules);
 		wordsTable.getSortOrder().setAll(wordColumn);
 		int last = wordsTable.getItems().size();
 		String sWord = wordColumn.getCellData(0);
@@ -99,7 +115,7 @@ public class ICURulesTest {
 		assertEquals("θwaɹt", sWord);
 		
 		sICUrules = onc.getLanguageProject().getVernacularLanguage().getIcuRules();
-		controller.setColumnICURules(wordColumn, sICUrules);
+		oncWordsController.setColumnICURules(wordColumn, sICUrules);
 		wordsTable.getSortOrder().setAll(wordColumn);
 		sWord = wordColumn.getCellData(0);
 		assertEquals("aɹktɪk", sWord);
@@ -117,4 +133,51 @@ public class ICURulesTest {
 		assertEquals("waɪld", sWord);
 	}
 
+	@Test
+	public void getAnyIcuRulesTest() {
+		Language vernacular = onc.getLanguageProject().getVernacularLanguage();
+		SortingOption initialOption = vernacular.getSortingOption();
+		vernacular.setSortingOption(SortingOption.DEFAULT_ORDER);
+		String icuRules = vernacular.getAnyIcuRules();
+		assertEquals("", icuRules);
+		vernacular.setSortingOption(SortingOption.CUSTOM_ICU_RULES);
+		icuRules = vernacular.getAnyIcuRules();
+		assertEquals(ksIcuRules, icuRules);
+		vernacular.setSortingOption(SortingOption.SAME_AS_ANOTHER_LANGUAGE);
+		icuRules = vernacular.getAnyIcuRules();
+		assertEquals(ksIcuRules, icuRules);
+		vernacular.setSortingOption(SortingOption.USE_LDML_FILE);
+		icuRules = vernacular.getAnyIcuRules();
+		assertEquals(ksIcuRules, icuRules);
+		vernacular.setSortingOption(initialOption);
+	}
+
+	@Test
+	public void writingSystemDisplayTest() throws Exception {
+		Language vernacular = onc.getLanguageProject().getVernacularLanguage();
+		SortingOption initialOption = vernacular.getSortingOption();
+//		vernacular.setSortingOption(SortingOption.DEFAULT_ORDER);
+//		wsController.setData(vernacular);
+		wsController.sortingChoiceBox.setValue(SortingOption.DEFAULT_ORDER);
+		assertEquals(false, wsController.icuRules.isVisible());
+		assertEquals(false, wsController.icuRulesTextArea.isVisible());
+		assertEquals(false, wsController.languageToUse.isVisible());
+		assertEquals(false, wsController.languageToUseComboBox.isVisible());
+		wsController.sortingChoiceBox.setValue(SortingOption.CUSTOM_ICU_RULES);
+		assertEquals(true, wsController.icuRules.isVisible());
+		assertEquals(true, wsController.icuRulesTextArea.isVisible());
+		assertEquals(false, wsController.languageToUse.isVisible());
+		assertEquals(false, wsController.languageToUseComboBox.isVisible());
+		wsController.sortingChoiceBox.setValue(SortingOption.SAME_AS_ANOTHER_LANGUAGE);
+		assertEquals(true, wsController.icuRules.isVisible());
+		assertEquals(true, wsController.icuRulesTextArea.isVisible());
+		assertEquals(true, wsController.languageToUse.isVisible());
+		assertEquals(true, wsController.languageToUseComboBox.isVisible());
+		wsController.sortingChoiceBox.setValue(SortingOption.USE_LDML_FILE);
+		assertEquals(true, wsController.icuRules.isVisible());
+		assertEquals(true, wsController.icuRulesTextArea.isVisible());
+		assertEquals(false, wsController.languageToUse.isVisible());
+		assertEquals(false, wsController.languageToUseComboBox.isVisible());
+		vernacular.setSortingOption(initialOption);
+	}
 }

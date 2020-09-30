@@ -9,14 +9,13 @@ package org.sil.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.Language;
-import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.SortingOption;
-import org.sil.syllableparser.model.SyllabificationParameters;
 
-import javafx.application.Platform;
+import com.ibm.icu.text.Collator;
+import com.ibm.icu.text.RuleBasedCollator;
+import com.ibm.icu.util.ULocale;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -27,13 +26,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -63,11 +61,18 @@ public class WritingSystemController extends SylParserBaseController implements
 	@FXML
 	private Button fontButton;
 	@FXML
-	private ChoiceBox<SortingOption> sortingChoiceBox;
-	@FXML
 	private ColorPicker colorPicker;
+	// following are public for unit tests
 	@FXML
-	private TextArea icuRulesTextArea;
+	public Label icuRules;
+	@FXML
+	public ChoiceBox<SortingOption> sortingChoiceBox;
+	@FXML
+	public TextArea icuRulesTextArea;
+	@FXML
+	public Label languageToUse;
+	@FXML
+	public ComboBox<String> languageToUseComboBox;
 
 	Stage dialogStage;
 	private boolean okClicked = false;
@@ -95,8 +100,6 @@ public class WritingSystemController extends SylParserBaseController implements
 			@Override
 			public String toString(SortingOption object) {
 				String localizedName = bundle.getString("language.sortingoption." + object.toString().toLowerCase());
-				if (currentLanguage != null)
-					currentLanguage.setSortOption(localizedName);
 				return localizedName;
 			}
 
@@ -106,15 +109,64 @@ public class WritingSystemController extends SylParserBaseController implements
 				return null;
 			}
 		});
+		sortingChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SortingOption>() {
+			public void changed(ObservableValue ov, SortingOption old_value, SortingOption new_value) {
+				displaySortingTabItemsPerSortingOption(new_value);
+			}
+		});
+		ULocale[] availableLocales = ULocale.getAvailableLocales();
+		for (ULocale l : availableLocales) {
+			languageToUseComboBox.getItems().add(l.getName());
+		}
+		languageToUseComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue ov, String old_value, String new_value) {
+				currentLanguage.setUseSameLanguage(new_value);
+				ULocale myLocale = new ULocale(new_value);
+				RuleBasedCollator rbc = (RuleBasedCollator) Collator.getInstance(myLocale);
+				String sRules = rbc.getRules();
+				if (currentLanguage.getSortingOption() == SortingOption.SAME_AS_ANOTHER_LANGUAGE) {
+					currentLanguage.setIcuRules(sRules);
+					icuRulesTextArea.setText(sRules);
+				}
+			}
+		});
 		colorPicker.setOnAction(new EventHandler() {
 		     public void handle(Event t) {
 		         color = colorPicker.getValue();
-//		         System.out.println("New Color's RGB = "+ color.getRed()+" "+color.getGreen()+" "+color.getBlue());
 		     }
 		 });
 		sortingChoiceBox.requestFocus();
 	}
 	
+	protected void displaySortingTabItemsPerSortingOption(SortingOption option) {
+		switch (option) {
+		case CUSTOM_ICU_RULES:
+			icuRules.setVisible(true);
+			icuRulesTextArea.setVisible(true);
+			languageToUse.setVisible(false);
+			languageToUseComboBox.setVisible(false);
+			break;
+		case DEFAULT_ORDER:
+			icuRules.setVisible(false);
+			icuRulesTextArea.setVisible(false);
+			languageToUse.setVisible(false);
+			languageToUseComboBox.setVisible(false);
+			break;
+		case SAME_AS_ANOTHER_LANGUAGE:
+			icuRules.setVisible(true);
+			icuRulesTextArea.setVisible(true);
+			languageToUse.setVisible(true);
+			languageToUseComboBox.setVisible(true);
+			break;
+		case USE_LDML_FILE:
+			icuRules.setVisible(true);
+			icuRulesTextArea.setVisible(true);
+			languageToUse.setVisible(false);
+			languageToUseComboBox.setVisible(false);
+			break;
+		}
+	}
+
 	public void setData(Language language) throws CloneNotSupportedException {
 		if (language == null)
 			return;
@@ -140,6 +192,10 @@ public class WritingSystemController extends SylParserBaseController implements
 		}
 		if (icuRulesTextArea != null) {
 			icuRulesTextArea.setText(currentLanguage.getIcuRules());
+		}
+		if (languageToUseComboBox != null) {
+			int i = languageToUseComboBox.getItems().indexOf(currentLanguage.getUseSameLanguage());
+			languageToUseComboBox.selectionModelProperty().get().select(i);
 		}
 	}
 	

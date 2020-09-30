@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -47,7 +48,10 @@
                            <children>
                               <ChoiceBox fx:id="sortingChoiceBox" layoutX="92.0" layoutY="26.0" />
                               <Label layoutX="14.0" layoutY="30.0" text="%label.sort" />
-                              <TextArea fx:id="icuRulesTextArea" layoutX="14.0" layoutY="72.0" prefHeight="289.0" prefWidth="251.0" />
+                              <TextArea fx:id="icuRulesTextArea" layoutX="14.0" layoutY="95.0" prefHeight="293.0" prefWidth="251.0" />
+                              <Label fx:id="icuRules" layoutX="14.0" layoutY="67.0" text="%label.icurules" />
+                              <ComboBox fx:id="languageToUseComboBox" layoutX="496.0" layoutY="26.0" prefHeight="25.0" prefWidth="90.0" />
+                              <Label fx:id="languageToUse" layoutX="358.0" layoutY="30.0" text="%label.languagetouse" />
                            </children>
                         </AnchorPane>
                      </content>
