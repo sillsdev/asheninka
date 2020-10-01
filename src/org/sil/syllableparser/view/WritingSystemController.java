@@ -6,11 +6,16 @@
  */
 package org.sil.syllableparser.view;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.SortingOption;
+import org.sil.syllableparser.service.LDMLFileExtractor;
+import org.sil.utility.view.ControllerUtilities;
 
 import com.ibm.icu.text.Collator;
 import com.ibm.icu.text.RuleBasedCollator;
@@ -73,11 +78,19 @@ public class WritingSystemController extends SylParserBaseController implements
 	public Label languageToUse;
 	@FXML
 	public ComboBox<String> languageToUseComboBox;
+	@FXML
+	public Button browseButton;
+	@FXML
+	public TextField directoryField;
 
 	Stage dialogStage;
 	private boolean okClicked = false;
 	private Language currentLanguage;
 	private Color color = Color.BLACK;
+	private String sFileFilterDescription = "";
+
+	private String sFileChooserFilterDescription = "*.ldml";
+	private String sFileExtensions = "";
 
 	public WritingSystemController() {
 		
@@ -91,6 +104,7 @@ public class WritingSystemController extends SylParserBaseController implements
 	public void initialize(URL location, ResourceBundle resources) {
 
 		this.bundle = resources;
+		sFileFilterDescription = bundle.getString("file.ldmlfilterdescription");
 
 		sortingChoiceBox.getItems().setAll(SortingOption.values());
 		if (currentLanguage != null) {
@@ -135,6 +149,8 @@ public class WritingSystemController extends SylParserBaseController implements
 		         color = colorPicker.getValue();
 		     }
 		 });
+		browseButton.setText(bundle.getString("label.browse"));
+
 		sortingChoiceBox.requestFocus();
 	}
 	
@@ -145,24 +161,32 @@ public class WritingSystemController extends SylParserBaseController implements
 			icuRulesTextArea.setVisible(true);
 			languageToUse.setVisible(false);
 			languageToUseComboBox.setVisible(false);
+			directoryField.setVisible(false);
+			browseButton.setVisible(false);
 			break;
 		case DEFAULT_ORDER:
 			icuRules.setVisible(false);
 			icuRulesTextArea.setVisible(false);
 			languageToUse.setVisible(false);
 			languageToUseComboBox.setVisible(false);
+			directoryField.setVisible(false);
+			browseButton.setVisible(false);
 			break;
 		case SAME_AS_ANOTHER_LANGUAGE:
 			icuRules.setVisible(true);
 			icuRulesTextArea.setVisible(true);
 			languageToUse.setVisible(true);
 			languageToUseComboBox.setVisible(true);
+			directoryField.setVisible(false);
+			browseButton.setVisible(false);
 			break;
 		case USE_LDML_FILE:
 			icuRules.setVisible(true);
 			icuRulesTextArea.setVisible(true);
 			languageToUse.setVisible(false);
 			languageToUseComboBox.setVisible(false);
+			directoryField.setVisible(true);
+			browseButton.setVisible(true);
 			break;
 		}
 	}
@@ -197,6 +221,12 @@ public class WritingSystemController extends SylParserBaseController implements
 			int i = languageToUseComboBox.getItems().indexOf(currentLanguage.getUseSameLanguage());
 			languageToUseComboBox.selectionModelProperty().get().select(i);
 		}
+		if (directoryField != null) {
+			directoryField.setText(currentLanguage.getLdmlFile());
+		}
+		sFileChooserFilterDescription = sFileFilterDescription + " ("
+				+ Constants.LDML_FILE_EXTENSIONS + ")";
+
 	}
 	
 	@Override
@@ -231,6 +261,7 @@ public class WritingSystemController extends SylParserBaseController implements
 		currentLanguage.setCode(codeField.getText());
 		currentLanguage.setSortingOption(sortingChoiceBox.selectionModelProperty().get().getSelectedItem());
 		currentLanguage.setIcuRules(icuRulesTextArea.getText());
+		currentLanguage.setLdmlFile(directoryField.getText());
 		
 		dialogStage.close();
 	}
@@ -241,6 +272,22 @@ public class WritingSystemController extends SylParserBaseController implements
 	@FXML
 	private void handleCancel() {
 		dialogStage.close();
+	}
+
+	@FXML
+	protected void handleBrowse() throws IOException {
+		File file = ControllerUtilities.getFileToOpen(getMainApp(),
+				currentLanguage.getLdmlFile(), sFileChooserFilterDescription,
+				Constants.LDML_FILE_EXTENSIONS);
+		if (file != null && file.exists() && file.isFile()) {
+			directoryField.setText(file.getAbsolutePath());
+			LDMLFileExtractor extractor = new LDMLFileExtractor(file);
+			String sLDMLFileContent = extractor.getIcuRules();
+			if (sLDMLFileContent != null) {
+				icuRulesTextArea.setText(sLDMLFileContent);
+			}
+
+		}
 	}
 
 	@Override

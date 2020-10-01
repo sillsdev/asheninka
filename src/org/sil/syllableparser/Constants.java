@@ -23,6 +23,9 @@ public class Constants {
 	public static final String ASHENINKA_DATA_FILE_EXTENSION = "ashedata";
 	public static final String ASHENINKA_DATA_FILE_EXTENSIONS = "*."
 			+ ASHENINKA_DATA_FILE_EXTENSION;
+	public static final String LDML_FILE_EXTENSION = "ldml";
+	public static final String LDML_FILE_EXTENSIONS = "*."
+			+ LDML_FILE_EXTENSION;
 	public static final String ASHENINKA_STARTER_FILE = "resources/starterFile.ashedata";
 	public static final String DEFAULT_DIRECTORY_NAME = "My Asheninka";
 	public static final String BACKUP_DIRECTORY_NAME = "Backups";
@@ -41,6 +44,7 @@ public class Constants {
 	public static final String UTF8_ENCODING = "UTF8";
 	public static final String XML_FILE_EXTENSION = ".xml";
 	public static final String MIGRATION_XSLT_FILE_NAME = "resources/DataMigration";
+	public static final String LDML_XSLT_FILE_NAME = "resources/LdmlExtractor.xsl";
 	public static final String RESOURCE_SOURCE_LOCATION = "src/org/sil/syllableparser/";
 
 	// chooser related constants

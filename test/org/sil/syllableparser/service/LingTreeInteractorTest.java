@@ -39,8 +39,8 @@ public class LingTreeInteractorTest {
 	@Before
 	public void setUp() throws Exception {
 		language = new LanguageProject();
-		al = new Language("Times", 12.0, "Regular", null, null, null, "");
-		vl = new Language("Charis SIL", 13.0, "Bold", null, null, null, "");
+		al = new Language("Times", 12.0, "Regular", null, null, null, "", null);
+		vl = new Language("Charis SIL", 13.0, "Bold", null, null, null, "", null);
 		language.setAnalysisLanguage(al);
 		language.setVernacularLanguage(vl);
 		fia = new FontInfo(al.getFont());

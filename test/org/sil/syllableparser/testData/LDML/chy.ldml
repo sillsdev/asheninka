@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity>
+		<version
+			number="" />
+		<generation
+			date="2015-01-20T23:44:55" />
+		<language
+			type="chy" />
+	</identity>
+	<collations>
+		<collation>
+			<rules>
+				<reset>k</reset>
+				<p>'</p>
+				<reset>s</reset>
+				<p>š</p>
+				<t>Š</t>
+				<reset>
+					<last_tertiary_ignorable />
+				</reset>
+				<ic>-()/=</ic>
+			</rules>
+			<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+				<palaso:sortRulesType
+					value="CustomICU" />
+			</special>
+		</collation>
+	</collations>
+	<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+		<palaso:abbreviation
+			value="Che" />
+		<palaso:defaultFontFamily
+			value="Doulos SIL" />
+		<palaso:languageName
+			value="Cheyenne" />
+		<palaso:spellCheckingId
+			value="chy" />
+		<palaso:version
+			value="2" />
+	</special>
+	<special xmlns:palaso2="urn://palaso.org/ldmlExtensions/v2">
+		<palaso2:knownKeyboards>
+			<palaso2:keyboard
+				layout="US"
+				locale="en-US"
+				os="Win32NT" />
+		</palaso2:knownKeyboards>
+		<palaso2:version
+			value="2" />
+	</special>
+	<special xmlns:fw="urn://fieldworks.sil.org/ldmlExtensions/v1">
+		<fw:graphiteEnabled
+			value="False" />
+		<fw:validChars
+			value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt; &lt;ValidCharacters&gt;   &lt;WordForming&gt;‌￼‍￼-￼'￼་￼༌￼⁰￼¹￼²￼³￼⁴￼⁵￼⁶￼⁷￼⁸￼⁹￼ꞌ￼Ꞌ&lt;/WordForming&gt;   &lt;Numeric /&gt;   &lt;Other /&gt; &lt;/ValidCharacters&gt;" />
+	</special>
+</ldml>

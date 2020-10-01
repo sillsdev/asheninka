@@ -156,28 +156,37 @@ public class ICURulesTest {
 	public void writingSystemDisplayTest() throws Exception {
 		Language vernacular = onc.getLanguageProject().getVernacularLanguage();
 		SortingOption initialOption = vernacular.getSortingOption();
-//		vernacular.setSortingOption(SortingOption.DEFAULT_ORDER);
-//		wsController.setData(vernacular);
 		wsController.sortingChoiceBox.setValue(SortingOption.DEFAULT_ORDER);
 		assertEquals(false, wsController.icuRules.isVisible());
 		assertEquals(false, wsController.icuRulesTextArea.isVisible());
 		assertEquals(false, wsController.languageToUse.isVisible());
 		assertEquals(false, wsController.languageToUseComboBox.isVisible());
+		assertEquals(false, wsController.directoryField.isVisible());
+		assertEquals(false, wsController.browseButton.isVisible());
+
 		wsController.sortingChoiceBox.setValue(SortingOption.CUSTOM_ICU_RULES);
 		assertEquals(true, wsController.icuRules.isVisible());
 		assertEquals(true, wsController.icuRulesTextArea.isVisible());
 		assertEquals(false, wsController.languageToUse.isVisible());
 		assertEquals(false, wsController.languageToUseComboBox.isVisible());
+		assertEquals(false, wsController.directoryField.isVisible());
+		assertEquals(false, wsController.browseButton.isVisible());
+
 		wsController.sortingChoiceBox.setValue(SortingOption.SAME_AS_ANOTHER_LANGUAGE);
 		assertEquals(true, wsController.icuRules.isVisible());
 		assertEquals(true, wsController.icuRulesTextArea.isVisible());
 		assertEquals(true, wsController.languageToUse.isVisible());
 		assertEquals(true, wsController.languageToUseComboBox.isVisible());
+		assertEquals(false, wsController.directoryField.isVisible());
+		assertEquals(false, wsController.browseButton.isVisible());
+
 		wsController.sortingChoiceBox.setValue(SortingOption.USE_LDML_FILE);
 		assertEquals(true, wsController.icuRules.isVisible());
 		assertEquals(true, wsController.icuRulesTextArea.isVisible());
 		assertEquals(false, wsController.languageToUse.isVisible());
 		assertEquals(false, wsController.languageToUseComboBox.isVisible());
+		assertEquals(true, wsController.directoryField.isVisible());
+		assertEquals(true, wsController.browseButton.isVisible());
 		vernacular.setSortingOption(initialOption);
 	}
 }

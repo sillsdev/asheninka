@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity><version
+			number="" /><generation
+			date="2011-06-08T22:00:36" /><language
+			type="ztu" /></identity>
+	<collations><collation><rules><reset>a</reset><s>á</s><s>à</s><s>â</s><s>aꞌ</s><s>áꞌ</s><s>àꞌ</s><s>âꞌ</s><reset>C</reset><p>ch</p><t>Ch</t><t>CH</t><reset>e</reset><s>é</s><s>è</s><s>ê</s><s>eꞌ</s><s>éꞌ</s><s>èꞌ</s><s>êꞌ</s><reset>i</reset><s>í</s><s>ì</s><s>î</s><s>iꞌ</s><s>íꞌ</s><s>ìꞌ</s><s>îꞌ</s><p>ɨ</p><s>ɨ́</s><s>ɨ̀</s><s>ɨ̂</s><s>ɨꞌ</s><s>ɨ́ꞌ</s><s>ɨ̀ꞌ</s><s>ɨ̂ꞌ</s><reset>o</reset><s>ó</s><s>ò</s><s>ô</s><s>oꞌ</s><s>óꞌ</s><s>òꞌ</s><s>ôꞌ</s><reset>T</reset><p>ts</p><t>Ts</t><t>TS</t><reset>u</reset><s>ú</s><s>ù</s><s>û</s><s>uꞌ</s><s>úꞌ</s><s>ùꞌ</s><s>ûꞌ</s></rules><special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1"><palaso:sortRulesType
+					value="CustomICU" /></special></collation></collations>
+	<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1"><palaso:abbreviation
+			value="Zap" /><palaso:defaultFontFamily
+			value="Charis SIL AmArea" /><palaso:languageName
+			value="Zapoteco de San Pablo Güilá" /></special><special xmlns:fw="urn://fieldworks.sil.org/ldmlExtensions/v1"><fw:graphiteEnabled
+			value="False" /><fw:validChars
+			value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt; &lt;ValidCharacters&gt;   &lt;WordForming&gt;‌￼‍￼-￼'￼་￼༌￼⁰￼¹￼²￼³￼⁴￼⁵￼⁶￼⁷￼⁸￼⁹￼ꞌ￼Ꞌ&lt;/WordForming&gt;   &lt;Numeric /&gt;   &lt;Other /&gt; &lt;/ValidCharacters&gt;" /><fw:windowsLCID
+			value="2058" /></special></ldml>

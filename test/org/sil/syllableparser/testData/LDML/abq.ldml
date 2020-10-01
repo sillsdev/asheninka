@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity>
+		<version number="" />
+		<generation date="2019-03-04T17:40:10Z" />
+		<language type="abq" />
+	</identity>
+	<characters>
+		<exemplarCharacters>[\-\u0410-\u0418\u041A-\u0438\u043A-\u044F\u04C0{\u0415\u0308}{\u0418\u0306}{\u0435\u0308}{\u0438\u0306}]</exemplarCharacters>
+		<exemplarCharacters type="punctuation">[\ ]</exemplarCharacters>
+	</characters>
+	<layout>
+		<orientation>
+			<characterOrder>left-to-right</characterOrder>
+		</orientation>
+	</layout>
+	<collations>
+		<defaultCollation>standard</defaultCollation>
+		<collation type="standard">
+			<cr><![CDATA[&[before 1] [first regular] < А << а < Б << б < В << в < Г << г < Гв << гв < Гъ << гъ < Гъв << гъв < Гъь << гъь < Гь << гь < ГӀ << гӀ < ГӀв << гӀв < Д << д < Дж << дж < Джв << джв < Джь << джь < Дз << дз < Е << е < Ё << ё < Ж << ж < Жв << жв < Жь << жь < З << з < И << и < Й << й < К << к < Кв << кв < Къ << къ < Къв << къв < Къь << къь < Кь << кь < КӀ << кӀ < КӀв << кӀв < КӀь << кӀь < Л << л < Ль << ль < М << м < Н << н < О << о < П << п < ПӀ << пӀ < Р << р < С << с < Т << т < Тл << тл < Тш << тш < ТӀ << тӀ < У << у < Ф << ф < Х << х < Хв << хв < Хъ << хъ < Хъв << хъв < Хь << хь < ХӀ << хӀ < ХӀв << хӀв < Ц << ц < ЦӀ << цӀ < Ч << ч < Чв << чв < ЧӀ << чӀ < ЧӀв << чӀв < Ш << ш < Шв << шв < ШӀ << шӀ < Щ << щ < Ъ << ъ < Ы << ы < ь < Э << э < Ю << ю < Я << я]]></cr>
+			<special xmlns:sil="urn://www.sil.org/ldml/0.1">
+				<sil:simple><![CDATA[А а
+Б б
+В в
+Г г
+Гв гв
+Гъ гъ
+Гъв гъв
+Гъь гъь
+Гь гь
+ГӀ гӀ
+ГӀв гӀв
+Д д
+Дж дж
+Джв джв
+Джь джь
+Дз дз
+Е е
+Ё ё
+Ж ж
+Жв жв
+Жь жь
+З з
+И и
+Й й
+К к
+Кв кв
+Къ къ
+Къв къв
+Къь къь
+Кь кь
+КӀ кӀ
+КӀв кӀв
+КӀь кӀь
+Л л
+Ль ль
+М м
+Н н
+О о
+П п
+ПӀ пӀ
+Р р
+С с
+Т т
+Тл тл
+Тш тш
+ТӀ тӀ
+У у
+Ф ф
+Х х
+Хв хв
+Хъ хъ
+Хъв хъв
+Хь хь
+ХӀ хӀ
+ХӀв хӀв
+Ц ц
+ЦӀ цӀ
+Ч ч
+Чв чв
+ЧӀ чӀ
+ЧӀв чӀв
+Ш ш
+Шв шв
+ШӀ шӀ
+Щ щ
+Ъ ъ
+Ы ы
+ь
+Э э
+Ю ю
+Я я]]></sil:simple>
+			</special>
+		</collation>
+	</collations>
+	<special xmlns:sil="urn://www.sil.org/ldml/0.1">
+		<sil:external-resources>
+			<sil:font name="Charis SIL" types="default" />
+		</sil:external-resources>
+	</special>
+</ldml>

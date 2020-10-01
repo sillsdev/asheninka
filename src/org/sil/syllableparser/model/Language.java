@@ -35,6 +35,7 @@ public class Language  {
 	private BooleanProperty rightToLeft;
 	private SortingOption sortingOption;
 	protected final StringProperty code;
+	protected final StringProperty ldmlFile;
 	protected final StringProperty useSameLanguage;
 	protected final StringProperty icuRules;
 
@@ -109,6 +110,18 @@ public class Language  {
 		this.color = color;
 	}
 
+	public String getCode() {
+		return code.get();
+	}
+
+	public StringProperty codeProperty() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code.set(code);
+	}
+
 	public BooleanProperty RightToLeftProperty() {
 		return rightToLeft;
 	}
@@ -141,16 +154,16 @@ public class Language  {
 		this.icuRules.set(rules);
 	}
 
-	public String getCode() {
-		return code.get();
+	public String getLdmlFile() {
+		return ldmlFile.get();
 	}
 
-	public StringProperty codeProperty() {
-		return code;
+	public StringProperty ldmlFileProperty() {
+		return ldmlFile;
 	}
 
-	public void setCode(String option) {
-		this.code.set(option);
+	public void setLdmlFile(String file) {
+		this.ldmlFile.set(file);
 	}
 
 	public String getUseSameLanguage() {
@@ -165,7 +178,7 @@ public class Language  {
 		this.useSameLanguage.set(option);
 	}
 
-	public Language(String fontFamily, double fontSize, String fontType, SortingOption option, String code, String icuRules, String useSameLanguage) {
+	public Language(String fontFamily, double fontSize, String fontType, SortingOption option, String code, String icuRules, String useSameLanguage, String ldmlFile) {
 		super();
 		this.fontFamily = fontFamily;
 		this.fontSize = fontSize;
@@ -176,6 +189,7 @@ public class Language  {
 		this.code = new SimpleStringProperty(code);
 		this.icuRules = new SimpleStringProperty(icuRules);
 		this.useSameLanguage = new SimpleStringProperty(useSameLanguage);
+		this.ldmlFile = new SimpleStringProperty(ldmlFile);
 	}
 
 	public Language() {
@@ -186,6 +200,7 @@ public class Language  {
 		rightToLeft = new SimpleBooleanProperty(false);
 		sortingOption = SortingOption.DEFAULT_ORDER;
 		code = new SimpleStringProperty("");
+		ldmlFile = new SimpleStringProperty("");
 		icuRules = new SimpleStringProperty("");
 		useSameLanguage = new SimpleStringProperty("");
 	}

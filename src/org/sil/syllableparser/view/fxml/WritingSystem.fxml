@@ -52,6 +52,8 @@
                               <Label fx:id="icuRules" layoutX="14.0" layoutY="67.0" text="%label.icurules" />
                               <ComboBox fx:id="languageToUseComboBox" layoutX="496.0" layoutY="26.0" prefHeight="25.0" prefWidth="90.0" />
                               <Label fx:id="languageToUse" layoutX="358.0" layoutY="30.0" text="%label.languagetouse" />
+                              <Button fx:id="browseButton" layoutX="521.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleBrowse" prefHeight="25.0" prefWidth="67.0" text="%label.browse" />
+                              <TextField fx:id="directoryField" layoutX="265.0" layoutY="55.0" prefHeight="25.0" prefWidth="249.0" />
                            </children>
                         </AnchorPane>
                      </content>

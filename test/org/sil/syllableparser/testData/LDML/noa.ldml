@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity>
+		<version
+			number="" />
+		<generation
+			date="2014-04-24T21:30:54" />
+		<language
+			type="noa" />
+	</identity>
+	<collations>
+		<collation>
+			<rules>
+				<reset
+					before="primary">
+					<first_non_ignorable />
+				</reset>
+				<p>A</p>
+				<s>a</s>
+				<p>Ã</p>
+				<s>ã</s>
+				<p>Ä</p>
+				<s>ä</s>
+				<p>B</p>
+				<s>b</s>
+				<p>Ch</p>
+				<s>ch</s>
+				<p>D</p>
+				<s>d</s>
+				<p>E</p>
+				<s>e</s>
+				<p>Ë</p>
+				<s>ẽ</s>
+				<p>ë</p>
+				<p>G</p>
+				<s>g</s>
+				<p>H</p>
+				<s>h</s>
+				<p>I</p>
+				<s>i</s>
+				<p>Ĩ</p>
+				<s>ĩ</s>
+				<p>J</p>
+				<s>j</s>
+				<p>K</p>
+				<s>k</s>
+				<p>K'</p>
+				<s>k'</s>
+				<p>L</p>
+				<s>l</s>
+				<p>M</p>
+				<s>m</s>
+				<p>N</p>
+				<s>n</s>
+				<p>Ñ</p>
+				<s>ñ</s>
+				<p>O</p>
+				<s>o</s>
+				<p>Õ</p>
+				<s>õ</s>
+				<p>Ö</p>
+				<s>ö</s>
+				<p>P</p>
+				<s>p</s>
+				<p>P'</p>
+				<s>p'</s>
+				<p>R</p>
+				<s>r</s>
+				<p>Rr</p>
+				<s>rr</s>
+				<p>S</p>
+				<s>s</s>
+				<p>T</p>
+				<s>t</s>
+				<p>T'</p>
+				<s>t'</s>
+				<p>U</p>
+				<s>u</s>
+				<p>Ũ</p>
+				<s>ũ</s>
+				<p>W</p>
+				<s>w</s>
+				<p>Y</p>
+				<s>y</s>
+				<p></p>
+				<s>ʌ</s>
+				<p>̃</p>
+				<s>ʌ̃</s>
+				<p>̈</p>
+				<s>ʌ̈</s>
+			</rules>
+			<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+				<palaso:sortRulesType
+					value="CustomSimple" />
+			</special>
+		</collation>
+	</collations>
+	<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+		<palaso:abbreviation
+			value="Wou" />
+		<palaso:defaultFontFamily
+			value="Charis SIL" />
+		<palaso:defaultKeyboard
+			value="Wou unic" />
+		<palaso:languageName
+			value="Wounaan" />
+		<palaso:spellCheckingId
+			value="noa" />
+		<palaso:version
+			value="2" />
+	</special>
+	<special xmlns:palaso2="urn://palaso.org/ldmlExtensions/v2">
+		<palaso2:knownKeyboards>
+			<palaso2:keyboard
+				layout="US"
+				locale="en-US"
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="Wou unic"
+				locale="wo-SN"
+				os="Win32NT" />
+		</palaso2:knownKeyboards>
+		<palaso2:version
+			value="2" />
+	</special>
+	<special xmlns:fw="urn://fieldworks.sil.org/ldmlExtensions/v1">
+		<fw:graphiteEnabled
+			value="False" />
+		<fw:validChars
+			value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt; &lt;ValidCharacters&gt;   &lt;WordForming&gt;‌￼‍￼-￼'￼་￼༌￼⁰￼¹￼²￼³￼⁴￼⁵￼⁶￼⁷￼⁸￼⁹￼ꞌ￼Ꞌ&lt;/WordForming&gt;   &lt;Numeric /&gt;   &lt;Other /&gt; &lt;/ValidCharacters&gt;" />
+		<fw:windowsLCID
+			value="1160" />
+	</special>
+</ldml>
