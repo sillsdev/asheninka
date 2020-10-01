@@ -163,6 +163,8 @@ public class ICURulesTest {
 		assertEquals(false, wsController.languageToUseComboBox.isVisible());
 		assertEquals(false, wsController.directoryField.isVisible());
 		assertEquals(false, wsController.browseButton.isVisible());
+		assertEquals(false, wsController.icuRulesErrorArea.isVisible());
+		assertEquals(false, wsController.icuRuleError.isVisible());
 
 		wsController.sortingChoiceBox.setValue(SortingOption.CUSTOM_ICU_RULES);
 		assertEquals(true, wsController.icuRules.isVisible());
@@ -171,6 +173,8 @@ public class ICURulesTest {
 		assertEquals(false, wsController.languageToUseComboBox.isVisible());
 		assertEquals(false, wsController.directoryField.isVisible());
 		assertEquals(false, wsController.browseButton.isVisible());
+		assertEquals(false, wsController.icuRulesErrorArea.isVisible());
+		assertEquals(false, wsController.icuRuleError.isVisible());
 
 		wsController.sortingChoiceBox.setValue(SortingOption.SAME_AS_ANOTHER_LANGUAGE);
 		assertEquals(true, wsController.icuRules.isVisible());
@@ -179,6 +183,8 @@ public class ICURulesTest {
 		assertEquals(true, wsController.languageToUseComboBox.isVisible());
 		assertEquals(false, wsController.directoryField.isVisible());
 		assertEquals(false, wsController.browseButton.isVisible());
+		assertEquals(false, wsController.icuRulesErrorArea.isVisible());
+		assertEquals(false, wsController.icuRuleError.isVisible());
 
 		wsController.sortingChoiceBox.setValue(SortingOption.USE_LDML_FILE);
 		assertEquals(true, wsController.icuRules.isVisible());
@@ -187,6 +193,9 @@ public class ICURulesTest {
 		assertEquals(false, wsController.languageToUseComboBox.isVisible());
 		assertEquals(true, wsController.directoryField.isVisible());
 		assertEquals(true, wsController.browseButton.isVisible());
+		assertEquals(false, wsController.icuRulesErrorArea.isVisible());
+		assertEquals(false, wsController.icuRuleError.isVisible());
+
 		vernacular.setSortingOption(initialOption);
 	}
 }

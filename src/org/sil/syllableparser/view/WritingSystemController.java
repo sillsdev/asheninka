@@ -9,6 +9,7 @@ package org.sil.syllableparser.view;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
@@ -66,6 +67,8 @@ public class WritingSystemController extends SylParserBaseController implements
 	@FXML
 	private Button fontButton;
 	@FXML
+	private Button okButton;
+	@FXML
 	private ColorPicker colorPicker;
 	// following are public for unit tests
 	@FXML
@@ -74,6 +77,10 @@ public class WritingSystemController extends SylParserBaseController implements
 	public ChoiceBox<SortingOption> sortingChoiceBox;
 	@FXML
 	public TextArea icuRulesTextArea;
+	@FXML
+	public Label icuRuleError;
+	@FXML
+	public TextArea icuRulesErrorArea;
 	@FXML
 	public Label languageToUse;
 	@FXML
@@ -90,7 +97,6 @@ public class WritingSystemController extends SylParserBaseController implements
 	private String sFileFilterDescription = "";
 
 	private String sFileChooserFilterDescription = "*.ldml";
-	private String sFileExtensions = "";
 
 	public WritingSystemController() {
 		
@@ -105,6 +111,7 @@ public class WritingSystemController extends SylParserBaseController implements
 
 		this.bundle = resources;
 		sFileFilterDescription = bundle.getString("file.ldmlfilterdescription");
+		icuRulesErrorArea.setEditable(false);
 
 		sortingChoiceBox.getItems().setAll(SortingOption.values());
 		if (currentLanguage != null) {
@@ -127,6 +134,31 @@ public class WritingSystemController extends SylParserBaseController implements
 			public void changed(ObservableValue ov, SortingOption old_value, SortingOption new_value) {
 				displaySortingTabItemsPerSortingOption(new_value);
 			}
+		});
+		icuRulesTextArea.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(final ObservableValue<? extends String> observable, final String oldValue, final String newValue) {
+				try {
+					icuRulesErrorArea.setText("");
+					icuRulesErrorArea.setVisible(false);
+					icuRuleError.setVisible(false);
+					okButton.setDisable(false);
+					RuleBasedCollator collatorViaRules = new RuleBasedCollator(newValue);
+//					collatorViaRules.
+				} catch (ParseException e) {
+					String details = e.getMessage();
+					int i = details.indexOf("near \"");
+					int end = details.lastIndexOf('"');
+					icuRuleError.setVisible(true);
+					icuRulesErrorArea.setVisible(true);
+					icuRulesErrorArea.setText(details.substring(i+6, end));
+					okButton.setDisable(true);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+		    }
 		});
 		ULocale[] availableLocales = ULocale.getAvailableLocales();
 		for (ULocale l : availableLocales) {
@@ -163,6 +195,8 @@ public class WritingSystemController extends SylParserBaseController implements
 			languageToUseComboBox.setVisible(false);
 			directoryField.setVisible(false);
 			browseButton.setVisible(false);
+			icuRulesErrorArea.setVisible(false);
+			icuRuleError.setVisible(false);
 			break;
 		case DEFAULT_ORDER:
 			icuRules.setVisible(false);
@@ -171,6 +205,8 @@ public class WritingSystemController extends SylParserBaseController implements
 			languageToUseComboBox.setVisible(false);
 			directoryField.setVisible(false);
 			browseButton.setVisible(false);
+			icuRulesErrorArea.setVisible(false);
+			icuRuleError.setVisible(false);
 			break;
 		case SAME_AS_ANOTHER_LANGUAGE:
 			icuRules.setVisible(true);
@@ -179,6 +215,8 @@ public class WritingSystemController extends SylParserBaseController implements
 			languageToUseComboBox.setVisible(true);
 			directoryField.setVisible(false);
 			browseButton.setVisible(false);
+			icuRulesErrorArea.setVisible(false);
+			icuRuleError.setVisible(false);
 			break;
 		case USE_LDML_FILE:
 			icuRules.setVisible(true);
@@ -187,6 +225,8 @@ public class WritingSystemController extends SylParserBaseController implements
 			languageToUseComboBox.setVisible(false);
 			directoryField.setVisible(true);
 			browseButton.setVisible(true);
+			icuRulesErrorArea.setVisible(false);
+			icuRuleError.setVisible(false);
 			break;
 		}
 	}

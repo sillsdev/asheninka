@@ -54,6 +54,8 @@
                               <Label fx:id="languageToUse" layoutX="358.0" layoutY="30.0" text="%label.languagetouse" />
                               <Button fx:id="browseButton" layoutX="521.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleBrowse" prefHeight="25.0" prefWidth="67.0" text="%label.browse" />
                               <TextField fx:id="directoryField" layoutX="265.0" layoutY="55.0" prefHeight="25.0" prefWidth="249.0" />
+                              <TextArea fx:id="icuRulesErrorArea" layoutX="281.0" layoutY="262.0" prefHeight="125.0" prefWidth="307.0" />
+                              <Label fx:id="icuRuleError" layoutX="288.0" layoutY="242.0" text="%label.errorinicurules" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -64,7 +66,7 @@
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
-	            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="%label.ok" />
+	            <Button fx:id="okButton" defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="%label.ok" />
       	        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="%label.cancel" />
               </buttons>
             </ButtonBar>
