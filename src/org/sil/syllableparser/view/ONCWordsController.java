@@ -138,7 +138,7 @@ public class ONCWordsController extends WordsControllerCommon {
 			predictedSyllabificationField.setText(oncWord.getONCPredictedSyllabification());
 			correctSyllabificationField.setText(oncWord.getCorrectSyllabification());
 			parserResultField.setText(oncWord.getONCParserResult());
-			parserResultField.getStyleClass().clear();
+			setParserResultFieldColor(oncWord.getONCParserResult());
 			showParserResultAndLingTree(oncWord.getONCPredictedSyllabification(), oncWord.getONCParserResult(),
 					oncWord.getONCLingTreeDescription());
 		} else {

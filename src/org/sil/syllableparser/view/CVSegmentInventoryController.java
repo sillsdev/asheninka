@@ -20,6 +20,7 @@ import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -38,6 +39,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -69,7 +71,12 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
 				if (obj != null && obj.isActive()) {
-					text.setFill(Constants.ACTIVE);
+					Color textColor = languageProject.getAnalysisLanguage().getColor();
+					if (textColor != null) {
+						text.setFill(textColor);
+					} else {
+						text.setFill(Constants.ACTIVE);
+					}
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
@@ -95,6 +102,12 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
 				if (obj != null && obj.isActive()) {
+					Color textColor = languageProject.getAnalysisLanguage().getColor();
+					if (textColor != null) {
+						text.setFill(textColor);
+					} else {
+						text.setFill(Constants.ACTIVE);
+					}
 					text.setFill(Constants.ACTIVE);
 				} else {
 					text.setFill(Constants.INACTIVE);
@@ -121,7 +134,12 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
 				if (obj != null && obj.isActive()) {
-					text.setFill(Constants.ACTIVE);
+					Color textColor = languageProject.getAnalysisLanguage().getColor();
+					if (textColor != null) {
+						text.setFill(textColor);
+					} else {
+						text.setFill(Constants.ACTIVE);
+					}
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
@@ -147,7 +165,12 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
 				if (obj != null && obj.isActive()) {
-					text.setFill(Constants.ACTIVE);
+					Color textColor = languageProject.getVernacularLanguage().getColor();
+					if (textColor != null) {
+						text.setFill(textColor);
+					} else {
+						text.setFill(Constants.ACTIVE);
+					}
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
@@ -480,6 +503,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
 		setColumnICURules();
+		setTextFieldColors();
 		populateSegmentTable(ApproachType.CV);
 	}
 
@@ -487,6 +511,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
 		setColumnICURules();
+		setTextFieldColors();
 		populateSegmentTable(ApproachType.SONORITY_HIERARCHY);
 	}
 
@@ -494,6 +519,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
 		setColumnICURules();
+		setTextFieldColors();
 		populateSegmentTable(ApproachType.ONSET_NUCLEUS_CODA);
 	}
 
@@ -501,6 +527,19 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		setColumnICURules(segmentColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
 		setColumnICURules(graphemesColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
 		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+	}
+
+	protected void setTextFieldColors() {
+		if (languageProject != null) {
+			Color textColor = languageProject.getVernacularLanguage().getColor();
+			String sRGB= StringUtilities.toRGBCode(textColor);
+			String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+			graphemesField.setStyle(sVernacular);
+			segmentField.setStyle(sVernacular);
+			textColor = languageProject.getAnalysisLanguage().getColor();
+			sRGB= StringUtilities.toRGBCode(textColor);
+			descriptionField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END);
+		}
 	}
 
 	protected void populateSegmentTable(ApproachType appType) {

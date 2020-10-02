@@ -27,6 +27,7 @@ import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
+import org.sil.utility.StringUtilities;
 import org.sil.antlr4.environmentparser.EnvironmentConstants;
 import org.sil.antlr4.environmentparser.EnvironmentErrorInfo;
 import org.sil.antlr4.environmentparser.EnvironmentErrorListener;
@@ -52,6 +53,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
@@ -67,49 +69,17 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Environment env = (Environment) this.getTableRow().getItem();
-				if (env != null && env.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<Environment, String> {
+	protected final class WrappingTableCell extends TableCell<Environment, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Environment env = (Environment) this.getTableRow().getItem();
-				if (env != null && env.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -173,7 +143,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			return new AnalysisWrappingTableCell();
 		});
 		representationColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
@@ -636,6 +606,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
 		setColumnICURules();
+		setTextFieldColors();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 
@@ -670,6 +641,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		languageProject = shApproach.getLanguageProject();
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
+		setTextFieldColors();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 
@@ -698,6 +670,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		languageProject = oncApproach.getLanguageProject();
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
+		setTextFieldColors();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 
@@ -718,6 +691,17 @@ public class EnvironmentsController extends SylParserBaseController implements I
 					environmentTable.scrollTo(iLastIndex);
 				}
 			});
+		}
+	}
+
+	protected void setTextFieldColors() {
+		if (languageProject != null) {
+			Color textColor = languageProject.getAnalysisLanguage().getColor();
+			String sRGB = StringUtilities.toRGBCode(textColor);
+			String sAnalysis = Constants.TEXT_COLOR_CSS_BEGIN + sRGB
+					+ Constants.TEXT_COLOR_CSS_END;
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
 		}
 	}
 

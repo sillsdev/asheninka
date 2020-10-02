@@ -136,7 +136,7 @@ public class SHWordsController extends WordsControllerCommon {
 			predictedSyllabificationField.setText(shWord.getSHPredictedSyllabification());
 			correctSyllabificationField.setText(shWord.getCorrectSyllabification());
 			parserResultField.setText(shWord.getSHParserResult());
-			parserResultField.getStyleClass().clear();
+			setParserResultFieldColor(shWord.getSHParserResult());
 			showParserResultAndLingTree(shWord.getSHPredictedSyllabification(), shWord.getSHParserResult(),
 					shWord.getSHLingTreeDescription());
 		} else {

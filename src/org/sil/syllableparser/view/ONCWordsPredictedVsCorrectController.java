@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -37,6 +37,7 @@ public class ONCWordsPredictedVsCorrectController extends WordsPredictedVsCorrec
 	public void setData(ONCApproach oncApproachData, ObservableList<Word> words) {
 		oncApproach = oncApproachData;
 		this.words = words;
+		languageProject = oncApproachData.getLanguageProject();
 
 		ObservableList<Word> wordsToShow = words.filtered(word -> (!word
 				.getCorrectSyllabification().isEmpty()

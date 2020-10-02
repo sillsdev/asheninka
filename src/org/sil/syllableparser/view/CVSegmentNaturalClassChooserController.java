@@ -12,13 +12,11 @@ import java.util.ResourceBundle;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
-import org.sil.syllableparser.model.GraphemeOrNaturalClass;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
-import org.sil.syllableparser.view.CVNaturalClassesController.VernacularWrappingTableCell;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -164,23 +164,5 @@ public class ONCSegmentInventoryController extends CVSegmentInventoryController 
 		onsetCheckBox.setSelected(segment.isOnset());
 		nucleusCheckBox.setSelected(segment.isNucleus());
 		codaCheckBox.setSelected(segment.isCoda());
-	}
-
-	public void setData(CVApproach cvApproachData) {
-		cvApproach = cvApproachData;
-		languageProject = cvApproach.getLanguageProject();
-		populateSegmentTable(ApproachType.CV);
-	}
-
-	public void setData(SHApproach shApproachData) {
-		shApproach = shApproachData;
-		languageProject = shApproach.getLanguageProject();
-		populateSegmentTable(ApproachType.SONORITY_HIERARCHY);
-	}
-
-	public void setData(ONCApproach oncApproachData) {
-		oncApproach = oncApproachData;
-		languageProject = oncApproach.getLanguageProject();
-		populateSegmentTable(ApproachType.ONSET_NUCLEUS_CODA);
 	}
 }

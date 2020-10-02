@@ -22,6 +22,7 @@ import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -35,6 +36,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -53,50 +55,18 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				GraphemeNaturalClass nc = (GraphemeNaturalClass) this.getTableRow().getItem();
-				if (nc != null && nc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends
+	protected final class WrappingTableCell extends
 			TableCell<GraphemeNaturalClass, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				GraphemeNaturalClass nc = (GraphemeNaturalClass) this.getTableRow().getItem();
-				if (nc != null && nc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -154,7 +124,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			return new AnalysisWrappingTableCell();
 		});
 		graphemeOrNaturalClassColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
@@ -345,6 +315,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
 		setColumnICURules();
+		setTextFieldColors();
 		addDataToTable();
 	}
 
@@ -381,6 +352,7 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		languageProject = shApproach.getLanguageProject();
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
+		setTextFieldColors();
 		addDataToTable();
 	}
 
@@ -389,7 +361,18 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		languageProject = oncApproach.getLanguageProject();
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
+		setTextFieldColors();
 		addDataToTable();
+	}
+
+	protected void setTextFieldColors() {
+		if (languageProject != null) {
+			Color textColor = languageProject.getAnalysisLanguage().getColor();
+			String sRGB= StringUtilities.toRGBCode(textColor);
+			String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+			nameField.setStyle(sVernacular);
+			descriptionField.setStyle(sVernacular);
+		}
 	}
 
 	@Override

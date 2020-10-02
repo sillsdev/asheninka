@@ -10,9 +10,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.LingTreeInteractor;
+import org.sil.utility.StringUtilities;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -23,6 +23,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -40,23 +41,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
-				if (obj != null && obj.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
@@ -66,16 +51,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processVernacularTableCell(this, text, item, empty);
 		}
 	}
 
@@ -166,6 +142,15 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 			}
 			if (languageProject != null) {
 				wordField.setFont(languageProject.getVernacularLanguage().getFont());
+				Color textColor = languageProject.getVernacularLanguage().getColor();
+				String sRGB= StringUtilities.toRGBCode(textColor);
+				String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+				wordField.setStyle(sVernacular);
+				predictedSyllabificationField.setStyle(sVernacular);
+				correctSyllabificationField.setStyle(sVernacular);
+				textColor = languageProject.getAnalysisLanguage().getColor();
+				sRGB= StringUtilities.toRGBCode(textColor);
+				commentField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END);
 			}
 		});
 		correctSyllabificationField.textProperty()
@@ -249,6 +234,8 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	void handleInsertNewItem() {
 		Word newWord = new Word();
 		newWord.setCVParserResult(bundle.getString("label.untested"));
+		newWord.setSHParserResult(bundle.getString("label.untested"));
+		newWord.setONCParserResult(bundle.getString("label.untested"));
 		words.add(newWord);
 		handleInsertNewItem(words, wordsTable);
 	}
@@ -294,5 +281,16 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 			ltSVG = ltInteractor.createSVG(sLingTreeDescription, fSuccess);
 		}
 		showLingTreeSVG();
+	}
+
+	protected void setParserResultFieldColor(String sParserResult) {
+		String sSuccess = bundle.getString("label.success");
+		if (sParserResult.equals(sSuccess)) {
+			parserResultField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN
+					+ Constants.PARSER_SUCCESS_COLOR_STRING + Constants.TEXT_COLOR_CSS_END);
+		} else {
+			parserResultField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN
+					+ Constants.PARSER_FAILURE_COLOR_STRING + Constants.TEXT_COLOR_CSS_END);
+		}
 	}
 }

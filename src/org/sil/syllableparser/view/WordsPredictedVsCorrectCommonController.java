@@ -10,14 +10,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.model.Word;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 /**
  * @author Andy Black
@@ -41,6 +44,14 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 	public WordsPredictedVsCorrectCommonController() {
 
 	}
+	protected final class VernacularWrappingTableCell extends TableCell<Word, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			processVernacularTableCell(this, text, item, empty);
+		}
+	}
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -56,6 +67,10 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 		wordsPredictedVsCorrectTable.setPlaceholder(whenTableIsEmptyMessage);
 
 		makeColumnHeaderWrappable(wordPredictedVsCorrectColumn);
+		// Custom rendering of the table cell.
+		wordPredictedVsCorrectColumn.setCellFactory(column -> {
+			return new VernacularWrappingTableCell();
+		});
 
 		// Listen for selection change for status bar info
 		wordsPredictedVsCorrectTable

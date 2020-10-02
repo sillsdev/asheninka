@@ -21,13 +21,16 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -69,6 +72,13 @@ public class FiltersController extends TemplatesFiltersController {
 					selectAndScrollToItem(iLastIndex);
 				}
 			});
+		}
+		if (languageProject != null) {
+			Color textColor = languageProject.getAnalysisLanguage().getColor();
+			String sRGB= StringUtilities.toRGBCode(textColor);
+			String sAnalysis = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
 		}
 	}
 

@@ -18,6 +18,7 @@ import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
+import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -34,6 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -46,30 +48,23 @@ import javafx.stage.Stage;
 
 public class SHSonorityHierarchyController extends SylParserBaseController implements Initializable {
 
+	protected final class AnalysisWrappingTableCell extends TableCell<SHNaturalClass, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
+
 	protected final class WrappingTableCell extends TableCell<SHNaturalClass, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				SHNaturalClass syllablePattern = (SHNaturalClass) this.getTableRow()
-						.getItem();
-				if (syllablePattern != null && syllablePattern.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -149,13 +144,13 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 		naturalClassColumn.setCellFactory(column -> {
 			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(nameColumn);
@@ -374,6 +369,13 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 					shSonorityHierarchyTable.scrollTo(iLastIndex);
 				}
 			});
+		}
+		if (languageProject != null) {
+			Color textColor = languageProject.getAnalysisLanguage().getColor();
+			String sRGB= StringUtilities.toRGBCode(textColor);
+			String sAnalysis = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
 		}
 	}
 

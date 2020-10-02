@@ -19,6 +19,7 @@ import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
+import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -66,7 +67,12 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 				CVSyllablePattern syllablePattern = (CVSyllablePattern) this.getTableRow()
 						.getItem();
 				if (syllablePattern != null && syllablePattern.isActive()) {
-					text.setFill(Constants.ACTIVE);
+					Color textColor = languageProject.getAnalysisLanguage().getColor();
+					if (textColor != null) {
+						text.setFill(textColor);
+					} else {
+						text.setFill(Constants.ACTIVE);
+					}
 				} else {
 					text.setFill(Constants.INACTIVE);
 				}
@@ -385,6 +391,15 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 					cvSyllablePatternTable.scrollTo(iLastIndex);
 				}
 			});
+		}
+		if (languageProject != null) {
+			Color textColor = languageProject.getAnalysisLanguage().getColor();
+			String sRGB = StringUtilities.toRGBCode(textColor);
+			String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB
+					+ Constants.TEXT_COLOR_CSS_END;
+			nameField.setStyle(sVernacular);
+			descriptionField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + sRGB
+					+ Constants.TEXT_COLOR_CSS_END);
 		}
 	}
 

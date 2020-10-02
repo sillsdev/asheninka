@@ -138,7 +138,7 @@ public class CVWordsController extends WordsControllerCommon {
 			predictedSyllabificationField.setText(cvWord.getCVPredictedSyllabification());
 			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
 			parserResultField.setText(cvWord.getCVParserResult());
-			parserResultField.getStyleClass().clear();
+			setParserResultFieldColor(cvWord.getCVParserResult());
 			showParserResultAndLingTree(cvWord.getCVPredictedSyllabification(), cvWord.getCVParserResult(),
 					cvWord.getCVLingTreeDescription());
 		} else {

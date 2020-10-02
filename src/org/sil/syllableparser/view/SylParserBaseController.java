@@ -8,9 +8,9 @@ package org.sil.syllableparser.view;
 
 import java.util.Comparator;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
@@ -21,9 +21,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -32,7 +36,6 @@ import javafx.scene.text.TextAlignment;
  */
 public abstract class SylParserBaseController extends ApproachEditorController implements Initializable {
 
-	
 	protected LanguageProject languageProject;
 	protected CVApproach cvApproach;
 	protected SHApproach shApproach;
@@ -124,5 +127,49 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	protected void processAnalysisTableCell(TableCell<? extends SylParserObject, String> cell, Text text, String item, boolean empty) {
+		Color textColor = languageProject.getAnalysisLanguage().getColor();
+		Font fontToUse = languageProject.getAnalysisLanguage().getFont();
+		processCell(cell, item, empty, textColor, fontToUse);
+	}
+
+	protected void processCell(TableCell<? extends SylParserObject, String> cell, String item,
+			boolean empty, Color textColor, Font fontToUse) {
+		Text text;
+		if (item == null || empty) {
+			cell.setText(null);
+			cell.setStyle("");
+		} else {
+			cell.setStyle("");
+			text = new Text(item.toString());
+			// Get it to wrap.
+			text.wrappingWidthProperty().bind(cell.getTableColumn().widthProperty());
+			SylParserObject obj = (SylParserObject) cell.getTableRow().getItem();
+			if (obj != null && obj.isActive()) {
+				if (textColor != null) {
+					text.setFill(textColor);
+				} else {
+					text.setFill(Constants.ACTIVE);
+				}
+			} else {
+				text.setFill(Constants.INACTIVE);
+			}
+			if (fontToUse != null) {
+				text.setFont(fontToUse);
+			}
+			cell.setGraphic(text);
+		}
+	}
+
+	protected void processTableCell(TableCell<? extends SylParserObject, String> cell, Text text, String item, boolean empty) {
+		Font fontToUse = languageProject.getAnalysisLanguage().getFont();
+		processCell(cell, item, empty, null, fontToUse);
+	}
+
+	protected void processVernacularTableCell(TableCell<? extends SylParserObject, String> cell, Text text, String item, boolean empty) {
+		Color textColor = languageProject.getVernacularLanguage().getColor();
+		Font fontToUse = languageProject.getVernacularLanguage().getFont();
+		processCell(cell, item, empty, textColor, fontToUse);
 	}
 }

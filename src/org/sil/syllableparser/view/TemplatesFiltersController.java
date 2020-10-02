@@ -68,49 +68,17 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				TemplateFilter tf = (TemplateFilter) this.getTableRow().getItem();
-				if (tf != null && tf.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<TemplateFilter, String> {
+	protected final class WrappingTableCell extends TableCell<TemplateFilter, String> {
 		protected Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				TemplateFilter tf = (TemplateFilter) this.getTableRow().getItem();
-				if (tf != null && tf.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -199,7 +167,7 @@ public abstract class TemplatesFiltersController extends SylParserBaseController
 			return new AnalysisWrappingTableCell();
 		});
 		representationColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();

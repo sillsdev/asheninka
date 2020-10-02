@@ -18,12 +18,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -58,6 +61,13 @@ public class TemplatesController extends TemplatesFiltersController {
 					selectAndScrollToItem(iLastIndex);
 				}
 			});
+		}
+		if (languageProject != null) {
+			Color textColor = languageProject.getAnalysisLanguage().getColor();
+			String sRGB= StringUtilities.toRGBCode(textColor);
+			String sAnalysis = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
 		}
 	}
 
@@ -101,8 +111,6 @@ public class TemplatesController extends TemplatesFiltersController {
 			}
 		});
 		typeComboBox.setPromptText(resources.getString("label.choosetype"));
-
-
 	}
 
 	/**

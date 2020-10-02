@@ -17,6 +17,7 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -30,6 +31,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -47,49 +49,17 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
-				if (nc != null && nc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<CVNaturalClass, String> {
+	protected final class GenericWrappingTableCell extends TableCell<CVNaturalClass, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
-				if (nc != null && nc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -146,7 +116,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			return new AnalysisWrappingTableCell();
 		});
 		segmentOrNaturalClassColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new GenericWrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
@@ -369,6 +339,15 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 					cvNaturalClassTable.scrollTo(iLastIndex);
 				}
 			});
+		}
+		if (languageProject != null) {
+			Color textColor = languageProject.getAnalysisLanguage().getColor();
+			String sRGB = StringUtilities.toRGBCode(textColor);
+			String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB
+					+ Constants.TEXT_COLOR_CSS_END;
+			nameField.setStyle(sVernacular);
+			descriptionField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + sRGB
+					+ Constants.TEXT_COLOR_CSS_END);
 		}
 	}
 
