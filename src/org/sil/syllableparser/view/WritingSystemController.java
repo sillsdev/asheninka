@@ -34,6 +34,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -183,7 +184,8 @@ public class WritingSystemController extends SylParserBaseController implements
 		 });
 		browseButton.setText(bundle.getString("label.browse"));
 
-		sortingChoiceBox.requestFocus();
+		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+		selectionModel.select(fontTab);
 	}
 	
 	protected void displaySortingTabItemsPerSortingOption(SortingOption option) {
