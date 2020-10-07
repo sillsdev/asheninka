@@ -44,6 +44,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -555,11 +556,16 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			nameField.setText(env.getEnvironmentName());
 			descriptionField.setText(env.getDescription());
 			representationField.setText(env.getEnvironmentRepresentation());
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			nameField.setNodeOrientation(analysisOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
 			activeCheckBox.setSelected(env.isActive());
 			List<String> choices = languageProject.getActiveGraphemeNaturalClasses().stream()
 					.map(GraphemeNaturalClass::getNCName).collect(Collectors.toList());
 			ObservableList<String> choices2 = FXCollections.observableArrayList(choices);
 			gncChoicesComboBox.setItems(choices2);
+			gncChoicesComboBox.setNodeOrientation(languageProject.getAnalysisLanguage().getOrientation());
 			gncChoicesComboBox.setVisible(false);
 		} else {
 			// Environment is null, remove all the text.

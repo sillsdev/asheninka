@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.ApproachType;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
@@ -21,9 +22,12 @@ import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
@@ -229,6 +233,11 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			descriptionField.setText(naturalClass.getDescription());
 			activeCheckBox.setSelected(naturalClass.isActive());
 			showSegmentOrNaturalClassContent();
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			descriptionField.setNodeOrientation(analysisOrientation);
+			nameField.setNodeOrientation(analysisOrientation);
+			sncTextFlow.setNodeOrientation(languageProject.getVernacularLanguage().getOrientation());
 		} else {
 			// Segment is null, remove all the text.
 			nameField.setText("");
@@ -258,30 +267,47 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	private void showSegmentOrNaturalClassContent() {
 		StringBuilder sb = new StringBuilder();
 		sncTextFlow.getChildren().clear();
+		ObservableList<SylParserObject> segmentsOrNaturalClasses = currentNaturalClass.getSegmentsOrNaturalClasses();
+		if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+			fillSncTextFlow(sb, segmentsOrNaturalClasses);
+		} else {
+			FXCollections.reverse(segmentsOrNaturalClasses);
+			fillSncTextFlow(sb, segmentsOrNaturalClasses);
+			FXCollections.reverse(segmentsOrNaturalClasses);
+		}
+		currentNaturalClass.setSNCRepresentation(sb.toString());
+	}
+
+	protected void fillSncTextFlow(StringBuilder sb,
+			ObservableList<SylParserObject> segmentsOrNaturalClasses) {
+		Language analysis = languageProject.getAnalysisLanguage();
+		Language vernacular = languageProject.getVernacularLanguage();
 		int i = 1;
-		int iCount = currentNaturalClass.getSegmentsOrNaturalClasses().size();
-		for (SylParserObject snc : currentNaturalClass.getSegmentsOrNaturalClasses()) {
+		int iCount = segmentsOrNaturalClasses.size();
+		for (SylParserObject snc : segmentsOrNaturalClasses) {
 			Text t;
 			String s;
 			if (snc instanceof Segment) {
 				s = ((Segment) snc).getSegment();
 				t = new Text(s);
-				t.setFont(languageProject.getVernacularLanguage().getFont());
+				t.setFont(vernacular.getFont());
+				t.setFill(vernacular.getColor());
+				t.setNodeOrientation(vernacular.getOrientation());
 				sb.append(s);
 			} else if (snc instanceof CVNaturalClass) {
 				s = ((CVNaturalClass) snc).getNCName();
 				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
 				t = new Text(s);
-				t.setFont(languageProject.getAnalysisLanguage().getFont());
+				t.setFont(analysis.getFont());
+				t.setFill(analysis.getColor());
+				t.setNodeOrientation(analysis.getOrientation());
 				sb.append(s);
 			} else {
 				s = "ERROR!";
 				t = new Text(s);
 				sb.append(s);
 			}
-			if (snc.isActive() && activeCheckBox.isSelected()) {
-				t.setFill(Constants.ACTIVE);
-			} else {
+			if (!(snc.isActive() && activeCheckBox.isSelected())) {
 				t.setFill(Constants.INACTIVE);
 			}
 			Text tBar = new Text(" | ");
@@ -291,7 +317,6 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				sb.append(", ");
 			}
 		}
-		currentNaturalClass.setSNCRepresentation(sb.toString());
 	}
 
 	public void setNaturalClass(CVNaturalClass naturalClass) {

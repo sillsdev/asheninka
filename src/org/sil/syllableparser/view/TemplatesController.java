@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
@@ -126,6 +127,12 @@ public class TemplatesController extends TemplatesFiltersController {
 			nameField.setText(tf.getTemplateFilterName());
 			descriptionField.setText(tf.getDescription());
 			representationField.setText(tf.getTemplateFilterRepresentation());
+			NodeOrientation vernacularOrientation = languageProject.getVernacularLanguage()
+					.getOrientation();
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			nameField.setNodeOrientation(analysisOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
 			activeCheckBox.setSelected(tf.isActive());
 			List<String> choices = languageProject.getCVApproach().getActiveCVNaturalClasses().stream()
 					.map(CVNaturalClass::getNCName).collect(Collectors.toList());

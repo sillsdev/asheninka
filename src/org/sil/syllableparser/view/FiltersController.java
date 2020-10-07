@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
@@ -92,6 +93,10 @@ public class FiltersController extends TemplatesFiltersController {
 			representationField.setText(tf.getTemplateFilterRepresentation());
 			repairRadioButton.setSelected(tf.getAction().isDoRepair());
 			failRadioButton.setSelected(!tf.getAction().isDoRepair());
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			nameField.setNodeOrientation(analysisOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
 
 			activeCheckBox.setSelected(tf.isActive());
 			List<String> choices = languageProject.getCVApproach().getActiveCVNaturalClasses().stream()

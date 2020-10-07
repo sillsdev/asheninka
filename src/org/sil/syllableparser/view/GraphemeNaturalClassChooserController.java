@@ -39,28 +39,22 @@ import javafx.stage.Stage;
 public class GraphemeNaturalClassChooserController extends CheckBoxColumnController implements
 		Initializable {
 
+	protected final class AnalysisWrappingTableCell extends TableCell<GraphemeOrNaturalClass, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
 	protected final class WrappingTableCell extends TableCell<GraphemeOrNaturalClass, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				GraphemeOrNaturalClass gnc = (GraphemeOrNaturalClass) this.getTableRow().getItem();
-				if (gnc != null && gnc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -112,7 +106,7 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		initializeCheckBoxContextMenu(resources);
@@ -128,6 +122,8 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 				}
 				break;
 			}
+			default:
+				break;
 			}
 		});
 	}

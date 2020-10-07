@@ -141,6 +141,7 @@ public class CVWordsController extends WordsControllerCommon {
 			setParserResultFieldColor(cvWord.getCVParserResult());
 			showParserResultAndLingTree(cvWord.getCVPredictedSyllabification(), cvWord.getCVParserResult(),
 					cvWord.getCVLingTreeDescription());
+			setNodeOrientationOnFields();
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");

@@ -248,7 +248,8 @@ public class WritingSystemController extends SylParserBaseController implements
 		}
 		if (colorPicker != null) {
 			if (currentLanguage.getColor() != null) {
-				colorPicker.setValue(currentLanguage.getColor());
+				color = currentLanguage.getColor();
+				colorPicker.setValue(color);
 			}
 		}
 		if (sortingChoiceBox != null) {

@@ -91,7 +91,7 @@ public class ONCApproachController extends ApproachController  {
 		}
 		String sClass = currentONCApproachController.getClass().getName();
 		switch (sClass) {
-		case "org.sil.syllableparser.view.CVSegmentInventoryController":
+		case "org.sil.syllableparser.view.ONCSegmentInventoryController":
 			sView = ONCApproachView.SEGMENT_INVENTORY.toString();
 			break;
 
@@ -352,7 +352,7 @@ public class ONCApproachController extends ApproachController  {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
-			String resource = "fxml/ONCPredictedToCorrectSyllabificationChooser.fxml";
+			String resource = "fxml/CVPredictedToCorrectSyllabificationChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
 					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
 					Constants.RESOURCE_LOCATION);
@@ -553,6 +553,64 @@ public class ONCApproachController extends ApproachController  {
 			tryAWordDialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void toggleView() {
+		String sClass = currentONCApproachController.getClass().getName();
+		switch (sClass) {
+		case "org.sil.syllableparser.view.ONCSegmentInventoryController":
+			handleSyllabificationParameters();
+			handleONCSegmentInventory();
+			break;
+
+		case "org.sil.syllableparser.view.SHSonorityHierarchyController":
+			handleSyllabificationParameters();
+			handleONCSonorityHierarchy();
+			break;
+
+		case "org.sil.syllableparser.view.SyllabificationParametersController":
+			// nothing to do
+			break;
+
+		case "org.sil.syllableparser.view.CVNaturalClassesController":
+			handleSyllabificationParameters();
+			handleCVNaturalClasses();
+			break;
+
+		case "org.sil.syllableparser.view.TemplatesController":
+			handleSyllabificationParameters();
+			handleTemplates();
+			break;
+
+		case "org.sil.syllableparser.view.FiltersController":
+			handleSyllabificationParameters();
+			handleFilters();
+			break;
+
+		case "org.sil.syllableparser.view.ONCWordsController":
+			handleSyllabificationParameters();
+			handleONCWords();
+			break;
+
+		case "org.sil.syllableparser.view.ONCWordsPredictedVsCorrectController":
+			handleSyllabificationParameters();
+			handleONCWordsPredictedVsCorrect();
+			break;
+
+		case "org.sil.syllableparser.view.EnvironmentsController":
+			handleSyllabificationParameters();
+			handleEnvironments();
+			break;
+
+		case "org.sil.syllableparser.view.GraphemeNaturalClassesController":
+			handleSyllabificationParameters();
+			handleGraphemeNaturalClasses();
+			break;
+
+		default:
+			break;
 		}
 	}
 }

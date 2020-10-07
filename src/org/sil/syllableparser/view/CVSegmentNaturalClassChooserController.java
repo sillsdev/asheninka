@@ -14,6 +14,7 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
+import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
@@ -37,28 +38,23 @@ import javafx.stage.Stage;
  */
 public class CVSegmentNaturalClassChooserController extends CheckBoxColumnController implements Initializable {
 
+	protected final class AnalysisWrappingTableCell extends TableCell<CVSegmentOrNaturalClass, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
+
 	protected final class WrappingTableCell extends TableCell<CVSegmentOrNaturalClass, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVSegmentOrNaturalClass snc = (CVSegmentOrNaturalClass) this.getTableRow().getItem();
-				if (snc != null && snc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -110,7 +106,7 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		initializeCheckBoxContextMenu(resources);

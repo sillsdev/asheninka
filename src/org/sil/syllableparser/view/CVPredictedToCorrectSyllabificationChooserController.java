@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -20,22 +20,34 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
  * @author Andy Black
  *
  */
-public class CVPredictedToCorrectSyllabificationChooserController implements Initializable {
+public class CVPredictedToCorrectSyllabificationChooserController extends SylParserBaseController {
+
+	protected final class VernacularWrappingTableCell extends TableCell<CVPredictedSyllabification, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processVernacularTableCell(this, text, item, empty);
+		}
+	}
 
 	@FXML
 	private TableView<CVPredictedSyllabification> cvPredictedSyllabificationTable;
@@ -57,9 +69,6 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	private MainApp mainApp;
 	private ApplicationPreferences preferences;
 
-	private CVApproach cvApproach;
-	private SHApproach shApproach;
-	private ONCApproach oncApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private CVPredictedSyllabification currentPredictedSyllabification;
 	private ObservableList<CVPredictedSyllabification> cvPredictedSyllabifications = FXCollections
@@ -78,7 +87,10 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 		});
 		predictedSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.predictedSyllabificationProperty());
-		// not working... predictedSyllabificationColumn.getStyleClass().add("predictedSyllabificationColumn");
+		predictedSyllabificationColumn.setCellFactory(column -> {
+			return new VernacularWrappingTableCell();
+		});
+
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
 		checkBoxColumn.setEditable(true);
 		cvPredictedSyllabificationTable.setEditable(true);
@@ -126,11 +138,12 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 	 */
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
+		languageProject = cvApproachData.getLanguageProject();
 		this.words = words;
-		createListOfDifferentWords(words);
+		createListOfDifferentCVWords(words);
 	}
 
-	private void createListOfDifferentWords(ObservableList<Word> words) {
+	private void createListOfDifferentCVWords(ObservableList<Word> words) {
 		for (Word cvWord : words) {
 			if (!cvWord.cvPredictedSyllabificationProperty().isEmpty().getValue()) {
 				currentPredictedSyllabification = new CVPredictedSyllabification(
@@ -138,7 +151,32 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 				cvPredictedSyllabifications.add(currentPredictedSyllabification);
 			}
 		}
-		// Add observable list data to the table
+		addWordsToTable();
+	}
+
+	private void createListOfDifferentSHWords(ObservableList<Word> words) {
+		for (Word cvWord : words) {
+			if (!cvWord.shPredictedSyllabificationProperty().isEmpty().getValue()) {
+				currentPredictedSyllabification = new CVPredictedSyllabification(
+						cvWord.getSHPredictedSyllabification(), cvWord.getID());
+				cvPredictedSyllabifications.add(currentPredictedSyllabification);
+			}
+		}
+		addWordsToTable();
+	}
+
+	private void createListOfDifferentONCWords(ObservableList<Word> words) {
+		for (Word cvWord : words) {
+			if (!cvWord.oncPredictedSyllabificationProperty().isEmpty().getValue()) {
+				currentPredictedSyllabification = new CVPredictedSyllabification(
+						cvWord.getONCPredictedSyllabification(), cvWord.getID());
+				cvPredictedSyllabifications.add(currentPredictedSyllabification);
+			}
+		}
+		addWordsToTable();
+	}
+
+	protected void addWordsToTable() {
 		cvPredictedSyllabificationTable.setItems(cvPredictedSyllabifications);
 		if (cvPredictedSyllabificationTable.getItems().size() > 0) {
 			// select one
@@ -150,14 +188,16 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 
 	public void setData(SHApproach shApproachData, ObservableList<Word> words) {
 		shApproach = shApproachData;
+		languageProject = shApproachData.getLanguageProject();
 		this.words = words;
-		createListOfDifferentWords(words);
+		createListOfDifferentSHWords(words);
 	}
 
 	public void setData(ONCApproach oncApproachData, ObservableList<Word> words) {
 		oncApproach = oncApproachData;
+		languageProject = oncApproachData.getLanguageProject();
 		this.words = words;
-		createListOfDifferentWords(words);
+		createListOfDifferentONCWords(words);
 	}
 
 	/**
@@ -246,6 +286,47 @@ public class CVPredictedToCorrectSyllabificationChooserController implements Ini
 				predictedSyllabification.setChecked(true);
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sil.syllableparser.view.ApproachEditorController#handleInsertNewItem()
+	 */
+	@Override
+	void handleInsertNewItem() {
+		// TODO Auto-generated method stub
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sil.syllableparser.view.ApproachEditorController#handleRemoveItem()
+	 */
+	@Override
+	void handleRemoveItem() {
+		// TODO Auto-generated method stub
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sil.syllableparser.view.ApproachEditorController#handlePreviousItem()
+	 */
+	@Override
+	void handlePreviousItem() {
+		// TODO Auto-generated method stub
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sil.syllableparser.view.ApproachEditorController#handleNextItem()
+	 */
+	@Override
+	void handleNextItem() {
+		// TODO Auto-generated method stub
+	}
+
+	/* (non-Javadoc)
+	 * @see org.sil.syllableparser.view.ApproachEditorController#createTextFields()
+	 */
+	@Override
+	TextField[] createTextFields() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

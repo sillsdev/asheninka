@@ -13,8 +13,6 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
-import org.sil.syllableparser.SyllableParserException;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
@@ -23,9 +21,12 @@ import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -34,7 +35,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
@@ -50,35 +50,13 @@ import javafx.stage.Stage;
 
 public class CVSyllablePatternsController extends SylParserBaseController implements Initializable {
 
-	protected final class WrappingTableCell extends TableCell<CVSyllablePattern, String> {
+	protected final class AnalysisWrappingTableCell extends TableCell<CVSyllablePattern, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVSyllablePattern syllablePattern = (CVSyllablePattern) this.getTableRow()
-						.getItem();
-				if (syllablePattern != null && syllablePattern.isActive()) {
-					Color textColor = languageProject.getAnalysisLanguage().getColor();
-					if (textColor != null) {
-						text.setFill(textColor);
-					} else {
-						text.setFill(Constants.ACTIVE);
-					}
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
@@ -158,13 +136,13 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 		naturalClassColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(nameColumn);
@@ -267,10 +245,14 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			// Fill the text fields with info from the person object.
 			nameField.setText(syllablePattern.getSPName());
 			descriptionField.setText(syllablePattern.getDescription());
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			nameField.setNodeOrientation(analysisOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
+			ncsTextFlow.setNodeOrientation(analysisOrientation);
 			activeCheckBox.setSelected(syllablePattern.isActive());
 			showNaturalClassesContent();
 			setUpDownButtonDisabled();
-
 		} else {
 			// Segment is null, remove all the text.
 			if (nameField != null) {
@@ -325,16 +307,13 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL, true);
 			sb.append(", ");
 		}
-		int i = 1;
-		int iCount = currentSyllablePattern.getNCs().size();
-		for (SylParserObject spo : currentSyllablePattern.getNCs()) {
-			CVNaturalClass nc = (CVNaturalClass) spo;
-			if (nc != null) {
-				addNameToContent(sb, nc.getNCName(), spo.isActive());
-				if (i++ < iCount) {
-					sb.append(", ");
-				}
-			}
+		ObservableList<CVNaturalClass> naturalClasses = currentSyllablePattern.getNCs();
+		if (languageProject.getAnalysisLanguage().getOrientation() ==  NodeOrientation.LEFT_TO_RIGHT) {
+			createStringOfNaturalClasses(sb, naturalClasses);
+		} else {
+			FXCollections.reverse(naturalClasses);
+			createStringOfNaturalClasses(sb, naturalClasses);
+			FXCollections.reverse(naturalClasses);
 		}
 		if (currentSyllablePattern.isWordFinal()) {
 			sb.append(", ");
@@ -343,11 +322,27 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 		currentSyllablePattern.setNCSRepresentation(sb.toString());
 	}
 
+	protected void createStringOfNaturalClasses(StringBuilder sb,
+			ObservableList<CVNaturalClass> naturalClasses) {
+		int i = 1;
+		int iCount = naturalClasses.size();
+		for (SylParserObject spo : naturalClasses) {
+			CVNaturalClass nc = (CVNaturalClass) spo;
+			if (nc != null) {
+				addNameToContent(sb, nc.getNCName(), spo.isActive());
+				if (i++ < iCount) {
+					sb.append(", ");
+				}
+			}
+		}
+	}
+
 	protected void addNameToContent(StringBuilder sb, String sName, boolean isActive) {
 		Text t = new Text(sName);
 		t.setFont(languageProject.getAnalysisLanguage().getFont());
 		if (isActive && activeCheckBox.isSelected()) {
-			t.setFill(Constants.ACTIVE);
+			t.setFill(languageProject.getAnalysisLanguage().getColor());
+			t.setNodeOrientation(languageProject.getAnalysisLanguage().getOrientation());
 		} else {
 			t.setFill(Constants.INACTIVE);
 		}

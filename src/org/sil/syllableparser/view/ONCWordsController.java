@@ -123,7 +123,7 @@ public class ONCWordsController extends WordsControllerCommon {
 	}
 	
 	/**
-	 * Fills all text fields to show details about the CV word. If the specified
+	 * Fills all text fields to show details about the ONC word. If the specified
 	 * word is null, all text fields are cleared.
 	 * 
 	 * @param oncWord
@@ -141,6 +141,7 @@ public class ONCWordsController extends WordsControllerCommon {
 			setParserResultFieldColor(oncWord.getONCParserResult());
 			showParserResultAndLingTree(oncWord.getONCPredictedSyllabification(), oncWord.getONCParserResult(),
 					oncWord.getONCLingTreeDescription());
+			setNodeOrientationOnFields();
 		} else {
 			// Segment is null, remove all the text.
 			wordField.setText("");

@@ -414,6 +414,9 @@ public class RootLayoutController implements Initializable {
 			controller.setData(language);
 			dialogStage.setResizable(false);
 			dialogStage.showAndWait();
+			if (controller.isOkClicked()) {
+				currentApproachController.toggleView();
+			}
 		} catch (IOException | CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

@@ -20,6 +20,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
@@ -123,6 +124,9 @@ public abstract class TryAWordController implements Initializable {
 		this.mainApp = mainApp;
 		preferences = mainApp.getApplicationPreferences();
 		String lastWordTried = getLastTryAWordUsed();
+		NodeOrientation vernacularOrientation = mainApp.getLanguageProject().getVernacularLanguage()
+				.getOrientation();
+		wordToTry.setNodeOrientation(vernacularOrientation);
 		wordToTry.setText(lastWordTried);
 		lastTryAWord = getLastTryAWord();
 		dialogStage = preferences.getLastWindowParameters(lastTryAWord, dialogStage, 533., 637.);

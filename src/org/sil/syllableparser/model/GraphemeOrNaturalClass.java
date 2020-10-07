@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -16,7 +16,7 @@ import javafx.beans.property.StringProperty;
  *
  *         an Object Value
  */
-public class GraphemeOrNaturalClass {
+public class GraphemeOrNaturalClass extends SylParserBase {
 	private StringProperty graphemeOrNaturalClass;
 	private StringProperty description;
 	private BooleanProperty checked;

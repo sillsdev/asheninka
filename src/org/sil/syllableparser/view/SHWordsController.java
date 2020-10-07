@@ -139,6 +139,7 @@ public class SHWordsController extends WordsControllerCommon {
 			setParserResultFieldColor(shWord.getSHParserResult());
 			showParserResultAndLingTree(shWord.getSHPredictedSyllabification(), shWord.getSHParserResult(),
 					shWord.getSHLingTreeDescription());
+			setNodeOrientationOnFields();
 		} else {
 			// Word is null, remove all the text.
 			wordField.setText("");

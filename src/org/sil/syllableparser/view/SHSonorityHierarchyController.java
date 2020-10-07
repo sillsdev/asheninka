@@ -13,8 +13,8 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
@@ -22,9 +22,12 @@ import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -55,6 +58,16 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
 			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
+
+	protected final class VernacularWrappingTableCell extends TableCell<SHNaturalClass, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processVernacularTableCell(this, text, item, empty);
 		}
 	}
 
@@ -147,7 +160,7 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 			return new AnalysisWrappingTableCell();
 		});
 		naturalClassColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new VernacularWrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
@@ -253,6 +266,12 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 			// Fill the text fields with info from the person object.
 			nameField.setText(syllablePattern.getNCName());
 			descriptionField.setText(syllablePattern.getDescription());
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			nameField.setNodeOrientation(analysisOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
+			ncsTextFlow.setNodeOrientation(languageProject.getVernacularLanguage()
+					.getOrientation());
 			activeCheckBox.setSelected(syllablePattern.isActive());
 			showNaturalClassesContent();
 			setUpDownButtonDisabled();
@@ -307,25 +326,35 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 		// TODO: can we do this with lambdas?
 		StringBuilder sb = new StringBuilder();
 		ncsTextFlow.getChildren().clear();
-		int i = 1;
-		int iCount = currentNaturalClass.getSegments().size();
-		for (SylParserObject spo : currentNaturalClass.getSegments()) {
-			Segment nc = (Segment) spo;
-			if (nc != null) {
-				addNameToContent(sb, nc.getSegment(), spo.isActive());
-				if (i++ < iCount) {
-					sb.append(", ");
-				}
-			}
+		ObservableList<Segment> segments = currentNaturalClass.getSegments();
+		if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+			fillNcsTextFlow(sb, segments);
+		} else {
+			FXCollections.reverse(segments);
+			fillNcsTextFlow(sb, segments);
+			FXCollections.reverse(segments);
 		}
 		currentNaturalClass.setSegmentsRepresentation(sb.toString());
 	}
 
+	protected void fillNcsTextFlow(StringBuilder sb, ObservableList<Segment> segments) {
+		int i = 1;
+		int iCount = segments.size();
+		for (Segment seg : segments) {
+			addNameToContent(sb, seg.getSegment(), seg.isActive());
+			if (i++ < iCount) {
+				sb.append(", ");
+			}
+		}
+	}
+
 	protected void addNameToContent(StringBuilder sb, String sName, boolean isActive) {
+		Language vernacular = languageProject.getVernacularLanguage();
 		Text t = new Text(sName);
-		t.setFont(languageProject.getAnalysisLanguage().getFont());
 		if (isActive && activeCheckBox.isSelected()) {
-			t.setFill(Constants.ACTIVE);
+			t.setFont(vernacular.getFont());
+			t.setFill(vernacular.getColor());
+			t.setNodeOrientation(vernacular.getOrientation());
 		} else {
 			t.setFill(Constants.INACTIVE);
 		}

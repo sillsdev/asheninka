@@ -553,4 +553,47 @@ public class CVApproachController extends ApproachController {
 			e.printStackTrace();
 		}
 	}
+
+	public void toggleView() {
+		String sClass = currentCVApproachController.getClass().getName();
+		switch (sClass) {
+		case "org.sil.syllableparser.view.CVSegmentInventoryController":
+			handleCVNaturalClasses();
+			handleCVSegmentInventory();
+			break;
+
+		case "org.sil.syllableparser.view.CVNaturalClassesController":
+			handleCVSegmentInventory();
+			handleCVNaturalClasses();
+			break;
+
+		case "org.sil.syllableparser.view.CVSyllablePatternsController":
+			handleCVNaturalClasses();
+			handleCVSyllablePatterns();
+			break;
+
+		case "org.sil.syllableparser.view.CVWordsController":
+			handleCVNaturalClasses();
+			handleCVWords();
+			break;
+
+		case "org.sil.syllableparser.view.CVWordsPredictedVsCorrectController":
+			handleCVSyllablePatterns();
+			handleCVWordsPredictedVsCorrect();
+			break;
+
+		case "org.sil.syllableparser.view.EnvironmentsController":
+			handleGraphemeNaturalClasses();
+			handleEnvironments();
+			break;
+
+		case "org.sil.syllableparser.view.GraphemeNaturalClassesController":
+			handleEnvironments();
+			handleGraphemeNaturalClasses();
+			break;
+
+		default:
+			break;
+		}
+	}
 }

@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -203,6 +204,17 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
 		commentField.setText(cvWord.getComment());
 		parserResultField.setText(cvWord.getCVParserResult());
+	}
+
+	protected void setNodeOrientationOnFields() {
+		NodeOrientation vernacularOrientation = languageProject.getVernacularLanguage()
+				.getOrientation();
+		NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+				.getOrientation();
+		commentField.setNodeOrientation(analysisOrientation);
+		correctSyllabificationField.setNodeOrientation(vernacularOrientation);
+		predictedSyllabificationField.setNodeOrientation(vernacularOrientation);
+		wordField.setNodeOrientation(vernacularOrientation);
 	}
 
 	public void setFocusOnWord(int index) {

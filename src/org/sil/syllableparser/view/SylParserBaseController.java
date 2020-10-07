@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.SylParserObject;
+import org.sil.syllableparser.model.SylParserBase;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
@@ -66,8 +66,8 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 		return value;
 	}
 
-	protected void handleInsertNewItem(ObservableList<? extends SylParserObject> list,
-			TableView<? extends SylParserObject> tableView) {
+	protected void handleInsertNewItem(ObservableList<? extends SylParserBase> list,
+			TableView<? extends SylParserBase> tableView) {
 		int i = list.size() - 1;
 		tableView.requestFocus();
 		tableView.getSelectionModel().select(i);
@@ -75,8 +75,8 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 		tableView.scrollTo(i);
 	}
 
-	protected void handleRemoveItem(ObservableList<? extends SylParserObject> list,
-			SylParserObject obj, TableView<? extends SylParserObject> tableView) {
+	protected void handleRemoveItem(ObservableList<? extends SylParserBase> list,
+			SylParserBase obj, TableView<? extends SylParserBase> tableView) {
 		int i = list.indexOf(obj);
 		obj = null;
 		if (i >= 0) {
@@ -92,8 +92,8 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 		tableView.refresh();
 	}
 
-	protected void handlePreviousItem(ObservableList<? extends SylParserObject> list,
-			SylParserObject obj, TableView<? extends SylParserObject> tableView) {
+	protected void handlePreviousItem(ObservableList<? extends SylParserBase> list,
+			SylParserBase obj, TableView<? extends SylParserBase> tableView) {
 		int i = list.indexOf(obj) - 1;
 		if (i >= 0) {
 			tableView.requestFocus();
@@ -103,8 +103,8 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 		}
 		tableView.refresh();
 	}
-	protected void handleNextItem(ObservableList<? extends SylParserObject> list,
-			SylParserObject obj, TableView<? extends SylParserObject> tableView) {
+	protected void handleNextItem(ObservableList<? extends SylParserBase> list,
+			SylParserBase obj, TableView<? extends SylParserBase> tableView) {
 		int i = list.indexOf(obj) + 1;
 		if (i < tableView.getItems().size()) {
 			tableView.requestFocus();
@@ -115,7 +115,7 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 		tableView.refresh();
 	}
 
-	protected void setColumnICURules(TableColumn<? extends SylParserObject, String> tableColumn, String sICURules) {
+	protected void setColumnICURules(TableColumn<? extends SylParserBase, String> tableColumn, String sICURules) {
 		try {
 			collatorViaRules = new RuleBasedCollator(sICURules);
 			Comparator<String> comparatorViaRules = Comparator.comparing(String::toString,
@@ -128,13 +128,14 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 			e.printStackTrace();
 		}
 	}
-	protected void processAnalysisTableCell(TableCell<? extends SylParserObject, String> cell, Text text, String item, boolean empty) {
+	protected void processAnalysisTableCell(TableCell<? extends SylParserBase, String> cell, Text text, String item, boolean empty) {
 		Color textColor = languageProject.getAnalysisLanguage().getColor();
 		Font fontToUse = languageProject.getAnalysisLanguage().getFont();
+		cell.setNodeOrientation(languageProject.getAnalysisLanguage().getOrientation());
 		processCell(cell, item, empty, textColor, fontToUse);
 	}
 
-	protected void processCell(TableCell<? extends SylParserObject, String> cell, String item,
+	protected void processCell(TableCell<? extends SylParserBase, String> cell, String item,
 			boolean empty, Color textColor, Font fontToUse) {
 		Text text;
 		if (item == null || empty) {
@@ -145,7 +146,7 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 			text = new Text(item.toString());
 			// Get it to wrap.
 			text.wrappingWidthProperty().bind(cell.getTableColumn().widthProperty());
-			SylParserObject obj = (SylParserObject) cell.getTableRow().getItem();
+			SylParserBase obj = (SylParserBase) cell.getTableRow().getItem();
 			if (obj != null && obj.isActive()) {
 				if (textColor != null) {
 					text.setFill(textColor);
@@ -162,14 +163,14 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 		}
 	}
 
-	protected void processTableCell(TableCell<? extends SylParserObject, String> cell, Text text, String item, boolean empty) {
-		Font fontToUse = languageProject.getAnalysisLanguage().getFont();
-		processCell(cell, item, empty, null, fontToUse);
+	protected void processTableCell(TableCell<? extends SylParserBase, String> cell, Text text, String item, boolean empty) {
+		processCell(cell, item, empty, null, null);
 	}
 
-	protected void processVernacularTableCell(TableCell<? extends SylParserObject, String> cell, Text text, String item, boolean empty) {
+	protected void processVernacularTableCell(TableCell<? extends SylParserBase, String> cell, Text text, String item, boolean empty) {
 		Color textColor = languageProject.getVernacularLanguage().getColor();
 		Font fontToUse = languageProject.getVernacularLanguage().getFont();
+		cell.setNodeOrientation(languageProject.getVernacularLanguage().getOrientation());
 		processCell(cell, item, empty, textColor, fontToUse);
 	}
 }

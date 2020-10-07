@@ -15,6 +15,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -38,6 +39,7 @@ public class Language  {
 	protected final StringProperty ldmlFile;
 	protected final StringProperty useSameLanguage;
 	protected final StringProperty icuRules;
+	protected NodeOrientation orientation;
 
 	/**
 	 * @return the font
@@ -176,6 +178,10 @@ public class Language  {
 
 	public void setUseSameLanguage(String option) {
 		this.useSameLanguage.set(option);
+	}
+
+	public NodeOrientation getOrientation() {
+		return isRightToLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT;
 	}
 
 	public Language(String fontFamily, double fontSize, String fontType, SortingOption option, String code, String icuRules, String useSameLanguage, String ldmlFile) {

@@ -17,7 +17,6 @@ import name.fraser.neil.plaintext.diff_match_patch.Diff;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Template;
-import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 

@@ -299,7 +299,7 @@ public class SHApproachController extends ApproachController {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
-			String resource = "fxml/SHPredictedToCorrectSyllabificationChooser.fxml";
+			String resource = "fxml/CVPredictedToCorrectSyllabificationChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
 					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
 					Constants.RESOURCE_LOCATION);
@@ -500,6 +500,45 @@ public class SHApproachController extends ApproachController {
 			tryAWordDialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void toggleView() {
+		String sClass = currentSHApproachController.getClass().getName();
+		switch (sClass) {
+		case "org.sil.syllableparser.view.CVSegmentInventoryController":
+			handleSHSonorityHierarchy();
+			handleSHSegmentInventory();
+			break;
+
+		case "org.sil.syllableparser.view.SHSonorityHierarchyController":
+			handleSHSegmentInventory();
+			handleSHSonorityHierarchy();
+			break;
+
+		case "org.sil.syllableparser.view.SHWordsController":
+			handleSHSegmentInventory();
+			handleSHWords();
+			break;
+
+		case "org.sil.syllableparser.view.SHWordsPredictedVsCorrectController":
+			handleSHSonorityHierarchy();
+			handleSHWordsPredictedVsCorrect();
+			break;
+
+		case "org.sil.syllableparser.view.EnvironmentsController":
+			handleGraphemeNaturalClasses();
+			handleEnvironments();
+			break;
+
+		case "org.sil.syllableparser.view.GraphemeNaturalClassesController":
+			handleEnvironments();
+			handleGraphemeNaturalClasses();
+			break;
+
+		default:
+			break;
 		}
 	}
 }
