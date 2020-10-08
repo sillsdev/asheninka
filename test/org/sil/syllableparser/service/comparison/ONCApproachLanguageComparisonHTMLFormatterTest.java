@@ -48,6 +48,8 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 	private LocalDateTime dateTime;
 	SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
+	private File file1;
+	private File file2;
 
 	/**
 	 * @throws java.lang.Exception
@@ -57,12 +59,12 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 		languageProject1 = new LanguageProject();
 		locale = new Locale("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
-		File file1 = new File(Constants.UNIT_TEST_DATA_FILE);
+		file1 = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file1);
 		onca1 = languageProject1.getONCApproach();
 		languageProject2 = new LanguageProject();
 		xmlBackEndProvider = new XMLBackEndProvider(languageProject2, locale);
-		File file2 = new File(Constants.UNIT_TEST_DATA_FILE_2);
+		file2 = new File(Constants.UNIT_TEST_DATA_FILE_2);
 		xmlBackEndProvider.loadLanguageDataFromFile(file2);
 		onca2 = languageProject2.getONCApproach();
 		comparer = new ONCApproachLanguageComparer(onca1, onca2);
@@ -100,19 +102,32 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 
 	@Test
 	public void formattingEnglishTest() {
-		ONCApproachLanguageComparisonHTMLFormatter formatter = new ONCApproachLanguageComparisonHTMLFormatter(
-				comparer, locale, dateTime);
-		String result = formatter.format();
-		File file = new File("test/org/sil/syllableparser/testData/ONCApproachLanguageComparisonHTMLEnglish.html");
 		try {
+			ONCApproachLanguageComparisonHTMLFormatter formatter = new ONCApproachLanguageComparisonHTMLFormatter(
+					comparer, locale, dateTime);
+			String result = formatter.format();
+			File file = new File(
+					"test/org/sil/syllableparser/testData/ONCApproachLanguageComparisonHTMLEnglish.html");
 			Stream<String> contents = Files.lines(file.toPath());
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			// now do right-to-left
+			onca1.getLanguageProject().getVernacularLanguage().setRightToLeft(true);
+			comparer = new ONCApproachLanguageComparer(onca1, onca2);
+			invokeComparison(comparer, file1, file2);
+			result = formatter.format();
+			file = new File(
+					"test/org/sil/syllableparser/testData/ONCApproachLanguageComparisonHTMLEnglishRTL.html");
+			contents = Files.lines(file.toPath());
+			scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	@Test

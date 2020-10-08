@@ -13,6 +13,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
 
+import javafx.geometry.NodeOrientation;
+
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
@@ -23,6 +25,7 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.utility.DateTimeNormalizer;
+import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -100,6 +103,11 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		sb.append(language.getFontSize());
 		sb.append(";\n\tfont-style:");
 		sb.append(language.getFontType());
+		sb.append(";\n\tcolor:");
+		sb.append(StringUtilities.toRGBCode(language.getColor()));
+		if (language.getOrientation() == NodeOrientation.RIGHT_TO_LEFT) {
+			sb.append(";\n\tdirection:rtl");
+		}
 		sb.append(";\n}\n");
 	}
 

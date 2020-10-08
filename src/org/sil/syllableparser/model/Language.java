@@ -32,7 +32,7 @@ public class Language  {
 	private String fontFamily;
 	private double fontSize;
 	private String fontType;
-	private Color color;
+	private Color color = Color.BLACK;
 	private BooleanProperty rightToLeft;
 	private SortingOption sortingOption;
 	protected final StringProperty code;
