@@ -53,7 +53,7 @@ public class CVTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		CVNaturalClasserResult ncResult = traceInfo.getNaturalClasserResult();
 		if (ncResult.success) {
 			appendSuccessMessage(sb);
-			sb.append("<p class='" + SUCCESS + "'>"
+			sb.append("<p class='" + SUCCESS + " analysis'>"
 					+ traceInfo.getNaturalClasser().getNaturalClassListsInCurrentWordAsString()
 					+ "</p>\n");
 		} else {
@@ -74,7 +74,7 @@ public class CVTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			boolean fSuccess = sylResult.success;
 			if (fSuccess) {
 				appendSuccessMessage(sb);
-				sb.append("<p class='" + SUCCESS + "'>");
+				sb.append("<p class='" + SUCCESS + " vernacular'>");
 				sb.append(traceInfo.getSyllabifier().getSyllabificationOfCurrentWord());
 			} else {
 				sb.append("<p class='" + FAILURE + "'>");

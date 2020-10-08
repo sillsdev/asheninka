@@ -53,6 +53,7 @@ public class LingTreeInteractor {
 		origTree.setHorizontalGap(20.0);
 		origTree.setVerticalGap(20.0);
 		origTree.setLexGlossGapAdjustment(0.0);
+		origTree.setUseRightToLeftOrientation(language.getVernacularLanguage().isRightToLeft());
 	}
 
 	public String createSVG(String lingTreeDescription, boolean fSuccess) {

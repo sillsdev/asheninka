@@ -181,4 +181,81 @@ public class LingTreeInteractorTest {
 						"</svg>\n"
 , svg);
 	}
+
+	@Test
+	public void svgRTLTest() {
+		language.getVernacularLanguage().setRightToLeft(true);
+		liInteractor.initializeParameters(language);
+		String svg = liInteractor.createSVG("", true);
+		assertEquals("", svg);
+		svg = liInteractor.createSVG("", false);
+		assertEquals("", svg);
+		svg = liInteractor.createSVG("(W)", true);
+		assertEquals(
+				"﻿<?xml version='1.0' standalone='no'?>\n"
+						+ "<svg width='21.208984375' height='13.81171875' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>\n"
+						+ "<script  id=\"clientEventHandlersJS\">\n"
+						+ "function OnClickLingTreeNode(node){}\n"
+						+ "</script>\n"
+						+ "<rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/>\n"
+						+ "<text x=\"0.0\" y=\"7.800000000000001\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">W</text>\n"
+						+ "</svg>\n", svg);
+		svg = liInteractor.createSVG("(W)", false);
+		assertEquals(
+				"﻿<?xml version='1.0' standalone='no'?>\n"
+						+ "<svg width='21.208984375' height='13.81171875' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>\n"
+						+ "<script  id=\"clientEventHandlersJS\">\n"
+						+ "function OnClickLingTreeNode(node){}\n"
+						+ "</script>\n"
+						+ "<rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/>\n"
+						+ "<text x=\"0.0\" y=\"7.800000000000001\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">W</text>\n"
+						+ "</svg>\n", svg);
+		svg = liInteractor
+				.createSVG(
+						"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))",
+						true);
+		assertEquals(
+				"﻿<?xml version='1.0' standalone='no'?>\n" +
+						"<svg width='176.1376953125' height='186.925' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>\n" +
+						"<script  id=\"clientEventHandlersJS\">\n" +
+						"function OnClickLingTreeNode(node){}\n" +
+						"</script>\n" +
+						"<rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/>\n" +
+						"<text x=\"84.70849609375\" y=\"7.800000000000001\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">W</text>\n" +
+						"<text x=\"141.48046875\" y=\"43.7609375\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">σ</text>\n" +
+						"<line x1=\"90.31298828125\" y1=\"13.81171875\" x2=\"144.9287109375\" y2=\"27.811718749999997\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"156.009765625\" y=\"79.721875\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">O</text>\n" +
+						"<line x1=\"144.9287109375\" y1=\"49.77265625\" x2=\"160.533203125\" y2=\"63.77265625\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"156.575439453125\" y=\"156.9474609375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">d</text>\n" +
+						"<line x1=\"160.533203125\" y1=\"85.73359375\" x2=\"160.533203125\" y2=\"138.395703125\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"156.575439453125\" y=\"178.212109375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">d</text>\n" +
+						"<text x=\"125.7353515625\" y=\"79.721875\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">R</text>\n" +
+						"<line x1=\"144.9287109375\" y1=\"49.77265625\" x2=\"129.32421875\" y2=\"63.77265625\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"124.8359375\" y=\"115.6828125\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">N</text>\n" +
+						"<line x1=\"129.32421875\" y1=\"85.73359375\" x2=\"129.32421875\" y2=\"99.73359375\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"125.5283203125\" y=\"156.9474609375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">o</text>\n" +
+						"<line x1=\"129.32421875\" y1=\"121.69453125\" x2=\"129.32421875\" y2=\"138.395703125\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"125.5283203125\" y=\"178.212109375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">o</text>\n" +
+						"<text x=\"32.2490234375\" y=\"43.7609375\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">σ</text>\n" +
+						"<line x1=\"90.31298828125\" y1=\"13.81171875\" x2=\"35.697265625\" y2=\"27.811718749999997\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"62.3828125\" y=\"79.721875\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">O</text>\n" +
+						"<line x1=\"35.697265625\" y1=\"49.77265625\" x2=\"66.90625\" y2=\"63.77265625\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"94.052734375\" y=\"156.9474609375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">n</text>\n" +
+						"<line x1=\"66.90625\" y1=\"85.73359375\" x2=\"98.115234375\" y2=\"138.395703125\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"94.052734375\" y=\"178.212109375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">n</text>\n" +
+						"<text x=\"62.84375\" y=\"156.9474609375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">n</text>\n" +
+						"<line x1=\"66.90625\" y1=\"85.73359375\" x2=\"66.90625\" y2=\"138.395703125\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"62.84375\" y=\"178.212109375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">n</text>\n" +
+						"<text x=\"33.53271484375\" y=\"156.9474609375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">l</text>\n" +
+						"<line x1=\"66.90625\" y1=\"85.73359375\" x2=\"35.697265625\" y2=\"138.395703125\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"33.53271484375\" y=\"178.212109375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">l</text>\n" +
+						"<text x=\"0.8994140625\" y=\"79.721875\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">R</text>\n" +
+						"<line x1=\"35.697265625\" y1=\"49.77265625\" x2=\"4.48828125\" y2=\"63.77265625\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"0.0\" y=\"115.6828125\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">N</text>\n" +
+						"<line x1=\"4.48828125\" y1=\"85.73359375\" x2=\"4.48828125\" y2=\"99.73359375\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"2.32373046875\" y=\"156.9474609375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">i</text>\n" +
+						"<line x1=\"4.48828125\" y1=\"121.69453125\" x2=\"4.48828125\" y2=\"138.395703125\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
+						"<text x=\"2.32373046875\" y=\"178.212109375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">i</text>\n" +
+						"</svg>\n", svg);
+	}
 }

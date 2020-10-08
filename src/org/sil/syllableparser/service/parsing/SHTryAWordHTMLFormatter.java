@@ -49,7 +49,7 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			boolean fSuccess = sylResult.success;
 			if (fSuccess) {
 				appendSuccessMessage(sb);
-				sb.append("<p class='" + SUCCESS + "'>");
+				sb.append("<p class='" + SUCCESS + " vernacular'>");
 				sb.append(traceInfo.getSyllabifier().getSyllabificationOfCurrentWord());
 			} else {
 				sb.append("<p class='" + FAILURE + "'>");
@@ -107,11 +107,11 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sb.append("<td>");
 			sb.append("<span class='");
 			sb.append(row1Status);
-			sb.append("'>&#xa0;");
+			sb.append("'>&#xa0;<span class='vernacular'>");
 			sb.append(sylInfo.getSegment1Result());
-			sb.append(" (");
+			sb.append("</span> (<span class='analysis'>");
 			sb.append(sylInfo.getNaturalClass1Result());
-			sb.append(")&#xa0;");
+			sb.append("</span>)&#xa0;");
 			sb.append("</span>\n");
 			sb.append("</td>");
 
@@ -131,11 +131,11 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sb.append("<td>");
 			sb.append("<span class='");
 			sb.append(row2Status);
-			sb.append("'>&#xa0;");
+			sb.append("'>&#xa0;<span class='vernacular'>");
 			sb.append(sylInfo.getSegment2Result());
-			sb.append(" (");
+			sb.append("</span> (<span class='analysis'>");
 			sb.append(sylInfo.getNaturalClass2Result());
-			sb.append(")&#xa0;");
+			sb.append("</span>)&#xa0;");
 			sb.append("</span>\n");
 			sb.append("<td align='center'>");
 			if (sylInfo.startsSyllable) {

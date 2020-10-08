@@ -98,8 +98,8 @@ public abstract class TryAWordHTMLFormatter {
 		sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n<title>");
 		sb.append(bundle.getString("report.tawtitle"));
 		sb.append("</title>\n<style type=\"text/css\">\n");
-		createLanguagFontCSS(sb, analysis, ANALYSIS);
-		createLanguagFontCSS(sb, vernacular, VERNACULAR);
+		createLanguageFontCSS(sb, analysis, ANALYSIS);
+		createLanguageFontCSS(sb, vernacular, VERNACULAR);
 		createColorCSS(sb, SUCCESS, SUCCESS_COLOR);
 		createColorCSS(sb, FAILURE, FAILURE_COLOR);
 		createColorCSS(sb, MATCHED, MATCHED_COLOR);
@@ -109,7 +109,7 @@ public abstract class TryAWordHTMLFormatter {
 		sb.append("</head>\n<body>\n");
 	}
 
-	protected void createLanguagFontCSS(StringBuilder sb, Language language, String sLangTypeNumber) {
+	protected void createLanguageFontCSS(StringBuilder sb, Language language, String sLangTypeNumber) {
 		sb.append(".");
 		sb.append(sLangTypeNumber);
 		sb.append(" {\n\tfont-family:");
@@ -130,8 +130,8 @@ public abstract class TryAWordHTMLFormatter {
 	}
 
 	protected void formatOverview(StringBuilder sb) {
-		String sFormattedWord = "<span style=\"font-family='" + vernacular.getFontFamily()
-				+ ";'\">" + sWord + "</span>";
+		String sFormattedWord = "<span style=\"font-family:" + vernacular.getFontFamily()
+				+ ";\">" + sWord + "</span>";
 		sb.append("<h2>" + getAddedArgument("report.tawtitle", sFormattedWord) + "</h2>\n");
 	}
 

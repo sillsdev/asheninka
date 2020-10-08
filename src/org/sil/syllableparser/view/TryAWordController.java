@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Language;
 import org.sil.utility.StringUtilities;
 
 import javafx.application.Platform;
@@ -124,9 +125,10 @@ public abstract class TryAWordController implements Initializable {
 		this.mainApp = mainApp;
 		preferences = mainApp.getApplicationPreferences();
 		String lastWordTried = getLastTryAWordUsed();
-		NodeOrientation vernacularOrientation = mainApp.getLanguageProject().getVernacularLanguage()
-				.getOrientation();
+		Language vernacular = mainApp.getLanguageProject().getVernacularLanguage();
+		NodeOrientation vernacularOrientation = vernacular.getOrientation();
 		wordToTry.setNodeOrientation(vernacularOrientation);
+		wordToTry.setFont(vernacular.getFont());
 		wordToTry.setText(lastWordTried);
 		lastTryAWord = getLastTryAWord();
 		dialogStage = preferences.getLastWindowParameters(lastTryAWord, dialogStage, 533., 637.);

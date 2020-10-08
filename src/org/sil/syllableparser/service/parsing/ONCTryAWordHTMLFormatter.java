@@ -50,7 +50,7 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			boolean fSuccess = sylResult.success;
 			if (fSuccess) {
 				appendSuccessMessage(sb);
-				sb.append("<p class='" + SUCCESS + "'>");
+				sb.append("<p class='" + SUCCESS + " vernacular'>");
 				sb.append(traceInfo.getSyllabifier().getSyllabificationOfCurrentWord());
 				sb.append("</p>");
 			} else {
@@ -111,11 +111,11 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sb.append("<td>");
 			sb.append("<span class='");
 			sb.append(rowStatus);
-			sb.append("'>&#xa0;");
+			sb.append("'>&#xa0;<span class='vernacular'>");
 			sb.append(tracingStep.getSegment1Result());
-			sb.append(" (");
+			sb.append("</span> (<span class='analysis'>");
 			sb.append(tracingStep.getNaturalClass1Result());
-			sb.append(")&#xa0;");
+			sb.append("</span>)&#xa0;");
 			sb.append("</span>\n");
 			sb.append("</td>");
 
@@ -135,11 +135,11 @@ public class ONCTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sb.append("<td>");
 			sb.append("<span class='");
 			sb.append(rowStatus);
-			sb.append("'>&#xa0;");
+			sb.append("'>&#xa0;<span class='vernacular'>");
 			sb.append(tracingStep.getSegment2Result());
-			sb.append(" (");
+			sb.append("</span> (<span class='analysis'>");
 			sb.append(tracingStep.getNaturalClass2Result());
-			sb.append(")&#xa0;");
+			sb.append("</span>)&#xa0;");
 			sb.append("</span>\n");
 			sb.append("<td class='");
 			sb.append(rowStatus);
