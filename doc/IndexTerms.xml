@@ -21,6 +21,11 @@ see="iLanguageAnalysis"
 >Analysis language</term
 ></indexTerm
 ><indexTerm
+id="iColor"
+><term
+>Color</term
+></indexTerm
+><indexTerm
 id="iCompareApproaches"
 ><term
 >Compare approaches</term
@@ -91,6 +96,11 @@ id="iCVWords"
 >Words</term
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iDefaultOrder"
+><term
+>Default order</term
 ></indexTerm
 ><indexTerm
 id="iDeleteDataItem"
@@ -247,6 +257,11 @@ type="tItalic"
 ></indexTerms
 ></indexTerm
 ><indexTerm
+id="iICUCustomRules"
+><term
+>ICU custom rules</term
+></indexTerm
+><indexTerm
 id="iImportWords"
 see="iImport"
 ><term
@@ -296,6 +311,11 @@ id="iLanguageVernacular"
 >Vernacular</term
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iLDMLFile"
+><term
+>LDML file</term
 ></indexTerm
 ><indexTerm
 id="iMoraicApproach"
@@ -514,6 +534,16 @@ see="iDeleteDataItem"
 >Remove data item</term
 ></indexTerm
 ><indexTerm
+id="iRightToLeft"
+><term
+>Right-to-left script</term
+></indexTerm
+><indexTerm
+id="iSameAsAnotherLanguage"
+><term
+>Same as another language sorting option</term
+></indexTerm
+><indexTerm
 id="iSaveProject"
 see="iProjectSave"
 ><term
@@ -591,6 +621,11 @@ id="iSHWords"
 id="iSorting"
 ><term
 >Sorting data in display</term
+></indexTerm
+><indexTerm
+id="iSortOrder"
+><term
+>Sort order</term
 ></indexTerm
 ><indexTerm
 id="iSpanish"
@@ -751,7 +786,7 @@ id="iImport"
 id="iImportFLEx"
 ><term
 >From <object
-type="tTool"
+type="tFieldWorks"
 >FieldWorks Language Explorer</object
 ></term
 ></indexTerm
@@ -779,6 +814,23 @@ id="iRemoveCorrectSyllabificationAllWords"
 id="iRemoveWords"
 ><term
 >Remove all words</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iWritingSystems"
+><term
+>Writing Systems</term
+><indexTerms
+><indexTerm
+id="iAnalysisWS"
+><term
+>Analysis language</term
+></indexTerm
+><indexTerm
+id="iVernacularWS"
+><term
+>Vernacular language</term
 ></indexTerm
 ></indexTerms
 ></indexTerm

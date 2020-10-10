@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->14 August 2020</date
+>9 October 2020</date
 ><version
->0.7.0 Alpha</version
+>0.7.0 Beta</version
 ><contents
 ></contents
 ></frontMatter
@@ -102,8 +102,14 @@ type="tField"
 ><indexedItem
 term="iSorting"
 ></indexedItem
->When the view contains a pane with rows and columns, you can click on a column header to sort by that column (it currently only sorts by Unicode code point). You can even hold the Shift key down and click on another column header to get a secondary sort (or on a third column to get a tertiary sort). There are some tables which cannot be sorted because the user controls the order manually. In such cases (such as <object
+>When the view contains a pane with rows and columns, you can click on a column header to sort by that column. You can even hold the Shift key down and click on another column header to get a secondary sort (or on a third column to get a tertiary sort). The default sort order is by Unicode code point. See <sectionRef
+sec="sLanguages"
+></sectionRef
+> for how to change the sort order. There are some tables which cannot be sorted because the user controls the order manually. In such cases (such as <object
 type="tCVSyllablePatterns"
+></object
+> and <object
+type="tSHSonorityHierarchy"
 ></object
 >), the sorting is disabled.</p
 ><p
@@ -206,7 +212,7 @@ type="tMenuItem"
 ><section2
 id="sLanguages"
 ><secTitle
->Setting fonts for vernacular and analysis language display</secTitle
+>Setting writing system information for vernacular and analysis language display</secTitle
 ><p
 ><indexedItem
 term="iLanguageAnalysis"
@@ -214,10 +220,173 @@ term="iLanguageAnalysis"
 ><indexedItem
 term="iLanguageVernacular"
 ></indexedItem
+><indexedItem
+term="iWritingSystems"
+></indexedItem
 >Use the <object
 type="tMenuItem"
 >Settings</object
-> menu item to set the font information for displaying the vernacular and/or the analysis languages. Currently, only font family, font size, and font style can be set. We do plan to include color and sorting information in a later version.</p
+> menu item to set the writing system information for displaying the vernacular and/or the analysis languages. When you choose one of these, the dialog (which is patterned loosely after the writing system dialog in <object
+type="tFieldWorks"
+></object
+>) has three tabs.</p
+><section3
+id="sWSFontTab"
+><secTitle
+>Font tab</secTitle
+><p
+><indexedItem
+term="iFonts"
+></indexedItem
+>The Font tab comes up by default. Click the “Choose font information” button to set the font family, font size, and font style.</p
+><p
+><indexedItem
+term="iColor"
+></indexedItem
+>Click the drop-down button on the color chooser to change the color from its default value of black.</p
+></section3
+><section3
+id="sWSGeneralTab"
+><secTitle
+>General tab</secTitle
+><p
+>There are two items on this tab.</p
+><p
+>The language code value is for you to set, should you so wish.  It is currently not used anywhere.</p
+><p
+><indexedItem
+term="iRightToLeft"
+></indexedItem
+>The check box is for whether the language is written right-to-left or not.  The default is not (i.e., left-to-right).<endnote
+id="nRTLAndHyphensAndOrSyllables"
+><p
+>While we do offer this option, we expect that most right-to-left scripts do not normally use discretionary hyphens and/or are not necessarily orthographically designed to allow showing syllable breaks.</p
+></endnote
+></p
+></section3
+><section3
+id="sWSSortingTab"
+><secTitle
+>Sorting tab</secTitle
+><p
+><indexedItem
+term="iSortOrder"
+></indexedItem
+>The sorting tab has a drop-down chooser box that contains the following options:</p
+><ol
+><li
+>Custom ICU rules</li
+><li
+>Default order</li
+><li
+>Same as another language</li
+><li
+>Use LDML file</li
+></ol
+><pc
+>These are described in the next sections.</pc
+><section4
+id="sWSCustomICURules"
+><secTitle
+>Custom ICU rules</secTitle
+><p
+><indexedItem
+term="iICUCustomRules"
+></indexedItem
+>When this option is chosen, you can key in any custom rules using the ICU rule format.<endnote
+id="nICURule"
+><p
+>See <link
+href="https://unicode-org.github.io/icu/userguide/collation/"
+>https://​unicode-org.​github.​io/​icu/​userguide/​collation/</link
+> and <link
+href="https://software.sil.org/fieldworks/wp-content/uploads/sites/38/2016/10/ICU-and-writing-systems.pdf"
+>https://​software.​sil.​org/​fieldworks/​wp-content/​uploads/​sites/​38/​2016/​10/ICU-​and-​writing-​systems.pdf</link
+>.</p
+></endnote
+>  If you use <object
+type="tFieldWorks"
+></object
+> and have set up ICU rules there, you can copy and paste them into here.</p
+><p
+>As you type your rules, <object
+type="tAsheninka"
+></object
+> attempts to parse the rules and whenever it finds an error, it gives a message in a box.  It shows the approximate location of the error via an exclamation mark before the item.  Please note that this appears as you type so if you are in the process of keying a rule, ignore the message until you finish the rule.  If there is still a message, try and fix the rule.  Whenever an error is found, the “OK” button is disabled so you cannot accidentally save a set of ICU rules with errors.</p
+></section4
+><section4
+id="sWSDefaultOrder"
+><secTitle
+>Default order</secTitle
+><p
+><indexedItem
+term="iDefaultOrder"
+></indexedItem
+>When the “Default order" option is chosen, <object
+type="tAsheninka"
+></object
+> will sort items by using Unicode code points.  That is, the order is based on the code number assigned to each Unicode character.  For languages that use accents or non-A-Z characters, this often is incorrect.  To fix it, please use one of the other options.</p
+></section4
+><section4
+id="sWSSameAsAnotherLanguage"
+><secTitle
+>Same as another language</secTitle
+><p
+><indexedItem
+term="iSameAsAnotherLanguage"
+></indexedItem
+>Use this option if you need a sort order that is the same as a standard language.  <object
+type="tAsheninka"
+></object
+> comes with a large list of such languages and lists them in the “Language to use” drop-down chooser.  The languages are given by their standard “locale” abbreviation.<endnote
+id="nLanguagesAvailable"
+><p
+>See <link
+href="https://icu4c-demos.unicode.org/icu-bin/locexp/locexp"
+>https://icu4c-demos.unicode.org/icu-bin/locexp/locexp</link
+> for a list.</p
+></endnote
+></p
+></section4
+><section4
+id="sWSUseLDMLFile"
+><secTitle
+>Use LDML file</secTitle
+><p
+><indexedItem
+term="iLDMLFile"
+></indexedItem
+>A given language's LDML file contains any ICU rules as well as much more information.<endnote
+id="nLDML"
+><p
+>See <link
+href="http://www.unicode.org/reports/tr35"
+>http://www.unicode.org/reports/tr35</link
+> for details.</p
+></endnote
+>  <object
+type="tAsheninka"
+></object
+> currently only uses the ICU rules, if any.  If you have used <object
+type="tFieldWorks"
+></object
+> and have set up a sort order for the language you are using <object
+type="tAsheninka"
+></object
+> for and you happen to know where the LDML file is located,<endnote
+id="nFLExLDMLFiles"
+><p
+>In a typical Windows installation, the LDML files are located at C:\​ProgramData\​SIL\​FieldWorks\​Projects\​<object
+type="tItalic"
+>your_project_name</object
+>\​WritingSystemStore.</p
+></endnote
+> then you can use this option to navigate to that file and select it.  <object
+type="tAsheninka"
+></object
+> will then find any ICU rules in it and use them.</p
+></section4
+></section3
 ></section2
 ><section2
 id="sHyphenationParameters"
@@ -3164,7 +3333,7 @@ type="tParatext"
 term="iImportFLEx"
 ></indexedItem
 >A word list exported from <object
-type="tTool"
+type="tFieldWorks"
 >FieldWorks Language Explorer</object
 > (aka FLEx) (in tab-delimited form)</li
 ></ol
@@ -4039,6 +4208,25 @@ term="iONCTemplates"
 type="tSHSonorityHierarchy"
 ></object
 >.</p
+></appendix
+><appendix
+id="aKnownIssues"
+><secTitle
+>Known issues</secTitle
+><p
+>The following are some issues we are aware of that have yet to be fixed.</p
+><ol
+><li
+>The <object
+type="tField"
+>Segment or Natural Class</object
+> field in CV Natural Classes may show a class closing square bracket at the beginning of the field when the vernacular language is set to show right-to-left.  Similarly, the <object
+type="tField"
+>Grapheme or Natural Class</object
+> field will do the same.</li
+><li
+></li
+></ol
 ></appendix
 ><endnotes
 ></endnotes

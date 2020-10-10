@@ -175,6 +175,12 @@ before="“"
 id="tField"
 ></type
 ><type
+before="FieldWorks Language Explorer"
+color="navy"
+font-weight="bold"
+id="tFieldWorks"
+></type
+><type
 before="Grapheme Natural Classes"
 id="tGraphemeNaturalClasses"
 types="tView"
@@ -256,7 +262,7 @@ before="Onset Principle"
 id="tOnsetPrinciple"
 ></type
 ><type
-before="ParaTExt"
+before="Paratext"
 color="navy"
 font-weight="bold"
 id="tParatext"
