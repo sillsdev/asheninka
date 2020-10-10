@@ -141,11 +141,11 @@ public class WritingSystemController extends SylParserBaseController implements
 			public void changed(final ObservableValue<? extends String> observable, final String oldValue, final String newValue) {
 				try {
 					icuRulesErrorArea.setText("");
+					icuRulesErrorArea.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + "red" + Constants.TEXT_COLOR_CSS_END);
 					icuRulesErrorArea.setVisible(false);
 					icuRuleError.setVisible(false);
 					okButton.setDisable(false);
 					RuleBasedCollator collatorViaRules = new RuleBasedCollator(newValue);
-//					collatorViaRules.
 				} catch (ParseException e) {
 					String details = e.getMessage();
 					int i = details.indexOf("near \"");
@@ -153,6 +153,7 @@ public class WritingSystemController extends SylParserBaseController implements
 					icuRuleError.setVisible(true);
 					icuRulesErrorArea.setVisible(true);
 					icuRulesErrorArea.setText(details.substring(i+6, end));
+					icuRulesErrorArea.setEditable(false);
 					okButton.setDisable(true);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
