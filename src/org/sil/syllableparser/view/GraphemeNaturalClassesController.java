@@ -35,6 +35,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
@@ -128,8 +129,46 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			return new AnalysisWrappingTableCell();
 		});
 		graphemeOrNaturalClassColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new TableCell<GraphemeNaturalClass, String>() {
+				// We override computePrefHeight because by default, the graphic's height
+				// gets set to the height of all items in the TextFlow as if none of them
+				// wrapped.  So for now, we're doing this hack.
+				@Override
+				protected double computePrefHeight(double width) {
+					Object g = getGraphic();
+					if (g instanceof TextFlow) {
+						return guessPrefHeight(g, column.widthProperty().get());
+					}
+					return super.computePrefHeight(-1);
+				}
+
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					GraphemeNaturalClass nc = ((GraphemeNaturalClass) getTableRow().getItem());
+					if (item == null || empty || nc == null) {
+						setGraphic(null);
+						setText(null);
+						setStyle("");
+					} else {
+						setGraphic(null);
+						TextFlow tf = new TextFlow();
+						if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+							tf = buildTextFlow(nc.getGraphemesOrNaturalClasses());
+							tf.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+						} else {
+							FXCollections.reverse(nc.getGraphemesOrNaturalClasses());
+							tf = buildTextFlow(nc.getGraphemesOrNaturalClasses());
+							tf.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+							FXCollections.reverse(nc.getGraphemesOrNaturalClasses());
+						}
+						setGraphic(tf);
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+					}
+				}
+			};
 		});
+
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
@@ -329,6 +368,43 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 				sb.append(", ");
 			}
 		}
+	}
+
+	@Override
+	protected TextFlow buildTextFlow(ObservableList<SylParserObject> graphemesOrNaturalClasses) {
+		TextFlow tf = new TextFlow();
+		Language analysis = languageProject.getAnalysisLanguage();
+		Language vernacular = languageProject.getVernacularLanguage();
+		int i = 1;
+		int iCount = graphemesOrNaturalClasses.size();
+		for (SylParserObject gnc : graphemesOrNaturalClasses) {
+			Text t;
+			String s;
+			if (gnc instanceof Grapheme) {
+				s = ((Grapheme) gnc).getForm();
+				t = new Text(s);
+				t.setFont(vernacular.getFont());
+				t.setFill(vernacular.getColor());
+				t.setNodeOrientation(vernacular.getOrientation());
+			} else if (gnc instanceof GraphemeNaturalClass) {
+				s = ((GraphemeNaturalClass) gnc).getNCName();
+				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
+				t = new Text(s);
+				t.setFont(analysis.getFont());
+				t.setFill(analysis.getColor());
+				t.setNodeOrientation(analysis.getOrientation());
+			} else {
+				s = "ERROR!";
+				t = new Text(s);
+			}
+			if (!(gnc.isActive() && activeCheckBox.isSelected())) {
+				t.setFill(Constants.INACTIVE);
+			}
+			Text tBar = new Text(" | ");
+			tBar.setStyle("-fx-stroke: lightgrey;");
+			tf.getChildren().addAll(t, tBar);
+		}
+		return tf;
 	}
 
 	public void setNaturalClass(GraphemeNaturalClass naturalClass) {

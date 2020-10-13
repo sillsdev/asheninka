@@ -54,7 +54,7 @@ public class Coda extends ONCConstituent {
 					ONCSegmentInSyllable segment = segmentsInWord.get(iStart + iSlotPos);
 					if (segment.getSegment().isNucleus() || segment.getSegment().isCoda()) {
 						// Most likely the segment will be a coda.  If it were a nucleus, we
-						// wold never get here because it would be parsed as a nucleus first.
+						// would never get here because it would be parsed as a nucleus first.
 						if (getGraphemes().size() > 1) {
 							applyRepairToNucleus(syl, tracer, f, segment);
 						}

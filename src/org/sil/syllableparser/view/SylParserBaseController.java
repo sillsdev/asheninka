@@ -9,8 +9,10 @@ package org.sil.syllableparser.view;
 import java.util.Comparator;
 
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.SylParserBase;
+import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
@@ -29,6 +31,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 
 /**
  * @author Andy Black
@@ -172,5 +175,31 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 		Font fontToUse = languageProject.getVernacularLanguage().getFont();
 		cell.setNodeOrientation(languageProject.getVernacularLanguage().getOrientation());
 		processCell(cell, item, empty, textColor, fontToUse);
+	}
+
+	protected double guessPrefHeight(Object g, double columnWidth) {
+		TextFlow tf = (TextFlow) g;
+		double area = tf.computeAreaInScreen();
+		Language analysis = languageProject.getAnalysisLanguage();
+		Language vernacular = languageProject.getVernacularLanguage();
+		double maxSize = Math.max(vernacular.getFontSize(),
+				analysis.getFontSize());
+		if (area > 0.0) {
+			double heightGuess = area / columnWidth;
+			if (heightGuess <= maxSize) {
+				return tf.getPrefHeight();
+			} else {
+				return heightGuess;
+			}
+		} else {
+			int iSize = tf.getChildrenUnmodifiable().size();
+			double dItemsGuess = 1.25 * iSize;
+			double d = (dItemsGuess * maxSize) / columnWidth;
+			return d * maxSize;
+		}
+	}
+
+	protected TextFlow buildTextFlow(ObservableList<SylParserObject> items) {
+		return new TextFlow();
 	}
 }

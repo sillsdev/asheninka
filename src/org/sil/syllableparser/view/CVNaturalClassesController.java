@@ -30,6 +30,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
@@ -119,9 +120,48 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		nameColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
+
 		segmentOrNaturalClassColumn.setCellFactory(column -> {
-			return new GenericWrappingTableCell();
+			return new TableCell<CVNaturalClass, String>() {
+				// We override computePrefHeight because by default, the graphic's height
+				// gets set to the height of all items in the TextFlow as if none of them
+				// wrapped.  So for now, we're doing this hack.
+				@Override
+				protected double computePrefHeight(double width) {
+					Object g = getGraphic();
+					if (g instanceof TextFlow) {
+						return guessPrefHeight(g, column.widthProperty().get());
+					}
+					return super.computePrefHeight(-1);
+				}
+
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					CVNaturalClass nc = ((CVNaturalClass) getTableRow().getItem());
+					if (item == null || empty || nc == null) {
+						setGraphic(null);
+						setText(null);
+						setStyle("");
+					} else {
+						setGraphic(null);
+						TextFlow tf = new TextFlow();
+						if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+							tf = buildTextFlow(nc.getSegmentsOrNaturalClasses());
+							tf.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+						} else {
+							FXCollections.reverse(nc.getSegmentsOrNaturalClasses());
+							tf = buildTextFlow(nc.getSegmentsOrNaturalClasses());
+							tf.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+							FXCollections.reverse(nc.getSegmentsOrNaturalClasses());
+						}
+						setGraphic(tf);
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+					}
+				}
+			};
 		});
+
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
@@ -149,10 +189,6 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-		// segmentOrNaturalClassField.textProperty().addListener(
-		// (observable, oldValue, newValue) -> {
-		// currentNaturalClass.setSNCRepresentation(segmentOrNaturalClassField.getText());
-		// });
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setDescription(descriptionField.getText());
@@ -317,6 +353,41 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				sb.append(", ");
 			}
 		}
+	}
+
+	@Override
+	protected TextFlow buildTextFlow(ObservableList<SylParserObject> segmentsOrNaturalClasses) {
+		TextFlow tf = new TextFlow();
+		Language analysis = languageProject.getAnalysisLanguage();
+		Language vernacular = languageProject.getVernacularLanguage();
+		for (SylParserObject snc : segmentsOrNaturalClasses) {
+			Text t;
+			String s;
+			if (snc instanceof Segment) {
+				s = ((Segment) snc).getSegment();
+				t = new Text(s);
+				t.setFont(vernacular.getFont());
+				t.setFill(vernacular.getColor());
+				t.setNodeOrientation(vernacular.getOrientation());
+			} else if (snc instanceof CVNaturalClass) {
+				s = ((CVNaturalClass) snc).getNCName();
+				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
+				t = new Text(s);
+				t.setFont(analysis.getFont());
+				t.setFill(analysis.getColor());
+				t.setNodeOrientation(analysis.getOrientation());
+			} else {
+				s = "ERROR!";
+				t = new Text(s);
+			}
+			if (!(snc.isActive() && activeCheckBox.isSelected())) {
+				t.setFill(Constants.INACTIVE);
+			}
+			Text tBar = new Text(" | ");
+			tBar.setStyle("-fx-stroke: lightgrey;");
+			tf.getChildren().addAll(t, tBar);
+		}
+		return tf;
 	}
 
 	public void setNaturalClass(CVNaturalClass naturalClass) {
