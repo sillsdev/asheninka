@@ -683,7 +683,7 @@ public class ONCSyllabifier implements Syllabifiable {
 	}
 
 	public boolean applyAnyOnsetTemplates(Segment seg1, Segment seg2, SHComparisonResult result, List<ONCSegmentInSyllable> segmentsInWord, int i) {
-		if (!seg1.isOnset() || result != SHComparisonResult.EQUAL || !seg2.isOnset())
+		if (seg1 == null || seg2 == null || !seg1.isOnset() || !seg2.isOnset())
 			return false;
 		if (onsetTemplates.size() > 0) {
 			int iSegmentsInWord = segmentsInWord.size();
