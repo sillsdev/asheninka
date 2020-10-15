@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->9 October 2020</date
+>15 October 2020</date
 ><version
 >0.7.0 Beta</version
 ><contents
@@ -252,12 +252,12 @@ id="sWSGeneralTab"
 ><p
 >There are two items on this tab.</p
 ><p
->The language code value is for you to set, should you so wish.  It is currently not used anywhere.</p
+>The language code value is for you to set, should you so wish. It is currently not used anywhere.</p
 ><p
 ><indexedItem
 term="iRightToLeft"
 ></indexedItem
->The check box is for whether the language is written right-to-left or not.  The default is not (i.e., left-to-right).<endnote
+>The check box is for whether the language is written right-to-left or not. The default is not (i.e., left-to-right).<endnote
 id="nRTLAndHyphensAndOrSyllables"
 ><p
 >While we do offer this option, we expect that most right-to-left scripts do not normally use discretionary hyphens and/or are not necessarily orthographically designed to allow showing syllable breaks.</p
@@ -304,7 +304,7 @@ href="https://software.sil.org/fieldworks/wp-content/uploads/sites/38/2016/10/IC
 >https://​software.​sil.​org/​fieldworks/​wp-content/​uploads/​sites/​38/​2016/​10/ICU-​and-​writing-​systems.pdf</link
 >.</p
 ></endnote
->  If you use <object
+> If you use <object
 type="tFieldWorks"
 ></object
 > and have set up ICU rules there, you can copy and paste them into here.</p
@@ -312,7 +312,7 @@ type="tFieldWorks"
 >As you type your rules, <object
 type="tAsheninka"
 ></object
-> attempts to parse the rules and whenever it finds an error, it gives a message in a box.  It shows the approximate location of the error via an exclamation mark before the item.  Please note that this appears as you type so if you are in the process of keying a rule, ignore the message until you finish the rule.  If there is still a message, try and fix the rule.  Whenever an error is found, the “OK” button is disabled so you cannot accidentally save a set of ICU rules with errors.</p
+> attempts to parse the rules and whenever it finds an error, it gives a message in a box. It shows the approximate location of the error via an exclamation mark before the item. Please note that this appears as you type so if you are in the process of keying a rule, ignore the message until you finish the rule. If there is still a message, try and fix the rule. Whenever an error is found, the “OK” button is disabled so you cannot accidentally save a set of ICU rules with errors.</p
 ></section4
 ><section4
 id="sWSDefaultOrder"
@@ -325,7 +325,7 @@ term="iDefaultOrder"
 >When the “Default order" option is chosen, <object
 type="tAsheninka"
 ></object
-> will sort items by using Unicode code points.  That is, the order is based on the code number assigned to each Unicode character.  For languages that use accents or non-A-Z characters, this often is incorrect.  To fix it, please use one of the other options.</p
+> will sort items by using Unicode code points. That is, the order is based on the code number assigned to each Unicode character. For languages that use accents or non-A-Z characters, this often is incorrect. To fix it, please use one of the other options.</p
 ></section4
 ><section4
 id="sWSSameAsAnotherLanguage"
@@ -335,10 +335,10 @@ id="sWSSameAsAnotherLanguage"
 ><indexedItem
 term="iSameAsAnotherLanguage"
 ></indexedItem
->Use this option if you need a sort order that is the same as a standard language.  <object
+>Use this option if you need a sort order that is the same as a standard language. <object
 type="tAsheninka"
 ></object
-> comes with a large list of such languages and lists them in the “Language to use” drop-down chooser.  The languages are given by their standard “locale” abbreviation.<endnote
+> comes with a large list of such languages and lists them in the “Language to use” drop-down chooser. The languages are given by their standard “locale” abbreviation.<endnote
 id="nLanguagesAvailable"
 ><p
 >See <link
@@ -364,10 +364,10 @@ href="http://www.unicode.org/reports/tr35"
 >http://www.unicode.org/reports/tr35</link
 > for details.</p
 ></endnote
->  <object
+> <object
 type="tAsheninka"
 ></object
-> currently only uses the ICU rules, if any.  If you have used <object
+> currently only uses the ICU rules, if any. If you have used <object
 type="tFieldWorks"
 ></object
 > and have set up a sort order for the language you are using <object
@@ -381,7 +381,7 @@ type="tItalic"
 >your_project_name</object
 >\​WritingSystemStore.</p
 ></endnote
-> then you can use this option to navigate to that file and select it.  <object
+> then you can use this option to navigate to that file and select it. <object
 type="tAsheninka"
 ></object
 > will then find any ICU rules in it and use them.</p
@@ -3577,11 +3577,14 @@ term="iRemoveWords"
 >Use the <object
 type="tMenuItem"
 >Tools / Remove all words</object
-> menu item to completely clear the list of words in both the <object
+> menu item to completely clear the list of words in the <object
 type="tCVWords"
 ></object
-> view and the <object
+> view, the <object
 type="tSHWords"
+></object
+> view and the <object
+type="tONCWords"
 ></object
 > view. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
 letter="xRemoveAllWords"
@@ -4220,12 +4223,15 @@ id="aKnownIssues"
 >The <object
 type="tField"
 >Segment or Natural Class</object
-> field in CV Natural Classes may show a class closing square bracket at the beginning of the field when the vernacular language is set to show right-to-left.  Similarly, the <object
+> field in CV Natural Classes may show a class closing square bracket at the beginning of the field when the vernacular language is set to show right-to-left. Similarly, the <object
 type="tField"
 >Grapheme or Natural Class</object
 > field will do the same.</li
 ><li
-></li
+>The “Find a word” dialog does not use the vernacular font, color or right-to-left values.  See <sectionRef
+sec="sFindWord"
+></sectionRef
+> for more on this dialog.</li
 ></ol
 ></appendix
 ><endnotes
