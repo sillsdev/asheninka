@@ -334,6 +334,8 @@ public class ONCSyllabifier implements Syllabifiable {
 			case ONSET_OR_NUCLEUS:
 				if (seg1.isOnset() && (result == SHComparisonResult.LESS)) {
 					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
+				} else if (seg1.isOnset() && applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, i)) {
+					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
 				} else if (seg1.isNucleus()) {
 					syl = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
 				} else if (applyAnyWordFinalTemplates(segmentsInWord, i-1)) {

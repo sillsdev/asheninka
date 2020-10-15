@@ -88,6 +88,8 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 				"(W(σ(O(\\L s(\\G s))(\\L t(\\G t))(\\L ɹ(\\G ɹ)))(R(N(\\L a(\\G a)))(C(\\L p(\\G p))))))");
 		checkSyllabification("manstəɹ", true, 2, "man.stəɹ", "onc.oonc",
 				"(W(σ(O(\\L m(\\G m)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L s(\\G s))(\\L t(\\G t)))(R(N(\\L ə(\\G ə)))(C(\\L ɹ(\\G ɹ))))))");
+		checkSyllabification("smanstil", true, 2, "sman.stil", "oonc.oonc",
+				"(W(σ(O(\\L s(\\G s))(\\L m(\\G m)))(R(N(\\L a(\\G a)))(C(\\L n(\\G n)))))(σ(O(\\L s(\\G s))(\\L t(\\G t)))(R(N(\\L i(\\G i)))(C(\\L l(\\G l))))))");
 		}
 
 	@Test
