@@ -150,8 +150,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 	}
 
 	public void compareFilters() {
-		List<Filter> filters1 = onca1.getLanguageProject().getFilters();
-		List<Filter> filters2 = onca2.getLanguageProject().getFilters();
+		List<Filter> filters1 = onca1.getLanguageProject().getFilters().filtered(f -> f.isActive());
+		List<Filter> filters2 = onca2.getLanguageProject().getFilters().filtered(f -> f.isActive());
 
 		Set<Filter> difference1from2 = new HashSet<Filter>(filters1);
 		// use set difference (removeAll)
@@ -194,8 +194,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 	}
 
 	public void compareTemplates() {
-		List<Template> templates1 = onca1.getLanguageProject().getTemplates();
-		List<Template> templates2 = onca2.getLanguageProject().getTemplates();
+		List<Template> templates1 = onca1.getLanguageProject().getTemplates().filtered(t -> t.isActive());
+		List<Template> templates2 = onca2.getLanguageProject().getTemplates().filtered(t -> t.isActive());
 
 		Set<Template> difference1from2 = new HashSet<Template>(templates1);
 		// use set difference (removeAll)
