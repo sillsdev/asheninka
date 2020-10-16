@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.utility.StringUtilities;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -152,9 +153,13 @@ public class CVWordsController extends WordsControllerCommon {
 		}
 
 		if (cvWord != null) {
-			int currentItem = wordsTable.getItems().indexOf(currentWord);
-			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
-					+ wordsTable.getItems().size() + " ");
+			ObservableList<Word> predictedWords = wordsTable.getItems().filtered(
+					w -> !StringUtilities.isNullOrEmpty(w.getCVPredictedSyllabification()));
+			ObservableList<Word> predictedEqualsCorrectWords = wordsTable.getItems().filtered(
+					w -> !StringUtilities.isNullOrEmpty(w.getCVPredictedSyllabification())
+							&& w.getCVPredictedSyllabification().equals(
+									w.getCorrectSyllabification()));
+			int currentItem = updateStatusBarWords(predictedWords, predictedEqualsCorrectWords);
 			mainApp.getApplicationPreferences().setLastCVWordsViewItemUsed(currentItem);
 		}
 	}

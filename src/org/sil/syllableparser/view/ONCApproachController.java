@@ -188,6 +188,7 @@ public class ONCApproachController extends ApproachController  {
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData.getLanguageProject().getCVApproach(),
 				ApproachType.ONSET_NUCLEUS_CODA);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastONCCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
@@ -208,6 +209,7 @@ public class ONCApproachController extends ApproachController  {
 		FiltersController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastONCFiltersViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
@@ -222,6 +224,7 @@ public class ONCApproachController extends ApproachController  {
 		ONCWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData, words);
+		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
 		}
@@ -242,6 +245,7 @@ public class ONCApproachController extends ApproachController  {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastONCGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
@@ -252,6 +256,7 @@ public class ONCApproachController extends ApproachController  {
 		EnvironmentsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastONCEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());

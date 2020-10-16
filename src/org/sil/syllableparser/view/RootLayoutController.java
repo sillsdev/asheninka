@@ -208,6 +208,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	StatusBar statusBar = new StatusBar();
 	Label numberOfItems = new Label("0/0");
+	Label predictedToTotal = new Label("0/0 (0%)");
+	Label predictedEqualsCorrectToTotal = new Label("0/0 (0%)");
 
 	private String syllableParserFilterDescription;
 
@@ -1210,6 +1212,10 @@ public class RootLayoutController implements Initializable {
 		menuItemFindWord.setDisable(true);
 
 		statusBar.getRightItems().add(new Separator(VERTICAL));
+		statusBar.getRightItems().add(predictedToTotal);
+		statusBar.getRightItems().add(new Separator(VERTICAL));
+		statusBar.getRightItems().add(predictedEqualsCorrectToTotal);
+		statusBar.getRightItems().add(new Separator(VERTICAL));
 		statusBar.getRightItems().add(numberOfItems);
 
 		ControllerUtilities.setDateInStatusBar(statusBar, bundle);
@@ -1541,8 +1547,31 @@ public class RootLayoutController implements Initializable {
 		this.languageProject = languageProject;
 	}
 
-	public void setNumberOfItems(String numberOfItems) {
-		this.numberOfItems.setText(numberOfItems);
+	public void setNumberOfItems(String sNumberOfItems) {
+		if (sNumberOfItems.equals("")) {
+			statusBar.getRightItems().get(4).setVisible(false);
+		} else {
+			statusBar.getRightItems().get(4).setVisible(true);
+		}
+		this.numberOfItems.setText(sNumberOfItems);
+	}
+
+	public void setPredictedToTotal(String sPredictedToTotal) {
+		if (sPredictedToTotal.equals("")) {
+			statusBar.getRightItems().get(0).setVisible(false);
+		} else {
+			statusBar.getRightItems().get(0).setVisible(true);
+		}
+		this.predictedToTotal.setText(sPredictedToTotal);
+	}
+
+	public void setPredictedEqualsCorrectToTotal(String sPredictedEqualsCorrectToTotal) {
+		if (sPredictedEqualsCorrectToTotal.equals("")) {
+			statusBar.getRightItems().get(2).setVisible(false);
+		} else {
+			statusBar.getRightItems().get(2).setVisible(true);
+		}
+		this.predictedEqualsCorrectToTotal.setText(sPredictedEqualsCorrectToTotal);
 	}
 
 	// code taken from

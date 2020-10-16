@@ -428,6 +428,11 @@ see="iSorting"
 >Ordering data in display</term
 ></indexTerm
 ><indexTerm
+id="iParseAllWords"
+><term
+>Parse all words</term
+></indexTerm
+><indexTerm
 id="iParsing"
 ><term
 >Parsing</term
@@ -641,6 +646,11 @@ see="iHPStart"
 type="tItalic"
 >i</object
 > characters from the front</term
+></indexTerm
+><indexTerm
+id="iStatusBar"
+><term
+>Status bar</term
 ></indexTerm
 ><indexTerm
 id="iStopHyphenation"

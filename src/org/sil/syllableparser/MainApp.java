@@ -305,12 +305,17 @@ public class MainApp extends Application implements MainAppUtilities {
 		return sOperatingSystem;
 	}
 
-	public void updateStatusBarNumberOfItems(String numberOfItems) {
-		if (numberOfItems != null) {
-			controller.setNumberOfItems(numberOfItems);
-		} else {
-			controller.setNumberOfItems("");
-		}
+	public void updateStatusBarNumberOfItems(String sNumberOfItems) {
+		controller.setPredictedToTotal("");
+		controller.setPredictedEqualsCorrectToTotal("");
+		controller.setNumberOfItems(sNumberOfItems);
+	}
+
+	public void updateStatusBarWordItems(String sPredictedToTotal,
+			String sPredictedEqualsCorrectToTotal, String sNumberOfItems) {
+		controller.setPredictedToTotal(sPredictedToTotal);
+		controller.setPredictedEqualsCorrectToTotal(sPredictedEqualsCorrectToTotal);
+		controller.setNumberOfItems(sNumberOfItems);
 	}
 
 	public RootLayoutController getController() {

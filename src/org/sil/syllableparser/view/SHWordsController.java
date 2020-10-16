@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.utility.StringUtilities;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -150,9 +151,13 @@ public class SHWordsController extends WordsControllerCommon {
 		}
 
 		if (shWord != null) {
-			int currentItem = wordsTable.getItems().indexOf(currentWord);
-			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
-					+ wordsTable.getItems().size() + " ");
+			ObservableList<Word> predictedWords = wordsTable.getItems().filtered(
+					w -> !StringUtilities.isNullOrEmpty(w.getSHPredictedSyllabification()));
+			ObservableList<Word> predictedEqualsCorrectWords = wordsTable.getItems().filtered(
+					w -> !StringUtilities.isNullOrEmpty(w.getSHPredictedSyllabification())
+							&& w.getSHPredictedSyllabification().equals(
+									w.getCorrectSyllabification()));
+			int currentItem = updateStatusBarWords(predictedWords, predictedEqualsCorrectWords);
 			mainApp.getApplicationPreferences().setLastSHWordsViewItemUsed(currentItem);
 		}
 	}

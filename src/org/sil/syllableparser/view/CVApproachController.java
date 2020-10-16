@@ -155,6 +155,7 @@ public class CVApproachController extends ApproachController {
 		CVNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, ApproachType.CV);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastCVApproachViewUsed(getViewUsed());
@@ -165,6 +166,7 @@ public class CVApproachController extends ApproachController {
 		CVSyllablePatternsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
@@ -177,6 +179,7 @@ public class CVApproachController extends ApproachController {
 		CVWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
+		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
 		}
@@ -197,6 +200,7 @@ public class CVApproachController extends ApproachController {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastCVGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastCVApproachViewUsed(getViewUsed());
@@ -207,6 +211,7 @@ public class CVApproachController extends ApproachController {
 		EnvironmentsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastCVEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastCVApproachViewUsed(getViewUsed());

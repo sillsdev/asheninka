@@ -145,6 +145,7 @@ public class SHApproachController extends ApproachController {
 		SHSonorityHierarchyController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
@@ -157,6 +158,7 @@ public class SHApproachController extends ApproachController {
 		SHWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData, words);
+		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
 		}
@@ -177,6 +179,7 @@ public class SHApproachController extends ApproachController {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastSHGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastSHApproachViewUsed(getViewUsed());
@@ -187,6 +190,7 @@ public class SHApproachController extends ApproachController {
 		EnvironmentsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
+		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastSHEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastSHApproachViewUsed(getViewUsed());

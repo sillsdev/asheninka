@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->15 October 2020</date
+>16 October 2020</date
 ><version
 >0.7.0 Beta</version
 ><contents
@@ -518,6 +518,38 @@ type="tAsheninka"
 >.</li
 ></ol
 ></section2
+><section2
+id="sStatusBar"
+><secTitle
+>Status bar</secTitle
+><p
+><indexedItem
+term="iStatusBar"
+></indexedItem
+>The bottom row of the window (known as the status bar) contains the current date (at the left). Usually it also contains some numbers at the right.  The rightmost pair of numbers is the current index for that view, a slash, followed by the total number of items in that view.</p
+><p
+>For word views, there are three sets of numbers.  From the left they are:</p
+><ol
+><li
+>The number of predicted parses, a slash, the total number of words, and the percentage for that ratio.</li
+><li
+>The number of predicted parses which equal the correct parse, a slash, the total number of words, and the percentage for that ratio.</li
+><li
+>The current index, a slash, and the total number of words.</li
+></ol
+><pc
+><indexedItem
+term="iParseAllWords"
+></indexedItem
+>The first two potentially change whenever you parse all words (by using the <object
+type="tMenuItem"
+>Parser / Parse all Words</object
+> menu item or clicking on the <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/SyllabifyWords.png"
+></img
+> tool bar button).  You can use the first set to help you see potential progress.  The second can help you compare how your implementation of a particular approach is doing compared to some other approach.</pc
+></section2
 ></section1
 ><section1
 id="sApproaches"
@@ -602,9 +634,12 @@ sec="sEnvironments"
 >After that, you import a word list (see <sectionRef
 sec="sWords"
 ></sectionRef
->) or enter a list of words by hand. Then you use the <object
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
 type="tMenuItem"
->Parser / Syllabify Words </object
+>Parser / Parse all Words </object
 > menu item or click on the <img
 XeLaTeXSpecial="scaled='500'"
 src="resources/SyllabifyWords.png"
@@ -1827,9 +1862,12 @@ sec="sSHEnvironments"
 >After that, you either use a existing word list, import a word list (see <sectionRef
 sec="sWords"
 ></sectionRef
->) or enter a list of words by hand. Then you use the <object
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
 type="tMenuItem"
->Parser / Syllabify Words </object
+>Parser / Parse all Words </object
 > menu item or click on the <img
 XeLaTeXSpecial="scaled='500'"
 src="resources/SyllabifyWords.png"
@@ -2354,9 +2392,12 @@ sec="sONCFilters"
 >After that, you either use a existing word list, import a word list (see <sectionRef
 sec="sWords"
 ></sectionRef
->) or enter a list of words by hand. Then you use the <object
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
 type="tMenuItem"
->Parser / Syllabify Words </object
+>Parser / Parse all Words </object
 > menu item or click on the <img
 XeLaTeXSpecial="scaled='500'"
 src="resources/SyllabifyWords.png"

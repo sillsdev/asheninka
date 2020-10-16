@@ -6,7 +6,9 @@
  */
 package org.sil.syllableparser.view;
 
+import java.math.RoundingMode;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
@@ -304,5 +306,28 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 			parserResultField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN
 					+ Constants.PARSER_FAILURE_COLOR_STRING + Constants.TEXT_COLOR_CSS_END);
 		}
+	}
+
+	protected int updateStatusBarWords(ObservableList<Word> predictedWords, ObservableList<Word> predictedEqualsCorrectWords) {
+		int iTotalWords = wordsTable.getItems().size();
+		int iPredicted = predictedWords.size();
+		int iPredictedEqualsCorrect = predictedEqualsCorrectWords.size();
+		int currentItem = wordsTable.getItems().indexOf(currentWord);
+		String sPredictedToTotal = "";
+		String sPredictedEqualsCorrectToTotal = "";
+		String sNumberOfItems = (currentItem + 1) + "/" + iTotalWords + " ";
+		if (iTotalWords > 0) {
+			NumberFormat nf = NumberFormat.getPercentInstance();
+			nf.setMaximumFractionDigits(2);
+			nf.setRoundingMode(RoundingMode.HALF_UP);
+			double predictedPercent = ((double) iPredicted / (double) iTotalWords);
+			sPredictedToTotal = iPredicted + "/" + iTotalWords + " ("
+					+ nf.format(predictedPercent) + ") ";
+			double predictedEqualsCorrectPercent = ((double) iPredictedEqualsCorrect / (double) iTotalWords);
+			sPredictedEqualsCorrectToTotal = " " + iPredictedEqualsCorrect + "/" + iTotalWords + " ("
+					+ nf.format(predictedEqualsCorrectPercent) + ") ";
+		}
+		this.mainApp.updateStatusBarWordItems(sPredictedToTotal, sPredictedEqualsCorrectToTotal, sNumberOfItems);
+		return currentItem;
 	}
 }
