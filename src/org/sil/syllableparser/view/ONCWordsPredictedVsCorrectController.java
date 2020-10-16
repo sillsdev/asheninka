@@ -46,6 +46,7 @@ public class ONCWordsPredictedVsCorrectController extends WordsPredictedVsCorrec
 
 		// Add observable list data to the table
 		wordsPredictedVsCorrectTable.setItems(wordsToShow.sorted());
+		updateStatusBar();
 		setFocusOnWord(0);
 	}
 }

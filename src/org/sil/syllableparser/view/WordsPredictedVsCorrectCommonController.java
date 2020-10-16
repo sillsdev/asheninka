@@ -130,4 +130,10 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 	void handleNextItem() {
 		// nothing to do
 	}
+
+	protected void updateStatusBar() {
+		int iCount = wordsPredictedVsCorrectTable.getItems().size();
+		int iFirst = (iCount >0) ? 1: 0;
+		mainApp.updateStatusBarNumberOfItems(iFirst + "/" + iCount + " ");
+	}
 }

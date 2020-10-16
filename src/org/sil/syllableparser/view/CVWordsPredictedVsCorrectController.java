@@ -46,6 +46,7 @@ public class CVWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 
 		// Add observable list data to the table
 		wordsPredictedVsCorrectTable.setItems(wordsToShow.sorted());
+		updateStatusBar();
 		setFocusOnWord(0);
 	}
 }

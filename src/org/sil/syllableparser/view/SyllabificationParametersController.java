@@ -127,6 +127,7 @@ public class SyllabificationParametersController extends SylParserBaseController
 	public void setData(LanguageProject langProj) {
 		languageProject = langProj;
 		syllabificationParameters = langProj.getSyllabificationParameters();
+		mainApp.updateStatusBarNumberOfItems("");
 		if (codasAllowedCheckBox != null) {
 			codasAllowedCheckBox.setSelected(syllabificationParameters.isCodasAllowed());
 		}
