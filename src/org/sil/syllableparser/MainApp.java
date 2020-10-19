@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 package org.sil.syllableparser;
@@ -6,7 +6,6 @@ package org.sil.syllableparser;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
@@ -15,6 +14,9 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.service.DatabaseMigrator;
 import org.sil.utility.MainAppUtilities;
 import org.sil.utility.view.ControllerUtilities;
+import org.sil.syllableparser.view.ApproachViewNavigator;
+import org.sil.syllableparser.view.CreateOpenRestorePromptController;
+import org.sil.syllableparser.view.CreateOpenRestorePromptController.Result;
 import org.sil.syllableparser.view.RootLayoutController;
 
 import javafx.application.Application;
@@ -26,10 +28,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -162,7 +163,7 @@ public class MainApp extends Application implements MainAppUtilities {
 			if (file != null && file.exists()) {
 				loadLanguageData(file);
 			} else {
-				boolean fSucceeded = askUserForNewOrToOpenExistingFile(bundle, controller);
+				boolean fSucceeded = useCreateOpenRestorePrompt(bundle, controller);
 				if (!fSucceeded) {
 					System.exit(0);
 				}
@@ -179,38 +180,50 @@ public class MainApp extends Application implements MainAppUtilities {
 		}
 	}
 
-	protected boolean askUserForNewOrToOpenExistingFile(ResourceBundle bundle,
+	protected boolean useCreateOpenRestorePrompt(ResourceBundle bundle,
 			RootLayoutController controller) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle(bundle.getString("program.name"));
-		alert.setHeaderText(bundle.getString("file.initiallynotfound"));
-		alert.setContentText(bundle.getString("file.chooseanoption"));
-		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(getNewMainIconImage());
-
-		ButtonType buttonCreateNewProject = new ButtonType(
-				bundle.getString("label.createnewproject"));
-		ButtonType buttonOpenExistingProject = new ButtonType(
-				bundle.getString("label.openexistingproject"));
-		ButtonType buttonCancel = new ButtonType(bundle.getString("label.cancel"),
-				ButtonData.CANCEL_CLOSE);
-
-		alert.getButtonTypes().setAll(buttonCreateNewProject, buttonOpenExistingProject,
-				buttonCancel);
-
 		boolean fSucceeded = true;
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonCreateNewProject) {
-			controller.handleNewProject();
-			if (languageProject.getActiveSegmentsInInventory().size() == 0) {
-				// The user canceled creating a new project
-				fSucceeded = false;
+		Result result = Result.CANCEL;
+		try {
+			Stage useCreateOpenRestoreDialogStage = new Stage();
+			String resource = "fxml/CreateOpenRestorePrompt.fxml";
+			String title = bundle.getString("program.name");
+			FXMLLoader loader = ControllerUtilities.getLoader(this, locale, useCreateOpenRestoreDialogStage,
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
+			CreateOpenRestorePromptController corController = loader.getController();
+			corController.setDialogStage(useCreateOpenRestoreDialogStage);
+			useCreateOpenRestoreDialogStage.showAndWait();
+			result = corController.getResult();
+			switch (result) {
+			case CANCEL:
+				System.exit(0);
+				break;
+			case CREATE:
+				controller.handleNewProject();
+				if (languageProject.getActiveSegmentsInInventory().size() == 0) {
+					// The user canceled creating a new project
+					fSucceeded = false;
+				}
+				break;
+			case OPEN:
+				controller.doFileOpen(true);
+				break;
+			case RESTORE:
+				DirectoryChooser directoryChooser = new DirectoryChooser();
+				File file = directoryChooser.showDialog(primaryStage);
+				if (file != null) {
+					if (!controller.restoreProject(file.getPath())) {
+						System.exit(0);
+					}
+				} else {
+					System.exit(0);
+				}
+				break;
 			}
-		} else if (result.get() == buttonOpenExistingProject) {
-			controller.doFileOpen(true);
-		} else {
-			// ... user chose CANCEL or closed the dialog
-			System.exit(0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return fSucceeded;
 	}

@@ -624,7 +624,12 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
-	private void handleRestoreProject() {
+	public void handleRestoreProject() {
+		String backupDirectoryPath = getBackupDirectoryPath();
+		processRestoreProject(backupDirectoryPath);
+	}
+
+	protected boolean processRestoreProject(String backupDirectoryPath) {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
@@ -638,13 +643,18 @@ public class RootLayoutController implements Initializable {
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setLocale(currentLocale);
-			String backupDirectoryPath = getBackupDirectoryPath();
 			controller.setData(backupDirectoryPath);
 
 			dialogStage.showAndWait();
+			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
+	}
+
+	public boolean restoreProject(String sBackupDirectoryPath) {
+		return processRestoreProject(sBackupDirectoryPath);
 	}
 
 	@FXML
