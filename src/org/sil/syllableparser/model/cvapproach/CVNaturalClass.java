@@ -6,10 +6,14 @@
  */
 package org.sil.syllableparser.model.cvapproach;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
+import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 
 import javafx.beans.property.SimpleListProperty;
@@ -106,6 +110,26 @@ public class CVNaturalClass extends SylParserObject {
 	public StringProperty naturalClassProperty() {
 		return this.ncName;
 	}
+
+	/**
+	 * Get a list of all segments in this natural class, including any in any
+	 * embedded natural classes.
+	 * @return a list of all segments
+	 */
+	public List<Segment> getAllSegments() {
+		List<Segment> segments = new ArrayList<Segment>();
+		if (isActive()) {
+			for (SylParserObject spo : getSegmentsOrNaturalClasses()) {
+				if (spo instanceof Segment) {
+					segments.add((Segment) spo);
+				} else if (spo instanceof CVNaturalClass) {
+					segments.addAll(((CVNaturalClass)spo).getAllSegments());
+				}
+			}
+		}
+		return segments;
+	}
+
 	@Override
 	public int hashCode() {
 		String sCombo = ncName.getValueSafe() + sncRepresentation.getValueSafe();
