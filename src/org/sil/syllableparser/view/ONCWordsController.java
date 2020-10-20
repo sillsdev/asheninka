@@ -122,7 +122,20 @@ public class ONCWordsController extends WordsControllerCommon {
 			setFocusOnWord(iLastIndex);
 		}
 	}
-	
+
+	public ObservableList<Word> getPredictedWords() {
+		return wordsTable.getItems().filtered(
+				w -> !StringUtilities.isNullOrEmpty(w.getONCPredictedSyllabification()));
+	}
+
+	public ObservableList<Word> getPredictedEqualsCorrectWords() {
+		return wordsTable.getItems()
+				.filtered(
+						w -> !StringUtilities.isNullOrEmpty(w.getONCPredictedSyllabification())
+								&& w.getONCPredictedSyllabification().equals(
+										w.getCorrectSyllabification()));
+	}
+
 	/**
 	 * Fills all text fields to show details about the ONC word. If the specified
 	 * word is null, all text fields are cleared.
@@ -153,13 +166,7 @@ public class ONCWordsController extends WordsControllerCommon {
 		}
 
 		if (oncWord != null) {
-			ObservableList<Word> predictedWords = wordsTable.getItems().filtered(
-					w -> !StringUtilities.isNullOrEmpty(w.getONCPredictedSyllabification()));
-			ObservableList<Word> predictedEqualsCorrectWords = wordsTable.getItems().filtered(
-					w -> !StringUtilities.isNullOrEmpty(w.getONCPredictedSyllabification())
-							&& w.getONCPredictedSyllabification().equals(
-									w.getCorrectSyllabification()));
-			int currentItem = updateStatusBarWords(predictedWords, predictedEqualsCorrectWords);
+			int currentItem = updateStatusBarWords(getPredictedWords(), getPredictedEqualsCorrectWords());
 			mainApp.getApplicationPreferences().setLastONCWordsViewItemUsed(currentItem);
 		}
 	}

@@ -120,7 +120,20 @@ public class SHWordsController extends WordsControllerCommon {
 			setFocusOnWord(iLastIndex);
 		}
 	}
-	
+
+	public ObservableList<Word> getPredictedWords() {
+		return wordsTable.getItems().filtered(
+				w -> !StringUtilities.isNullOrEmpty(w.getSHPredictedSyllabification()));
+	}
+
+	public ObservableList<Word> getPredictedEqualsCorrectWords() {
+		return wordsTable.getItems()
+				.filtered(
+						w -> !StringUtilities.isNullOrEmpty(w.getSHPredictedSyllabification())
+								&& w.getSHPredictedSyllabification().equals(
+										w.getCorrectSyllabification()));
+	}
+
 	/**
 	 * Fills all text fields to show details about the CV word. If the specified
 	 * word is null, all text fields are cleared.
@@ -151,13 +164,7 @@ public class SHWordsController extends WordsControllerCommon {
 		}
 
 		if (shWord != null) {
-			ObservableList<Word> predictedWords = wordsTable.getItems().filtered(
-					w -> !StringUtilities.isNullOrEmpty(w.getSHPredictedSyllabification()));
-			ObservableList<Word> predictedEqualsCorrectWords = wordsTable.getItems().filtered(
-					w -> !StringUtilities.isNullOrEmpty(w.getSHPredictedSyllabification())
-							&& w.getSHPredictedSyllabification().equals(
-									w.getCorrectSyllabification()));
-			int currentItem = updateStatusBarWords(predictedWords, predictedEqualsCorrectWords);
+			int currentItem = updateStatusBarWords(getPredictedWords(), getPredictedEqualsCorrectWords());
 			mainApp.getApplicationPreferences().setLastSHWordsViewItemUsed(currentItem);
 		}
 	}

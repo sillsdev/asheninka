@@ -347,6 +347,11 @@ public class ONCApproachController extends ApproachController  {
 			statusBar.textProperty().unbind();
 			statusBar.progressProperty().unbind();
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
+			if (currentONCApproachController instanceof ONCWordsController) {
+				ONCWordsController oncController = (ONCWordsController) currentONCApproachController;
+				oncController.updateStatusBarWords(oncController.getPredictedWords(),
+						oncController.getPredictedEqualsCorrectWords());
+			}
 		});
 
 		Platform.runLater(task);

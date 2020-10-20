@@ -308,7 +308,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		}
 	}
 
-	protected int updateStatusBarWords(ObservableList<Word> predictedWords, ObservableList<Word> predictedEqualsCorrectWords) {
+	public int updateStatusBarWords(ObservableList<Word> predictedWords, ObservableList<Word> predictedEqualsCorrectWords) {
 		int iTotalWords = wordsTable.getItems().size();
 		int iPredicted = predictedWords.size();
 		int iPredictedEqualsCorrect = predictedEqualsCorrectWords.size();

@@ -343,6 +343,11 @@ public class CVApproachController extends ApproachController {
 			statusBar.textProperty().unbind();
 			statusBar.progressProperty().unbind();
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
+			if (currentCVApproachController instanceof CVWordsController) {
+				CVWordsController cvController = (CVWordsController) currentCVApproachController;
+				cvController.updateStatusBarWords(cvController.getPredictedWords(),
+						cvController.getPredictedEqualsCorrectWords());
+			}
 		});
 
 		Platform.runLater(task);

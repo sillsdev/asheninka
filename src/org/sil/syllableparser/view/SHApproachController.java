@@ -292,6 +292,11 @@ public class SHApproachController extends ApproachController {
 			statusBar.textProperty().unbind();
 			statusBar.progressProperty().unbind();
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
+			if (currentSHApproachController instanceof SHWordsController) {
+				SHWordsController shController = (SHWordsController) currentSHApproachController;
+				shController.updateStatusBarWords(shController.getPredictedWords(),
+						shController.getPredictedEqualsCorrectWords());
+			}
 		});
 
 		Platform.runLater(task);
