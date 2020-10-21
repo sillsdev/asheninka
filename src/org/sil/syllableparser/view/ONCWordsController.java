@@ -9,6 +9,7 @@ package org.sil.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
@@ -60,6 +61,7 @@ public class ONCWordsController extends WordsControllerCommon {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.ONC_WORDS);
 		super.setWordsTable(oncWordsTable);
 		super.initialize(location, resources);
 

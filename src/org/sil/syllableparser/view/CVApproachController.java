@@ -179,6 +179,7 @@ public class CVApproachController extends ApproachController {
 		CVWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
+		controller.intializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);

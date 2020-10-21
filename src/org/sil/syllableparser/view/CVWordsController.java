@@ -9,6 +9,7 @@ package org.sil.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
@@ -61,6 +62,7 @@ public class CVWordsController extends WordsControllerCommon {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.CV_WORDS);
 		super.setWordsTable(cvWordsTable);
 		super.initialize(location, resources);
 		parserResultColumn.setCellFactory(column -> {

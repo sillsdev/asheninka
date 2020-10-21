@@ -1,5 +1,5 @@
-// Copyright (c) 2016-2019 SIL International
-// This software is licensed under the LGPL, version 2.1 or later 
+// Copyright (c) 2016-2020 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser;
 
@@ -67,6 +67,11 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	// setting it because it is not clear why it would be useful. We'll use it if users
 	// request it.
 	static final String LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastONCWordPredictedVsCorrectViewItemUsed";
+
+	// Word controller table column widths and splitter position
+	public static final String CV_WORDS = "CV_WORDS_";
+	public static final String SH_WORDS = "SH_WORDS_";
+	public static final String ONC_WORDS = "ONC_WORDS_";
 
 	// Syllabification comparison options
 	static final String LAST_USE_CV_APPROACH_VALUE = "lastUseCVApproachValueUsed";
@@ -460,7 +465,15 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 		setPreferencesKey(sWindow + MAXIMIZED, stage.isMaximized());
 	}
 
-	private void setPreferencesKey(String key, boolean value) {
+	public Double getDoubleValue(String sColumnKey, Double defaultValue) {
+		return prefs.getDouble(sColumnKey, defaultValue);
+	}
+	
+//	public void setTableColumnWidth(String sColumnKey, Double value) {
+//		setPreferencesKey(sColumnKey, value);
+//	}
+	
+	public void setPreferencesKey(String key, boolean value) {
 		if (!StringUtilities.isNullOrEmpty(key)) {
 			if (key != null) {
 				prefs.putBoolean(key, value);
@@ -471,7 +484,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 		}
 	}
 
-	private void setPreferencesKey(String key, int value) {
+	public void setPreferencesKey(String key, int value) {
 		if (!StringUtilities.isNullOrEmpty(key)) {
 			if (key != null) {
 				prefs.putInt(key, value);
@@ -482,7 +495,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 		}
 	}
 
-	private void setPreferencesKey(String key, Double value) {
+	public void setPreferencesKey(String key, Double value) {
 		if (!StringUtilities.isNullOrEmpty(key)) {
 			if (key != null && value != null) {
 				prefs.putDouble(key, value);

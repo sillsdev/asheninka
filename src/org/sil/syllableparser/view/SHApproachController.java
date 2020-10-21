@@ -158,6 +158,7 @@ public class SHApproachController extends ApproachController {
 		SHWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData, words);
+		controller.intializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);

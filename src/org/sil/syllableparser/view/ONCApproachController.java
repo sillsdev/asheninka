@@ -224,6 +224,7 @@ public class ONCApproachController extends ApproachController  {
 		ONCWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData, words);
+		controller.intializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
