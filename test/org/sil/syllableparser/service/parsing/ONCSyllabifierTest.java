@@ -740,7 +740,7 @@ public class ONCSyllabifierTest extends ONCSyllabifierTestBase {
 		checkSyllabifyWord("funmdo", false, 1, "fun", "onc",
 				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();
-		assertEquals(6, tracingSteps.size());
+		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "f", "Obstruents", "u", "Vowels", SHComparisonResult.LESS,
 				ONCSyllabifierState.ONSET, ONCSyllabificationStatus.ADDED_AS_ONSET, true);
@@ -755,10 +755,7 @@ public class ONCSyllabifierTest extends ONCSyllabifierTestBase {
 				ONCSyllabifierState.CODA, ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE, true);
 		tracingStep = tracingSteps.get(4);
 		checkTracingStep(tracingStep, "m", "Nasals", "d", "Obstruents", SHComparisonResult.MORE,
-				ONCSyllabifierState.ONSET, ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET, false);
-		tracingStep = tracingSteps.get(5);
-		checkTracingStep(tracingStep, "m", "Nasals", "d", "Obstruents", SHComparisonResult.MORE,
-				ONCSyllabifierState.NUCLEUS, ONCSyllabificationStatus.EXPECTED_NUCLEUS_NOT_FOUND, false);
+				ONCSyllabifierState.ONSET_OR_NUCLEUS, ONCSyllabificationStatus.EXPECTED_ONSET_OR_NUCLEUS_NOT_FOUND, false);
 
 		checkSyllabifyWord("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
 		tracingSteps = oncSyllabifier.getTracingSteps();

@@ -324,11 +324,17 @@ public class ONCSyllabifier implements Syllabifiable {
 							return false;
 						} else {
 							tracer.setStatus(ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET);
+							tracer.recordStep();
 						}
 					} else {
 						tracer.setStatus(ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET);
+						tracer.recordStep();
+						if (i > 0 && opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED && !seg1.isOnset()) {
+							tracer.setStatus(ONCSyllabificationStatus.ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET);
+							tracer.recordStep();
+							return false;
+						}
 					}
-					tracer.recordStep();
 				}
 				break;
 			case ONSET_OR_NUCLEUS:
@@ -414,7 +420,7 @@ public class ONCSyllabifier implements Syllabifiable {
 								if (iApplied > 0) {
 									syllablesInCurrentWord.add(syl);
 									syl = createNewSyllable();
-									currentState = ONCSyllabifierState.ONSET_OR_NUCLEUS;
+									currentState = updateTypeForNewSyllable();//ONCSyllabifierState.ONSET_OR_NUCLEUS;
 									i = iApplied;
 									tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_CODA_START_NEW_SYLLABLE);
 								} else {
@@ -651,7 +657,7 @@ public class ONCSyllabifier implements Syllabifiable {
 
 	protected ONCSyllabifierState updateTypeForNewSyllable() {
 		ONCSyllabifierState currentState;
-		if (opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
+		if (opType == OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
 			currentState = ONCSyllabifierState.ONSET_OR_NUCLEUS;
 		} else {
 			currentState = ONCSyllabifierState.ONSET;
