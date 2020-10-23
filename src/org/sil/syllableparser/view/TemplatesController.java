@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateType;
@@ -74,6 +75,8 @@ public class TemplatesController extends TemplatesFiltersController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.TEMPLATES);
+		super.setTableView(templateTable);
 		super.initialize(location, resources);
 
 		showTemplateDetails(null);

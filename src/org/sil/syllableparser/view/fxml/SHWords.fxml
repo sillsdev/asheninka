@@ -24,9 +24,6 @@
                       <TableColumn fx:id="correctSyllabificationColumn" prefWidth="120.0" text="%label.correctsyllabification" />
                       <TableColumn fx:id="parserResultColumn" prefWidth="63.0" text="%label.parserresult" editable="false" />
                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
                   </TableView>
                </children>
             </AnchorPane>

@@ -68,10 +68,20 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	// request it.
 	static final String LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastONCWordPredictedVsCorrectViewItemUsed";
 
-	// Word controller table column widths and splitter position
+	// Controller table column widths and splitter position
+	public static final String CV_NATURAL_CLASSES = "CV_NATURAL_CLASSES_";
+	public static final String CV_SEGMENTS = "CV_SEGMENTS_";
+	public static final String CV_SYLLABLE_PATTERNS = "CV_SYLLABLE_PATTERNS_";
 	public static final String CV_WORDS = "CV_WORDS_";
-	public static final String SH_WORDS = "SH_WORDS_";
+	public static final String ENVIRONMENTS = "ENVIROMENTS_";
+	public static final String FILTERS = "FILTERS_";
+	public static final String GRAPHEME_NATURAL_CLASSES = "GRAPHEME_NATURAL_CLASSES_";
+	public static final String ONC_SEGMENTS = "ONC_SEGMENTS_";
 	public static final String ONC_WORDS = "ONC_WORDS_";
+	public static final String SH_SEGMENTS = "SH_SEGMENTS_";
+	public static final String SH_SONORITY_HIERARCHY = "SH_SONORITY_HIERARCHY_";
+	public static final String SH_WORDS = "SH_WORDS_";
+	public static final String TEMPLATES = "TEMPLATES_";
 
 	// Syllabification comparison options
 	static final String LAST_USE_CV_APPROACH_VALUE = "lastUseCVApproachValueUsed";
@@ -468,10 +478,6 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public Double getDoubleValue(String sColumnKey, Double defaultValue) {
 		return prefs.getDouble(sColumnKey, defaultValue);
 	}
-	
-//	public void setTableColumnWidth(String sColumnKey, Double value) {
-//		setPreferencesKey(sColumnKey, value);
-//	}
 	
 	public void setPreferencesKey(String key, boolean value) {
 		if (!StringUtilities.isNullOrEmpty(key)) {

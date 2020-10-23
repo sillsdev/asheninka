@@ -30,9 +30,6 @@
                       <TableColumn fx:id="correctSyllabificationColumn" prefWidth="120.0" text="%label.correctsyllabification" />
                       <TableColumn fx:id="parserResultColumn" editable="false" prefWidth="63.0" text="%label.parserresult" />
                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
                   </TableView>
                </children>
             </AnchorPane>

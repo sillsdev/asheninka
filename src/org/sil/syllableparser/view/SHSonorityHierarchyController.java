@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
@@ -26,7 +27,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -49,7 +49,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class SHSonorityHierarchyController extends SylParserBaseController implements Initializable {
+public class SHSonorityHierarchyController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<SHNaturalClass, String> {
 		private Text text;
@@ -131,6 +131,10 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.SH_SONORITY_HIERARCHY);
+		super.setTableView(shSonorityHierarchyTable);
+		super.initialize(location, resources);
+
 		bundle = resources;
 		// Initialize the button icons
 		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",
@@ -139,15 +143,6 @@ public class SHSonorityHierarchyController extends SylParserBaseController imple
 		tooltipMoveDown = ControllerUtilities.createToolbarButtonWithImage("DownArrow.png",
 				buttonMoveDown, tooltipMoveDown, bundle.getString("sh.view.sonorityhierarchy.down"),
 				Constants.RESOURCE_SOURCE_LOCATION);
-
-		// checkBoxColumn.setCellValueFactory(cellData ->
-		// cellData.getValue().activeCheckBoxProperty());
-		// checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
-		// checkBoxColumn.setEditable(true);
-		// checkBoxColumnHead.setOnAction((event) -> {
-		// handleCheckBoxColumnHead();
-		// });
-		// initializeCheckBoxContextMenu(resources);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		naturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()

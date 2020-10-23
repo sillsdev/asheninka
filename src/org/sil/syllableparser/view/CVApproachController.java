@@ -132,6 +132,7 @@ public class CVApproachController extends ApproachController {
 		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		controller.setViewItemUsed(prefs.getLastCVSegmentInventoryViewItemUsed());
 		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
@@ -166,6 +167,7 @@ public class CVApproachController extends ApproachController {
 		CVSyllablePatternsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
@@ -179,7 +181,7 @@ public class CVApproachController extends ApproachController {
 		CVWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
-		controller.intializeTableColumnWidthsAndSplitDividerPosition();
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
@@ -201,6 +203,7 @@ public class CVApproachController extends ApproachController {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastCVGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);

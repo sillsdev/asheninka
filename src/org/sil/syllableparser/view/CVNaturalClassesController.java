@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.ApproachType;
@@ -26,7 +27,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -46,7 +46,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends SylParserBaseController implements Initializable {
+public class CVNaturalClassesController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<CVNaturalClass, String> {
 		private Text text;
@@ -109,6 +109,9 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.CV_NATURAL_CLASSES);
+		super.setTableView(cvNaturalClassTable);
+		super.initialize(location, resources);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()

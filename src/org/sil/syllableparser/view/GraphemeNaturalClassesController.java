@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.ApproachType;
@@ -31,7 +32,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -51,8 +51,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class GraphemeNaturalClassesController extends SylParserBaseController implements
-		Initializable {
+public class GraphemeNaturalClassesController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<GraphemeNaturalClass, String> {
 		private Text text;
@@ -117,6 +116,9 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.GRAPHEME_NATURAL_CLASSES);
+		super.setTableView(graphemeNaturalClassTable);
+		super.initialize(location, resources);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		graphemeOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()

@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.control.textfield.TextFields;
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.*;
@@ -122,6 +123,8 @@ public class SHApproachController extends ApproachController {
 		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
+		controller.setApproach(ApplicationPreferences.SH_SEGMENTS);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		controller.setViewItemUsed(prefs.getLastSHSegmentInventoryViewItemUsed());
 		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
@@ -145,6 +148,7 @@ public class SHApproachController extends ApproachController {
 		SHSonorityHierarchyController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
@@ -158,7 +162,7 @@ public class SHApproachController extends ApproachController {
 		SHWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData, words);
-		controller.intializeTableColumnWidthsAndSplitDividerPosition();
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
@@ -180,6 +184,7 @@ public class SHApproachController extends ApproachController {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastSHGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);

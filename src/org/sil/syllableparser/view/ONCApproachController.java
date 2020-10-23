@@ -148,6 +148,7 @@ public class ONCApproachController extends ApproachController  {
 		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		controller.setViewItemUsed(prefs.getLastONCSegmentInventoryViewItemUsed());
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 	}
@@ -171,6 +172,7 @@ public class ONCApproachController extends ApproachController  {
 		SHSonorityHierarchyController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 	}
 
@@ -188,6 +190,7 @@ public class ONCApproachController extends ApproachController  {
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData.getLanguageProject().getCVApproach(),
 				ApproachType.ONSET_NUCLEUS_CODA);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastONCCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
@@ -199,6 +202,7 @@ public class ONCApproachController extends ApproachController  {
 		TemplatesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		int i = prefs.getLastONCTemplatesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
@@ -209,6 +213,7 @@ public class ONCApproachController extends ApproachController  {
 		FiltersController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastONCFiltersViewItemUsed();
 		controller.setViewItemUsed(i);
@@ -224,7 +229,7 @@ public class ONCApproachController extends ApproachController  {
 		ONCWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData, words);
-		controller.intializeTableColumnWidthsAndSplitDividerPosition();
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
@@ -246,6 +251,7 @@ public class ONCApproachController extends ApproachController  {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastONCGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
@@ -257,6 +263,7 @@ public class ONCApproachController extends ApproachController  {
 		EnvironmentsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		int i = prefs.getLastONCEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);

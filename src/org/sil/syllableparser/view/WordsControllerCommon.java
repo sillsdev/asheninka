@@ -11,21 +11,16 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
-import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.LingTreeInteractor;
 import org.sil.utility.StringUtilities;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,7 +35,7 @@ import javafx.scene.web.WebView;
  *
  */
 
-public class WordsControllerCommon extends SylParserBaseController implements Initializable {
+public class WordsControllerCommon extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<Word, String> {
 		private Text text;
@@ -62,8 +57,6 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		}
 	}
 
-	@FXML
-	SplitPane splitPane;
 	@FXML
 	protected TableView<Word> wordsTable;
 	@FXML
@@ -97,18 +90,13 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	protected Word currentWord;
 	protected LingTreeInteractor ltInteractor;
 	protected String ltSVG = "";
-	protected String sApproach = "";
-
 	public WordsControllerCommon() {
 		ltInteractor = LingTreeInteractor.getInstance();
 	}
 
 	public void setWordsTable(TableView<Word> tableView) {
 		wordsTable = tableView;
-	}
-
-	public void setApproach(String sApproach) {
-		this.sApproach = sApproach;
+		this.tableView = tableView;
 	}
 
 	/**
@@ -117,7 +105,7 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// public void initialize() {
+		super.initialize(location, resources);
 		this.bundle = resources;
 		webEngine = parserLingTreeSVG.getEngine();
 
@@ -141,27 +129,9 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 			return new AnalysisWrappingTableCell();
 		});
 
-		for (TableColumn<Word, ?> column: wordsTable.getColumns()) {
-			  column.widthProperty().addListener(new ChangeListener<Number>() {
-			    @Override
-			      public void changed(ObservableValue<? extends Number> observableValue, Number oldWidth, Number newWidth) {
-			        ApplicationPreferences prefs = mainApp.getApplicationPreferences();
-			        prefs.setPreferencesKey(sApproach + column.getId(), newWidth.doubleValue());
-			    }
-			  });
-			}
-
-		splitPane.getDividers().get(0).positionProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue,
-					Number newValue) {
-		        ApplicationPreferences prefs = mainApp.getApplicationPreferences();
-				prefs.setPreferencesKey(sApproach + splitPane.getId(), newValue.doubleValue());
-			}
-		});
 		// Without the following, the columns get set to equal values, more or less
 		// With it, the widths remain as stored in the preferences
-		wordsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+		//wordsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
 		makeColumnHeaderWrappable(wordColumn);
 		makeColumnHeaderWrappable(predictedSyllabificationColumn);
@@ -363,15 +333,5 @@ public class WordsControllerCommon extends SylParserBaseController implements In
 		}
 		this.mainApp.updateStatusBarWordItems(sPredictedToTotal, sPredictedEqualsCorrectToTotal, sNumberOfItems);
 		return currentItem;
-	}
-
-	protected void intializeTableColumnWidthsAndSplitDividerPosition() {
-		ApplicationPreferences prefs = mainApp.getApplicationPreferences();
-		Double d = prefs.getDoubleValue(sApproach + splitPane.getId(), .4);
-		splitPane.getDividers().get(0).setPosition(d);
-		for (TableColumn<Word, ?> column : wordsTable.getColumns()) {
-			d = prefs.getDoubleValue(sApproach + column.getId(), column.getPrefWidth());
-			column.setPrefWidth(d);
-		}
 	}
 }

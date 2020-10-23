@@ -11,13 +11,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
@@ -32,7 +32,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -51,7 +50,7 @@ import javafx.util.Callback;
  *
  */
 
-public class CVSegmentInventoryController extends CheckBoxColumnController implements Initializable {
+public class CVSegmentInventoryController extends SplitPaneWithTableViewWithCheckBoxColumnController {
 
 	protected final class AnalysisWrappingTableCellGrapheme extends TableCell<Grapheme, String> {
 		private Text text;
@@ -117,14 +116,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 					int selectedIndex = getTableRow().getIndex();
 					Grapheme selectedGrapheme = (Grapheme) graphemesTable.getItems().get(
 							selectedIndex);
-					// show environments chooser for this grapheme
-					// Alert alert = new Alert(AlertType.INFORMATION);
-					// alert.setTitle("Information Dialog");
-					// alert.setHeaderText("Look, an Information Dialog");
-					// alert.setContentText("Selected grapheme: " +
-					// selectedGrapheme.getForm());
-					//
-					// alert.showAndWait();
 					showEnvironmentsChooser(selectedGrapheme);
 				}
 			});
@@ -189,7 +180,10 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// Segment table
+		super.setApproach(ApplicationPreferences.CV_SEGMENTS);
+		super.setTableView(cvSegmentTable);
+		super.initialize(location, resources);
+
 		segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
 		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
 		descriptionColumn
@@ -526,6 +520,8 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	protected void handleCheckBoxSelectAll() {
 		for (Grapheme grapheme : currentSegment.getGraphs()) {
 			grapheme.setActive(true);
+			grapheme.setActiveCheckBox(true);
+			grapheme.setChecked(true);
 			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
 	}
@@ -533,6 +529,8 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	protected void handleCheckBoxClearAll() {
 		for (Grapheme grapheme : currentSegment.getGraphs()) {
 			grapheme.setActive(false);
+			grapheme.setActiveCheckBox(false);
+			grapheme.setChecked(false);
 			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
 	}
@@ -541,8 +539,12 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		for (Grapheme grapheme : currentSegment.getGraphs()) {
 			if (grapheme.isActive()) {
 				grapheme.setActive(false);
+				grapheme.setActiveCheckBox(false);
+				grapheme.setChecked(false);
 			} else {
 				grapheme.setActive(true);
+				grapheme.setActiveCheckBox(true);
+				grapheme.setChecked(true);
 			}
 			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}

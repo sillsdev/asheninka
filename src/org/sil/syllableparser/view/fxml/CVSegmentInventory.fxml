@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2016 SIL International 
+<!-- Copyright (c) 2016-2020 SIL International 
     This software is licensed under the LGPL, version 2.1 or later 
     (http://www.gnu.org/licenses/lgpl-2.1.html) -->
 
@@ -18,7 +18,7 @@
 
 <StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.CVSegmentInventoryController">
    <children>
-      <SplitPane dividerPositions="0.4373040752351097" prefHeight="160.0" prefWidth="200.0">
+      <SplitPane fx:id="splitPane" dividerPositions="0.4373040752351097" prefHeight="160.0" prefWidth="200.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -33,9 +33,6 @@
                       <TableColumn fx:id="graphemesColumn" prefWidth="90.0" text="%label.orthographicforms" />
                       <TableColumn fx:id="descriptionColumn" prefWidth="200.0" text="%label.description" />
                      </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
                   </TableView>
                </children>
             </AnchorPane>

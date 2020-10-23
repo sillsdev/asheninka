@@ -18,6 +18,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Environment;
@@ -43,7 +44,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -62,7 +62,7 @@ import javafx.scene.text.Text;
  *
  */
 
-public class EnvironmentsController extends SylParserBaseController implements Initializable {
+public class EnvironmentsController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<Environment, String> {
 		private Text text;
@@ -131,6 +131,10 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.ENVIRONMENTS);
+		super.setTableView(environmentTable);
+		super.initialize(location, resources);
+
 
 		this.bundle = resources;
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().environmentNameProperty());

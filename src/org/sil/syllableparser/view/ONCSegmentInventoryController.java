@@ -9,11 +9,8 @@ package org.sil.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.sil.syllableparser.model.ApproachType;
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.oncapproach.ONCApproach;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -53,6 +50,7 @@ public class ONCSegmentInventoryController extends CVSegmentInventoryController 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
+		super.setApproach(ApplicationPreferences.ONC_SEGMENTS);
 
 		onsetColumn.setCellValueFactory(cellData -> cellData.getValue().onsetProperty());
 		onsetColumn.setCellFactory(CheckBoxTableCell.forTableColumn(onsetColumn));

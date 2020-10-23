@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.SylParserObject;
@@ -25,7 +26,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -48,7 +48,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVSyllablePatternsController extends SylParserBaseController implements Initializable {
+public class CVSyllablePatternsController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<CVSyllablePattern, String> {
 		private Text text;
@@ -110,6 +110,10 @@ public class CVSyllablePatternsController extends SylParserBaseController implem
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.CV_SYLLABLE_PATTERNS);
+		super.setTableView(cvSyllablePatternTable);
+		super.initialize(location, resources);
+
 		bundle = resources;
 		// Initialize the button icons
 		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",

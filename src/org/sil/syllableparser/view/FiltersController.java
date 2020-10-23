@@ -25,6 +25,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
@@ -152,6 +153,8 @@ public class FiltersController extends TemplatesFiltersController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.FILTERS);
+		super.setTableView(filterTable);
 		super.initialize(location, resources);
 
 		repairRadioButton.setText(bundle.getString("radio.repairaction"));
