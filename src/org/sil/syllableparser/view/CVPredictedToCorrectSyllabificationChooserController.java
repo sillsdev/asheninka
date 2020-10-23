@@ -102,6 +102,20 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 				resources.getString("menu.syllabifywords"));
 		cvPredictedSyllabificationTable.setPlaceholder(whenTableIsEmptyMessage);
 
+		cvPredictedSyllabificationTable.setOnKeyPressed(keyEvent -> {
+			switch (keyEvent.getCode()) {
+			case SPACE: {
+				keyEvent.consume();
+				CVPredictedSyllabification predicted = cvPredictedSyllabificationTable.getSelectionModel()
+						.getSelectedItem();
+				if (predicted != null) {
+					predicted.setChecked(!predicted.isChecked());
+				}
+				break;
+			}
+			}
+		});
+
 		initializeCheckBoxContextMenu(resources);
 	}
 
