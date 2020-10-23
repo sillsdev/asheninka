@@ -572,6 +572,7 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 			controller.setMainApp(mainApp);
 			controller.setGrapheme(grapheme);
 			controller.setData(currentApproach);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 

@@ -23,27 +23,14 @@ import javafx.scene.control.TableView;
  * @author Andy Black
  *
  */
-public abstract class SplitPaneWithTableViewWithCheckBoxColumnController extends CheckBoxColumnController {
+public abstract class SplitPaneWithTableViewWithCheckBoxColumnController extends TableViewWithCheckBoxColumnController {
 
 	@FXML
 	SplitPane splitPane;
 
-	ObservableList<? extends SylParserBase> list;
-	TableView<? extends SylParserBase> tableView;
-	protected String sApproach = "";
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		for (TableColumn<? extends SylParserBase, ?> column: tableView.getColumns()) {
-			  column.widthProperty().addListener(new ChangeListener<Number>() {
-			    @Override
-			      public void changed(ObservableValue<? extends Number> observableValue, Number oldWidth, Number newWidth) {
-			        ApplicationPreferences prefs = mainApp.getApplicationPreferences();
-			        prefs.setPreferencesKey(sApproach + column.getId(), newWidth.doubleValue());
-			    }
-			  });
-			}
-
+		super.initialize(location, resources);
 		splitPane.getDividers().get(0).positionProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue,
@@ -54,22 +41,10 @@ public abstract class SplitPaneWithTableViewWithCheckBoxColumnController extends
 		});
 	}
 
-	public void setApproach(String sApproach) {
-		this.sApproach = sApproach;
-	}
-
-	public void setTableView(TableView<? extends SylParserBase> tableView) {
-		this.tableView = tableView;
-	}
-
 	protected void initializeTableColumnWidthsAndSplitDividerPosition() {
 		ApplicationPreferences prefs = mainApp.getApplicationPreferences();
 		Double d = prefs.getDoubleValue(sApproach + splitPane.getId(), .4);
 		splitPane.getDividers().get(0).setPosition(d);
-		for (TableColumn<? extends SylParserBase, ?> column : tableView.getColumns()) {
-			d = prefs.getDoubleValue(sApproach + column.getId(), column.getPrefWidth());
-			column.setPrefWidth(d);
-		}
+		initializeTableColumnWidths(prefs);
 	}
-
 }

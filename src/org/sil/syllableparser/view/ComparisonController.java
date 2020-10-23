@@ -250,6 +250,7 @@ public abstract class ComparisonController implements Initializable {
 		BackupChooserController controller = loader.getController();
 		controller.setDialogStage(dialogStage);
 		controller.setMainApp(mainApp);
+		controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 		controller.setLocale(locale);
 		String backupDirectoryPath = backupDirectory;
 		controller.setData(backupDirectoryPath);

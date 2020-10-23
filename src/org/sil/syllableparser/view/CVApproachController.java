@@ -373,6 +373,7 @@ public class CVApproachController extends ApproachController {
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setData(cvApproachData, words);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 

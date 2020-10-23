@@ -462,6 +462,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 			controller.setMainApp(mainApp);
 			controller.setNaturalClass(currentNaturalClass);
 			controller.setData(shApproach);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 

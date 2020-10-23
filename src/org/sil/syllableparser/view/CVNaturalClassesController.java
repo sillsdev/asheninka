@@ -493,6 +493,7 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 			controller.setMainApp(mainApp);
 			controller.setNaturalClass(currentNaturalClass);
 			controller.setData(cvApproach);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 

@@ -642,6 +642,7 @@ public class RootLayoutController implements Initializable {
 			RestoreBackupChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 			controller.setLocale(currentLocale);
 			controller.setData(backupDirectoryPath);
 

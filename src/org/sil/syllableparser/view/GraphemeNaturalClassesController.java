@@ -524,6 +524,7 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 			controller.setMainApp(mainApp);
 			controller.setNaturalClass(currentNaturalClass);
 			controller.setData(cvApproach);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 

@@ -14,7 +14,6 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
@@ -23,7 +22,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,7 +34,7 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class CVSegmentNaturalClassChooserController extends CheckBoxColumnController implements Initializable {
+public class CVSegmentNaturalClassChooserController extends TableViewWithCheckBoxColumnController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<CVSegmentOrNaturalClass, String> {
 		private Text text;
@@ -81,6 +79,10 @@ public class CVSegmentNaturalClassChooserController extends CheckBoxColumnContro
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.CV_SEGMENT_NATURAL_CLASS_CHOOSER);
+		super.setTableView(cvSegmentOrNaturalClassTable);
+		super.initialize(location, resources);
+
 		// Initialize the table with the three columns.
 		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));

@@ -37,7 +37,7 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class CVPredictedToCorrectSyllabificationChooserController extends SylParserBaseController {
+public class CVPredictedToCorrectSyllabificationChooserController extends TableViewWithCheckBoxColumnController {
 
 	protected final class VernacularWrappingTableCell extends TableCell<CVPredictedSyllabification, String> {
 		private Text text;
@@ -80,6 +80,10 @@ public class CVPredictedToCorrectSyllabificationChooserController extends SylPar
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.PREDICTED_TO_CORRECT_CHOOSER);
+		super.setTableView(cvPredictedSyllabificationTable);
+		super.initialize(location, resources);
+
 		// Initialize the table with the three columns.
 		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
 		checkBoxColumnHead.setOnAction((event) -> {
@@ -101,7 +105,7 @@ public class CVPredictedToCorrectSyllabificationChooserController extends SylPar
 		initializeCheckBoxContextMenu(resources);
 	}
 
-	private void initializeCheckBoxContextMenu(ResourceBundle bundle) {
+	protected void initializeCheckBoxContextMenu(ResourceBundle bundle) {
 		// set up context menu
 		selectAll.setOnAction((event) -> {
 			handleCheckBoxSelectAll();
@@ -254,7 +258,7 @@ public class CVPredictedToCorrectSyllabificationChooserController extends SylPar
 	 * Called when the user clicks on the check box column header
 	 */
 	@FXML
-	private void handleCheckBoxColumnHead() {
+	protected void handleCheckBoxColumnHead() {
 		// make sure the check box stays checked
 		checkBoxColumnHead.setSelected(true);
 		// show the check box context menu
@@ -266,19 +270,19 @@ public class CVPredictedToCorrectSyllabificationChooserController extends SylPar
 	// this.naturalClass = naturalClass;
 	// }
 	//
-	void handleCheckBoxSelectAll() {
+	protected void handleCheckBoxSelectAll() {
 		for (CVPredictedSyllabification predictedSyllabification : cvPredictedSyllabifications) {
 			predictedSyllabification.setChecked(true);
 		}
 	}
 
-	void handleCheckBoxClearAll() {
+	protected void handleCheckBoxClearAll() {
 		for (CVPredictedSyllabification predictedSyllabification : cvPredictedSyllabifications) {
 			predictedSyllabification.setChecked(false);
 		}
 	}
 
-	void handleCheckBoxToggle() {
+	protected void handleCheckBoxToggle() {
 		for (CVPredictedSyllabification predictedSyllabification : cvPredictedSyllabifications) {
 			if (predictedSyllabification.isChecked()) {
 				predictedSyllabification.setChecked(false);

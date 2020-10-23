@@ -13,14 +13,12 @@ import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -33,7 +31,7 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class SHSegmentChooserController extends CheckBoxColumnController implements Initializable {
+public class SHSegmentChooserController extends TableViewWithCheckBoxColumnController {
 
 	protected final class WrappingTableCell extends TableCell<Segment, String> {
 		private Text text;
@@ -82,6 +80,10 @@ public class SHSegmentChooserController extends CheckBoxColumnController impleme
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.SH_SEGMENT_CHOOSER);
+		super.setTableView(shSegmentTable);
+		super.initialize(location, resources);
+
 		// Initialize the table with the three columns.
 		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));

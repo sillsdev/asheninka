@@ -23,7 +23,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,8 +35,7 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class GraphemeNaturalClassChooserController extends CheckBoxColumnController implements
-		Initializable {
+public class GraphemeNaturalClassChooserController extends TableViewWithCheckBoxColumnController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<GraphemeOrNaturalClass, String> {
 		private Text text;
@@ -81,6 +79,10 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.GRAPHEME_NATURAL_CLASS_CHOOSER);
+		super.setTableView(graphemeOrNaturalClassTable);
+		super.initialize(location, resources);
+
 		// Initialize the table with the three columns.
 		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));

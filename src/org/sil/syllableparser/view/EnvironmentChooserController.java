@@ -14,12 +14,10 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
-import org.sil.syllableparser.model.LanguageProject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,7 +30,7 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class EnvironmentChooserController extends CheckBoxColumnController implements Initializable {
+public class EnvironmentChooserController extends TableViewWithCheckBoxColumnController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<Environment, String> {
 		private Text text;
@@ -75,6 +73,10 @@ public class EnvironmentChooserController extends CheckBoxColumnController imple
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.ENVIRONMENT_CHOOSER);
+		super.setTableView(environmentTable);
+		super.initialize(location, resources);
+
 		// Initialize the table with the three columns.
 		checkBoxColumn
 				.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());

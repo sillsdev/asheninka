@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.zip.ZipFile;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.BackupFile;
@@ -25,7 +26,6 @@ import org.sil.syllableparser.model.BackupFile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,7 +38,7 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class BackupChooserController extends SylParserBaseController implements Initializable{
+public class BackupChooserController extends TableViewController {
 	protected final class WrappingTableCell extends TableCell<BackupFile, String> {
 		private Text text;
 
@@ -84,6 +84,10 @@ public class BackupChooserController extends SylParserBaseController implements 
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.BACKUP_CHOOSER);
+		super.setTableView(restoreBackupTable);
+		super.initialize(location, resources);
+
 		bundle = resources;
 		// Initialize the table with the three columns.
 		fileNameColumn.setCellValueFactory(cellData -> cellData.getValue().fileNameProperty());

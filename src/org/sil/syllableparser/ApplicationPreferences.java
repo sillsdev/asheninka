@@ -69,15 +69,21 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastONCWordPredictedVsCorrectViewItemUsed";
 
 	// Controller table column widths and splitter position
+	public static final String BACKUP_CHOOSER = "BACKUP_CHOOSER_";
 	public static final String CV_NATURAL_CLASSES = "CV_NATURAL_CLASSES_";
 	public static final String CV_SEGMENTS = "CV_SEGMENTS_";
+	public static final String CV_SEGMENT_NATURAL_CLASS_CHOOSER = "CV_SEGMENT_NATURAL_CLASS_CHOOSER_";
 	public static final String CV_SYLLABLE_PATTERNS = "CV_SYLLABLE_PATTERNS_";
 	public static final String CV_WORDS = "CV_WORDS_";
+	public static final String ENVIRONMENT_CHOOSER = "ENVIROMENT_CHOOSER_";
 	public static final String ENVIRONMENTS = "ENVIROMENTS_";
 	public static final String FILTERS = "FILTERS_";
+	public static final String GRAPHEME_NATURAL_CLASS_CHOOSER = "GRAPHEME_NATURAL_CLASSE_CHOOSER_";
 	public static final String GRAPHEME_NATURAL_CLASSES = "GRAPHEME_NATURAL_CLASSES_";
+	public static final String PREDICTED_TO_CORRECT_CHOOSER = "PREDICTED_TO_CORRECT_CHOOSER_";
 	public static final String ONC_SEGMENTS = "ONC_SEGMENTS_";
 	public static final String ONC_WORDS = "ONC_WORDS_";
+	public static final String SH_SEGMENT_CHOOSER = "SH_SEGMENT_CHOOSER_";
 	public static final String SH_SEGMENTS = "SH_SEGMENTS_";
 	public static final String SH_SONORITY_HIERARCHY = "SH_SONORITY_HIERARCHY_";
 	public static final String SH_WORDS = "SH_WORDS_";

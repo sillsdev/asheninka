@@ -324,6 +324,7 @@ public class SHApproachController extends ApproachController {
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setData(shApproachData, words);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 

@@ -380,6 +380,7 @@ public class ONCApproachController extends ApproachController  {
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setData(oncApproachData, words);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 
