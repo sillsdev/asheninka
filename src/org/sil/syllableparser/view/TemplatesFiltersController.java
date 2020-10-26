@@ -141,7 +141,7 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		super.initialize(location, resources);
 		this.bundle = resources;
 		// Initialize the button icons
 		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",
