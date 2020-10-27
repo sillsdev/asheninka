@@ -136,6 +136,9 @@ public abstract class TryAWordController implements Initializable {
 
 	protected abstract String getLastTryAWord();
 	protected abstract String getLastTryAWordUsed();
+	protected String setWordAsString() {
+		return wordToTry.getText().trim();
+	}
 	
 	public void setLocale(Locale locale) {
 		this.locale = locale;
