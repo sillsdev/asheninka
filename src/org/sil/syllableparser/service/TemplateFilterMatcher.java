@@ -31,6 +31,7 @@ public class TemplateFilterMatcher {
 	List<Segment> activeSegments = new ArrayList<>();
 	List<CVNaturalClass> activeClasses = new ArrayList<>();
 	int iSegMatchCount = 0;
+	List<TemplateFilterSlotSegment> slotAndSegment = new ArrayList<>();
 
 	public static TemplateFilterMatcher getInstance() {
 		if (instance == null) {
@@ -63,7 +64,7 @@ public class TemplateFilterMatcher {
 	}
 
 	public boolean matches(TemplateFilter tf, List<ONCSegmentInSyllable> segmentsToMatch, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
-		List<TemplateFilterSlotSegment> slotAndSegment = new ArrayList<>();
+		slotAndSegment.clear();
 		int iSlot = 0;
 		List<TemplateFilterSlotSegmentOrNaturalClass> slots = tf.getSlots();
 		iSegMatchCount = 0;

@@ -11,8 +11,11 @@ import java.util.Optional;
 
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.OnsetPrincipleType;
+import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.service.TemplateFilterMatcher;
 import org.sil.syllableparser.service.parsing.ONCTracer;
 import org.sil.syllableparser.service.parsing.ONCSyllabifierState;
@@ -30,6 +33,7 @@ public class Onset extends ONCConstituent {
 	
 	boolean codasAllowed;
 	OnsetPrincipleType opType;
+	int iSegmentMatchesInTemplate;
 	
 	public boolean areCodasAllowed() {
 		return codasAllowed;
@@ -45,6 +49,10 @@ public class Onset extends ONCConstituent {
 
 	public void setOpType(OnsetPrincipleType opType) {
 		this.opType = opType;
+	}
+
+	public int getSegmentMatchesInTemplate() {
+		return iSegmentMatchesInTemplate;
 	}
 
 	public void createLingTreeDescription(StringBuilder sb) {
@@ -158,5 +166,47 @@ public class Onset extends ONCConstituent {
 				ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
 		tracer.setSuccessful(true);
 		tracer.recordStep();
+	}
+
+	public boolean applyAnyTemplates(Segment seg1, Segment seg2, SHComparisonResult result,
+			List<ONCSegmentInSyllable> segmentsInWord, ONCSyllable syl, int i,
+			SHSonorityComparer sonorityComparer, ONCTracer tracer,
+			ONCSyllabifierState currentState, ONCApproach oncApproach) {
+		iSegmentMatchesInTemplate = 0;
+		if (seg1 == null || seg2 == null || !seg1.isOnset() || !seg2.isOnset())
+			return false;
+		if (templates.size() > 0) {
+			int iSegmentsInWord = segmentsInWord.size();
+			for (Template t : templates) {
+				int iItemsInTemplate = t.getSlots().size();
+				if (iItemsInTemplate >= 2) {
+					TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();
+					if (matcher.matches(t, segmentsInWord.subList(i, iSegmentsInWord),
+							sonorityComparer, null)) {
+						iSegmentMatchesInTemplate = matcher.getMatchCount();
+						if (tracer.isTracing()) {
+							tracer.setSegment1(seg1);
+							SHNaturalClass shClass = oncApproach
+									.getNaturalClassContainingSegment(seg1);
+							tracer.getTracingStep().setNaturalClass1(shClass);
+							tracer.setOncState(currentState);
+							tracer.setStatus(ONCSyllabificationStatus.ONSET_TEMPLATE_MATCHED);
+							tracer.setTemplateFilterUsed(t);
+							tracer.setSuccessful(true);
+							tracer.recordStep();
+							tracer.setSegment1(seg1);
+							tracer.getTracingStep().setNaturalClass1(shClass);
+							tracer.setSegment2(seg2);
+							tracer.getTracingStep().setComparisonResult(result);
+							tracer.getTracingStep().setNaturalClass2(
+									oncApproach.getNaturalClassContainingSegment(seg2));
+							tracer.setOncState(currentState);
+						}
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

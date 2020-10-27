@@ -310,10 +310,13 @@ public class ONCSyllabifier implements Syllabifiable {
 			switch (currentState) {
 			case UNKNOWN:
 			case ONSET:
-				if (seg1.isOnset() && (result == SHComparisonResult.LESS)) {
-					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
-				} else if (applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, i)) {
-					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
+				Onset onset = syl.getOnset();
+				if (onset.applyAnyTemplates(seg1, seg2, result, segmentsInWord, syl, i,
+						sonorityComparer, tracer, currentState, oncApproach)) {
+					i = addMatchedSegmentsToOnset(segmentsInWord, syl, i, onset);
+					currentState = ONCSyllabifierState.NUCLEUS;
+				} else if (seg1.isOnset() && (result == SHComparisonResult.LESS)) {
+					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, i);
 				} else {
 					i--;
 					currentState = ONCSyllabifierState.NUCLEUS;
@@ -329,7 +332,8 @@ public class ONCSyllabifier implements Syllabifiable {
 					} else {
 						tracer.setStatus(ONCSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET);
 						tracer.recordStep();
-						if (i > 0 && opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED && !seg1.isOnset()) {
+						if (i > 0 && opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED
+								&& !seg1.isOnset()) {
 							tracer.setStatus(ONCSyllabificationStatus.ONSET_REQUIRED_BUT_SEGMENT_NOT_AN_ONSET);
 							tracer.recordStep();
 							return false;
@@ -338,13 +342,17 @@ public class ONCSyllabifier implements Syllabifiable {
 				}
 				break;
 			case ONSET_OR_NUCLEUS:
-				if (seg1.isOnset() && (result == SHComparisonResult.LESS)) {
-					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
-				} else if (seg1.isOnset() && applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, i)) {
-					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, seg1, i);
+				onset = syl.getOnset();
+				if (seg1.isOnset()
+						&& onset.applyAnyTemplates(seg1, seg2, result, segmentsInWord, syl, i,
+								sonorityComparer, tracer, currentState, oncApproach)) {
+					i = addMatchedSegmentsToOnset(segmentsInWord, syl, i, onset);
+					currentState = ONCSyllabifierState.NUCLEUS;
+				} else if (seg1.isOnset() && (result == SHComparisonResult.LESS)) {
+					currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, i);
 				} else if (seg1.isNucleus()) {
 					syl = addSegmentToSyllableAsNucleus(segmentsInWord, syl, seg1, i);
-				} else if (applyAnyWordFinalTemplates(segmentsInWord, i-1)) {
+				} else if (applyAnyWordFinalTemplates(segmentsInWord, i - 1)) {
 					currentState = ONCSyllabifierState.WORD_FINAL_TEMPLATE_APPLIED;
 				} else {
 					// Probably never get here, but just in case...
@@ -458,13 +466,15 @@ public class ONCSyllabifier implements Syllabifiable {
 				}
 				break;
 			case CODA_OR_ONSET:
-				Segment seg0 = segmentsInWord.get(i-1).getSegment();
+				Segment seg0 = segmentsInWord.get(i - 1).getSegment();
 				SHComparisonResult resultBack = sonorityComparer.compare(seg0, seg1);
 				if (seg1.isCoda()
 						&& codasAllowed
 						&& resultBack == SHComparisonResult.MORE
-						&& (result == SHComparisonResult.MORE || result ==SHComparisonResult.EQUAL)) {
-					if (applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, i)) {
+						&& (result == SHComparisonResult.MORE || result == SHComparisonResult.EQUAL)) {
+					onset = syl.getOnset();
+					if (onset.applyAnyTemplates(seg1, seg2, result, segmentsInWord, syl, i,
+							sonorityComparer, tracer, currentState, oncApproach)) {
 						syllablesInCurrentWord.add(syl);
 						syl = createNewSyllable();
 						i--;
@@ -475,13 +485,12 @@ public class ONCSyllabifier implements Syllabifiable {
 				} else {
 					i--;
 					syllablesInCurrentWord.add(syl);
-					currentState = syl.getRime().applyAnyFailFilters(segmentsInWord, i, currentState,
-							syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
+					currentState = syl.getRime().applyAnyFailFilters(segmentsInWord, i,
+							currentState, syl, ONCSyllabificationStatus.RIME_FILTER_FAILED,
 							syllablesInCurrentWord, sonorityComparer, null);
-					currentState = syl
-							.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
-									ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
-									syllablesInCurrentWord, sonorityComparer, null);
+					currentState = syl.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
+							ONCSyllabificationStatus.SYLLABLE_FILTER_FAILED,
+							syllablesInCurrentWord, sonorityComparer, null);
 					if (currentState != ONCSyllabifierState.FILTER_FAILED) {
 						syl = createNewSyllable();
 						currentState = ONCSyllabifierState.ONSET_OR_NUCLEUS;
@@ -516,6 +525,16 @@ public class ONCSyllabifier implements Syllabifiable {
 		return true;
 	}
 
+	protected int addMatchedSegmentsToOnset(List<ONCSegmentInSyllable> segmentsInWord,
+			ONCSyllable syl, int i, Onset onset) {
+		int iMatched = onset.getSegmentMatchesInTemplate();
+		for (int index=0; index < iMatched; index++) {
+			currentState = addSegmentToSyllableAsOnset(segmentsInWord, syl, i + index);
+		}
+		i = i + iMatched - 1;
+		return i;
+	}
+
 	public ONCSyllable createNewSyllable() {
 		ONCSyllable syl = new ONCSyllable(new ArrayList<ONCSegmentInSyllable>());
 		syl.setFailFilters(syllableFailFilters);
@@ -524,6 +543,7 @@ public class ONCSyllabifier implements Syllabifiable {
 		syl.getOnset().setRepairFilters(onsetRepairFilters);
 		syl.getOnset().setCodasAllowed(codasAllowed);
 		syl.getOnset().setOpType(opType);
+		syl.getOnset().setTemplates(onsetTemplates);
 		syl.getRime().setFailFilters(rimeFailFilters);
 		syl.getRime().setRepairFilters(rimeRepairFilters);
 		syl.getRime().getNucleus().setFailFilters(nucleusFailFilters);
@@ -636,16 +656,22 @@ public class ONCSyllabifier implements Syllabifiable {
 	}
 
 	protected ONCSyllabifierState addSegmentToSyllableAsOnset(
-			List<ONCSegmentInSyllable> segmentsInWord, ONCSyllable syl, Segment seg1, int i) {
+			List<ONCSegmentInSyllable> segmentsInWord, ONCSyllable syl, int i) {
 		ONCSyllabifierState currentState;
-		segmentsInWord.get(i).setUsage(ONCSegmentUsageType.ONSET);
-		syl.add(segmentsInWord.get(i));
+		ONCSegmentInSyllable segInSyl = segmentsInWord.get(i);
+		segInSyl.setUsage(ONCSegmentUsageType.ONSET);
+		syl.add(segInSyl);
 		Onset onset = syl.getOnset();
-		onset.add(segmentsInWord.get(i));
+		onset.add(segInSyl);
 		currentState = ONCSyllabifierState.ONSET_OR_NUCLEUS;
-		tracer.setOncState(ONCSyllabifierState.ONSET);
-		tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_ONSET);
-		tracer.recordStep();
+		if (tracer.isTracing()) {
+			tracer.setSegment1(segInSyl.getSegment());
+			tracer.getTracingStep().setNaturalClass1(
+					oncApproach.getNaturalClassContainingSegment(segInSyl.getSegment()));
+			tracer.setOncState(ONCSyllabifierState.ONSET);
+			tracer.setStatus(ONCSyllabificationStatus.ADDED_AS_ONSET);
+			tracer.recordStep();
+		}
 		onset.applyAnyRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord,
 				sonorityComparer, SHComparisonResult.LESS);
 
@@ -688,39 +714,6 @@ public class ONCSyllabifier implements Syllabifiable {
 			currentState = ONCSyllabifierState.WORD_FINAL_TEMPLATE_APPLIED;
 		}
 		return currentState;
-	}
-
-	public boolean applyAnyOnsetTemplates(Segment seg1, Segment seg2, SHComparisonResult result, List<ONCSegmentInSyllable> segmentsInWord, int i) {
-		if (seg1 == null || seg2 == null || !seg1.isOnset() || !seg2.isOnset())
-			return false;
-		if (onsetTemplates.size() > 0) {
-			int iSegmentsInWord = segmentsInWord.size();
-			for (Template t: onsetTemplates) {
-				int iItemsInTemplate = t.getSlots().size();
-				if (iItemsInTemplate >= 2) {
-					if (matcher.matches(t, segmentsInWord.subList(i, iSegmentsInWord), sonorityComparer, null)) {
-							if (tracer.isTracing()) {
-								tracer.setSegment1(seg1);
-								SHNaturalClass shClass = oncApproach.getNaturalClassContainingSegment(seg1);
-								tracer.getTracingStep().setNaturalClass1(shClass);
-								tracer.setOncState(currentState);
-								tracer.setStatus(ONCSyllabificationStatus.ONSET_TEMPLATE_MATCHED);
-								tracer.setTemplateFilterUsed(t);
-								tracer.setSuccessful(true);
-								tracer.recordStep();
-								tracer.setSegment1(seg1);
-								tracer.getTracingStep().setNaturalClass1(shClass);
-								tracer.setSegment2(seg2);
-								tracer.getTracingStep().setComparisonResult(result);
-								tracer.getTracingStep().setNaturalClass2(oncApproach.getNaturalClassContainingSegment(seg2));
-								tracer.setOncState(currentState);
-							}
-						return true;
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	public int applyAnyCodaTemplates(Segment seg1, Segment seg2, SHComparisonResult result,

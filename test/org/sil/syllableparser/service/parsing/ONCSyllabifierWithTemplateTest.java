@@ -516,10 +516,10 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		checkTracingStep(tracingStep, "s", "Obstruents", "p", "Obstruents", SHComparisonResult.EQUAL, ONCSyllabifierState.ONSET,
 				ONCSyllabificationStatus.ADDED_AS_ONSET, true);
 		tracingStep = tracingSteps.get(2);
-		checkTracingStep(tracingStep, "p", "Obstruents", "a", "Vowels", SHComparisonResult.LESS, ONCSyllabifierState.ONSET,
+		checkTracingStep(tracingStep, "p", "Obstruents", null, null, null, ONCSyllabifierState.ONSET,
 				ONCSyllabificationStatus.ADDED_AS_ONSET, true);
 		tracingStep = tracingSteps.get(3);
-		checkTracingStep(tracingStep, "a", "Vowels", "t", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.ONSET_OR_NUCLEUS,
+		checkTracingStep(tracingStep, "a", "Vowels", "t", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,
 				ONCSyllabificationStatus.NUCLEUS_TEMPLATE_MATCHED, true);
 		tracingStep = tracingSteps.get(4);
 		checkTracingStep(tracingStep, "a", "Vowels", "t", "Obstruents", SHComparisonResult.MORE, ONCSyllabifierState.NUCLEUS,

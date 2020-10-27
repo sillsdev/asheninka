@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.service.TemplateFilterMatcher;
 import org.sil.syllableparser.service.parsing.ONCTracer;
@@ -28,6 +29,7 @@ public abstract class ONCConstituent {
 	protected List<ONCSegmentInSyllable> graphemes = new ArrayList<ONCSegmentInSyllable>();
 	protected List<Filter> failFilters = new ArrayList<Filter>();
 	protected List<Filter> repairFilters = new ArrayList<Filter>();
+	protected List<Template> templates = new ArrayList<Template>();
 
 	public List<ONCSegmentInSyllable> getGraphemes() {
 		return graphemes;
@@ -51,6 +53,14 @@ public abstract class ONCConstituent {
 
 	public void setRepairFilters(List<Filter> repairFilters) {
 		this.repairFilters = repairFilters;
+	}
+
+	public List<Template> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(List<Template> templates) {
+		this.templates = templates;
 	}
 
 	public boolean exists() {

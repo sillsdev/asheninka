@@ -111,9 +111,9 @@ public class TemplateFilterMatcherTest {
 
 		tf = languageProject.getTemplates().get(1);
 		// s [VoicelessNonCont] ([SonorantCV])
-		checkMatch("stap", 4, true, 3);
+		checkMatch("stap", 4, true, 2);
 		checkMatch("stɹæp", 5, true, 3);
-		checkMatch("skɪp", 4, true, 3);
+		checkMatch("skɪp", 4, true, 2);
 		checkMatch("skɹɪp", 5, true, 3);
 		checkMatch("astap", 5, false, 0);
 		checkMatch("astɹæp", 6, false, 0);
