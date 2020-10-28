@@ -241,7 +241,6 @@ public class ONCApproachController extends ApproachController  {
 		ONCWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData, words);
-		controller.setFocusOnWord(0);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 	}
 

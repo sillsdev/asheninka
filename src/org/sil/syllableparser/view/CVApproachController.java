@@ -194,7 +194,6 @@ public class CVApproachController extends ApproachController {
 		CVWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
-		controller.setFocusOnWord(0);
 		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 

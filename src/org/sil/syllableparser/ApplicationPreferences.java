@@ -34,9 +34,6 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_CV_WORDS_VIEW_ITEM_USED = "lastCVWordsViewItemUsed";
 	static final String LAST_CV_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastCVGraphemeNaturalClassesViewItemUsed";
 	static final String LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED = "lastCVEnvironmentsViewItemUsed";
-	// We have a last item used for predicted vs. correct words, but we're not
-	// setting it because it is not clear why it would be useful. We'll use it if users
-	// request it.
 	static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastCVWordPredictedVsCorrectViewItemUsed";
 
 	// last Sonority Hierarchy used
@@ -47,9 +44,6 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_SH_WORDS_VIEW_ITEM_USED = "lastSHWordsViewItemUsed";
 	static final String LAST_SH_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastSHGraphemeNaturalClassesViewItemUsed";
 	static final String LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED = "lastSHEnvironmentsViewItemUsed";
-	// We have a last item used for predicted vs. correct words, but we're not
-	// setting it because it is not clear why it would be useful. We'll use it if users
-	// request it.
 	static final String LAST_SH_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastSHWordPredictedVsCorrectViewItemUsed";
 
 	// last ONC view used
@@ -63,9 +57,6 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_ONC_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastONCCVNaturalClassesViewItemUsed";
 	static final String LAST_ONC_TEMPLATES_VIEW_ITEM_USED = "lastONCTemplatesViewItemUsed";
 	static final String LAST_ONC_FILTERS_VIEW_ITEM_USED = "lastONCFiltersViewItemUsed";
-	// We have a last item used for predicted vs. correct words, but we're not
-	// setting it because it is not clear why it would be useful. We'll use it if users
-	// request it.
 	static final String LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastONCWordPredictedVsCorrectViewItemUsed";
 
 	// Controller table column widths and splitter position

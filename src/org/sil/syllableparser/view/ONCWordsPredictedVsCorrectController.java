@@ -52,7 +52,8 @@ public class ONCWordsPredictedVsCorrectController extends WordsPredictedVsCorrec
 		SortedList<Word> wordsSorted = wordsToShow.sorted();
 		wordsSorted.comparatorProperty().bind(oncWordsPredictedVsCorrectTable.comparatorProperty());
 		wordsPredictedVsCorrectTable.setItems(wordsSorted);
+		int iLastIndex = mainApp.getApplicationPreferences().getLastONCWordsPredictedVsCorrectViewItemUsed();
+		focusOnLastItemUsed(iLastIndex);
 		updateStatusBar();
-		setFocusOnWord(0);
 	}
 }

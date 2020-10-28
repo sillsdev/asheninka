@@ -52,7 +52,8 @@ public class CVWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 		SortedList<Word> wordsSorted = wordsToShow.sorted();
 		wordsSorted.comparatorProperty().bind(cvWordsPredictedVsCorrectTable.comparatorProperty());
 		wordsPredictedVsCorrectTable.setItems(wordsSorted);
+		int iLastIndex = mainApp.getApplicationPreferences().getLastCVWordsPredictedVsCorrectViewItemUsed();
+		focusOnLastItemUsed(iLastIndex);
 		updateStatusBar();
-		setFocusOnWord(0);
 	}
 }

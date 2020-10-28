@@ -53,7 +53,8 @@ public class SHWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 		SortedList<Word> wordsSorted = wordsToShow.sorted();
 		wordsSorted.comparatorProperty().bind(shWordsPredictedVsCorrectTable.comparatorProperty());
 		wordsPredictedVsCorrectTable.setItems(wordsSorted);
+		int iLastIndex = mainApp.getApplicationPreferences().getLastSHWordsPredictedVsCorrectViewItemUsed();
+		focusOnLastItemUsed(iLastIndex);
 		updateStatusBar();
-		setFocusOnWord(0);
 	}
 }

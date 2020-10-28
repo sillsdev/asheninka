@@ -89,9 +89,18 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 	private void showStatusBarNumberOfItems(Word cvWord) {
 		currentWord = cvWord;
 		if (cvWord != null) {
-			int currentItem = wordsPredictedVsCorrectTable.getItems().indexOf(currentWord) + 1;
-			this.mainApp.updateStatusBarNumberOfItems(currentItem + "/"
+			int currentItem = wordsPredictedVsCorrectTable.getItems().indexOf(currentWord);
+			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
 					+ wordsPredictedVsCorrectTable.getItems().size() + " ");
+			if (this instanceof CVWordsPredictedVsCorrectController) {
+				mainApp.getApplicationPreferences().setLastCVWordsPredictedVsCorrectViewItemUsed(currentItem);
+			}
+			else if (this instanceof SHWordsPredictedVsCorrectController) {
+				mainApp.getApplicationPreferences().setLastSHWordsPredictedVsCorrectViewItemUsed(currentItem);
+			}
+			else if (this instanceof ONCWordsPredictedVsCorrectController) {
+				mainApp.getApplicationPreferences().setLastONCWordsPredictedVsCorrectViewItemUsed(currentItem);
+			}
 		}
 	}
 
@@ -136,5 +145,15 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 		int iCount = wordsPredictedVsCorrectTable.getItems().size();
 		int iFirst = (iCount >0) ? 1: 0;
 		mainApp.updateStatusBarNumberOfItems(iFirst + "/" + iCount + " ");
+	}
+
+	protected void focusOnLastItemUsed(int iLastIndex) {
+		int max = wordsPredictedVsCorrectTable.getItems().size();
+		if (max > 0 && mainApp != null) {
+			iLastIndex = adjustIndexValue(iLastIndex, max);
+			setFocusOnWord(iLastIndex);
+		} else {
+			setFocusOnWord(0);
+		}
 	}
 }

@@ -175,7 +175,6 @@ public class SHApproachController extends ApproachController {
 		SHWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData, words);
-		controller.setFocusOnWord(0);
 		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
