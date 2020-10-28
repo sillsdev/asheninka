@@ -78,6 +78,7 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		oncSyllabifier = new ONCSyllabifier(oncApproach);
+		checkSyllabification("sp", false, 0, "", "", "(W)");
 		checkSyllabification("spat", true, 1, "spat", "oonc",
 				"(W(σ(O(\\L s(\\G s))(\\L p(\\G p)))(R(N(\\L a(\\G a)))(C(\\L t(\\G t))))))");
 		checkSyllabification("stap", true, 1, "stap", "oonc",

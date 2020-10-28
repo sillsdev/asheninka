@@ -515,6 +515,9 @@ public class ONCSyllabifier implements Syllabifiable {
 		if (currentState == ONCSyllabifierState.TEMPLATE_FAILED ||
 				currentState == ONCSyllabifierState.FILTER_FAILED)
 			return false;
+		if (currentState == ONCSyllabifierState.NUCLEUS && syl.getRime().getNucleus().getGraphemes().size() == 0) {
+			return false;
+		}
 		if (syl.getSegmentsInSyllable().size() > 0) {
 			syllablesInCurrentWord.add(syl);
 			Segment seg = segmentsInWord.get(segmentCount - 1).getSegment();
