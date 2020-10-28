@@ -14,6 +14,7 @@ import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 
@@ -39,14 +40,15 @@ public class SHWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 		shApproach = shApproachData;
 		this.words = words;
 		languageProject = shApproachData.getLanguageProject();
+		setColumnICURules(wordPredictedVsCorrectColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
 
 		ObservableList<Word> wordsToShow = words.filtered(word -> (!word
 				.getCorrectSyllabification().isEmpty()
 				&& !word.getSHPredictedSyllabification().isEmpty() && !word
 				.getSHPredictedSyllabification().equals(word.getCorrectSyllabification())));
-
-		// Add observable list data to the table
-		wordsPredictedVsCorrectTable.setItems(wordsToShow.sorted());
+		SortedList<Word> wordsSorted = wordsToShow.sorted();
+		wordsSorted.comparatorProperty().bind(shWordsPredictedVsCorrectTable.comparatorProperty());
+		wordsPredictedVsCorrectTable.setItems(wordsSorted);
 		updateStatusBar();
 		setFocusOnWord(0);
 	}

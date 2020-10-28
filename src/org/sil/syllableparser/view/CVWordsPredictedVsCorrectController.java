@@ -13,6 +13,7 @@ import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 
@@ -38,14 +39,15 @@ public class CVWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 		cvApproach = cvApproachData;
 		this.words = words;
 		languageProject = cvApproachData.getLanguageProject();
+		setColumnICURules(wordPredictedVsCorrectColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
 
 		ObservableList<Word> wordsToShow = words.filtered(word -> (!word
 				.getCorrectSyllabification().isEmpty()
 				&& !word.getCVPredictedSyllabification().isEmpty() && !word
 				.getCVPredictedSyllabification().equals(word.getCorrectSyllabification())));
-
-		// Add observable list data to the table
-		wordsPredictedVsCorrectTable.setItems(wordsToShow.sorted());
+		SortedList<Word> wordsSorted = wordsToShow.sorted();
+		wordsSorted.comparatorProperty().bind(cvWordsPredictedVsCorrectTable.comparatorProperty());
+		wordsPredictedVsCorrectTable.setItems(wordsSorted);
 		updateStatusBar();
 		setFocusOnWord(0);
 	}

@@ -71,6 +71,7 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 		wordPredictedVsCorrectColumn.setCellFactory(column -> {
 			return new VernacularWrappingTableCell();
 		});
+		wordsPredictedVsCorrectTable.getSortOrder().add(wordPredictedVsCorrectColumn);
 
 		// Listen for selection change for status bar info
 		wordsPredictedVsCorrectTable
