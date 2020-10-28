@@ -66,6 +66,9 @@ public class Constants {
 	public static final String TEXT_COLOR_CSS_END = ";";
 	public static final String PARSER_SUCCESS_COLOR_STRING = "green";
 	public static final String PARSER_FAILURE_COLOR_STRING = "red";
+	public static final int CV_WORDS_VIEW_INDEX = 3;
+	public static final int ONC_WORDS_VIEW_INDEX = 6;
+	public static final int SH_WORDS_VIEW_INDEX = 2;
 
 	// Unit Testing constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/org/sil/syllableparser/testData/CVTestData.";

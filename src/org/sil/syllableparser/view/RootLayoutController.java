@@ -988,7 +988,7 @@ public class RootLayoutController implements Initializable {
 		selectApproachViewItem(5);
 	}
 
-	protected void selectApproachViewItem(int iItem) {
+	public void selectApproachViewItem(int iItem) {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {

@@ -189,6 +189,15 @@ public class CVApproachController extends ApproachController {
 		prefs.setLastCVApproachViewUsed(getViewUsed());
 	}
 
+	public void handleCVWordsPredictedVsCorrect(int index) {
+		FXMLLoader loader = createFXMLLoader("fxml/CVWordsPredictedVsCorrect.fxml");
+		CVWordsPredictedVsCorrectController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(cvApproachData, words);
+		controller.setFocusOnWord(index);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
+	}
+
 	public void handleCVWordsPredictedVsCorrect() {
 		FXMLLoader loader = createFXMLLoader("fxml/CVWordsPredictedVsCorrect.fxml");
 		CVWordsPredictedVsCorrectController controller = loader.getController();
@@ -416,14 +425,24 @@ public class CVApproachController extends ApproachController {
 					contentText, bundle);
 
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
-			for (Word word : words) {
+			ObservableList<Word> wordsToUse = words;
+			if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController) {
+				CVWordsPredictedVsCorrectController predController = (CVWordsPredictedVsCorrectController) currentCVApproachController;
+				wordsToUse = predController.getCVWordsPredictedVsCorrectTable().getItems();
+			}
+			for (Word word : wordsToUse) {
 				listOfWords.add(word.getWord());
 			}
 			TextFields.bindAutoCompletion(dialog.getEditor(), listOfWords);
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(word -> {
 				int index = listOfWords.indexOf(result.get());
-				handleCVWords(index, true);
+				if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController) {
+					handleCVWordsPredictedVsCorrect(index);
+				} else {
+					handleCVWords(index, true);
+					rootController.selectApproachViewItem(Constants.CV_WORDS_VIEW_INDEX);
+				}
 			});
 
 		} catch (Exception e) {

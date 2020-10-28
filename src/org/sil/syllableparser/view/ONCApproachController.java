@@ -236,6 +236,15 @@ public class ONCApproachController extends ApproachController  {
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 	}
 
+	public void handleONCWordsPredictedVsCorrect(int index) {
+		FXMLLoader loader = createFXMLLoader("fxml/ONCWordsPredictedVsCorrect.fxml");
+		ONCWordsPredictedVsCorrectController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(oncApproachData, words);
+		controller.setFocusOnWord(index);
+		prefs.setLastONCApproachViewUsed(getViewUsed());
+	}
+
 	public void handleONCWordsPredictedVsCorrect() {
 		FXMLLoader loader = createFXMLLoader("fxml/ONCWordsPredictedVsCorrect.fxml");
 		ONCWordsPredictedVsCorrectController controller = loader.getController();
@@ -421,14 +430,24 @@ public class ONCApproachController extends ApproachController  {
 					contentText, bundle);
 
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
-			for (Word word : words) {
+			ObservableList<Word> wordsToUse = words;
+			if (currentONCApproachController instanceof ONCWordsPredictedVsCorrectController) {
+				ONCWordsPredictedVsCorrectController predController = (ONCWordsPredictedVsCorrectController) currentONCApproachController;
+				wordsToUse = predController.getONCWordsPredictedVsCorrectTable().getItems();
+			}
+			for (Word word : wordsToUse) {
 				listOfWords.add(word.getWord());
 			}
 			TextFields.bindAutoCompletion(dialog.getEditor(), listOfWords);
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(word -> {
 				int index = listOfWords.indexOf(result.get());
-				handleONCWords(index, true);
+				if (currentONCApproachController instanceof ONCWordsPredictedVsCorrectController) {
+					handleONCWordsPredictedVsCorrect(index);
+				} else {
+					handleONCWords(index, true);
+					rootController.selectApproachViewItem(Constants.ONC_WORDS_VIEW_INDEX);
+				}
 			});
 
 		} catch (Exception e) {

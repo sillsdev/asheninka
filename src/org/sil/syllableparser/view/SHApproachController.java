@@ -170,6 +170,15 @@ public class SHApproachController extends ApproachController {
 		prefs.setLastSHApproachViewUsed(getViewUsed());
 	}
 
+	public void handleSHWordsPredictedVsCorrect(int index) {
+		FXMLLoader loader = createFXMLLoader("fxml/SHWordsPredictedVsCorrect.fxml");
+		SHWordsPredictedVsCorrectController controller = loader.getController();
+		initializeApproachEditorController(controller);
+		controller.setData(shApproachData, words);
+		controller.setFocusOnWord(index);
+		prefs.setLastSHApproachViewUsed(getViewUsed());
+	}
+
 	public void handleSHWordsPredictedVsCorrect() {
 		FXMLLoader loader = createFXMLLoader("fxml/SHWordsPredictedVsCorrect.fxml");
 		SHWordsPredictedVsCorrectController controller = loader.getController();
@@ -366,14 +375,24 @@ public class SHApproachController extends ApproachController {
 					contentText, bundle);
 
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
-			for (Word word : words) {
+			ObservableList<Word> wordsToUse = words;
+			if (currentSHApproachController instanceof SHWordsPredictedVsCorrectController) {
+				SHWordsPredictedVsCorrectController predController = (SHWordsPredictedVsCorrectController) currentSHApproachController;
+				wordsToUse = predController.getSHWordsPredictedVsCorrectTable().getItems();
+			}
+			for (Word word : wordsToUse) {
 				listOfWords.add(word.getWord());
 			}
 			TextFields.bindAutoCompletion(dialog.getEditor(), listOfWords);
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(word -> {
 				int index = listOfWords.indexOf(result.get());
-				handleSHWords(index, true);
+				if (currentSHApproachController instanceof SHWordsPredictedVsCorrectController) {
+					handleSHWordsPredictedVsCorrect(index);
+				} else {
+					handleSHWords(index, true);
+					rootController.selectApproachViewItem(Constants.SH_WORDS_VIEW_INDEX);
+				}
 			});
 
 		} catch (Exception e) {
