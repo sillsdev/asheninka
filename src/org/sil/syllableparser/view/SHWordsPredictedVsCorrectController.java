@@ -28,6 +28,10 @@ public class SHWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 	@FXML
 	protected TableView<Word> shWordsPredictedVsCorrectTable;
 
+	public TableView<Word> getSHWordsPredictedVsCorrectTable() {
+		return shWordsPredictedVsCorrectTable;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.setWordsTable(shWordsPredictedVsCorrectTable);

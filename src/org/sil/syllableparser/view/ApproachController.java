@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 import org.controlsfx.control.StatusBar;
 import org.sil.syllableparser.ApplicationPreferences;
@@ -82,5 +83,11 @@ public abstract class ApproachController {
 		this.locale = locale;
 	}
 
-
+	protected void setWordForTryAWord(TryAWordController controller, TableView<Word> wordsTable) {
+		Word word = (Word) wordsTable.getSelectionModel().getSelectedItem();
+		if (word != null) {
+			String sCurrentWord = word.getWord();
+			controller.getWordToTry().setText(sCurrentWord);
+		}
+	}
 }

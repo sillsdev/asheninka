@@ -504,12 +504,10 @@ public class SHApproachController extends ApproachController {
 
 			if (currentSHApproachController instanceof SHWordsController) {
 				SHWordsController shWordsController = (SHWordsController) currentSHApproachController;
-				TableView<Word> shWordsTable = shWordsController.getSHWordsTable();
-				Word shWord = (Word) shWordsTable.getSelectionModel().getSelectedItem();
-				if (shWord != null) {
-					String sCurrentWord = shWord.getWord();
-					controller.getWordToTry().setText(sCurrentWord);
-				}
+				setWordForTryAWord(controller, shWordsController.getSHWordsTable());
+			} else if (currentSHApproachController instanceof SHWordsPredictedVsCorrectController) {
+				SHWordsPredictedVsCorrectController predController = (SHWordsPredictedVsCorrectController) currentSHApproachController;
+				setWordForTryAWord(controller, predController.getSHWordsPredictedVsCorrectTable());
 			}
 
 			tryAWordDialogStage.initModality(Modality.NONE);

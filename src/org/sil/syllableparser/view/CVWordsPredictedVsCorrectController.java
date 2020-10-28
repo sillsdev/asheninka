@@ -27,6 +27,10 @@ public class CVWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 	@FXML
 	protected TableView<Word> cvWordsPredictedVsCorrectTable;
 
+	public TableView<Word> getCVWordsPredictedVsCorrectTable() {
+		return cvWordsPredictedVsCorrectTable;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.setWordsTable(cvWordsPredictedVsCorrectTable);

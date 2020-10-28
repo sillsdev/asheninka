@@ -37,7 +37,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -559,13 +558,11 @@ public class ONCApproachController extends ApproachController  {
 			controller.setData(oncApproachData);
 
 			if (currentONCApproachController instanceof ONCWordsController) {
-				ONCWordsController shWordsController = (ONCWordsController) currentONCApproachController;
-				TableView<Word> shWordsTable = shWordsController.getONCWordsTable();
-				Word shWord = (Word) shWordsTable.getSelectionModel().getSelectedItem();
-				if (shWord != null) {
-					String sCurrentWord = shWord.getWord();
-					controller.getWordToTry().setText(sCurrentWord);
-				}
+				ONCWordsController oncWordsController = (ONCWordsController) currentONCApproachController;
+				setWordForTryAWord(controller, oncWordsController.getONCWordsTable());
+			} else if (currentONCApproachController instanceof ONCWordsPredictedVsCorrectController) {
+				ONCWordsPredictedVsCorrectController predController = (ONCWordsPredictedVsCorrectController) currentONCApproachController;
+				setWordForTryAWord(controller, predController.getONCWordsPredictedVsCorrectTable());
 			}
 
 			tryAWordDialogStage.initModality(Modality.NONE);

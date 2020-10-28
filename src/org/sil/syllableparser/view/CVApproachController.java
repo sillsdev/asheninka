@@ -554,12 +554,10 @@ public class CVApproachController extends ApproachController {
 
 			if (currentCVApproachController instanceof CVWordsController) {
 				CVWordsController cvWordsController = (CVWordsController) currentCVApproachController;
-				TableView<Word> cvWordsTable = cvWordsController.getCVWordsTable();
-				Word cvWord = (Word) cvWordsTable.getSelectionModel().getSelectedItem();
-				if (cvWord != null) {
-					String sCurrentWord = cvWord.getWord();
-					controller.getWordToTry().setText(sCurrentWord);
-				}
+				setWordForTryAWord(controller, cvWordsController.getCVWordsTable());
+			} else if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController) {
+				CVWordsPredictedVsCorrectController predController = (CVWordsPredictedVsCorrectController) currentCVApproachController;
+				setWordForTryAWord(controller, predController.getCVWordsPredictedVsCorrectTable());
 			}
 
 			tryAWordDialogStage.initModality(Modality.NONE);

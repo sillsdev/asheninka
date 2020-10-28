@@ -27,6 +27,10 @@ public class ONCWordsPredictedVsCorrectController extends WordsPredictedVsCorrec
 	@FXML
 	protected TableView<Word> oncWordsPredictedVsCorrectTable;
 
+	public TableView<Word> getONCWordsPredictedVsCorrectTable() {
+		return oncWordsPredictedVsCorrectTable;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.setWordsTable(oncWordsPredictedVsCorrectTable);
