@@ -901,91 +901,91 @@ public class RootLayoutController implements Initializable {
 	private void handleCVSegmentInventory() {
 		currentApproachController = cvApproachController;
 		cvApproachController.handleCVSegmentInventory();
-		selectApproachViewItem(0);
+		selectApproachViewItem(Constants.CV_SEGMENT_INVENTORY_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleCVNaturalClasses() {
 		currentApproachController = cvApproachController;
 		cvApproachController.handleCVNaturalClasses();
-		selectApproachViewItem(1);
+		selectApproachViewItem(Constants.CV_NATURAL_CLASSES_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleCVSyllablePatterns() {
 		currentApproachController = cvApproachController;
 		cvApproachController.handleCVSyllablePatterns();
-		selectApproachViewItem(2);
+		selectApproachViewItem(Constants.CV_SYLLABLE_PATTERNS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleCVWords() {
 		currentApproachController = cvApproachController;
 		cvApproachController.handleCVWords();
-		selectApproachViewItem(3);
+		selectApproachViewItem(Constants.CV_WORDS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleCVWordsPredictedVsCorrect() {
 		currentApproachController = cvApproachController;
 		cvApproachController.handleCVWordsPredictedVsCorrect();
-		selectApproachViewItem(4);
+		selectApproachViewItem(Constants.CV_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
 	}
 
 	@FXML
-	private void handleGraphemeNaturalClasses() {
+	private void handleCVGraphemeNaturalClasses() {
 		currentApproachController = cvApproachController;
 		cvApproachController.handleGraphemeNaturalClasses();
-		selectApproachViewItem(5);
+		selectApproachViewItem(Constants.CV_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
 	}
 
 	@FXML
-	private void handleEnvironments() {
+	private void handleCVEnvironments() {
 		currentApproachController = cvApproachController;
 		cvApproachController.handleEnvironments();
-		selectApproachViewItem(6);
+		selectApproachViewItem(Constants.CV_ENVIRONMENTS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleSHSegmentInventory() {
 		currentApproachController = shApproachController;
 		shApproachController.handleSHSegmentInventory();
-		selectApproachViewItem(0);
+		selectApproachViewItem(Constants.SH_SEGMENT_INVENTORY_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleSHSonorityHierarchy() {
 		currentApproachController = shApproachController;
 		shApproachController.handleSHSonorityHierarchy();
-		selectApproachViewItem(1);
+		selectApproachViewItem(Constants.SH_SONORITY_HIERARCHY_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleSHWords() {
 		currentApproachController = shApproachController;
 		shApproachController.handleSHWords();
-		selectApproachViewItem(2);
+		selectApproachViewItem(Constants.SH_WORDS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleSHWordsPredictedVsCorrect() {
 		currentApproachController = shApproachController;
 		shApproachController.handleSHWordsPredictedVsCorrect();
-		selectApproachViewItem(3);
+		selectApproachViewItem(Constants.SH_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleSHGraphemeNaturalClasses() {
 		currentApproachController = shApproachController;
 		shApproachController.handleGraphemeNaturalClasses();
-		selectApproachViewItem(4);
+		selectApproachViewItem(Constants.SH_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleSHEnvironments() {
 		currentApproachController = shApproachController;
 		shApproachController.handleEnvironments();
-		selectApproachViewItem(5);
+		selectApproachViewItem(Constants.SH_ENVIRONMENTS_VIEW_INDEX);
 	}
 
 	public void selectApproachViewItem(int iItem) {
@@ -1032,6 +1032,78 @@ public class RootLayoutController implements Initializable {
 		setInitialONCView();
 		setDisableForSomeMenuAndToolbarItems();
 	}
+
+	@FXML
+	private void handleONCSegmentInventory() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleONCSegmentInventory();
+		selectApproachViewItem(Constants.ONC_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCSonorityHierarchy() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleONCSonorityHierarchy();
+		selectApproachViewItem(Constants.ONC_SONORITY_HIERARCHY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCNaturalClasses() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleCVNaturalClasses();
+		selectApproachViewItem(Constants.ONC_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleSyllabificationParameters() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleSyllabificationParameters();
+		selectApproachViewItem(Constants.ONC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleTemplates() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleTemplates();;
+		selectApproachViewItem(Constants.ONC_TEMPLATES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleFilters() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleFilters();;
+		selectApproachViewItem(Constants.ONC_FILTERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCWords() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleONCWords();
+		selectApproachViewItem(Constants.ONC_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCWordsPredictedVsCorrect() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleONCWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.ONC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCGraphemeNaturalClasses() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.ONC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCEnvironments() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.ONC_ENVIRONMENTS_VIEW_INDEX);
+	}
+
+
 
 	/**
 	 * Moraic Approach
@@ -1284,31 +1356,31 @@ public class RootLayoutController implements Initializable {
 		String sLastCVApproachViewUsed = applicationPreferences.getLastCVApproachViewUsed();
 		switch (sLastCVApproachViewUsed) {
 		case "ENVIRONMENTS":
-			selectApproachViewItem(6);
+			selectApproachViewItem(Constants.CV_ENVIRONMENTS_VIEW_INDEX);
 			break;
 
 		case "GRAPHEME_NATURAL_CLASSES":
-			selectApproachViewItem(5);
+			selectApproachViewItem(Constants.CV_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
 			break;
 
 		case "NATURAL_CLASSES":
-			selectApproachViewItem(1);
+			selectApproachViewItem(Constants.CV_NATURAL_CLASSES_VIEW_INDEX);
 			break;
 
 		case "PREDICTED_VS_CORRECT_WORDS":
-			selectApproachViewItem(4);
+			selectApproachViewItem(Constants.CV_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
 			break;
 
 		case "SEGMENT_INVENTORY":
-			selectApproachViewItem(0);
+			selectApproachViewItem(Constants.CV_SEGMENT_INVENTORY_VIEW_INDEX);
 			break;
 
 		case "SYLLABLE_PATTERNS":
-			selectApproachViewItem(2);
+			selectApproachViewItem(Constants.CV_SYLLABLE_PATTERNS_VIEW_INDEX);
 			break;
 
 		case "WORDS":
-			selectApproachViewItem(3);
+			selectApproachViewItem(Constants.CV_WORDS_VIEW_INDEX);
 			break;
 
 		default:
@@ -1321,27 +1393,27 @@ public class RootLayoutController implements Initializable {
 		String sLastSHApproachViewUsed = applicationPreferences.getLastSHApproachViewUsed();
 		switch (sLastSHApproachViewUsed) {
 		case "ENVIRONMENTS":
-			selectApproachViewItem(5);
+			selectApproachViewItem(Constants.SH_ENVIRONMENTS_VIEW_INDEX);
 			break;
 
 		case "GRAPHEME_NATURAL_CLASSES":
-			selectApproachViewItem(4);
+			selectApproachViewItem(Constants.SH_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
 			break;
 
 		case "PREDICTED_VS_CORRECT_WORDS":
-			selectApproachViewItem(3);
+			selectApproachViewItem(Constants.SH_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
 			break;
 
 		case "SEGMENT_INVENTORY":
-			selectApproachViewItem(0);
+			selectApproachViewItem(Constants.SH_SEGMENT_INVENTORY_VIEW_INDEX);
 			break;
 
 		case "SONORITY_HIERARCHY":
-			selectApproachViewItem(1);
+			selectApproachViewItem(Constants.SH_SONORITY_HIERARCHY_VIEW_INDEX);
 			break;
 
 		case "WORDS":
-			selectApproachViewItem(2);
+			selectApproachViewItem(Constants.SH_WORDS_VIEW_INDEX);
 			break;
 
 		default:
@@ -1354,43 +1426,43 @@ public class RootLayoutController implements Initializable {
 		String sLastONCApproachViewUsed = applicationPreferences.getLastONCApproachViewUsed();
 		switch (sLastONCApproachViewUsed) {
 		case "ENVIRONMENTS":
-			selectApproachViewItem(9);
+			selectApproachViewItem(Constants.ONC_ENVIRONMENTS_VIEW_INDEX);
 			break;
 
 		case "FILTERS":
-			selectApproachViewItem(5);
+			selectApproachViewItem(Constants.ONC_FILTERS_VIEW_INDEX);
 			break;
 
 		case "GRAPHEME_NATURAL_CLASSES":
-			selectApproachViewItem(8);
+			selectApproachViewItem(Constants.ONC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
 			break;
 
 		case "NATURAL_CLASSES":
-			selectApproachViewItem(3);
+			selectApproachViewItem(Constants.ONC_NATURAL_CLASSES_VIEW_INDEX);
 			break;
 
 		case "PREDICTED_VS_CORRECT_WORDS":
-			selectApproachViewItem(7);
+			selectApproachViewItem(Constants.ONC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
 			break;
 
 		case "SEGMENT_INVENTORY":
-			selectApproachViewItem(0);
+			selectApproachViewItem(Constants.ONC_SEGMENT_INVENTORY_VIEW_INDEX);
 			break;
 
 		case "SONORITY_HIERARCHY":
-			selectApproachViewItem(1);
+			selectApproachViewItem(Constants.ONC_SONORITY_HIERARCHY_VIEW_INDEX);
 			break;
 
 		case "SYLLABIFICATION_PARAMETERS":
-			selectApproachViewItem(2);
+			selectApproachViewItem(Constants.ONC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
 			break;
 
 		case "TEMPLATES":
-			selectApproachViewItem(4);
+			selectApproachViewItem(Constants.ONC_TEMPLATES_VIEW_INDEX);
 			break;
 
 		case "WORDS":
-			selectApproachViewItem(6);
+			selectApproachViewItem(Constants.ONC_WORDS_VIEW_INDEX);
 			break;
 
 		default:

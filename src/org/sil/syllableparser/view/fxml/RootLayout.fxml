@@ -105,9 +105,9 @@
 									text="%cv.view.words" />
 								<MenuItem mnemonicParsing="true"
 									onAction="#handleCVWordsPredictedVsCorrect" text="%cv.view.wordspredictedvscorrect" />
-								<MenuItem mnemonicParsing="true" onAction="#handleGraphemeNaturalClasses"
+								<MenuItem mnemonicParsing="true" onAction="#handleCVGraphemeNaturalClasses"
 									text="%cv.view.graphemenaturalclasses" />
-								<MenuItem mnemonicParsing="true" onAction="#handleEnvironments"
+								<MenuItem mnemonicParsing="true" onAction="#handleCVEnvironments"
 									text="%cv.view.environments" />
 							</Menu>
 							<Menu mnemonicParsing="true" onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy">
@@ -124,11 +124,28 @@
 								<MenuItem mnemonicParsing="true" onAction="#handleSHEnvironments"
 									text="%cv.view.environments" />
 							</Menu>
-<!-- 							<MenuItem mnemonicParsing="true" -->
-<!-- 								onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy" -->
-<!-- 								fx:id="menuItemSonorityHierarchyApproach" /> -->
-							<MenuItem mnemonicParsing="true" onAction="#handleONCApproach"
-								text="%approach.onc" fx:id="menuItemONCApproach" />
+							<Menu mnemonicParsing="true" onAction="#handleONCApproach" text="%approach.onc" fx:id="menuItemONCApproach" >
+								<MenuItem mnemonicParsing="true" onAction="#handleONCSegmentInventory"
+									text="%cv.view.segmentinventory" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCSonorityHierarchy"
+									text="%sh.view.sonorityhierarchy" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSyllabificationParameters"
+									text="%onc.view.syllabificationparameters" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCNaturalClasses"
+									text="%cv.view.naturalclass" />
+								<MenuItem mnemonicParsing="true" onAction="#handleTemplates"
+									text="%onc.view.templates" />
+								<MenuItem mnemonicParsing="true" onAction="#handleFilters"
+									text="%onc.view.filters" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCWords"
+									text="%onc.view.words" />
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleONCWordsPredictedVsCorrect" text="%onc.view.wordspredictedvscorrect" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCGraphemeNaturalClasses"
+									text="%cv.view.graphemenaturalclasses" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCEnvironments"
+									text="%cv.view.environments" />
+							</Menu>
 							<MenuItem mnemonicParsing="true" onAction="#handleMoraicApproach"
 								text="%approach.moraic" fx:id="menuItemMoraicApproach" />
 							<MenuItem mnemonicParsing="true"

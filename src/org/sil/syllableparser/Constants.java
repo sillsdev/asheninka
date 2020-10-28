@@ -66,9 +66,33 @@ public class Constants {
 	public static final String TEXT_COLOR_CSS_END = ";";
 	public static final String PARSER_SUCCESS_COLOR_STRING = "green";
 	public static final String PARSER_FAILURE_COLOR_STRING = "red";
+
+	// View constants
+	public static final int CV_SEGMENT_INVENTORY_VIEW_INDEX = 0;
+	public static final int CV_NATURAL_CLASSES_VIEW_INDEX = 1;
+	public static final int CV_SYLLABLE_PATTERNS_VIEW_INDEX = 2;
 	public static final int CV_WORDS_VIEW_INDEX = 3;
-	public static final int ONC_WORDS_VIEW_INDEX = 6;
+	public static final int CV_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 4;
+	public static final int CV_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 5;
+	public static final int CV_ENVIRONMENTS_VIEW_INDEX = 6;
+
+	public static final int SH_SEGMENT_INVENTORY_VIEW_INDEX = 0;
+	public static final int SH_SONORITY_HIERARCHY_VIEW_INDEX = 1;
 	public static final int SH_WORDS_VIEW_INDEX = 2;
+	public static final int SH_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 3;
+	public static final int SH_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 4;
+	public static final int SH_ENVIRONMENTS_VIEW_INDEX = 5;
+
+	public static final int ONC_SEGMENT_INVENTORY_VIEW_INDEX = 0;
+	public static final int ONC_SONORITY_HIERARCHY_VIEW_INDEX = 1;
+	public static final int ONC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX = 2;
+	public static final int ONC_NATURAL_CLASSES_VIEW_INDEX = 3;
+	public static final int ONC_TEMPLATES_VIEW_INDEX = 4;
+	public static final int ONC_FILTERS_VIEW_INDEX = 5;
+	public static final int ONC_WORDS_VIEW_INDEX = 6;
+	public static final int ONC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 7;
+	public static final int ONC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 8;
+	public static final int ONC_ENVIRONMENTS_VIEW_INDEX = 9;
 
 	// Unit Testing constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/org/sil/syllableparser/testData/CVTestData.";
