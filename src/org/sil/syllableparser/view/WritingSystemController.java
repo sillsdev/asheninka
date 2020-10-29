@@ -60,6 +60,8 @@ public class WritingSystemController extends SylParserBaseController implements
 	@FXML
 	private Tab sortingTab;
 	@FXML
+	private TextField languageNameField;
+	@FXML
 	private TextField codeField;
 	@FXML
 	private CheckBox rightToLeftCheckBox;
@@ -241,6 +243,9 @@ public class WritingSystemController extends SylParserBaseController implements
 		if (rightToLeftCheckBox != null) {
 			rightToLeftCheckBox.setSelected(currentLanguage.isRightToLeft());
 		}
+		if (languageNameField != null) {
+			languageNameField.setText(currentLanguage.getLanguageName());
+		}
 		if (codeField != null) {
 			codeField.setText(currentLanguage.getCode());
 		}
@@ -302,6 +307,7 @@ public class WritingSystemController extends SylParserBaseController implements
 		okClicked = true;
 		currentLanguage.setColor(color);
 		currentLanguage.setRightToLeft(rightToLeftCheckBox.isSelected());
+		currentLanguage.setLanguageName(languageNameField.getText());
 		currentLanguage.setCode(codeField.getText());
 		currentLanguage.setSortingOption(sortingChoiceBox.selectionModelProperty().get().getSelectedItem());
 		currentLanguage.setIcuRules(icuRulesTextArea.getText());

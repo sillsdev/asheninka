@@ -35,6 +35,7 @@ public class Language  {
 	private Color color = Color.BLACK;
 	private BooleanProperty rightToLeft;
 	private SortingOption sortingOption;
+	protected final StringProperty languageName;
 	protected final StringProperty code;
 	protected final StringProperty ldmlFile;
 	protected final StringProperty useSameLanguage;
@@ -112,6 +113,18 @@ public class Language  {
 		this.color = color;
 	}
 
+	public String getLanguageName() {
+		return languageName.get();
+	}
+
+	public StringProperty languageNameProperty() {
+		return languageName;
+	}
+
+	public void setLanguageName(String languageName) {
+		this.languageName.set(languageName);
+	}
+
 	public String getCode() {
 		return code.get();
 	}
@@ -173,7 +186,7 @@ public class Language  {
 	}
 
 	public StringProperty useSameLanguageProperty() {
-		return code;
+		return useSameLanguage;
 	}
 
 	public void setUseSameLanguage(String option) {
@@ -184,7 +197,7 @@ public class Language  {
 		return isRightToLeft() ? NodeOrientation.RIGHT_TO_LEFT : NodeOrientation.LEFT_TO_RIGHT;
 	}
 
-	public Language(String fontFamily, double fontSize, String fontType, SortingOption option, String code, String icuRules, String useSameLanguage, String ldmlFile) {
+	public Language(String fontFamily, double fontSize, String fontType, SortingOption option, String code, String icuRules, String useSameLanguage, String ldmlFile, String languageName) {
 		super();
 		this.fontFamily = fontFamily;
 		this.fontSize = fontSize;
@@ -192,6 +205,7 @@ public class Language  {
 		font = createFont(fontFamily, fontSize, fontType);
 		rightToLeft = new SimpleBooleanProperty(false);
 		sortingOption = option;
+		this.languageName = new SimpleStringProperty(languageName);
 		this.code = new SimpleStringProperty(code);
 		this.icuRules = new SimpleStringProperty(icuRules);
 		this.useSameLanguage = new SimpleStringProperty(useSameLanguage);
@@ -205,6 +219,7 @@ public class Language  {
 		font = createFont(fontFamily, fontSize, fontType);
 		rightToLeft = new SimpleBooleanProperty(false);
 		sortingOption = SortingOption.DEFAULT_ORDER;
+		languageName = new SimpleStringProperty("");
 		code = new SimpleStringProperty("");
 		ldmlFile = new SimpleStringProperty("");
 		icuRules = new SimpleStringProperty("");

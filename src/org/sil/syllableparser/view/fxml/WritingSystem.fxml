@@ -24,9 +24,11 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label layoutX="14.0" layoutY="38.0" text="%label.code" />
-                              <TextField fx:id="codeField" layoutX="100.0" layoutY="34.0" />
+                              <Label layoutX="14.0" layoutY="38.0" text="%label.languagename" />
+                              <TextField fx:id="languageNameField" layoutX="161.0" layoutY="34.0" prefHeight="25.0" prefWidth="328.0" />
                               <CheckBox fx:id="rightToLeftCheckBox" layoutX="17.0" layoutY="117.0" mnemonicParsing="false" text="%label.righttoleft" />
+                              <Label layoutX="17.0" layoutY="79.0" text="%label.code" />
+                              <TextField fx:id="codeField" layoutX="161.0" layoutY="75.0" />
                            </children>
                         </AnchorPane>
                   </content>
