@@ -149,15 +149,12 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 			}
 			if (languageProject != null) {
 				wordField.setFont(languageProject.getVernacularLanguage().getFont());
-				Color textColor = languageProject.getVernacularLanguage().getColor();
-				String sRGB= StringUtilities.toRGBCode(textColor);
-				String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+				String sVernacular = mainApp.getStyleFromColor(languageProject.getVernacularLanguage().getColor());
 				wordField.setStyle(sVernacular);
 				predictedSyllabificationField.setStyle(sVernacular);
 				correctSyllabificationField.setStyle(sVernacular);
-				textColor = languageProject.getAnalysisLanguage().getColor();
-				sRGB= StringUtilities.toRGBCode(textColor);
-				commentField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END);
+				String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+				commentField.setStyle(sAnalysis);
 			}
 		});
 		correctSyllabificationField.textProperty()

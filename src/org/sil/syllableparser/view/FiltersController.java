@@ -76,9 +76,7 @@ public class FiltersController extends TemplatesFiltersController {
 			});
 		}
 		if (languageProject != null) {
-			Color textColor = languageProject.getAnalysisLanguage().getColor();
-			String sRGB= StringUtilities.toRGBCode(textColor);
-			String sAnalysis = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
 			nameField.setStyle(sAnalysis);
 			descriptionField.setStyle(sAnalysis);
 		}

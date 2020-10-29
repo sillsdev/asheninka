@@ -456,14 +456,11 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 
 	protected void setTextFieldColors() {
 		if (languageProject != null) {
-			Color textColor = languageProject.getVernacularLanguage().getColor();
-			String sRGB= StringUtilities.toRGBCode(textColor);
-			String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+			String sVernacular =mainApp.getStyleFromColor(languageProject.getVernacularLanguage().getColor());
 			graphemesField.setStyle(sVernacular);
 			segmentField.setStyle(sVernacular);
-			textColor = languageProject.getAnalysisLanguage().getColor();
-			sRGB= StringUtilities.toRGBCode(textColor);
-			descriptionField.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END);
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			descriptionField.setStyle(sAnalysis);
 		}
 	}
 

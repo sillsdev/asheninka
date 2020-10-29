@@ -470,11 +470,9 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 
 	protected void setTextFieldColors() {
 		if (languageProject != null) {
-			Color textColor = languageProject.getAnalysisLanguage().getColor();
-			String sRGB= StringUtilities.toRGBCode(textColor);
-			String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
-			nameField.setStyle(sVernacular);
-			descriptionField.setStyle(sVernacular);
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
 		}
 	}
 

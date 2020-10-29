@@ -13,6 +13,7 @@ import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.service.DatabaseMigrator;
 import org.sil.utility.MainAppUtilities;
+import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 import org.sil.syllableparser.view.ApproachViewNavigator;
 import org.sil.syllableparser.view.CreateOpenRestorePromptController;
@@ -30,6 +31,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -271,6 +273,12 @@ public class MainApp extends Application implements MainAppUtilities {
 
 	public LanguageProject getLanguageProject() {
 		return languageProject;
+	}
+
+	public String getStyleFromColor(Color textColor) {
+		String sRGB= StringUtilities.toRGBCode(textColor);
+		String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+		return sVernacular;
 	}
 
 	/**

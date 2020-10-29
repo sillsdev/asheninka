@@ -129,6 +129,8 @@ public abstract class TryAWordController implements Initializable {
 		NodeOrientation vernacularOrientation = vernacular.getOrientation();
 		wordToTry.setNodeOrientation(vernacularOrientation);
 		wordToTry.setFont(vernacular.getFont());
+		String sVernacular = mainApp.getStyleFromColor(vernacular.getColor());
+		wordToTry.setStyle(sVernacular);
 		wordToTry.setText(lastWordTried);
 		lastTryAWord = getLastTryAWord();
 		dialogStage = preferences.getLastWindowParameters(lastTryAWord, dialogStage, 533., 637.);

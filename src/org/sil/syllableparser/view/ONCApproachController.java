@@ -19,6 +19,7 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.ApproachView;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
@@ -27,6 +28,7 @@ import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.ONCSegmenter;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
+import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -35,9 +37,11 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -428,6 +432,12 @@ public class ONCApproachController extends ApproachController  {
 			String contentText = bundle.getString("label.wordtofind");
 			TextInputDialog dialog = ControllerUtilities.getTextInputDialog(mainApp, title,
 					contentText, bundle);
+			Language vernacular = mainApp.getLanguageProject().getVernacularLanguage();
+			NodeOrientation vernacularOrientation = vernacular.getOrientation();
+			dialog.getEditor().setNodeOrientation(vernacularOrientation);
+			dialog.getEditor().setFont(vernacular.getFont());
+			String sVernacular = mainApp.getStyleFromColor(vernacular.getColor());
+			dialog.getEditor().setStyle(sVernacular);
 
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
 			ObservableList<Word> wordsToUse = words;
