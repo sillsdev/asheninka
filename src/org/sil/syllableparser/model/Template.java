@@ -13,7 +13,7 @@ import javafx.collections.ObservableList;
  */
 public class Template extends TemplateFilter {
 
-	protected TemplateType templateType = TemplateType.SYLLABLE;
+	protected TemplateType templateType = TemplateType.ONSET;
 
 	public Template() {
 		super();
