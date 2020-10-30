@@ -255,7 +255,12 @@ public class MainApp extends Application implements MainAppUtilities {
 		if (file != null) {
 			String sFileNameToUse = file.getName().replace(
 					"." + Constants.ASHENINKA_DATA_FILE_EXTENSION, "");
-			primaryStage.setTitle(kApplicationTitle + " - " + sFileNameToUse);
+			String sLangName = languageProject.getVernacularLanguage().getLanguageName();
+			if (!StringUtilities.isNullOrEmpty(sLangName)) {
+				primaryStage.setTitle(kApplicationTitle + " - " + sLangName + " (" + sFileNameToUse + ")");
+			} else {
+				primaryStage.setTitle(kApplicationTitle + " - " + sFileNameToUse);
+			}
 		} else {
 			primaryStage.setTitle(kApplicationTitle);
 		}

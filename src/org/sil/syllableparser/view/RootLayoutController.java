@@ -399,6 +399,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleVernacularWritingSystem() {
 		launchWritingSystemController(languageProject.getVernacularLanguage(), "label.vernacularwritingsystem");
+		File file = applicationPreferences.getLastOpenedFile();
+		mainApp.updateStageTitle(file);
 	}
 
 	protected void launchWritingSystemController(Language language, String titleResource) {
