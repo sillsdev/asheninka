@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->16 October 2020</date
+>30 October 2020</date
 ><version
->0.7.0 Beta</version
+>0.7.0 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -116,7 +116,7 @@ type="tSHSonorityHierarchy"
 ><object
 type="tAsheninka"
 ></object
-> will attempt to remember the location and size of the main window and most dialog boxes. So if you find that a dialog box is too small or too large, try resizing it (by dragging the edges of the window). Usually the next time you use that dialog box, it will be at the location and size you changed it to.</p
+> will attempt to remember the location and size of the main window, table column widths, and most dialog boxes. So if you find that a dialog box is too small or too large, try resizing it (by dragging the edges of the window). Usually the next time you use that dialog box, it will be at the location and size you changed it to.</p
 ><section2
 id="sNewProject"
 ><secTitle
@@ -151,7 +151,7 @@ type="tAsheninka"
 >We suggest you create a directory called “My Asheninka” in your normal documents directory and put all your <object
 type="tAsheninka"
 ></object
-> projects in it.</p
+> projects in it.  You may find it helpful to put each language project in its own directory.</p
 ></section2
 ><section2
 id="sOpen"
@@ -250,7 +250,9 @@ id="sWSGeneralTab"
 ><secTitle
 >General tab</secTitle
 ><p
->There are two items on this tab.</p
+>There are thee items on this tab.</p
+><p
+>The language name value is for you to set, should you so wish. It is currently not used anywhere.</p
 ><p
 >The language code value is for you to set, should you so wish. It is currently not used anywhere.</p
 ><p
@@ -495,7 +497,7 @@ term="iTutorial"
 ></indexedItem
 ><object
 type="tMenuItem"
->Suggested Stepsl</object
+>Suggested Steps</object
 > which has some suggestions on how to be effective when using <object
 type="tAsheninka"
 ></object
@@ -526,9 +528,9 @@ id="sStatusBar"
 ><indexedItem
 term="iStatusBar"
 ></indexedItem
->The bottom row of the window (known as the status bar) contains the current date (at the left). Usually it also contains some numbers at the right.  The rightmost pair of numbers is the current index for that view, a slash, followed by the total number of items in that view.</p
+>The bottom row of the window (known as the status bar) contains the current date (at the left). Usually it also contains some numbers at the right. The rightmost pair of numbers is the current index for that view, a slash, followed by the total number of items in that view.</p
 ><p
->For word views, there are three sets of numbers.  From the left they are:</p
+>For word views, there are three sets of numbers. From the left they are:</p
 ><ol
 ><li
 >The number of predicted parses, a slash, the total number of words, and the percentage for that ratio.</li
@@ -548,7 +550,7 @@ type="tMenuItem"
 XeLaTeXSpecial="scaled='500'"
 src="resources/SyllabifyWords.png"
 ></img
-> tool bar button).  You can use the first set to help you see potential progress.  The second can help you compare how your implementation of a particular approach is doing compared to some other approach.</pc
+> tool bar button). You can use the first set to help you see potential progress. The second can help you compare how your implementation of a particular approach is doing compared to some other approach.</pc
 ></section2
 ></section1
 ><section1
@@ -567,12 +569,16 @@ textBefore="plural"
 sec="sOTApproach"
 textBefore="none"
 ></sectionRef
->. Only two are implemented in the current version. See <sectionRef
+>. Only three are implemented in the current version. See <sectionRef
 sec="sCVApproach"
 textBefore="plural"
 ></sectionRef
-> and <sectionRef
+>, <sectionRef
 sec="sSonorityHiearchyApproach"
+textBefore="none"
+></sectionRef
+>, and <sectionRef
+sec="sONCApproach"
 textBefore="none"
 ></sectionRef
 >.</p
@@ -1391,11 +1397,16 @@ term="iCVWords"
 >In the <object
 type="tCVWords"
 ></object
-> view, the middle pane of the display shows all the words with three other columns:</p
+> view, the middle pane of the display shows all the words with four other columns:</p
 ><ol
 ><li
 ><object
 type="tPredictedSyllableBreaks"
+></object
+></li
+><li
+><object
+type="tComment"
 ></object
 ></li
 ><li
@@ -1477,6 +1488,11 @@ src="resources/ConvertPredictedToCorrect.png"
 ></img
 > tool bar button.</p
 ><p
+>The <object
+type="tComment"
+></object
+> field is for your use as needed.  One possible scenario is to indicate why a given word does not parse.  Another, if you are using IPA, is to enter how the word is spelled in the practical orthography.</p
+><p
 >When you run the <object
 type="tConvertPredictedToCorrectSyllabifcation"
 ></object
@@ -1505,14 +1521,17 @@ type="tTryAWord"
 > dialog box can be useful. To see it, use the <object
 type="tMenuItem"
 >Parser / Try a Word</object
-> menu item. This brings up a dialog box like the one shown in example <exampleRef
+> menu item while in the <object
+type="tCVPatternApproach"
+></object
+>. This brings up a dialog box like the one shown in example <exampleRef
 letter="xCVTryAWord"
 num="xCVTryAWord"
 ></exampleRef
->. (Note: unlike most dialog boxes, you can keep the <object
+>.  Unlike most dialog boxes, you can keep the <object
 type="tTryAWord"
 ></object
-> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it.) Further, the size and location of the <object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
 > dialog box for the <object
@@ -1527,7 +1546,7 @@ type="tONCApproach"
 > can be set independently; you can have several <object
 type="tTryAWord"
 ></object
-> dialog boxes open at the same time if you wish.)</p
+> dialog boxes open at the same time if you wish.</p
 ><example
 num="xCVTryAWord"
 ><chart
@@ -1543,6 +1562,9 @@ type="tAsheninka"
 ></object
 > shows the current word selected in the <object
 type="tCVWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tCVPredictedVsCorrectWords"
 ></object
 > view (if you are showing that view) or the last word you used (or nothing if you've never used <object
 type="tTryAWord"
@@ -1732,7 +1754,7 @@ lang="lVernacular"
 > in it. So when it tried to find a natural class for <langData
 lang="lVernacular"
 >b</langData
->, it failed. Notice that is does show what was found. (If the segment is the first item in the word, the found classes will be <object
+>, it failed. Notice that it does show what was found. (If the segment is the first item in the word, the found classes will be <object
 type="tErrorMessageText"
 >''</object
 > and the covered graphemes will be <object
@@ -2114,7 +2136,7 @@ type="tMenuItem"
 letter="xSHTryAWord"
 num="xSHTryAWord"
 ></exampleRef
->. (Note: unlike most dialog boxes, you can keep the <object
+>.  Unlike most dialog boxes, you can keep the <object
 type="tTryAWord"
 ></object
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
@@ -2132,7 +2154,7 @@ type="tONCApproach"
 > can be set independently; you can have several <object
 type="tTryAWord"
 ></object
-> dialog boxes open at the same time if you wish.)</p
+> dialog boxes open at the same time if you wish.</p
 ><example
 num="xSHTryAWord"
 ><chart
@@ -2148,6 +2170,9 @@ type="tAsheninka"
 ></object
 > shows the current word selected in the <object
 type="tSHWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tSHPredictedVsCorrectWords"
 ></object
 > view (if you are showing that view) or the last word you used (or nothing if you've never used <object
 type="tTryAWord"
@@ -2285,7 +2310,7 @@ term="iFailureSHNaturalClasser"
 >If a word contains a segment that is not in any natural class, the sonority hierarchy results table will end with a row whose <object
 type="tBold"
 >Relation</object
-> column contains “!!!” in red and one of the offending segments will have “(No Natural Class) after it as shown in example <exampleRef
+> column contains “!!!” in red and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
 letter="xSHTryAWordNCFailure"
 num="xSHTryAWordNCFailure"
 ></exampleRef
@@ -2424,7 +2449,7 @@ type="tONCApproach"
 > in <object
 type="tAsheninka"
 ></object
-> is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes) and the syllabification parameters so that one gets most, if not all, words to syllabify correctly.</p
+> is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes) and the syllabification parameters so that one gets most, if not all, words to syllabify correctly.  You may also need to write templates and/or filters to get some words to parse.</p
 ><p
 >In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to find sequences of onset, nucleus, and coda segments that can be placed in a syllable, modulo the parsing parameters. See appendix <appendixRef
 app="aONCAlgorithmInDetail"
@@ -2599,6 +2624,8 @@ type="tSHSonorityHierarchy"
 > violations.</li
 ></ol
 ><p
+>Note that syllable templates are not currently implemented.</p
+><p
 >When defining a template, you fill in the fields. The “Name” field is for you to remember this template.</p
 ><p
 >Its "Description” field lets you define it more fully, perhaps including some example words as to why you added the template in the first place.</p
@@ -2637,7 +2664,7 @@ border="1"
 ><td
 >Onset</td
 ><td
->*s [VoicelessNonCont] ([SonorantCV])</td
+>*s [VoicelessNonCont] ([SonorantC])</td
 ><td
 >Allow /<langData
 lang="lIPA"
@@ -2744,7 +2771,7 @@ sec="sONCCVNaturalClasses"
 >) enclosed in square brackets (e.g., "[C]”). If the segment or the natural class can violate the <object
 type="tSHSonorityHierarchy"
 ></object
->, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses. If it is a repair filter, then key a vertical line (|) at the point where the repair will occur.</p
+>, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses. If it is a repair filter, then key a vertical bar (|) at the point where the repair will occur.</p
 ><p
 ><indexedItem
 term="iEnglish"
@@ -2971,7 +2998,7 @@ type="tMenuItem"
 letter="xONCTryAWord"
 num="xONCTryAWord"
 ></exampleRef
->. (Note: unlike most dialog boxes, you can keep the <object
+>.  Unlike most dialog boxes, you can keep the <object
 type="tTryAWord"
 ></object
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
@@ -2989,7 +3016,7 @@ type="tONCApproach"
 > can be set independently; you can have several <object
 type="tTryAWord"
 ></object
-> dialog boxes open at the same time if you wish.)</p
+> dialog boxes open at the same time if you wish.</p
 ><example
 num="xONCTryAWord"
 ><chart
@@ -3005,6 +3032,9 @@ type="tAsheninka"
 ></object
 > shows the current word selected in the <object
 type="tONCWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tONCPredictedVsCorrectWords"
 ></object
 > view (if you are showing that view) or the last word you used (or nothing if you've never used <object
 type="tTryAWord"
@@ -3157,7 +3187,7 @@ type="tBold"
 >Status</object
 > column shows what the algorithm did at that part of the processing.</pc
 ><p
->As mentioned above, whenever one of the two steps fails, there is an error message shown for that step (and no following steps will be tried). See <sectionRef
+>As mentioned above, whenever one of the two steps fails, there is an error message shown for that step. Depending on the error and the state of the parser at the time, more steps may or may not be tried. See <sectionRef
 sec="sCVTryAWord"
 ></sectionRef
 > for examples where the segments could not be parsed.</p
@@ -3168,7 +3198,7 @@ term="iFailureONCNaturalClasser"
 >If a word contains a segment that is not in any natural class, the onset-nucleus-coda results table will end with a row whose <object
 type="tBold"
 >Relation</object
-> column contains “!!!” in red and one of the offending segments will have “(No Natural Class) after it as shown in example <exampleRef
+> column contains “!!!” in red and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
 letter="xONCTryAWordNCFailure"
 num="xONCTryAWordNCFailure"
 ></exampleRef
@@ -3406,10 +3436,16 @@ type="tParatext"
 ></object
 >, this file can be found in the “My Paratext Projects” folder and then in the folder of your project name.</p
 ><p
->Newly added words will appear in the <object
+>Newly added words will appear in the three words views (<object
 type="tCVWords"
 ></object
-> view with a <object
+>, <object
+type="tSHWords"
+></object
+>, and <object
+type="tONCWords"
+></object
+>) with a <object
 type="tParserResult"
 ></object
 > showing <object
@@ -3484,7 +3520,7 @@ type="tCorrectSyllableBreaks"
 > is empty, then if there is a value in <object
 type="tPredictedSyllableBreaks"
 ></object
->, it uses that value.</li
+> for the currently selected approach, it uses that value.</li
 ><li
 >Otherwise, it does not export the word.</li
 ></ol
@@ -3535,7 +3571,7 @@ type="tParatext"
 > and <object
 type="tXLingPaper"
 ></object
-> export methods limit discretionary hyphens from two characters from front and two characters from the back.</p
+> export methods limit discretionary hyphens from two characters from the front and two characters from the back.</p
 ></section2
 ></section1
 ><section1
@@ -3565,7 +3601,16 @@ type="tKey"
 XeLaTeXSpecial="scaled='500'"
 src="resources/FindWord.png"
 ></img
-> button on the toolbar to find a particular word. This brings up a dialog box which allows you to start typing the word you are looking for. As you type, it has a drop down area showing all words which contain the sequence of characters you have typed. Note that it shows all words which have this sequence anywhere in them, not just at the beginning. For example, with one project when I typed “<object
+> button on the toolbar to find a particular word. This brings up a dialog box which allows you to start typing the word you are looking for. As you type, it has a drop down area showing all words which contain the sequence of characters you have typed. If you are currently showing the <object
+type="tCVPredictedVsCorrectWords"
+></object
+>, <object
+type="tSHPredictedVsCorrectWords"
+></object
+>, or <object
+type="tONCPredictedVsCorrectWords"
+></object
+> view, then it only uses those words in this view.  If you are showing any other view, it shows all words which match what you type.  Note that it shows all words which have this sequence anywhere in them, not just at the beginning. For example, with one project when I typed “<object
 type="tKey"
 >ach</object
 >”, what is in example <exampleRef
@@ -3599,13 +3644,19 @@ type="tCVWords"
 > view of the <object
 type="tCVPatternApproach"
 ></object
-> or the <object
+>, the <object
 type="tSHWords"
 ></object
 > view of the <object
 type="tSHApproach"
 ></object
->.</p
+>, or the <object
+type="tONCWords"
+></object
+> view of the <object
+type="tONCApproach"
+></object
+>.  The exception is if you currently selected any of the predicted vs.​ correct views, it will select the chosen word in that view.</p
 ></section2
 ><section2
 id="sRemoveAllWords"
@@ -3667,8 +3718,11 @@ type="tAsheninka"
 >Note that when the words are removed, it will happen whether or not the <object
 type="tCVWords"
 ></object
-> view or the <object
+> view, the <object
 type="tSHWords"
+></object
+> view, or the <object
+type="tONCWords"
 ></object
 > view is currently being shown. It usually happens very quickly.</p
 ><p
@@ -3691,11 +3745,14 @@ type="tMenuItem"
 > menu item to completely clear the <object
 type="tCorrectSyllableBreaks"
 ></object
-> column in both the <object
+> column in the <object
 type="tCVWords"
 ></object
-> view and the <object
+> view, the <object
 type="tSHWords"
+></object
+> view, and the <object
+type="tONCWords"
 ></object
 > view. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
 letter="xRemoveCorrectSyllabification"
@@ -3749,8 +3806,11 @@ type="tCorrectSyllableBreaks"
 > forms are removed, it will happen whether or not the <object
 type="tCVWords"
 ></object
-> view or the <object
+> view, the <object
 type="tSHWords"
+></object
+> view, or the <object
+type="tONCWords"
 ></object
 > view is currently being shown. It usually happens very quickly.</p
 ><p
@@ -4268,11 +4328,6 @@ type="tField"
 type="tField"
 >Grapheme or Natural Class</object
 > field will do the same.</li
-><li
->The “Find a word” dialog does not use the vernacular font, color or right-to-left values.  See <sectionRef
-sec="sFindWord"
-></sectionRef
-> for more on this dialog.</li
 ></ol
 ></appendix
 ><endnotes

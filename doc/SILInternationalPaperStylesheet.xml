@@ -320,6 +320,7 @@ spaceafter="12pt"
 spacebefore="24pt"
 textafterletter=". "
 textalign="center"
+textbefore="Appendix "
 ></appendixTitleLayout
 ></appendixLayout
 ><glossaryLayout

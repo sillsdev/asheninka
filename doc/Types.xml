@@ -116,6 +116,11 @@ before="Codas Allowed"
 id="tCodasAllowed"
 ></type
 ><type
+before="Comment"
+id="tComment"
+types="tView"
+></type
+><type
 before="Convert Predicted to Correct Syllabifcation"
 id="tConvertPredictedToCorrectSyllabifcation"
 types="tView"
