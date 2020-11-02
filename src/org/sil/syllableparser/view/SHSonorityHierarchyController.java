@@ -9,7 +9,9 @@ package org.sil.syllableparser.view;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
@@ -19,7 +21,7 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
-import org.sil.utility.StringUtilities;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SegmentInSHNaturalClass;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -34,11 +36,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -116,8 +118,8 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 	private Tooltip tooltipMoveUp;
 	@FXML
 	private Tooltip tooltipMoveDown;
-	// @FXML
-	// private TextField sncRepresentationField;
+	@FXML
+	private TextArea errorTextArea;
 
 	private SHNaturalClass currentNaturalClass;
 
@@ -170,6 +172,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 		nameColumn.setSortable(false);
 		naturalClassColumn.setSortable(false);
 		descriptionColumn.setSortable(false);
+		errorTextArea.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + "red" + Constants.TEXT_COLOR_CSS_END);
 
 		// Clear sonority hierarchy details.
 		showSHNaturalClassDetails(null);
@@ -208,6 +211,8 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 			displayFieldsPerActiveSetting(currentNaturalClass);
 		});
 
+		errorTextArea.setEditable(false);
+
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
 			descriptionField.requestFocus();
@@ -233,6 +238,11 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 		descriptionField.setDisable(!fIsActive);
 	}
 
+	private void hideErrors(){
+		errorTextArea.setText("");
+		errorTextArea.setVisible(false);
+	}
+
 	private void forceTableRowToRedisplayPerActiveSetting(SHNaturalClass naturalCLass) {
 		// we need to make the content of the row cells change in order for
 		// the cell factory to fire.
@@ -252,22 +262,22 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 	 * Fills all text fields to show details about the CV natural class. If the
 	 * specified segment is null, all text fields are cleared.
 	 *
-	 * @param syllablePattern
+	 * @param naturalClass
 	 *            the segment or null
 	 */
-	private void showSHNaturalClassDetails(SHNaturalClass syllablePattern) {
-		currentNaturalClass = syllablePattern;
-		if (syllablePattern != null) {
+	private void showSHNaturalClassDetails(SHNaturalClass naturalClass) {
+		currentNaturalClass = naturalClass;
+		if (naturalClass != null) {
 			// Fill the text fields with info from the person object.
-			nameField.setText(syllablePattern.getNCName());
-			descriptionField.setText(syllablePattern.getDescription());
+			nameField.setText(naturalClass.getNCName());
+			descriptionField.setText(naturalClass.getDescription());
 			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
 					.getOrientation();
 			nameField.setNodeOrientation(analysisOrientation);
 			descriptionField.setNodeOrientation(analysisOrientation);
 			ncsTextFlow.setNodeOrientation(languageProject.getVernacularLanguage()
 					.getOrientation());
-			activeCheckBox.setSelected(syllablePattern.isActive());
+			activeCheckBox.setSelected(naturalClass.isActive());
 			showNaturalClassesContent();
 			setUpDownButtonDisabled();
 
@@ -285,14 +295,61 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 			buttonMoveDown.setDisable(true);
 			buttonMoveUp.setDisable(true);
 		}
-		displayFieldsPerActiveSetting(syllablePattern);
+		displayFieldsPerActiveSetting(naturalClass);
 
-		if (syllablePattern != null) {
+		if (shApproach != null)
+			showAnySegmentBasedErrrors();
+
+		if (naturalClass != null) {
 			int currentItem = shSonorityHierarchyTable.getItems().indexOf(currentNaturalClass);
 			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
 					+ shSonorityHierarchyTable.getItems().size() + " ");
 			mainApp.getApplicationPreferences().setLastSHSonorityHierarchyViewItemUsed(currentItem);
 		}
+	}
+
+	protected void showAnySegmentBasedErrrors() {
+		hideErrors();
+		Set<Segment> missingSegments = shApproach.getMissingSegmentsFromSonorityHierarchy();
+		if (missingSegments.size() > 0) {
+			errorTextArea.setVisible(true);
+			showMissingSegments(missingSegments);
+		}
+		List<SegmentInSHNaturalClass> duplicateSegments = shApproach.getDuplicateSegmentsFromSonorityHierarchy();
+		if (duplicateSegments.size() > 0) {
+			errorTextArea.setVisible(true);
+			showDuplicateSegments(duplicateSegments);
+		}
+	}
+
+	/**
+	 * @param duplicateSegments
+	 */
+	private void showDuplicateSegments(List<SegmentInSHNaturalClass> duplicateSegments) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(bundle.getString("sonorityhierarchyerror.duplicatesegmentsinhierarchy"));
+		sb.append("\n");
+		for (SegmentInSHNaturalClass segInClass : duplicateSegments) {
+			sb.append(segInClass.getSegment().getSegment());
+			sb.append("\t");
+			sb.append(segInClass.getNaturalClass().getNCName());
+			sb.append("\n");
+		}
+		errorTextArea.setText(sb.toString());
+	}
+
+	/**
+	 * @param missingSegments
+	 */
+	private void showMissingSegments(Set<Segment> missingSegments) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(bundle.getString("sonorityhierarchyerror.missingsegmentsinhierarchy"));
+		sb.append("\n");
+		for (Segment seg : missingSegments) {
+			sb.append(seg.getSegment());
+			sb.append("\n");
+		}
+		errorTextArea.setText(sb.toString());
 	}
 
 	@Override
@@ -431,6 +488,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 	void handleLaunchSegmentChooser() {
 		showSegmentChooser();
 		showNaturalClassesContent();
+		showAnySegmentBasedErrrors();
 	}
 
 	/**

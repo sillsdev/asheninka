@@ -9,7 +9,9 @@ package org.sil.syllableparser.model;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,8 +19,9 @@ import org.junit.Test;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.cvapproach.*;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SegmentInSHNaturalClass;
 
 /**
  * @author Andy Black
@@ -57,5 +60,44 @@ public class SHApproachTest {
 	public void getActiveItemsTest() {
 		assertEquals("Sonority hierarchy size", 6, sha.getSHSonorityHierarchy().size());
 		assertEquals("Active sonority hierarchy levels size", 5, sha.getActiveSHNaturalClasses().size());
+	}
+
+	@Test
+	public void missingSegmentsInSonorityHierarchyTest() {
+		Set<Segment> missingSegments = sha.getMissingSegmentsFromSonorityHierarchy();
+		assertEquals(1, missingSegments.size());
+		Segment segs[] = new Segment[missingSegments.size()];
+		segs = missingSegments.toArray(segs);
+		assertEquals("b", segs[0].getSegment());
+		List<SHNaturalClass> ncs = sha.getActiveSHNaturalClasses();
+		ncs.get(0).getSegments().remove(1);
+		ncs.get(0).getSegments().remove(0);
+		missingSegments = sha.getMissingSegmentsFromSonorityHierarchy();
+		assertEquals(3, missingSegments.size());
+		segs = missingSegments.toArray(segs);
+		assertEquals("b", segs[0].getSegment());
+		assertEquals("e", segs[1].getSegment());
+		assertEquals("a", segs[2].getSegment());
+	}
+
+	@Test
+	public void duplicateSegmentsInSonorityHierarchyTest() {
+		List<SegmentInSHNaturalClass> duplicateSegments = sha.getDuplicateSegmentsFromSonorityHierarchy();
+		assertEquals(0, duplicateSegments.size());
+		List<SHNaturalClass> ncs = sha.getActiveSHNaturalClasses();
+		Segment seg = ncs.get(0).getSegments().get(0);
+		ncs.get(0).getSegments().add(seg);
+		ncs.get(1).getSegments().add(seg);
+		duplicateSegments = sha.getDuplicateSegmentsFromSonorityHierarchy();
+		assertEquals(3, duplicateSegments.size());
+		SegmentInSHNaturalClass segInClass = duplicateSegments.get(0);
+		assertEquals("a", segInClass.getSegment().getSegment());
+		assertEquals("Vowels", segInClass.getNaturalClass().getNCName());
+		segInClass = duplicateSegments.get(1);
+		assertEquals("a", segInClass.getSegment().getSegment());
+		assertEquals("Vowels", segInClass.getNaturalClass().getNCName());
+		segInClass = duplicateSegments.get(2);
+		assertEquals("a", segInClass.getSegment().getSegment());
+		assertEquals("Glides", segInClass.getNaturalClass().getNCName());
 	}
 }

@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->30 October 2020</date
+>2 November 2020</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -151,7 +151,7 @@ type="tAsheninka"
 >We suggest you create a directory called “My Asheninka” in your normal documents directory and put all your <object
 type="tAsheninka"
 ></object
-> projects in it.  You may find it helpful to put each language project in its own directory.</p
+> projects in it. You may find it helpful to put each language project in its own directory.</p
 ></section2
 ><section2
 id="sOpen"
@@ -1491,7 +1491,7 @@ src="resources/ConvertPredictedToCorrect.png"
 >The <object
 type="tComment"
 ></object
-> field is for your use as needed.  One possible scenario is to indicate why a given word does not parse.  Another, if you are using IPA, is to enter how the word is spelled in the practical orthography.</p
+> field is for your use as needed. One possible scenario is to indicate why a given word does not parse. Another, if you are using IPA, is to enter how the word is spelled in the practical orthography.</p
 ><p
 >When you run the <object
 type="tConvertPredictedToCorrectSyllabifcation"
@@ -1528,7 +1528,7 @@ type="tCVPatternApproach"
 letter="xCVTryAWord"
 num="xCVTryAWord"
 ></exampleRef
->.  Unlike most dialog boxes, you can keep the <object
+>. Unlike most dialog boxes, you can keep the <object
 type="tTryAWord"
 ></object
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
@@ -2039,10 +2039,20 @@ type="tField"
 XeLaTeXSpecial="scaled='500'"
 src="resources/ChooserButton.png"
 ></img
->. Click on it to bring up a dialog box which lets you select the segments which constitute this class. Note that <object
+>. Click on it to bring up a dialog box which lets you select the segments which constitute this class.</p
+><p
+><object
 type="tAsheninka"
 ></object
-> currently does not check to see if a given segment has already been used in some other class. It is up to you to avoid using the same segment in more than one class. If a given segment is in more than one class, the syllabification algorithm will use the topmost class containing that segment.</p
+> checks to see two things:</p
+><ol
+><li
+>If every segment appears in some class, and</li
+><li
+>if a given segment has already been used in some other class.</li
+></ol
+><p
+>If either or both of these conditions exist, a box will appear showing which segments and or segment/class combinations are problematic.  It is up to you to fix any problem.  If a given segment is not in any class, then any word containing that segment will fail to syllabify.  If a given segment is in more than one class, the syllabification algorithm will use the topmost class containing that segment.</p
 ><p
 >Finally, the order in which the classes occur is important. The items are in order of sonority: the most sonorous at top and the least sonorous at the bottom. You control the order of the classes by clicking on a class in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
 ></section2
@@ -2136,7 +2146,7 @@ type="tMenuItem"
 letter="xSHTryAWord"
 num="xSHTryAWord"
 ></exampleRef
->.  Unlike most dialog boxes, you can keep the <object
+>. Unlike most dialog boxes, you can keep the <object
 type="tTryAWord"
 ></object
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
@@ -2449,7 +2459,7 @@ type="tONCApproach"
 > in <object
 type="tAsheninka"
 ></object
-> is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes) and the syllabification parameters so that one gets most, if not all, words to syllabify correctly.  You may also need to write templates and/or filters to get some words to parse.</p
+> is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes) and the syllabification parameters so that one gets most, if not all, words to syllabify correctly. You may also need to write templates and/or filters to get some words to parse.</p
 ><p
 >In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to find sequences of onset, nucleus, and coda segments that can be placed in a syllable, modulo the parsing parameters. See appendix <appendixRef
 app="aONCAlgorithmInDetail"
@@ -2998,7 +3008,7 @@ type="tMenuItem"
 letter="xONCTryAWord"
 num="xONCTryAWord"
 ></exampleRef
->.  Unlike most dialog boxes, you can keep the <object
+>. Unlike most dialog boxes, you can keep the <object
 type="tTryAWord"
 ></object
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
@@ -3610,7 +3620,7 @@ type="tSHPredictedVsCorrectWords"
 >, or <object
 type="tONCPredictedVsCorrectWords"
 ></object
-> view, then it only uses those words in this view.  If you are showing any other view, it shows all words which match what you type.  Note that it shows all words which have this sequence anywhere in them, not just at the beginning. For example, with one project when I typed “<object
+> view, then it only uses those words in this view. If you are showing any other view, it shows all words which match what you type. Note that it shows all words which have this sequence anywhere in them, not just at the beginning. For example, with one project when I typed “<object
 type="tKey"
 >ach</object
 >”, what is in example <exampleRef
@@ -3656,7 +3666,7 @@ type="tONCWords"
 > view of the <object
 type="tONCApproach"
 ></object
->.  The exception is if you currently selected any of the predicted vs.​ correct views, it will select the chosen word in that view.</p
+>. The exception is if you currently selected any of the predicted vs.​ correct views, it will select the chosen word in that view.</p
 ></section2
 ><section2
 id="sRemoveAllWords"

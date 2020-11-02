@@ -6,7 +6,12 @@
  */
 package org.sil.syllableparser.model.sonorityhierarchyapproach;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.Unmarshaller;
@@ -84,4 +89,34 @@ public class SHApproach extends Approach {
 		return natClassesWithSegment.get(0);
 	}
 
+	public Set<Segment> getMissingSegmentsFromSonorityHierarchy() {
+		Set<Segment> segmentsInInventory = new HashSet<Segment>();
+		Set<Segment> segmentsInHierarchy = new HashSet<Segment>();
+		segmentsInInventory.addAll(getLanguageProject().getActiveSegmentsInInventory());
+		for (SHNaturalClass nc : getActiveSHNaturalClasses()) {
+			segmentsInHierarchy.addAll(nc.getSegments());
+		}
+		segmentsInInventory.removeAll(segmentsInHierarchy);
+		return segmentsInInventory;
+	}
+
+	public List<SegmentInSHNaturalClass> getDuplicateSegmentsFromSonorityHierarchy() {
+		Map<Segment, SHNaturalClass> segmentNatClassesInHierarchy = new HashMap<Segment, SHNaturalClass>();
+		List<SegmentInSHNaturalClass> duplicateSegsInClasses = new ArrayList<SegmentInSHNaturalClass>();
+		for (SHNaturalClass nc : getActiveSHNaturalClasses()) {
+			for (Segment seg : nc.getSegments()) {
+				if (segmentNatClassesInHierarchy.containsKey(seg)) {
+					SegmentInSHNaturalClass segInClass = new SegmentInSHNaturalClass(seg, segmentNatClassesInHierarchy.get(seg));
+					if (!duplicateSegsInClasses.contains(segInClass)) {
+						duplicateSegsInClasses.add(segInClass);
+					}
+					SegmentInSHNaturalClass segInClass2 = new SegmentInSHNaturalClass(seg, nc);
+					duplicateSegsInClasses.add(segInClass2);
+				} else {
+					segmentNatClassesInHierarchy.put(seg, nc);
+				}
+			}
+		}
+		return duplicateSegsInClasses;
+	}
 }
