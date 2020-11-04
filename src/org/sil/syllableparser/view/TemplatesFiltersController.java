@@ -479,6 +479,11 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 			appendMessage(sMessage, sb);
 		}
 
+		if (fAllowSlotPosition && listener.getConstituentBeginMarkersFound() > 1) {
+			sMessage = bundle.getString("templatefiltersyntaxerror.extra_constituent_begin_marker_indicator");
+			appendMessage(sMessage, sb);
+		}
+
 		if (!listener.isObligatorySegmentFound()) {
 			sMessage = bundle.getString("templatefiltersyntaxerror.all_slots_optional");
 			appendMessage(sMessage, sb);

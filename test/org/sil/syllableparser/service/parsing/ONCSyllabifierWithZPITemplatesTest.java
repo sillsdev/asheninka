@@ -41,7 +41,7 @@ public class ONCSyllabifierWithZPITemplatesTest extends ONCSyllabifierTestBase {
 	@Before
 	public void setUp() throws Exception {
 		syl = new ONCSyllable(segsInSyllable);
-		this.projectFile = "test/org/sil/syllableparser/testData/ZPI.ashedata";
+		this.projectFile = "test/org/sil/syllableparser/testData/ZPITemplates.ashedata";
 		super.setUp();
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
 				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);

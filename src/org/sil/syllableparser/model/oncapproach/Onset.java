@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.collections.ObservableList;
+
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
@@ -70,10 +72,19 @@ public class Onset extends ONCConstituent {
 		TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();
 		for (Filter f : repairFilters) {
 			int iItemsInFilter = f.getSlots().size();
+			// find repair slot position
+			int iConstituentBeginPosition = findConstituentBeginPosition(f);
 			int iSegmentsInConstituent = getGraphemes().size();
-			if (iSegmentsInConstituent >= iItemsInFilter) {
+			if (iSegmentsInConstituent >= iItemsInFilter || iConstituentBeginPosition > 0) {
 				int iStart = iSegmentInWord - (iItemsInFilter - 1);
-				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1), sonorityComparer, null)) {
+				if (iConstituentBeginPosition > 0) {
+					iStart = iSegmentInWord - iConstituentBeginPosition;
+				}
+				if (iStart < 0)
+					continue;
+				int iEnd = iSegmentInWord + iItemsInFilter - iConstituentBeginPosition;
+				iEnd = Math.min(iEnd, segmentsInWord.size());
+				if (matcher.matches(f, segmentsInWord.subList(iStart, iEnd), sonorityComparer, null)) {
 					if (syllablesInCurrentWord.size() <= 0) {
 						tracer.initStep(
 								ONCSyllabifierState.FILTER_FAILED,
@@ -92,7 +103,9 @@ public class Onset extends ONCConstituent {
 					ONCSegmentInSyllable segment = segmentsInWord.get(iStart + iSlotPos);
 					if (codasAllowed && segment.getSegment().isCoda()) {
 						if (getGraphemes().size() > 1) {
-							applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segment);
+							applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segmentsInWord, iStart + iSlotPos, iConstituentBeginPosition);
+						} else if (nextMatchingSegmentCanBeOnset(f.getSlots(), iSlotPos, segmentsInWord, iStart)) {
+							applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segmentsInWord, iStart + iSlotPos, -1);
 						} else {
 							switch (opType) {
 							case ALL_BUT_FIRST_HAS_ONSET:  // fall through
@@ -104,7 +117,7 @@ public class Onset extends ONCConstituent {
 								tracer.recordStep();
 								break;
 							case ONSETS_NOT_REQUIRED:
-								applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segment);
+								applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segmentsInWord, iStart + iSlotPos, -1);
 								break;
 							}
 						}
@@ -112,7 +125,7 @@ public class Onset extends ONCConstituent {
 						// NOTE: this code has not been tested via a unit test
 						// Until we have templates working which can place a
 						// segment which can be either an onset or a nucleus as
-						// an onset, we will no get here; the segment is always
+						// an onset, we will not get here; the segment is always
 						// added as a nucleus
 						switch (opType) {
 						case ALL_BUT_FIRST_HAS_ONSET:  // fall through
@@ -144,6 +157,31 @@ public class Onset extends ONCConstituent {
 		}
 	}
 
+	protected int findConstituentBeginPosition(Filter f) {
+		int iConstituentBeginPosition = 1;
+		for (TemplateFilterSlotSegmentOrNaturalClass slot : f.getSlots()) {
+			if (slot.isConstituentBeginsHere()) {
+				return iConstituentBeginPosition;
+			}
+			iConstituentBeginPosition++;
+		}
+		return -1;
+	}
+
+	private boolean nextMatchingSegmentCanBeOnset(
+			ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots, int iSlotPos,
+			List<ONCSegmentInSyllable> segmentsInWord, int iStart) {
+		iSlotPos++;
+		if (iSlotPos >= slots.size()) {
+			return false;
+		}
+		ONCSegmentInSyllable segment = segmentsInWord.get(iStart + iSlotPos);
+		if (!segment.getSegment().isOnset()) {
+			return false;
+		}
+		return true;
+	}
+
 	public void applyRepairToNucleus(ONCSyllable syl, ONCTracer tracer, Filter f,
 			ONCSyllable previousSyl, ONCSegmentInSyllable segment) {
 		Nucleus nuc = previousSyl.getRime().getNucleus();
@@ -157,11 +195,19 @@ public class Onset extends ONCConstituent {
 	}
 
 	public void applyRepairToCoda(ONCSyllable syl, LinkedList<ONCSyllable> syllablesInCurrentWord,
-			ONCTracer tracer, Filter f, ONCSegmentInSyllable segment) {
-		syllablesInCurrentWord.getLast().getRime().getCoda().add(segment);
-		syllablesInCurrentWord.getLast().getSegmentsInSyllable().add(segment);
-		getGraphemes().remove(0);
-		syl.getSegmentsInSyllable().remove(0);
+			ONCTracer tracer, Filter f, List<ONCSegmentInSyllable> segmentsInWord, int iRepairPosition, int iConstituentBeginPosition) {
+		int iSlotPosition = iRepairPosition;
+		if (iConstituentBeginPosition >= 0) {
+			iSlotPosition = iRepairPosition - iConstituentBeginPosition;
+		}
+		while (iSlotPosition <= iRepairPosition && getGraphemes().size() > 0) {
+			ONCSegmentInSyllable segInSyl = segmentsInWord.get(iSlotPosition);
+			syllablesInCurrentWord.getLast().getRime().getCoda().add(segInSyl);
+			syllablesInCurrentWord.getLast().getSegmentsInSyllable().add(segInSyl);
+			getGraphemes().remove(0);
+			syl.getSegmentsInSyllable().remove(0);
+			iSlotPosition++;
+		}
 		tracer.initStep(ONCSyllabifierState.FILTER_REPAIR_APPLIED,
 				ONCSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
 		tracer.setSuccessful(true);

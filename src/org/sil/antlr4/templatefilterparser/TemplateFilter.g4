@@ -24,11 +24,18 @@ description : termSequence
 	 ;
 
 termSequence : termSequence slotPositionTerm termSequence
+			 | termSequence constituentBeginMarkerTerm termSequence
+			 | constituentBeginMarkerTerm termSequence
+			 | termSequence slotPositionTerm {notifyErrorListeners("missingClassOrSegment");}
+			 | termSequence constituentBeginMarkerTerm {notifyErrorListeners("missingClassOrSegment");}
 			 | term
 			 | term termSequence
 			 ;
 
 slotPositionTerm : SLOT_POSITION
+	             ;
+
+constituentBeginMarkerTerm : CONSTITUENT_BEGIN_MARKER
 	             ;
 
 term : optionalSegment
@@ -65,4 +72,5 @@ literal : ID
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 SLOT_POSITION: '|' {slotPosition}? ;
+CONSTITUENT_BEGIN_MARKER: '_' {slotPosition}? ;
 ID : [\\~`=_|/<>#{},.;:^!?@$%&'"a-zA-Z\u0080-\uFFFF0-9+-]+ ; // Identifier

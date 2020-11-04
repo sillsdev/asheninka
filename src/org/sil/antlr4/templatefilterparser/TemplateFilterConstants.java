@@ -17,4 +17,6 @@ public class TemplateFilterConstants {
 	public static final String MISSING_OPENING_PAREN = "missingOpeningParen";
 	public static final String MISSING_OPENING_SQUARE_BRACKET = "missingOpeningSquareBracket";
 	public static final String EXTRA_SLOT_POSITION_INDICATOR = "extraSlotPositionIndicator";
+	public static final String EXTRA_CONSTITUENT_BEGIN_MARKER = "extraConstituentBeginMarker";
+	public static final String MISMATCHED_INPUT = "mismatched input '<EOF>' expecting {'(', '*', '[', ']', '_', ID}";
 }

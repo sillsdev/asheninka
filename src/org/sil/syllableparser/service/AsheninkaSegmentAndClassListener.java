@@ -125,4 +125,15 @@ public class AsheninkaSegmentAndClassListener extends CheckSegmentAndClassListen
 		}
 	}
 
+	@Override
+	public void enterConstituentBeginMarkerTerm(TemplateFilterParser.ConstituentBeginMarkerTermContext ctx) {
+		if (currentSlot != null) {
+			currentSlot.setConstituentBeginsHere(true);
+			for (TemplateFilterSlotSegmentOrNaturalClass slot : templateFilter.getSlots()) {
+				if (slot != currentSlot) {
+					slot.setConstituentBeginsHere(false);
+				}
+			}
+		}
+	}
 }

@@ -113,6 +113,10 @@ public class TemplateFilterRecognizerTest {
 		checkValidTemplateFilter("H");
 		checkValidTemplateFilter("a|b");
 		checkValidTemplateFilter("a [C] | [V]");
+		checkValidTemplateFilter("a_b");
+		checkValidTemplateFilter("a _ b");
+		checkValidTemplateFilter("a_|b");
+		checkValidTemplateFilter("a _ | b");
 	}
 
 	private void checkValidTemplateFilter(String sDesc) {
@@ -203,11 +207,19 @@ public class TemplateFilterRecognizerTest {
 		checkInvalidTemplateFilter("[*C]", TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET, 4, 2);
 		checkInvalidTemplateFilter("[C*]", TemplateFilterConstants.MISSING_OPENING_SQUARE_BRACKET, 4, 2);
 		checkInvalidTemplateFilter("[C]*", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 4, 1);
+		// bad slot position and/or constituent begin marker
+		fAllowSlotPosition = true;
+		checkInvalidTemplateFilter("|", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 2);
+		checkInvalidTemplateFilter("_", TemplateFilterConstants.MISMATCHED_INPUT, 1, 1);
+		checkInvalidTemplateFilter("a _", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 3, 1);
+		checkInvalidTemplateFilter("a |", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 3, 1);
+		checkInvalidTemplateFilter("a _ |", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 5, 2);
 	}
 
 	private void checkInvalidTemplateFilter(String sDesc, String sFailedPortion, int iPos,
 			int iNumErrors) {
 		// TODO: check position and message
+		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
 		TemplateFilterParser parser = parseAStringExpectFailure(sDesc);
 		assertEquals(iNumErrors, parser.getNumberOfSyntaxErrors());
 		VerboseListener errListener = (VerboseListener) parser.getErrorListeners().get(0);
@@ -222,20 +234,21 @@ public class TemplateFilterRecognizerTest {
 	@Test
 	public void validSyntaxBadContentTemplateFilterTest() {
 		// chr not in segment list
-		checkValidSyntaxBadContent("chr ", "chr", 1, 0, 1, 0, 1, 0);
+		checkValidSyntaxBadContent("chr ", "chr", 1, 0, 1, 0, 1, 0, 0);
 		// g is not in segment list
-		checkValidSyntaxBadContent("frage", "frage", 1, 0, 1, 0, 3, 0);
+		checkValidSyntaxBadContent("frage", "frage", 1, 0, 1, 0, 3, 0, 0);
 		// +lab not in class list
-		checkValidSyntaxBadContent(" [+lab]", "+lab", 3, 0, 0, 1, 1, 0);
+		checkValidSyntaxBadContent(" [+lab]", "+lab", 3, 0, 0, 1, 1, 0, 0);
 		// +lab, -vd not in class list
-		checkValidSyntaxBadContent("[+lab, -vd]", "+lab, -vd", 3, 0, 0, 1, 1, 0);
+		checkValidSyntaxBadContent("[+lab, -vd]", "+lab, -vd", 3, 0, 0, 1, 1, 0, 0);
 		// +lab, -vd -cor not in class list
-		checkValidSyntaxBadContent(" [+lab, +vd, -cor] ", "+lab, +vd, -cor", 3, 0, 0, 1, 1, 0);
+		checkValidSyntaxBadContent(" [+lab, +vd, -cor] ", "+lab, +vd, -cor", 3, 0, 0, 1, 1, 0, 0);
 		// X not in class list
-		checkValidSyntaxBadContent("[X][Y]", "X, Y", 5, 0, 0, 2, 1, 0);
-		// too many slot position indicators
+		checkValidSyntaxBadContent("[X][Y]", "X, Y", 5, 0, 0, 2, 1, 0, 0);
+		// too many slot position or constituent begin marker indicators
 		fAllowSlotPosition = true;
-		checkValidSyntaxBadContent("a | b | f", "f", 7, 0, 0, 0, 1, 2);
+		checkValidSyntaxBadContent("a | b | f", "f", 7, 0, 0, 0, 1, 2, 0);
+		checkValidSyntaxBadContent("a _ b _ f", "f", 7, 0, 0, 0, 1, 0, 2);
 	}
 
 	private TemplateFilterParser parseAStringWithContentError(String sInput) {
@@ -255,7 +268,7 @@ public class TemplateFilterRecognizerTest {
 	}
 
 	private void checkValidSyntaxBadContent(String sDesc, String sFailedPortion, int iPosInDesc,
-			int iNumSyntaxErrors, int iNumSegmentErrors, int iNumClassErrors, int iPosInFailed, int iSlotPositionsFound) {
+			int iNumSyntaxErrors, int iNumSegmentErrors, int iNumClassErrors, int iPosInFailed, int iSlotPositionsFound, int iConstituentBeginMarkersFound) {
 		// TODO: check position and message
 		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
 		TemplateFilterParser parser = parseAStringWithContentError(sDesc);
@@ -285,6 +298,7 @@ public class TemplateFilterRecognizerTest {
 			assertEquals(sFailedPortion, sMsg);
 		}
 		assertEquals(iSlotPositionsFound, listener.getSlotPositionIndicatorsFound());
+		assertEquals(iConstituentBeginMarkersFound, listener.getConstituentBeginMarkersFound());
 	}
 
 	@Test

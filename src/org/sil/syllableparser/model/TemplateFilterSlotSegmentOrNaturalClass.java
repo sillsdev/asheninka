@@ -26,6 +26,7 @@ public class TemplateFilterSlotSegmentOrNaturalClass {
 	private boolean isOptional = false;
 	private boolean obeysSSP = true;
 	private boolean repairLeftwardFromHere = false;
+	private boolean constituentBeginsHere = false;
 
 	public TemplateFilterSlotSegmentOrNaturalClass() {
 	}
@@ -124,5 +125,13 @@ public class TemplateFilterSlotSegmentOrNaturalClass {
 
 	public void setRepairLeftwardFromHere(boolean repairLeftwardFromHere) {
 		this.repairLeftwardFromHere = repairLeftwardFromHere;
+	}
+
+	public boolean isConstituentBeginsHere() {
+		return constituentBeginsHere;
+	}
+
+	public void setConstituentBeginsHere(boolean constituentBeginsHere) {
+		this.constituentBeginsHere = constituentBeginsHere;
 	}
 }

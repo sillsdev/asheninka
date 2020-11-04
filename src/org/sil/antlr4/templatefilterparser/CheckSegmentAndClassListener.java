@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -21,6 +21,7 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 	protected TemplateFilterParser parser;
 	protected boolean obligatorySegmentFound = false;
 	protected int slotPositionIndicatorsFound = 0;
+	protected int constituentBeginMarkersFound = 0;
 
 	protected List<String> segmentsAsStringMasterList;
 	protected List<Segment> segmentsMasterList;
@@ -41,6 +42,11 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 	@Override
 	public void exitSlotPositionTerm(TemplateFilterParser.SlotPositionTermContext ctx) {
 		slotPositionIndicatorsFound++;
+	}
+
+	@Override
+	public void exitConstituentBeginMarkerTerm(TemplateFilterParser.ConstituentBeginMarkerTermContext ctx) {
+		constituentBeginMarkersFound++;
 	}
 
 	@Override
@@ -114,5 +120,9 @@ public class CheckSegmentAndClassListener extends TemplateFilterBaseListener {
 
 	public int getSlotPositionIndicatorsFound() {
 		return slotPositionIndicatorsFound;
+	}
+
+	public int getConstituentBeginMarkersFound() {
+		return constituentBeginMarkersFound;
 	}
 }

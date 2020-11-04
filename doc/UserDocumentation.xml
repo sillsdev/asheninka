@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->2 November 2020</date
+>4 November 2020</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -2783,6 +2783,8 @@ type="tSHSonorityHierarchy"
 ></object
 >, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses. If it is a repair filter, then key a vertical bar (|) at the point where the repair will occur.</p
 ><p
+>Note that for onset-oriented repair filters, one can also key an underscore character ( _ ) at the point before the first segment or class at the point where the onset begins (i.e., just before the first segment or class in the onset).  This enables you to give some context for the preceding syllable.</p
+><p
 ><indexedItem
 term="iEnglish"
 ></indexedItem
@@ -2790,7 +2792,11 @@ term="iEnglish"
 letter="xFiltersEnglish"
 num="xFiltersEnglish"
 ></exampleRef
-> has some examples from an English project. They are all repair filters.</p
+> has some examples from an English project. They are all repair filters.  Example <exampleRef
+letter="xFiltersZPI"
+num="xFiltersZPI"
+></exampleRef
+> has an example from Quiegolani Zapotec which makes use of the context in the preceding syllable ([Obs] is a class of obstruents).</p
 ><example
 num="xFiltersEnglish"
 ><table
@@ -2877,6 +2883,40 @@ lang="lIPA"
 >, not <langData
 lang="lIPA"
 >ʃa.pwoɹn</langData
+>.</td
+></tr
+></table
+></example
+><example
+num="xFiltersZPI"
+><table
+border="1"
+><tr
+><th
+>Type</th
+><th
+>Slots</th
+><th
+>Description</th
+></tr
+><tr
+><td
+>Onset</td
+><td
+>[V] [Sonorant] _ *[Obs] | ([Sonorant]) *[Obs]</td
+><td
+>Disallow an obstruent before another obstruent in an onset when the preceding syllable's rime contains a vowel and a sonorant. Example: <langData
+lang="lZPI"
+>baanske</langData
+> (<langData
+lang="lEnglishExmple"
+>sadly</langData
+>) should be <langData
+lang="lZPI"
+>baans.ke</langData
+>, not <langData
+lang="lZPI"
+>baan.ske</langData
 >.</td
 ></tr
 ></table
