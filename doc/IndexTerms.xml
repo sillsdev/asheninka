@@ -533,6 +533,11 @@ id="iProjectSaveAs"
 ></indexTerms
 ></indexTerm
 ><indexTerm
+id="iQuiegolaniZapotec"
+><term
+>Quiegolani Zapotc</term
+></indexTerm
+><indexTerm
 id="iRemoveDataItem"
 see="iDeleteDataItem"
 ><term
@@ -843,6 +848,12 @@ id="iVernacularWS"
 >Vernacular language</term
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iZapotecQuiegolani"
+see="iQuiegolaniZapotec"
+><term
+>Zapotec, Quiegolani</term
 ></indexTerm
 ></indexTerms
 >

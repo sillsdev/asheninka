@@ -2792,7 +2792,10 @@ term="iEnglish"
 letter="xFiltersEnglish"
 num="xFiltersEnglish"
 ></exampleRef
-> has some examples from an English project. They are all repair filters.  Example <exampleRef
+> has some examples from an English project. They are all repair filters.  <indexedItem
+term="iQuiegolaniZapotec"
+></indexedItem
+>Example <exampleRef
 letter="xFiltersZPI"
 num="xFiltersZPI"
 ></exampleRef
@@ -3326,7 +3329,10 @@ src="resources/ConvertPredictedToCorrect.png"
 > tool bar button, it brings up a dialog box listing all the words which have a non-empty <object
 type="tPredictedSyllableBreaks"
 ></object
-> field. You can select which words should be converted by manually checking the box before them<endnote
+> field and that differ from any non-empty <object
+type="tCorrectSyllableBreaks"
+></object
+>. You can select which words should be converted by manually checking the box before them<endnote
 id="nCheckingBox"
 ><p
 >To check the box, either click in it or click in the row and press the space bar.</p

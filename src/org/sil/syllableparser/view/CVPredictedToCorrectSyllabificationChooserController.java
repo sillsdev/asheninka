@@ -163,7 +163,8 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 
 	private void createListOfDifferentCVWords(ObservableList<Word> words) {
 		for (Word cvWord : words) {
-			if (!cvWord.cvPredictedSyllabificationProperty().isEmpty().getValue()) {
+			if (!cvWord.getCVPredictedSyllabification().isEmpty() &
+					!cvWord.getCVPredictedSyllabification().equals(cvWord.getCorrectSyllabification())) {
 				currentPredictedSyllabification = new CVPredictedSyllabification(
 						cvWord.getCVPredictedSyllabification(), cvWord.getID());
 				cvPredictedSyllabifications.add(currentPredictedSyllabification);
@@ -173,10 +174,11 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 	}
 
 	private void createListOfDifferentSHWords(ObservableList<Word> words) {
-		for (Word cvWord : words) {
-			if (!cvWord.shPredictedSyllabificationProperty().isEmpty().getValue()) {
+		for (Word shWord : words) {
+			if (!shWord.getSHPredictedSyllabification().isEmpty()
+					&& !shWord.getSHPredictedSyllabification().equals(shWord.getCorrectSyllabification())) {
 				currentPredictedSyllabification = new CVPredictedSyllabification(
-						cvWord.getSHPredictedSyllabification(), cvWord.getID());
+						shWord.getSHPredictedSyllabification(), shWord.getID());
 				cvPredictedSyllabifications.add(currentPredictedSyllabification);
 			}
 		}
@@ -184,10 +186,11 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 	}
 
 	private void createListOfDifferentONCWords(ObservableList<Word> words) {
-		for (Word cvWord : words) {
-			if (!cvWord.oncPredictedSyllabificationProperty().isEmpty().getValue()) {
+		for (Word oncWord : words) {
+			if (!oncWord.getONCPredictedSyllabification().isEmpty()
+					&& !oncWord.getONCPredictedSyllabification().equals(oncWord.getCorrectSyllabification())) {
 				currentPredictedSyllabification = new CVPredictedSyllabification(
-						cvWord.getONCPredictedSyllabification(), cvWord.getID());
+						oncWord.getONCPredictedSyllabification(), oncWord.getID());
 				cvPredictedSyllabifications.add(currentPredictedSyllabification);
 			}
 		}
