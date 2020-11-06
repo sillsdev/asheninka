@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->4 November 2020</date
+>6 November 2020</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -252,9 +252,9 @@ id="sWSGeneralTab"
 ><p
 >There are thee items on this tab.</p
 ><p
->The language name value is for you to set, should you so wish. It is currently not used anywhere.</p
+>The language name value is for you to set, should you so wish. It will appear in the main window title if it is not blank.</p
 ><p
->The language code value is for you to set, should you so wish. It is currently not used anywhere.</p
+>The language code value is for you to set, should you so wish. It will appear in the main window title if the language name is not blank and this code is not blank.</p
 ><p
 ><indexedItem
 term="iRightToLeft"
@@ -2052,7 +2052,7 @@ type="tAsheninka"
 >if a given segment has already been used in some other class.</li
 ></ol
 ><p
->If either or both of these conditions exist, a box will appear showing which segments and or segment/class combinations are problematic.  It is up to you to fix any problem.  If a given segment is not in any class, then any word containing that segment will fail to syllabify.  If a given segment is in more than one class, the syllabification algorithm will use the topmost class containing that segment.</p
+>If either or both of these conditions exist, a box will appear showing which segments and or segment/class combinations are problematic. It is up to you to fix any problem. If a given segment is not in any class, then any word containing that segment will fail to syllabify. If a given segment is in more than one class, the syllabification algorithm will use the topmost class containing that segment.</p
 ><p
 >Finally, the order in which the classes occur is important. The items are in order of sonority: the most sonorous at top and the least sonorous at the bottom. You control the order of the classes by clicking on a class in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
 ></section2
@@ -2783,7 +2783,7 @@ type="tSHSonorityHierarchy"
 ></object
 >, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses. If it is a repair filter, then key a vertical bar (|) at the point where the repair will occur.</p
 ><p
->Note that for onset-oriented repair filters, one can also key an underscore character ( _ ) at the point before the first segment or class at the point where the onset begins (i.e., just before the first segment or class in the onset).  This enables you to give some context for the preceding syllable.</p
+>Note that for onset-oriented repair filters, one can also key an underscore character ( _ ) at the point before the first segment or class at the point where the onset begins (i.e., just before the first segment or class in the onset). This enables you to give some context for the preceding syllable.</p
 ><p
 ><indexedItem
 term="iEnglish"
@@ -2792,7 +2792,7 @@ term="iEnglish"
 letter="xFiltersEnglish"
 num="xFiltersEnglish"
 ></exampleRef
-> has some examples from an English project. They are all repair filters.  <indexedItem
+> has some examples from an English project. They are all repair filters. <indexedItem
 term="iQuiegolaniZapotec"
 ></indexedItem
 >Example <exampleRef
