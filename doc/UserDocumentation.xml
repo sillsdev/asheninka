@@ -4386,6 +4386,76 @@ type="tField"
 > field will do the same.</li
 ></ol
 ></appendix
+><appendix
+contentType="ctSampleData"
+id="aSampleDataSets"
+><secTitle
+>Sample data sets</secTitle
+><p
+><object
+type="tAsheninka"
+></object
+> comes with some sample data sets in case you find these of value.  There are two.</p
+><section1
+id="sSampleEnglishIPA"
+><secTitle
+>English IPA</secTitle
+><p
+>This has English words written in IPA (<citation
+paren="none"
+ref="rIPA"
+></citation
+>) per my dialect.  It illustrates the need for some templates and filters which are described in the “Overview” document. You can read this document by clicking <link
+href="Overview.pdf"
+>here</link
+> or by using the <object
+type="tMenuItem"
+>Help / Introduction to syllabification</object
+> menu item.</p
+></section1
+><section1
+id="sSampleAsheninka"
+><secTitle
+>Asheninka Pajonal</secTitle
+><p
+>This has an implementation for the Pajonal variety of Asheninka (ISO-639-3 code cjo).  Here are some observations about it:</p
+><ol
+><li
+>The basic syllable pattern is (C)V(V)(N).</li
+><li
+>Onsets are required for all syllables but the first.</li
+><li
+>The nasals in the coda are homorganic with the following onset.  We do not actually check for this.</li
+><li
+>The second vowel of the nucleus is either geminate or an <langData
+lang="lVernacular"
+>e</langData
+> which forms a diphthong with a preceding <langData
+lang="lVernacular"
+>a</langData
+> or <langData
+lang="lVernacular"
+>o</langData
+>.</li
+><li
+>No templates or filters are needed.</li
+></ol
+><p
+>In this implementation, I chose to model the geminates and diphthongs as separate segments.  The reasons for this are as follows:</p
+><ol
+><li
+>Fewer CV syllable patterns are needed for the <object
+type="tCVPatternApproach"
+></object
+>.</li
+><li
+>The <object
+type="tSHApproach"
+></object
+> forces a syllable break whenever there are two consecutive top-level segments.  Since vowels are the highest level, this means the geminates and diphthongs are broken into two syllables.  This is incorrect.</li
+></ol
+></section1
+></appendix
 ><endnotes
 ></endnotes
 ><xi:include
@@ -4411,6 +4481,25 @@ href="IndexTerms.xml"
 xpointer="element(/1)"
 xmlns:xi="http://www.w3.org/2001/XInclude"
 ></xi:include
+><contentControl
+><contentTypes
+><contentType
+id="ctSampleData"
+>Include sample data sets</contentType
+><contentType
+id="ctNoSampleData"
+>No sample data sets</contentType
+></contentTypes
+><contentControlChoices
+><contentControlChoice
+active="no"
+>Include sample data sets</contentControlChoice
+><contentControlChoice
+active="yes"
+exclude="ctSampleData"
+>Exclude sample data sets</contentControlChoice
+></contentControlChoices
+></contentControl
 ></lingPaper
 ><xi:include
 href="SILInternationalPaperStylesheet.xml"
