@@ -30,11 +30,6 @@
                 <NCName>N</NCName>
                 <SNCRepresentation>m, my, n, ñ</SNCRepresentation>
             </cvNaturalClass>
-            <cvNaturalClass snc="4ba2d85d-ac62-44c7-b932-f3b7ea091d7b bad3c040-9306-423c-95d0-58b3678b40ee f3606732-7af8-4695-b893-2737e5ec1855 6bc43a79-0aac-42aa-994e-6368a05bc29a fbf53c3f-a3ee-4355-b310-750370fe874b a09371d4-f079-42ff-a2f6-25c2dcab0b95 ca0b450a-a1d3-40e0-b31d-da97bcab5533 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a ae820f4f-a8c9-4d69-b528-8dc480ec7a8c 76e0b311-b742-4eb5-98f9-8670dfce5149 1f5403b1-b109-4f0b-b3c2-3eba2aaa4898 25bdfcdf-242a-49d8-94d2-74e2f666f88b a8fdc75c-3d5c-40cb-b240-1ac707a52be5 65be3575-5c87-4a7d-8560-d1f32a816b2f 39ce1780-7d0f-4976-bbd6-0ecddff31213 ac38b14e-24ac-4151-bf6b-0d2bdec17109 f9531727-3422-4df1-8410-21688fc0df18 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 518cf26f-42ab-4555-ac4d-af1667774959 5b00fb26-005d-4e73-a7c0-5ffac83a3a97" id="3d603eb1-3550-4f9c-8dbc-6f00ab68f616" active="true">
-                <description>Set of consonants which cannot follow an /m/ in a coda.</description>
-                <NCName>C-lab</NCName>
-                <SNCRepresentation>ch, g, j, k, ky, m, my, n, ñ, r, ry, s, sh, t, th, ts, ty, tz, v, y</SNCRepresentation>
-            </cvNaturalClass>
         </cvNaturalClasses>
         <cvSyllablePatterns>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="5059b228-2994-4195-a881-e62958bff0c5" active="true">
@@ -68,34 +63,7 @@
         </cvSyllablePatterns>
     </cvApproach>
     <environments/>
-    <filters>
-        <filter id="58681089-588f-4e2c-ac6f-07ab0d7484f3" active="false">
-            <description></description>
-            <slots>
-                <slot segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95">
-                    <constituentBeginsHere>false</constituentBeginsHere>
-                    <obeysSSP>true</obeysSSP>
-                    <isOptional>false</isOptional>
-                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
-                    <isSegment>true</isSegment>
-                    <segmentString>m</segmentString>
-                </slot>
-                <slot natclass="3d603eb1-3550-4f9c-8dbc-6f00ab68f616">
-                    <constituentBeginsHere>false</constituentBeginsHere>
-                    <obeysSSP>true</obeysSSP>
-                    <isOptional>false</isOptional>
-                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
-                    <isSegment>false</isSegment>
-                </slot>
-            </slots>
-            <templateFilterName>Block coda m with non-labial onset</templateFilterName>
-            <templateFilterRepresentation>m _ [C-lab]</templateFilterRepresentation>
-            <type>Onset</type>
-            <valid>false</valid>
-            <action doRepair="false" repairStartPos="0"/>
-            <templateFilterType>ONSET</templateFilterType>
-        </filter>
-    </filters>
+    <filters/>
     <graphemeNaturalClassess/>
     <hyphenationParametersListWord>
         <discretionaryHyphen>=</discretionaryHyphen>
