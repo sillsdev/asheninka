@@ -174,4 +174,9 @@ public class SHWordsController extends WordsControllerCommon {
 	public TableView<Word> getSHWordsTable() {
 		return wordsTable;
 	}
+
+	public void handleRemoveAllFilters() {
+		super.handleRemoveAllFilters();
+		setData(shApproach, languageProject.getWords());
+	}
 }

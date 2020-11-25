@@ -35,7 +35,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -127,6 +126,7 @@ public class SHApproachController extends ApproachController {
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		controller.setViewItemUsed(prefs.getLastSHSegmentInventoryViewItemUsed());
 		prefs.setLastSHApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	private FXMLLoader createFXMLLoader(String sFxml) {
@@ -151,6 +151,7 @@ public class SHApproachController extends ApproachController {
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastSHApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleSHWords() {
@@ -168,6 +169,7 @@ public class SHApproachController extends ApproachController {
 			controller.setFocusOnWord(index);
 		}
 		prefs.setLastSHApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(false);
 	}
 
 	public void handleSHWordsPredictedVsCorrect(int index) {
@@ -177,6 +179,7 @@ public class SHApproachController extends ApproachController {
 		controller.setData(shApproachData, words);
 		controller.setFocusOnWord(index);
 		prefs.setLastSHApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(false, true);
 	}
 
 	public void handleSHWordsPredictedVsCorrect() {
@@ -185,6 +188,7 @@ public class SHApproachController extends ApproachController {
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData, words);
 		prefs.setLastSHApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(false, true);
 	}
 
 	public void handleGraphemeNaturalClasses() {
@@ -197,6 +201,7 @@ public class SHApproachController extends ApproachController {
 		int i = prefs.getLastSHGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastSHApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleEnvironments() {
@@ -208,6 +213,7 @@ public class SHApproachController extends ApproachController {
 		int i = prefs.getLastSHEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastSHApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	/*
@@ -571,6 +577,36 @@ public class SHApproachController extends ApproachController {
 
 		default:
 			break;
+		}
+	}
+	@Override
+	void handleFilterCorrectSyllabifications() {
+		if (currentSHApproachController instanceof SHWordsController ) {
+			SHWordsController controller = (SHWordsController) currentSHApproachController;
+			controller.handleFilterCorrectSyllabifications();
+		}
+	}
+
+	@Override
+	void handleFilterPredictedSyllabifications() {
+		if (currentSHApproachController instanceof SHWordsController ) {
+			SHWordsController controller = (SHWordsController) currentSHApproachController;
+			controller.handleFilterPredictedSyllabifications();
+		}
+	}
+
+	public void handleFilterWords() {
+		if (currentSHApproachController instanceof SHWordsController ) {
+			SHWordsController controller = (SHWordsController) currentSHApproachController;
+			controller.handleFilterWords();
+		}
+	}
+
+	@Override
+	void handleRemoveAllFilters() {
+		if (currentSHApproachController instanceof SHWordsController ) {
+			SHWordsController controller = (SHWordsController) currentSHApproachController;
+			controller.handleRemoveAllFilters();
 		}
 	}
 }

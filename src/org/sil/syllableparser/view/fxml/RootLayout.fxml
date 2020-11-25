@@ -175,6 +175,16 @@
 								text="%menu.clearwords" fx:id="menuItemClearWords" />
 							<MenuItem mnemonicParsing="true" onAction="#handleClearCorrectSyllabificationInWords"
 								text="%menu.clearcorrectsyllabificationinwords" fx:id="menuItemClearCorrectSyllabificationInWords" />
+							<SeparatorMenuItem />
+							<MenuItem mnemonicParsing="true" onAction="#handleFilterWords"
+								text="%menu.filterwords" fx:id="menuItemFilterWords" />
+							<MenuItem mnemonicParsing="true" onAction="#handleFilterPredictedSyllabifications"
+								text="%menu.filterpredictedwords" fx:id="menuItemFilterPredictedSyllabifications" />
+							<MenuItem mnemonicParsing="true" onAction="#handleFilterCorrectSyllabifications"
+								text="%menu.filtercorrectwords" fx:id="menuItemFilterCorrectSyllabifications" />
+							<MenuItem mnemonicParsing="true" onAction="#handleRemoveAllFilters"
+								text="%menu.filterremoveallfilters" fx:id="menuItemRemoveAllFilters" />
+							<SeparatorMenuItem />
 							<MenuItem mnemonicParsing="true"
 								onAction="#handleCompareImplementations" text="%menu.compareimplementations"
 								fx:id="menuItemCompareImplementations" />
@@ -267,6 +277,24 @@
 					<Button fx:id="buttonToolbarFindWord" contentDisplay="GRAPHIC_ONLY"
 						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
 						onAction="#handleFindWord" prefHeight="23.0" prefWidth="19.0"
+						text="" />
+					<Separator orientation="VERTICAL" prefHeight="0.0"
+						prefWidth="3.0" />
+					<Button fx:id="buttonToolbarFilterWords" contentDisplay="GRAPHIC_ONLY"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleFilterWords" prefHeight="23.0" prefWidth="19.0"
+						text="" />
+					<Button fx:id="buttonToolbarFilterPredictedSyllabifications" contentDisplay="GRAPHIC_ONLY"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleFilterPredictedSyllabifications" prefHeight="23.0" prefWidth="19.0"
+						text="" />
+					<Button fx:id="buttonToolbarFilterCorrectSyllabifications" contentDisplay="GRAPHIC_ONLY"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleFilterCorrectSyllabifications" prefHeight="23.0" prefWidth="19.0"
+						text="" />
+					<Button fx:id="buttonToolbarRemoveAllFilters" contentDisplay="GRAPHIC_ONLY"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleRemoveAllFilters" prefHeight="23.0" prefWidth="19.0"
 						text="" />
 				</items>
 			</ToolBar>

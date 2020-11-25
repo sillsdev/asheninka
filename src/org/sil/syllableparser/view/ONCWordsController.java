@@ -176,4 +176,9 @@ public class ONCWordsController extends WordsControllerCommon {
 	public TableView<Word> getONCWordsTable() {
 		return wordsTable;
 	}
+
+	public void handleRemoveAllFilters() {
+		super.handleRemoveAllFilters();
+		setData(oncApproach, languageProject.getWords());
+	}
 }

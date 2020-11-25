@@ -125,6 +125,14 @@ public class RootLayoutController implements Initializable {
 	private Button buttonToolbarConvertPredictedToCorrectSyllabification;
 	@FXML
 	private Button buttonToolbarFindWord;
+	@FXML
+	private Button buttonToolbarFilterCorrectSyllabifications;
+	@FXML
+	private Button buttonToolbarFilterPredictedSyllabifications;
+	@FXML
+	private Button buttonToolbarFilterWords;
+	@FXML
+	private Button buttonToolbarRemoveAllFilters;
 	private Button currentButtonSelected;
 	@FXML
 	private Tooltip tooltipToolbarFileOpen;
@@ -148,6 +156,14 @@ public class RootLayoutController implements Initializable {
 	private Tooltip tooltipToolbarConvertPredictedToCorrectSyllabification;
 	@FXML
 	private Tooltip tooltipToolbarFindWord;
+	@FXML
+	private Tooltip tooltipToolbarFilterCorrectSyllabifications;
+	@FXML
+	private Tooltip tooltipToolbarFilterPredictedSyllabifications;
+	@FXML
+	private Tooltip tooltipToolbarFilterWords;
+	@FXML
+	private Tooltip tooltipToolbarRemoveAllFilters;
 	@FXML
 	private MenuItem menuItemEditCopy;
 	@FXML
@@ -174,6 +190,14 @@ public class RootLayoutController implements Initializable {
 	private MenuItem menuItemClearWords;
 	@FXML
 	private MenuItem menuItemClearCorrectSyllabificationInWords;
+	@FXML
+	private MenuItem menuItemFilterWords;
+	@FXML
+	private MenuItem menuItemFilterPredictedSyllabifications;
+	@FXML
+	private MenuItem menuItemFilterCorrectSyllabifications;
+	@FXML
+	private MenuItem menuItemRemoveAllFilters;
 	@FXML
 	private MenuItem menuItemCompareImplementations;
 	@FXML
@@ -302,6 +326,26 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleConvertPredictedToCorrectSyllabification() {
 		currentApproachController.handleConvertPredictedToCorrectSyllabification();
+	}
+
+	@FXML
+	private void handleFilterCorrectSyllabifications() {
+		currentApproachController.handleFilterCorrectSyllabifications();
+	}
+
+	@FXML
+	private void handleFilterPredictedSyllabifications() {
+		currentApproachController.handleFilterPredictedSyllabifications();
+	}
+
+	@FXML
+	private void handleFilterWords() {
+		currentApproachController.handleFilterWords();
+	}
+
+	@FXML
+	private void handleRemoveAllFilters() {
+		currentApproachController.handleRemoveAllFilters();
 	}
 
 	@FXML
@@ -882,6 +926,10 @@ public class RootLayoutController implements Initializable {
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(false);
 		menuItemConvertPredictedToCorrectSyllabification.setDisable(false);
 		buttonToolbarFindWord.setDisable(false);
+		buttonToolbarFilterCorrectSyllabifications.setDisable(false);
+		buttonToolbarFilterPredictedSyllabifications.setDisable(false);
+		buttonToolbarFilterWords.setDisable(false);
+		buttonToolbarRemoveAllFilters.setDisable(false);
 		menuItemFindWord.setDisable(false);
 	}
 
@@ -1294,6 +1342,10 @@ public class RootLayoutController implements Initializable {
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(true);
 		menuItemConvertPredictedToCorrectSyllabification.setDisable(true);
 		buttonToolbarFindWord.setDisable(true);
+		buttonToolbarFilterCorrectSyllabifications.setDisable(true);
+		buttonToolbarFilterPredictedSyllabifications.setDisable(true);
+		buttonToolbarFilterWords.setDisable(true);
+		buttonToolbarRemoveAllFilters.setDisable(true);
 		menuItemFindWord.setDisable(true);
 
 		statusBar.getRightItems().add(new Separator(VERTICAL));
@@ -1510,6 +1562,33 @@ public class RootLayoutController implements Initializable {
 		tooltipToolbarFindWord = ControllerUtilities.createToolbarButtonWithImage("FindWord.png",
 				buttonToolbarFindWord, tooltipToolbarFindWord,
 				bundle.getString("tooltip.findword"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarFilterCorrectSyllabifications = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64-Correct.png",
+				buttonToolbarFilterCorrectSyllabifications, tooltipToolbarFilterCorrectSyllabifications,
+				bundle.getString("tooltip.filtercorrectsyllablebreaks"), Constants.RESOURCE_SOURCE_LOCATION);
+		buttonToolbarFilterCorrectSyllabifications = adjustImageSize(buttonToolbarFilterCorrectSyllabifications);
+		tooltipToolbarFilterPredictedSyllabifications = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64-Predicted.png",
+				buttonToolbarFilterPredictedSyllabifications, tooltipToolbarFilterPredictedSyllabifications,
+				bundle.getString("tooltip.filterpredictedsyllablebreaks"), Constants.RESOURCE_SOURCE_LOCATION);
+		buttonToolbarFilterPredictedSyllabifications = adjustImageSize(buttonToolbarFilterPredictedSyllabifications);
+		tooltipToolbarFilterWords = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64.png",
+				buttonToolbarFilterWords, tooltipToolbarFilterWords,
+				bundle.getString("tooltip.filterwords"), Constants.RESOURCE_SOURCE_LOCATION);
+		buttonToolbarFilterWords = adjustImageSize(buttonToolbarFilterWords);
+		tooltipToolbarRemoveAllFilters = ControllerUtilities.createToolbarButtonWithImage("icons8-clear-filters-64.png",
+				buttonToolbarRemoveAllFilters, tooltipToolbarRemoveAllFilters,
+				bundle.getString("tooltip.removeallfilters"), Constants.RESOURCE_SOURCE_LOCATION);
+		buttonToolbarRemoveAllFilters = adjustImageSize(buttonToolbarRemoveAllFilters);
+	}
+
+	private Button adjustImageSize(Button button) {
+		Node n = button.getGraphic();
+		if (n instanceof ImageView) {
+			ImageView image = (ImageView) n;
+			image.setPreserveRatio(true);
+			image.setFitHeight(16);
+			button.setGraphic(image);
+		}
+		return button;
 	}
 
 	private void listenForChangesInApproachViews() {
@@ -1657,6 +1736,28 @@ public class RootLayoutController implements Initializable {
 			statusBar.getRightItems().get(2).setVisible(true);
 		}
 		this.predictedEqualsCorrectToTotal.setText(sPredictedEqualsCorrectToTotal);
+	}
+
+	public void setFiltersDisabled(boolean disable, boolean isPredictedVsCorrect) {
+		buttonToolbarFilterWords.setDisable(disable);
+		menuItemFilterWords.setDisable(disable);
+		if (isPredictedVsCorrect) {
+			buttonToolbarFilterCorrectSyllabifications.setDisable(true);
+			buttonToolbarFilterPredictedSyllabifications.setDisable(true);
+			menuItemFilterCorrectSyllabifications.setDisable(true);
+			menuItemFilterPredictedSyllabifications.setDisable(true);
+		} else {
+			buttonToolbarFilterCorrectSyllabifications.setDisable(disable);
+			buttonToolbarFilterPredictedSyllabifications.setDisable(disable);
+			menuItemFilterCorrectSyllabifications.setDisable(disable);
+			menuItemFilterPredictedSyllabifications.setDisable(disable);
+		}
+		buttonToolbarRemoveAllFilters.setDisable(disable);
+		menuItemRemoveAllFilters.setDisable(disable);
+	}
+
+	public void setFiltersDisabled(boolean disable) {
+		setFiltersDisabled(disable, false);
 	}
 
 	// code taken from

@@ -34,6 +34,7 @@ import org.sil.utility.view.ControllerUtilities;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -154,6 +155,7 @@ public class ONCApproachController extends ApproachController  {
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		controller.setViewItemUsed(prefs.getLastONCSegmentInventoryViewItemUsed());
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	private FXMLLoader createFXMLLoader(String sFxml) {
@@ -177,6 +179,7 @@ public class ONCApproachController extends ApproachController  {
 		controller.setData(oncApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleSyllabificationParameters() {
@@ -185,6 +188,7 @@ public class ONCApproachController extends ApproachController  {
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData.getLanguageProject());
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleCVNaturalClasses() {
@@ -198,6 +202,7 @@ public class ONCApproachController extends ApproachController  {
 		int i = prefs.getLastONCCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleTemplates() {
@@ -209,6 +214,7 @@ public class ONCApproachController extends ApproachController  {
 		int i = prefs.getLastONCTemplatesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleFilters() {
@@ -221,6 +227,7 @@ public class ONCApproachController extends ApproachController  {
 		int i = prefs.getLastONCFiltersViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleONCWords() {
@@ -238,6 +245,7 @@ public class ONCApproachController extends ApproachController  {
 			controller.setFocusOnWord(index);
 		}
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(false);
 	}
 
 	public void handleONCWordsPredictedVsCorrect(int index) {
@@ -247,6 +255,7 @@ public class ONCApproachController extends ApproachController  {
 		controller.setData(oncApproachData, words);
 		controller.setFocusOnWord(index);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(false, true);
 	}
 
 	public void handleONCWordsPredictedVsCorrect() {
@@ -255,6 +264,7 @@ public class ONCApproachController extends ApproachController  {
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData, words);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(false, true);
 	}
 
 	public void handleGraphemeNaturalClasses() {
@@ -267,6 +277,7 @@ public class ONCApproachController extends ApproachController  {
 		int i = prefs.getLastONCGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleEnvironments() {
@@ -279,6 +290,7 @@ public class ONCApproachController extends ApproachController  {
 		int i = prefs.getLastONCEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	@Override
@@ -655,6 +667,37 @@ public class ONCApproachController extends ApproachController  {
 
 		default:
 			break;
+		}
+	}
+
+	@Override
+	void handleFilterCorrectSyllabifications() {
+		if (currentONCApproachController instanceof ONCWordsController ) {
+			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
+			controller.handleFilterCorrectSyllabifications();
+		}
+	}
+
+	@Override
+	void handleFilterPredictedSyllabifications() {
+		if (currentONCApproachController instanceof ONCWordsController ) {
+			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
+			controller.handleFilterPredictedSyllabifications();
+		}
+	}
+
+	public void handleFilterWords() {
+		if (currentONCApproachController instanceof ONCWordsController ) {
+			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
+			controller.handleFilterWords();
+		}
+	}
+
+	@Override
+	void handleRemoveAllFilters() {
+		if (currentONCApproachController instanceof ONCWordsController ) {
+			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
+			controller.handleRemoveAllFilters();
 		}
 	}
 }

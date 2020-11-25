@@ -176,4 +176,9 @@ public class CVWordsController extends WordsControllerCommon {
 	public TableView<Word> getCVWordsTable() {
 		return wordsTable;
 	}
+
+	public void handleRemoveAllFilters() {
+		super.handleRemoveAllFilters();
+		setData(cvApproach, languageProject.getWords());
+	}
 }

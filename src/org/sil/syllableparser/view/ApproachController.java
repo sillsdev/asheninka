@@ -45,6 +45,10 @@ public abstract class ApproachController {
 	abstract void handleTryAWord();
 	abstract void handleConvertPredictedToCorrectSyllabification();
 	abstract void handleFindWord();
+	abstract void handleFilterCorrectSyllabifications();
+	abstract void handleFilterPredictedSyllabifications();
+	abstract void handleFilterWords();
+	abstract void handleRemoveAllFilters();
 	abstract boolean anythingSelected();
 	public abstract ArrayList<String> getHyphenatedWordsListWord(ObservableList<Word> words);
 	public abstract ArrayList<String> getHyphenatedWordsParaTExt(ObservableList<Word> words);
@@ -90,4 +94,5 @@ public abstract class ApproachController {
 			controller.getWordToTry().setText(sCurrentWord);
 		}
 	}
+
 }
