@@ -57,4 +57,15 @@ public class SHWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 		focusOnLastItemUsed(iLastIndex);
 		updateStatusBar();
 	}
+
+	public void handleFilterWords() {
+		wordsPredictedVsCorrectTable.refresh();
+		setData(shApproach, languageProject.getWords());
+		super.handleFilterWords();
+	}
+
+	public void handleRemoveFiltersWord() {
+		super.handleRemoveFiltersWord();
+		setData(shApproach, languageProject.getWords());
+	}
 }

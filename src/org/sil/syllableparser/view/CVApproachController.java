@@ -656,6 +656,9 @@ public class CVApproachController extends ApproachController {
 		if (currentCVApproachController instanceof CVWordsController ) {
 			CVWordsController controller = (CVWordsController) currentCVApproachController;
 			controller.handleFilterWords();
+		} else if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController ) {
+			CVWordsPredictedVsCorrectController controller = (CVWordsPredictedVsCorrectController) currentCVApproachController;
+			controller.handleFilterWords();
 		}
 	}
 
@@ -664,6 +667,9 @@ public class CVApproachController extends ApproachController {
 		if (currentCVApproachController instanceof CVWordsController ) {
 			CVWordsController controller = (CVWordsController) currentCVApproachController;
 			controller.handleRemoveAllFilters();
+		} else if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController ) {
+			CVWordsPredictedVsCorrectController controller = (CVWordsPredictedVsCorrectController) currentCVApproachController;
+			controller.handleRemoveFiltersWord();
 		}
 	}
 }

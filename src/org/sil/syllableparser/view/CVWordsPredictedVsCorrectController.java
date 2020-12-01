@@ -56,4 +56,15 @@ public class CVWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 		focusOnLastItemUsed(iLastIndex);
 		updateStatusBar();
 	}
+
+	public void handleFilterWords() {
+		wordsPredictedVsCorrectTable.refresh();
+		setData(cvApproach, languageProject.getWords());
+		super.handleFilterWords();
+	}
+
+	public void handleRemoveFiltersWord() {
+		super.handleRemoveFiltersWord();
+		setData(cvApproach, languageProject.getWords());
+	}
 }

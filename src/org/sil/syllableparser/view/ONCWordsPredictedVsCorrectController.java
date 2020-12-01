@@ -56,4 +56,16 @@ public class ONCWordsPredictedVsCorrectController extends WordsPredictedVsCorrec
 		focusOnLastItemUsed(iLastIndex);
 		updateStatusBar();
 	}
+
+	public void handleFilterWords() {
+		wordsPredictedVsCorrectTable.refresh();
+		setData(oncApproach, languageProject.getWords());
+		super.handleFilterWords();
+	}
+
+	public void handleRemoveFiltersWord() {
+		super.handleRemoveFiltersWord();
+		setData(oncApproach, languageProject.getWords());
+	}
+
 }

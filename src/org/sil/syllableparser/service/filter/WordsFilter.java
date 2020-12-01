@@ -22,7 +22,18 @@ public class WordsFilter {
 	boolean matchDiacritics;
 	String textToMatch;
 	String loweredTextToMatch;
-	
+	boolean active;
+
+	public WordsFilter() {
+		wordsFilterType = WordsFilterType.WORDS;
+		filterType = ColumnFilterType.ANYWHERE;
+		matchCase = false;
+		matchDiacritics = false;
+		textToMatch = "";
+		loweredTextToMatch = "";
+		active = false;
+	}
+
 	public WordsFilter(WordsFilterType wordsFilterType, ColumnFilterType filterType, boolean matchCase,
 			boolean matchDiacritics, String textToMatch) {
 		this.wordsFilterType = wordsFilterType;
@@ -30,6 +41,14 @@ public class WordsFilter {
 		this.matchCase = matchCase;
 		this.matchDiacritics = matchDiacritics;
 		setTextToMatch(textToMatch);
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public WordsFilterType getWordsFilterType() {

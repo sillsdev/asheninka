@@ -13,6 +13,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.filter.ColumnFilterType;
 import org.sil.syllableparser.service.filter.WordsFilter;
@@ -25,6 +26,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
@@ -81,6 +83,14 @@ public class ColumnFilterController implements Initializable {
 	
 	public void setWords(ObservableList<Word> words) {
 		this.words = words;
+		Language vernacular = mainApp.getLanguageProject().getVernacularLanguage();
+		NodeOrientation vernacularOrientation = vernacular.getOrientation();
+		textToSearchFor.setNodeOrientation(vernacularOrientation);
+		textToSearchFor.setFont(vernacular.getFont());
+		String sVernacular = mainApp.getStyleFromColor(vernacular.getColor());
+		textToSearchFor.setStyle(sVernacular);
+//		textToSearchFor.setText(lastWordTried);
+
 	}
 
 	public boolean isResultIsOK() {
@@ -93,6 +103,13 @@ public class ColumnFilterController implements Initializable {
 
 	public void setWordsFilterType(WordsFilterType wordsFilterType) {
 		this.wordsFilterType = wordsFilterType;
+		if (wordsFilterType == WordsFilterType.WORDS) {
+			showBlanksRadio.setDisable(true);
+			showNonBlanksRadio.setDisable(true);
+		} else {
+			showBlanksRadio.setDisable(false);
+			showNonBlanksRadio.setDisable(false);
+		}
 	}
 
 	public ColumnFilterType getColumnFilterType() {
@@ -137,8 +154,8 @@ public class ColumnFilterController implements Initializable {
 	@FXML
 	private void handleOK() {
 		String sTextToSearchFor = textToSearchFor.getText().trim();
-		if (sTextToSearchFor.length() == 0) {
-			return; // just in case...
+		if (sTextToSearchFor.length() == 0 && !(showBlanksRadio.isSelected() || showNonBlanksRadio.isSelected())) {
+			return;
 		}
 		if (matchRegularExpressionRadio.isSelected()) {
 			try {

@@ -690,6 +690,9 @@ public class ONCApproachController extends ApproachController  {
 		if (currentONCApproachController instanceof ONCWordsController ) {
 			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
 			controller.handleFilterWords();
+		} else if (currentONCApproachController instanceof ONCWordsPredictedVsCorrectController ) {
+			ONCWordsPredictedVsCorrectController controller = (ONCWordsPredictedVsCorrectController) currentONCApproachController;
+			controller.handleFilterWords();
 		}
 	}
 
@@ -698,6 +701,9 @@ public class ONCApproachController extends ApproachController  {
 		if (currentONCApproachController instanceof ONCWordsController ) {
 			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
 			controller.handleRemoveAllFilters();
+		} else if (currentONCApproachController instanceof ONCWordsPredictedVsCorrectController ) {
+			ONCWordsPredictedVsCorrectController controller = (ONCWordsPredictedVsCorrectController) currentONCApproachController;
+			controller.handleRemoveFiltersWord();
 		}
 	}
 }

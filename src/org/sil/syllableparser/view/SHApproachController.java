@@ -599,6 +599,9 @@ public class SHApproachController extends ApproachController {
 		if (currentSHApproachController instanceof SHWordsController ) {
 			SHWordsController controller = (SHWordsController) currentSHApproachController;
 			controller.handleFilterWords();
+		} else if (currentSHApproachController instanceof SHWordsPredictedVsCorrectController) {
+			SHWordsPredictedVsCorrectController controller = (SHWordsPredictedVsCorrectController) currentSHApproachController;
+			controller.handleFilterWords();
 		}
 	}
 
@@ -607,6 +610,9 @@ public class SHApproachController extends ApproachController {
 		if (currentSHApproachController instanceof SHWordsController ) {
 			SHWordsController controller = (SHWordsController) currentSHApproachController;
 			controller.handleRemoveAllFilters();
+		} else if (currentSHApproachController instanceof SHWordsPredictedVsCorrectController) {
+			SHWordsPredictedVsCorrectController controller = (SHWordsPredictedVsCorrectController) currentSHApproachController;
+			controller.handleRemoveFiltersWord();
 		}
 	}
 }

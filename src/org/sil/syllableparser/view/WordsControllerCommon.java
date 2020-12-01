@@ -127,9 +127,10 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 	protected Word currentWord;
 	protected LingTreeInteractor ltInteractor;
 	protected String ltSVG = "";
-	protected WordsFilter filterCorrectSyllableBreaks;
-	protected WordsFilter filterPredictedSyllableBreaks;
-	protected WordsFilter filterWords;
+	protected WordsFilter filterCorrectSyllableBreaks = new WordsFilter();
+	protected WordsFilter filterPredictedSyllableBreaks = new WordsFilter();
+	protected WordsFilter filterWords = new WordsFilter();
+	ObservableList<Word> wordsToFilter;
 
 	public WordsControllerCommon() {
 		ltInteractor = LingTreeInteractor.getInstance();
@@ -245,6 +246,7 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 			handleFilterWords();
 		});
 		miRemoveFiltersWords = new MenuItem(bundle.getString("menu.filterremovefilterwords"));
+		miRemoveFiltersWords.setDisable(true);
 		miRemoveFiltersWords.setOnAction((event) -> {
 			handleRemoveFiltersWord();
 		});
@@ -258,6 +260,7 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 			handleFilterPredictedSyllabifications();
 		});
 		miRemoveFiltersPredicted = new MenuItem(bundle.getString("menu.filterremovefilterpredictedwords"));
+		miRemoveFiltersPredicted.setDisable(true);
 		miRemoveFiltersPredicted.setOnAction((event) -> {
 			handleRemoveFiltersPredicted();
 		});
@@ -271,6 +274,7 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 			handleFilterCorrectSyllabifications();
 		});
 		miRemoveFiltersCorrect = new MenuItem(bundle.getString("menu.filterremovefiltercorrectwords"));
+		miRemoveFiltersCorrect.setDisable(true);
 		miRemoveFiltersCorrect.setOnAction((event) -> {
 			handleRemoveFiltersCorrect();
 		});
@@ -345,11 +349,12 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 
 	public void handleFilterWords() {
 		filterWords = processFilter("label.filterwords", WordsFilterType.WORDS, wordColumn, filterWords);
+		applyWordFilters();
 	}
 
 	public void handleFilterPredictedSyllabifications() {
 		WordsFilterType wordsFilterType = WordsFilterType.CV_PREDICTED;
-		switch (this.getClass().getName()) {
+		switch (this.getClass().getSimpleName()) {
 		case "ONCWordsController":
 			wordsFilterType = WordsFilterType.ONC_PREDICTED;
 			break;
@@ -358,11 +363,13 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 		}
 		filterPredictedSyllableBreaks = processFilter("label.filterpredictedsyllablebreaks",
 				wordsFilterType, predictedSyllabificationColumn, filterPredictedSyllableBreaks);
+		applyWordFilters();
 	}
 
 	public void handleFilterCorrectSyllabifications() {
 		filterCorrectSyllableBreaks = processFilter("label.filtercorrectsyllablebreaks",
 				WordsFilterType.CORRECT, correctSyllabificationColumn, filterCorrectSyllableBreaks);
+		applyWordFilters();
 	}
 
 	protected WordsFilter processFilter(String sTitle, WordsFilterType wordsFilterType,
@@ -389,17 +396,7 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 			}
 			filterWordDialogStage.showAndWait();
 			if (controller.isResultIsOK()) {
-				filteredWords = new FilteredList<>(controller.getWords(), p -> true);
-				SortedList<Word> sortedWords = new SortedList<>(filteredWords);
-				sortedWords.comparatorProperty().bind(wordsTable.comparatorProperty());
-				wordsTable.setItems(sortedWords);
-				int max = wordsTable.getItems().size();
-				if (max > 0) {
-					int indexToStartWith = adjustIndexValue(0, max);
-					setFocusOnWord(indexToStartWith);
-				}
-				column.setStyle("-fx-background-color:yellow");
-				wordsTable.refresh();
+				controller.getFilter().setActive(true);
 				return controller.getFilter();
 			}
 		} catch (IOException e) {
@@ -408,22 +405,63 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 		return filter;
 	}
 
+	protected void applyWordFilters() {
+		wordsToFilter = languageProject.getWords();
+		boolean someColumnIsFiltered = false;
+		someColumnIsFiltered = applyWordFilter(someColumnIsFiltered, filterWords, wordColumn, miRemoveFiltersWords);
+		someColumnIsFiltered = applyWordFilter(someColumnIsFiltered, filterPredictedSyllableBreaks, predictedSyllabificationColumn, miRemoveFiltersPredicted);
+		someColumnIsFiltered = applyWordFilter(someColumnIsFiltered, filterCorrectSyllableBreaks, correctSyllabificationColumn, miRemoveFiltersCorrect);
+		if (someColumnIsFiltered) {
+			filteredWords = new FilteredList<>(wordsToFilter, p -> true);
+			SortedList<Word> sortedWords = new SortedList<>(filteredWords);
+			sortedWords.comparatorProperty().bind(wordsTable.comparatorProperty());
+			wordsTable.setItems(sortedWords);
+			int max = wordsTable.getItems().size();
+			if (max > 0) {
+				int indexToStartWith = adjustIndexValue(0, max);
+				setFocusOnWord(indexToStartWith);
+			}
+		} else {
+			wordsTable.setItems(wordsToFilter);
+		}
+		wordsTable.refresh();
+	}
+
+	protected boolean applyWordFilter(boolean someColumnIsFiltered, WordsFilter wordsFilter,
+			TableColumn<Word, String> column, MenuItem miRemove) {
+		if (wordsFilter.isActive()) {
+			wordsToFilter = wordsFilter.applyFilter(wordsToFilter);
+			column.setStyle("-fx-background-color:yellow");
+			someColumnIsFiltered = true;
+			miRemove.setDisable(false);
+		} else {
+			miRemove.setDisable(true);
+		}
+		return someColumnIsFiltered;
+	}
+
 	protected void handleRemoveAllFilters() {
-		wordColumn.setStyle("");
-		predictedSyllabificationColumn.setStyle("");
-		correctSyllabificationColumn.setStyle("");
+		handleRemoveFiltersWord();
+		handleRemoveFiltersPredicted();
+		handleRemoveFiltersCorrect();
 	}
 
 	protected void handleRemoveFiltersCorrect() {
 		correctSyllabificationColumn.setStyle("");
+		filterCorrectSyllableBreaks.setActive(false);
+		applyWordFilters();
 	}
 
 	protected void handleRemoveFiltersPredicted() {
 		predictedSyllabificationColumn.setStyle("");
+		filterPredictedSyllableBreaks.setActive(false);
+		applyWordFilters();
 	}
 
 	protected void handleRemoveFiltersWord() {
 		wordColumn.setStyle("");
+		filterWords.setActive(false);
+		applyWordFilters();
 	}
 
 	@Override
