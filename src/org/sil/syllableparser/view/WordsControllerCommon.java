@@ -383,17 +383,11 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 
 			ColumnFilterController controller = loader.getController();
 			controller.setDialogStage(filterWordDialogStage);
+			controller.setWordsFilterType(wordsFilterType);
 			controller.setMainApp(mainApp);
 			controller.setLocale(locale);
-			controller.setWordsFilterType(wordsFilterType);
 			controller.setFilter(filter);
 			controller.setWords(wordsTable.getItems());
-			if (filter != null) {
-				controller.setColumnFilterType(filter.getFilterType());
-				controller.setTextToSearchFor(filter.getTextToMatch());
-				controller.setMatchCase(filter.isMatchCase());
-				controller.setMatchDiacritics(filter.isMatchDiacritics());
-			}
 			filterWordDialogStage.showAndWait();
 			if (controller.isResultIsOK()) {
 				controller.getFilter().setActive(true);

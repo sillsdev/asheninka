@@ -109,6 +109,9 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_ONC_SEGMENT = "lastONCSegment";
 	public static final String LAST_ONC_TRY_A_WORD = "lastONCTryAWord";
 	public static final String LAST_SYLLABIFICATION_COMPARISON = "lastSyllabificationComparision";
+	public static final String LAST_FILTER_CORRECT_SYLLABIFICATIONS = "lastFilterCorrectSyllabifications";
+	public static final String LAST_FILTER_PREDICTED_SYLLABIFICATIONS = "lastFilterPredictedSyllabifications";
+	public static final String LAST_FILTER_WORDS = "lastFilterWords";
 	
 	Preferences prefs;
 
@@ -472,10 +475,18 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 		setPreferencesKey(sWindow + MAXIMIZED, stage.isMaximized());
 	}
 
-	public Double getDoubleValue(String sColumnKey, Double defaultValue) {
-		return prefs.getDouble(sColumnKey, defaultValue);
+	public boolean getBooleanValue(String sKey, boolean defaultValue) {
+		return prefs.getBoolean(sKey, defaultValue);
 	}
-	
+
+	public Double getDoubleValue(String sKey, Double defaultValue) {
+		return prefs.getDouble(sKey, defaultValue);
+	}
+
+	public String getStringValue(String sKey, String defaultValue) {
+		return prefs.get(sKey, defaultValue);
+	}
+
 	public void setPreferencesKey(String key, boolean value) {
 		if (!StringUtilities.isNullOrEmpty(key)) {
 			if (key != null) {
@@ -509,7 +520,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 		}
 	}
 
-	private void setPreferencesKey(String key, String value) {
+	public void setPreferencesKey(String key, String value) {
 		if (!StringUtilities.isNullOrEmpty(key) && !StringUtilities.isNullOrEmpty(value)) {
 			prefs.put(key, value);
 
