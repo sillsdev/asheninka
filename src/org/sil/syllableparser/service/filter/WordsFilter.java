@@ -25,7 +25,7 @@ public class WordsFilter {
 	boolean active;
 
 	public WordsFilter() {
-		wordsFilterType = WordsFilterType.WORDS;
+		wordsFilterType = WordsFilterType.CV_WORDS;
 		filterType = ColumnFilterType.ANYWHERE;
 		matchCase = false;
 		matchDiacritics = false;
@@ -125,7 +125,12 @@ public class WordsFilter {
 	public ObservableList<Word> applyAnywhereFilter(ObservableList<Word> words) {
 		ObservableList<Word> filteredWords = FXCollections.observableArrayList();
 		switch (wordsFilterType) {
-		case CORRECT:
+		case CV_CORRECT:
+		case MORAIC_CORRECT:
+		case NUCLEAR_PROJECTION_CORRECT:
+		case ONC_CORRECT:
+		case OT_CORRECT:
+		case SH_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getCorrectSyllabification().contains(textToMatch));	
 			} else {
@@ -159,7 +164,18 @@ public class WordsFilter {
 				filteredWords = words.filtered(w -> (w.getSHPredictedSyllabification()).toLowerCase().contains(loweredTextToMatch));
 			}
 			break;
-		case WORDS:
+		case CV_WORDS:
+		case MORAIC_WORDS:
+		case NUCLEAR_PROJECTION_WORDS:
+		case ONC_WORDS:
+		case OT_WORDS:
+		case SH_WORDS:
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+		case SH_WORDS_PREDICTED_VS_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getWord().contains(textToMatch));	
 			} else {
@@ -175,7 +191,12 @@ public class WordsFilter {
 	public ObservableList<Word> applyAtEndFilter(ObservableList<Word> words) {
 		ObservableList<Word> filteredWords = FXCollections.observableArrayList();
 		switch (wordsFilterType) {
-		case CORRECT:
+		case CV_CORRECT:
+		case MORAIC_CORRECT:
+		case NUCLEAR_PROJECTION_CORRECT:
+		case ONC_CORRECT:
+		case OT_CORRECT:
+		case SH_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getCorrectSyllabification().endsWith(textToMatch));	
 			} else {
@@ -209,7 +230,18 @@ public class WordsFilter {
 				filteredWords = words.filtered(w -> (w.getSHPredictedSyllabification()).toLowerCase().endsWith(loweredTextToMatch));
 			}
 			break;
-		case WORDS:
+		case CV_WORDS:
+		case MORAIC_WORDS:
+		case NUCLEAR_PROJECTION_WORDS:
+		case ONC_WORDS:
+		case OT_WORDS:
+		case SH_WORDS:
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+		case SH_WORDS_PREDICTED_VS_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getWord().endsWith(textToMatch));	
 			} else {
@@ -225,7 +257,12 @@ public class WordsFilter {
 	public ObservableList<Word> applyAtStartFilter(ObservableList<Word> words) {
 		ObservableList<Word> filteredWords = FXCollections.observableArrayList();
 		switch (wordsFilterType) {
-		case CORRECT:
+		case CV_CORRECT:
+		case MORAIC_CORRECT:
+		case NUCLEAR_PROJECTION_CORRECT:
+		case ONC_CORRECT:
+		case OT_CORRECT:
+		case SH_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getCorrectSyllabification().startsWith(textToMatch));	
 			} else {
@@ -259,7 +296,18 @@ public class WordsFilter {
 				filteredWords = words.filtered(w -> (w.getSHPredictedSyllabification()).toLowerCase().startsWith(loweredTextToMatch));
 			}
 			break;
-		case WORDS:
+		case CV_WORDS:
+		case MORAIC_WORDS:
+		case NUCLEAR_PROJECTION_WORDS:
+		case ONC_WORDS:
+		case OT_WORDS:
+		case SH_WORDS:
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+		case SH_WORDS_PREDICTED_VS_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getWord().startsWith(textToMatch));	
 			} else {
@@ -275,7 +323,12 @@ public class WordsFilter {
 	public ObservableList<Word> applyBlankFilter(ObservableList<Word> words) {
 		ObservableList<Word> filteredWords = FXCollections.observableArrayList();
 		switch (wordsFilterType) {
-		case CORRECT:
+		case CV_CORRECT:
+		case MORAIC_CORRECT:
+		case NUCLEAR_PROJECTION_CORRECT:
+		case ONC_CORRECT:
+		case OT_CORRECT:
+		case SH_CORRECT:
 			filteredWords = words.filtered(w -> w.getCorrectSyllabification().equals(""));
 			break;
 		case CV_PREDICTED:
@@ -293,8 +346,21 @@ public class WordsFilter {
 		case SH_PREDICTED:
 			filteredWords = words.filtered(w -> w.getSHPredictedSyllabification().equals(""));
 			break;
-		case WORDS:
+		case CV_WORDS:
+		case MORAIC_WORDS:
+		case NUCLEAR_PROJECTION_WORDS:
+		case ONC_WORDS:
+		case OT_WORDS:
+		case SH_WORDS:
 			// Should not be any
+			filteredWords = words.filtered(w -> w.getWord().equals(""));
+			break;
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+		case SH_WORDS_PREDICTED_VS_CORRECT:
 			filteredWords = words.filtered(w -> w.getWord().equals(""));
 			break;
 		default:
@@ -306,7 +372,12 @@ public class WordsFilter {
 	public ObservableList<Word> applyNonBlankFilter(ObservableList<Word> words) {
 		ObservableList<Word> filteredWords = FXCollections.observableArrayList();
 		switch (wordsFilterType) {
-		case CORRECT:
+		case CV_CORRECT:
+		case MORAIC_CORRECT:
+		case NUCLEAR_PROJECTION_CORRECT:
+		case ONC_CORRECT:
+		case OT_CORRECT:
+		case SH_CORRECT:
 			filteredWords = words.filtered(w -> !w.getCorrectSyllabification().equals(""));
 			break;
 		case CV_PREDICTED:
@@ -324,7 +395,18 @@ public class WordsFilter {
 		case SH_PREDICTED:
 			filteredWords = words.filtered(w -> !w.getSHPredictedSyllabification().equals(""));
 			break;
-		case WORDS:
+		case CV_WORDS:
+		case MORAIC_WORDS:
+		case NUCLEAR_PROJECTION_WORDS:
+		case ONC_WORDS:
+		case OT_WORDS:
+		case SH_WORDS:
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+		case SH_WORDS_PREDICTED_VS_CORRECT:
 			// Should be all of them
 			filteredWords = words.filtered(w -> !w.getWord().equals(""));
 			break;
@@ -339,7 +421,12 @@ public class WordsFilter {
 		String adjustedRegularExpression = adjustTextToMatchFoRegExpression();
 		String loweredAdjustedRegularExpression = adjustedRegularExpression.toLowerCase();
 		switch (wordsFilterType) {
-		case CORRECT:
+		case CV_CORRECT:
+		case MORAIC_CORRECT:
+		case NUCLEAR_PROJECTION_CORRECT:
+		case ONC_CORRECT:
+		case OT_CORRECT:
+		case SH_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getCorrectSyllabification().matches(adjustedRegularExpression));	
 			} else {
@@ -373,7 +460,18 @@ public class WordsFilter {
 				filteredWords = words.filtered(w -> (w.getSHPredictedSyllabification()).toLowerCase().matches(loweredAdjustedRegularExpression));
 			}
 			break;
-		case WORDS:
+		case CV_WORDS:
+		case MORAIC_WORDS:
+		case NUCLEAR_PROJECTION_WORDS:
+		case ONC_WORDS:
+		case OT_WORDS:
+		case SH_WORDS:
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+		case SH_WORDS_PREDICTED_VS_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getWord().matches(adjustedRegularExpression));	
 			} else {
@@ -401,7 +499,12 @@ public class WordsFilter {
 	public ObservableList<Word> applyWholeItemFilter(ObservableList<Word> words) {
 		ObservableList<Word> filteredWords = FXCollections.observableArrayList();
 		switch (wordsFilterType) {
-		case CORRECT:
+		case CV_CORRECT:
+		case MORAIC_CORRECT:
+		case NUCLEAR_PROJECTION_CORRECT:
+		case ONC_CORRECT:
+		case OT_CORRECT:
+		case SH_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getCorrectSyllabification().equals(textToMatch));	
 			} else {
@@ -439,7 +542,18 @@ public class WordsFilter {
 				filteredWords = words.filtered(w -> (w.getSHPredictedSyllabification()).toLowerCase().equals(loweredTextToMatch));
 			}
 			break;
-		case WORDS:
+		case CV_WORDS:
+		case MORAIC_WORDS:
+		case NUCLEAR_PROJECTION_WORDS:
+		case ONC_WORDS:
+		case OT_WORDS:
+		case SH_WORDS:
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+		case SH_WORDS_PREDICTED_VS_CORRECT:
 			if (matchCase) {
 				filteredWords = words.filtered(w -> w.getWord().equals(textToMatch));	
 			} else {

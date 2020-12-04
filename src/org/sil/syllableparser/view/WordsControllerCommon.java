@@ -12,9 +12,11 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.LingTreeInteractor;
+import org.sil.syllableparser.service.filter.ColumnFilterType;
 import org.sil.syllableparser.service.filter.WordsFilter;
 import org.sil.syllableparser.service.filter.WordsFilterType;
 import org.sil.utility.view.ControllerUtilities;
@@ -134,6 +136,9 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 
 	public WordsControllerCommon() {
 		ltInteractor = LingTreeInteractor.getInstance();
+		filterWords.setWordsFilterType(getWordsFilterType());
+		filterPredictedSyllableBreaks.setWordsFilterType(getPredictedWordsFilterType());
+		filterCorrectSyllableBreaks.setWordsFilterType(getCorrectWordsFilterType());
 	}
 
 	public void setWordsTable(TableView<Word> tableView) {
@@ -348,11 +353,30 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 	}
 
 	public void handleFilterWords() {
-		filterWords = processFilter("label.filterwords", WordsFilterType.WORDS, wordColumn, filterWords);
+		filterWords = processFilter("label.filterwords", getWordsFilterType(), wordColumn, filterWords);
 		applyWordFilters();
 	}
 
 	public void handleFilterPredictedSyllabifications() {
+		WordsFilterType wordsFilterType = getPredictedWordsFilterType();
+		filterPredictedSyllableBreaks = processFilter("label.filterpredictedsyllablebreaks",
+				wordsFilterType, predictedSyllabificationColumn, filterPredictedSyllableBreaks);
+		applyWordFilters();
+	}
+
+	protected WordsFilterType getCorrectWordsFilterType() {
+		WordsFilterType wordsFilterType = WordsFilterType.CV_CORRECT;
+		switch (this.getClass().getSimpleName()) {
+		case "ONCWordsController":
+			wordsFilterType = WordsFilterType.ONC_CORRECT;
+			break;
+		case "SHWordsController":
+			wordsFilterType = WordsFilterType.SH_CORRECT;
+		}
+		return wordsFilterType;
+	}
+
+	protected WordsFilterType getPredictedWordsFilterType() {
 		WordsFilterType wordsFilterType = WordsFilterType.CV_PREDICTED;
 		switch (this.getClass().getSimpleName()) {
 		case "ONCWordsController":
@@ -361,14 +385,24 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 		case "SHWordsController":
 			wordsFilterType = WordsFilterType.SH_PREDICTED;
 		}
-		filterPredictedSyllableBreaks = processFilter("label.filterpredictedsyllablebreaks",
-				wordsFilterType, predictedSyllabificationColumn, filterPredictedSyllableBreaks);
-		applyWordFilters();
+		return wordsFilterType;
+	}
+
+	protected WordsFilterType getWordsFilterType() {
+		WordsFilterType wordsFilterType = WordsFilterType.CV_WORDS;
+		switch (this.getClass().getSimpleName()) {
+		case "ONCWordsController":
+			wordsFilterType = WordsFilterType.ONC_WORDS;
+			break;
+		case "SHWordsController":
+			wordsFilterType = WordsFilterType.SH_WORDS;
+		}
+		return wordsFilterType;
 	}
 
 	public void handleFilterCorrectSyllabifications() {
 		filterCorrectSyllableBreaks = processFilter("label.filtercorrectsyllablebreaks",
-				WordsFilterType.CORRECT, correctSyllabificationColumn, filterCorrectSyllableBreaks);
+				getCorrectWordsFilterType(), correctSyllabificationColumn, filterCorrectSyllableBreaks);
 		applyWordFilters();
 	}
 
@@ -399,7 +433,7 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 		return filter;
 	}
 
-	protected void applyWordFilters() {
+	public void applyWordFilters() {
 		wordsToFilter = languageProject.getWords();
 		boolean someColumnIsFiltered = false;
 		someColumnIsFiltered = applyWordFilter(someColumnIsFiltered, filterWords, wordColumn, miRemoveFiltersWords);
@@ -443,18 +477,27 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 	protected void handleRemoveFiltersCorrect() {
 		correctSyllabificationColumn.setStyle("");
 		filterCorrectSyllableBreaks.setActive(false);
+		WordsFilterType wft = getCorrectWordsFilterType();
+		prefs.setPreferencesKey(ColumnFilterController.getAppPreferencesBaseToUse(wft)
+				+ ApplicationPreferences.FILTER_ACTIVE, false);
 		applyWordFilters();
 	}
 
 	protected void handleRemoveFiltersPredicted() {
 		predictedSyllabificationColumn.setStyle("");
 		filterPredictedSyllableBreaks.setActive(false);
+		WordsFilterType wft = getPredictedWordsFilterType();
+		prefs.setPreferencesKey(ColumnFilterController.getAppPreferencesBaseToUse(wft)
+				+ ApplicationPreferences.FILTER_ACTIVE, false);
 		applyWordFilters();
 	}
 
 	protected void handleRemoveFiltersWord() {
 		wordColumn.setStyle("");
 		filterWords.setActive(false);
+		WordsFilterType wft = getWordsFilterType();
+		prefs.setPreferencesKey(ColumnFilterController.getAppPreferencesBaseToUse(wft)
+				+ ApplicationPreferences.FILTER_ACTIVE, false);
 		applyWordFilters();
 	}
 
@@ -541,8 +584,43 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 			sPredictedEqualsCorrectToTotal = " " + iPredictedEqualsCorrect + "/" + iTotalWords
 					+ " (" + nf.format(predictedEqualsCorrectPercent) + ") ";
 		}
+		if (mainApp != null) {
 		this.mainApp.updateStatusBarWordItems(sPredictedToTotal, sPredictedEqualsCorrectToTotal,
 				sNumberOfItems);
+		}
 		return currentItem;
+	}
+
+	protected void initWordFilters() {
+		initWordsFilter(ColumnFilterController.getAppPreferencesBaseToUse(getWordsFilterType()), filterWords);
+		initWordsFilter(ColumnFilterController.getAppPreferencesBaseToUse(getPredictedWordsFilterType()), filterPredictedSyllableBreaks);
+		initWordsFilter(ColumnFilterController.getAppPreferencesBaseToUse(getCorrectWordsFilterType()), filterCorrectSyllableBreaks);
+	}
+
+	@SuppressWarnings("static-access")
+	protected void initWordsFilter(String sAppPreferencesBase, WordsFilter filter) {
+		filter.setActive(prefs.getBooleanValue(sAppPreferencesBase + prefs.FILTER_ACTIVE, false));
+		ColumnFilterType columnFilterType = ColumnFilterController.getColumnFilterType(prefs, sAppPreferencesBase + prefs.FILTER_SEARCH_TYPE);
+		filter.setFilterType(columnFilterType);
+		filter.setMatchCase(prefs.getBooleanValue(sAppPreferencesBase + prefs.FILTER_MATCH_CASE, false));
+		filter.setMatchDiacritics(prefs.getBooleanValue(sAppPreferencesBase + prefs.FILTER_MATCH_DIACRITICS, false));
+		filter.setTextToMatch(prefs.getStringValue(sAppPreferencesBase + prefs.FILTER_SEARCH_TEXT, ""));
+	}
+
+	protected void setDataCommon(ObservableList<Word> words) {
+		setColumnICURules(wordColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(commentColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+		setColumnICURules(predictedSyllabificationColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(correctSyllabificationColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(parserResultColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+		this.words = words;
+		if (mainApp != null) {
+			prefs = mainApp.getApplicationPreferences();
+			initWordFilters();
+			applyWordFilters();
+		}
+
+		// Add observable list data to the table
+		wordsTable.setItems(words);
 	}
 }

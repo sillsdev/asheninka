@@ -28,13 +28,11 @@ import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.ONCSegmenter;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
-import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +40,6 @@ import javafx.geometry.NodeOrientation;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -240,6 +237,7 @@ public class ONCApproachController extends ApproachController  {
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData, words);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
+		controller.applyWordFilters();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
@@ -253,18 +251,15 @@ public class ONCApproachController extends ApproachController  {
 		ONCWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData, words);
+		controller.initWordsFilter();
+		controller.applyWordFilter();
 		controller.setFocusOnWord(index);
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false, true);
 	}
 
 	public void handleONCWordsPredictedVsCorrect() {
-		FXMLLoader loader = createFXMLLoader("fxml/ONCWordsPredictedVsCorrect.fxml");
-		ONCWordsPredictedVsCorrectController controller = loader.getController();
-		initializeApproachEditorController(controller);
-		controller.setData(oncApproachData, words);
-		prefs.setLastONCApproachViewUsed(getViewUsed());
-		mainApp.getController().setFiltersDisabled(false, true);
+		handleONCWordsPredictedVsCorrect(0);
 	}
 
 	public void handleGraphemeNaturalClasses() {
@@ -673,7 +668,7 @@ public class ONCApproachController extends ApproachController  {
 	@Override
 	void handleFilterCorrectSyllabifications() {
 		if (currentONCApproachController instanceof ONCWordsController ) {
-			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
+			WordsControllerCommon controller = (WordsControllerCommon) currentONCApproachController;
 			controller.handleFilterCorrectSyllabifications();
 		}
 	}
@@ -681,14 +676,14 @@ public class ONCApproachController extends ApproachController  {
 	@Override
 	void handleFilterPredictedSyllabifications() {
 		if (currentONCApproachController instanceof ONCWordsController ) {
-			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
+			WordsControllerCommon controller = (WordsControllerCommon) currentONCApproachController;
 			controller.handleFilterPredictedSyllabifications();
 		}
 	}
 
 	public void handleFilterWords() {
 		if (currentONCApproachController instanceof ONCWordsController ) {
-			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
+			WordsControllerCommon controller = (WordsControllerCommon) currentONCApproachController;
 			controller.handleFilterWords();
 		} else if (currentONCApproachController instanceof ONCWordsPredictedVsCorrectController ) {
 			ONCWordsPredictedVsCorrectController controller = (ONCWordsPredictedVsCorrectController) currentONCApproachController;
@@ -699,7 +694,7 @@ public class ONCApproachController extends ApproachController  {
 	@Override
 	void handleRemoveAllFilters() {
 		if (currentONCApproachController instanceof ONCWordsController ) {
-			ONCWordsController controller = (ONCWordsController) currentONCApproachController;
+			WordsControllerCommon controller = (WordsControllerCommon) currentONCApproachController;
 			controller.handleRemoveAllFilters();
 		} else if (currentONCApproachController instanceof ONCWordsPredictedVsCorrectController ) {
 			ONCWordsPredictedVsCorrectController controller = (ONCWordsPredictedVsCorrectController) currentONCApproachController;

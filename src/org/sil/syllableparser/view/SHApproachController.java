@@ -164,6 +164,7 @@ public class SHApproachController extends ApproachController {
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData, words);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
+		controller.applyWordFilters();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
@@ -177,18 +178,15 @@ public class SHApproachController extends ApproachController {
 		SHWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(shApproachData, words);
+		controller.initWordsFilter();
+		controller.applyWordFilter();
 		controller.setFocusOnWord(index);
 		prefs.setLastSHApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false, true);
 	}
 
 	public void handleSHWordsPredictedVsCorrect() {
-		FXMLLoader loader = createFXMLLoader("fxml/SHWordsPredictedVsCorrect.fxml");
-		SHWordsPredictedVsCorrectController controller = loader.getController();
-		initializeApproachEditorController(controller);
-		controller.setData(shApproachData, words);
-		prefs.setLastSHApproachViewUsed(getViewUsed());
-		mainApp.getController().setFiltersDisabled(false, true);
+		handleSHWordsPredictedVsCorrect(0);
 	}
 
 	public void handleGraphemeNaturalClasses() {
@@ -582,7 +580,7 @@ public class SHApproachController extends ApproachController {
 	@Override
 	void handleFilterCorrectSyllabifications() {
 		if (currentSHApproachController instanceof SHWordsController ) {
-			SHWordsController controller = (SHWordsController) currentSHApproachController;
+			WordsControllerCommon controller = (WordsControllerCommon) currentSHApproachController;
 			controller.handleFilterCorrectSyllabifications();
 		}
 	}
@@ -590,14 +588,14 @@ public class SHApproachController extends ApproachController {
 	@Override
 	void handleFilterPredictedSyllabifications() {
 		if (currentSHApproachController instanceof SHWordsController ) {
-			SHWordsController controller = (SHWordsController) currentSHApproachController;
+			WordsControllerCommon controller = (WordsControllerCommon) currentSHApproachController;
 			controller.handleFilterPredictedSyllabifications();
 		}
 	}
 
 	public void handleFilterWords() {
 		if (currentSHApproachController instanceof SHWordsController ) {
-			SHWordsController controller = (SHWordsController) currentSHApproachController;
+			WordsControllerCommon controller = (WordsControllerCommon) currentSHApproachController;
 			controller.handleFilterWords();
 		} else if (currentSHApproachController instanceof SHWordsPredictedVsCorrectController) {
 			SHWordsPredictedVsCorrectController controller = (SHWordsPredictedVsCorrectController) currentSHApproachController;
@@ -608,7 +606,7 @@ public class SHApproachController extends ApproachController {
 	@Override
 	void handleRemoveAllFilters() {
 		if (currentSHApproachController instanceof SHWordsController ) {
-			SHWordsController controller = (SHWordsController) currentSHApproachController;
+			WordsControllerCommon controller = (WordsControllerCommon) currentSHApproachController;
 			controller.handleRemoveAllFilters();
 		} else if (currentSHApproachController instanceof SHWordsPredictedVsCorrectController) {
 			SHWordsPredictedVsCorrectController controller = (SHWordsPredictedVsCorrectController) currentSHApproachController;

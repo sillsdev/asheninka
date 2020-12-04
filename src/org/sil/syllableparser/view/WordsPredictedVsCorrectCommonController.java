@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
+import org.sil.syllableparser.service.filter.ColumnFilterType;
 import org.sil.syllableparser.service.filter.WordsFilter;
 import org.sil.syllableparser.service.filter.WordsFilterType;
 import org.sil.utility.view.ControllerUtilities;
@@ -59,11 +61,13 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 	private Word currentWord;
 	protected FilteredList<Word> filteredWords;
 	protected SortedList<Word> sortedWords;
-	protected WordsFilter filterWords = new WordsFilter();
+	protected WordsFilter filterWordsPredictedVsCorrect = new WordsFilter();
 	boolean haveAppliedFilter = false;
+	ObservableList<Word> wordsToFilter;
+	ApplicationPreferences prefs;
 
 	public WordsPredictedVsCorrectCommonController() {
-
+		filterWordsPredictedVsCorrect.setWordsFilterType(getWordsPredictedVsCorrectFilterType());
 	}
 	protected final class VernacularWrappingTableCell extends TableCell<Word, String> {
 		private Text text;
@@ -156,16 +160,16 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 
 			ColumnFilterController controller = loader.getController();
 			controller.setDialogStage(filterWordDialogStage);
+			controller.setWordsFilterType(getWordsPredictedVsCorrectFilterType());
 			controller.setMainApp(mainApp);
 			controller.setLocale(locale);
-			controller.setWordsFilterType(WordsFilterType.WORDS);
-			controller.setFilter(filterWords);
+			controller.setFilter(filterWordsPredictedVsCorrect);
 			controller.setWords(wordsPredictedVsCorrectTable.getItems());
-			if (filterWords != null) {
-				controller.setColumnFilterType(filterWords.getFilterType());
-				controller.setTextToSearchFor(filterWords.getTextToMatch());
-				controller.setMatchCase(filterWords.isMatchCase());
-				controller.setMatchDiacritics(filterWords.isMatchDiacritics());
+			if (filterWordsPredictedVsCorrect != null) {
+				controller.setColumnFilterType(filterWordsPredictedVsCorrect.getFilterType());
+				controller.setTextToSearchFor(filterWordsPredictedVsCorrect.getTextToMatch());
+				controller.setMatchCase(filterWordsPredictedVsCorrect.isMatchCase());
+				controller.setMatchDiacritics(filterWordsPredictedVsCorrect.isMatchDiacritics());
 			}
 			filterWordDialogStage.showAndWait();
 			if (controller.isResultIsOK()) {
@@ -174,7 +178,7 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 				sortedWords = new SortedList<>(filteredWords);
 				haveAppliedFilter = true;
 				putFilteredDataInTable();
-				filterWords = controller.getFilter();
+				filterWordsPredictedVsCorrect = controller.getFilter();
 			} else if (haveAppliedFilter) {
 				putFilteredDataInTable();
 			}
@@ -196,9 +200,71 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 		wordsPredictedVsCorrectTable.refresh();
 	}
 
+	public void applyWordFilter() {
+		wordsToFilter = wordsPredictedVsCorrectTable.getItems();
+		boolean someColumnIsFiltered = false;
+		someColumnIsFiltered = applyWordFilter(someColumnIsFiltered, filterWordsPredictedVsCorrect, wordPredictedVsCorrectColumn, miRemoveFiltersWords);
+		if (someColumnIsFiltered) {
+			filteredWords = new FilteredList<>(wordsToFilter, p -> true);
+			SortedList<Word> sortedWords = new SortedList<>(filteredWords);
+			sortedWords.comparatorProperty().bind(wordsPredictedVsCorrectTable.comparatorProperty());
+			wordsPredictedVsCorrectTable.setItems(sortedWords);
+			int max = wordsPredictedVsCorrectTable.getItems().size();
+			if (max > 0) {
+				int indexToStartWith = adjustIndexValue(0, max);
+				setFocusOnWord(indexToStartWith);
+			}
+		} else {
+			wordsPredictedVsCorrectTable.setItems(wordsToFilter);
+		}
+		wordsPredictedVsCorrectTable.refresh();
+	}
+
+	protected boolean applyWordFilter(boolean someColumnIsFiltered, WordsFilter wordsFilter,
+			TableColumn<Word, String> column, MenuItem miRemove) {
+		if (wordsFilter.isActive()) {
+			wordsToFilter = wordsFilter.applyFilter(wordsToFilter);
+			column.setStyle("-fx-background-color:yellow");
+			someColumnIsFiltered = true;
+			miRemove.setDisable(false);
+		} else {
+			miRemove.setDisable(true);
+		}
+		return someColumnIsFiltered;
+	}
+
+	@SuppressWarnings("static-access")
+	protected void initWordsFilter() {
+		WordsFilterType wft = getWordsPredictedVsCorrectFilterType();
+		String sAppPreferencesBase = ColumnFilterController.getAppPreferencesBaseToUse(wft);
+		prefs = mainApp.getApplicationPreferences();
+		filterWordsPredictedVsCorrect.setActive(prefs.getBooleanValue(sAppPreferencesBase + prefs.FILTER_ACTIVE, false));
+		ColumnFilterType columnFilterType = ColumnFilterController.getColumnFilterType(prefs, sAppPreferencesBase + prefs.FILTER_SEARCH_TYPE);
+		filterWordsPredictedVsCorrect.setFilterType(columnFilterType);
+		filterWordsPredictedVsCorrect.setMatchCase(prefs.getBooleanValue(sAppPreferencesBase + prefs.FILTER_MATCH_CASE, false));
+		filterWordsPredictedVsCorrect.setMatchDiacritics(prefs.getBooleanValue(sAppPreferencesBase + prefs.FILTER_MATCH_DIACRITICS, false));
+		filterWordsPredictedVsCorrect.setTextToMatch(prefs.getStringValue(sAppPreferencesBase + prefs.FILTER_SEARCH_TEXT, ""));
+	}
+
+	protected WordsFilterType getWordsPredictedVsCorrectFilterType() {
+		WordsFilterType wordsFilterType = WordsFilterType.CV_WORDS_PREDICTED_VS_CORRECT;
+		switch (this.getClass().getSimpleName()) {
+		case "ONCWordsPredictedVsCorrectController":
+			wordsFilterType = WordsFilterType.ONC_WORDS_PREDICTED_VS_CORRECT;
+			break;
+		case "SHWordsPredictedVsCorrectController":
+			wordsFilterType = WordsFilterType.SH_WORDS_PREDICTED_VS_CORRECT;
+		}
+		return wordsFilterType;
+	}
+
 	protected void handleRemoveFiltersWord() {
 		wordPredictedVsCorrectColumn.setStyle("");
-		filterWords.setActive(false);
+		filterWordsPredictedVsCorrect.setActive(false);
+		WordsFilterType wft = getWordsPredictedVsCorrectFilterType();
+		String sAppPreferencesBase = ColumnFilterController.getAppPreferencesBaseToUse(wft);
+		prefs = mainApp.getApplicationPreferences();
+		prefs.setPreferencesKey(sAppPreferencesBase + ApplicationPreferences.FILTER_ACTIVE, false);
 		miRemoveFiltersWords.setDisable(true);
 		wordsPredictedVsCorrectTable.setItems(words);
 		wordsPredictedVsCorrectTable.refresh();

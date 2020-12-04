@@ -16,6 +16,7 @@ import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.utility.StringUtilities;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -108,15 +109,7 @@ public class CVWordsController extends WordsControllerCommon {
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
-		setColumnICURules(wordColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(commentColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
-		setColumnICURules(predictedSyllabificationColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(correctSyllabificationColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(parserResultColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
-		this.words = words;
-
-		// Add observable list data to the table
-		wordsTable.setItems(words);
+		setDataCommon(words);
 		int max = wordsTable.getItems().size();
 		if (max > 0) {
 			int iLastIndex = mainApp.getApplicationPreferences().getLastCVWordsViewItemUsed();
@@ -170,6 +163,8 @@ public class CVWordsController extends WordsControllerCommon {
 		if (cvWord != null) {
 			int currentItem = updateStatusBarWords(getPredictedWords(), getPredictedEqualsCorrectWords());
 			mainApp.getApplicationPreferences().setLastCVWordsViewItemUsed(currentItem);
+		} else {
+			updateStatusBarWords(FXCollections.observableArrayList(), FXCollections.observableArrayList());
 		}
 	}
 

@@ -190,9 +190,21 @@ id="iFailureONCSegmenter"
 ></indexTerm
 ><indexTerm
 id="iFilters"
-see="iONCFilter"
 ><term
 >Filters</term
+><indexTerms
+><indexTerm
+id="iFiltersColumns"
+><term
+>Columns in word views and predicted vs. correct view</term
+></indexTerm
+><indexTerm
+id="iFiltersDuringSyllabification"
+see="iONCFilter"
+><term
+>During syllabification</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iFonts"

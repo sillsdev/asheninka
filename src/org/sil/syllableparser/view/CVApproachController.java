@@ -185,6 +185,7 @@ public class CVApproachController extends ApproachController {
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
+		controller.applyWordFilters();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index);
@@ -198,18 +199,15 @@ public class CVApproachController extends ApproachController {
 		CVWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
+		controller.initWordsFilter();
+		controller.applyWordFilter();
 		controller.setFocusOnWord(index);
 		prefs.setLastCVApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false, true);
 	}
 
 	public void handleCVWordsPredictedVsCorrect() {
-		FXMLLoader loader = createFXMLLoader("fxml/CVWordsPredictedVsCorrect.fxml");
-		CVWordsPredictedVsCorrectController controller = loader.getController();
-		initializeApproachEditorController(controller);
-		controller.setData(cvApproachData, words);
-		prefs.setLastCVApproachViewUsed(getViewUsed());
-		mainApp.getController().setFiltersDisabled(false, true);
+		handleCVWordsPredictedVsCorrect(0);
 	}
 
 	public void handleGraphemeNaturalClasses() {

@@ -16,6 +16,7 @@ import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.utility.StringUtilities;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -107,15 +108,7 @@ public class ONCWordsController extends WordsControllerCommon {
 	public void setData(ONCApproach oncApproachData, ObservableList<Word> words) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
-		setColumnICURules(wordColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(commentColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
-		setColumnICURules(predictedSyllabificationColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(correctSyllabificationColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(parserResultColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
-		this.words = words;
-
-		// Add observable list data to the table
-		wordsTable.setItems(words);
+		setDataCommon(words);
 		int max = wordsTable.getItems().size();
 		// mainApp null test is to make some tests work
 		if (max > 0 && mainApp != null) {
@@ -170,6 +163,8 @@ public class ONCWordsController extends WordsControllerCommon {
 		if (oncWord != null) {
 			int currentItem = updateStatusBarWords(getPredictedWords(), getPredictedEqualsCorrectWords());
 			mainApp.getApplicationPreferences().setLastONCWordsViewItemUsed(currentItem);
+		} else {
+			updateStatusBarWords(FXCollections.observableArrayList(), FXCollections.observableArrayList());
 		}
 	}
 

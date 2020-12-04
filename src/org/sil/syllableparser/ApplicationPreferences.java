@@ -109,10 +109,36 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_ONC_SEGMENT = "lastONCSegment";
 	public static final String LAST_ONC_TRY_A_WORD = "lastONCTryAWord";
 	public static final String LAST_SYLLABIFICATION_COMPARISON = "lastSyllabificationComparision";
-	public static final String LAST_FILTER_CORRECT_SYLLABIFICATIONS = "lastFilterCorrectSyllabifications";
-	public static final String LAST_FILTER_PREDICTED_SYLLABIFICATIONS = "lastFilterPredictedSyllabifications";
-	public static final String LAST_FILTER_WORDS = "lastFilterWords";
-	
+	public static final String LAST_CV_FILTER_CORRECT_SYLLABIFICATIONS = "lastCVFilterCorrectSyllabifications";
+	public static final String LAST_CV_FILTER_PREDICTED_SYLLABIFICATIONS = "lastCVFilterPredictedSyllabifications";
+	public static final String LAST_CV_FILTER_WORDS = "lastCVFilterWords";
+	public static final String LAST_CV_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastCVFilterWordsPredictedVsCorrect";
+	public static final String LAST_MORAIC_FILTER_CORRECT_SYLLABIFICATIONS = "lastMoraicFilterCorrectSyllabifications";
+	public static final String LAST_MORAIC_FILTER_PREDICTED_SYLLABIFICATIONS = "lastMoraicFilterPredictedSyllabifications";
+	public static final String LAST_MORAIC_FILTER_WORDS = "lastMoraicFilterWords";
+	public static final String LAST_MORAIC_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastMoraicFilterWordsPredictedVsCorrect";
+	public static final String LAST_NUCLEAR_PROJECTION_FILTER_CORRECT_SYLLABIFICATIONS = "lastNuclearProjectionFilterCorrectSyllabifications";
+	public static final String LAST_NUCLEAR_PROJECTION_FILTER_PREDICTED_SYLLABIFICATIONS = "lastNuclearProjectionFilterPredictedSyllabifications";
+	public static final String LAST_NUCLEAR_PROJECTION_FILTER_WORDS = "lastNuclearProjectionFilterWords";
+	public static final String LAST_NUCLEAR_PROJECTION_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastNuclearProjectionFilterWordsPredictedVsCorrect";
+	public static final String LAST_ONC_FILTER_CORRECT_SYLLABIFICATIONS = "lastONCFilterCorrectSyllabifications";
+	public static final String LAST_ONC_FILTER_PREDICTED_SYLLABIFICATIONS = "lastONCFilterPredictedSyllabifications";
+	public static final String LAST_ONC_FILTER_WORDS = "lastONCFilterWords";
+	public static final String LAST_ONC_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastONCFilterWordsPredictedVsCorrect";
+	public static final String LAST_OT_FILTER_CORRECT_SYLLABIFICATIONS = "lastOTFilterCorrectSyllabifications";
+	public static final String LAST_OT_FILTER_PREDICTED_SYLLABIFICATIONS = "lastOTFilterPredictedSyllabifications";
+	public static final String LAST_OT_FILTER_WORDS = "lastOTFilterWords";
+	public static final String LAST_OT_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastOTFilterWordsPredictedVsCorrect";
+	public static final String LAST_SH_FILTER_CORRECT_SYLLABIFICATIONS = "lastSHFilterCorrectSyllabifications";
+	public static final String LAST_SH_FILTER_PREDICTED_SYLLABIFICATIONS = "lastSHFilterPredictedSyllabifications";
+	public static final String LAST_SH_FILTER_WORDS = "lastSHFilterWords";
+	public static final String LAST_SH_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastSHFilterWordsPredictedVsCorrect";
+	public static final String FILTER_ACTIVE = "Active";
+	public static final String FILTER_SEARCH_TEXT = "SearchText";
+	public static final String FILTER_SEARCH_TYPE = "SearchType";
+	public static final String FILTER_MATCH_CASE = "MatchCase";
+	public static final String FILTER_MATCH_DIACRITICS = "MatchDiacritics";
+
 	Preferences prefs;
 
 	public ApplicationPreferences(Object app) {

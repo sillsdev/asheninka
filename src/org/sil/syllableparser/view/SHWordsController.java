@@ -16,6 +16,7 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.StringUtilities;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
@@ -106,15 +107,7 @@ public class SHWordsController extends WordsControllerCommon {
 	public void setData(SHApproach shApproachData, ObservableList<Word> words) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
-		setColumnICURules(wordColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(commentColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
-		setColumnICURules(predictedSyllabificationColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(correctSyllabificationColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
-		setColumnICURules(parserResultColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
-		this.words = words;
-
-		// Add observable list data to the table
-		wordsTable.setItems(words);
+		setDataCommon(words);
 		int max = wordsTable.getItems().size();
 		if (max > 0) {
 			int iLastIndex = mainApp.getApplicationPreferences().getLastSHWordsViewItemUsed();
@@ -168,6 +161,8 @@ public class SHWordsController extends WordsControllerCommon {
 		if (shWord != null) {
 			int currentItem = updateStatusBarWords(getPredictedWords(), getPredictedEqualsCorrectWords());
 			mainApp.getApplicationPreferences().setLastSHWordsViewItemUsed(currentItem);
+		} else {
+			updateStatusBarWords(FXCollections.observableArrayList(), FXCollections.observableArrayList());
 		}
 	}
 

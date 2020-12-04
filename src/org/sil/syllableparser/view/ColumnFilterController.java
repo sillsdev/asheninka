@@ -68,19 +68,16 @@ public class ColumnFilterController implements Initializable {
 	private MainApp mainApp;
 	Stage dialogStage;
 	protected ApplicationPreferences preferences;
-	String sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_WORDS;
-	static final String sSearchTextKey = "SearchText";
-	static final String sSearchTypeKey = "SearchType";
-	static final String sMatchCaseKey = "MatchCase";
-	static final String sMatchDiacriticsKey = "MatchDiacritics";
+	String sAppPreferencesBase = ApplicationPreferences.LAST_CV_FILTER_WORDS;
 	protected String sTextToSearchFor;
 	protected ResourceBundle bundle;
 	protected Locale locale;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private boolean resultIsOK = false;
-	WordsFilterType wordsFilterType = WordsFilterType.WORDS;
+	WordsFilterType wordsFilterType = WordsFilterType.CV_WORDS;
 	ColumnFilterType columnFilterType = ColumnFilterType.ANYWHERE;
 	WordsFilter filter;
+	boolean filterIsActive = false;
 	
 	public ObservableList<Word> getWords() {
 		return words;
@@ -108,12 +105,27 @@ public class ColumnFilterController implements Initializable {
 
 	public void setWordsFilterType(WordsFilterType wordsFilterType) {
 		this.wordsFilterType = wordsFilterType;
-		if (wordsFilterType == WordsFilterType.WORDS) {
+		switch (wordsFilterType) {
+		// all words and words predicted vs. correct are the same
+		case CV_WORDS:
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+		case MORAIC_WORDS:
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+		case NUCLEAR_PROJECTION_WORDS:
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+		case ONC_WORDS:
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+		case OT_WORDS:
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+		case SH_WORDS:
+		case SH_WORDS_PREDICTED_VS_CORRECT:
 			showBlanksRadio.setDisable(true);
 			showNonBlanksRadio.setDisable(true);
-		} else {
+			break;
+		default:
 			showBlanksRadio.setDisable(false);
 			showNonBlanksRadio.setDisable(false);
+			break;
 		}
 	}
 
@@ -153,6 +165,11 @@ public class ColumnFilterController implements Initializable {
 	}
 
 	public void setFilter(WordsFilter filter) {
+		filter.setActive(filterIsActive);
+		filter.setFilterType(columnFilterType);
+		filter.setMatchCase(isMatchCase());
+		filter.setMatchDiacritics(isMatchDiacritics());
+		filter.setTextToMatch(textToSearchFor.getText());
 		this.filter = filter;
 	}
 
@@ -182,25 +199,30 @@ public class ColumnFilterController implements Initializable {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	protected void processFilter() {
 		resultIsOK = true;
 		// create list of words that match the pattern
 		filter = new WordsFilter(wordsFilterType, columnFilterType,
 				matchCaseCheckBox.isSelected(), matchDiacriticsCheckBox.isSelected(),
 				textToSearchFor.getText());
+		filter.setActive(filterIsActive);
 		words = filter.applyFilter(words);
 		preferences.setLastWindowParameters(sAppPreferencesBase, dialogStage);
-		preferences.setPreferencesKey(sAppPreferencesBase + sMatchCaseKey, isMatchCase());
-		preferences.setPreferencesKey(sAppPreferencesBase + sMatchDiacriticsKey, isMatchDiacritics());
-		preferences.setPreferencesKey(sAppPreferencesBase + sSearchTextKey, textToSearchFor.getText());
-		preferences.setPreferencesKey(sAppPreferencesBase + sSearchTypeKey, columnFilterType.toString());
+		preferences.setPreferencesKey(sAppPreferencesBase + preferences.FILTER_ACTIVE, true);
+		preferences.setPreferencesKey(sAppPreferencesBase + preferences.FILTER_MATCH_CASE, isMatchCase());
+		preferences.setPreferencesKey(sAppPreferencesBase + preferences.FILTER_MATCH_DIACRITICS, isMatchDiacritics());
+		preferences.setPreferencesKey(sAppPreferencesBase + preferences.FILTER_SEARCH_TEXT, textToSearchFor.getText());
+		preferences.setPreferencesKey(sAppPreferencesBase + preferences.FILTER_SEARCH_TYPE, columnFilterType.toString());
 		dialogStage.close();
 	}
 
+	@SuppressWarnings("static-access")
 	@FXML
 	private void handleClose() {
 		resultIsOK = false;
 		preferences.setLastWindowParameters(sAppPreferencesBase, dialogStage);
+		preferences.setPreferencesKey(sAppPreferencesBase + preferences.FILTER_ACTIVE, false);
 		dialogStage.close();
 	}
 
@@ -232,82 +254,135 @@ public class ColumnFilterController implements Initializable {
 		this.dialogStage = dialogStage;
 	}
 
-	protected void findWindowParamsToUse() {
+	public static String getAppPreferencesBaseToUse(WordsFilterType wordsFilterType) {
+		String appBase = "";
 		switch (wordsFilterType) {
-		case CORRECT:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_CORRECT_SYLLABIFICATIONS;
+		case CV_CORRECT:
+			appBase = ApplicationPreferences.LAST_CV_FILTER_CORRECT_SYLLABIFICATIONS;
 			break;
 		case CV_PREDICTED:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_PREDICTED_SYLLABIFICATIONS;
+			appBase = ApplicationPreferences.LAST_CV_FILTER_PREDICTED_SYLLABIFICATIONS;
+			break;
+		case CV_WORDS:
+			appBase = ApplicationPreferences.LAST_CV_FILTER_WORDS;
+			break;
+		case CV_WORDS_PREDICTED_VS_CORRECT:
+			appBase = ApplicationPreferences.LAST_CV_FILTER_WORDS_PREDICTED_VS_CORRECT;
+			break;
+		case MORAIC_CORRECT:
+			appBase = ApplicationPreferences.LAST_MORAIC_FILTER_CORRECT_SYLLABIFICATIONS;
 			break;
 		case MORAIC_PREDICTED:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_PREDICTED_SYLLABIFICATIONS;
+			appBase = ApplicationPreferences.LAST_MORAIC_FILTER_PREDICTED_SYLLABIFICATIONS;
+			break;
+		case MORAIC_WORDS:
+			appBase = ApplicationPreferences.LAST_MORAIC_FILTER_WORDS;
+			break;
+		case MORAIC_WORDS_PREDICTED_VS_CORRECT:
+			appBase = ApplicationPreferences.LAST_MORAIC_FILTER_WORDS_PREDICTED_VS_CORRECT;
+			break;
+		case NUCLEAR_PROJECTION_CORRECT:
+			appBase = ApplicationPreferences.LAST_NUCLEAR_PROJECTION_FILTER_CORRECT_SYLLABIFICATIONS;
 			break;
 		case NUCLEAR_PROJECTION_PREDICTED:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_PREDICTED_SYLLABIFICATIONS;
+			appBase = ApplicationPreferences.LAST_NUCLEAR_PROJECTION_FILTER_PREDICTED_SYLLABIFICATIONS;
+			break;
+		case NUCLEAR_PROJECTION_WORDS:
+			appBase = ApplicationPreferences.LAST_NUCLEAR_PROJECTION_FILTER_WORDS;
+			break;
+		case NUCLEAR_PROJECTION_WORDS_PREDICTED_VS_CORRECT:
+			appBase = ApplicationPreferences.LAST_NUCLEAR_PROJECTION_FILTER_WORDS_PREDICTED_VS_CORRECT;
+			break;
+		case ONC_CORRECT:
+			appBase = ApplicationPreferences.LAST_ONC_FILTER_CORRECT_SYLLABIFICATIONS;
 			break;
 		case ONC_PREDICTED:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_PREDICTED_SYLLABIFICATIONS;
+			appBase = ApplicationPreferences.LAST_ONC_FILTER_PREDICTED_SYLLABIFICATIONS;
+			break;
+		case ONC_WORDS:
+			appBase = ApplicationPreferences.LAST_ONC_FILTER_WORDS;
+			break;
+		case ONC_WORDS_PREDICTED_VS_CORRECT:
+			appBase = ApplicationPreferences.LAST_ONC_FILTER_WORDS_PREDICTED_VS_CORRECT;
+			break;
+		case OT_CORRECT:
+			appBase = ApplicationPreferences.LAST_OT_FILTER_CORRECT_SYLLABIFICATIONS;
 			break;
 		case OT_PREDICTED:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_PREDICTED_SYLLABIFICATIONS;
+			appBase = ApplicationPreferences.LAST_OT_FILTER_PREDICTED_SYLLABIFICATIONS;
+			break;
+		case OT_WORDS:
+			appBase = ApplicationPreferences.LAST_OT_FILTER_WORDS;
+			break;
+		case OT_WORDS_PREDICTED_VS_CORRECT:
+			appBase = ApplicationPreferences.LAST_OT_FILTER_WORDS_PREDICTED_VS_CORRECT;
+			break;
+		case SH_CORRECT:
+			appBase = ApplicationPreferences.LAST_SH_FILTER_CORRECT_SYLLABIFICATIONS;
 			break;
 		case SH_PREDICTED:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_PREDICTED_SYLLABIFICATIONS;
+			appBase = ApplicationPreferences.LAST_SH_FILTER_PREDICTED_SYLLABIFICATIONS;
 			break;
-		case WORDS:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_WORDS;
+		case SH_WORDS:
+			appBase = ApplicationPreferences.LAST_SH_FILTER_WORDS;
 			break;
-		default:
-			sAppPreferencesBase = ApplicationPreferences.LAST_FILTER_WORDS;
+		case SH_WORDS_PREDICTED_VS_CORRECT:
+			appBase = ApplicationPreferences.LAST_SH_FILTER_WORDS_PREDICTED_VS_CORRECT;
 			break;
 		}
+		return appBase;
 	}
 
+	protected void findAppPreferencesBaseToUse() {
+		sAppPreferencesBase = getAppPreferencesBaseToUse(wordsFilterType);
+	}
+
+	public static ColumnFilterType getColumnFilterType(ApplicationPreferences prefs, String sPrefKey) {
+		String sType = prefs.getStringValue(sPrefKey, ColumnFilterType.ANYWHERE.toString());
+		ColumnFilterType cft = ColumnFilterType.ANYWHERE;
+		switch (sType) {
+		case "ANYWHERE":
+			cft = ColumnFilterType.ANYWHERE;
+			break;
+		case "AT_END":
+			cft = ColumnFilterType.AT_END;
+			break;
+		case "AT_START":
+			cft = ColumnFilterType.AT_START;
+			break;
+		case "BLANKS":
+			cft = ColumnFilterType.BLANKS;
+			break;
+		case "NON_BLANKS":
+			cft = ColumnFilterType.NON_BLANKS;
+			break;
+		case "REGULAR_EXPRESSION":
+			cft = ColumnFilterType.REGULAR_EXPRESSION;
+			break;
+		case "WHOLE_ITEM":
+			cft = ColumnFilterType.WHOLE_ITEM;
+			break;
+		}
+		return cft;
+	}
+
+	@SuppressWarnings("static-access")
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		preferences = mainApp.getApplicationPreferences();
-		findWindowParamsToUse();
+		findAppPreferencesBaseToUse();
 		dialogStage = preferences.getLastWindowParameters(sAppPreferencesBase, dialogStage, 410.0, 600.0);
-		matchCaseCheckBox.setSelected(preferences.getBooleanValue(sAppPreferencesBase + sMatchCaseKey, matchCaseCheckBox.isSelected()));
-		matchDiacriticsCheckBox.setSelected(preferences.getBooleanValue(sAppPreferencesBase + sMatchDiacriticsKey, matchDiacriticsCheckBox.isSelected()));
-		textToSearchFor.setText(preferences.getStringValue(sAppPreferencesBase + sSearchTextKey, textToSearchFor.getText()));
+		filterIsActive = preferences.getBooleanValue(sAppPreferencesBase + preferences.FILTER_ACTIVE, false);
+		matchCaseCheckBox.setSelected(preferences.getBooleanValue(sAppPreferencesBase + preferences.FILTER_MATCH_CASE, matchCaseCheckBox.isSelected()));
+		matchDiacriticsCheckBox.setSelected(preferences.getBooleanValue(sAppPreferencesBase + preferences.FILTER_MATCH_DIACRITICS, matchDiacriticsCheckBox.isSelected()));
+		textToSearchFor.setText(preferences.getStringValue(sAppPreferencesBase + preferences.FILTER_SEARCH_TEXT, textToSearchFor.getText()));
 		sTextToSearchFor = textToSearchFor.getText();
 		setColumnFilterTypeFromPreferences();
 	}
 
+	@SuppressWarnings("static-access")
 	protected void setColumnFilterTypeFromPreferences() {
-		String sType = preferences.getStringValue(sAppPreferencesBase + sSearchTypeKey, wordsFilterType.toString());
-		switch (sType) {
-		case "ANYWHERE":
-			columnFilterType = ColumnFilterType.ANYWHERE;
-			anywhereRadio.setSelected(true);
-			break;
-		case "AT_END":
-			columnFilterType = ColumnFilterType.AT_END;
-			atEndRadio.setSelected(true);
-			break;
-		case "AT_START":
-			columnFilterType = ColumnFilterType.AT_START;
-			atStartRadio.setSelected(true);
-			break;
-		case "BLANKS":
-			columnFilterType = ColumnFilterType.BLANKS;
-			showBlanksRadio.setSelected(true);
-			break;
-		case "NON_BLANKS":
-			columnFilterType = ColumnFilterType.NON_BLANKS;
-			showNonBlanksRadio.setSelected(true);
-			break;
-		case "REGULAR_EXPRESSION":
-			columnFilterType = ColumnFilterType.REGULAR_EXPRESSION;
-			matchRegularExpressionRadio.setSelected(true);
-			break;
-		case "WHOLE_ITEM":
-			columnFilterType = ColumnFilterType.WHOLE_ITEM;
-			wholeItemRadio.setSelected(true);
-			break;
-		}
+		columnFilterType = getColumnFilterType(preferences, sAppPreferencesBase + preferences.FILTER_SEARCH_TYPE);
 		setColumnFilterType(columnFilterType);
 	}
 

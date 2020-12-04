@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->6 November 2020</date
+>4 December 2020</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -3683,7 +3683,10 @@ src="resources/FindWordSample.png"
 ></chart
 ></example
 ><p
->This can be very useful not only for finding a particular word, but also for looking for particular sequences of characters.</p
+>This can be very useful not only for finding a particular word, but also for looking for particular sequences of characters.  A potentially better option for the latter, however, is described in <sectionRef
+sec="sColumnFiltering"
+></sectionRef
+>.</p
 ><p
 >When your press the <object
 type="tKey"
@@ -4057,6 +4060,129 @@ type="tAsheninka"
 >, you can keep this dialog box open while doing other things.</p
 ></section2
 ></section1
+><section1
+id="sColumnFiltering"
+><secTitle
+>Filtering word columns</secTitle
+><p
+><indexedItem
+term="iFiltersColumns"
+></indexedItem
+>When using any of the Words views or the Predicted vs. correct views, <object
+type="tAsheninka"
+></object
+> allows you to filter the columns containing words or syllabifications. </p
+><p
+>There are three ways to use one of these filters:</p
+><ul
+><li
+>Use <object
+type="tMenuItem"
+>Tools</object
+> and then choose any of <object
+type="tMenuItem"
+>Filter words</object
+>, <object
+type="tMenuItem"
+>Filter predicted syllable breaks</object
+>, <object
+type="tMenuItem"
+>Filter correct syllable breaks</object
+> or <object
+type="tMenuItem"
+>Remove all filters</object
+>.</li
+><li
+>Click on one of the filter-oriented toolbar buttons:<ul
+><li
+><img
+XeLaTeXSpecial="scaled='200'"
+src="resources/icons8-filter-64.png"
+width="30"
+></img
+> for Filter words</li
+><li
+><img
+XeLaTeXSpecial="scaled='200'"
+src="resources/icons8-filter-64-Predicted.png"
+width="30"
+></img
+> for Filter predicted syllable breaks</li
+><li
+><img
+XeLaTeXSpecial="scaled='400' "
+src="resources/icons8-filter-64-Correct.png"
+width="30"
+></img
+> for Filter correct syllable breaks</li
+><li
+><img
+XeLaTeXSpecial="scaled='200'"
+src="resources/icons8-clear-filters-64.png"
+width="30"
+></img
+> for Remove all syllable breaks</li
+></ul
+></li
+><li
+>Right-click on the column header.  This brings up a context menu containing the options available for that column.  For the Words views, these have an additional option to remove the filter for just the column you right-clicked on.</li
+></ul
+><p
+>A filter dialog looks like what is in example <exampleRef
+letter="xColumnFilter"
+num="xColumnFilter"
+></exampleRef
+>.</p
+><example
+num="xColumnFilter"
+><chart
+><img
+src="resources/ColumnFilter.png"
+width="400"
+></img
+></chart
+></example
+><p
+>You can choose to filter on the text you enter at the bottom using various methods:</p
+><ol
+><li
+>The text occurs anywhere within the word or syllabification.</li
+><li
+>The text occurs at the start of the word or syllabification.</li
+><li
+>The text occurs at the end of the word or syllabification.</li
+><li
+>The text describes the entire word or syllabification.</li
+><li
+>The text is a regular expression which should match the word or syllabification.</li
+><li
+>Show only blanks.</li
+><li
+>Show only non-blanks.</li
+></ol
+><pc
+>The last two methods are not available for the Words column or the Predicted vs. correct column.  They are available for both the Predicted Syllable Breaks and the Correct Syllable Breaks columns.</pc
+><p
+>In addition, you can tell it to match upper/lower case or not.  Currently, the matching of diacritics is not done.</p
+><p
+>Regular expressions use what is documented at <link
+href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html"
+>https://​docs.​oracle.​com/​javase/​8/​docs/​api/​java/​util/​regex/​Pattern.html</link
+> beginning at <object
+type="tItalic"
+>Summary of regular-expression constructs</object
+>.  If the text you type cannot be parsed as a regular expression, then when you click on the OK button, an error dialog box will appear, showing where the error occurred and giving you an idea of what the problem is.</p
+><p
+>When creating a filter for any of the Predicted vs. correct views, <object
+type="tAsheninka"
+></object
+> looks for matches for the shape of the word, not the shape of the syllabification (even though what is shown are syllabifications).  That is, no periods are matched.</p
+><p
+>Whenever a filter is being applied, the column header will have a yellow background color.  <object
+type="tAsheninka"
+></object
+> will remember which filters have been used from previous sessions.  It also keeps track of these filters on an approach by approach basis.  That is, you can have different filters for each approach.</p
+></section1
 ><backMatter
 ><appendix
 id="aAsheninka"
@@ -4395,7 +4521,7 @@ id="aSampleDataSets"
 ><object
 type="tAsheninka"
 ></object
-> comes with some sample data sets in case you find these of value.  There are two.</p
+> comes with some sample data sets in case you find these of value. There are two.</p
 ><section1
 id="sSampleEnglishIPA"
 ><secTitle
@@ -4405,7 +4531,7 @@ id="sSampleEnglishIPA"
 paren="none"
 ref="rIPA"
 ></citation
->) per my dialect.  It illustrates the need for some templates and filters which are described in the “Overview” document. You can read this document by clicking <link
+>) per my dialect. It illustrates the need for some templates and filters which are described in the “Overview” document. You can read this document by clicking <link
 href="Overview.pdf"
 >here</link
 > or by using the <object
@@ -4418,14 +4544,14 @@ id="sSampleAsheninka"
 ><secTitle
 >Asheninka Pajonal</secTitle
 ><p
->This has an implementation for the Pajonal variety of Asheninka (ISO-639-3 code cjo).  Here are some observations about it:</p
+>This has an implementation for the Pajonal variety of Asheninka (ISO-639-3 code cjo). Here are some observations about it:</p
 ><ol
 ><li
 >The basic syllable pattern is (C)V(V)(N).</li
 ><li
 >Onsets are required for all syllables but the first.</li
 ><li
->The nasals in the coda are homorganic with the following onset.  We do not actually check for this.</li
+>The nasals in the coda are homorganic with the following onset. We do not actually check for this.</li
 ><li
 >The second vowel of the nucleus is either geminate or an <langData
 lang="lVernacular"
@@ -4441,7 +4567,7 @@ lang="lVernacular"
 >No templates or filters are needed.</li
 ></ol
 ><p
->In this implementation, I chose to model the geminates and diphthongs as separate segments.  The reasons for this are as follows:</p
+>In this implementation, I chose to model the geminates and diphthongs as separate segments. The reasons for this are as follows:</p
 ><ol
 ><li
 >Fewer CV syllable patterns are needed for the <object
@@ -4452,7 +4578,7 @@ type="tCVPatternApproach"
 >The <object
 type="tSHApproach"
 ></object
-> forces a syllable break whenever there are two consecutive top-level segments.  Since vowels are the highest level, this means the geminates and diphthongs are broken into two syllables.  This is incorrect.</li
+> forces a syllable break whenever there are two consecutive top-level segments. Since vowels are the highest level, this means the geminates and diphthongs are broken into two syllables. This is incorrect.</li
 ></ol
 ></section1
 ></appendix
