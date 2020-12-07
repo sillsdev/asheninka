@@ -114,7 +114,7 @@ public class CVWordsController extends WordsControllerCommon {
 		if (max > 0) {
 			int iLastIndex = mainApp.getApplicationPreferences().getLastCVWordsViewItemUsed();
 			iLastIndex = adjustIndexValue(iLastIndex, max);
-			setFocusOnWord(iLastIndex);
+			setFocusOnWord(iLastIndex, false);
 		}
 	}
 

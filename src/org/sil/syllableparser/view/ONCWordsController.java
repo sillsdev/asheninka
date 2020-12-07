@@ -114,7 +114,7 @@ public class ONCWordsController extends WordsControllerCommon {
 		if (max > 0 && mainApp != null) {
 			int iLastIndex = mainApp.getApplicationPreferences().getLastONCWordsViewItemUsed();
 			iLastIndex = adjustIndexValue(iLastIndex, max);
-			setFocusOnWord(iLastIndex);
+			setFocusOnWord(iLastIndex, false);
 		}
 	}
 

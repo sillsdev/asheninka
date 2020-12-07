@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->4 December 2020</date
+>7 December 2020</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -3716,6 +3716,17 @@ type="tONCWords"
 type="tONCApproach"
 ></object
 >. The exception is if you currently selected any of the predicted vs.​ correct views, it will select the chosen word in that view.</p
+><p
+><indexedItem
+term="iFiltersColumns"
+></indexedItem
+>If you happen to have any filters set on any word columns (see <sectionRef
+sec="sColumnFiltering"
+></sectionRef
+>) and the word you chose is not currently in the list of filtered words, then <object
+type="tAsheninka"
+></object
+> will show a dialog box indicating that the word is hidden.  You can remove all filters to show that word or you can cancel the process of finding that word.</p
 ></section2
 ><section2
 id="sRemoveAllWords"
@@ -4066,6 +4077,7 @@ id="sColumnFiltering"
 >Filtering word columns</secTitle
 ><p
 ><indexedItem
+main="yes"
 term="iFiltersColumns"
 ></indexedItem
 >When using any of the Words views or the Predicted vs. correct views, <object

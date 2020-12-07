@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.LingTreeInteractor;
 import org.sil.syllableparser.service.filter.ColumnFilterType;
@@ -29,6 +31,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -36,6 +40,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -328,15 +333,42 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 		wordField.setNodeOrientation(vernacularOrientation);
 	}
 
-	public void setFocusOnWord(int index) {
-		if (wordsTable.getItems().size() > 0 && index > -1 && index < wordsTable.getItems().size()) {
+	public void setFocusOnWord(int index, boolean fCheckFilters) {
+		if (fCheckFilters
+				&& (filterWords.isActive() || filterPredictedSyllableBreaks.isActive() || filterCorrectSyllableBreaks
+						.isActive())) {
+			if (index > -1 && index < words.size()) {
+				Word w = words.get(index);
+				if (wordsTable.getItems().contains(w)) {
+					index = wordsTable.getItems().indexOf(w);
+				} else {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle(MainApp.kApplicationTitle);
+					alert.setHeaderText(bundle.getString("label.wordhiddenbyfilter").replace("{0}", w.getWord()));
+					alert.setContentText(bundle
+							.getString("label.wordhiddenbyfiltersoremoveallfilters"));
+					Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+					stage.getIcons().add(mainApp.getNewMainIconImage());
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK) {
+						handleRemoveAllFilters();
+					} else {
+						// The user chose not to remove filters so quit
+						// Otherwise we may change position in the table
+						return;
+					}
+				}
+			}
+		}
+		final int i = index;
+		if (wordsTable.getItems().size() > 0 && i > -1 && i < wordsTable.getItems().size()) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
 					wordsTable.requestFocus();
-					wordsTable.getSelectionModel().select(index);
-					wordsTable.getFocusModel().focus(index);
-					wordsTable.scrollTo(index);
+					wordsTable.getSelectionModel().select(i);
+					wordsTable.getFocusModel().focus(i);
+					wordsTable.scrollTo(i);
 				}
 			});
 		}
@@ -447,7 +479,7 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 			int max = wordsTable.getItems().size();
 			if (max > 0) {
 				int indexToStartWith = adjustIndexValue(0, max);
-				setFocusOnWord(indexToStartWith);
+				setFocusOnWord(indexToStartWith, false);
 			}
 		} else {
 			wordsTable.setItems(wordsToFilter);

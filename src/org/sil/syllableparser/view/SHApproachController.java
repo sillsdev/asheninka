@@ -155,10 +155,10 @@ public class SHApproachController extends ApproachController {
 	}
 
 	public void handleSHWords() {
-		handleSHWords(0, false);
+		handleSHWords(0, false, false);
 	}
 
-	public void handleSHWords(int index, boolean fResetIndex) {
+	public void handleSHWords(int index, boolean fResetIndex, boolean fCheckFilters) {
 		FXMLLoader loader = createFXMLLoader("fxml/SHWords.fxml");
 		SHWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
@@ -167,7 +167,7 @@ public class SHApproachController extends ApproachController {
 		controller.applyWordFilters();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
-			controller.setFocusOnWord(index);
+			controller.setFocusOnWord(index, fCheckFilters);
 		}
 		prefs.setLastSHApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false);
@@ -394,7 +394,7 @@ public class SHApproachController extends ApproachController {
 				if (currentSHApproachController instanceof SHWordsPredictedVsCorrectController) {
 					handleSHWordsPredictedVsCorrect(index);
 				} else {
-					handleSHWords(index, true);
+					handleSHWords(index, true, true);
 					rootController.selectApproachViewItem(Constants.SH_WORDS_VIEW_INDEX);
 				}
 			});

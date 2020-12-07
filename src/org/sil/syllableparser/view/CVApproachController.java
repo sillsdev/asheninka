@@ -176,10 +176,10 @@ public class CVApproachController extends ApproachController {
 	}
 
 	public void handleCVWords() {
-		handleCVWords(0, false);
+		handleCVWords(0, false, false);
 	}
 
-	public void handleCVWords(int index, boolean fResetIndex) {
+	public void handleCVWords(int index, boolean fResetIndex, boolean fCheckFilters) {
 		FXMLLoader loader = createFXMLLoader("fxml/CVWords.fxml");
 		CVWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
@@ -188,7 +188,7 @@ public class CVApproachController extends ApproachController {
 		controller.applyWordFilters();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
-			controller.setFocusOnWord(index);
+			controller.setFocusOnWord(index, fCheckFilters);
 		}
 		prefs.setLastCVApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false);
@@ -446,7 +446,7 @@ public class CVApproachController extends ApproachController {
 				if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController) {
 					handleCVWordsPredictedVsCorrect(index);
 				} else {
-					handleCVWords(index, true);
+					handleCVWords(index, true, true);
 					rootController.selectApproachViewItem(Constants.CV_WORDS_VIEW_INDEX);
 				}
 			});

@@ -228,10 +228,10 @@ public class ONCApproachController extends ApproachController  {
 	}
 
 	public void handleONCWords() {
-		handleONCWords(0, false);
+		handleONCWords(0, false, false);
 	}
 
-	public void handleONCWords(int index, boolean fResetIndex) {
+	public void handleONCWords(int index, boolean fResetIndex, boolean fCheckFilters) {
 		FXMLLoader loader = createFXMLLoader("fxml/ONCWords.fxml");
 		ONCWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
@@ -240,7 +240,7 @@ public class ONCApproachController extends ApproachController  {
 		controller.applyWordFilters();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
-			controller.setFocusOnWord(index);
+			controller.setFocusOnWord(index, fCheckFilters);
 		}
 		prefs.setLastONCApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false);
@@ -462,7 +462,7 @@ public class ONCApproachController extends ApproachController  {
 				if (currentONCApproachController instanceof ONCWordsPredictedVsCorrectController) {
 					handleONCWordsPredictedVsCorrect(index);
 				} else {
-					handleONCWords(index, true);
+					handleONCWords(index, true, true);
 					rootController.selectApproachViewItem(Constants.ONC_WORDS_VIEW_INDEX);
 				}
 			});

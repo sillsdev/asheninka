@@ -112,7 +112,7 @@ public class SHWordsController extends WordsControllerCommon {
 		if (max > 0) {
 			int iLastIndex = mainApp.getApplicationPreferences().getLastSHWordsViewItemUsed();
 			iLastIndex = adjustIndexValue(iLastIndex, max);
-			setFocusOnWord(iLastIndex);
+			setFocusOnWord(iLastIndex, false);
 		}
 	}
 
