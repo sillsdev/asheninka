@@ -237,6 +237,7 @@ public class ColumnFilterController implements Initializable {
 		showNonBlanksRadio.setUserData(ColumnFilterType.NON_BLANKS);
 		wholeItemRadio.setUserData(ColumnFilterType.WHOLE_ITEM);
 		matchDiacriticsCheckBox.setDisable(true);
+		matchDiacriticsCheckBox.setVisible(false); // does not work the same as in FLEx
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle newToggle) {
 				columnFilterType = (ColumnFilterType) newToggle.getUserData();

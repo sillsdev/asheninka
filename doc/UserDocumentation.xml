@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->7 December 2020</date
+>9 December 2020</date
 ><version
 >0.7.0 Alpha</version
 ><contents
@@ -3683,7 +3683,7 @@ src="resources/FindWordSample.png"
 ></chart
 ></example
 ><p
->This can be very useful not only for finding a particular word, but also for looking for particular sequences of characters.  A potentially better option for the latter, however, is described in <sectionRef
+>This can be very useful not only for finding a particular word, but also for looking for particular sequences of characters. A potentially better option for the latter, however, is described in <sectionRef
 sec="sColumnFiltering"
 ></sectionRef
 >.</p
@@ -3726,7 +3726,7 @@ sec="sColumnFiltering"
 >) and the word you chose is not currently in the list of filtered words, then <object
 type="tAsheninka"
 ></object
-> will show a dialog box indicating that the word is hidden.  You can remove all filters to show that word or you can cancel the process of finding that word.</p
+> will show a dialog box indicating that the word is hidden. You can remove all filters to show that word or you can cancel the process of finding that word.</p
 ></section2
 ><section2
 id="sRemoveAllWords"
@@ -4083,7 +4083,7 @@ term="iFiltersColumns"
 >When using any of the Words views or the Predicted vs. correct views, <object
 type="tAsheninka"
 ></object
-> allows you to filter the columns containing words or syllabifications. </p
+> allows you to filter the columns containing words or syllabifications.</p
 ><p
 >There are three ways to use one of these filters:</p
 ><ul
@@ -4137,7 +4137,7 @@ width="30"
 ></ul
 ></li
 ><li
->Right-click on the column header.  This brings up a context menu containing the options available for that column.  For the Words views, these have an additional option to remove the filter for just the column you right-clicked on.</li
+>Right-click on the column header. This brings up a context menu containing the options available for that column. For the Words views, these have an additional option to remove the filter for just the column you right-clicked on.</li
 ></ul
 ><p
 >A filter dialog looks like what is in example <exampleRef
@@ -4173,9 +4173,9 @@ width="400"
 >Show only non-blanks.</li
 ></ol
 ><pc
->The last two methods are not available for the Words column or the Predicted vs. correct column.  They are available for both the Predicted Syllable Breaks and the Correct Syllable Breaks columns.</pc
+>The last two methods are not available for the Words column or the Predicted vs. correct column. They are available for both the Predicted Syllable Breaks and the Correct Syllable Breaks columns.</pc
 ><p
->In addition, you can tell it to match upper/lower case or not.  Currently, the matching of diacritics is not done.</p
+>In addition, you can tell it to match upper/lower case or not.</p
 ><p
 >Regular expressions use what is documented at <link
 href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html"
@@ -4183,17 +4183,17 @@ href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html"
 > beginning at <object
 type="tItalic"
 >Summary of regular-expression constructs</object
->.  If the text you type cannot be parsed as a regular expression, then when you click on the OK button, an error dialog box will appear, showing where the error occurred and giving you an idea of what the problem is.</p
+>. If the text you type cannot be parsed as a regular expression, then when you click on the OK button, an error dialog box will appear, showing where the error occurred and giving you an idea of what the problem is.</p
 ><p
 >When creating a filter for any of the Predicted vs. correct views, <object
 type="tAsheninka"
 ></object
-> looks for matches for the shape of the word, not the shape of the syllabification (even though what is shown are syllabifications).  That is, no periods are matched.</p
+> looks for matches for the shape of the word, not the shape of the syllabification (even though what is shown are syllabifications). That is, no periods are matched.</p
 ><p
->Whenever a filter is being applied, the column header will have a yellow background color.  <object
+>Whenever a filter is being applied, the column header will have a yellow background color. <object
 type="tAsheninka"
 ></object
-> will remember which filters have been used from previous sessions.  It also keeps track of these filters on an approach by approach basis.  That is, you can have different filters for each approach.</p
+> will remember which filters have been used from previous sessions. It also keeps track of these filters on an approach by approach basis. That is, you can have different filters for each approach.</p
 ></section1
 ><backMatter
 ><appendix
