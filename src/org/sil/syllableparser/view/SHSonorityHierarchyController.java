@@ -524,6 +524,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

@@ -404,6 +404,7 @@ public class ONCApproachController extends ApproachController  {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -428,6 +429,7 @@ public class ONCApproachController extends ApproachController  {
 			dialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -469,6 +471,7 @@ public class ONCApproachController extends ApproachController  {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -604,6 +607,7 @@ public class ONCApproachController extends ApproachController  {
 			tryAWordDialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.LanguageProject;
@@ -58,8 +59,8 @@ public class ParaTExt7SegmentImporter extends SegmentImporter {
 			// We do not care about what else is in the file, so just close it
 			bufr.close();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			MainApp.reportException(e1, null);
 		}
 	}
 

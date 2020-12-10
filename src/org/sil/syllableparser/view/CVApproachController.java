@@ -393,6 +393,7 @@ public class CVApproachController extends ApproachController {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -417,6 +418,7 @@ public class CVApproachController extends ApproachController {
 			dialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 
 	}
@@ -453,6 +455,7 @@ public class CVApproachController extends ApproachController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -588,6 +591,7 @@ public class CVApproachController extends ApproachController {
 			tryAWordDialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

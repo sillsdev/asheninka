@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.SortingOption;
 import org.sil.syllableparser.service.LDMLFileExtractor;
@@ -158,10 +159,9 @@ public class WritingSystemController extends SylParserBaseController implements
 					icuRulesErrorArea.setEditable(false);
 					okButton.setDisable(true);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					MainApp.reportException(e, bundle);
 				}
-
 		    }
 		});
 		ULocale[] availableLocales = ULocale.getAvailableLocales();

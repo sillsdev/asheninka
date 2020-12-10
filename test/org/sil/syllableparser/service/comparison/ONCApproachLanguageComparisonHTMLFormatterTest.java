@@ -124,7 +124,6 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 			contents.close();
 			assertEquals(scontents, result);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -142,7 +141,6 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 			contents.close();
 			assertEquals(scontents, result);
 			} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -159,7 +157,6 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 			contents.close();
 			assertEquals(scontents, result);
 			} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -176,7 +173,6 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 			contents.close();
 			assertEquals(scontents, result);
 			} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

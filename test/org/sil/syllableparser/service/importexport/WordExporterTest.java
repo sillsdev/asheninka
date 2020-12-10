@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -56,7 +56,6 @@ public class WordExporterTest {
 			tempSaveFile = File.createTempFile("AsheninkaTestSave",
 					".ashedata");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -81,7 +80,6 @@ public class WordExporterTest {
 			lineCount = stream.count();
 			assertEquals(1903,  lineCount);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
@@ -98,7 +96,6 @@ public class WordExporterTest {
 			assertEquals("ba=ka", line);
 			bufr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -115,7 +112,6 @@ public class WordExporterTest {
 			lineCount = stream.count();
 			assertEquals(1903,  lineCount);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
@@ -132,7 +128,6 @@ public class WordExporterTest {
 			assertEquals("baka", line);
 			bufr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -146,7 +141,6 @@ public class WordExporterTest {
 			lineCount = stream.count();
 			assertEquals(1910,  lineCount);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
@@ -167,7 +161,6 @@ public class WordExporterTest {
 			assertEquals("ba=ka", line);
 			bufr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -185,7 +178,6 @@ public class WordExporterTest {
 			lineCount = stream.count();
 			assertEquals(1910,  lineCount);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
@@ -206,7 +198,6 @@ public class WordExporterTest {
 			assertEquals("baka", line);
 			bufr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -236,7 +227,6 @@ public class WordExporterTest {
 			lineCount = stream.count();
 			assertEquals(1907,  lineCount);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
@@ -266,7 +256,6 @@ public class WordExporterTest {
 			assertEquals("</exceptions>", line);
 			bufr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -283,7 +272,6 @@ public class WordExporterTest {
 			lineCount = stream.count();
 			assertEquals(1907,  lineCount);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
@@ -313,7 +301,6 @@ public class WordExporterTest {
 			assertEquals("</exceptions>", line);
 			bufr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

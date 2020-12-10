@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -50,6 +50,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 			stream.forEach(s -> languageProject.createNewWordFromParaTExt(s, sUntested));
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 	}
 
@@ -89,6 +90,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 					});
 				} catch (IOException e) {
 					e.printStackTrace();
+					MainApp.reportException(e, bundle);
 				}
 				ControllerUtilities.formatTimePassed(timeStart, "Importing ParaTExt hyphenatedWords.txt file");
 				scene.setCursor(currentCursor);
@@ -131,8 +133,8 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 			}
 			bufr.close();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			MainApp.reportException(e1, null);
 		}
 	}
 }

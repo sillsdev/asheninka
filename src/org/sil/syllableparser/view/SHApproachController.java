@@ -342,6 +342,7 @@ public class SHApproachController extends ApproachController {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -366,6 +367,7 @@ public class SHApproachController extends ApproachController {
 			dialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -401,6 +403,7 @@ public class SHApproachController extends ApproachController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -536,6 +539,7 @@ public class SHApproachController extends ApproachController {
 			tryAWordDialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

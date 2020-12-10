@@ -18,7 +18,6 @@ import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
-import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -37,7 +36,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -458,6 +456,7 @@ public class CVSyllablePatternsController extends SplitPaneWithTableViewControll
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

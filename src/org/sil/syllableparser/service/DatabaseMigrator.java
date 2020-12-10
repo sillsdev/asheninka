@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -24,6 +24,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.utility.HandleExceptionMessage;
 import org.w3c.dom.Document;
 
@@ -73,8 +74,8 @@ public class DatabaseMigrator {
 			bufr.close();
 			reader.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 		return version;
 	}
@@ -100,8 +101,8 @@ public class DatabaseMigrator {
 					StandardCopyOption.REPLACE_EXISTING);
 			// TODO: delete the temp files
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 	}
 
@@ -111,8 +112,8 @@ public class DatabaseMigrator {
 		try {
 			tempSaveFile = File.createTempFile("AsheninkaDataMigration" + version, ".ashedata");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 
 		// if (tempSaveFile != null) {

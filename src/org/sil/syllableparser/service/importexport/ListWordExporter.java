@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 
 import org.controlsfx.control.StatusBar;
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.view.ApproachController;
@@ -56,8 +57,8 @@ public class ListWordExporter extends WordExporter {
 			}
 			fileWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 	}
 
@@ -101,8 +102,8 @@ public class ListWordExporter extends WordExporter {
 					}
 					fileWriter.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					MainApp.reportException(e, bundle);
 				}
 				ControllerUtilities.formatTimePassed(timeStart, "Exporting plain list");
 				scene.setCursor(currentCursor);

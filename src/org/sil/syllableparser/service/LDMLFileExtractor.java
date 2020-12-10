@@ -20,6 +20,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.utility.HandleExceptionMessage;
 import org.w3c.dom.Document;
 
@@ -50,8 +51,8 @@ public class LDMLFileExtractor {
 			sIcuRules = new String(Files.readAllBytes(result.toPath()),
 					StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 		return sIcuRules;
 	}
@@ -62,8 +63,8 @@ public class LDMLFileExtractor {
 		try {
 			tempSaveFile = File.createTempFile("AsheninkaLdmlFileExtraction", ".ldml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 
 		// if (tempSaveFile != null) {

@@ -19,7 +19,6 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -36,7 +35,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -495,6 +493,7 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

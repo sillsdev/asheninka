@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -9,9 +9,6 @@ package org.sil.syllableparser.backendprovider;
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -76,12 +73,6 @@ public class XMLBackEndProvider extends BackEndProvider {
 			e.printStackTrace();
 			HandleExceptionMessage.show(sFileError, sFileErrorLoadHeader, sFileErrorLoadContent
 					+ file.getPath(), true);
-			// Alert alert = new Alert(AlertType.ERROR);
-			// alert.setTitle(sFileError);
-			// alert.setHeaderText(sFileErrorLoadHeader);
-			// alert.setContentText(sFileErrorLoadContent + file.getPath());
-			// alert.showAndWait();
-			// System.exit(1);
 		}
 	}
 
@@ -102,11 +93,6 @@ public class XMLBackEndProvider extends BackEndProvider {
 			e.printStackTrace();
 			HandleExceptionMessage.show(sFileError, sFileErrorSaveHeader, sFileErrorSaveContent
 					+ file.getPath(), true);
-			// Alert alert = new Alert(AlertType.ERROR);
-			// alert.setTitle(sFileError);
-			// alert.setHeaderText(sFileErrorSaveHeader);
-			// alert.setContentText(sFileErrorSaveContent + file.getPath());
-			// alert.showAndWait();
 		}
 	}
 

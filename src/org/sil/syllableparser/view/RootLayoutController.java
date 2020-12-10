@@ -16,7 +16,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.dialog.FontSelectorDialog;
 import org.sil.syllableparser.ApplicationPreferences;
@@ -43,10 +42,8 @@ import org.sil.syllableparser.service.importexport.SegmentImporterException;
 import org.sil.syllableparser.service.importexport.XLingPaperHyphenatedWordExporter;
 import org.sil.utility.DateTimeNormalizer;
 import org.sil.utility.view.ControllerUtilities;
-
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
-
 import static javafx.geometry.Orientation.VERTICAL;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -467,6 +464,7 @@ public class RootLayoutController implements Initializable {
 			}
 		} catch (IOException | CloneNotSupportedException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -645,8 +643,8 @@ public class RootLayoutController implements Initializable {
 				try {
 					Files.createDirectory(Paths.get(backupDirectoryPath));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					MainApp.reportException(e, bundle);
 				}
 			}
 			String nameWithoutExtension = mainApp.getLanguageProjectFilePath().getName()
@@ -696,6 +694,7 @@ public class RootLayoutController implements Initializable {
 			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 			return false;
 		}
 	}
@@ -729,6 +728,7 @@ public class RootLayoutController implements Initializable {
 			dialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 
 	}
@@ -823,6 +823,7 @@ public class RootLayoutController implements Initializable {
 			dialogStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -1630,8 +1631,8 @@ public class RootLayoutController implements Initializable {
 				}
 
 				catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					MainApp.reportException(e, bundle);
 				}
 			}
 		});

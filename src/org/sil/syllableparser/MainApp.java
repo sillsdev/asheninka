@@ -176,9 +176,10 @@ public class MainApp extends Application implements MainAppUtilities {
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		} catch (Exception e) {
-			System.out.println("non-IO Exception caught!");
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 	}
 
@@ -224,8 +225,8 @@ public class MainApp extends Application implements MainAppUtilities {
 				break;
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 		return fSucceeded;
 	}
@@ -353,4 +354,18 @@ public class MainApp extends Application implements MainAppUtilities {
 		return controller;
 	}
 
+	public static void reportException(Exception ex, ResourceBundle bundle) {
+		String sTitle = "Error Found!";
+		String sHeader = "A serious error happened.";
+		String sContent = "Please copy the exception information below, email it to asheninka_support_lsdev@sil.org along with a description of what you were doing.";
+		String sLabel = "The exception stacktrace was:";
+		if (bundle != null) {
+			sTitle = bundle.getString("exception.title");
+			sHeader = bundle.getString("exception.header");
+			sContent = bundle.getString("exception.content");
+			sLabel = bundle.getString("exception.label");
+		}
+		ControllerUtilities.showExceptionInErrorDialog(ex, sTitle, sHeader, sContent, sLabel);
+		System.exit(1);
+	}
 }

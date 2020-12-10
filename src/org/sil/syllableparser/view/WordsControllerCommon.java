@@ -461,6 +461,7 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 		return filter;
 	}

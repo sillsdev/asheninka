@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,10 +15,9 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.LanguageProject;
 
@@ -48,11 +47,11 @@ public class BackupFileRestorer {
 			loadData(languageProject, locale, temp);
 			temp.delete();
 		} catch (ZipException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 	}
 

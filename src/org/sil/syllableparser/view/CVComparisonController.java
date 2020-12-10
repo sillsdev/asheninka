@@ -128,11 +128,11 @@ public class CVComparisonController extends ComparisonController {
 			backupComment = getBackupComment(backupDirectory2);
 			sDataSet2Info = backupDirectory2 + " (" + backupComment + ")";
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

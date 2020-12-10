@@ -9,6 +9,7 @@ package org.sil.syllableparser.view;
 import java.util.Comparator;
 
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.SylParserBase;
@@ -127,8 +128,8 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 				return comparatorViaRules.compare(s1, s2);
 			});
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 	protected void processAnalysisTableCell(TableCell<? extends SylParserBase, String> cell, Text text, String item, boolean empty) {

@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.filter.ColumnFilterType;
 import org.sil.syllableparser.service.filter.WordsFilter;
@@ -184,6 +185,7 @@ public class WordsPredictedVsCorrectCommonController extends SylParserBaseContro
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

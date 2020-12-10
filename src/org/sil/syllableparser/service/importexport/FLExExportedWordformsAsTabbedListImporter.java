@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -47,6 +47,7 @@ public class FLExExportedWordformsAsTabbedListImporter extends WordImporter {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 	}
 
@@ -81,6 +82,7 @@ public class FLExExportedWordformsAsTabbedListImporter extends WordImporter {
 					});
 				} catch (IOException e) {
 					e.printStackTrace();
+					MainApp.reportException(e, bundle);
 				}
 				ControllerUtilities.formatTimePassed(timeStart,
 						"Importing ParaTExt hyphenatedWords.txt file");

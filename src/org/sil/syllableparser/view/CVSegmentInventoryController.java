@@ -21,7 +21,6 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
-import org.sil.utility.StringUtilities;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -40,7 +39,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -575,6 +573,7 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
