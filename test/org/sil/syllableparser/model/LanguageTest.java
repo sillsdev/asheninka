@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -39,13 +39,13 @@ public class LanguageTest {
 		Language lang = new Language();
 		checkFontInfo(lang, "System", 12.0, "Regular");
 		
-		lang = new Language("System", 9.0, "Bold");
+		lang = new Language("System", 9.0, "Bold", null, null, null, "", null, null);
 		checkFontInfo(lang, "System",  9.0, "Bold");
 		
-		lang = new Language("System", 10.0, "Italic");
+		lang = new Language("System", 10.0, "Italic", null, null, null, "", null, null);
 		checkFontInfo(lang, "System",  10.0, "Italic");
 		
-		lang = new Language("Charis SIL", 14.0, "Bold Italic");
+		lang = new Language("Charis SIL", 14.0, "Bold Italic", null, null, null, "", null, null);
 		checkFontInfo(lang, "Charis SIL", 14.0, "Bold Italic");
 	}
 	

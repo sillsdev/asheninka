@@ -21,6 +21,16 @@ see="iLanguageAnalysis"
 >Analysis language</term
 ></indexTerm
 ><indexTerm
+id="iColor"
+><term
+>Color</term
+></indexTerm
+><indexTerm
+id="iCompareApproaches"
+><term
+>Compare approaches</term
+></indexTerm
+><indexTerm
 id="iCompare2Implementations"
 ><term
 >Compare two implementations</term
@@ -34,6 +44,11 @@ id="iCVPatternApproach"
 id="iCVPatternAlgorithm"
 ><term
 >Algorithm</term
+></indexTerm
+><indexTerm
+id="iCVCompare2Implementstions"
+><term
+>Compare two implementations</term
 ></indexTerm
 ><indexTerm
 id="iCVEnvironments"
@@ -83,6 +98,11 @@ id="iCVWords"
 ></indexTerms
 ></indexTerm
 ><indexTerm
+id="iDefaultOrder"
+><term
+>Default order</term
+></indexTerm
+><indexTerm
 id="iDeleteDataItem"
 ><term
 >Delete data item</term
@@ -92,6 +112,12 @@ id="iDiscretionaryHyphen"
 see="iHPDiscretionaryHyphen"
 ><term
 >Discretionary hyphen character(s)</term
+></indexTerm
+><indexTerm
+id="iEnglish"
+see="iUIEnglish"
+><term
+>English</term
 ></indexTerm
 ><indexTerm
 id="iExportWords"
@@ -127,9 +153,56 @@ id="iFailureCVSyllables"
 ></indexTerms
 ></indexTerm
 ><indexTerm
+id="iCVFailures"
+><term
+>Sonority hierarchy approach</term
+><indexTerms
+><indexTerm
+id="iFailureSHNaturalClasser"
+><term
+>Parse into natural classes</term
+></indexTerm
+><indexTerm
+id="iFailureSHSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
 id="iONCFailures"
 ><term
 >ONC approach</term
+><indexTerms
+><indexTerm
+id="iFailureONCNaturalClasser"
+><term
+>Parse into natural classes</term
+></indexTerm
+><indexTerm
+id="iFailureONCSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+></indexTerms
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iFilters"
+><term
+>Filters</term
+><indexTerms
+><indexTerm
+id="iFiltersColumns"
+><term
+>Columns in word views and predicted vs. correct view</term
+></indexTerm
+><indexTerm
+id="iFiltersDuringSyllabification"
+see="iONCFilter"
+><term
+>During syllabification</term
 ></indexTerm
 ></indexTerms
 ></indexTerm
@@ -138,6 +211,12 @@ id="iFonts"
 see="iLanguage"
 ><term
 >Fonts</term
+></indexTerm
+><indexTerm
+id="iFrench"
+see="iUIFrench"
+><term
+>French</term
 ></indexTerm
 ><indexTerm
 id="iHelp"
@@ -190,6 +269,11 @@ type="tItalic"
 ></indexTerms
 ></indexTerm
 ><indexTerm
+id="iICUCustomRules"
+><term
+>ICU custom rules</term
+></indexTerm
+><indexTerm
 id="iImportWords"
 see="iImport"
 ><term
@@ -215,6 +299,23 @@ id="iLanguageAnalysis"
 id="iLanguageUI"
 ><term
 >User interface</term
+><indexTerms
+><indexTerm
+id="iUIEnglish"
+><term
+>English</term
+></indexTerm
+><indexTerm
+id="iUIFrench"
+><term
+>French</term
+></indexTerm
+><indexTerm
+id="iUISpanish"
+><term
+>Spanish</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iLanguageVernacular"
@@ -222,6 +323,11 @@ id="iLanguageVernacular"
 >Vernacular</term
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iLDMLFile"
+><term
+>LDML file</term
 ></indexTerm
 ><indexTerm
 id="iMoraicApproach"
@@ -243,6 +349,78 @@ id="iNuclearProjectionApproach"
 id="iONCApproach"
 ><term
 >Onset-nucleus-coda approach</term
+><indexTerms
+><indexTerm
+id="iONCPatternAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iONCCompare2Implementstions"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iONCEnvironments"
+><term
+>Environments</term
+></indexTerm
+><indexTerm
+id="iONCFilter"
+><term
+>Filters</term
+></indexTerm
+><indexTerm
+id="iONCGraphemeNaturalClasses"
+><term
+>Grapheme natural classes</term
+></indexTerm
+><indexTerm
+id="iONCGraphemes"
+><term
+>Graphemes</term
+></indexTerm
+><indexTerm
+id="iONCNaturalClasses"
+><term
+>Natural classes</term
+></indexTerm
+><indexTerm
+id="iONCPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="iONCSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iONCSonorityHierarchy"
+><term
+>Sonority hierarchy</term
+></indexTerm
+><indexTerm
+id="iONCSyllabificationParameters"
+><term
+>Syllabification parameters</term
+></indexTerm
+><indexTerm
+id="iONCTemplates"
+><term
+>Templates</term
+></indexTerm
+><indexTerm
+id="iONCTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iONCWords"
+><term
+>Words</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iOpenProject"
@@ -260,6 +438,11 @@ id="iOrdering"
 see="iSorting"
 ><term
 >Ordering data in display</term
+></indexTerm
+><indexTerm
+id="iParseAllWords"
+><term
+>Parse all words</term
 ></indexTerm
 ><indexTerm
 id="iParsing"
@@ -282,6 +465,12 @@ id="iParsingResult"
 ><term
 >Parsing result failure messages</term
 ></indexTerm
+><indexTerm
+id="iAlgorithmSH"
+see="iSHPatternAlgorithm"
+><term
+>Sonority hierarchy algorithm</term
+></indexTerm
 ></indexTerms
 ></indexTerm
 ><indexTerm
@@ -292,7 +481,17 @@ id="iCVPredictedSyllabification"
 ><indexTerm
 id="iCVPredictedSyllabificationCompare"
 ><term
->Comparing with correct</term
+>Comparing with correct (CV)</term
+></indexTerm
+><indexTerm
+id="iONCPredictedSyllabificationCompare"
+><term
+>Comparing with correct (ONC)</term
+></indexTerm
+><indexTerm
+id="iSHPredictedSyllabificationCompare"
+><term
+>Comparing with correct (Son. Hier.)</term
 ></indexTerm
 ><indexTerm
 id="iCVPredictedSyllabificationConvert"
@@ -346,10 +545,25 @@ id="iProjectSaveAs"
 ></indexTerms
 ></indexTerm
 ><indexTerm
+id="iQuiegolaniZapotec"
+><term
+>Quiegolani Zapotc</term
+></indexTerm
+><indexTerm
 id="iRemoveDataItem"
 see="iDeleteDataItem"
 ><term
 >Remove data item</term
+></indexTerm
+><indexTerm
+id="iRightToLeft"
+><term
+>Right-to-left script</term
+></indexTerm
+><indexTerm
+id="iSameAsAnotherLanguage"
+><term
+>Same as another language sorting option</term
 ></indexTerm
 ><indexTerm
 id="iSaveProject"
@@ -367,11 +581,79 @@ see="iProjectSaveAs"
 id="iSonorityHierarchyApproach"
 ><term
 >Sonority hierarchy approach</term
+><indexTerms
+><indexTerm
+id="iSHPatternAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iSHCompare2Implementstions"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iSHEnvironments"
+><term
+>Environments</term
+></indexTerm
+><indexTerm
+id="iSHGraphemeNaturalClasses"
+><term
+>Grapheme natural classes</term
+></indexTerm
+><indexTerm
+id="iSHGraphemes"
+><term
+>Graphemes</term
+></indexTerm
+><indexTerm
+id="iSHNaturalClasses"
+><term
+>Natural classes</term
+></indexTerm
+><indexTerm
+id="iSHPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="iSHSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iSHSonorityHierarchy"
+><term
+>Sonority hierarchy</term
+></indexTerm
+><indexTerm
+id="iSHTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iSHWords"
+><term
+>Words</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iSorting"
 ><term
 >Sorting data in display</term
+></indexTerm
+><indexTerm
+id="iSortOrder"
+><term
+>Sort order</term
+></indexTerm
+><indexTerm
+id="iSpanish"
+see="iUISpanish"
+><term
+>Spanish</term
 ></indexTerm
 ><indexTerm
 id="iStartHyphenation"
@@ -381,6 +663,11 @@ see="iHPStart"
 type="tItalic"
 >i</object
 > characters from the front</term
+></indexTerm
+><indexTerm
+id="iStatusBar"
+><term
+>Status bar</term
 ></indexTerm
 ><indexTerm
 id="iStopHyphenation"
@@ -396,6 +683,51 @@ id="iSyllabification"
 see="iIntroduction"
 ><term
 >Syllabification</term
+></indexTerm
+><indexTerm
+id="iSyllabificationParameters"
+><term
+>Syllabification parameters</term
+><indexTerms
+><indexTerm
+id="iCodasAllowed"
+><term
+>Codas allowed</term
+></indexTerm
+><indexTerm
+id="iOnsetMaximization"
+><term
+>Onset maximization</term
+></indexTerm
+><indexTerm
+id="iOnsetPrinciple"
+><term
+>Onset principle</term
+><indexTerms
+><indexTerm
+id="iAllButFirst"
+><term
+>All but first syllable</term
+></indexTerm
+><indexTerm
+id="iEverySyllable"
+><term
+>Every syllable</term
+></indexTerm
+><indexTerm
+id="iOnsetsNotRequired"
+><term
+>Onsets not required</term
+></indexTerm
+></indexTerms
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iTemplates"
+see="iONCTemplates"
+><term
+>Templates</term
 ></indexTerm
 ><indexTerm
 id="iTryAWord"
@@ -481,7 +813,7 @@ id="iImport"
 id="iImportFLEx"
 ><term
 >From <object
-type="tTool"
+type="tFieldWorks"
 >FieldWorks Language Explorer</object
 ></term
 ></indexTerm
@@ -511,6 +843,29 @@ id="iRemoveWords"
 >Remove all words</term
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iWritingSystems"
+><term
+>Writing Systems</term
+><indexTerms
+><indexTerm
+id="iAnalysisWS"
+><term
+>Analysis language</term
+></indexTerm
+><indexTerm
+id="iVernacularWS"
+><term
+>Vernacular language</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iZapotecQuiegolani"
+see="iQuiegolaniZapotec"
+><term
+>Zapotec, Quiegolani</term
 ></indexTerm
 ></indexTerms
 >

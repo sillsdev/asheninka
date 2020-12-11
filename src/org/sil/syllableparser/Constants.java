@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 public class Constants {
 	// program wide constants
-	public static final String VERSION_NUMBER = "0.5.2.0 Alpha";
+	public static final String VERSION_NUMBER = "0.7.0.0 Beta";
 	public static final int SAVE_DATA_PERIODICITY = 15;
 	public static final int CURRENT_DATABASE_VERSION = 2;
 
@@ -23,6 +23,9 @@ public class Constants {
 	public static final String ASHENINKA_DATA_FILE_EXTENSION = "ashedata";
 	public static final String ASHENINKA_DATA_FILE_EXTENSIONS = "*."
 			+ ASHENINKA_DATA_FILE_EXTENSION;
+	public static final String LDML_FILE_EXTENSION = "ldml";
+	public static final String LDML_FILE_EXTENSIONS = "*."
+			+ LDML_FILE_EXTENSION;
 	public static final String ASHENINKA_STARTER_FILE = "resources/starterFile.ashedata";
 	public static final String DEFAULT_DIRECTORY_NAME = "My Asheninka";
 	public static final String BACKUP_DIRECTORY_NAME = "Backups";
@@ -41,6 +44,8 @@ public class Constants {
 	public static final String UTF8_ENCODING = "UTF8";
 	public static final String XML_FILE_EXTENSION = ".xml";
 	public static final String MIGRATION_XSLT_FILE_NAME = "resources/DataMigration";
+	public static final String LDML_XSLT_FILE_NAME = "resources/LdmlExtractor.xsl";
+	public static final String RESOURCE_SOURCE_LOCATION = "src/org/sil/syllableparser/";
 
 	// chooser related constants
 	public static final String WORD_BOUNDARY_SYMBOL = "#";
@@ -56,7 +61,38 @@ public class Constants {
 	public static final String PLEASE_WAIT_HTML_ENDING = "</p>\n</body>\n</html>\n";
 	public static final String NATURAL_CLASS_PREFIX = "[";
 	public static final String NATURAL_CLASS_SUFFIX = "]";
-	
+	public static final String SORT_VALUE_DIVIDER = ";";
+	public static final String TEXT_COLOR_CSS_BEGIN = "-fx-text-inner-color: ";
+	public static final String TEXT_COLOR_CSS_END = ";";
+	public static final String PARSER_SUCCESS_COLOR_STRING = "green";
+	public static final String PARSER_FAILURE_COLOR_STRING = "red";
+
+	// View constants
+	public static final int CV_SEGMENT_INVENTORY_VIEW_INDEX = 0;
+	public static final int CV_NATURAL_CLASSES_VIEW_INDEX = 1;
+	public static final int CV_SYLLABLE_PATTERNS_VIEW_INDEX = 2;
+	public static final int CV_WORDS_VIEW_INDEX = 3;
+	public static final int CV_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 4;
+	public static final int CV_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 5;
+	public static final int CV_ENVIRONMENTS_VIEW_INDEX = 6;
+
+	public static final int SH_SEGMENT_INVENTORY_VIEW_INDEX = 0;
+	public static final int SH_SONORITY_HIERARCHY_VIEW_INDEX = 1;
+	public static final int SH_WORDS_VIEW_INDEX = 2;
+	public static final int SH_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 3;
+	public static final int SH_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 4;
+	public static final int SH_ENVIRONMENTS_VIEW_INDEX = 5;
+
+	public static final int ONC_SEGMENT_INVENTORY_VIEW_INDEX = 0;
+	public static final int ONC_SONORITY_HIERARCHY_VIEW_INDEX = 1;
+	public static final int ONC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX = 2;
+	public static final int ONC_NATURAL_CLASSES_VIEW_INDEX = 3;
+	public static final int ONC_TEMPLATES_VIEW_INDEX = 4;
+	public static final int ONC_FILTERS_VIEW_INDEX = 5;
+	public static final int ONC_WORDS_VIEW_INDEX = 6;
+	public static final int ONC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 7;
+	public static final int ONC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 8;
+	public static final int ONC_ENVIRONMENTS_VIEW_INDEX = 9;
 
 	// Unit Testing constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/org/sil/syllableparser/testData/CVTestData.";
@@ -76,6 +112,8 @@ public class Constants {
 	public static final String UNIT_TEST_DATA_FILE_VERSION_002 = "test/org/sil/syllableparser/testData/CVTestDataVersion002.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_VERSION_2 = "test/org/sil/syllableparser/testData/CVTestDataVersion2.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_ENVIRONMENTS = "test/org/sil/syllableparser/testData/CVTestDataEnvironments.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_TEMPLATES_FILTERS = "test/org/sil/syllableparser/testData/TemplatesFiltersTestData.ashedata";
+	public static final String UNIT_TEST_DATA_FILE_ICU_RULES = "test/org/sil/syllableparser/testData/ICURulesTestData.ashedata";
 
 	// Text colors
 	public static final Color ACTIVE = Color.BLACK;
@@ -83,6 +121,7 @@ public class Constants {
 	public static final Color PARSER_SUCCESS = Color.GREEN;
 	public static final Color PARSER_FAILURE = Color.RED;
 	public static final Color ENVIRONMENT_ERROR_MESSAGE = Color.CRIMSON;
+	public static final Color SLOTS_ERROR_MESSAGE = Color.CRIMSON;
 	
 	// Try a Word constants
 	public static final String TRY_A_WORD_INTERBLOCK_CSS = ".interblock {\n"

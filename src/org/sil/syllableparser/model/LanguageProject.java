@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -8,24 +8,19 @@ package org.sil.syllableparser.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.utility.StringUtilities;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 /**
  * @author Andy Black
@@ -35,10 +30,13 @@ import org.sil.utility.StringUtilities;
 public class LanguageProject {
 
 	private CVApproach cvApproach;
+	private SHApproach shApproach;
+	private ONCApproach oncApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
-	private ObservableList<GraphemeNaturalClass> graphemeNaturalClasses = FXCollections.observableArrayList();
+	private ObservableList<GraphemeNaturalClass> graphemeNaturalClasses = FXCollections
+			.observableArrayList();
 	private Language vernacularLanguage;
 	private Language analysisLanguage;
 	private HyphenationParametersListWord hyphenationParametersListWord;
@@ -46,16 +44,24 @@ public class LanguageProject {
 	private HyphenationParametersXLingPaper hyphenationParametersXLingPaper;
 	private int databaseVersion;
 	private ObservableList<Environment> environments = FXCollections.observableArrayList();
-	
+	private ObservableList<Template> templates = FXCollections.observableArrayList();
+	private ObservableList<Filter> filters = FXCollections.observableArrayList();
+	private SyllabificationParameters syllabificationParameters;
+
 	public LanguageProject() {
 		super();
 		cvApproach = new CVApproach();
 		cvApproach.setLanguageProject(this);
+		shApproach = new SHApproach();
+		shApproach.setLanguageProject(this);
+		oncApproach = new ONCApproach();
+		oncApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
 		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
 		hyphenationParametersParaTExt = new HyphenationParametersParaTExt("=", 2, 2);
 		hyphenationParametersXLingPaper = new HyphenationParametersXLingPaper("-", 2, 2);
+		syllabificationParameters = new SyllabificationParameters();
 	}
 
 	/**
@@ -63,17 +69,21 @@ public class LanguageProject {
 	 */
 	public void clear() {
 		cvApproach.clear();
+		shApproach.clear();
+		oncApproach.clear();
 		segmentInventory.clear();
 		words.clear();
 		environments.clear();
 		graphemeNaturalClasses.clear();
+		templates.clear();
+		filters.clear();
 	}
 
 	public int getDatabaseVersion() {
 		return databaseVersion;
 	}
 
-	@XmlAttribute(name="databaseVersion")
+	@XmlAttribute(name = "databaseVersion")
 	public void setDatabaseVersion(int databaseVersion) {
 		this.databaseVersion = databaseVersion;
 	}
@@ -87,6 +97,24 @@ public class LanguageProject {
 		this.cvApproach = cvApproach;
 	}
 
+	public SHApproach getSHApproach() {
+		return shApproach;
+	}
+
+	@XmlElement(name = "shApproach")
+	public void setSHApproach(SHApproach shApproach) {
+		this.shApproach = shApproach;
+	}
+
+	public ONCApproach getONCApproach() {
+		return oncApproach;
+	}
+
+	@XmlElement(name = "oncApproach")
+	public void setONCApproach(ONCApproach oncApproach) {
+		this.oncApproach = oncApproach;
+	}
+
 	/**
 	 * @return the cvSegmentInventoryData
 	 */
@@ -95,17 +123,14 @@ public class LanguageProject {
 	public ObservableList<Segment> getSegmentInventory() {
 		return segmentInventory;
 	}
-	
+
 	public List<Segment> getActiveSegmentsInInventory() {
-		return segmentInventory.stream().filter(segment -> segment.isActive()).collect(Collectors.toList());
+		return segmentInventory.stream().filter(segment -> segment.isActive())
+				.collect(Collectors.toList());
 	}
 
-	/**
-	 * @param cvSegmentInventoryData
-	 *            the cvSegmentInventoryData to set
-	 */
-	public void setSegmentInventory(ObservableList<Segment> cvSegmentInventoryData) {
-		this.segmentInventory = cvSegmentInventoryData;
+	public void setSegmentInventory(ObservableList<Segment> segmentInventoryData) {
+		this.segmentInventory = segmentInventoryData;
 	}
 
 	@XmlElementWrapper(name = "graphemeNaturalClassess")
@@ -114,7 +139,8 @@ public class LanguageProject {
 		return graphemeNaturalClasses;
 	}
 
-	public void setGraphemeNaturalClasses(ObservableList<GraphemeNaturalClass> graphemeNaturalClassesData) {
+	public void setGraphemeNaturalClasses(
+			ObservableList<GraphemeNaturalClass> graphemeNaturalClassesData) {
 		this.graphemeNaturalClasses = graphemeNaturalClassesData;
 	}
 
@@ -127,11 +153,23 @@ public class LanguageProject {
 	}
 
 	public List<GraphemeNaturalClass> getActiveGraphemeNaturalClasses() {
-		return graphemeNaturalClasses.stream().filter(gnc -> gnc.isActive()).collect(Collectors.toList());
+		return graphemeNaturalClasses.stream().filter(gnc -> gnc.isActive())
+				.collect(Collectors.toList());
 	}
 
 	public List<Environment> getActiveAndValidEnvironments() {
-		return environments.stream().filter(env -> env.isActive() && env.isValid()).collect(Collectors.toList());
+		return environments.stream().filter(env -> env.isActive() && env.isValid())
+				.collect(Collectors.toList());
+	}
+
+	public List<Template> getActiveAndValidTemplates() {
+		return templates.stream().filter(template -> template.isActive() && template.isValid())
+				.collect(Collectors.toList());
+	}
+
+	public List<Filter> getActiveAndValidFilters() {
+		return filters.stream().filter(filter -> filter.isActive() && filter.isValid())
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -160,13 +198,33 @@ public class LanguageProject {
 	public void setEnvironments(ObservableList<Environment> environments) {
 		this.environments = environments;
 	}
-	
+
 	public ObservableList<Grapheme> getGraphemes() {
 		ObservableList<Grapheme> graphemes = FXCollections.observableArrayList();
 		for (Segment segment : getSegmentInventory()) {
 			graphemes.addAll(segment.getGraphs());
 		}
 		return graphemes;
+	}
+
+	@XmlElementWrapper(name = "templates")
+	@XmlElement(name = "template")
+	public ObservableList<Template> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(ObservableList<Template> templates) {
+		this.templates = templates;
+	}
+
+	@XmlElementWrapper(name = "filters")
+	@XmlElement(name = "filter")
+	public ObservableList<Filter> getFilters() {
+		return filters;
+	}
+
+	public void setFilters(ObservableList<Filter> filters) {
+		this.filters = filters;
 	}
 
 	public String getParaTExtHyphenatedWordsPreamble() {
@@ -184,6 +242,10 @@ public class LanguageProject {
 		databaseVersion = languageProjectLoaded.getDatabaseVersion();
 		cvApproach.load(languageProjectLoaded.getCVApproach());
 		cvApproach.setLanguageProject(this);
+		shApproach.load(languageProjectLoaded.getSHApproach());
+		shApproach.setLanguageProject(this);
+		oncApproach.load(languageProjectLoaded.getONCApproach());
+		oncApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
 				.getSegmentInventory();
 		for (Segment segment : segmentInventoryLoadedData) {
@@ -193,16 +255,32 @@ public class LanguageProject {
 		for (Word word : wordsLoadedData) {
 			words.add(word);
 		}
-		ObservableList<GraphemeNaturalClass> graphemeNaturalClassesLoadedData = languageProjectLoaded.getGraphemeNaturalClasses();
+		ObservableList<GraphemeNaturalClass> graphemeNaturalClassesLoadedData = languageProjectLoaded
+				.getGraphemeNaturalClasses();
 		for (GraphemeNaturalClass gnc : graphemeNaturalClassesLoadedData) {
 			graphemeNaturalClasses.add(gnc);
 		}
-		ObservableList<Environment> environmentsLoadedData = languageProjectLoaded.getEnvironments();
+		ObservableList<Environment> environmentsLoadedData = languageProjectLoaded
+				.getEnvironments();
 		for (Environment environment : environmentsLoadedData) {
 			environments.add(environment);
 		}
+		ObservableList<Template> templatesLoadedData = languageProjectLoaded
+				.getTemplates();
+		for (Template template : templatesLoadedData) {
+			templates.add(template);
+		}
+		ObservableList<Filter> filtersLoadedData = languageProjectLoaded
+				.getFilters();
+		for (Filter filter : filtersLoadedData) {
+			filters.add(filter);
+		}
 		analysisLanguage = languageProjectLoaded.getAnalysisLanguage();
 		vernacularLanguage = languageProjectLoaded.getVernacularLanguage();
+		hyphenationParametersListWord = languageProjectLoaded.getHyphenationParametersListWord();
+		hyphenationParametersParaTExt = languageProjectLoaded.getHyphenationParametersParaTExt();
+		hyphenationParametersXLingPaper = languageProjectLoaded.getHyphenationParametersXLingPaper();
+		syllabificationParameters = languageProjectLoaded.getSyllabificationParameters();
 	}
 
 	public void createNewWord(String word, String sUntested) {
@@ -275,7 +353,8 @@ public class LanguageProject {
 	}
 
 	/**
-	 * @param language the vernacular language to set
+	 * @param language
+	 *            the vernacular language to set
 	 */
 	public void setVernacularLanguage(Language language) {
 		this.vernacularLanguage = language;
@@ -289,7 +368,8 @@ public class LanguageProject {
 	}
 
 	/**
-	 * @param language the analysis language to set
+	 * @param language
+	 *            the analysis language to set
 	 */
 	public void setAnalysisLanguage(Language language) {
 		this.analysisLanguage = language;
@@ -322,4 +402,11 @@ public class LanguageProject {
 		this.hyphenationParametersXLingPaper = hyphenationParametersXLingPaper;
 	}
 
+	public SyllabificationParameters getSyllabificationParameters() {
+		return syllabificationParameters;
+	}
+
+	public void setSyllabificationParameters(SyllabificationParameters sylParameters) {
+		this.syllabificationParameters = sylParameters;
+	}
 }

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity>
+		<version
+			number="" />
+		<generation
+			date="2016-08-29T18:09:07" />
+		<language
+			type="mxb" />
+	</identity>
+	<collations>
+		<collation>
+			<settings
+				alternate="shifted" />
+			<rules>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>¿</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>¡</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>‘‘</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>’’</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>‘</s>
+				<reset>
+					<first_secondary_ignorable />
+				</reset>
+				<s>­na</s>
+				<s>­ná</s>
+				<s>­na̱</s>
+				<s>­ña</s>
+				<s>­ñá</s>
+				<s>­ña̱</s>
+				<s>­rá</s>
+				<s>­ri</s>
+				<s>­ri̱</s>
+				<s>­xí</s>
+				<reset>C</reset>
+				<p>ch</p>
+				<t>Ch</t>
+				<s>CH</s>
+				<reset>N</reset>
+				<p>ñ</p>
+				<t>Ñ</t>
+				<reset>a</reset>
+				<s>á</s>
+				<s>a̱</s>
+				<s>aꞌ</s>
+				<s>áꞌ</s>
+				<s>a̱ꞌ</s>
+				<t>A</t>
+				<s>Á</s>
+				<s>A̱</s>
+				<s>Aꞌ</s>
+				<s>Áꞌ</s>
+				<s>A̱ꞌ</s>
+				<reset>e</reset>
+				<s>é</s>
+				<s>e̱</s>
+				<s>eꞌ</s>
+				<s>éꞌ</s>
+				<s>e̱ꞌ</s>
+				<t>E</t>
+				<s>É</s>
+				<s>E̱</s>
+				<s>Eꞌ</s>
+				<s>Éꞌ</s>
+				<s>E̱ꞌ</s>
+				<reset>i</reset>
+				<s>í</s>
+				<s>i̱</s>
+				<s>iꞌ</s>
+				<s>íꞌ</s>
+				<s>i̱ꞌ</s>
+				<t>I</t>
+				<s>Í</s>
+				<s>I̱</s>
+				<s>Iꞌ</s>
+				<s>Íꞌ</s>
+				<s>I̱ꞌ</s>
+				<reset>o</reset>
+				<s>ó</s>
+				<s>o̱</s>
+				<s>oꞌ</s>
+				<s>óꞌ</s>
+				<s>o̱ꞌ</s>
+				<t>O</t>
+				<s>Ó</s>
+				<s>O̱</s>
+				<s>Oꞌ</s>
+				<s>Óꞌ</s>
+				<s>O̱ꞌ</s>
+				<reset>u</reset>
+				<s>ú</s>
+				<s>u̱</s>
+				<s>uꞌ</s>
+				<s>úꞌ</s>
+				<s>u̱ꞌ</s>
+				<t>U</t>
+				<s>Ú</s>
+				<s>U̱</s>
+				<s>Uꞌ</s>
+				<s>Úꞌ</s>
+				<s>U̱ꞌ</s>
+			</rules>
+			<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+				<palaso:sortRulesType
+					value="CustomICU" />
+			</special>
+		</collation>
+	</collations>
+	<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+		<palaso:abbreviation
+			value="Mix" />
+		<palaso:defaultFontFamily
+			value="Charis SIL AmArea" />
+		<palaso:defaultKeyboard
+			value="SpanTepU" />
+		<palaso:languageName
+			value="Mixtec, Tezoatlán" />
+		<palaso:spellCheckingId
+			value="&lt;None&gt;" />
+		<palaso:version
+			value="2" />
+	</special>
+	<special xmlns:palaso2="urn://palaso.org/ldmlExtensions/v2">
+		<palaso2:knownKeyboards>
+			<palaso2:keyboard
+				layout="SpanTepU"
+				locale="es-MX"
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="Latin American"
+				locale="es-MX"
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="Latinoamericano"
+				locale="es-MX"
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="Spanish"
+				locale="es-MX"
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="US"
+				locale="en-US"
+				os="Win32NT" />
+		</palaso2:knownKeyboards>
+		<palaso2:version
+			value="2" />
+	</special>
+	<special xmlns:fw="urn://fieldworks.sil.org/ldmlExtensions/v1">
+		<fw:graphiteEnabled
+			value="False" />
+		<fw:validChars
+			value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt; &lt;ValidCharacters&gt;   &lt;WordForming&gt;‍￼་￼༌￼'￼‌￼⁰￼¹￼²￼³￼⁴￼⁵￼⁶￼⁷￼⁸￼⁹￼ꞌ￼Ꞌ￼-&lt;/WordForming&gt;   &lt;Numeric /&gt;   &lt;Other /&gt; &lt;/ValidCharacters&gt;" />
+	</special>
+</ldml>

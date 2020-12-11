@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 package org.sil.syllableparser;
@@ -6,26 +6,21 @@ package org.sil.syllableparser;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.service.DatabaseMigrator;
-import org.sil.syllableparser.view.ControllerUtilities;
+import org.sil.utility.MainAppUtilities;
+import org.sil.utility.StringUtilities;
+import org.sil.utility.view.ControllerUtilities;
+import org.sil.syllableparser.view.ApproachViewNavigator;
+import org.sil.syllableparser.view.CreateOpenRestorePromptController;
+import org.sil.syllableparser.view.CreateOpenRestorePromptController.Result;
 import org.sil.syllableparser.view.RootLayoutController;
 
 import javafx.application.Application;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.ObservableList;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -34,16 +29,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MainApp extends Application {
+public class MainApp extends Application implements MainAppUtilities {
 
 	/**
 	 *
@@ -82,7 +75,6 @@ public class MainApp extends Application {
 		initRootLayout();
 
 		saveDataPeriodically(Constants.SAVE_DATA_PERIODICITY);
-
 	}
 
 	private void restoreWindowSettings() {
@@ -130,11 +122,15 @@ public class MainApp extends Application {
 		applicationPreferences.setLastApproachUsed(controller.getApproachUsed());
 		applicationPreferences.setLastApproachViewUsed(controller.getViewUsed());
 		controller.handleSaveProject();
+		if (saveDataPeriodicallyService != null) {
+			saveDataPeriodicallyService.cancel();
+		}
 	}
 
 	public void setLocale(Locale locale) {
 
 		this.locale = locale;
+		primaryStage.close();
 		initRootLayout();
 	}
 
@@ -153,9 +149,7 @@ public class MainApp extends Application {
 			ResourceBundle bundle = ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale);
 			loader.setResources(bundle);
 			rootLayout = (BorderPane) loader.load();
-			if (getOperatingSystem().equals("Mac OS X")) {
-				adjustMenusForMacOSX();
-			}
+			ControllerUtilities.adjustMenusIfNeeded(sOperatingSystem, rootLayout);
 
 			sNotImplementedYetHeader = bundle.getString("misc.niyheader");
 			sNotImplementedYetContent = bundle.getString("misc.niycontent");
@@ -171,7 +165,7 @@ public class MainApp extends Application {
 			if (file != null && file.exists()) {
 				loadLanguageData(file);
 			} else {
-				boolean fSucceeded = askUserForNewOrToOpenExistingFile(bundle, controller);
+				boolean fSucceeded = useCreateOpenRestorePrompt(bundle, controller);
 				if (!fSucceeded) {
 					System.exit(0);
 				}
@@ -182,50 +176,57 @@ public class MainApp extends Application {
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		} catch (Exception e) {
-			System.out.println("non-IO Exception caught!");
 			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 	}
 
-	protected void adjustMenusForMacOSX() {
-		VBox vbox = (VBox) rootLayout.getChildren().get(0);
-		MenuBar menuBar = (MenuBar) vbox.getChildren().get(0);
-		menuBar.useSystemMenuBarProperty().set(true);
-	}
-
-	protected boolean askUserForNewOrToOpenExistingFile(ResourceBundle bundle,
+	protected boolean useCreateOpenRestorePrompt(ResourceBundle bundle,
 			RootLayoutController controller) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle(bundle.getString("program.name"));
-		alert.setHeaderText(bundle.getString("file.initiallynotfound"));
-		alert.setContentText(bundle.getString("file.chooseanoption"));
-		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(getNewMainIconImage());
-
-		ButtonType buttonCreateNewProject = new ButtonType(
-				bundle.getString("label.createnewproject"));
-		ButtonType buttonOpenExistingProject = new ButtonType(
-				bundle.getString("label.openexistingproject"));
-		ButtonType buttonCancel = new ButtonType(bundle.getString("label.cancel"),
-				ButtonData.CANCEL_CLOSE);
-
-		alert.getButtonTypes().setAll(buttonCreateNewProject, buttonOpenExistingProject,
-				buttonCancel);
-
 		boolean fSucceeded = true;
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonCreateNewProject) {
-			controller.handleNewProject();
-			if (languageProject.getActiveSegmentsInInventory().size() == 0) {
-				// The user canceled creating a new project
-				fSucceeded = false;
+		Result result = Result.CANCEL;
+		try {
+			Stage useCreateOpenRestoreDialogStage = new Stage();
+			String resource = "fxml/CreateOpenRestorePrompt.fxml";
+			String title = bundle.getString("program.name");
+			FXMLLoader loader = ControllerUtilities.getLoader(this, locale, useCreateOpenRestoreDialogStage,
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
+			CreateOpenRestorePromptController corController = loader.getController();
+			corController.setDialogStage(useCreateOpenRestoreDialogStage);
+			useCreateOpenRestoreDialogStage.showAndWait();
+			result = corController.getResult();
+			switch (result) {
+			case CANCEL:
+				System.exit(0);
+				break;
+			case CREATE:
+				controller.handleNewProject();
+				if (languageProject.getActiveSegmentsInInventory().size() == 0) {
+					// The user canceled creating a new project
+					fSucceeded = false;
+				}
+				break;
+			case OPEN:
+				controller.doFileOpen(true);
+				break;
+			case RESTORE:
+				DirectoryChooser directoryChooser = new DirectoryChooser();
+				File file = directoryChooser.showDialog(primaryStage);
+				if (file != null) {
+					if (!controller.restoreProject(file.getPath())) {
+						System.exit(0);
+					}
+				} else {
+					System.exit(0);
+				}
+				break;
 			}
-		} else if (result.get() == buttonOpenExistingProject) {
-			controller.doFileOpen(true);
-		} else {
-			// ... user chose CANCEL or closed the dialog
-			System.exit(0);
+		} catch (IOException e) {
+			e.printStackTrace();
+			MainApp.reportException(e, null);
 		}
 		return fSucceeded;
 	}
@@ -255,10 +256,24 @@ public class MainApp extends Application {
 		if (file != null) {
 			String sFileNameToUse = file.getName().replace(
 					"." + Constants.ASHENINKA_DATA_FILE_EXTENSION, "");
-			primaryStage.setTitle(kApplicationTitle + " - " + sFileNameToUse);
+			String sLangName = languageProject.getVernacularLanguage().getLanguageName();
+			String sCode = languageProject.getVernacularLanguage().getCode();
+			if (!StringUtilities.isNullOrEmpty(sLangName)) {
+				if (!StringUtilities.isNullOrEmpty(sCode)) {
+					primaryStage.setTitle(kApplicationTitle + " - " + sLangName + " - " + sCode + " (" + sFileNameToUse + ")");
+				} else {
+					primaryStage.setTitle(kApplicationTitle + " - " + sLangName + " (" + sFileNameToUse + ")");
+				}
+			} else {
+				primaryStage.setTitle(kApplicationTitle + " - " + sFileNameToUse);
+			}
 		} else {
 			primaryStage.setTitle(kApplicationTitle);
 		}
+	}
+
+	public void saveFile(File file) {
+		saveLanguageData(file);
 	}
 
 	public void saveLanguageData(File file) {
@@ -269,6 +284,12 @@ public class MainApp extends Application {
 
 	public LanguageProject getLanguageProject() {
 		return languageProject;
+	}
+
+	public String getStyleFromColor(Color textColor) {
+		String sRGB= StringUtilities.toRGBCode(textColor);
+		String sVernacular = Constants.TEXT_COLOR_CSS_BEGIN + sRGB + Constants.TEXT_COLOR_CSS_END;
+		return sVernacular;
 	}
 
 	/**
@@ -303,7 +324,8 @@ public class MainApp extends Application {
 	 * @return the mainIconImage
 	 */
 	public Image getNewMainIconImage() {
-		Image img = ControllerUtilities.getIconImageFromURL(kApplicationIconResource);
+		Image img = ControllerUtilities.getIconImageFromURL(kApplicationIconResource,
+				Constants.RESOURCE_SOURCE_LOCATION);
 		return img;
 	}
 
@@ -315,16 +337,35 @@ public class MainApp extends Application {
 		return sOperatingSystem;
 	}
 
-	public void updateStatusBarNumberOfItems(String numberOfItems) {
-		if (numberOfItems != null) {
-			controller.setNumberOfItems(numberOfItems);
-		} else {
-			controller.setNumberOfItems("");
-		}
+	public void updateStatusBarNumberOfItems(String sNumberOfItems) {
+		controller.setPredictedToTotal("");
+		controller.setPredictedEqualsCorrectToTotal("");
+		controller.setNumberOfItems(sNumberOfItems);
+	}
+
+	public void updateStatusBarWordItems(String sPredictedToTotal,
+			String sPredictedEqualsCorrectToTotal, String sNumberOfItems) {
+		controller.setPredictedToTotal(sPredictedToTotal);
+		controller.setPredictedEqualsCorrectToTotal(sPredictedEqualsCorrectToTotal);
+		controller.setNumberOfItems(sNumberOfItems);
 	}
 
 	public RootLayoutController getController() {
 		return controller;
 	}
 
+	public static void reportException(Exception ex, ResourceBundle bundle) {
+		String sTitle = "Error Found!";
+		String sHeader = "A serious error happened.";
+		String sContent = "Please copy the exception information below, email it to asheninka_support_lsdev@sil.org along with a description of what you were doing.";
+		String sLabel = "The exception stacktrace was:";
+		if (bundle != null) {
+			sTitle = bundle.getString("exception.title");
+			sHeader = bundle.getString("exception.header");
+			sContent = bundle.getString("exception.content");
+			sLabel = bundle.getString("exception.label");
+		}
+		ControllerUtilities.showExceptionInErrorDialog(ex, sTitle, sHeader, sContent, sLabel);
+		System.exit(1);
+	}
 }

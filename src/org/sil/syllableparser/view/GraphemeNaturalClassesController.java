@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -12,35 +12,36 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
-import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
-import javafx.concurrent.Task;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -48,8 +49,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class GraphemeNaturalClassesController extends SylParserBaseController implements
-		Initializable {
+public class GraphemeNaturalClassesController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<GraphemeNaturalClass, String> {
 		private Text text;
@@ -57,50 +57,18 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				GraphemeNaturalClass nc = (GraphemeNaturalClass) this.getTableRow().getItem();
-				if (nc != null && nc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends
+	protected final class WrappingTableCell extends
 			TableCell<GraphemeNaturalClass, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				GraphemeNaturalClass nc = (GraphemeNaturalClass) this.getTableRow().getItem();
-				if (nc != null && nc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -146,6 +114,9 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.GRAPHEME_NATURAL_CLASSES);
+		super.setTableView(graphemeNaturalClassTable);
+		super.initialize(location, resources);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		graphemeOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -158,8 +129,46 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			return new AnalysisWrappingTableCell();
 		});
 		graphemeOrNaturalClassColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new TableCell<GraphemeNaturalClass, String>() {
+				// We override computePrefHeight because by default, the graphic's height
+				// gets set to the height of all items in the TextFlow as if none of them
+				// wrapped.  So for now, we're doing this hack.
+				@Override
+				protected double computePrefHeight(double width) {
+					Object g = getGraphic();
+					if (g instanceof TextFlow) {
+						return guessPrefHeight(g, column.widthProperty().get());
+					}
+					return super.computePrefHeight(-1);
+				}
+
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					GraphemeNaturalClass nc = ((GraphemeNaturalClass) getTableRow().getItem());
+					if (item == null || empty || nc == null) {
+						setGraphic(null);
+						setText(null);
+						setStyle("");
+					} else {
+						setGraphic(null);
+						TextFlow tf = new TextFlow();
+						if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+							tf = buildTextFlow(nc.getGraphemesOrNaturalClasses());
+							tf.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+						} else {
+							FXCollections.reverse(nc.getGraphemesOrNaturalClasses());
+							tf = buildTextFlow(nc.getGraphemesOrNaturalClasses());
+							tf.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+							FXCollections.reverse(nc.getGraphemesOrNaturalClasses());
+						}
+						setGraphic(tf);
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+					}
+				}
+			};
 		});
+
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
@@ -274,6 +283,12 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			// Fill the text fields with info from the object.
 			nameField.setText(naturalClass.getNCName());
 			descriptionField.setText(naturalClass.getDescription());
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			nameField.setNodeOrientation(analysisOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
+			gncTextFlow.setNodeOrientation(languageProject.getVernacularLanguage()
+					.getOrientation());
 			activeCheckBox.setSelected(naturalClass.isActive());
 			showGraphemeOrNaturalClassContent();
 		} else {
@@ -289,39 +304,61 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ graphemeNaturalClassTable.getItems().size() + " ");
 			// remember the selection
-			mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(
-					iCurrentIndex);
+			String sApproach = this.rootController.getApproachUsed();
+			if (sApproach.equals(ApproachType.CV.name())) {
+				mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+				mainApp.getApplicationPreferences().setLastSHGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+			}
 		}
-
 	}
 
 	private void showGraphemeOrNaturalClassContent() {
 		StringBuilder sb = new StringBuilder();
 		gncTextFlow.getChildren().clear();
+		ObservableList<SylParserObject> graphemesOrNaturalClasses = currentNaturalClass.getGraphemesOrNaturalClasses();
+		if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+			fillGncTextFlow(sb, graphemesOrNaturalClasses);
+		} else {
+			FXCollections.reverse(graphemesOrNaturalClasses);
+			fillGncTextFlow(sb, graphemesOrNaturalClasses);
+			FXCollections.reverse(graphemesOrNaturalClasses);
+		}
+		currentNaturalClass.setGNCRepresentation(sb.toString());
+	}
+
+	protected void fillGncTextFlow(StringBuilder sb,
+			ObservableList<SylParserObject> graphemesOrNaturalClasses) {
+		Language analysis = languageProject.getAnalysisLanguage();
+		Language vernacular = languageProject.getVernacularLanguage();
 		int i = 1;
-		int iCount = currentNaturalClass.getGraphemesOrNaturalClasses().size();
-		for (SylParserObject gnc : currentNaturalClass.getGraphemesOrNaturalClasses()) {
+		int iCount = graphemesOrNaturalClasses.size();
+		for (SylParserObject gnc : graphemesOrNaturalClasses) {
 			Text t;
 			String s;
 			if (gnc instanceof Grapheme) {
 				s = ((Grapheme) gnc).getForm();
 				t = new Text(s);
-				t.setFont(languageProject.getVernacularLanguage().getFont());
+				t.setFont(vernacular.getFont());
+				t.setFill(vernacular.getColor());
+				t.setNodeOrientation(vernacular.getOrientation());
 				sb.append(s);
 			} else if (gnc instanceof GraphemeNaturalClass) {
 				s = ((GraphemeNaturalClass) gnc).getNCName();
 				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
 				t = new Text(s);
-				t.setFont(languageProject.getAnalysisLanguage().getFont());
+				t.setFont(analysis.getFont());
+				t.setFill(analysis.getColor());
+				t.setNodeOrientation(analysis.getOrientation());
 				sb.append(s);
 			} else {
 				s = "ERROR!";
 				t = new Text(s);
 				sb.append(s);
 			}
-			if (gnc.isActive() && activeCheckBox.isSelected()) {
-				t.setFill(Constants.ACTIVE);
-			} else {
+			if (!(gnc.isActive() && activeCheckBox.isSelected())) {
 				t.setFill(Constants.INACTIVE);
 			}
 			Text tBar = new Text(" | ");
@@ -331,7 +368,43 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 				sb.append(", ");
 			}
 		}
-		currentNaturalClass.setGNCRepresentation(sb.toString());
+	}
+
+	@Override
+	protected TextFlow buildTextFlow(ObservableList<SylParserObject> graphemesOrNaturalClasses) {
+		TextFlow tf = new TextFlow();
+		Language analysis = languageProject.getAnalysisLanguage();
+		Language vernacular = languageProject.getVernacularLanguage();
+		int i = 1;
+		int iCount = graphemesOrNaturalClasses.size();
+		for (SylParserObject gnc : graphemesOrNaturalClasses) {
+			Text t;
+			String s;
+			if (gnc instanceof Grapheme) {
+				s = ((Grapheme) gnc).getForm();
+				t = new Text(s);
+				t.setFont(vernacular.getFont());
+				t.setFill(vernacular.getColor());
+				t.setNodeOrientation(vernacular.getOrientation());
+			} else if (gnc instanceof GraphemeNaturalClass) {
+				s = ((GraphemeNaturalClass) gnc).getNCName();
+				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
+				t = new Text(s);
+				t.setFont(analysis.getFont());
+				t.setFill(analysis.getColor());
+				t.setNodeOrientation(analysis.getOrientation());
+			} else {
+				s = "ERROR!";
+				t = new Text(s);
+			}
+			if (!(gnc.isActive() && activeCheckBox.isSelected())) {
+				t.setFill(Constants.INACTIVE);
+			}
+			Text tBar = new Text(" | ");
+			tBar.setStyle("-fx-stroke: lightgrey;");
+			tf.getChildren().addAll(t, tBar);
+		}
+		return tf;
 	}
 
 	public void setNaturalClass(GraphemeNaturalClass naturalClass) {
@@ -339,17 +412,23 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		descriptionField.setText(naturalClass.getDescription());
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 *
-	 * @param cvApproachController
-	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		setColumnICURules();
+		setTextFieldColors();
+		addDataToTable();
+	}
 
+	protected void setColumnICURules() {
+		setColumnICURules(graphemeOrNaturalClassColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+	}
+
+	private void addDataToTable() {
 		// Add observable list data to the table
-		graphemeNaturalClassTable.setItems(cvApproachData.getLanguageProject()
+		graphemeNaturalClassTable.setItems(languageProject
 				.getGraphemeNaturalClasses());
 		int max = graphemeNaturalClassTable.getItems().size();
 		if (max > 0) {
@@ -369,48 +448,59 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
+	public void setData(SHApproach shApproachData) {
+		shApproach = shApproachData;
+		languageProject = shApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
+		setColumnICURules();
+		setTextFieldColors();
+		addDataToTable();
+	}
+
+	public void setData(ONCApproach oncApproachData) {
+		oncApproach = oncApproachData;
+		languageProject = oncApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
+		setColumnICURules();
+		setTextFieldColors();
+		addDataToTable();
+	}
+
+	protected void setTextFieldColors() {
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
 	@Override
 	void handleInsertNewItem() {
 		GraphemeNaturalClass newNaturalClass = new GraphemeNaturalClass();
 		cvApproach.getLanguageProject().getGraphemeNaturalClasses().add(newNaturalClass);
-		int i = cvApproach.getLanguageProject().getGraphemeNaturalClasses().size() - 1;
-		graphemeNaturalClassTable.requestFocus();
-		graphemeNaturalClassTable.getSelectionModel().select(i);
-		graphemeNaturalClassTable.getFocusModel().focus(i);
-		graphemeNaturalClassTable.scrollTo(i);
+		handleInsertNewItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), graphemeNaturalClassTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		// need to deal with all pointers to this natural class
-		int i = cvApproach.getLanguageProject().getGraphemeNaturalClasses()
-				.indexOf(currentNaturalClass);
-		currentNaturalClass = null;
-		if (i >= 0) {
-			cvApproach.getLanguageProject().getGraphemeNaturalClasses().remove(i);
-			int max = graphemeNaturalClassTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			graphemeNaturalClassTable.requestFocus();
-			graphemeNaturalClassTable.getSelectionModel().select(i);
-			graphemeNaturalClassTable.getFocusModel().focus(i);
-			graphemeNaturalClassTable.scrollTo(i);
-		}
-		graphemeNaturalClassTable.refresh();
+		handleRemoveItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), currentNaturalClass, graphemeNaturalClassTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), currentNaturalClass, graphemeNaturalClassTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), currentNaturalClass, graphemeNaturalClassTable);
 	}
 
 	@FXML
 	void handleLaunchGNCChooser() {
+		if (cvApproach == null) {
+			cvApproach = languageProject.getCVApproach();
+		}
 		showGNCChooser();
 		showGraphemeOrNaturalClassContent();
 	}
@@ -423,17 +513,20 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			Stage dialogStage = new Stage();
 			String resource = "fxml/GraphemeNaturalClassChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
-					resource, MainApp.kApplicationTitle);
+					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 			GraphemeNaturalClassChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setNaturalClass(currentNaturalClass);
 			controller.setData(cvApproach);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -468,5 +561,4 @@ public class GraphemeNaturalClassesController extends SylParserBaseController im
 			forceTableRowToRedisplayPerActiveSetting(nc);
 		}
 	}
-
 }

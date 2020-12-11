@@ -22,9 +22,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->30 March 2017</date
+>24 September 2019</date
 ><version
->0.4.0 Alpha</version
+>0.7.0 Alpha</version
 ><contents
 ></contents
 ></frontMatter
@@ -48,16 +48,13 @@ id="sSetup"
 ><secTitle
 >Setup</secTitle
 ><p
->The basic setup for the <object
-type="tCVPatternApproach"
-></object
-> approach is as follows:</p
+>The basic setup for any of the implemented approaches is as follows:</p
 ><ol
 ><li
 >Create a new project (use menu item <object
 type="tMenuItem"
 >File / New</object
-><endnote
+>).<endnote
 id="nSaveAs"
 ><p
 >If you already have a project and it is very similar to what you need for this new project, you can also use menu item <object
@@ -65,19 +62,36 @@ type="tMenuItem"
 >File / Save As</object
 >.</p
 ></endnote
->).</li
+></li
 ><li
 >Make sure that what is in the <object
 type="tCVSegmentInventory"
 ></object
-> covers all the segments you have in the orthography.</li
+> covers all the segments you have in the orthography. Depending on the orthography, you may find that you'll need to add environments for some graphemes within some segments.  For the <object
+type="tONCApproach"
+></object
+>, check the onset, nucleus, and coda boxes as needed for each segment.</li
 ><li
->Make sure that every segment is in a natural class.</li
+>Make sure that every segment is in a natural class for the <object
+type="tCVPatternApproach"
+></object
+> or is somewhere in the sonority hierarchy for the other approaches.</li
 ><li
->Create <object
+>For the <object
+type="tCVPatternApproach"
+></object
+>, create <object
 type="tCVSyllablePatterns"
 ></object
 > that cover the kinds of syllables you think the language has.  Be sure to allow for vowel-initial syllables if the language has them.</li
+><li
+>For the <object
+type="tONCApproach"
+></object
+>, set the <object
+type="tSyllabificationParameters"
+></object
+>.</li
 ><li
 >Import a list of words (or key them one by one).</li
 ><li
@@ -106,7 +120,13 @@ type="tAsheninka"
 > parse all the words in the <object
 type="tCVWords"
 ></object
-> view.</li
+> (or <object
+type="tSHWords"
+></object
+> or <object
+type="tONCWords"
+></object
+>) view.</li
 ><li
 >Look at the results. You can click on a column header to sort by that column (it currently only sorts by Unicode code point). Doing this on the <object
 type="tParserResult"
@@ -114,12 +134,21 @@ type="tParserResult"
 > column in the <object
 type="tCVWords"
 ></object
-> view will show all the words which failed at the top (at least in the English user interface language).</li
+> (or <object
+type="tSHWords"
+></object
+> or <object
+type="tONCWords"
+></object
+>) view will show all the words which failed at the top (at least in the English user interface language).</li
 ><li
 >Make frequent (labeled) backups via menu item <object
 type="tMenuItem"
 >File / Project Management / Back up this project</object
->. You can make a backup, try something else (e.g., add a segment or class; or re-order the syllable patterns or add a new one), perform the <object
+>. You can make a backup, try something else (e.g., add a segment or class; re-order the syllable patterns or add a new one; adjust the sonority hierarchy; or change the <object
+type="tSyllabificationParameters"
+></object
+>), perform the <object
 type="tMenuItem"
 >Parser / Parse all Words</object
 > process and see how it goes. If it's worse, just restore from the backup. If it's better, make a backup of that and go on.</li
@@ -151,20 +180,13 @@ type="tMenuItem"
 >Use the <object
 type="tCVPredictedVsCorrectWords"
 ></object
-> view to discover any words whose parse does not match what is in the correct column. There may well be cases where it is not worth the effort to get the parser to correctly syllabify certain words (e.g., loan words in a different orthography or words which may well be misspelled).</li
-><li
->Depending on the orthography, you may find that you'll need to add some segments that are actually sequences of consonant-vowel. On one language I used it for recently, I had to add <langData
-lang="lVernacular"
->kue</langData
-> to handle a labialized velar stop-vowel sequence and avoid having <langData
-lang="lVernacular"
->ku</langData
-> always being treated as labialized velar stop when it was a velar stop, u vowel sequence.<endnote
-id="nEnvironments"
-><p
->We do plan on adding environments when defining segments to make this work-around not be needed.</p
-></endnote
-></li
+> (or <object
+type="tSHPredictedVsCorrectWords"
+></object
+> or <object
+type="tONCPredictedVsCorrectWords"
+></object
+>) view to discover any words whose parse does not match what is in the correct column. There may well be cases where it is not worth the effort to get the parser to correctly syllabify certain words (e.g., loan words in a different orthography or words which may well be misspelled).  In such cases, just manually set the correct syllabification and do not worry that these fail to parse successfully.</li
 ></ol
 ></section2
 ></section1

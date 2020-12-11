@@ -86,7 +86,7 @@ id="tUnderline"
 xsl-foSpecial="text-decoration=&quot;underline&quot;"
 ></type
 ><comment
->Add your custom types here.CW</comment
+>Add your custom types here.​</comment
 ><type
 before="Asheninka"
 id="tAsheninka"
@@ -108,6 +108,19 @@ font-weight="bold"
 id="tButton"
 ></type
 ><type
+font-family="Courier New"
+id="tCategory"
+></type
+><type
+before="Codas Allowed"
+id="tCodasAllowed"
+></type
+><type
+before="Comment"
+id="tComment"
+types="tView"
+></type
+><type
 before="Convert Predicted to Correct Syllabifcation"
 id="tConvertPredictedToCorrectSyllabifcation"
 types="tView"
@@ -118,21 +131,21 @@ id="tCorrectSyllableBreaks"
 types="tView"
 ></type
 ><type
+before="CV pattern approach"
+id="tCVPatternApproach"
+></type
+><type
 before="CV Natural Classes"
 id="tCVNaturalClasses"
 types="tView"
 ></type
 ><type
-before="CV pattern approach"
-id="tCVPatternApproach"
-></type
-><type
-before="Predicted vs. Correct CV Words"
+before="Predicted vs.​ Correct CV Words"
 id="tCVPredictedVsCorrectWords"
 types="tView"
 ></type
 ><type
-before="CV Segment Inventory"
+before="Segment Inventory"
 id="tCVSegmentInventory"
 types="tView"
 ></type
@@ -144,6 +157,11 @@ types="tView"
 ><type
 before="CV Words"
 id="tCVWords"
+types="tView"
+></type
+><type
+before="Environments"
+id="tEnvironments"
 types="tView"
 ></type
 ><type
@@ -160,6 +178,17 @@ id="tErrorMessageText"
 after="”"
 before="“"
 id="tField"
+></type
+><type
+before="FieldWorks Language Explorer"
+color="navy"
+font-weight="bold"
+id="tFieldWorks"
+></type
+><type
+before="Grapheme Natural Classes"
+id="tGraphemeNaturalClasses"
+types="tView"
 ></type
 ><type
 after="green"
@@ -191,7 +220,54 @@ color="maroon"
 id="tMenuItem"
 ></type
 ><type
-before="ParaTExt"
+before="Onset-nucleus-coda approach"
+id="tONCApproach"
+></type
+><type
+before="Predicted vs.​ Correct ONC Words"
+id="tONCPredictedVsCorrectWords"
+types="tView"
+></type
+><type
+before="Segment Inventory"
+id="tONCSegmentInventory"
+types="tView"
+></type
+><type
+before="Sonority Hierarchy"
+id="tONCSonorityHierarchy"
+types="tView"
+></type
+><type
+before="ONC Words"
+id="tONCWords"
+types="tView"
+></type
+><type
+before="All But First Has Onset"
+font-style="italic"
+id="tOPAllButFirstHasOnset"
+></type
+><type
+before="All But First Has Onset"
+font-style="italic"
+id="tOPEverySyllableHasOnset"
+></type
+><type
+before="Onsets Not Required"
+font-style="italic"
+id="tOPOnsetsNotRequired"
+></type
+><type
+before="Onset Maximization"
+id="tOnsetMaximization"
+></type
+><type
+before="Onset Principle"
+id="tOnsetPrinciple"
+></type
+><type
+before="Paratext"
 color="navy"
 font-weight="bold"
 id="tParatext"
@@ -199,6 +275,11 @@ id="tParatext"
 ><type
 before="Parser Result"
 id="tParserResult"
+types="tView"
+></type
+><type
+before="Tree Diagram"
+id="tParserTreeDiagram"
 types="tView"
 ></type
 ><type
@@ -212,10 +293,39 @@ color="red"
 id="tRed"
 ></type
 ><type
+before="Sonority hierarchy approach"
+id="tSHApproach"
+></type
+><type
+before="Predicted vs.​ Correct Son.​ Hier.​ Words"
+id="tSHPredictedVsCorrectWords"
+types="tView"
+></type
+><type
+before="Segment Inventory"
+id="tSHSegmentInventory"
+types="tView"
+></type
+><type
+before="Sonority Hierarchy"
+id="tSHSonorityHierarchy"
+types="tView"
+></type
+><type
+before="Son.​ Hier.​ Words"
+id="tSHWords"
+types="tView"
+></type
+><type
 after="”"
 before="“Success"
 color="green"
 id="tSuccessMessage"
+></type
+><type
+before="Syllabification Parameters"
+id="tSyllabificationParameters"
+types="tView"
 ></type
 ><type
 before="Parse all Words"

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -26,7 +26,7 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.view.JavaFXThreadingRule;
+import org.sil.utility.view.JavaFXThreadingRule;
 
 /**
  * @author Andy Black
@@ -101,7 +101,6 @@ public class XMLBackEndProviderTest {
 		try {
 			tempSaveFile = File.createTempFile("AsheninkaTestSave", ".ashedata");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 SIL International
+ * Copyright (c) 2016-2019 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -8,50 +8,30 @@
 
 package org.sil.syllableparser.model.cvapproach;
 
-import org.sil.syllableparser.service.CVNaturalClasser;
-import org.sil.syllableparser.service.CVNaturalClasserResult;
-import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.CVSegmenterResult;
-import org.sil.syllableparser.service.CVSyllabifier;
-import org.sil.syllableparser.service.CVSyllabifierResult;
+import org.sil.syllableparser.model.TraceInfo;
+import org.sil.syllableparser.service.parsing.CVNaturalClasser;
+import org.sil.syllableparser.service.parsing.CVNaturalClasserResult;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.CVSyllabifier;
+import org.sil.syllableparser.service.parsing.CVSyllabifierResult;
 
-public class CVTraceInfo {
+public class CVTraceInfo extends TraceInfo {
 	
-	CVSegmenter segmenter;
 	CVNaturalClasser naturalClasser;
 	CVSyllabifier syllabifier;
-	String sWord;
-	CVSegmenterResult segmenterResult;
 	CVNaturalClasserResult naturalClasserResult;
 	CVSyllabifierResult syllabifierResult;
 	
 	public CVTraceInfo(String sWord) {
+		super(sWord);
 		this.sWord = sWord;
 	}
 
 	public CVTraceInfo(String sWord, CVSegmenter segmenter,
 			CVNaturalClasser naturalClasser, CVSyllabifier syllabifier) {
-		super();
-		this.segmenter = segmenter;
+		super(sWord, segmenter);
 		this.naturalClasser = naturalClasser;
 		this.syllabifier = syllabifier;
-		this.sWord = sWord;
-	}
-
-	public String getWord() {
-		return sWord;
-	}
-
-	public void setWord(String sWord) {
-		this.sWord = sWord;
-	}
-
-	public CVSegmenter getSegmenter() {
-		return segmenter;
-	}
-
-	public void setSegmenter(CVSegmenter segmenter) {
-		this.segmenter = segmenter;
 	}
 
 	public CVNaturalClasser getNaturalClasser() {
@@ -70,14 +50,6 @@ public class CVTraceInfo {
 		this.syllabifier = syllabifier;
 	}
 
-	public CVSegmenterResult getSegmenterResult() {
-		return segmenterResult;
-	}
-
-	public void setSegmenterResult(CVSegmenterResult segmenterResult) {
-		this.segmenterResult = segmenterResult;
-	}
-
 	public CVNaturalClasserResult getNaturalClasserResult() {
 		return naturalClasserResult;
 	}
@@ -93,5 +65,4 @@ public class CVTraceInfo {
 	public void setSyllabifierResult(CVSyllabifierResult syllabifierResult) {
 		this.syllabifierResult = syllabifierResult;
 	}
-
 }

@@ -8,6 +8,9 @@
 
 		<mkdir dir="externalLibs" />
 		<copy todir="externalLibs">
+			<fileset dir="../LibJavaDev">
+				<filename name="libjavadev-*.jar"/>
+			</fileset>
 			<fileset dir="../ControlsFX">
 				<include name="controlsfx-8.40.12.jar" />
 				<include name="controlsfx-8.40.12license.txt" />
@@ -20,6 +23,12 @@
 			<fileset dir="../ANTLR">
 				<include name="antlr-4.7-complete.jar"/>
 				<include name="ANTLR-4-License.txt"/>
+			</fileset>
+			<fileset dir="../ICU">
+				<include name="icu4j-67_1.jar"/>
+			</fileset>
+			<fileset dir="../lingtree">
+				<include name="LingTree.jar"/>
 			</fileset>
 		</copy>
 

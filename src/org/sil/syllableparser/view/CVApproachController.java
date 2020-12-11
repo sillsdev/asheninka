@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.control.textfield.TextFields;
-import org.sil.syllableparser.ApplicationPreferences;
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.*;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
@@ -23,34 +23,25 @@ import org.sil.syllableparser.model.cvapproach.CVApproachView;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
-import org.sil.syllableparser.service.CVNaturalClasser;
-import org.sil.syllableparser.service.CVNaturalClasserResult;
-import org.sil.syllableparser.service.CVSegmenter;
-import org.sil.syllableparser.service.CVSegmenterResult;
-import org.sil.syllableparser.service.CVSyllabifier;
+import org.sil.syllableparser.service.parsing.CVNaturalClasser;
+import org.sil.syllableparser.service.parsing.CVNaturalClasserResult;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.CVSyllabifier;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * @author Andy Black
@@ -89,6 +80,10 @@ public class CVApproachController extends ApproachController {
 
 	public String getViewUsed() {
 		String sView = "unknown";
+		if (currentCVApproachController == null) {
+			sView = prefs.getLastCVApproachViewUsed();
+			return sView;
+		}
 		String sClass = currentCVApproachController.getClass().getName();
 		switch (sClass) {
 		case "org.sil.syllableparser.view.CVSegmentInventoryController":
@@ -136,8 +131,10 @@ public class CVApproachController extends ApproachController {
 		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		controller.setViewItemUsed(mainApp.getApplicationPreferences()
-				.getLastCVSegmentInventoryViewItemUsed());
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
+		controller.setViewItemUsed(prefs.getLastCVSegmentInventoryViewItemUsed());
+		prefs.setLastCVApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	private FXMLLoader createFXMLLoader(String sFxml) {
@@ -158,9 +155,13 @@ public class CVApproachController extends ApproachController {
 		FXMLLoader loader = createFXMLLoader("fxml/CVNaturalClasses.fxml");
 		CVNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(cvApproachData);
-		int i = mainApp.getApplicationPreferences().getLastCVNaturalClassesViewItemUsed();
+		controller.setData(cvApproachData, ApproachType.CV);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
+		mainApp.updateStatusBarNumberOfItems("");
+		int i = prefs.getLastCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleCVSyllablePatterns() {
@@ -168,28 +169,45 @@ public class CVApproachController extends ApproachController {
 		CVSyllablePatternsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
+		mainApp.updateStatusBarNumberOfItems("");
+		prefs.setLastCVApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleCVWords() {
-		handleCVWords(0, false);
+		handleCVWords(0, false, false);
 	}
 
-	public void handleCVWords(int index, boolean fResetIndex) {
+	public void handleCVWords(int index, boolean fResetIndex, boolean fCheckFilters) {
 		FXMLLoader loader = createFXMLLoader("fxml/CVWords.fxml");
 		CVWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
+		controller.applyWordFilters();
+		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
-			controller.setFocusOnWord(index);
+			controller.setFocusOnWord(index, fCheckFilters);
 		}
+		prefs.setLastCVApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(false);
 	}
 
-	public void handleCVWordsPredictedVsCorrect() {
+	public void handleCVWordsPredictedVsCorrect(int index) {
 		FXMLLoader loader = createFXMLLoader("fxml/CVWordsPredictedVsCorrect.fxml");
 		CVWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData, words);
-		controller.setFocusOnWord(0);
+		controller.initWordsFilter();
+		controller.applyWordFilter();
+		controller.setFocusOnWord(index);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(false, true);
+	}
+
+	public void handleCVWordsPredictedVsCorrect() {
+		handleCVWordsPredictedVsCorrect(0);
 	}
 
 	public void handleGraphemeNaturalClasses() {
@@ -197,8 +215,12 @@ public class CVApproachController extends ApproachController {
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		int i = mainApp.getApplicationPreferences().getLastCVGraphemeNaturalClassesViewItemUsed();
+		controller.initializeTableColumnWidthsAndSplitDividerPosition();
+		mainApp.updateStatusBarNumberOfItems("");
+		int i = prefs.getLastCVGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleEnvironments() {
@@ -206,8 +228,11 @@ public class CVApproachController extends ApproachController {
 		EnvironmentsController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(cvApproachData);
-		int i = mainApp.getApplicationPreferences().getLastCVEnvironmentsViewItemUsed();
+		mainApp.updateStatusBarNumberOfItems("");
+		int i = prefs.getLastCVEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
+		prefs.setLastCVApproachViewUsed(getViewUsed());
+		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	/*
@@ -229,6 +254,16 @@ public class CVApproachController extends ApproachController {
 	@Override
 	void handleRemoveItem() {
 		currentCVApproachController.handleRemoveItem();
+	}
+
+	@Override
+	void handlePreviousItem() {
+		currentCVApproachController.handlePreviousItem();
+	}
+
+	@Override
+	void handleNextItem() {
+		currentCVApproachController.handleNextItem();
 	}
 
 	@Override
@@ -281,7 +316,7 @@ public class CVApproachController extends ApproachController {
 						word.setCVPredictedSyllabification("");
 						continue;
 					}
-					List<CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					CVNaturalClasserResult ncResult = naturalClasser
 							.convertSegmentsToNaturalClasses(segmentsInWord);
 					fSuccess = ncResult.success;
@@ -305,6 +340,7 @@ public class CVApproachController extends ApproachController {
 					}
 					word.setCVPredictedSyllabification(syllabifier
 							.getSyllabificationOfCurrentWord());
+					word.setCVLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
 					word.setCVParserResult(sSuccess);
 				}
 				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
@@ -325,6 +361,11 @@ public class CVApproachController extends ApproachController {
 			statusBar.textProperty().unbind();
 			statusBar.progressProperty().unbind();
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
+			if (currentCVApproachController instanceof CVWordsController) {
+				CVWordsController cvController = (CVWordsController) currentCVApproachController;
+				cvController.updateStatusBarWords(cvController.getPredictedWords(),
+						cvController.getPredictedEqualsCorrectWords());
+			}
 		});
 
 		Platform.runLater(task);
@@ -338,18 +379,21 @@ public class CVApproachController extends ApproachController {
 			Stage dialogStage = new Stage();
 			String resource = "fxml/CVPredictedToCorrectSyllabificationChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
-					resource, MainApp.kApplicationTitle);
+					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 
 			CVPredictedToCorrectSyllabificationChooserController controller = loader
 					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setData(cvApproachData, words);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -360,8 +404,8 @@ public class CVApproachController extends ApproachController {
 			Stage dialogStage = new Stage();
 			String resource = "fxml/CVComparison.fxml";
 			String title = bundle.getString("label.compareimplementations");
-			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
-					resource, title);
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
+					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
 
 			CVComparisonController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -374,6 +418,7 @@ public class CVApproachController extends ApproachController {
 			dialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 
 	}
@@ -385,21 +430,32 @@ public class CVApproachController extends ApproachController {
 			String title = bundle.getString("program.name");
 			String contentText = bundle.getString("label.wordtofind");
 			TextInputDialog dialog = ControllerUtilities.getTextInputDialog(mainApp, title,
-					contentText);
+					contentText, bundle);
 
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
-			for (Word word : words) {
+			ObservableList<Word> wordsToUse = words;
+			if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController) {
+				CVWordsPredictedVsCorrectController predController = (CVWordsPredictedVsCorrectController) currentCVApproachController;
+				wordsToUse = predController.getCVWordsPredictedVsCorrectTable().getItems();
+			}
+			for (Word word : wordsToUse) {
 				listOfWords.add(word.getWord());
 			}
 			TextFields.bindAutoCompletion(dialog.getEditor(), listOfWords);
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(word -> {
 				int index = listOfWords.indexOf(result.get());
-				handleCVWords(index, true);
+				if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController) {
+					handleCVWordsPredictedVsCorrect(index);
+				} else {
+					handleCVWords(index, true, true);
+					rootController.selectApproachViewItem(Constants.CV_WORDS_VIEW_INDEX);
+				}
 			});
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
@@ -514,7 +570,8 @@ public class CVApproachController extends ApproachController {
 			String resource = "fxml/CVTryAWord.fxml";
 			String title = bundle.getString("label.tryaword");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
-					resource, title);
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 
 			CVTryAWordController controller = loader.getController();
 			controller.setDialogStage(tryAWordDialogStage);
@@ -524,18 +581,97 @@ public class CVApproachController extends ApproachController {
 
 			if (currentCVApproachController instanceof CVWordsController) {
 				CVWordsController cvWordsController = (CVWordsController) currentCVApproachController;
-				TableView<Word> cvWordsTable = cvWordsController.getCVWordsTable();
-				Word cvWord = (Word) cvWordsTable.getSelectionModel().getSelectedItem();
-				if (cvWord != null) {
-					String sCurrentWord = cvWord.getWord();
-					controller.getWordToTry().setText(sCurrentWord);
-				}
+				setWordForTryAWord(controller, cvWordsController.getCVWordsTable());
+			} else if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController) {
+				CVWordsPredictedVsCorrectController predController = (CVWordsPredictedVsCorrectController) currentCVApproachController;
+				setWordForTryAWord(controller, predController.getCVWordsPredictedVsCorrectTable());
 			}
 
 			tryAWordDialogStage.initModality(Modality.NONE);
 			tryAWordDialogStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
+		}
+	}
+
+	public void toggleView() {
+		String sClass = currentCVApproachController.getClass().getName();
+		switch (sClass) {
+		case "org.sil.syllableparser.view.CVSegmentInventoryController":
+			handleCVNaturalClasses();
+			handleCVSegmentInventory();
+			break;
+
+		case "org.sil.syllableparser.view.CVNaturalClassesController":
+			handleCVSegmentInventory();
+			handleCVNaturalClasses();
+			break;
+
+		case "org.sil.syllableparser.view.CVSyllablePatternsController":
+			handleCVNaturalClasses();
+			handleCVSyllablePatterns();
+			break;
+
+		case "org.sil.syllableparser.view.CVWordsController":
+			handleCVNaturalClasses();
+			handleCVWords();
+			break;
+
+		case "org.sil.syllableparser.view.CVWordsPredictedVsCorrectController":
+			handleCVSyllablePatterns();
+			handleCVWordsPredictedVsCorrect();
+			break;
+
+		case "org.sil.syllableparser.view.EnvironmentsController":
+			handleGraphemeNaturalClasses();
+			handleEnvironments();
+			break;
+
+		case "org.sil.syllableparser.view.GraphemeNaturalClassesController":
+			handleEnvironments();
+			handleGraphemeNaturalClasses();
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	@Override
+	void handleFilterCorrectSyllabifications() {
+		if (currentCVApproachController instanceof CVWordsController ) {
+			CVWordsController controller = (CVWordsController) currentCVApproachController;
+			controller.handleFilterCorrectSyllabifications();
+		}
+	}
+
+	@Override
+	void handleFilterPredictedSyllabifications() {
+		if (currentCVApproachController instanceof CVWordsController ) {
+			CVWordsController controller = (CVWordsController) currentCVApproachController;
+			controller.handleFilterPredictedSyllabifications();
+		}
+	}
+
+	public void handleFilterWords() {
+		if (currentCVApproachController instanceof CVWordsController ) {
+			CVWordsController controller = (CVWordsController) currentCVApproachController;
+			controller.handleFilterWords();
+		} else if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController ) {
+			CVWordsPredictedVsCorrectController controller = (CVWordsPredictedVsCorrectController) currentCVApproachController;
+			controller.handleFilterWords();
+		}
+	}
+
+	@Override
+	void handleRemoveAllFilters() {
+		if (currentCVApproachController instanceof CVWordsController ) {
+			CVWordsController controller = (CVWordsController) currentCVApproachController;
+			controller.handleRemoveAllFilters();
+		} else if (currentCVApproachController instanceof CVWordsPredictedVsCorrectController ) {
+			CVWordsPredictedVsCorrectController controller = (CVWordsPredictedVsCorrectController) currentCVApproachController;
+			controller.handleRemoveFiltersWord();
 		}
 	}
 }

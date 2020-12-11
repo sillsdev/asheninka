@@ -9,12 +9,31 @@ id="lVernacular"
 name="vernacular"
 ></language
 ><language
+color="blue"
+font-family="Charis SIL"
+id="lIPA"
+name="vernacular"
+></language
+><language
+color="green"
+font-family="Charis SIL"
+font-style="italic"
+id="lEnglishExmple"
+name="vernacular"
+></language
+><language
 color="green"
 id="lGloss"
 name="gloss"
 ></language
 ><language
 id="en"
+></language
+><language
+color="#3300cc"
+font-family="Charis SIL"
+id="lZPI"
+name="Quiegolani Zapotec"
 ></language
 ></languages
 >

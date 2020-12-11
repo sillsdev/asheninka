@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -23,7 +23,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,31 +35,24 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class GraphemeNaturalClassChooserController extends CheckBoxColumnController implements
-		Initializable {
+public class GraphemeNaturalClassChooserController extends TableViewWithCheckBoxColumnController {
 
+	protected final class AnalysisWrappingTableCell extends TableCell<GraphemeOrNaturalClass, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
 	protected final class WrappingTableCell extends TableCell<GraphemeOrNaturalClass, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				GraphemeOrNaturalClass gnc = (GraphemeOrNaturalClass) this.getTableRow().getItem();
-				if (gnc != null && gnc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -87,6 +79,10 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.GRAPHEME_NATURAL_CLASS_CHOOSER);
+		super.setTableView(graphemeOrNaturalClassTable);
+		super.initialize(location, resources);
+
 		// Initialize the table with the three columns.
 		checkBoxColumn.setCellValueFactory(cellData -> cellData.getValue().checkedProperty());
 		checkBoxColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkBoxColumn));
@@ -112,7 +108,7 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		initializeCheckBoxContextMenu(resources);
@@ -128,6 +124,8 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 				}
 				break;
 			}
+			default:
+				break;
 			}
 		});
 	}
@@ -295,5 +293,15 @@ public class GraphemeNaturalClassChooserController extends CheckBoxColumnControl
 	@Override
 	TextField[] createTextFields() {
 		return null;
+	}
+
+	@Override
+	void handlePreviousItem() {
+		// nothing to do
+	}
+
+	@Override
+	void handleNextItem() {
+		// nothing to do
 	}
 }

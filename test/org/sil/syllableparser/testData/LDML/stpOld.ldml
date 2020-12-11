@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity>
+		<version
+			number="" />
+		<generation
+			date="2017-02-24T22:50:58" />
+		<language
+			type="stp" />
+	</identity>
+	<collations>
+		<collation>
+			<settings
+				alternate="shifted" />
+			<rules>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>¿</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>¡</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>‘‘</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>’’</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>‘</s>
+				<reset>
+					<first_primary_ignorable />
+				</reset>
+				<s>’</s>
+				<reset>B</reset>
+				<p>bh</p>
+				<t>Bh</t>
+				<t>BH</t>
+				<reset>C</reset>
+				<p>ch</p>
+				<t>Ch</t>
+				<t>CH</t>
+				<reset>D</reset>
+				<p>dh</p>
+				<t>Dh</t>
+				<t>DH</t>
+				<reset>E</reset>
+				<p></p>
+				<t></t>
+				<reset>I</reset>
+				<p>ɨ</p>
+				<t>Ɨ</t>
+				<reset>L</reset>
+				<p>lh</p>
+				<t>Lh</t>
+				<t>LH</t>
+				<reset>N</reset>
+				<p>ñ</p>
+				<t>Ñ</t>
+			</rules>
+			<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+				<palaso:sortRulesType
+					value="CustomICU" />
+			</special>
+		</collation>
+	</collations>
+	<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+		<palaso:abbreviation
+			value="stp" />
+		<palaso:defaultFontFamily
+			value="Charis SIL AmArea" />
+		<palaso:defaultKeyboard
+			value="MexTepU" />
+		<palaso:languageName
+			value="Tepehuan, Southeastern" />
+		<palaso:version
+			value="2" />
+	</special>
+	<special xmlns:palaso2="urn://palaso.org/ldmlExtensions/v2">
+		<palaso2:knownKeyboards>
+			<palaso2:keyboard
+				layout="Spanish"
+				locale="es-ES"
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="SpanTepU"
+				locale=""
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="US"
+				locale="en-US"
+				os="Win32NT" />
+		</palaso2:knownKeyboards>
+		<palaso2:version
+			value="2" />
+	</special>
+	<special xmlns:fw="urn://fieldworks.sil.org/ldmlExtensions/v1">
+		<fw:graphiteEnabled
+			value="False" />
+		<fw:legacyMapping
+			value="Mextep" />
+		<fw:validChars
+			value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt; &lt;ValidCharacters&gt;   &lt;WordForming&gt;'&lt;/WordForming&gt;   &lt;Numeric /&gt;   &lt;Other /&gt; &lt;/ValidCharacters&gt;" />
+		<fw:windowsLCID
+			value="1058" />
+	</special>
+</ldml>

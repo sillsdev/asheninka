@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2019 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -13,7 +13,6 @@ import org.sil.syllableparser.model.SylParserObject;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
@@ -22,8 +21,16 @@ import javafx.collections.ObservableList;
 public class Word extends SylParserObject {
 	protected final StringProperty word;
 	protected final StringProperty correctSyllabification;
+	protected StringProperty comment;
 	protected StringProperty cvParserResult;
 	protected StringProperty cvPredictedSyllabification;
+	protected StringProperty shParserResult;
+	protected StringProperty shPredictedSyllabification;
+	protected StringProperty oncParserResult;
+	protected StringProperty oncPredictedSyllabification;
+	protected StringProperty cvLingTreeDescription;
+	protected StringProperty shLingTreeDescription;
+	protected StringProperty oncLingTreeDescription;
 
 	// TODO: decide if we need some kind of a comment field to say what kind of
 	// case this word represents
@@ -35,8 +42,16 @@ public class Word extends SylParserObject {
 		super();
 		this.word = new SimpleStringProperty("");
 		this.correctSyllabification = new SimpleStringProperty("");
+		this.comment = new SimpleStringProperty("");
 		this.cvParserResult = new SimpleStringProperty("");
 		this.cvPredictedSyllabification = new SimpleStringProperty("");
+		this.shParserResult = new SimpleStringProperty("");
+		this.shPredictedSyllabification = new SimpleStringProperty("");
+		this.oncParserResult = new SimpleStringProperty("");
+		this.oncPredictedSyllabification = new SimpleStringProperty("");
+		this.cvLingTreeDescription = new SimpleStringProperty("");
+		this.shLingTreeDescription = new SimpleStringProperty("");
+		this.oncLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -44,21 +59,29 @@ public class Word extends SylParserObject {
 		super();
 		this.word = new SimpleStringProperty(word);
 		this.correctSyllabification = new SimpleStringProperty(correctHyphenation);
+		this.comment = new SimpleStringProperty("");
 		this.cvParserResult = new SimpleStringProperty(parserResult);
 		this.cvPredictedSyllabification = new SimpleStringProperty("");
+		this.shParserResult = new SimpleStringProperty(parserResult);
+		this.shPredictedSyllabification = new SimpleStringProperty("");
+		this.oncParserResult = new SimpleStringProperty(parserResult);
+		this.oncPredictedSyllabification = new SimpleStringProperty("");
+		this.cvLingTreeDescription = new SimpleStringProperty("");
+		this.shLingTreeDescription = new SimpleStringProperty("");
+		this.oncLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
 
-	public String getWord() {
-		return word.get();
+	public String getComment() {
+		return comment.get();
 	}
 
-	public StringProperty wordProperty() {
-		return word;
+	public StringProperty commentProperty() {
+		return comment;
 	}
 
-	public void setWord(String word) {
-		this.word.set(word);
+	public void setComment(String comment) {
+		this.comment.set(comment);
 	}
 
 	public String getCorrectSyllabification() {
@@ -71,6 +94,18 @@ public class Word extends SylParserObject {
 
 	public void setCorrectSyllabification(String correctSyllabification) {
 		this.correctSyllabification.set(correctSyllabification);
+	}
+
+	public String getWord() {
+		return word.get();
+	}
+
+	public StringProperty wordProperty() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word.set(word);
 	}
 
 	public String getCVParserResult() {
@@ -105,9 +140,112 @@ public class Word extends SylParserObject {
 		return s;
 	}
 
+	public String getSHParserResult() {
+		return shParserResult.get();
+	}
+
+	public StringProperty shParserResultProperty() {
+		return shParserResult;
+	}
+
+	public void setSHParserResult(String parserResult) {
+		this.shParserResult.set(parserResult);
+	}
+
+	public String getSHPredictedSyllabification() {
+		return shPredictedSyllabification.get();
+	}
+
+	public StringProperty shPredictedSyllabificationProperty() {
+		return shPredictedSyllabification;
+	}
+
+	@XmlElement(name = "shPredictedSyllabification")
+	public void setSHPredictedSyllabification(String predictedSyllabification) {
+		this.shPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public StringProperty shPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(shPredictedSyllabificationProperty(), "\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
+	public String getONCParserResult() {
+		return oncParserResult.get();
+	}
+
+	public StringProperty oncParserResultProperty() {
+		return oncParserResult;
+	}
+
+	public void setONCParserResult(String parserResult) {
+		this.oncParserResult.set(parserResult);
+	}
+
+	public String getONCPredictedSyllabification() {
+		return oncPredictedSyllabification.get();
+	}
+
+	public StringProperty oncPredictedSyllabificationProperty() {
+		return oncPredictedSyllabification;
+	}
+
+	@XmlElement(name = "oncPredictedSyllabification")
+	public void setONCPredictedSyllabification(String predictedSyllabification) {
+		this.oncPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public StringProperty oncPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(oncPredictedSyllabificationProperty(), "\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
+	public String getCVLingTreeDescription() {
+		return cvLingTreeDescription.get();
+	}
+
+	public StringProperty cvLingTreeDescriptionProperty() {
+		return cvLingTreeDescription;
+	}
+
+	public void setCVLingTreeDescription(String ltDescription) {
+		this.cvLingTreeDescription.set(ltDescription);
+	}
+
+	public String getSHLingTreeDescription() {
+		return shLingTreeDescription.get();
+	}
+
+	public StringProperty shLingTreeDescriptionProperty() {
+		return shLingTreeDescription;
+	}
+
+	public void setSHLingTreeDescription(String ltDescription) {
+		this.shLingTreeDescription.set(ltDescription);
+	}
+
+	public String getONCLingTreeDescription() {
+		return oncLingTreeDescription.get();
+	}
+
+	public StringProperty oncLingTreeDescriptionProperty() {
+		return oncLingTreeDescription;
+	}
+
+	public void setONCLingTreeDescription(String ltDescription) {
+		this.oncLingTreeDescription.set(ltDescription);
+	}
+
 	@Override
 	public int hashCode() {
-		String sCombo = word.getValueSafe() + cvPredictedSyllabification.getValueSafe()
+		String sCombo = word.getValueSafe() + comment.getValueSafe()
+				+ cvPredictedSyllabification.getValueSafe()
+				+ shPredictedSyllabification.getValueSafe()
+				+ oncPredictedSyllabification.getValueSafe()
 				+ correctSyllabification.getValueSafe();
 		return sCombo.hashCode();
 	}
@@ -127,8 +265,23 @@ public class Word extends SylParserObject {
 		} else {
 			if (!getCVPredictedSyllabification().equals(otherWord.getCVPredictedSyllabification())) {
 				result = false;
+			} else {
+				if (!getSHPredictedSyllabification().equals(
+						otherWord.getSHPredictedSyllabification())) {
+					result = false;
+				} else {
+					if (!getONCPredictedSyllabification().equals(
+							otherWord.getONCPredictedSyllabification())) {
+						result = false;
+					}
+				}
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public String getSortingValue() {
+		return getWord();
 	}
 }

@@ -9,6 +9,7 @@ package org.sil.syllableparser.model;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.After;
@@ -59,5 +60,13 @@ public class CVApproachTest {
 
 		assertEquals("CV patterns size", 9, cva.getCVSyllablePatterns().size());
 		assertEquals("Active CV patterns size", 7, cva.getActiveCVSyllablePatterns().size());
+	}
+
+	@Test
+	public void getAllSegmentsFromNaturalClassTest() {
+		CVNaturalClass nc = cva.getCVNaturalClasses().get(0);
+		assertEquals("C", nc.getNCName());
+		List<Segment> segments = nc.getAllSegments();
+		assertEquals(20, segments.size());
 	}
 }

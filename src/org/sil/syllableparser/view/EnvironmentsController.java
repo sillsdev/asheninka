@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -6,15 +6,11 @@
  */
 package org.sil.syllableparser.view;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.CharStream;
@@ -22,24 +18,25 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
-import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
+import org.sil.utility.StringUtilities;
+import org.sil.antlr4.environmentparser.EnvironmentConstants;
+import org.sil.antlr4.environmentparser.EnvironmentErrorInfo;
+import org.sil.antlr4.environmentparser.EnvironmentErrorListener;
+import org.sil.antlr4.environmentparser.GraphemeErrorInfo;
+import org.sil.antlr4.environmentparser.EnvironmentErrorListener.VerboseListener;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentLexer;
+import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 
-import org.sil.environmentparser.CheckGraphemeAndClassListener;
-import org.sil.environmentparser.EnvironmentConstants;
-import org.sil.environmentparser.EnvironmentErrorInfo;
-import org.sil.environmentparser.EnvironmentErrorListener;
-import org.sil.environmentparser.GraphemeErrorInfo;
-import org.sil.environmentparser.EnvironmentErrorListener.VerboseListener;
-import org.sil.environmentparser.EnvironmentLexer;
-import org.sil.environmentparser.EnvironmentParser;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,11 +44,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -59,23 +52,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * @author Andy Black
  *
  */
 
-public class EnvironmentsController extends SylParserBaseController implements Initializable {
+public class EnvironmentsController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<Environment, String> {
 		private Text text;
@@ -83,49 +70,17 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Environment env = (Environment) this.getTableRow().getItem();
-				if (env != null && env.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<Environment, String> {
+	protected final class WrappingTableCell extends TableCell<Environment, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Environment env = (Environment) this.getTableRow().getItem();
-				if (env != null && env.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -176,6 +131,10 @@ public class EnvironmentsController extends SylParserBaseController implements I
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.ENVIRONMENTS);
+		super.setTableView(environmentTable);
+		super.initialize(location, resources);
+
 
 		this.bundle = resources;
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().environmentNameProperty());
@@ -189,7 +148,7 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			return new AnalysisWrappingTableCell();
 		});
 		representationColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
@@ -601,11 +560,16 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			nameField.setText(env.getEnvironmentName());
 			descriptionField.setText(env.getDescription());
 			representationField.setText(env.getEnvironmentRepresentation());
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			nameField.setNodeOrientation(analysisOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
 			activeCheckBox.setSelected(env.isActive());
 			List<String> choices = languageProject.getActiveGraphemeNaturalClasses().stream()
 					.map(GraphemeNaturalClass::getNCName).collect(Collectors.toList());
 			ObservableList<String> choices2 = FXCollections.observableArrayList(choices);
 			gncChoicesComboBox.setItems(choices2);
+			gncChoicesComboBox.setNodeOrientation(languageProject.getAnalysisLanguage().getOrientation());
 			gncChoicesComboBox.setVisible(false);
 		} else {
 			// Environment is null, remove all the text.
@@ -621,9 +585,26 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ environmentTable.getItems().size() + " ");
 			// remember the selection
-			mainApp.getApplicationPreferences().setLastCVEnvironmentsViewItemUsed(iCurrentIndex);
-		}
+			ApproachType approach = this.rootController.getCurrentApproach();
+			switch (approach) {
+			case CV:
+				mainApp.getApplicationPreferences()
+						.setLastCVEnvironmentsViewItemUsed(iCurrentIndex);
+				break;
 
+			case SONORITY_HIERARCHY:
+				mainApp.getApplicationPreferences().setLastSHEnvironmentsViewItemUsed(
+						iCurrentIndex);
+				break;
+
+			case ONSET_NUCLEUS_CODA:
+				mainApp.getApplicationPreferences().setLastONCEnvironmentsViewItemUsed(
+						iCurrentIndex);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	public void setEnvironment(Environment environment) {
@@ -631,14 +612,11 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		descriptionField.setText(environment.getDescription());
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 *
-	 * @param cvApproachController
-	 */
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		setColumnICURules();
+		setTextFieldColors();
 		iRepresentationCaretPosition = 6;
 		fGncChoicesUsingMouse = false;
 
@@ -662,44 +640,99 @@ public class EnvironmentsController extends SylParserBaseController implements I
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
+	protected void setColumnICURules() {
+		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(representationColumn, languageProject.getAnalysisLanguage().getIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getIcuRules());
+	}
+
+	public void setData(SHApproach shApproachData) {
+		shApproach = shApproachData;
+		languageProject = shApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
+		setColumnICURules();
+		setTextFieldColors();
+		iRepresentationCaretPosition = 6;
+		fGncChoicesUsingMouse = false;
+
+		// Add observable list data to the table
+		environmentTable.setItems(shApproachData.getLanguageProject().getEnvironments());
+		int max = environmentTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastSHEnvironmentsViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					// select the last one used
+					environmentTable.requestFocus();
+					environmentTable.getSelectionModel().select(iLastIndex);
+					environmentTable.getFocusModel().focus(iLastIndex);
+					environmentTable.scrollTo(iLastIndex);
+				}
+			});
+		}
+	}
+
+	public void setData(ONCApproach oncApproachData) {
+		oncApproach = oncApproachData;
+		languageProject = oncApproach.getLanguageProject();
+		cvApproach = languageProject.getCVApproach();
+		setColumnICURules();
+		setTextFieldColors();
+		iRepresentationCaretPosition = 6;
+		fGncChoicesUsingMouse = false;
+
+		// Add observable list data to the table
+		environmentTable.setItems(oncApproachData.getLanguageProject().getEnvironments());
+		int max = environmentTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastONCEnvironmentsViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					// select the last one used
+					environmentTable.requestFocus();
+					environmentTable.getSelectionModel().select(iLastIndex);
+					environmentTable.getFocusModel().focus(iLastIndex);
+					environmentTable.scrollTo(iLastIndex);
+				}
+			});
+		}
+	}
+
+	protected void setTextFieldColors() {
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
 	@Override
 	void handleInsertNewItem() {
 		Environment newEnvironment = new Environment();
 		cvApproach.getLanguageProject().getEnvironments().add(newEnvironment);
 		newEnvironment.setEnvironmentRepresentation("/  _  ");
-		int i = cvApproach.getLanguageProject().getEnvironments().size() - 1;
-		environmentTable.requestFocus();
-		environmentTable.getSelectionModel().select(i);
-		environmentTable.getFocusModel().focus(i);
-		environmentTable.scrollTo(i);
+		handleInsertNewItem(cvApproach.getLanguageProject().getEnvironments(), environmentTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		// need to deal with all pointers to this environment
-		int i = cvApproach.getLanguageProject().getEnvironments().indexOf(currentEnvironment);
-		currentEnvironment = null;
-		if (i >= 0) {
-			cvApproach.getLanguageProject().getEnvironments().remove(i);
-			int max = environmentTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			environmentTable.requestFocus();
-			environmentTable.getSelectionModel().select(i);
-			environmentTable.getFocusModel().focus(i);
-			environmentTable.scrollTo(i);
-		}
-		environmentTable.refresh();
+		handleRemoveItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(cvApproach.getLanguageProject().getEnvironments(), currentEnvironment, environmentTable);
 	}
 
 	// code taken from
@@ -733,5 +766,4 @@ public class EnvironmentsController extends SylParserBaseController implements I
 			forceTableRowToRedisplayPerActiveSetting(env);
 		}
 	}
-
 }

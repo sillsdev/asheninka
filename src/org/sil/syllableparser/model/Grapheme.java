@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -13,9 +13,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlList;
 
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.service.CVSegmenterGraphemeEnvironmentResult;
-import org.sil.syllableparser.service.CVSegmenterGraphemeResult;
+import org.sil.syllableparser.service.parsing.CVSegmenterGraphemeEnvironmentResult;
+import org.sil.syllableparser.service.parsing.CVSegmenterGraphemeResult;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -24,8 +23,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 /**
  * @author Andy Black
@@ -191,5 +188,10 @@ public class Grapheme extends SylParserObject {
 			result = false;
 		}
 		return result;
+	}
+
+	@Override
+	public String getSortingValue() {
+		return getForm();
 	}
 }

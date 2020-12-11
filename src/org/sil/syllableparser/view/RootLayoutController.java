@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -16,8 +16,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
-
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.dialog.FontSelectorDialog;
 import org.sil.syllableparser.ApplicationPreferences;
@@ -32,21 +30,20 @@ import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.service.BackupFileCreator;
 import org.sil.syllableparser.service.CorrectSyllabificationCleaner;
-import org.sil.syllableparser.service.FLExExportedWordformsAsTabbedListImporter;
-import org.sil.syllableparser.service.ListWordExporter;
-import org.sil.syllableparser.service.ListWordImporter;
-import org.sil.syllableparser.service.ParaTExt7SegmentImporter;
-import org.sil.syllableparser.service.ParaTExtExportedWordListImporter;
-import org.sil.syllableparser.service.ParaTExtHyphenatedWordsExporter;
-import org.sil.syllableparser.service.ParaTExtHyphenatedWordsImporter;
-import org.sil.syllableparser.service.ParaTExtSegmentImporterNoCharactersException;
-import org.sil.syllableparser.service.SegmentImporterException;
-import org.sil.syllableparser.service.XLingPaperHyphenatedWordExporter;
+import org.sil.syllableparser.service.importexport.FLExExportedWordformsAsTabbedListImporter;
+import org.sil.syllableparser.service.importexport.ListWordExporter;
+import org.sil.syllableparser.service.importexport.ListWordImporter;
+import org.sil.syllableparser.service.importexport.ParaTExt7SegmentImporter;
+import org.sil.syllableparser.service.importexport.ParaTExtExportedWordListImporter;
+import org.sil.syllableparser.service.importexport.ParaTExtHyphenatedWordsExporter;
+import org.sil.syllableparser.service.importexport.ParaTExtHyphenatedWordsImporter;
+import org.sil.syllableparser.service.importexport.ParaTExtSegmentImporterNoCharactersException;
+import org.sil.syllableparser.service.importexport.SegmentImporterException;
+import org.sil.syllableparser.service.importexport.XLingPaperHyphenatedWordExporter;
 import org.sil.utility.DateTimeNormalizer;
-
+import org.sil.utility.view.ControllerUtilities;
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
-
 import static javafx.geometry.Orientation.VERTICAL;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -74,6 +71,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -124,6 +122,14 @@ public class RootLayoutController implements Initializable {
 	private Button buttonToolbarConvertPredictedToCorrectSyllabification;
 	@FXML
 	private Button buttonToolbarFindWord;
+	@FXML
+	private Button buttonToolbarFilterCorrectSyllabifications;
+	@FXML
+	private Button buttonToolbarFilterPredictedSyllabifications;
+	@FXML
+	private Button buttonToolbarFilterWords;
+	@FXML
+	private Button buttonToolbarRemoveAllFilters;
 	private Button currentButtonSelected;
 	@FXML
 	private Tooltip tooltipToolbarFileOpen;
@@ -148,6 +154,14 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private Tooltip tooltipToolbarFindWord;
 	@FXML
+	private Tooltip tooltipToolbarFilterCorrectSyllabifications;
+	@FXML
+	private Tooltip tooltipToolbarFilterPredictedSyllabifications;
+	@FXML
+	private Tooltip tooltipToolbarFilterWords;
+	@FXML
+	private Tooltip tooltipToolbarRemoveAllFilters;
+	@FXML
 	private MenuItem menuItemEditCopy;
 	@FXML
 	private MenuItem menuItemEditCut;
@@ -157,6 +171,10 @@ public class RootLayoutController implements Initializable {
 	private MenuItem menuItemEditInsert;
 	@FXML
 	private MenuItem menuItemEditRemove;
+	@FXML
+	private MenuItem menuItemEditPrevious;
+	@FXML
+	private MenuItem menuItemEditNext;
 	@FXML
 	private MenuItem menuItemSyllabify;
 	@FXML
@@ -170,7 +188,17 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private MenuItem menuItemClearCorrectSyllabificationInWords;
 	@FXML
+	private MenuItem menuItemFilterWords;
+	@FXML
+	private MenuItem menuItemFilterPredictedSyllabifications;
+	@FXML
+	private MenuItem menuItemFilterCorrectSyllabifications;
+	@FXML
+	private MenuItem menuItemRemoveAllFilters;
+	@FXML
 	private MenuItem menuItemCompareImplementations;
+	@FXML
+	private MenuItem menuItemCompareApproachSyllabifications;
 	@FXML
 	private MenuItem menuItemVernacularFont;
 	@FXML
@@ -191,6 +219,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private ListView<ApproachView> approachViews;
 	private CVApproachController cvApproachController;
+	private SHApproachController shApproachController;
 	private ONCApproachController oncApproachController;
 	private ApproachController currentApproachController;
 
@@ -200,6 +229,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	StatusBar statusBar = new StatusBar();
 	Label numberOfItems = new Label("0/0");
+	Label predictedToTotal = new Label("0/0 (0%)");
+	Label predictedEqualsCorrectToTotal = new Label("0/0 (0%)");
 
 	private String syllableParserFilterDescription;
 
@@ -234,7 +265,14 @@ public class RootLayoutController implements Initializable {
 	public void setMainApp(MainApp mainApp, Locale locale, LanguageProject languageProject) {
 		this.mainApp = mainApp;
 		cvApproachController.setMainApp(mainApp);
+		cvApproachController.setPrefs(mainApp.getApplicationPreferences());
 		cvApproachController.setRootLayout(this);
+		shApproachController.setMainApp(mainApp);
+		shApproachController.setPrefs(mainApp.getApplicationPreferences());
+		shApproachController.setRootLayout(this);
+		oncApproachController.setMainApp(mainApp);
+		oncApproachController.setPrefs(mainApp.getApplicationPreferences());
+		oncApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -244,6 +282,12 @@ public class RootLayoutController implements Initializable {
 		cvApproachController.setCVApproachData(languageProject.getCVApproach(),
 				languageProject.getWords());
 		cvApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		shApproachController.setSHApproachData(languageProject.getSHApproach(),
+				languageProject.getWords());
+		shApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		oncApproachController.setONCApproachData(languageProject.getONCApproach(),
+				languageProject.getWords());
+		oncApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -254,6 +298,16 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleRemoveItem() {
 		currentApproachController.handleRemoveItem();
+	}
+
+	@FXML
+	private void handlePreviousItem() {
+		currentApproachController.handlePreviousItem();
+	}
+
+	@FXML
+	private void handleNextItem() {
+		currentApproachController.handleNextItem();
 	}
 
 	@FXML
@@ -269,6 +323,26 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleConvertPredictedToCorrectSyllabification() {
 		currentApproachController.handleConvertPredictedToCorrectSyllabification();
+	}
+
+	@FXML
+	private void handleFilterCorrectSyllabifications() {
+		currentApproachController.handleFilterCorrectSyllabifications();
+	}
+
+	@FXML
+	private void handleFilterPredictedSyllabifications() {
+		currentApproachController.handleFilterPredictedSyllabifications();
+	}
+
+	@FXML
+	private void handleFilterWords() {
+		currentApproachController.handleFilterWords();
+	}
+
+	@FXML
+	private void handleRemoveAllFilters() {
+		currentApproachController.handleRemoveAllFilters();
 	}
 
 	@FXML
@@ -290,7 +364,7 @@ public class RootLayoutController implements Initializable {
 		ButtonType buttonTypeCancel = ButtonType.CANCEL;
 
 		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
-		localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		alert = localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeYes) {
@@ -327,7 +401,7 @@ public class RootLayoutController implements Initializable {
 		ButtonType buttonTypeCancel = ButtonType.CANCEL;
 
 		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
-		localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		alert = localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeYes) {
@@ -339,7 +413,7 @@ public class RootLayoutController implements Initializable {
 
 	}
 
-	protected void localizeConfirmationButtons(Alert alert, ButtonType buttonTypeYes,
+	protected Alert localizeConfirmationButtons(Alert alert, ButtonType buttonTypeYes,
 			ButtonType buttonTypeNo, ButtonType buttonTypeCancel) {
 		Button buttonYes = (Button) alert.getDialogPane().lookupButton(buttonTypeYes);
 		buttonYes.setText(bundle.getString("label.yes"));
@@ -347,7 +421,7 @@ public class RootLayoutController implements Initializable {
 		buttonNo.setText(bundle.getString("label.no"));
 		Button buttonCancel = (Button) alert.getDialogPane().lookupButton(buttonTypeCancel);
 		buttonCancel.setText(bundle.getString("label.cancel"));
-		// debug says that this has changed at this point, but it still shows with English...
+		return alert;
 	}
 
 	public void clearAllCorrectSyllabifications() {
@@ -364,17 +438,44 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
-	private void handleVernacularFont() {
-		handleFont(mainApp.getPrimaryStage(), languageProject.getVernacularLanguage());
+	private void handleVernacularWritingSystem() {
+		launchWritingSystemController(languageProject.getVernacularLanguage(), "label.vernacularwritingsystem");
+		File file = applicationPreferences.getLastOpenedFile();
+		mainApp.updateStageTitle(file);
+	}
+
+	protected void launchWritingSystemController(Language language, String titleResource) {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/WritingSystem.fxml";
+			String title = bundle.getString(titleResource);
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
+			WritingSystemController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setData(language);
+			dialogStage.setResizable(false);
+			dialogStage.showAndWait();
+			if (controller.isOkClicked()) {
+				currentApproachController.toggleView();
+			}
+		} catch (IOException | CloneNotSupportedException e) {
+			e.printStackTrace();
+			MainApp.reportException(e, bundle);
+		}
 	}
 
 	@FXML
-	private void handleAnalysisFont() {
-		handleFont(mainApp.getPrimaryStage(), languageProject.getAnalysisLanguage());
+	private void handleAnalysisWritingSystem() {
+		launchWritingSystemController(languageProject.getAnalysisLanguage(), "label.analysiswritingsystem");
 	}
 
 	public void handleFont(Stage stage, Language lang) {
-		FontSelectorDialog dlg = new FontSelectorDialog(lang.getFont());
+		Font tempFont = lang.getFont();
+		FontSelectorDialog dlg = new FontSelectorDialog(tempFont);
 		dlg.initOwner(stage);
 		// dlg.setResult(languageProject.getVernacularFont());
 		dlg.showAndWait();
@@ -403,7 +504,9 @@ public class RootLayoutController implements Initializable {
 		}
 		applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 		File fileCreated = ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false,
-				syllableParserFilterDescription);
+				syllableParserFilterDescription, bundle.getString("file.new"),
+				Constants.ASHENINKA_DATA_FILE_EXTENSION, Constants.ASHENINKA_DATA_FILE_EXTENSIONS,
+				Constants.RESOURCE_LOCATION);
 		if (fileCreated != null) {
 			File file = new File(Constants.ASHENINKA_STARTER_FILE);
 			mainApp.loadLanguageData(file);
@@ -519,15 +622,16 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleSaveProjectAs() {
 		ControllerUtilities.doFileSaveAs(mainApp, currentLocale, false,
-				syllableParserFilterDescription);
+				syllableParserFilterDescription, null, Constants.ASHENINKA_DATA_FILE_EXTENSION,
+				Constants.ASHENINKA_DATA_FILE_EXTENSIONS, Constants.RESOURCE_LOCATION);
 	}
 
 	@FXML
 	private void handleBackUpProject() {
 		String title = bundle.getString("label.backupproject");
 		String contentText = bundle.getString("label.backupcomment");
-		TextInputDialog dialog = ControllerUtilities
-				.getTextInputDialog(mainApp, title, contentText);
+		TextInputDialog dialog = ControllerUtilities.getTextInputDialog(mainApp, title,
+				contentText, bundle);
 		dialog.setResizable(true);
 
 		Optional<String> result = dialog.showAndWait();
@@ -539,8 +643,8 @@ public class RootLayoutController implements Initializable {
 				try {
 					Files.createDirectory(Paths.get(backupDirectoryPath));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					MainApp.reportException(e, bundle);
 				}
 			}
 			String nameWithoutExtension = mainApp.getLanguageProjectFilePath().getName()
@@ -564,31 +668,69 @@ public class RootLayoutController implements Initializable {
 	}
 
 	@FXML
-	private void handleRestoreProject() {
+	public void handleRestoreProject() {
+		String backupDirectoryPath = getBackupDirectoryPath();
+		processRestoreProject(backupDirectoryPath);
+	}
+
+	protected boolean processRestoreProject(String backupDirectoryPath) {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
 			String resource = "fxml/RestoreBackupChooser.fxml";
 			String title = bundle.getString("label.restoreproject");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
-					resource, title);
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 
 			RestoreBackupChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 			controller.setLocale(currentLocale);
-			String backupDirectoryPath = getBackupDirectoryPath();
 			controller.setData(backupDirectoryPath);
 
 			dialogStage.showAndWait();
+			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
+			return false;
 		}
+	}
+
+	public boolean restoreProject(String sBackupDirectoryPath) {
+		return processRestoreProject(sBackupDirectoryPath);
 	}
 
 	@FXML
 	private void handleCompareImplementations() {
 		currentApproachController.handleCompareImplementations();
+	}
+
+	@FXML
+	private void handleCompareApproachSyllabifications() {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			Stage dialogStage = new Stage();
+			String resource = "fxml/SyllabificationComparison.fxml";
+			String title = bundle.getString("label.comparesyllabifications");
+			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage, title,
+					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
+
+			SyllabificationComparisonController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setLocale(currentLocale);
+			controller.setData(languageProject);
+
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+			MainApp.reportException(e, bundle);
+		}
+
 	}
 
 	@FXML
@@ -651,7 +793,6 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleHyphenationParametersSimpleList() {
-		System.out.println("Simple list hyphenation parameters");
 		launchHyphenationParametersController("label.hyphenationparametersindesign",
 				languageProject.getHyphenationParametersListWord());
 	}
@@ -664,7 +805,8 @@ public class RootLayoutController implements Initializable {
 			String resource = "fxml/HyphenationParametersChooser.fxml";
 			String title = bundle.getString("label.sethyphenationparameters");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
-					resource, title);
+					title, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 
 			Object[] args = { bundle.getString(sHyphenationParametersType) };
 			MessageFormat msgFormatter = new MessageFormat("");
@@ -681,19 +823,18 @@ public class RootLayoutController implements Initializable {
 			dialogStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
 	@FXML
 	private void handleHyphenationParametersParaTExt() {
-		System.out.println("Paratext hyphenation parameters");
 		launchHyphenationParametersController("label.hyphenationparametersparatext",
 				languageProject.getHyphenationParametersParaTExt());
 	}
 
 	@FXML
 	private void handleHyphenationParametersXLingPaper() {
-		System.out.println("XLingPaper hyphenation parameters");
 		launchHyphenationParametersController("label.hyphenationparametersxlingpaper",
 				languageProject.getHyphenationParametersXLingPaper());
 	}
@@ -713,8 +854,8 @@ public class RootLayoutController implements Initializable {
 		alert.setTitle(sAboutHeader);
 		alert.setHeaderText(null);
 		alert.setContentText(sAboutContent);
-		Image silLogo = ControllerUtilities
-				.getIconImageFromURL("file:resources/images/SILLogo.png");
+		Image silLogo = ControllerUtilities.getIconImageFromURL(
+				"file:resources/images/SILLogo.png", Constants.RESOURCE_SOURCE_LOCATION);
 		// Image silLogo = new
 		// Image("file:src/org/sil/syllableparser/resources/images/SILLogo.png");
 		alert.setGraphic(new ImageView(silLogo));
@@ -759,13 +900,8 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleExit() {
-		handleSaveProject();
+		mainApp.stop();
 		System.exit(0);
-	}
-
-	@FXML
-	private void handleApproachClick() {
-
 	}
 
 	/**
@@ -773,10 +909,11 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleCVApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonCVApproach);
 		approachViews.setItems(cvApproachController.getViews());
 		currentApproachController = cvApproachController;
-		selectApproachViewItem(0);
+		setInitialCVView();
 		setDisableForSomeMenuAndToolbarItems();
 	}
 
@@ -790,68 +927,119 @@ public class RootLayoutController implements Initializable {
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(false);
 		menuItemConvertPredictedToCorrectSyllabification.setDisable(false);
 		buttonToolbarFindWord.setDisable(false);
+		buttonToolbarFilterCorrectSyllabifications.setDisable(false);
+		buttonToolbarFilterPredictedSyllabifications.setDisable(false);
+		buttonToolbarFilterWords.setDisable(false);
+		buttonToolbarRemoveAllFilters.setDisable(false);
 		menuItemFindWord.setDisable(false);
+	}
+
+	private void rememberLastApproachViewUsed() {
+		if (currentApproachController == null) {
+			return;
+		}
+		String sCurrentView = currentApproachController.getViewUsed();
+		if (currentApproachController instanceof CVApproachController) {
+			applicationPreferences.setLastCVApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof SHApproachController) {
+			applicationPreferences.setLastSHApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof ONCApproachController) {
+			applicationPreferences.setLastONCApproachViewUsed(sCurrentView);
+		}
 	}
 
 	@FXML
 	private void handleCVSegmentInventory() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVSegmentInventory();
-		selectApproachViewItem(0);
+		selectApproachViewItem(Constants.CV_SEGMENT_INVENTORY_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleCVNaturalClasses() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVNaturalClasses();
-		selectApproachViewItem(1);
+		selectApproachViewItem(Constants.CV_NATURAL_CLASSES_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleCVSyllablePatterns() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVSyllablePatterns();
-		;
-		selectApproachViewItem(2);
+		selectApproachViewItem(Constants.CV_SYLLABLE_PATTERNS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleCVWords() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVWords();
-		selectApproachViewItem(3);
+		selectApproachViewItem(Constants.CV_WORDS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleCVWordsPredictedVsCorrect() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+		currentApproachController = cvApproachController;
 		cvApproachController.handleCVWordsPredictedVsCorrect();
-		selectApproachViewItem(4);
+		selectApproachViewItem(Constants.CV_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
 	}
 
 	@FXML
-	private void handleGraphemeNaturalClasses() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+	private void handleCVGraphemeNaturalClasses() {
+		currentApproachController = cvApproachController;
 		cvApproachController.handleGraphemeNaturalClasses();
-		selectApproachViewItem(5);
+		selectApproachViewItem(Constants.CV_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
 	}
 
 	@FXML
-	private void handleEnvironments() {
-		handleCVApproach();
-		CVApproachController cvApproachController = (CVApproachController) currentApproachController;
+	private void handleCVEnvironments() {
+		currentApproachController = cvApproachController;
 		cvApproachController.handleEnvironments();
-		selectApproachViewItem(6);
+		selectApproachViewItem(Constants.CV_ENVIRONMENTS_VIEW_INDEX);
 	}
 
+	@FXML
+	private void handleSHSegmentInventory() {
+		currentApproachController = shApproachController;
+		shApproachController.handleSHSegmentInventory();
+		selectApproachViewItem(Constants.SH_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
 
-	protected void selectApproachViewItem(int iItem) {
+	@FXML
+	private void handleSHSonorityHierarchy() {
+		currentApproachController = shApproachController;
+		shApproachController.handleSHSonorityHierarchy();
+		selectApproachViewItem(Constants.SH_SONORITY_HIERARCHY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleSHWords() {
+		currentApproachController = shApproachController;
+		shApproachController.handleSHWords();
+		selectApproachViewItem(Constants.SH_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleSHWordsPredictedVsCorrect() {
+		currentApproachController = shApproachController;
+		shApproachController.handleSHWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.SH_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleSHGraphemeNaturalClasses() {
+		currentApproachController = shApproachController;
+		shApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.SH_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleSHEnvironments() {
+		currentApproachController = shApproachController;
+		shApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.SH_ENVIRONMENTS_VIEW_INDEX);
+	}
+
+	public void selectApproachViewItem(int iItem) {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -875,8 +1063,12 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleSonorityHierarchyApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonSonorityHierarchyApproach);
-		mainApp.showNotImplementedYet();
+		approachViews.setItems(shApproachController.getViews());
+		currentApproachController = shApproachController;
+		setInitialSHView();
+		setDisableForSomeMenuAndToolbarItems();
 	}
 
 	/**
@@ -884,11 +1076,85 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleONCApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonONCApproach);
-		mainApp.showNotImplementedYet();
-		// approachViews.setItems(oncApproachController.getViews());
-		// currentApproachController = oncApproachController;
+		approachViews.setItems(oncApproachController.getViews());
+		currentApproachController = oncApproachController;
+		setInitialONCView();
+		setDisableForSomeMenuAndToolbarItems();
 	}
+
+	@FXML
+	private void handleONCSegmentInventory() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleONCSegmentInventory();
+		selectApproachViewItem(Constants.ONC_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCSonorityHierarchy() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleONCSonorityHierarchy();
+		selectApproachViewItem(Constants.ONC_SONORITY_HIERARCHY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCNaturalClasses() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleCVNaturalClasses();
+		selectApproachViewItem(Constants.ONC_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleSyllabificationParameters() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleSyllabificationParameters();
+		selectApproachViewItem(Constants.ONC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleTemplates() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleTemplates();;
+		selectApproachViewItem(Constants.ONC_TEMPLATES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleFilters() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleFilters();;
+		selectApproachViewItem(Constants.ONC_FILTERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCWords() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleONCWords();
+		selectApproachViewItem(Constants.ONC_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCWordsPredictedVsCorrect() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleONCWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.ONC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCGraphemeNaturalClasses() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.ONC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleONCEnvironments() {
+		currentApproachController = oncApproachController;
+		oncApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.ONC_ENVIRONMENTS_VIEW_INDEX);
+	}
+
+
 
 	/**
 	 * Moraic Approach
@@ -922,31 +1188,35 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleChangeInterfaceLanguage() {
-
-		Map<String, ResourceBundle> validLocales = new TreeMap<String, ResourceBundle>();
-		getListOfValidLocales(validLocales);
+		Map<String, ResourceBundle> validLocales = ControllerUtilities.getValidLocales(
+				currentLocale, Constants.RESOURCE_LOCATION);
 
 		ChoiceDialog<String> dialog = new ChoiceDialog<>(
 				currentLocale.getDisplayLanguage(currentLocale), validLocales.keySet());
 		dialog.setTitle(sChangeInterfaceLanguage);
 		dialog.setHeaderText(sChooseInterfaceLanguage);
 		dialog.setContentText(sChooseLanguage);
+		Button buttonOK = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+		buttonOK.setText(bundle.getString("label.ok"));
+		Button buttonCancel = (Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+		buttonCancel.setText(bundle.getString("label.cancel"));
 
 		Optional<String> result = dialog.showAndWait();
-		result.ifPresent(locale -> mainApp.setLocale(validLocales.get(locale).getLocale()));
-
-	}
-
-	private void getListOfValidLocales(Map<String, ResourceBundle> choices) {
-		Locale[] locales = Locale.getAvailableLocales();
-		for (Locale locale : locales) {
-			ResourceBundle rb = ResourceBundle.getBundle(
-					"org.sil.syllableparser.resources.SyllableParser", locale);
-			if (rb != null) {
-				String localeName = rb.getLocale().getDisplayName(currentLocale);
-				choices.putIfAbsent(localeName, rb);
+		result.ifPresent(locale -> {
+			Locale selectedLocale = validLocales.get(locale).getLocale();
+			bundle = validLocales.get(locale);
+			if (!currentLocale.equals(selectedLocale)) {
+				TimerService timer = mainApp.getSaveDataPeriodicallyService();
+				if (timer != null) {
+					mainApp.getSaveDataPeriodicallyService().cancel();
+				}
+				mainApp.setLocale(selectedLocale);
+				currentLocale = selectedLocale;
+				if (timer != null) {
+					mainApp.getSaveDataPeriodicallyService().restart();
+				}
 			}
-		}
+		});
 	}
 
 	@FXML
@@ -1010,17 +1280,17 @@ public class RootLayoutController implements Initializable {
 		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 		stage.getIcons().add(mainApp.getNewMainIconImage());
 
-		ButtonType buttonYes = ButtonType.YES;
-		ButtonType buttonNo = ButtonType.NO;
-		ButtonType buttonCancel = ButtonType.CANCEL;
-
-		alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+		ButtonType buttonTypeYes = ButtonType.YES;
+		ButtonType buttonTypeNo = ButtonType.NO;
+		ButtonType buttonTypeCancel = ButtonType.CANCEL;
+		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		alert = localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonYes) {
+		if (result.get() == buttonTypeYes) {
 			handleBackUpProject();
 			importParaTExtCharacters();
-		} else if (result.get() == buttonNo) {
+		} else if (result.get() == buttonTypeNo) {
 			importParaTExtCharacters();
 		}
 	}
@@ -1035,7 +1305,7 @@ public class RootLayoutController implements Initializable {
 				importer.importSegments(file);
 			} catch (SegmentImporterException e) {
 				if (e instanceof ParaTExtSegmentImporterNoCharactersException) {
-					ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
+					//ParaTExtSegmentImporterNoCharactersException ptex = (ParaTExtSegmentImporterNoCharactersException) e;
 					// ptex.getsFileName()
 					Alert errorAlert = new Alert(AlertType.ERROR);
 					errorAlert.setTitle(bundle.getString("program.name"));
@@ -1059,7 +1329,8 @@ public class RootLayoutController implements Initializable {
 		sLabelUntested = bundle.getString("label.untested");
 
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
-		oncApproachController = new ONCApproachController(bundle);
+		shApproachController = new SHApproachController(bundle, bundle.getLocale());
+		oncApproachController = new ONCApproachController(bundle, bundle.getLocale());
 
 		createToolbarButtons(bundle);
 
@@ -1072,8 +1343,16 @@ public class RootLayoutController implements Initializable {
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(true);
 		menuItemConvertPredictedToCorrectSyllabification.setDisable(true);
 		buttonToolbarFindWord.setDisable(true);
+		buttonToolbarFilterCorrectSyllabifications.setDisable(true);
+		buttonToolbarFilterPredictedSyllabifications.setDisable(true);
+		buttonToolbarFilterWords.setDisable(true);
+		buttonToolbarRemoveAllFilters.setDisable(true);
 		menuItemFindWord.setDisable(true);
 
+		statusBar.getRightItems().add(new Separator(VERTICAL));
+		statusBar.getRightItems().add(predictedToTotal);
+		statusBar.getRightItems().add(new Separator(VERTICAL));
+		statusBar.getRightItems().add(predictedEqualsCorrectToTotal);
 		statusBar.getRightItems().add(new Separator(VERTICAL));
 		statusBar.getRightItems().add(numberOfItems);
 
@@ -1095,7 +1374,8 @@ public class RootLayoutController implements Initializable {
 		String sLastApproachUsed = applicationPreferences.getLastApproachUsed();
 		switch (sLastApproachUsed) {
 		case "CV":
-			setCVApproachAndInitialCVView();
+			handleCVApproach();
+			setInitialCVView();
 			break;
 
 		case "MORAIC":
@@ -1108,6 +1388,7 @@ public class RootLayoutController implements Initializable {
 
 		case "ONSET_NUCLEUS_CODA":
 			handleONCApproach();
+			setInitialONCView();
 			break;
 
 		case "OPTIMALITY_THEORY":
@@ -1116,44 +1397,127 @@ public class RootLayoutController implements Initializable {
 
 		case "SONORITY_HIERARCHY":
 			handleSonorityHierarchyApproach();
+			setInitialSHView();
 			break;
 
 		default:
-			setCVApproachAndInitialCVView();
+			handleCVApproach();
+			setInitialCVView();
 			break;
 		}
 	}
 
-	protected void setCVApproachAndInitialCVView() {
-		handleCVApproach();
-		String sLastApproachViewUsed = applicationPreferences.getLastApproachViewUsed();
-		switch (sLastApproachViewUsed) {
+	protected void setInitialCVView() {
+		String sLastCVApproachViewUsed = applicationPreferences.getLastCVApproachViewUsed();
+		switch (sLastCVApproachViewUsed) {
 		case "ENVIRONMENTS":
-			selectApproachViewItem(6);
+			selectApproachViewItem(Constants.CV_ENVIRONMENTS_VIEW_INDEX);
 			break;
 
 		case "GRAPHEME_NATURAL_CLASSES":
-			selectApproachViewItem(5);
+			selectApproachViewItem(Constants.CV_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
 			break;
 
 		case "NATURAL_CLASSES":
-			selectApproachViewItem(1);
+			selectApproachViewItem(Constants.CV_NATURAL_CLASSES_VIEW_INDEX);
 			break;
 
 		case "PREDICTED_VS_CORRECT_WORDS":
-			selectApproachViewItem(4);
+			selectApproachViewItem(Constants.CV_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
 			break;
 
 		case "SEGMENT_INVENTORY":
-			selectApproachViewItem(0);
+			selectApproachViewItem(Constants.CV_SEGMENT_INVENTORY_VIEW_INDEX);
 			break;
 
 		case "SYLLABLE_PATTERNS":
-			selectApproachViewItem(2);
+			selectApproachViewItem(Constants.CV_SYLLABLE_PATTERNS_VIEW_INDEX);
 			break;
 
 		case "WORDS":
-			selectApproachViewItem(3);
+			selectApproachViewItem(Constants.CV_WORDS_VIEW_INDEX);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
+	protected void setInitialSHView() {
+		String sLastSHApproachViewUsed = applicationPreferences.getLastSHApproachViewUsed();
+		switch (sLastSHApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(Constants.SH_ENVIRONMENTS_VIEW_INDEX);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(Constants.SH_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(Constants.SH_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(Constants.SH_SEGMENT_INVENTORY_VIEW_INDEX);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(Constants.SH_SONORITY_HIERARCHY_VIEW_INDEX);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(Constants.SH_WORDS_VIEW_INDEX);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
+	protected void setInitialONCView() {
+		String sLastONCApproachViewUsed = applicationPreferences.getLastONCApproachViewUsed();
+		switch (sLastONCApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(Constants.ONC_ENVIRONMENTS_VIEW_INDEX);
+			break;
+
+		case "FILTERS":
+			selectApproachViewItem(Constants.ONC_FILTERS_VIEW_INDEX);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(Constants.ONC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "NATURAL_CLASSES":
+			selectApproachViewItem(Constants.ONC_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(Constants.ONC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(Constants.ONC_SEGMENT_INVENTORY_VIEW_INDEX);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(Constants.ONC_SONORITY_HIERARCHY_VIEW_INDEX);
+			break;
+
+		case "SYLLABIFICATION_PARAMETERS":
+			selectApproachViewItem(Constants.ONC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+			break;
+
+		case "TEMPLATES":
+			selectApproachViewItem(Constants.ONC_TEMPLATES_VIEW_INDEX);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(Constants.ONC_WORDS_VIEW_INDEX);
 			break;
 
 		default:
@@ -1163,32 +1527,69 @@ public class RootLayoutController implements Initializable {
 	}
 
 	protected void createToolbarButtons(ResourceBundle bundle) {
-		ControllerUtilities.createToolbarButtonWithImage("newAction.png", buttonToolbarFileNew,
-				tooltipToolbarFileNew, bundle.getString("tooltip.new"));
-		ControllerUtilities.createToolbarButtonWithImage("openAction.png", buttonToolbarFileOpen,
-				tooltipToolbarFileOpen, bundle.getString("tooltip.open"));
-		ControllerUtilities.createToolbarButtonWithImage("saveAction.png", buttonToolbarFileSave,
-				tooltipToolbarFileSave, bundle.getString("tooltip.save"));
-		ControllerUtilities.createToolbarButtonWithImage("cutAction.png", buttonToolbarEditCut,
-				tooltipToolbarEditCut, bundle.getString("tooltip.cut"));
-		ControllerUtilities.createToolbarButtonWithImage("copyAction.png", buttonToolbarEditCopy,
-				tooltipToolbarEditCopy, bundle.getString("tooltip.copy"));
-		ControllerUtilities.createToolbarButtonWithImage("pasteAction.png", buttonToolbarEditPaste,
-				tooltipToolbarEditPaste, bundle.getString("tooltip.paste"));
-		ControllerUtilities.createToolbarButtonWithImage("insertAction.png",
-				buttonToolbarEditInsert, tooltipToolbarEditInsert,
-				bundle.getString("tooltip.insertnew"));
-		ControllerUtilities.createToolbarButtonWithImage("deleteAction.png",
-				buttonToolbarEditRemove, tooltipToolbarEditRemove,
-				bundle.getString("tooltip.remove"));
-		ControllerUtilities.createToolbarButtonWithImage("syllabify.png", buttonToolbarSyllabify,
-				tooltipToolbarSyllabify, bundle.getString("tooltip.syllabifywords"));
-		ControllerUtilities.createToolbarButtonWithImage("predictedToCorrect.png",
-				buttonToolbarConvertPredictedToCorrectSyllabification,
-				tooltipToolbarConvertPredictedToCorrectSyllabification,
-				bundle.getString("tooltip.convertpredictedtocorrect"));
-		ControllerUtilities.createToolbarButtonWithImage("FindWord.png", buttonToolbarFindWord,
-				tooltipToolbarFindWord, bundle.getString("tooltip.findword"));
+		tooltipToolbarFileNew = ControllerUtilities.createToolbarButtonWithImage("newAction.png",
+				buttonToolbarFileNew, tooltipToolbarFileNew, bundle.getString("tooltip.new"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarFileOpen = ControllerUtilities.createToolbarButtonWithImage("openAction.png",
+				buttonToolbarFileOpen, tooltipToolbarFileOpen, bundle.getString("tooltip.open"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarFileSave = ControllerUtilities.createToolbarButtonWithImage("saveAction.png",
+				buttonToolbarFileSave, tooltipToolbarFileSave, bundle.getString("tooltip.save"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditCut = ControllerUtilities.createToolbarButtonWithImage("cutAction.png",
+				buttonToolbarEditCut, tooltipToolbarEditCut, bundle.getString("tooltip.cut"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditCopy = ControllerUtilities.createToolbarButtonWithImage("copyAction.png",
+				buttonToolbarEditCopy, tooltipToolbarEditCopy, bundle.getString("tooltip.copy"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditPaste = ControllerUtilities.createToolbarButtonWithImage(
+				"pasteAction.png", buttonToolbarEditPaste, tooltipToolbarEditPaste,
+				bundle.getString("tooltip.paste"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditInsert = ControllerUtilities.createToolbarButtonWithImage(
+				"insertAction.png", buttonToolbarEditInsert, tooltipToolbarEditInsert,
+				bundle.getString("tooltip.insertnew"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarEditRemove = ControllerUtilities.createToolbarButtonWithImage(
+				"deleteAction.png", buttonToolbarEditRemove, tooltipToolbarEditRemove,
+				bundle.getString("tooltip.remove"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarSyllabify = ControllerUtilities.createToolbarButtonWithImage("syllabify.png",
+				buttonToolbarSyllabify, tooltipToolbarSyllabify,
+				bundle.getString("tooltip.syllabifywords"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarConvertPredictedToCorrectSyllabification = ControllerUtilities
+				.createToolbarButtonWithImage("predictedToCorrect.png",
+						buttonToolbarConvertPredictedToCorrectSyllabification,
+						tooltipToolbarConvertPredictedToCorrectSyllabification,
+						bundle.getString("tooltip.convertpredictedtocorrect"),
+						Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarFindWord = ControllerUtilities.createToolbarButtonWithImage("FindWord.png",
+				buttonToolbarFindWord, tooltipToolbarFindWord,
+				bundle.getString("tooltip.findword"), Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipToolbarFilterCorrectSyllabifications = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64-Correct.png",
+				buttonToolbarFilterCorrectSyllabifications, tooltipToolbarFilterCorrectSyllabifications,
+				bundle.getString("tooltip.filtercorrectsyllablebreaks"), Constants.RESOURCE_SOURCE_LOCATION);
+		buttonToolbarFilterCorrectSyllabifications = adjustImageSize(buttonToolbarFilterCorrectSyllabifications);
+		tooltipToolbarFilterPredictedSyllabifications = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64-Predicted.png",
+				buttonToolbarFilterPredictedSyllabifications, tooltipToolbarFilterPredictedSyllabifications,
+				bundle.getString("tooltip.filterpredictedsyllablebreaks"), Constants.RESOURCE_SOURCE_LOCATION);
+		buttonToolbarFilterPredictedSyllabifications = adjustImageSize(buttonToolbarFilterPredictedSyllabifications);
+		tooltipToolbarFilterWords = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64.png",
+				buttonToolbarFilterWords, tooltipToolbarFilterWords,
+				bundle.getString("tooltip.filterwords"), Constants.RESOURCE_SOURCE_LOCATION);
+		buttonToolbarFilterWords = adjustImageSize(buttonToolbarFilterWords);
+		tooltipToolbarRemoveAllFilters = ControllerUtilities.createToolbarButtonWithImage("icons8-clear-filters-64.png",
+				buttonToolbarRemoveAllFilters, tooltipToolbarRemoveAllFilters,
+				bundle.getString("tooltip.removeallfilters"), Constants.RESOURCE_SOURCE_LOCATION);
+		buttonToolbarRemoveAllFilters = adjustImageSize(buttonToolbarRemoveAllFilters);
+	}
+
+	private Button adjustImageSize(Button button) {
+		Node n = button.getGraphic();
+		if (n instanceof ImageView) {
+			ImageView image = (ImageView) n;
+			image.setPreserveRatio(true);
+			image.setFitHeight(16);
+			button.setGraphic(image);
+		}
+		return button;
 	}
 
 	private void listenForChangesInApproachViews() {
@@ -1213,11 +1614,10 @@ public class RootLayoutController implements Initializable {
 		p.addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				try {
-					Class<?> c = Class.forName(currentApproachController.getClass().getName());// this.getClass().getName());
+					Class<?> c = Class.forName(currentApproachController.getClass().getName());
 					Method method = c.getDeclaredMethod(newValue.getViewHandler(),
 							(Class<?>[]) null);
-					method.invoke(currentApproachController, (Object[]) null);// this,
-																				// (Object[])null);
+					method.invoke(currentApproachController, (Object[]) null);
 					buttonToolbarEditInsert.setDisable(false);
 					menuItemEditInsert.setDisable(false);
 					buttonToolbarEditRemove.setDisable(false);
@@ -1231,8 +1631,8 @@ public class RootLayoutController implements Initializable {
 				}
 
 				catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					MainApp.reportException(e, bundle);
 				}
 			}
 		});
@@ -1261,17 +1661,43 @@ public class RootLayoutController implements Initializable {
 		String sClass = currentApproachController.getClass().getName();
 		switch (sClass) {
 		case "org.sil.syllableparser.view.CVApproachController":
-			sApproach = ApproachType.CV.toString();
+			sApproach = ApproachType.CV.name();
+			break;
+
+		case "org.sil.syllableparser.view.SHApproachController":
+			sApproach = ApproachType.SONORITY_HIERARCHY.name();
 			break;
 
 		case "org.sil.syllableparser.view.ONCApproachController":
-			sApproach = ApproachType.ONSET_NUCLEUS_CODA.toString();
+			sApproach = ApproachType.ONSET_NUCLEUS_CODA.name();
 			break;
 
 		default:
 			break;
 		}
 		return sApproach;
+	}
+
+	public ApproachType getCurrentApproach() {
+		ApproachType approach = ApproachType.CV;
+		String sClass = currentApproachController.getClass().getName();
+		switch (sClass) {
+		case "org.sil.syllableparser.view.CVApproachController":
+			approach = ApproachType.CV;
+			break;
+
+		case "org.sil.syllableparser.view.SHApproachController":
+			approach = ApproachType.SONORITY_HIERARCHY;
+			break;
+
+		case "org.sil.syllableparser.view.ONCApproachController":
+			approach = ApproachType.ONSET_NUCLEUS_CODA;
+			break;
+
+		default:
+			break;
+		}
+		return approach;
 	}
 
 	public String getViewUsed() {
@@ -1286,8 +1712,53 @@ public class RootLayoutController implements Initializable {
 		this.languageProject = languageProject;
 	}
 
-	public void setNumberOfItems(String numberOfItems) {
-		this.numberOfItems.setText(numberOfItems);
+	public void setNumberOfItems(String sNumberOfItems) {
+		if (sNumberOfItems.equals("")) {
+			statusBar.getRightItems().get(4).setVisible(false);
+		} else {
+			statusBar.getRightItems().get(4).setVisible(true);
+		}
+		this.numberOfItems.setText(sNumberOfItems);
+	}
+
+	public void setPredictedToTotal(String sPredictedToTotal) {
+		if (sPredictedToTotal.equals("")) {
+			statusBar.getRightItems().get(0).setVisible(false);
+		} else {
+			statusBar.getRightItems().get(0).setVisible(true);
+		}
+		this.predictedToTotal.setText(sPredictedToTotal);
+	}
+
+	public void setPredictedEqualsCorrectToTotal(String sPredictedEqualsCorrectToTotal) {
+		if (sPredictedEqualsCorrectToTotal.equals("")) {
+			statusBar.getRightItems().get(2).setVisible(false);
+		} else {
+			statusBar.getRightItems().get(2).setVisible(true);
+		}
+		this.predictedEqualsCorrectToTotal.setText(sPredictedEqualsCorrectToTotal);
+	}
+
+	public void setFiltersDisabled(boolean disable, boolean isPredictedVsCorrect) {
+		buttonToolbarFilterWords.setDisable(disable);
+		menuItemFilterWords.setDisable(disable);
+		if (isPredictedVsCorrect) {
+			buttonToolbarFilterCorrectSyllabifications.setDisable(true);
+			buttonToolbarFilterPredictedSyllabifications.setDisable(true);
+			menuItemFilterCorrectSyllabifications.setDisable(true);
+			menuItemFilterPredictedSyllabifications.setDisable(true);
+		} else {
+			buttonToolbarFilterCorrectSyllabifications.setDisable(disable);
+			buttonToolbarFilterPredictedSyllabifications.setDisable(disable);
+			menuItemFilterCorrectSyllabifications.setDisable(disable);
+			menuItemFilterPredictedSyllabifications.setDisable(disable);
+		}
+		buttonToolbarRemoveAllFilters.setDisable(disable);
+		menuItemRemoveAllFilters.setDisable(disable);
+	}
+
+	public void setFiltersDisabled(boolean disable) {
+		setFiltersDisabled(disable, false);
 	}
 
 	// code taken from

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ldml>
+	<identity>
+		<version
+			number="" />
+		<generation
+			date="2017-04-17T20:13:29" />
+		<language
+			type="pug" />
+		<territory
+			type="BF" />
+	</identity>
+	<collations>
+		<collation>
+			<settings
+				backwards="on" />
+			<rules>
+				<reset>ae</reset>
+				<s>æ</s>
+				<t>Æ</t>
+				<reset>A</reset>
+				<p>ã</p>
+				<t>Ã</t>
+				<reset>B</reset>
+				<p>ɓ</p>
+				<t>Ɓ</t>
+				<reset>C</reset>
+				<p>ch</p>
+				<t>Ch</t>
+				<t>CH</t>
+				<reset>D</reset>
+				<p>ɗ</p>
+				<t>Ɗ</t>
+				<reset>E</reset>
+				<p>ẽ</p>
+				<t>Ẽ</t>
+				<reset>Ẽ</reset>
+				<p>ɛ</p>
+				<t>Ɛ</t>
+				<reset>Ɛ</reset>
+				<p>ɛ̃</p>
+				<t>Ɛ̃</t>
+				<reset>G</reset>
+				<p>gb</p>
+				<t>Gb</t>
+				<t>GB</t>
+				<reset>I</reset>
+				<p>ĩ</p>
+				<t>Ĩ</t>
+				<reset>Ĩ</reset>
+				<p>ɩ</p>
+				<t>Ɩ</t>
+				<reset>Ɩ</reset>
+				<p>ɩ̃</p>
+				<t>Ɩ̃</t>
+				<reset>K</reset>
+				<p>kh</p>
+				<t>Kh</t>
+				<t>KH</t>
+				<reset>KH</reset>
+				<p>kp</p>
+				<t>Kp</t>
+				<t>KP</t>
+				<reset>N</reset>
+				<p>ɲ</p>
+				<t>Ɲ</t>
+				<reset>Ɲ</reset>
+				<p>ŋ</p>
+				<t>Ŋ</t>
+				<reset>Ŋ</reset>
+				<p>ŋm</p>
+				<t>Ŋm</t>
+				<t>ŊM</t>
+				<reset>O</reset>
+				<p>õ</p>
+				<t>Õ</t>
+				<reset>Õ</reset>
+				<p>ɔ</p>
+				<t>Ɔ</t>
+				<reset>Ɔ</reset>
+				<p>ɔ̃</p>
+				<t>Ɔ̃</t>
+				<reset>P</reset>
+				<p>ph</p>
+				<t>Ph</t>
+				<t>PH</t>
+				<reset>T</reset>
+				<p>th</p>
+				<t>Th</t>
+				<t>TH</t>
+				<reset>U</reset>
+				<p>ũ</p>
+				<t>Ũ</t>
+				<reset>Ũ</reset>
+				<p>ʋ</p>
+				<t>Ʋ</t>
+				<reset>Ʋ</reset>
+				<p>ʋ̃</p>
+				<t>Ʋ̃</t>
+				<reset>W</reset>
+				<p></p>
+				<t></t>
+				<reset>Y</reset>
+				<p>ƴ</p>
+				<t>Ƴ</t>
+			</rules>
+			<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+				<palaso:sortRulesType
+					value="CustomICU" />
+			</special>
+		</collation>
+	</collations>
+	<special xmlns:palaso="urn://palaso.org/ldmlExtensions/v1">
+		<palaso:abbreviation
+			value="Pug" />
+		<palaso:defaultFontFamily
+			value="Charis SIL" />
+		<palaso:defaultKeyboard
+			value="Clavier du Burkina QWERTY" />
+		<palaso:languageName
+			value="Puguli" />
+		<palaso:spellCheckingId
+			value="pug__IPA" />
+		<palaso:version
+			value="2" />
+	</special>
+	<special xmlns:palaso2="urn://palaso.org/ldmlExtensions/v2">
+		<palaso2:knownKeyboards>
+			<palaso2:keyboard
+				layout="US"
+				locale="en-US"
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="Clavier du Burkina QWERTY"
+				locale=""
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="Clavier du Burkina QWERTY"
+				locale="en-US"
+				os="Win32NT" />
+			<palaso2:keyboard
+				layout="English"
+				locale="en-US"
+				os="Win32NT" />
+		</palaso2:knownKeyboards>
+		<palaso2:version
+			value="2" />
+	</special>
+	<special xmlns:fw="urn://fieldworks.sil.org/ldmlExtensions/v1">
+		<fw:graphiteEnabled
+			value="False" />
+		<fw:regionName
+			value="Burkina Faso" />
+		<fw:validChars
+			value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt; &lt;ValidCharacters&gt;   &lt;WordForming&gt;‌￼‍￼-￼'￼་￼༌￼⁰￼¹￼²￼³￼⁴￼⁵￼⁶￼⁷￼⁸￼⁹￼ꞌ￼Ꞌ&lt;/WordForming&gt;   &lt;Numeric /&gt;   &lt;Other /&gt; &lt;/ValidCharacters&gt;" />
+		<fw:windowsLCID
+			value="1036" />
+	</special>
+</ldml>

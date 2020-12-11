@@ -6,6 +6,7 @@
 				<file name="." />
 				<file name="${java.home}\..\lib\ant-javafx.jar" />
 				<file name="${java.home}\lib\jfxrt.jar" />
+				<file name="${java.home}\lib\" />
 				<file name="${basedir}" />
 			</filelist>
 		</path>

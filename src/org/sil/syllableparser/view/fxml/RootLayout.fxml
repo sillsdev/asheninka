@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) 2016 SIL International This software is licensed under 
+<!-- Copyright (c) 2016-2020 SIL International This software is licensed under 
 	the LGPL, version 2.1 or later (http://www.gnu.org/licenses/lgpl-2.1.html) -->
     
 <?import javafx.scene.image.*?>
@@ -84,6 +84,11 @@
 								text="%menu.insertnew" fx:id="menuItemEditInsert" accelerator="ctrl+i" />
 							<MenuItem mnemonicParsing="true" onAction="#handleRemoveItem"
 								text="%menu.remove" fx:id="menuItemEditRemove" accelerator="ctrl+d" />
+							<SeparatorMenuItem />
+							<MenuItem mnemonicParsing="true" onAction="#handlePreviousItem"
+								text="%menu.previousitem" fx:id="menuItemEditPrevious" accelerator="ctrl+shift+p" />
+							<MenuItem mnemonicParsing="true" onAction="#handleNextItem"
+								text="%menu.nextitem" fx:id="menuItemEditNext" accelerator="ctrl+shift+n" />
 						</items>
 					</Menu>
 					<Menu mnemonicParsing="true" text="%menu.view">
@@ -100,16 +105,47 @@
 									text="%cv.view.words" />
 								<MenuItem mnemonicParsing="true"
 									onAction="#handleCVWordsPredictedVsCorrect" text="%cv.view.wordspredictedvscorrect" />
-								<MenuItem mnemonicParsing="true" onAction="#handleGraphemeNaturalClasses"
+								<MenuItem mnemonicParsing="true" onAction="#handleCVGraphemeNaturalClasses"
 									text="%cv.view.graphemenaturalclasses" />
-								<MenuItem mnemonicParsing="true" onAction="#handleEnvironments"
+								<MenuItem mnemonicParsing="true" onAction="#handleCVEnvironments"
 									text="%cv.view.environments" />
 							</Menu>
-							<MenuItem mnemonicParsing="true"
-								onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy"
-								fx:id="menuItemSonorityHierarchyApproach" />
-							<MenuItem mnemonicParsing="true" onAction="#handleONCApproach"
-								text="%approach.onc" fx:id="menuItemONCApproach" />
+							<Menu mnemonicParsing="true" onAction="#handleSonorityHierarchyApproach" text="%approach.sonorityhierarchy">
+								<MenuItem mnemonicParsing="true" onAction="#handleSHSegmentInventory"
+									text="%cv.view.segmentinventory" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSHSonorityHierarchy"
+									text="%sh.view.sonorityhierarchy" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSHWords"
+									text="%sh.view.words" />
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleSHWordsPredictedVsCorrect" text="%sh.view.wordspredictedvscorrect" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSHGraphemeNaturalClasses"
+									text="%cv.view.graphemenaturalclasses" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSHEnvironments"
+									text="%cv.view.environments" />
+							</Menu>
+							<Menu mnemonicParsing="true" onAction="#handleONCApproach" text="%approach.onc" fx:id="menuItemONCApproach" >
+								<MenuItem mnemonicParsing="true" onAction="#handleONCSegmentInventory"
+									text="%cv.view.segmentinventory" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCSonorityHierarchy"
+									text="%sh.view.sonorityhierarchy" />
+								<MenuItem mnemonicParsing="true" onAction="#handleSyllabificationParameters"
+									text="%onc.view.syllabificationparameters" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCNaturalClasses"
+									text="%cv.view.naturalclass" />
+								<MenuItem mnemonicParsing="true" onAction="#handleTemplates"
+									text="%onc.view.templates" />
+								<MenuItem mnemonicParsing="true" onAction="#handleFilters"
+									text="%onc.view.filters" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCWords"
+									text="%onc.view.words" />
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleONCWordsPredictedVsCorrect" text="%onc.view.wordspredictedvscorrect" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCGraphemeNaturalClasses"
+									text="%cv.view.graphemenaturalclasses" />
+								<MenuItem mnemonicParsing="true" onAction="#handleONCEnvironments"
+									text="%cv.view.environments" />
+							</Menu>
 							<MenuItem mnemonicParsing="true" onAction="#handleMoraicApproach"
 								text="%approach.moraic" fx:id="menuItemMoraicApproach" />
 							<MenuItem mnemonicParsing="true"
@@ -139,16 +175,30 @@
 								text="%menu.clearwords" fx:id="menuItemClearWords" />
 							<MenuItem mnemonicParsing="true" onAction="#handleClearCorrectSyllabificationInWords"
 								text="%menu.clearcorrectsyllabificationinwords" fx:id="menuItemClearCorrectSyllabificationInWords" />
+							<SeparatorMenuItem />
+							<MenuItem mnemonicParsing="true" onAction="#handleFilterWords"
+								text="%menu.filterwords" fx:id="menuItemFilterWords" />
+							<MenuItem mnemonicParsing="true" onAction="#handleFilterPredictedSyllabifications"
+								text="%menu.filterpredictedwords" fx:id="menuItemFilterPredictedSyllabifications" />
+							<MenuItem mnemonicParsing="true" onAction="#handleFilterCorrectSyllabifications"
+								text="%menu.filtercorrectwords" fx:id="menuItemFilterCorrectSyllabifications" />
+							<MenuItem mnemonicParsing="true" onAction="#handleRemoveAllFilters"
+								text="%menu.filterremoveallfilters" fx:id="menuItemRemoveAllFilters" />
+							<SeparatorMenuItem />
 							<MenuItem mnemonicParsing="true"
 								onAction="#handleCompareImplementations" text="%menu.compareimplementations"
 								fx:id="menuItemCompareImplementations" />
+							<SeparatorMenuItem />
+							<MenuItem mnemonicParsing="true"
+								onAction="#handleCompareApproachSyllabifications" text="%menu.compareapproachsyllabifications"
+								fx:id="menuItemCompareApproachSyllabifications" />
 						</items>
 					</Menu>
 					<Menu mnemonicParsing="true" text="%menu.settings">
 						<items>
-							<MenuItem mnemonicParsing="true" onAction="#handleVernacularFont"
+							<MenuItem mnemonicParsing="true" onAction="#handleVernacularWritingSystem"
 								text="%menu.vernacularfont" fx:id="menuItemVernacularFont" />
-							<MenuItem mnemonicParsing="true" onAction="#handleAnalysisFont"
+							<MenuItem mnemonicParsing="true" onAction="#handleAnalysisWritingSystem"
 								text="%menu.analysisfont" fx:id="menuItemAnalysisFont" />
 							<SeparatorMenuItem />
 							<Menu mnemonicParsing="true" text="%menu.exporthyphenationparameters">
@@ -227,6 +277,24 @@
 					<Button fx:id="buttonToolbarFindWord" contentDisplay="GRAPHIC_ONLY"
 						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
 						onAction="#handleFindWord" prefHeight="23.0" prefWidth="19.0"
+						text="" />
+					<Separator orientation="VERTICAL" prefHeight="0.0"
+						prefWidth="3.0" />
+					<Button fx:id="buttonToolbarFilterWords" contentDisplay="GRAPHIC_ONLY"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleFilterWords" prefHeight="23.0" prefWidth="19.0"
+						text="" />
+					<Button fx:id="buttonToolbarFilterPredictedSyllabifications" contentDisplay="GRAPHIC_ONLY"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleFilterPredictedSyllabifications" prefHeight="23.0" prefWidth="19.0"
+						text="" />
+					<Button fx:id="buttonToolbarFilterCorrectSyllabifications" contentDisplay="GRAPHIC_ONLY"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleFilterCorrectSyllabifications" prefHeight="23.0" prefWidth="19.0"
+						text="" />
+					<Button fx:id="buttonToolbarRemoveAllFilters" contentDisplay="GRAPHIC_ONLY"
+						graphicTextGap="0.0" minWidth="19.0" mnemonicParsing="true"
+						onAction="#handleRemoveAllFilters" prefHeight="23.0" prefWidth="19.0"
 						text="" />
 				</items>
 			</ToolBar>

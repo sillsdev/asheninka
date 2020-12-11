@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -11,13 +11,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Approach;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -27,24 +31,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -53,35 +48,25 @@ import javafx.util.Callback;
  *
  */
 
-public class CVSegmentInventoryController extends CheckBoxColumnController implements Initializable {
+public class CVSegmentInventoryController extends SplitPaneWithTableViewWithCheckBoxColumnController {
 
-	// TODO: how can we make the next four classes be more generic so we don't
-	// have to have
-	// one for Segment and one for Grapheme? (And one for vernacular vs
-	// anaysis?)
 	protected final class AnalysisWrappingTableCellGrapheme extends TableCell<Grapheme, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
-				if (obj != null && obj.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
+
+	protected final class GenericWrappingTableCellGrapheme extends TableCell<Grapheme, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -91,23 +76,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
-				if (obj != null && obj.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processVernacularTableCell(this, text, item, empty);
 		}
 	}
 
@@ -117,23 +86,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
-				if (obj != null && obj.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
@@ -143,23 +96,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				SylParserObject obj = (SylParserObject) this.getTableRow().getItem();
-				if (obj != null && obj.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processVernacularTableCell(this, text, item, empty);
 		}
 	}
 
@@ -167,7 +104,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	// http://java-buddy.blogspot.com/2014/08/javafx-get-row-data-from-tableview.html
 	// accessed on September 27 2017
 	// Define the button cell
-	private class ButtonCell extends TableCell<Grapheme, Boolean> {
+	protected class ButtonCell extends TableCell<Grapheme, Boolean> {
 		final Button cellButton = new Button("...");
 
 		ButtonCell() {
@@ -177,14 +114,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 					int selectedIndex = getTableRow().getIndex();
 					Grapheme selectedGrapheme = (Grapheme) graphemesTable.getItems().get(
 							selectedIndex);
-					// show environments chooser for this grapheme
-					// Alert alert = new Alert(AlertType.INFORMATION);
-					// alert.setTitle("Information Dialog");
-					// alert.setHeaderText("Look, an Information Dialog");
-					// alert.setContentText("Selected grapheme: " +
-					// selectedGrapheme.getForm());
-					//
-					// alert.showAndWait();
 					showEnvironmentsChooser(selectedGrapheme);
 				}
 			});
@@ -201,42 +130,43 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	}
 
 	@FXML
-	private TableView<Segment> cvSegmentTable;
+	protected TableView<Segment> cvSegmentTable;
 	@FXML
-	private TableColumn<Segment, String> segmentColumn;
+	protected TableColumn<Segment, String> segmentColumn;
 	@FXML
-	private TableColumn<Segment, String> graphemesColumn;
+	protected TableColumn<Segment, String> graphemesColumn;
 	@FXML
-	private TableColumn<Segment, String> descriptionColumn;
+	protected TableColumn<Segment, String> descriptionColumn;
 	@FXML
-	private TableView<Grapheme> graphemesTable;
+	protected TableView<Grapheme> graphemesTable;
 	@FXML
-	private TableColumn<Grapheme, String> graphemeColumn;
+	protected TableColumn<Grapheme, String> graphemeColumn;
 	@FXML
-	private TableColumn<Grapheme, String> environmentsColumn;
+	protected TableColumn<Grapheme, String> environmentsColumn;
 	// @FXML
 	// private TableColumn<Grapheme, String> graphemeDescriptionColumn;
 	@FXML
-	private TableColumn<Grapheme, Boolean> checkBoxColumn;
+	protected TableColumn<Grapheme, Boolean> checkBoxColumn;
 	@FXML
-	private CheckBox checkBoxColumnHead;
+	protected CheckBox checkBoxColumnHead;
 	@FXML
-	private TableColumn<Grapheme, Boolean> environmentsButtonColumn;
+	protected TableColumn<Grapheme, Boolean> environmentsButtonColumn;
 
 	@FXML
-	private TextField segmentField;
+	protected TextField segmentField;
 	@FXML
-	private TextField graphemesField;
+	protected TextField graphemesField;
 	@FXML
-	private TextField descriptionField;
+	protected TextField descriptionField;
 	@FXML
-	private Button environmentsButton;
+	protected Button environmentsButton;
 	// @FXML
 	// private TextField graphemeDescriptionField;
 	@FXML
-	private CheckBox activeCheckBox;
+	protected CheckBox activeCheckBox;
 
-	private Segment currentSegment;
+	protected Segment currentSegment;
+	protected Approach currentApproach;
 
 	public CVSegmentInventoryController() {
 
@@ -248,7 +178,10 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// Segment table
+		super.setApproach(ApplicationPreferences.CV_SEGMENTS);
+		super.setTableView(cvSegmentTable);
+		super.initialize(location, resources);
+
 		segmentColumn.setCellValueFactory(cellData -> cellData.getValue().segmentProperty());
 		graphemesColumn.setCellValueFactory(cellData -> cellData.getValue().graphemesProperty());
 		descriptionColumn
@@ -292,7 +225,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			return new VernacularWrappingTableCellGrapheme();
 		});
 		environmentsColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCellGrapheme();
+			return new GenericWrappingTableCellGrapheme();
 		});
 
 		// button table cell code base on code from
@@ -316,9 +249,6 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		environmentsButtonColumn.setEditable(true);
 
 		graphemesTable.setEditable(true);
-		// graphemeDescriptionColumn.setCellFactory(column -> {
-		// return new AnalysisWrappingTableCellGrapheme();
-		// });
 
 		makeColumnHeaderWrappable(segmentColumn);
 		makeColumnHeaderWrappable(graphemesColumn);
@@ -330,6 +260,11 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		// Listen for selection changes and show the details when changed.
 		cvSegmentTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showCVSegmentDetails(newValue));
+
+		// Following avoids getting the following message:
+		// com.sun.javafx.scene.control.skin.VirtualFlow addTrailingCells
+		// INFO: index exceeds maxCellCount.
+		cvSegmentTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
 		// Handle TextField text changes.
 		segmentField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -384,7 +319,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		segmentField.requestFocus();
 	}
 
-	private void forceTableRowToRedisplayPerActiveSetting(Segment segment) {
+	protected void forceTableRowToRedisplayPerActiveSetting(Segment segment) {
 		// we need to make the content of the row cells change in order for
 		// the cell factory to fire.
 		// We do this by getting the value, blanking it, and then restoring it.
@@ -399,7 +334,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		segment.setDescription(temp);
 	}
 
-	private void forceTableRowToRedisplayPerActiveSetting(Grapheme grapheme) {
+	protected void forceTableRowToRedisplayPerActiveSetting(Grapheme grapheme) {
 		// we need to make the content of the row cells change in order for
 		// the cell factory to fire.
 		// We do this by getting the value, blanking it, and then restoring it.
@@ -419,7 +354,7 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	 * @param segment
 	 *            the segment or null
 	 */
-	private void showCVSegmentDetails(Segment segment) {
+	protected void showCVSegmentDetails(Segment segment) {
 		currentSegment = segment;
 		if (segment != null) {
 			// Fill the text fields with info from the segment object.
@@ -427,6 +362,13 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			graphemesField.setText(segment.getGraphemes());
 			descriptionField.setText(segment.getDescription());
 			activeCheckBox.setSelected(segment.isActive());
+			NodeOrientation vernacularOrientation = languageProject.getVernacularLanguage()
+					.getOrientation();
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			segmentField.setNodeOrientation(vernacularOrientation);
+			graphemesField.setNodeOrientation(vernacularOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
 			displayFieldsPerActiveSetting(segment);
 
 			// Add observable list data to the graphemes table and force it to
@@ -445,8 +387,18 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 			int currentSegmentNumber = cvSegmentTable.getItems().indexOf(currentSegment);
 			this.mainApp.updateStatusBarNumberOfItems((currentSegmentNumber + 1) + "/"
 					+ cvSegmentTable.getItems().size() + " ");
-			mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
-					currentSegmentNumber);
+
+			String sApproach = this.rootController.getApproachUsed();
+			if (sApproach.equals(ApproachType.CV.name())) {
+				mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
+						currentSegmentNumber);
+			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+				mainApp.getApplicationPreferences().setLastSHSegmentInventoryViewItemUsed(
+						currentSegmentNumber);
+			} else if (sApproach.equals(ApproachType.ONSET_NUCLEUS_CODA.name())) {
+				mainApp.getApplicationPreferences().setLastONCSegmentInventoryViewItemUsed(
+						currentSegmentNumber);
+			}
 		}
 	}
 
@@ -470,24 +422,64 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		descriptionField.setText(segment.getDescription());
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * 
-	 * @param cvApproachController
-	 */
 	public void setData(CVApproach cvApproachData) {
-		cvApproach = cvApproachData;
+		currentApproach = cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		setColumnICURules();
+		setTextFieldColors();
+		populateSegmentTable(ApproachType.CV);
+	}
 
-		// Add observable list data to the table
+	public void setData(SHApproach shApproachData) {
+		currentApproach = shApproach = shApproachData;
+		languageProject = shApproach.getLanguageProject();
+		setColumnICURules();
+		setTextFieldColors();
+		populateSegmentTable(ApproachType.SONORITY_HIERARCHY);
+	}
+
+	public void setData(ONCApproach oncApproachData) {
+		currentApproach = oncApproach = oncApproachData;
+		languageProject = oncApproach.getLanguageProject();
+		setColumnICURules();
+		setTextFieldColors();
+		populateSegmentTable(ApproachType.ONSET_NUCLEUS_CODA);
+	}
+
+	protected void setColumnICURules() {
+		setColumnICURules(segmentColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(graphemesColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+	}
+
+	protected void setTextFieldColors() {
+		if (languageProject != null) {
+			String sVernacular =mainApp.getStyleFromColor(languageProject.getVernacularLanguage().getColor());
+			graphemesField.setStyle(sVernacular);
+			segmentField.setStyle(sVernacular);
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
+	protected void populateSegmentTable(ApproachType appType) {
 		cvSegmentTable.setItems(languageProject.getSegmentInventory());
 		int max = cvSegmentTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVSegmentInventoryViewItemUsed();
+					int iLastIndex = 0;
+					if (appType == ApproachType.CV) {
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastCVSegmentInventoryViewItemUsed();
+					} else if (appType == ApproachType.SONORITY_HIERARCHY) {
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastSHSegmentInventoryViewItemUsed();
+					} else if (appType == ApproachType.ONSET_NUCLEUS_CODA) {
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastONCSegmentInventoryViewItemUsed();
+					}
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					cvSegmentTable.requestFocus();
 					cvSegmentTable.getSelectionModel().select(iLastIndex);
@@ -498,40 +490,33 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
-	void handleInsertNewItem() {
+	protected void handleInsertNewItem() {
 		Segment newSegment = new Segment();
 		languageProject.getSegmentInventory().add(newSegment);
-		int i = languageProject.getSegmentInventory().size() - 1;
-		cvSegmentTable.requestFocus();
-		cvSegmentTable.getSelectionModel().select(i);
-		cvSegmentTable.getFocusModel().focus(i);
-		cvSegmentTable.scrollTo(i);
+		handleInsertNewItem(languageProject.getSegmentInventory(), cvSegmentTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
-	void handleRemoveItem() {
-		int i = languageProject.getSegmentInventory().indexOf(currentSegment);
-		currentSegment = null;
-		if (i >= 0) {
-			languageProject.getSegmentInventory().remove(i);
-		}
-		cvSegmentTable.refresh();
+	protected void handleRemoveItem() {
+		handleRemoveItem(languageProject.getSegmentInventory(), currentSegment, cvSegmentTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(languageProject.getSegmentInventory(), currentSegment, cvSegmentTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(languageProject.getSegmentInventory(), currentSegment, cvSegmentTable);
 	}
 
 	protected void handleCheckBoxSelectAll() {
 		for (Grapheme grapheme : currentSegment.getGraphs()) {
 			grapheme.setActive(true);
+			grapheme.setActiveCheckBox(true);
+			grapheme.setChecked(true);
 			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
 	}
@@ -539,6 +524,8 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 	protected void handleCheckBoxClearAll() {
 		for (Grapheme grapheme : currentSegment.getGraphs()) {
 			grapheme.setActive(false);
+			grapheme.setActiveCheckBox(false);
+			grapheme.setChecked(false);
 			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
 	}
@@ -547,8 +534,12 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 		for (Grapheme grapheme : currentSegment.getGraphs()) {
 			if (grapheme.isActive()) {
 				grapheme.setActive(false);
+				grapheme.setActiveCheckBox(false);
+				grapheme.setChecked(false);
 			} else {
 				grapheme.setActive(true);
+				grapheme.setActiveCheckBox(true);
+				grapheme.setChecked(true);
 			}
 			forceTableRowToRedisplayPerActiveSetting(grapheme);
 		}
@@ -564,36 +555,32 @@ public class CVSegmentInventoryController extends CheckBoxColumnController imple
 
 	}
 
-	/**
-	 * Opens a dialog to show the chooser.
-	 *
-	 * @param grapheme
-	 *            TODO
-	 */
 	public void showEnvironmentsChooser(Grapheme grapheme) {
 		try {
 			Stage dialogStage = new Stage();
 			String resource = "fxml/EnvironmentChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
-					resource, MainApp.kApplicationTitle);
+					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 			EnvironmentChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setGrapheme(grapheme);
-			controller.setData(cvApproach);
+			controller.setData(currentApproach);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 
 	// code taken from
 	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
-	TextField[] createTextFields() {
+	protected TextField[] createTextFields() {
 		return new TextField[] { segmentField, graphemesField, descriptionField };
 	}
-
 }

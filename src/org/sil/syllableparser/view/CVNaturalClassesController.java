@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,32 +10,33 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.ApproachType;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -43,7 +44,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class CVNaturalClassesController extends SylParserBaseController implements Initializable {
+public class CVNaturalClassesController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<CVNaturalClass, String> {
 		private Text text;
@@ -51,49 +52,17 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
-				if (nc != null && nc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getAnalysisLanguage().getFont());
-				setGraphic(text);
-			}
+			processAnalysisTableCell(this, text, item, empty);
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<CVNaturalClass, String> {
+	protected final class GenericWrappingTableCell extends TableCell<CVNaturalClass, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				CVNaturalClass nc = (CVNaturalClass) this.getTableRow().getItem();
-				if (nc != null && nc.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				text.setFont(languageProject.getVernacularLanguage().getFont());
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -126,6 +95,7 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	private CheckBox activeCheckBox;
 
 	private CVNaturalClass currentNaturalClass;
+	private ApproachType approachType = ApproachType.CV;
 
 	public CVNaturalClassesController() {
 
@@ -137,6 +107,9 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.CV_NATURAL_CLASSES);
+		super.setTableView(cvNaturalClassTable);
+		super.initialize(location, resources);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		segmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -148,9 +121,48 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 		nameColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
+
 		segmentOrNaturalClassColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
+			return new TableCell<CVNaturalClass, String>() {
+				// We override computePrefHeight because by default, the graphic's height
+				// gets set to the height of all items in the TextFlow as if none of them
+				// wrapped.  So for now, we're doing this hack.
+				@Override
+				protected double computePrefHeight(double width) {
+					Object g = getGraphic();
+					if (g instanceof TextFlow) {
+						return guessPrefHeight(g, column.widthProperty().get());
+					}
+					return super.computePrefHeight(-1);
+				}
+
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					CVNaturalClass nc = ((CVNaturalClass) getTableRow().getItem());
+					if (item == null || empty || nc == null) {
+						setGraphic(null);
+						setText(null);
+						setStyle("");
+					} else {
+						setGraphic(null);
+						TextFlow tf = new TextFlow();
+						if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+							tf = buildTextFlow(nc.getSegmentsOrNaturalClasses());
+							tf.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+						} else {
+							FXCollections.reverse(nc.getSegmentsOrNaturalClasses());
+							tf = buildTextFlow(nc.getSegmentsOrNaturalClasses());
+							tf.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+							FXCollections.reverse(nc.getSegmentsOrNaturalClasses());
+						}
+						setGraphic(tf);
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+					}
+				}
+			};
 		});
+
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
@@ -178,10 +190,6 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-		// segmentOrNaturalClassField.textProperty().addListener(
-		// (observable, oldValue, newValue) -> {
-		// currentNaturalClass.setSNCRepresentation(segmentOrNaturalClassField.getText());
-		// });
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setDescription(descriptionField.getText());
@@ -262,6 +270,11 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			descriptionField.setText(naturalClass.getDescription());
 			activeCheckBox.setSelected(naturalClass.isActive());
 			showSegmentOrNaturalClassContent();
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			descriptionField.setNodeOrientation(analysisOrientation);
+			nameField.setNodeOrientation(analysisOrientation);
+			sncTextFlow.setNodeOrientation(languageProject.getVernacularLanguage().getOrientation());
 		} else {
 			// Segment is null, remove all the text.
 			nameField.setText("");
@@ -275,38 +288,63 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ cvNaturalClassTable.getItems().size() + " ");
 			// remember the selection
-			mainApp.getApplicationPreferences().setLastCVNaturalClassesViewItemUsed(iCurrentIndex);
+			switch (approachType) {
+			case ONSET_NUCLEUS_CODA:
+				mainApp.getApplicationPreferences().setLastONCCVNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+			default:
+				mainApp.getApplicationPreferences().setLastCVNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+			}
 		}
-
 	}
 
 	private void showSegmentOrNaturalClassContent() {
 		StringBuilder sb = new StringBuilder();
 		sncTextFlow.getChildren().clear();
+		ObservableList<SylParserObject> segmentsOrNaturalClasses = currentNaturalClass.getSegmentsOrNaturalClasses();
+		if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+			fillSncTextFlow(sb, segmentsOrNaturalClasses);
+		} else {
+			FXCollections.reverse(segmentsOrNaturalClasses);
+			fillSncTextFlow(sb, segmentsOrNaturalClasses);
+			FXCollections.reverse(segmentsOrNaturalClasses);
+		}
+		currentNaturalClass.setSNCRepresentation(sb.toString());
+	}
+
+	protected void fillSncTextFlow(StringBuilder sb,
+			ObservableList<SylParserObject> segmentsOrNaturalClasses) {
+		Language analysis = languageProject.getAnalysisLanguage();
+		Language vernacular = languageProject.getVernacularLanguage();
 		int i = 1;
-		int iCount = currentNaturalClass.getSegmentsOrNaturalClasses().size();
-		for (SylParserObject snc : currentNaturalClass.getSegmentsOrNaturalClasses()) {
+		int iCount = segmentsOrNaturalClasses.size();
+		for (SylParserObject snc : segmentsOrNaturalClasses) {
 			Text t;
 			String s;
 			if (snc instanceof Segment) {
 				s = ((Segment) snc).getSegment();
 				t = new Text(s);
-				t.setFont(languageProject.getVernacularLanguage().getFont());
+				t.setFont(vernacular.getFont());
+				t.setFill(vernacular.getColor());
+				t.setNodeOrientation(vernacular.getOrientation());
 				sb.append(s);
 			} else if (snc instanceof CVNaturalClass) {
 				s = ((CVNaturalClass) snc).getNCName();
 				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
 				t = new Text(s);
-				t.setFont(languageProject.getAnalysisLanguage().getFont());
+				t.setFont(analysis.getFont());
+				t.setFill(analysis.getColor());
+				t.setNodeOrientation(analysis.getOrientation());
 				sb.append(s);
 			} else {
 				s = "ERROR!";
 				t = new Text(s);
 				sb.append(s);
 			}
-			if (snc.isActive() && activeCheckBox.isSelected()) {
-				t.setFill(Constants.ACTIVE);
-			} else {
+			if (!(snc.isActive() && activeCheckBox.isSelected())) {
 				t.setFill(Constants.INACTIVE);
 			}
 			Text tBar = new Text(" | ");
@@ -316,7 +354,41 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				sb.append(", ");
 			}
 		}
-		currentNaturalClass.setSNCRepresentation(sb.toString());
+	}
+
+	@Override
+	protected TextFlow buildTextFlow(ObservableList<SylParserObject> segmentsOrNaturalClasses) {
+		TextFlow tf = new TextFlow();
+		Language analysis = languageProject.getAnalysisLanguage();
+		Language vernacular = languageProject.getVernacularLanguage();
+		for (SylParserObject snc : segmentsOrNaturalClasses) {
+			Text t;
+			String s;
+			if (snc instanceof Segment) {
+				s = ((Segment) snc).getSegment();
+				t = new Text(s);
+				t.setFont(vernacular.getFont());
+				t.setFill(vernacular.getColor());
+				t.setNodeOrientation(vernacular.getOrientation());
+			} else if (snc instanceof CVNaturalClass) {
+				s = ((CVNaturalClass) snc).getNCName();
+				s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
+				t = new Text(s);
+				t.setFont(analysis.getFont());
+				t.setFill(analysis.getColor());
+				t.setNodeOrientation(analysis.getOrientation());
+			} else {
+				s = "ERROR!";
+				t = new Text(s);
+			}
+			if (!(snc.isActive() && activeCheckBox.isSelected())) {
+				t.setFill(Constants.INACTIVE);
+			}
+			Text tBar = new Text(" | ");
+			tBar.setStyle("-fx-stroke: lightgrey;");
+			tf.getChildren().addAll(t, tBar);
+		}
+		return tf;
 	}
 
 	public void setNaturalClass(CVNaturalClass naturalClass) {
@@ -326,12 +398,16 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 *
-	 * @param cvApproachController
+	 * @param approachType = which approach invoked this
+	 * @param cvApproachController = CV data
 	 */
-	public void setData(CVApproach cvApproachData) {
+	public void setData(CVApproach cvApproachData, ApproachType approachType) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
+		this.approachType = approachType;
+		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+		setColumnICURules(segmentOrNaturalClassColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
 
 		// Add observable list data to the table
 		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
@@ -340,8 +416,18 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVNaturalClassesViewItemUsed();
+					// retrieve selection
+					int iLastIndex = 0;
+					switch (approachType) {
+					case ONSET_NUCLEUS_CODA:
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastONCCVNaturalClassesViewItemUsed();
+						break;
+					default:
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastCVNaturalClassesViewItemUsed();
+						break;
+					}
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					// select the last one used
 					cvNaturalClassTable.requestFocus();
@@ -351,45 +437,33 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 				}
 			});
 		}
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleInsertNewItem()
-	 */
 	@Override
 	void handleInsertNewItem() {
 		CVNaturalClass newNaturalClass = new CVNaturalClass();
 		cvApproach.getCVNaturalClasses().add(newNaturalClass);
-		int i = cvApproach.getCVNaturalClasses().size() - 1;
-		cvNaturalClassTable.requestFocus();
-		cvNaturalClassTable.getSelectionModel().select(i);
-		cvNaturalClassTable.getFocusModel().focus(i);
-		cvNaturalClassTable.scrollTo(i);
+		handleInsertNewItem(cvApproach.getCVNaturalClasses(), cvNaturalClassTable);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.sil.syllableparser.view.ApproachController#handleRemoveItem()
-	 */
 	@Override
 	void handleRemoveItem() {
-		// need to deal with all pointers to this natural class
-		int i = cvApproach.getCVNaturalClasses().indexOf(currentNaturalClass);
-		currentNaturalClass = null;
-		if (i >= 0) {
-			cvApproach.getCVNaturalClasses().remove(i);
-			int max = cvNaturalClassTable.getItems().size();
-			i = adjustIndexValue(i, max);
-			// select the last one used
-			cvNaturalClassTable.requestFocus();
-			cvNaturalClassTable.getSelectionModel().select(i);
-			cvNaturalClassTable.getFocusModel().focus(i);
-			cvNaturalClassTable.scrollTo(i);
-		}
-		cvNaturalClassTable.refresh();
+		handleRemoveItem(cvApproach.getCVNaturalClasses(), currentNaturalClass, cvNaturalClassTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(cvApproach.getCVNaturalClasses(), currentNaturalClass, cvNaturalClassTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(cvApproach.getCVNaturalClasses(), currentNaturalClass, cvNaturalClassTable);
 	}
 
 	@FXML
@@ -406,17 +480,20 @@ public class CVNaturalClassesController extends SylParserBaseController implemen
 			Stage dialogStage = new Stage();
 			String resource = "fxml/CVSegmentNaturalClassChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
-					resource, MainApp.kApplicationTitle);
+					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
+					Constants.RESOURCE_LOCATION);
 			CVSegmentNaturalClassChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setNaturalClass(currentNaturalClass);
 			controller.setData(cvApproach);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			MainApp.reportException(e, bundle);
 		}
 	}
 

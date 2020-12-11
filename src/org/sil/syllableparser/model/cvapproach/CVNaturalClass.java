@@ -1,10 +1,13 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
  *
  */
 package org.sil.syllableparser.model.cvapproach;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
@@ -30,8 +33,6 @@ public class CVNaturalClass extends SylParserObject {
 	private final StringProperty description;
 	private final StringProperty sncRepresentation;
 	ObservableList<SylParserObject> snc = FXCollections.observableArrayList();
-//	ListChangeListener<SylParserObject> lcl;
-//	WeakListChangeListener<SylParserObject> weakListener = new WeakListChangeListener<>(lcl);
 
 	public CVNaturalClass() {
 		super();
@@ -40,7 +41,6 @@ public class CVNaturalClass extends SylParserObject {
 		this.description = new SimpleStringProperty("");
 		this.sncRepresentation = new SimpleStringProperty("");
 		createUUID();
-//		snc.addListener(weakListener);
 	}
 
 	public CVNaturalClass(String className, SimpleListProperty<Object> segmentsOrNaturalClasses,
@@ -110,6 +110,26 @@ public class CVNaturalClass extends SylParserObject {
 	public StringProperty naturalClassProperty() {
 		return this.ncName;
 	}
+
+	/**
+	 * Get a list of all segments in this natural class, including any in any
+	 * embedded natural classes.
+	 * @return a list of all segments
+	 */
+	public List<Segment> getAllSegments() {
+		List<Segment> segments = new ArrayList<Segment>();
+		if (isActive()) {
+			for (SylParserObject spo : getSegmentsOrNaturalClasses()) {
+				if (spo instanceof Segment) {
+					segments.add((Segment) spo);
+				} else if (spo instanceof CVNaturalClass) {
+					segments.addAll(((CVNaturalClass)spo).getAllSegments());
+				}
+			}
+		}
+		return segments;
+	}
+
 	@Override
 	public int hashCode() {
 		String sCombo = ncName.getValueSafe() + sncRepresentation.getValueSafe();
@@ -134,6 +154,11 @@ public class CVNaturalClass extends SylParserObject {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public String getSortingValue() {
+		return getNCName();
 	}
 
 }

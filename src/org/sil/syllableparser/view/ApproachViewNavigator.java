@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -9,6 +9,8 @@ package org.sil.syllableparser.view;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import org.sil.syllableparser.MainApp;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -74,6 +76,7 @@ public class ApproachViewNavigator {
             );
         } catch (IOException e) {
             e.printStackTrace();
+			MainApp.reportException(e, null);
         }
     }
 

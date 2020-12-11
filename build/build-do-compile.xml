@@ -11,11 +11,14 @@
 			<fileset dir="externalLibs">
 				<include name="controlsfx-8.40.12.jar" />
 				<include name="controlsfx-8.40.12license.txt" />
+				<include name="libjavadev-*.jar"/>
 				<include name="diff-match-patch.jar" />
 				<include name="diff-match-patchCOPYING" />
 				<include name="diff-match-patchREADME.txt" />
 				<include name="antlr-4.7-complete.jar"/>
 				<include name="ANTLR-4-License.txt"/>
+				<include name="icu4j-*.jar"/>
+				<include name="LingTree.jar"/>
 			</fileset>
 		</copy>
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 SIL International
+// Copyright (c) 2016-2020 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -7,24 +7,17 @@
 package org.sil.syllableparser.view;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
-import org.sil.syllableparser.model.GraphemeOrNaturalClass;
-import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -37,7 +30,17 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class EnvironmentChooserController extends CheckBoxColumnController implements Initializable {
+public class EnvironmentChooserController extends TableViewWithCheckBoxColumnController {
+
+	protected final class AnalysisWrappingTableCell extends TableCell<Environment, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
 
 	protected final class WrappingTableCell extends TableCell<Environment, String> {
 		private Text text;
@@ -45,22 +48,7 @@ public class EnvironmentChooserController extends CheckBoxColumnController imple
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Environment env = (Environment) this.getTableRow().getItem();
-				if (env != null && env.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				setGraphic(text);
-			}
+			processTableCell(this, text, item, empty);
 		}
 	}
 
@@ -77,16 +65,18 @@ public class EnvironmentChooserController extends CheckBoxColumnController imple
 	private MainApp mainApp;
 	private ApplicationPreferences preferences;
 
-	private Environment currentEnvironment;
 	private ObservableList<Environment> environments = FXCollections.observableArrayList();
 	private Grapheme grapheme;
-	private LanguageProject languageProject;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.ENVIRONMENT_CHOOSER);
+		super.setTableView(environmentTable);
+		super.initialize(location, resources);
+
 		// Initialize the table with the three columns.
 		checkBoxColumn
 				.setCellValueFactory(cellData -> cellData.getValue().activeCheckBoxProperty());
@@ -105,7 +95,7 @@ public class EnvironmentChooserController extends CheckBoxColumnController imple
 			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		initializeCheckBoxContextMenu(resources);
@@ -138,7 +128,7 @@ public class EnvironmentChooserController extends CheckBoxColumnController imple
 		});
 	}
 
-	public void setData(CVApproach cvApproachData) {
+	public void setData(Approach cvApproachData) {
 		languageProject = cvApproachData.getLanguageProject();
 		environments = FXCollections.observableList(languageProject.getActiveAndValidEnvironments());
 		for (Environment env : environments) {
@@ -251,5 +241,15 @@ public class EnvironmentChooserController extends CheckBoxColumnController imple
 	@Override
 	TextField[] createTextFields() {
 		return null;
+	}
+
+	@Override
+	void handlePreviousItem() {
+		// nothing to do
+	}
+
+	@Override
+	void handleNextItem() {
+		//  nothing to do
 	}
 }

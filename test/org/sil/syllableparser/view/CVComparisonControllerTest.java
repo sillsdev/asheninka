@@ -1,8 +1,5 @@
 /**
-// Copyright (c) 2016 SIL International 
-// This software is licensed under the LGPL, version 2.1 or later 
-// (http://www.gnu.org/licenses/lgpl-2.1.html) 
- * Copyright (c) 2016 SIL International 
+ * Copyright (c) 2016-2018 SIL International 
  * This software is licensed under the LGPL, version 2.1 or later 
  * (http://www.gnu.org/licenses/lgpl-2.1.html) 
  */
@@ -10,7 +7,6 @@ package org.sil.syllableparser.view;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -25,10 +21,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
-import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.view.ApproachViewNavigator;
 import org.sil.syllableparser.view.CVComparisonController;
+import org.sil.utility.view.JavaFXThreadingRule;
 
 /**
  * @author Andy Black

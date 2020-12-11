@@ -1,0 +1,2407 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<languageProject databaseVersion="2">
+    <analysisLanguage>
+        <code>eng</code>
+        <color>#4d1a4d</color>
+        <fontFamily>Times New Roman</fontFamily>
+        <fontSize>14.0</fontSize>
+        <fontType>Regular</fontType>
+        <icuRules></icuRules>
+        <languageName>English</languageName>
+        <ldmlFile></ldmlFile>
+        <rightToLeft>false</rightToLeft>
+        <sortingOption>DEFAULT_ORDER</sortingOption>
+        <useSameLanguage></useSameLanguage>
+    </analysisLanguage>
+    <cvApproach>
+        <cvNaturalClasses>
+            <cvNaturalClass snc="000e634b-5e9e-479d-82e6-f44ab9e27879 0a11acc2-cca2-45c8-a500-b3952aaf9002 d791dab4-f503-4f8f-a22f-98022a1e6973 0c349a88-de1d-4bd8-8845-18775f142719 aa3953cf-4225-4368-b0a2-5c70fff1e2d0 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee cdcd70a0-324f-47ee-91f8-07bf4bdbd511 9f5a8793-b8a8-4bf6-ac2b-e7938e6b721e 60765d81-b40d-42b2-ace5-9d476355270c 598d527f-52d3-4b0d-8c2f-b7341ee75e08 6bc43a79-0aac-42aa-994e-6368a05bc29a afe6142f-a77e-46ee-a77a-85f268a67865 da8fb681-3ebb-4fd1-89ca-183c0e60dc0c 101d2651-cd84-4671-a286-0d37e22759e4 91c1f393-497a-4345-9fcd-cd67fbb5575b 76e0b311-b742-4eb5-98f9-8670dfce5149 25bdfcdf-242a-49d8-94d2-74e2f666f88b 65be3575-5c87-4a7d-8560-d1f32a816b2f bc68a57c-739c-4700-9c92-f3048a167815 9a46061d-f5c4-4434-97f6-baca489aba59 518cf26f-42ab-4555-ac4d-af1667774959 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df a606ebec-8ceb-42bd-93ee-2b78f65f9984 5b00fb26-005d-4e73-a7c0-5ffac83a3a97 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 9d99421e-bca4-4c03-b68f-61f78d48e946 de23a803-28f0-4be7-a5d4-1efc12477f99 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" id="b500749a-9617-444c-ae28-7552cb3236ec" active="true">
+                <description>consonants</description>
+                <NCName>C</NCName>
+                <SNCRepresentation>b, c/q, ch, d, dx, f, g, gw, gy, h, j, k, kw, ky, l, p, r, s, t, ts, tx, v, w, x, y, z, zh, rr, [N]</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="de664190-dd3c-4bb3-892e-16dc596255ce 36cb40ce-7c57-44eb-b220-c7acaa24ef90 b8984bcf-d02c-4a8b-a960-9d87a2499af4 5ea55e1c-44c6-453e-b198-81d0c840ff81 d7f0c64a-6c5d-4ef1-a10a-3cd4cc1ddbbc 34459c4c-6cff-4958-8ab9-4e84762f0888 92284e25-50b0-4c3a-9043-c5a67c6cfcff dc1b1087-0f74-493c-8aa5-0dcbc8c36710 da0aaf1f-fc4b-48ec-b00c-a62b4df87402 796c9f2d-e3ef-477b-8536-6a8529c9e1a0 ce2c9225-83a2-4fa8-87b8-269df0786dd7 83f6023d-ab99-4e80-981f-778d79493490 1b1de24c-3e47-4dab-899a-8ddc942ecd89 c5ce811e-3202-4809-b5c8-236c2b342093 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 7c72e509-5ea4-40e9-8692-36e1b12fae7a 8903ab74-2dce-4b55-a76c-553bc3c4fdae 987b62d9-d3a3-447d-aa50-495b6d85336b f93b74f9-15d3-49dc-96e8-aef0ed85fab6 95a8713c-eab3-4d11-b197-6561d838591f 008bb81a-5594-45ee-ae2a-457a058cee16 66575489-ccd5-45db-9216-537861ba4613 106e190d-9e84-48f8-be85-0c62115af010 a487f4fe-ba54-432a-8519-6403749892ca 23641e7c-c1d0-45f4-b648-8906e7b5e495 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f 2aebe2d9-ffd8-4252-808c-69b50a328a70 6b3e34f8-2f95-4ae5-8abd-e59714c5595a 8728a438-6c7f-42af-8ea8-d87d70f22271" id="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true">
+                <description>vowels</description>
+                <NCName>V</NCName>
+                <SNCRepresentation>a, aa, ae, ai, ao, au, e, ea, ee, ei, eo, eu, ë, ëë, i, ia, ie, ii, io, iu, o, oa, oe, oi, oo, u, ue, uu, ua</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" id="6fbdfa10-f79d-44c6-a1bf-b474ac386c12" active="true">
+                <description>nasals</description>
+                <NCName>N</NCName>
+                <SNCRepresentation>m, n, ñ</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="000e634b-5e9e-479d-82e6-f44ab9e27879 91c1f393-497a-4345-9fcd-cd67fbb5575b" id="79d592b1-7392-4da6-b016-9598a27e9287" active="true">
+                <description>Non-nasal labial</description>
+                <NCName>C+lab-nas</NCName>
+                <SNCRepresentation>b, p</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="bad3c040-9306-423c-95d0-58b3678b40ee cdcd70a0-324f-47ee-91f8-07bf4bdbd511 9f5a8793-b8a8-4bf6-ac2b-e7938e6b721e 6bc43a79-0aac-42aa-994e-6368a05bc29a afe6142f-a77e-46ee-a77a-85f268a67865 da8fb681-3ebb-4fd1-89ca-183c0e60dc0c" id="76717a73-27ca-4601-82ca-82eea09c0b77" active="true">
+                <description>Velar consonant</description>
+                <NCName>Cvelar</NCName>
+                <SNCRepresentation>g, gw, gy, k, kw, ky</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="0c349a88-de1d-4bd8-8845-18775f142719 aa3953cf-4225-4368-b0a2-5c70fff1e2d0 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee cdcd70a0-324f-47ee-91f8-07bf4bdbd511 9f5a8793-b8a8-4bf6-ac2b-e7938e6b721e 60765d81-b40d-42b2-ace5-9d476355270c 598d527f-52d3-4b0d-8c2f-b7341ee75e08 6bc43a79-0aac-42aa-994e-6368a05bc29a afe6142f-a77e-46ee-a77a-85f268a67865 da8fb681-3ebb-4fd1-89ca-183c0e60dc0c 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b 65be3575-5c87-4a7d-8560-d1f32a816b2f bc68a57c-739c-4700-9c92-f3048a167815 9a46061d-f5c4-4434-97f6-baca489aba59 518cf26f-42ab-4555-ac4d-af1667774959 a606ebec-8ceb-42bd-93ee-2b78f65f9984 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 9d99421e-bca4-4c03-b68f-61f78d48e946" id="8984d4a2-9903-478d-9a93-3a686c2820f8" active="true">
+                <description>Obstruents</description>
+                <NCName>Obs</NCName>
+                <SNCRepresentation>d, dx, f, g, gw, gy, h, j, k, kw, ky, p, s, t, ts, tx, v, x, z, zh</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="598d527f-52d3-4b0d-8c2f-b7341ee75e08 101d2651-cd84-4671-a286-0d37e22759e4 a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a ae820f4f-a8c9-4d69-b528-8dc480ec7a8c 76e0b311-b742-4eb5-98f9-8670dfce5149 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df 5b00fb26-005d-4e73-a7c0-5ffac83a3a97" id="1e9e83d3-dc09-4410-99ac-9530a1cb129e" active="true">
+                <description></description>
+                <NCName>Sonorant</NCName>
+                <SNCRepresentation>j, l, m, n, ñ, r, w, y</SNCRepresentation>
+            </cvNaturalClass>
+        </cvNaturalClasses>
+        <cvSyllablePatterns>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" id="387d551f-e4a5-402c-91f8-a8a5d8b1626f" active="true">
+                <description></description>
+                <NCSRepresentation>C, C, C, V, C</NCSRepresentation>
+                <SPName>CCCVC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" id="ef542169-8f0c-45ee-9613-0ca0efcc1ec9" active="true">
+                <description>Closed syllable pattern</description>
+                <NCSRepresentation>C, V, C</NCSRepresentation>
+                <SPName>CVC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" id="79ceae50-8ae5-41ee-b436-8748710bb13c" active="true">
+                <description></description>
+                <NCSRepresentation>C, C, V, C</NCSRepresentation>
+                <SPName>CCVC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="5059b228-2994-4195-a881-e62958bff0c5" active="true">
+                <description>Basic syllable pattern</description>
+                <NCSRepresentation>C, V</NCSRepresentation>
+                <SPName>CV</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="bfb5baad-f697-4e5d-9cb4-2370f32496a0" active="true">
+                <description></description>
+                <NCSRepresentation>C, C, C, V</NCSRepresentation>
+                <SPName>CCCV</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="d8ee6384-281f-4c16-b5ef-aecdebce01a8" active="true">
+                <description></description>
+                <NCSRepresentation>C, C, V</NCSRepresentation>
+                <SPName>CCV</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" id="ad516e02-d5ae-4c06-b643-bd3105d3abc2" active="true">
+                <description>Nasal coda</description>
+                <NCSRepresentation>C, V, N</NCSRepresentation>
+                <SPName>CVN</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec" id="ed8f00a6-81a8-4390-9b0d-dd7086cc2faf" active="true">
+                <description>Onsetless closed syllable</description>
+                <NCSRepresentation>#, V, C</NCSRepresentation>
+                <SPName>VC</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>true</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="e9126200-ddc4-41fc-b5ef-33cbe3dccc9d" active="true">
+                <description>Onsetless open syllable</description>
+                <NCSRepresentation>#, V</NCSRepresentation>
+                <SPName>V</SPName>
+                <wordFinal>false</wordFinal>
+                <wordInitial>true</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec" id="d0ce26a3-0c51-4cfc-993c-6795c7252487" active="true">
+                <description></description>
+                <NCSRepresentation>C, C, V, C, C, #</NCSRepresentation>
+                <SPName>CCVCC#</SPName>
+                <wordFinal>true</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec" id="17db07cb-f247-4cf4-9e26-ac66a29f7fdb" active="true">
+                <description></description>
+                <NCSRepresentation>C, V, C, C, #</NCSRepresentation>
+                <SPName>CVCC#</SPName>
+                <wordFinal>true</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec" id="db684a90-5bc9-4871-9c71-6c67581ea163" active="true">
+                <description></description>
+                <NCSRepresentation>#, V, C, C, #</NCSRepresentation>
+                <SPName>#VCC#</SPName>
+                <wordFinal>true</wordFinal>
+                <wordInitial>true</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec" id="383043ec-66f1-4b05-8043-78887786c3cc" active="true">
+                <description></description>
+                <NCSRepresentation>C, V, C, C, C, #</NCSRepresentation>
+                <SPName>CVCCC#</SPName>
+                <wordFinal>true</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+            <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa b500749a-9617-444c-ae28-7552cb3236ec b500749a-9617-444c-ae28-7552cb3236ec" id="fe8bc85e-2ace-4741-b76b-286546ba72e9" active="true">
+                <description></description>
+                <NCSRepresentation>C, C, C, V, C, C, #</NCSRepresentation>
+                <SPName>CCCVCC#</SPName>
+                <wordFinal>true</wordFinal>
+                <wordInitial>false</wordInitial>
+            </cvSyllablePattern>
+        </cvSyllablePatterns>
+    </cvApproach>
+    <environments>
+        <environment id="f339fb89-a757-4332-9239-a33a1540a50b" active="true">
+            <description>Spanish loans</description>
+            <environmentName>Before high front vowels</environmentName>
+            <environmentRepresentation>/ _ [V-lo+fr]</environmentRepresentation>
+            <leftContext>
+                <environmentContexts/>
+                <wordBoundary>false</wordBoundary>
+            </leftContext>
+            <rightContext>
+                <environmentContexts>
+                    <envContextGOrNC>
+                        <isGrapheme>false</isGrapheme>
+                        <graphemeNaturalClass gnc="4aa4f7cb-096a-4608-bfed-573cb540d8ed b814227f-3b5f-42c2-8cbc-47cce20e1a1b 596315eb-b5d4-4f9f-87c6-3287d45cbfd6 8a12daf7-eb71-4b2a-8323-c2770f5da378 f40b6a5f-41b3-4758-a430-755e2155d49e d4bebf83-bbe9-4c92-850e-f55458626bb6 b5556f1c-0bd7-4cec-984d-af0b70a71b7e 7b4514b7-88d0-4e46-9fe5-86ccdcc097a8" id="55fd332a-ba28-433e-85d2-8c317cbb05c7" active="true">
+                            <description>Non-low front vowels</description>
+                            <GNCRepresentation>e, E, é, É, i, I, í, Í</GNCRepresentation>
+                            <NCName>V-lo+fr</NCName>
+                        </graphemeNaturalClass>
+                        <graphemeString>V-lo+fr</graphemeString>
+                        <isOptional>false</isOptional>
+                    </envContextGOrNC>
+                </environmentContexts>
+                <wordBoundary>false</wordBoundary>
+            </rightContext>
+            <valid>true</valid>
+        </environment>
+        <environment id="679b76eb-5360-44f9-a612-391107f747a7" active="true">
+            <description>Spanish loans</description>
+            <environmentName>Before non-high-front vowels</environmentName>
+            <environmentRepresentation>/ _ [V-hi-fr]</environmentRepresentation>
+            <leftContext>
+                <environmentContexts/>
+                <wordBoundary>false</wordBoundary>
+            </leftContext>
+            <rightContext>
+                <environmentContexts>
+                    <envContextGOrNC>
+                        <isGrapheme>false</isGrapheme>
+                        <graphemeNaturalClass gnc="9f8124db-00aa-43e9-a141-65c797175ce8 53c84ded-61d7-46a6-a7eb-0c6f344de5fc 23a06fd8-d615-44a4-93b7-44abe68db150 6aadd5d7-4870-4724-9e82-c36fecd64392 cb8ad282-6cd4-44b0-bbef-ce455b81464a 584d1acc-5451-4e58-860b-7c0a0e76684d e55e3066-3170-4499-b640-662a5add1ef0 3c5c6c50-d950-4ff9-988f-062731a4b327" id="63468dfc-f887-4927-b39a-a28ed48cbbc8" active="true">
+                            <description>Non high front vowels</description>
+                            <GNCRepresentation>a, á, ë, o, ó, u, ú, ü</GNCRepresentation>
+                            <NCName>V-hi-fr</NCName>
+                        </graphemeNaturalClass>
+                        <graphemeString>V-hi-fr</graphemeString>
+                        <isOptional>false</isOptional>
+                    </envContextGOrNC>
+                </environmentContexts>
+                <wordBoundary>false</wordBoundary>
+            </rightContext>
+            <valid>true</valid>
+        </environment>
+        <environment id="5acb9c70-ac1e-4cf3-9a86-23617671b24e" active="true">
+            <description>Spanish loans</description>
+            <environmentName>Before vowels</environmentName>
+            <environmentRepresentation>/ _ [V]</environmentRepresentation>
+            <leftContext>
+                <environmentContexts/>
+                <wordBoundary>false</wordBoundary>
+            </leftContext>
+            <rightContext>
+                <environmentContexts>
+                    <envContextGOrNC>
+                        <isGrapheme>false</isGrapheme>
+                        <graphemeNaturalClass gnc="9f8124db-00aa-43e9-a141-65c797175ce8 4aa4f7cb-096a-4608-bfed-573cb540d8ed f40b6a5f-41b3-4758-a430-755e2155d49e 6aadd5d7-4870-4724-9e82-c36fecd64392" id="1ff3cb19-4079-4460-ba80-a5af60059e03" active="true">
+                            <description>Vowels</description>
+                            <GNCRepresentation>a, á, e, é, i, í, o, ó</GNCRepresentation>
+                            <NCName>V</NCName>
+                        </graphemeNaturalClass>
+                        <graphemeString>V</graphemeString>
+                        <isOptional>false</isOptional>
+                    </envContextGOrNC>
+                </environmentContexts>
+                <wordBoundary>false</wordBoundary>
+            </rightContext>
+            <valid>true</valid>
+        </environment>
+        <environment id="b9cb5ead-56e8-4e87-8715-0661af76e46b" active="true">
+            <description>Spanish loans</description>
+            <environmentName>Wod final</environmentName>
+            <environmentRepresentation>/ _ # </environmentRepresentation>
+            <leftContext>
+                <environmentContexts/>
+                <wordBoundary>false</wordBoundary>
+            </leftContext>
+            <rightContext>
+                <environmentContexts/>
+                <wordBoundary>true</wordBoundary>
+            </rightContext>
+            <valid>true</valid>
+        </environment>
+        <environment id="936ca3a4-2534-4f86-9884-0aa0ef08f7f2" active="true">
+            <description>Spanish loans</description>
+            <environmentName>Before liquid</environmentName>
+            <environmentRepresentation>/ _ [C+liq]</environmentRepresentation>
+            <leftContext>
+                <environmentContexts/>
+                <wordBoundary>false</wordBoundary>
+            </leftContext>
+            <rightContext>
+                <environmentContexts>
+                    <envContextGOrNC>
+                        <isGrapheme>false</isGrapheme>
+                        <graphemeNaturalClass gnc="ca412d2c-e643-453f-9df0-79dee39a485b 5c48866b-5b05-4ea2-be99-2c12e52dd9d4 53a6c562-f063-4c07-a3eb-52511b850071 87729eb4-2622-4dbc-b519-bf530b7a3c42" id="461fb91d-7b50-4e9e-8d97-42d96a026193" active="true">
+                            <description>Liquids</description>
+                            <GNCRepresentation>l, L, r, R</GNCRepresentation>
+                            <NCName>C+liq</NCName>
+                        </graphemeNaturalClass>
+                        <graphemeString>C+liq</graphemeString>
+                        <isOptional>false</isOptional>
+                    </envContextGOrNC>
+                </environmentContexts>
+                <wordBoundary>false</wordBoundary>
+            </rightContext>
+            <valid>true</valid>
+        </environment>
+        <environment id="e2b5c868-008b-49db-b384-0c012beb5a02" active="true">
+            <description>Spanish loans: cc in direccion</description>
+            <environmentName>Before c</environmentName>
+            <environmentRepresentation>/  _  c</environmentRepresentation>
+            <leftContext>
+                <environmentContexts/>
+                <wordBoundary>false</wordBoundary>
+            </leftContext>
+            <rightContext>
+                <environmentContexts>
+                    <envContextGOrNC>
+                        <isGrapheme>true</isGrapheme>
+                        <graphemeString>c</graphemeString>
+                        <isOptional>false</isOptional>
+                    </envContextGOrNC>
+                </environmentContexts>
+                <wordBoundary>false</wordBoundary>
+            </rightContext>
+            <valid>true</valid>
+        </environment>
+        <environment id="a1793e22-a0fc-4823-9235-f940301b5804" active="true">
+            <description>Spanish loans: doctor</description>
+            <environmentName>Before t</environmentName>
+            <environmentRepresentation>/  _  t</environmentRepresentation>
+            <leftContext>
+                <environmentContexts/>
+                <wordBoundary>false</wordBoundary>
+            </leftContext>
+            <rightContext>
+                <environmentContexts>
+                    <envContextGOrNC>
+                        <isGrapheme>true</isGrapheme>
+                        <graphemeString>t</graphemeString>
+                        <isOptional>false</isOptional>
+                    </envContextGOrNC>
+                </environmentContexts>
+                <wordBoundary>false</wordBoundary>
+            </rightContext>
+            <valid>true</valid>
+        </environment>
+    </environments>
+    <filters>
+        <filter id="e232a2cd-079d-4be5-b6af-bc57d8997f2b" active="false">
+            <description></description>
+            <slots>
+                <slot natclass="1e9e83d3-dc09-4410-99ac-9530a1cb129e">
+                    <constituentBeginsHere>true</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="8984d4a2-9903-478d-9a93-3a686c2820f8">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>true</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Son Obs C</templateFilterName>
+            <templateFilterRepresentation>[Sonorant] _ *[Obs] | [C]</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
+        </filter>
+        <filter id="b6af8d7c-8d41-4d30-896b-6edd5ff078e3" active="false">
+            <description>Used for xkwer.pnzoon -&gt; xkwerp.nzoon, diz.fwer.ttee -&gt; diz.fwert.tee, xlër.man.knaal -. xlër.mank.naal, and others</description>
+            <slots>
+                <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="1e9e83d3-dc09-4410-99ac-9530a1cb129e">
+                    <constituentBeginsHere>true</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="8984d4a2-9903-478d-9a93-3a686c2820f8">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>true</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="1e9e83d3-dc09-4410-99ac-9530a1cb129e">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="8984d4a2-9903-478d-9a93-3a686c2820f8">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>V Son Obs (Son) Obs</templateFilterName>
+            <templateFilterRepresentation>[V] [Sonorant] _ *[Obs] | ([Sonorant]) *[Obs]</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
+        </filter>
+        <filter id="0232db8b-83fd-48b0-9e40-426780b153a9" active="false">
+            <description>Used for diz.fwer.ttee -&gt; diz.fwert.tee</description>
+            <slots>
+                <slot segment="65be3575-5c87-4a7d-8560-d1f32a816b2f">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>true</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>t</segmentString>
+                </slot>
+                <slot segment="65be3575-5c87-4a7d-8560-d1f32a816b2f">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>t</segmentString>
+                </slot>
+            </slots>
+            <templateFilterName>Special case for t t</templateFilterName>
+            <templateFilterRepresentation>t | t</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
+        </filter>
+        <filter id="c128b0d9-b561-4930-a2c4-8eaa44fe6a94" active="false">
+            <description>Used for xkwer.pnzoon -&gt; xkwerp.nzoon</description>
+            <slots>
+                <slot segment="91c1f393-497a-4345-9fcd-cd67fbb5575b">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>true</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>p</segmentString>
+                </slot>
+                <slot segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>n</segmentString>
+                </slot>
+            </slots>
+            <templateFilterName>Special case p n</templateFilterName>
+            <templateFilterRepresentation> p | n</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
+        </filter>
+        <filter id="3a0d5a45-9365-40ee-ab8b-e0f469cd098a" active="false">
+            <description>Used for xlër.man.knaal -. xlër.mank.naal</description>
+            <slots>
+                <slot segment="6bc43a79-0aac-42aa-994e-6368a05bc29a">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>true</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>k</segmentString>
+                </slot>
+                <slot segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>n</segmentString>
+                </slot>
+            </slots>
+            <templateFilterName>Special case k n</templateFilterName>
+            <templateFilterRepresentation>k | n</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
+        </filter>
+        <filter id="477f6740-f65c-4ee8-86d2-a09af0487794" active="true">
+            <description></description>
+            <slots>
+                <slot natclass="1e9e83d3-dc09-4410-99ac-9530a1cb129e">
+                    <constituentBeginsHere>true</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="8984d4a2-9903-478d-9a93-3a686c2820f8">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>true</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="1e9e83d3-dc09-4410-99ac-9530a1cb129e">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="8984d4a2-9903-478d-9a93-3a686c2820f8">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>no v</templateFilterName>
+            <templateFilterRepresentation>[Sonorant] _ *[Obs] | ([Sonorant]) *[Obs]</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
+        </filter>
+    </filters>
+    <graphemeNaturalClassess>
+        <graphemeNaturalClass gnc="4aa4f7cb-096a-4608-bfed-573cb540d8ed b814227f-3b5f-42c2-8cbc-47cce20e1a1b 596315eb-b5d4-4f9f-87c6-3287d45cbfd6 8a12daf7-eb71-4b2a-8323-c2770f5da378 f40b6a5f-41b3-4758-a430-755e2155d49e d4bebf83-bbe9-4c92-850e-f55458626bb6 b5556f1c-0bd7-4cec-984d-af0b70a71b7e 7b4514b7-88d0-4e46-9fe5-86ccdcc097a8" id="55fd332a-ba28-433e-85d2-8c317cbb05c7" active="true">
+            <description>Non-low front vowels</description>
+            <GNCRepresentation>e, E, é, É, i, I, í, Í</GNCRepresentation>
+            <NCName>V-lo+fr</NCName>
+        </graphemeNaturalClass>
+        <graphemeNaturalClass gnc="9f8124db-00aa-43e9-a141-65c797175ce8 53c84ded-61d7-46a6-a7eb-0c6f344de5fc 23a06fd8-d615-44a4-93b7-44abe68db150 6aadd5d7-4870-4724-9e82-c36fecd64392 cb8ad282-6cd4-44b0-bbef-ce455b81464a 584d1acc-5451-4e58-860b-7c0a0e76684d e55e3066-3170-4499-b640-662a5add1ef0 3c5c6c50-d950-4ff9-988f-062731a4b327" id="63468dfc-f887-4927-b39a-a28ed48cbbc8" active="true">
+            <description>Non high front vowels</description>
+            <GNCRepresentation>a, á, ë, o, ó, u, ú, ü</GNCRepresentation>
+            <NCName>V-hi-fr</NCName>
+        </graphemeNaturalClass>
+        <graphemeNaturalClass gnc="9f8124db-00aa-43e9-a141-65c797175ce8 68993a78-3dea-4f0f-96d7-34f208892019 53c84ded-61d7-46a6-a7eb-0c6f344de5fc 2944d4ee-6240-47db-b46d-7c408c9217c0 b39a38c5-77de-40c9-ae17-6161880082a8 cc62c5ba-f242-4f75-8208-bb18ad87655e e5085cac-008c-48c1-adec-ff54be57ad5a 4aa4f7cb-096a-4608-bfed-573cb540d8ed b814227f-3b5f-42c2-8cbc-47cce20e1a1b 596315eb-b5d4-4f9f-87c6-3287d45cbfd6 8a12daf7-eb71-4b2a-8323-c2770f5da378 eff40c5d-5849-4063-86ce-0817886e3087 a3fcec13-017f-49d0-bd0f-309980a3dca1 d394d1f4-5cb0-4ea4-bd0b-6a9f7e986199 23a06fd8-d615-44a4-93b7-44abe68db150 b7e0045b-7ae3-4d15-b5de-19e6a24f3451 805cc8f3-82e1-446a-84ca-211f36b3ecc2 2d9516a7-97b7-49e0-9edc-a9a6cb83028c 9a6af803-1796-405a-a4fb-214d72a83cca f40b6a5f-41b3-4758-a430-755e2155d49e d4bebf83-bbe9-4c92-850e-f55458626bb6 b5556f1c-0bd7-4cec-984d-af0b70a71b7e 7b4514b7-88d0-4e46-9fe5-86ccdcc097a8 78ca64c9-1cc9-4d30-847f-942e477dd515 a51bd461-cf52-47db-86b0-ed16a1470f0c f8de92b4-ba9c-4ec8-ae75-f5bd7a16fb39 6aadd5d7-4870-4724-9e82-c36fecd64392 3ca70ef8-454f-4822-8df8-14a0d9024487 cb8ad282-6cd4-44b0-bbef-ce455b81464a 0dcf296f-e512-4add-8fc6-58de1738b10d e3a6fd32-6662-426e-a6fe-d6155b947894 d3496df1-7cf4-4c4f-80fc-7e8f5fd9ad56 e250fdb6-66ae-4d54-a62e-546146453fae 584d1acc-5451-4e58-860b-7c0a0e76684d f84ee93e-f7f7-487a-9999-5364e026248f e55e3066-3170-4499-b640-662a5add1ef0 7d52ec08-bade-49fc-bbdb-dd7ac72857f6 3c5c6c50-d950-4ff9-988f-062731a4b327 3b046204-364d-4f82-a441-fb70af8f8ce0 6f46710e-6180-4c66-b9ce-c92e627b1f02 7aac6fcc-7809-4da3-b0d9-9cc56bb73a99 a29add7e-a896-4ef5-828e-4a41d8322666" id="1ff3cb19-4079-4460-ba80-a5af60059e03" active="true">
+            <description>Vowels</description>
+            <GNCRepresentation>a, A, á, Á, aa, Aa, AA, e, E, é, É, ee, Ee, EE, ë, Ë, ëë, Ëë, ËË, i, I, í, Í, ii, Ii, II, o, O, ó, Ó, oo, Oo, OO, u, U, ú, Ú, ü, Ü, uu, Uu, UU</GNCRepresentation>
+            <NCName>V</NCName>
+        </graphemeNaturalClass>
+        <graphemeNaturalClass gnc="ca412d2c-e643-453f-9df0-79dee39a485b 5c48866b-5b05-4ea2-be99-2c12e52dd9d4 53a6c562-f063-4c07-a3eb-52511b850071 87729eb4-2622-4dbc-b519-bf530b7a3c42" id="461fb91d-7b50-4e9e-8d97-42d96a026193" active="true">
+            <description>Liquids</description>
+            <GNCRepresentation>l, L, r, R</GNCRepresentation>
+            <NCName>C+liq</NCName>
+        </graphemeNaturalClass>
+    </graphemeNaturalClassess>
+    <hyphenationParametersListWord>
+        <discretionaryHyphen>=</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>0</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>0</stopBeforeCharactersFromEnd>
+    </hyphenationParametersListWord>
+    <hyphenationParametersParaTExt>
+        <discretionaryHyphen>=</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
+    </hyphenationParametersParaTExt>
+    <hyphenationParametersXLingPaper>
+        <discretionaryHyphen>-</discretionaryHyphen>
+        <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
+        <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
+    </hyphenationParametersXLingPaper>
+    <oncApproach/>
+    <shApproach>
+        <shSonorityHierarchy>
+            <shNaturalClass segs="de664190-dd3c-4bb3-892e-16dc596255ce 36cb40ce-7c57-44eb-b220-c7acaa24ef90 b8984bcf-d02c-4a8b-a960-9d87a2499af4 5ea55e1c-44c6-453e-b198-81d0c840ff81 d7f0c64a-6c5d-4ef1-a10a-3cd4cc1ddbbc 34459c4c-6cff-4958-8ab9-4e84762f0888 92284e25-50b0-4c3a-9043-c5a67c6cfcff dc1b1087-0f74-493c-8aa5-0dcbc8c36710 da0aaf1f-fc4b-48ec-b00c-a62b4df87402 796c9f2d-e3ef-477b-8536-6a8529c9e1a0 ce2c9225-83a2-4fa8-87b8-269df0786dd7 83f6023d-ab99-4e80-981f-778d79493490 1b1de24c-3e47-4dab-899a-8ddc942ecd89 c5ce811e-3202-4809-b5c8-236c2b342093 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 7c72e509-5ea4-40e9-8692-36e1b12fae7a 8903ab74-2dce-4b55-a76c-553bc3c4fdae 987b62d9-d3a3-447d-aa50-495b6d85336b f93b74f9-15d3-49dc-96e8-aef0ed85fab6 95a8713c-eab3-4d11-b197-6561d838591f 008bb81a-5594-45ee-ae2a-457a058cee16 66575489-ccd5-45db-9216-537861ba4613 106e190d-9e84-48f8-be85-0c62115af010 a487f4fe-ba54-432a-8519-6403749892ca 23641e7c-c1d0-45f4-b648-8906e7b5e495 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f 2aebe2d9-ffd8-4252-808c-69b50a328a70 6b3e34f8-2f95-4ae5-8abd-e59714c5595a 8728a438-6c7f-42af-8ea8-d87d70f22271" id="6930ff4b-c002-4881-a8d1-2a2d7beefaca" active="true">
+                <description></description>
+                <NCName>Vowels</NCName>
+                <segmentsRepresentation>a, aa, ae, ai, ao, au, e, ea, ee, ei, eo, eu, ë, ëë, i, ia, ie, ii, io, iu, o, oa, oe, oi, oo, u, ue, uu, ua</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="000e634b-5e9e-479d-82e6-f44ab9e27879 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df 5b00fb26-005d-4e73-a7c0-5ffac83a3a97" id="e8ae2309-3ade-47dc-8002-5578092e294d" active="true">
+                <description></description>
+                <NCName>Glides</NCName>
+                <segmentsRepresentation>b, w, y</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="101d2651-cd84-4671-a286-0d37e22759e4 76e0b311-b742-4eb5-98f9-8670dfce5149 de23a803-28f0-4be7-a5d4-1efc12477f99" id="85c6cd43-fde2-4f25-8410-1544fa50ab79" active="true">
+                <description></description>
+                <NCName>Liquid</NCName>
+                <segmentsRepresentation>l, r, rr</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="a09371d4-f079-42ff-a2f6-25c2dcab0b95 9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" id="4f9c480b-6605-4a46-aa72-318690fd9e3e" active="true">
+                <description></description>
+                <NCName>Nasals</NCName>
+                <segmentsRepresentation>m, n, ñ</segmentsRepresentation>
+            </shNaturalClass>
+            <shNaturalClass segs="0a11acc2-cca2-45c8-a500-b3952aaf9002 d791dab4-f503-4f8f-a22f-98022a1e6973 0c349a88-de1d-4bd8-8845-18775f142719 aa3953cf-4225-4368-b0a2-5c70fff1e2d0 0701fe22-3ac3-43a9-8d0d-78940f0ec514 bad3c040-9306-423c-95d0-58b3678b40ee cdcd70a0-324f-47ee-91f8-07bf4bdbd511 9f5a8793-b8a8-4bf6-ac2b-e7938e6b721e 60765d81-b40d-42b2-ace5-9d476355270c 598d527f-52d3-4b0d-8c2f-b7341ee75e08 6bc43a79-0aac-42aa-994e-6368a05bc29a afe6142f-a77e-46ee-a77a-85f268a67865 da8fb681-3ebb-4fd1-89ca-183c0e60dc0c 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b 65be3575-5c87-4a7d-8560-d1f32a816b2f bc68a57c-739c-4700-9c92-f3048a167815 9a46061d-f5c4-4434-97f6-baca489aba59 518cf26f-42ab-4555-ac4d-af1667774959 a606ebec-8ceb-42bd-93ee-2b78f65f9984 50a5aa37-3e18-42a8-83e6-9d0ae2cbb422 9d99421e-bca4-4c03-b68f-61f78d48e946" id="f312e0d5-28ad-4afa-b217-9b991e7c5408" active="true">
+                <description></description>
+                <NCName>Obstruents</NCName>
+                <segmentsRepresentation>c/q, ch, d, dx, f, g, gw, gy, h, j, k, kw, ky, p, s, t, ts, tx, v, x, z, zh</segmentsRepresentation>
+            </shNaturalClass>
+        </shSonorityHierarchy>
+    </shApproach>
+    <segments>
+        <segment id="de664190-dd3c-4bb3-892e-16dc596255ce" active="true">
+            <coda>false</coda>
+            <description>low central unrounded vowel</description>
+            <graphemes>a A á Á</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" id="9f8124db-00aa-43e9-a141-65c797175ce8" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>a</form>
+                </grapheme>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" id="68993a78-3dea-4f0f-96d7-34f208892019" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>A</form>
+                </grapheme>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" id="53c84ded-61d7-46a6-a7eb-0c6f344de5fc" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>á</form>
+                </grapheme>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" id="2944d4ee-6240-47db-b46d-7c408c9217c0" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Á</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>a</segment>
+        </segment>
+        <segment id="b8984bcf-d02c-4a8b-a960-9d87a2499af4" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ae áe aé</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="b8984bcf-d02c-4a8b-a960-9d87a2499af4" id="2d5e019f-0ada-4185-b7c8-b9e52c7a5dd1" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ae</form>
+                </grapheme>
+                <grapheme envs="" segment="b8984bcf-d02c-4a8b-a960-9d87a2499af4" id="f5e0d383-06f3-4820-be71-b57bb8a8ded9" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>áe</form>
+                </grapheme>
+                <grapheme envs="" segment="b8984bcf-d02c-4a8b-a960-9d87a2499af4" id="eb095fcb-06bc-41e3-8d6a-90ec620c2ce1" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aé</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ae</segment>
+        </segment>
+        <segment id="5ea55e1c-44c6-453e-b198-81d0c840ff81" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ai ái aí aía</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="5ea55e1c-44c6-453e-b198-81d0c840ff81" id="1aaed04b-4930-4923-b4dc-904f1b4c5674" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ai</form>
+                </grapheme>
+                <grapheme envs="" segment="5ea55e1c-44c6-453e-b198-81d0c840ff81" id="3d6a21b7-04af-42c7-89e9-7c01580ab105" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ái</form>
+                </grapheme>
+                <grapheme envs="" segment="5ea55e1c-44c6-453e-b198-81d0c840ff81" id="b2aa5c96-d8af-49e4-bce1-554382738808" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aí</form>
+                </grapheme>
+                <grapheme envs="" segment="5ea55e1c-44c6-453e-b198-81d0c840ff81" id="fd271df9-d506-4b78-8bf8-146507907e02" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aía</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ai</segment>
+        </segment>
+        <segment id="d7f0c64a-6c5d-4ef1-a10a-3cd4cc1ddbbc" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ao áo aó</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="d7f0c64a-6c5d-4ef1-a10a-3cd4cc1ddbbc" id="cc121412-e87a-4332-8492-5d172c6872c0" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ao</form>
+                </grapheme>
+                <grapheme envs="" segment="d7f0c64a-6c5d-4ef1-a10a-3cd4cc1ddbbc" id="1f1ef9bd-924a-4095-8e35-6a0b7be60d3c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>áo</form>
+                </grapheme>
+                <grapheme envs="" segment="d7f0c64a-6c5d-4ef1-a10a-3cd4cc1ddbbc" id="3d7f6552-fc21-48df-afed-4216d8883cd4" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aó</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ao</segment>
+        </segment>
+        <segment id="34459c4c-6cff-4958-8ab9-4e84762f0888" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>au áu aú Au</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="34459c4c-6cff-4958-8ab9-4e84762f0888" id="654b4efa-48b5-4479-96bd-4f6a9dd6faac" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>au</form>
+                </grapheme>
+                <grapheme envs="" segment="34459c4c-6cff-4958-8ab9-4e84762f0888" id="4c97c5fb-bfa8-4baa-af3a-94f9f08b8e66" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>áu</form>
+                </grapheme>
+                <grapheme envs="" segment="34459c4c-6cff-4958-8ab9-4e84762f0888" id="f3df4aff-31e1-4004-a6f7-49950298bcfc" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aú</form>
+                </grapheme>
+                <grapheme envs="" segment="34459c4c-6cff-4958-8ab9-4e84762f0888" id="c6b1e836-cdf4-4c85-9602-eda4ec71e1ff" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Au</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>au</segment>
+        </segment>
+        <segment id="36cb40ce-7c57-44eb-b220-c7acaa24ef90" active="true">
+            <coda>false</coda>
+            <description>low central unrounded laryngealized vowel</description>
+            <graphemes>aa Aa AA áá aá</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="36cb40ce-7c57-44eb-b220-c7acaa24ef90" id="b39a38c5-77de-40c9-ae17-6161880082a8" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aa</form>
+                </grapheme>
+                <grapheme envs="" segment="36cb40ce-7c57-44eb-b220-c7acaa24ef90" id="cc62c5ba-f242-4f75-8208-bb18ad87655e" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Aa</form>
+                </grapheme>
+                <grapheme envs="" segment="36cb40ce-7c57-44eb-b220-c7acaa24ef90" id="e5085cac-008c-48c1-adec-ff54be57ad5a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>AA</form>
+                </grapheme>
+                <grapheme envs="" segment="36cb40ce-7c57-44eb-b220-c7acaa24ef90" id="b6e43271-d3d1-4168-9d01-e21f9f501e5a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>áá</form>
+                </grapheme>
+                <grapheme envs="" segment="36cb40ce-7c57-44eb-b220-c7acaa24ef90" id="b9f4313d-c9f5-407b-845c-d4db218163c0" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aá</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>aa</segment>
+        </segment>
+        <segment id="000e634b-5e9e-479d-82e6-f44ab9e27879" active="true">
+            <coda>true</coda>
+            <description>voiced bilabial stop</description>
+            <graphemes>b B</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="000e634b-5e9e-479d-82e6-f44ab9e27879" id="b15c6c7a-610a-48c2-b6b6-fff74c91a695" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>b</form>
+                </grapheme>
+                <grapheme envs="" segment="000e634b-5e9e-479d-82e6-f44ab9e27879" id="f002986a-ed0d-473e-96ce-894002200b4f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>B</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>b</segment>
+        </segment>
+        <segment id="0a11acc2-cca2-45c8-a500-b3952aaf9002" active="true">
+            <coda>true</coda>
+            <description>voiceless uvular stop</description>
+            <graphemes>c C qu Qu QU</graphemes>
+            <graphemesAsList>
+                <grapheme envs="5acb9c70-ac1e-4cf3-9a86-23617671b24e b9cb5ead-56e8-4e87-8715-0661af76e46b 936ca3a4-2534-4f86-9884-0aa0ef08f7f2 e2b5c868-008b-49db-b384-0c012beb5a02 a1793e22-a0fc-4823-9235-f940301b5804" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002" id="38d85df8-526f-4e4d-8dc7-b48fa499903a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V]; / _ # ; / _ [C+liq]; /  _  c; /  _  t</envsRepresentation>
+                    <form>c</form>
+                </grapheme>
+                <grapheme envs="5acb9c70-ac1e-4cf3-9a86-23617671b24e b9cb5ead-56e8-4e87-8715-0661af76e46b 936ca3a4-2534-4f86-9884-0aa0ef08f7f2" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002" id="8aa474ac-5c87-4d3d-ac18-49f2b8720057" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V]; / _ # ; / _ [C+liq]</envsRepresentation>
+                    <form>C</form>
+                </grapheme>
+                <grapheme envs="f339fb89-a757-4332-9239-a33a1540a50b" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002" id="e873b084-aff8-48a8-b573-db717944925b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V-lo+fr]</envsRepresentation>
+                    <form>qu</form>
+                </grapheme>
+                <grapheme envs="f339fb89-a757-4332-9239-a33a1540a50b" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002" id="10e4f49e-7311-45a1-a11e-5fc10ecc452e" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V-lo+fr]</envsRepresentation>
+                    <form>Qu</form>
+                </grapheme>
+                <grapheme envs="f339fb89-a757-4332-9239-a33a1540a50b" segment="0a11acc2-cca2-45c8-a500-b3952aaf9002" id="644fbcb1-c9be-4969-9527-0873fa621bb6" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V-lo+fr]</envsRepresentation>
+                    <form>QU</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>c/q</segment>
+        </segment>
+        <segment id="d791dab4-f503-4f8f-a22f-98022a1e6973" active="true">
+            <coda>true</coda>
+            <description>voiceless palatal-alveolar affricate</description>
+            <graphemes>ch Ch CH</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="d791dab4-f503-4f8f-a22f-98022a1e6973" id="0af3379a-87e6-4ec2-adf9-0b52f4add483" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ch</form>
+                </grapheme>
+                <grapheme envs="" segment="d791dab4-f503-4f8f-a22f-98022a1e6973" id="4e921b35-d582-40e9-80ee-aa7ecc6c978b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ch</form>
+                </grapheme>
+                <grapheme envs="" segment="d791dab4-f503-4f8f-a22f-98022a1e6973" id="2a077645-a065-4097-ae41-99a442f84267" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>CH</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ch</segment>
+        </segment>
+        <segment id="0c349a88-de1d-4bd8-8845-18775f142719" active="true">
+            <coda>true</coda>
+            <description>voiced alveolar stop</description>
+            <graphemes>d D</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0c349a88-de1d-4bd8-8845-18775f142719" id="03d4b953-11d7-45f1-95ee-91982e4e0423" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>d</form>
+                </grapheme>
+                <grapheme envs="" segment="0c349a88-de1d-4bd8-8845-18775f142719" id="c039c928-aabd-46df-89d9-8076be37578d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>D</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>d</segment>
+        </segment>
+        <segment id="aa3953cf-4225-4368-b0a2-5c70fff1e2d0" active="true">
+            <coda>true</coda>
+            <description>voiced retroflexed affricate</description>
+            <graphemes>dx Dx DX</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="aa3953cf-4225-4368-b0a2-5c70fff1e2d0" id="6ad5520c-7c19-41eb-8e64-5fb685449153" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>dx</form>
+                </grapheme>
+                <grapheme envs="" segment="aa3953cf-4225-4368-b0a2-5c70fff1e2d0" id="4fcd9851-e03e-404d-896c-a48f39afed6a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Dx</form>
+                </grapheme>
+                <grapheme envs="" segment="aa3953cf-4225-4368-b0a2-5c70fff1e2d0" id="ba9d5bc5-463b-4391-aee1-99e553ad2395" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>DX</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>dx</segment>
+        </segment>
+        <segment id="92284e25-50b0-4c3a-9043-c5a67c6cfcff" active="true">
+            <coda>false</coda>
+            <description>mid front unrounded vowel</description>
+            <graphemes>e E é É</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" id="4aa4f7cb-096a-4608-bfed-573cb540d8ed" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>e</form>
+                </grapheme>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" id="b814227f-3b5f-42c2-8cbc-47cce20e1a1b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>E</form>
+                </grapheme>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" id="596315eb-b5d4-4f9f-87c6-3287d45cbfd6" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>é</form>
+                </grapheme>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" id="8a12daf7-eb71-4b2a-8323-c2770f5da378" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>É</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>e</segment>
+        </segment>
+        <segment id="dc1b1087-0f74-493c-8aa5-0dcbc8c36710" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ea éa eá</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="dc1b1087-0f74-493c-8aa5-0dcbc8c36710" id="e1d6d1af-6c7a-4b44-a00b-d8cb062b5251" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ea</form>
+                </grapheme>
+                <grapheme envs="" segment="dc1b1087-0f74-493c-8aa5-0dcbc8c36710" id="701a044a-3a7c-4397-8c7a-58dd6872f816" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>éa</form>
+                </grapheme>
+                <grapheme envs="" segment="dc1b1087-0f74-493c-8aa5-0dcbc8c36710" id="5b2cd5b6-4058-4d26-8fe8-4c42ce40e423" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eá</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ea</segment>
+        </segment>
+        <segment id="796c9f2d-e3ef-477b-8536-6a8529c9e1a0" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ei éi eí</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="796c9f2d-e3ef-477b-8536-6a8529c9e1a0" id="27ac9604-b54f-4e99-84c3-e761770b4bc8" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ei</form>
+                </grapheme>
+                <grapheme envs="" segment="796c9f2d-e3ef-477b-8536-6a8529c9e1a0" id="9a6d57db-5d2b-49f6-aa9d-48181430773f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>éi</form>
+                </grapheme>
+                <grapheme envs="" segment="796c9f2d-e3ef-477b-8536-6a8529c9e1a0" id="35e7d6d6-04b6-44ee-895b-3f9e452c0de2" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eí</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ei</segment>
+        </segment>
+        <segment id="ce2c9225-83a2-4fa8-87b8-269df0786dd7" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>eo éo eó</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="ce2c9225-83a2-4fa8-87b8-269df0786dd7" id="2c79dbf7-f760-419f-8256-4e214cd6bc14" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eo</form>
+                </grapheme>
+                <grapheme envs="" segment="ce2c9225-83a2-4fa8-87b8-269df0786dd7" id="8f8fded3-a2e7-4aac-8046-552275aebbbf" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>éo</form>
+                </grapheme>
+                <grapheme envs="" segment="ce2c9225-83a2-4fa8-87b8-269df0786dd7" id="e59f1c56-0779-4ad5-a3bb-c33b6171736d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eó</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>eo</segment>
+        </segment>
+        <segment id="83f6023d-ab99-4e80-981f-778d79493490" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>eu éu eú Eu</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="83f6023d-ab99-4e80-981f-778d79493490" id="c7670c5c-c1a5-42f2-b6de-1ff0247c2187" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eu</form>
+                </grapheme>
+                <grapheme envs="" segment="83f6023d-ab99-4e80-981f-778d79493490" id="5213f7c3-ed1c-4e2d-80b2-696a5e2032ff" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>éu</form>
+                </grapheme>
+                <grapheme envs="" segment="83f6023d-ab99-4e80-981f-778d79493490" id="153158fa-3f10-4817-9b3a-7682a45b117f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eú</form>
+                </grapheme>
+                <grapheme envs="" segment="83f6023d-ab99-4e80-981f-778d79493490" id="1ab5e405-c1c3-4e5d-8120-c2579b046ead" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Eu</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>eu</segment>
+        </segment>
+        <segment id="1b1de24c-3e47-4dab-899a-8ddc942ecd89" active="true">
+            <coda>false</coda>
+            <description>low front unrounded vowel</description>
+            <graphemes>ë Ë ë́</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="1b1de24c-3e47-4dab-899a-8ddc942ecd89" id="23a06fd8-d615-44a4-93b7-44abe68db150" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ë</form>
+                </grapheme>
+                <grapheme envs="" segment="1b1de24c-3e47-4dab-899a-8ddc942ecd89" id="b7e0045b-7ae3-4d15-b5de-19e6a24f3451" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ë</form>
+                </grapheme>
+                <grapheme envs="" segment="1b1de24c-3e47-4dab-899a-8ddc942ecd89" id="e5a87478-0096-48a3-b70b-e3c5db821f14" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ë́</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ë</segment>
+        </segment>
+        <segment id="da0aaf1f-fc4b-48ec-b00c-a62b4df87402" active="true">
+            <coda>false</coda>
+            <description>mid front unrounded laryngealized vowel</description>
+            <graphemes>ee Ee EE éé Éé ÉÉ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="da0aaf1f-fc4b-48ec-b00c-a62b4df87402" id="eff40c5d-5849-4063-86ce-0817886e3087" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ee</form>
+                </grapheme>
+                <grapheme envs="" segment="da0aaf1f-fc4b-48ec-b00c-a62b4df87402" id="a3fcec13-017f-49d0-bd0f-309980a3dca1" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ee</form>
+                </grapheme>
+                <grapheme envs="" segment="da0aaf1f-fc4b-48ec-b00c-a62b4df87402" id="d394d1f4-5cb0-4ea4-bd0b-6a9f7e986199" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>EE</form>
+                </grapheme>
+                <grapheme envs="" segment="da0aaf1f-fc4b-48ec-b00c-a62b4df87402" id="9bb432b5-c91d-4a3a-b0bc-65f8069971dd" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>éé</form>
+                </grapheme>
+                <grapheme envs="" segment="da0aaf1f-fc4b-48ec-b00c-a62b4df87402" id="8b002220-7b7e-4bdc-9bc4-1df48d6b0ea6" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Éé</form>
+                </grapheme>
+                <grapheme envs="" segment="da0aaf1f-fc4b-48ec-b00c-a62b4df87402" id="fd4c9f00-23f9-4e4b-913a-e79ee8847469" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ÉÉ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ee</segment>
+        </segment>
+        <segment id="c5ce811e-3202-4809-b5c8-236c2b342093" active="true">
+            <coda>false</coda>
+            <description>low front unrounded laryngealized vowel</description>
+            <graphemes>ëë Ëë ËË ë́ë́</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="c5ce811e-3202-4809-b5c8-236c2b342093" id="805cc8f3-82e1-446a-84ca-211f36b3ecc2" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ëë</form>
+                </grapheme>
+                <grapheme envs="" segment="c5ce811e-3202-4809-b5c8-236c2b342093" id="2d9516a7-97b7-49e0-9edc-a9a6cb83028c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ëë</form>
+                </grapheme>
+                <grapheme envs="" segment="c5ce811e-3202-4809-b5c8-236c2b342093" id="9a6af803-1796-405a-a4fb-214d72a83cca" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ËË</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ëë</segment>
+        </segment>
+        <segment id="0701fe22-3ac3-43a9-8d0d-78940f0ec514" active="true">
+            <coda>true</coda>
+            <description>voiceless interdental fricative (Spanish loans)</description>
+            <graphemes>f F</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514" id="a810050a-5b56-4c1c-905e-50add699db4c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>f</form>
+                </grapheme>
+                <grapheme envs="" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514" id="93bf75aa-6c37-4390-94a5-5b8a04fc6b1c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>F</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>f</segment>
+        </segment>
+        <segment id="bad3c040-9306-423c-95d0-58b3678b40ee" active="true">
+            <coda>true</coda>
+            <description>voiced velar stop</description>
+            <graphemes>g G Gu GU gu</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="bad3c040-9306-423c-95d0-58b3678b40ee" id="f014ffa5-d58e-4889-90ee-dd353a9993f2" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>g</form>
+                </grapheme>
+                <grapheme envs="" segment="bad3c040-9306-423c-95d0-58b3678b40ee" id="f5b7ba28-e76c-4367-b7a6-94b3f62e4468" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>G</form>
+                </grapheme>
+                <grapheme envs="" segment="bad3c040-9306-423c-95d0-58b3678b40ee" id="940bc92b-810f-4b0a-a581-7d6fc1996040" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Gu</form>
+                </grapheme>
+                <grapheme envs="f339fb89-a757-4332-9239-a33a1540a50b" segment="bad3c040-9306-423c-95d0-58b3678b40ee" id="f5cd9237-8600-4841-8d41-15c23d4be3a6" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V-lo+fr]</envsRepresentation>
+                    <form>GU</form>
+                </grapheme>
+                <grapheme envs="f339fb89-a757-4332-9239-a33a1540a50b" segment="bad3c040-9306-423c-95d0-58b3678b40ee" id="90868afb-706f-4b69-9a4a-98cfee311e71" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V-lo+fr]</envsRepresentation>
+                    <form>gu</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>g</segment>
+        </segment>
+        <segment id="cdcd70a0-324f-47ee-91f8-07bf4bdbd511" active="true">
+            <coda>true</coda>
+            <description>voiced labial-velar stop</description>
+            <graphemes>gw Gw GW</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="cdcd70a0-324f-47ee-91f8-07bf4bdbd511" id="2b910aaa-b8ec-4b56-9f6f-b45db4133829" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>gw</form>
+                </grapheme>
+                <grapheme envs="" segment="cdcd70a0-324f-47ee-91f8-07bf4bdbd511" id="c02e22f8-64c2-43ff-b5d3-2789bf06b98a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Gw</form>
+                </grapheme>
+                <grapheme envs="" segment="cdcd70a0-324f-47ee-91f8-07bf4bdbd511" id="61f1095f-16d1-4324-b635-93060e1c1844" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>GW</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>gw</segment>
+        </segment>
+        <segment id="9f5a8793-b8a8-4bf6-ac2b-e7938e6b721e" active="true">
+            <coda>true</coda>
+            <description>voiced palatal-velar stop</description>
+            <graphemes>gy Gy GY</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="9f5a8793-b8a8-4bf6-ac2b-e7938e6b721e" id="5cebafa0-2879-4a48-8a22-a51c669ba429" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>gy</form>
+                </grapheme>
+                <grapheme envs="" segment="9f5a8793-b8a8-4bf6-ac2b-e7938e6b721e" id="738aba2b-7b04-45ab-918e-bfb369824d4b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Gy</form>
+                </grapheme>
+                <grapheme envs="" segment="9f5a8793-b8a8-4bf6-ac2b-e7938e6b721e" id="71e4e88d-d984-4ae6-8438-ab9832767c71" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>GY</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>gy</segment>
+        </segment>
+        <segment id="60765d81-b40d-42b2-ace5-9d476355270c" active="true">
+            <coda>false</coda>
+            <description>voiceless glottal fricative (Spanish loans)</description>
+            <graphemes>h H</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="60765d81-b40d-42b2-ace5-9d476355270c" id="69d5bf4e-c5e6-4f93-90a4-4ead62b0ce12" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>h</form>
+                </grapheme>
+                <grapheme envs="" segment="60765d81-b40d-42b2-ace5-9d476355270c" id="86378991-6e93-43fb-8e1b-a30f1ed265a2" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>H</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>h</segment>
+        </segment>
+        <segment id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" active="true">
+            <coda>false</coda>
+            <description>high front unrounded vowel</description>
+            <graphemes>i I í Í</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" id="f40b6a5f-41b3-4758-a430-755e2155d49e" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>i</form>
+                </grapheme>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" id="d4bebf83-bbe9-4c92-850e-f55458626bb6" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>I</form>
+                </grapheme>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" id="b5556f1c-0bd7-4cec-984d-af0b70a71b7e" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>í</form>
+                </grapheme>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" id="7b4514b7-88d0-4e46-9fe5-86ccdcc097a8" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Í</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>i</segment>
+        </segment>
+        <segment id="7c72e509-5ea4-40e9-8692-36e1b12fae7a" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ia ía iá</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="7c72e509-5ea4-40e9-8692-36e1b12fae7a" id="157becc2-7a04-4f83-88c3-f7717db22dee" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ia</form>
+                </grapheme>
+                <grapheme envs="" segment="7c72e509-5ea4-40e9-8692-36e1b12fae7a" id="d1333394-b825-4fe1-8307-e43b8fa90124" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ía</form>
+                </grapheme>
+                <grapheme envs="" segment="7c72e509-5ea4-40e9-8692-36e1b12fae7a" id="47cb1d86-22bc-442e-8cea-82aa91188efd" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>iá</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ia</segment>
+        </segment>
+        <segment id="8903ab74-2dce-4b55-a76c-553bc3c4fdae" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ie íe eí</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="8903ab74-2dce-4b55-a76c-553bc3c4fdae" id="43b5ed20-e9e3-4c98-ac27-9301f04d1a6d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ie</form>
+                </grapheme>
+                <grapheme envs="" segment="8903ab74-2dce-4b55-a76c-553bc3c4fdae" id="4655f8c3-3578-4271-a86e-3ec17489a924" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>íe</form>
+                </grapheme>
+                <grapheme envs="" segment="8903ab74-2dce-4b55-a76c-553bc3c4fdae" id="58aa6971-299a-4224-ad9e-4981eb7c6e9d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eí</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ie</segment>
+        </segment>
+        <segment id="f93b74f9-15d3-49dc-96e8-aef0ed85fab6" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>io ío ió</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="f93b74f9-15d3-49dc-96e8-aef0ed85fab6" id="1a761094-26b3-42c0-b74f-8c701f04058a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>io</form>
+                </grapheme>
+                <grapheme envs="" segment="f93b74f9-15d3-49dc-96e8-aef0ed85fab6" id="0060a729-efce-4499-9282-61714fa4f54c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ío</form>
+                </grapheme>
+                <grapheme envs="" segment="f93b74f9-15d3-49dc-96e8-aef0ed85fab6" id="314223c7-9a62-4eba-8a1d-de82acd79a2e" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ió</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>io</segment>
+        </segment>
+        <segment id="95a8713c-eab3-4d11-b197-6561d838591f" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>iu íu iú</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="95a8713c-eab3-4d11-b197-6561d838591f" id="a6f9d679-acdf-4245-976f-7ae90a9eef04" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>iu</form>
+                </grapheme>
+                <grapheme envs="" segment="95a8713c-eab3-4d11-b197-6561d838591f" id="cf8a5b9e-4904-4cdc-9723-94d931d25dbd" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>íu</form>
+                </grapheme>
+                <grapheme envs="" segment="95a8713c-eab3-4d11-b197-6561d838591f" id="5bc31cd2-a82e-4c27-86ca-d9d4d4acd0c5" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>iú</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>iu</segment>
+        </segment>
+        <segment id="987b62d9-d3a3-447d-aa50-495b6d85336b" active="true">
+            <coda>false</coda>
+            <description>high front unrounded laryngealized vowel</description>
+            <graphemes>ii Ii II íí Íí ÍÍ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="987b62d9-d3a3-447d-aa50-495b6d85336b" id="78ca64c9-1cc9-4d30-847f-942e477dd515" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ii</form>
+                </grapheme>
+                <grapheme envs="" segment="987b62d9-d3a3-447d-aa50-495b6d85336b" id="a51bd461-cf52-47db-86b0-ed16a1470f0c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ii</form>
+                </grapheme>
+                <grapheme envs="" segment="987b62d9-d3a3-447d-aa50-495b6d85336b" id="f8de92b4-ba9c-4ec8-ae75-f5bd7a16fb39" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>II</form>
+                </grapheme>
+                <grapheme envs="" segment="987b62d9-d3a3-447d-aa50-495b6d85336b" id="d5b2686a-a607-4434-8fe6-1742c49020c0" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>íí</form>
+                </grapheme>
+                <grapheme envs="" segment="987b62d9-d3a3-447d-aa50-495b6d85336b" id="49af60c6-b4d4-47a4-9832-a0d8ffd7f2fe" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Íí</form>
+                </grapheme>
+                <grapheme envs="" segment="987b62d9-d3a3-447d-aa50-495b6d85336b" id="e5ed3a0f-f2cc-4a2b-a827-b035fe7c0281" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ÍÍ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ii</segment>
+        </segment>
+        <segment id="598d527f-52d3-4b0d-8c2f-b7341ee75e08" active="true">
+            <coda>true</coda>
+            <description>voiced palatal-alveolar affricate</description>
+            <graphemes>j J</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="598d527f-52d3-4b0d-8c2f-b7341ee75e08" id="c9eacf92-9914-4e69-8c16-f70faeef5802" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>j</form>
+                </grapheme>
+                <grapheme envs="" segment="598d527f-52d3-4b0d-8c2f-b7341ee75e08" id="685c5fc3-2a9d-477c-b8a8-20b66f25e275" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>J</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>j</segment>
+        </segment>
+        <segment id="6bc43a79-0aac-42aa-994e-6368a05bc29a" active="true">
+            <coda>true</coda>
+            <description>voiceless velar stop</description>
+            <graphemes>k K</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="6bc43a79-0aac-42aa-994e-6368a05bc29a" id="7300f43f-a1ec-472a-9f00-ae749b547780" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>k</form>
+                </grapheme>
+                <grapheme envs="" segment="6bc43a79-0aac-42aa-994e-6368a05bc29a" id="d61585bf-9251-4419-aef8-7fed6fa31f2b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>K</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>k</segment>
+        </segment>
+        <segment id="afe6142f-a77e-46ee-a77a-85f268a67865" active="true">
+            <coda>true</coda>
+            <description>voiced labial-velar stop</description>
+            <graphemes>kw Kw KW</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="afe6142f-a77e-46ee-a77a-85f268a67865" id="4ccf6178-a9ab-453e-8cfa-dd3cb94a4f9a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>kw</form>
+                </grapheme>
+                <grapheme envs="" segment="afe6142f-a77e-46ee-a77a-85f268a67865" id="7e9f24e1-01ef-45f8-ab67-7f6ea8223fca" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Kw</form>
+                </grapheme>
+                <grapheme envs="" segment="afe6142f-a77e-46ee-a77a-85f268a67865" id="2f318d64-e2d7-4a79-874f-21c3efa97908" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>KW</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>kw</segment>
+        </segment>
+        <segment id="da8fb681-3ebb-4fd1-89ca-183c0e60dc0c" active="true">
+            <coda>true</coda>
+            <description>voiceless palatal-velar stop</description>
+            <graphemes>ky Ky KY</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="da8fb681-3ebb-4fd1-89ca-183c0e60dc0c" id="ca4ac23b-286a-40a2-b2fe-036a3aa5dd5b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ky</form>
+                </grapheme>
+                <grapheme envs="" segment="da8fb681-3ebb-4fd1-89ca-183c0e60dc0c" id="605ffa40-88d2-45cc-b25e-35b876c0148b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ky</form>
+                </grapheme>
+                <grapheme envs="" segment="da8fb681-3ebb-4fd1-89ca-183c0e60dc0c" id="7c6b24a0-9fd2-4f42-acd4-6b46a93f3c66" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>KY</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ky</segment>
+        </segment>
+        <segment id="101d2651-cd84-4671-a286-0d37e22759e4" active="true">
+            <coda>true</coda>
+            <description>voiced lateral</description>
+            <graphemes>l L</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="101d2651-cd84-4671-a286-0d37e22759e4" id="ca412d2c-e643-453f-9df0-79dee39a485b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>l</form>
+                </grapheme>
+                <grapheme envs="" segment="101d2651-cd84-4671-a286-0d37e22759e4" id="5c48866b-5b05-4ea2-be99-2c12e52dd9d4" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>L</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>l</segment>
+        </segment>
+        <segment id="a09371d4-f079-42ff-a2f6-25c2dcab0b95" active="true">
+            <coda>true</coda>
+            <description>bilabial nasal</description>
+            <graphemes>m M</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95" id="da05bc67-f14d-4d01-93f4-6eb5a87ffb28" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>m</form>
+                </grapheme>
+                <grapheme envs="" segment="a09371d4-f079-42ff-a2f6-25c2dcab0b95" id="b23051a5-ab7a-4b1d-ad62-b51fe3891628" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>M</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>m</segment>
+        </segment>
+        <segment id="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a" active="true">
+            <coda>true</coda>
+            <description>alveolar nasal</description>
+            <graphemes>n N</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a" id="2b6db334-3be2-4c4c-94d5-0211e5b1494f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>n</form>
+                </grapheme>
+                <grapheme envs="" segment="9dcd35f1-b13d-4e1a-8c67-3e3a2da92d8a" id="0c35aa47-7105-4c0c-9c39-bafd110012a7" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>N</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>n</segment>
+        </segment>
+        <segment id="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" active="true">
+            <coda>true</coda>
+            <description>palatal nasal</description>
+            <graphemes>ñ Ñ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" id="0d001d3e-1e5d-4992-8052-e43d61e40124" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ñ</form>
+                </grapheme>
+                <grapheme envs="" segment="ae820f4f-a8c9-4d69-b528-8dc480ec7a8c" id="a4aeeaef-a39b-49db-bedc-f9459ba1e5fe" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ñ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ñ</segment>
+        </segment>
+        <segment id="008bb81a-5594-45ee-ae2a-457a058cee16" active="true">
+            <coda>false</coda>
+            <description>mid back rounded vowel</description>
+            <graphemes>o O ó Ó</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" id="6aadd5d7-4870-4724-9e82-c36fecd64392" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>o</form>
+                </grapheme>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" id="3ca70ef8-454f-4822-8df8-14a0d9024487" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>O</form>
+                </grapheme>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" id="cb8ad282-6cd4-44b0-bbef-ce455b81464a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ó</form>
+                </grapheme>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" id="0dcf296f-e512-4add-8fc6-58de1738b10d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ó</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>o</segment>
+        </segment>
+        <segment id="66575489-ccd5-45db-9216-537861ba4613" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>oa óa oá</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="66575489-ccd5-45db-9216-537861ba4613" id="26daeb89-5e1e-4acd-be3d-b56456061006" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oa</form>
+                </grapheme>
+                <grapheme envs="" segment="66575489-ccd5-45db-9216-537861ba4613" id="0c607316-6b0b-47b7-9fd7-324f47042c1d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>óa</form>
+                </grapheme>
+                <grapheme envs="" segment="66575489-ccd5-45db-9216-537861ba4613" id="6abf0713-1a7f-4ff9-b495-249b1863063d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oá</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>oa</segment>
+        </segment>
+        <segment id="106e190d-9e84-48f8-be85-0c62115af010" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>oe óe oé</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="106e190d-9e84-48f8-be85-0c62115af010" id="4479c0c9-721e-47f8-bb9a-0bab5a5be758" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oe</form>
+                </grapheme>
+                <grapheme envs="" segment="106e190d-9e84-48f8-be85-0c62115af010" id="534493c5-3006-4155-9774-365482144508" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>óe</form>
+                </grapheme>
+                <grapheme envs="" segment="106e190d-9e84-48f8-be85-0c62115af010" id="4daf2268-9e78-4c72-a6a9-de4db64fc3b4" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oé</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>oe</segment>
+        </segment>
+        <segment id="a487f4fe-ba54-432a-8519-6403749892ca" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>oi ói oí</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a487f4fe-ba54-432a-8519-6403749892ca" id="5c4014a0-4a43-47fa-ae08-2d56154d065e" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oi</form>
+                </grapheme>
+                <grapheme envs="" segment="a487f4fe-ba54-432a-8519-6403749892ca" id="7b75a6e0-83ce-4e9c-8ed4-ca7d244d7d43" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ói</form>
+                </grapheme>
+                <grapheme envs="" segment="a487f4fe-ba54-432a-8519-6403749892ca" id="458f2e5e-43df-4a2b-94f5-02c467308a1f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oí</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>oi</segment>
+        </segment>
+        <segment id="23641e7c-c1d0-45f4-b648-8906e7b5e495" active="true">
+            <coda>false</coda>
+            <description>mid back rounded laryngealized vowel</description>
+            <graphemes>oo Oo OO óó Óó ÓÓ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="23641e7c-c1d0-45f4-b648-8906e7b5e495" id="e3a6fd32-6662-426e-a6fe-d6155b947894" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oo</form>
+                </grapheme>
+                <grapheme envs="" segment="23641e7c-c1d0-45f4-b648-8906e7b5e495" id="d3496df1-7cf4-4c4f-80fc-7e8f5fd9ad56" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Oo</form>
+                </grapheme>
+                <grapheme envs="" segment="23641e7c-c1d0-45f4-b648-8906e7b5e495" id="e250fdb6-66ae-4d54-a62e-546146453fae" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>OO</form>
+                </grapheme>
+                <grapheme envs="" segment="23641e7c-c1d0-45f4-b648-8906e7b5e495" id="9485abb6-00ec-439e-973e-ed0da1ec4939" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>óó</form>
+                </grapheme>
+                <grapheme envs="" segment="23641e7c-c1d0-45f4-b648-8906e7b5e495" id="786fbd10-772a-4b45-a0c5-f7c47bcc6b1a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Óó</form>
+                </grapheme>
+                <grapheme envs="" segment="23641e7c-c1d0-45f4-b648-8906e7b5e495" id="35b8b1c1-740c-4f75-8ee2-d2389be1d08d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ÓÓ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>oo</segment>
+        </segment>
+        <segment id="91c1f393-497a-4345-9fcd-cd67fbb5575b" active="true">
+            <coda>true</coda>
+            <description>voiceless bilabial stop</description>
+            <graphemes>p P</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="91c1f393-497a-4345-9fcd-cd67fbb5575b" id="fcd8aa59-52c7-427e-9ad0-682bb3c41cf2" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>p</form>
+                </grapheme>
+                <grapheme envs="" segment="91c1f393-497a-4345-9fcd-cd67fbb5575b" id="586db2fc-caab-40d4-84ca-7cc9c888ec32" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>P</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>p</segment>
+        </segment>
+        <segment id="76e0b311-b742-4eb5-98f9-8670dfce5149" active="true">
+            <coda>true</coda>
+            <description>voiced retroflexed flap</description>
+            <graphemes>r R</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="76e0b311-b742-4eb5-98f9-8670dfce5149" id="53a6c562-f063-4c07-a3eb-52511b850071" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>r</form>
+                </grapheme>
+                <grapheme envs="" segment="76e0b311-b742-4eb5-98f9-8670dfce5149" id="87729eb4-2622-4dbc-b519-bf530b7a3c42" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>R</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>r</segment>
+        </segment>
+        <segment id="de23a803-28f0-4be7-a5d4-1efc12477f99" active="true">
+            <coda>false</coda>
+            <description>Spanish loan</description>
+            <graphemes>rr Rr RR</graphemes>
+            <graphemesAsList>
+                <grapheme envs="5acb9c70-ac1e-4cf3-9a86-23617671b24e" segment="de23a803-28f0-4be7-a5d4-1efc12477f99" id="82deb1de-d2f6-44e2-8a13-ac0b63419b6b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V]</envsRepresentation>
+                    <form>rr</form>
+                </grapheme>
+                <grapheme envs="5acb9c70-ac1e-4cf3-9a86-23617671b24e" segment="de23a803-28f0-4be7-a5d4-1efc12477f99" id="9526563d-747d-47d9-8888-2bab6c2372d8" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V]</envsRepresentation>
+                    <form>Rr</form>
+                </grapheme>
+                <grapheme envs="5acb9c70-ac1e-4cf3-9a86-23617671b24e" segment="de23a803-28f0-4be7-a5d4-1efc12477f99" id="3e86d583-98f9-4ca3-8131-56536c56793c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V]</envsRepresentation>
+                    <form>RR</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>rr</segment>
+        </segment>
+        <segment id="25bdfcdf-242a-49d8-94d2-74e2f666f88b" active="true">
+            <coda>true</coda>
+            <description>voiceless alveolar fricative</description>
+            <graphemes>s S</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b" id="a5b5bf33-57fc-41d5-ba9f-191be89317c7" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>s</form>
+                </grapheme>
+                <grapheme envs="" segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b" id="4316c1bd-7556-493f-be21-ac815618bdc4" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>S</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>s</segment>
+        </segment>
+        <segment id="65be3575-5c87-4a7d-8560-d1f32a816b2f" active="true">
+            <coda>true</coda>
+            <description>voiceless alveolar stop</description>
+            <graphemes>t T</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="65be3575-5c87-4a7d-8560-d1f32a816b2f" id="ea8d11e0-0030-4bac-98f4-b5226391d60f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>t</form>
+                </grapheme>
+                <grapheme envs="" segment="65be3575-5c87-4a7d-8560-d1f32a816b2f" id="050813be-ba8c-4004-b057-b21b371f1bc9" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>T</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>t</segment>
+        </segment>
+        <segment id="bc68a57c-739c-4700-9c92-f3048a167815" active="true">
+            <coda>true</coda>
+            <description>voiceless aveolar affricate</description>
+            <graphemes>ts Ts TS</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="bc68a57c-739c-4700-9c92-f3048a167815" id="bb008ffe-d3cd-4401-a216-627ebf95f2f1" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ts</form>
+                </grapheme>
+                <grapheme envs="" segment="bc68a57c-739c-4700-9c92-f3048a167815" id="41687b14-a295-493f-b588-14bfe8b1ee0e" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ts</form>
+                </grapheme>
+                <grapheme envs="" segment="bc68a57c-739c-4700-9c92-f3048a167815" id="4c8086d1-29dc-4030-a9a8-c9fb6e445d4b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>TS</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>ts</segment>
+        </segment>
+        <segment id="9a46061d-f5c4-4434-97f6-baca489aba59" active="true">
+            <coda>true</coda>
+            <description>voiceless retroflexed affricate</description>
+            <graphemes>tx Tx TX</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="9a46061d-f5c4-4434-97f6-baca489aba59" id="5d9a472a-c95d-45f3-b7d8-dd7fcfc0d93d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>tx</form>
+                </grapheme>
+                <grapheme envs="" segment="9a46061d-f5c4-4434-97f6-baca489aba59" id="cb910de7-f8b0-4b2b-a34a-fde93f45379a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Tx</form>
+                </grapheme>
+                <grapheme envs="" segment="9a46061d-f5c4-4434-97f6-baca489aba59" id="ad6992b2-cfd2-49c2-84f6-4b64ea00d3d6" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>TX</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>tx</segment>
+        </segment>
+        <segment id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true">
+            <coda>false</coda>
+            <description>high back rounded vowel</description>
+            <graphemes>u U ú Ú ü Ü</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="584d1acc-5451-4e58-860b-7c0a0e76684d" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>u</form>
+                </grapheme>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="f84ee93e-f7f7-487a-9999-5364e026248f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>U</form>
+                </grapheme>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="e55e3066-3170-4499-b640-662a5add1ef0" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ú</form>
+                </grapheme>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="7d52ec08-bade-49fc-bbdb-dd7ac72857f6" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Ú</form>
+                </grapheme>
+                <grapheme envs="5acb9c70-ac1e-4cf3-9a86-23617671b24e" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="3c5c6c50-d950-4ff9-988f-062731a4b327" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V]</envsRepresentation>
+                    <form>ü</form>
+                </grapheme>
+                <grapheme envs="5acb9c70-ac1e-4cf3-9a86-23617671b24e" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="3b046204-364d-4f82-a441-fb70af8f8ce0" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation>/ _ [V]</envsRepresentation>
+                    <form>Ü</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>u</segment>
+        </segment>
+        <segment id="8728a438-6c7f-42af-8ea8-d87d70f22271" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ua</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="8728a438-6c7f-42af-8ea8-d87d70f22271" id="55f01def-03cb-4f46-ab54-5b7bbd4c5782" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ua</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ua</segment>
+        </segment>
+        <segment id="2aebe2d9-ffd8-4252-808c-69b50a328a70" active="true">
+            <coda>false</coda>
+            <description>Spanish loans only</description>
+            <graphemes>ue ué</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="2aebe2d9-ffd8-4252-808c-69b50a328a70" id="fa1e8a60-df5c-46ae-8715-c30128c8296f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ue</form>
+                </grapheme>
+                <grapheme envs="" segment="2aebe2d9-ffd8-4252-808c-69b50a328a70" id="b5b4e303-6327-43d0-b969-5dffeb2b7c11" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ué</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ue</segment>
+        </segment>
+        <segment id="6b3e34f8-2f95-4ae5-8abd-e59714c5595a" active="true">
+            <coda>false</coda>
+            <description>high back rounded larygealized vowel</description>
+            <graphemes>uu Uu UU úú Úú ÚÚ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="6b3e34f8-2f95-4ae5-8abd-e59714c5595a" id="6f46710e-6180-4c66-b9ce-c92e627b1f02" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>uu</form>
+                </grapheme>
+                <grapheme envs="" segment="6b3e34f8-2f95-4ae5-8abd-e59714c5595a" id="7aac6fcc-7809-4da3-b0d9-9cc56bb73a99" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Uu</form>
+                </grapheme>
+                <grapheme envs="" segment="6b3e34f8-2f95-4ae5-8abd-e59714c5595a" id="a29add7e-a896-4ef5-828e-4a41d8322666" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>UU</form>
+                </grapheme>
+                <grapheme envs="" segment="6b3e34f8-2f95-4ae5-8abd-e59714c5595a" id="fe7c3fd6-ab9a-4292-a22e-344f528e6d4f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>úú</form>
+                </grapheme>
+                <grapheme envs="" segment="6b3e34f8-2f95-4ae5-8abd-e59714c5595a" id="1c718073-9d82-409f-b943-3890a6ad13d9" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Úú</form>
+                </grapheme>
+                <grapheme envs="" segment="6b3e34f8-2f95-4ae5-8abd-e59714c5595a" id="a9f7c0a3-2c21-4e84-ab1e-01dbb0ba4ac6" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ÚÚ</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>uu</segment>
+        </segment>
+        <segment id="518cf26f-42ab-4555-ac4d-af1667774959" active="true">
+            <coda>true</coda>
+            <description>voiced interdental fricative</description>
+            <graphemes>v V</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="518cf26f-42ab-4555-ac4d-af1667774959" id="f256f202-83db-49a2-ad29-2c07019fd0c1" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>v</form>
+                </grapheme>
+                <grapheme envs="" segment="518cf26f-42ab-4555-ac4d-af1667774959" id="b05d9d9f-f93c-49c1-9fec-a56d333549ed" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>V</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>v</segment>
+        </segment>
+        <segment id="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df" active="true">
+            <coda>true</coda>
+            <description>labio-velar aproximate</description>
+            <graphemes>w W</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df" id="bb86d2f0-294d-49c9-8f92-d8fa6597571b" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>w</form>
+                </grapheme>
+                <grapheme envs="" segment="a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df" id="614047f7-1085-466c-be37-bd990672dda2" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>W</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>w</segment>
+        </segment>
+        <segment id="a606ebec-8ceb-42bd-93ee-2b78f65f9984" active="true">
+            <coda>true</coda>
+            <description>voiceless retroflexed fricative</description>
+            <graphemes>x X</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a606ebec-8ceb-42bd-93ee-2b78f65f9984" id="e965f23c-f632-4270-b932-b49b6b090339" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>x</form>
+                </grapheme>
+                <grapheme envs="" segment="a606ebec-8ceb-42bd-93ee-2b78f65f9984" id="1683e686-8ef8-4503-ace3-ad40b3e1a610" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>X</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>x</segment>
+        </segment>
+        <segment id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97" active="true">
+            <coda>true</coda>
+            <description>voiced palatal approximate</description>
+            <graphemes>y Y</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97" id="d83723f5-a5dc-4c32-8c27-1b34aea0ea84" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>y</form>
+                </grapheme>
+                <grapheme envs="" segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97" id="790d509f-ce6f-4f11-ae96-0ea137cc7969" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Y</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>y</segment>
+        </segment>
+        <segment id="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" active="true">
+            <coda>true</coda>
+            <description>voiced alveolar fricative</description>
+            <graphemes>z Z</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" id="36e6762d-4663-4d7c-821b-1961c2ba5e95" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>z</form>
+                </grapheme>
+                <grapheme envs="" segment="50a5aa37-3e18-42a8-83e6-9d0ae2cbb422" id="d87935bc-cf6d-4bb8-b4a9-60a5dadd0d06" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Z</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>z</segment>
+        </segment>
+        <segment id="9d99421e-bca4-4c03-b68f-61f78d48e946" active="true">
+            <coda>true</coda>
+            <description>voiced retroflexed fricative</description>
+            <graphemes>zh Zh ZH</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="9d99421e-bca4-4c03-b68f-61f78d48e946" id="ff44f7d8-cf34-4a4b-8f2a-b5f106eaf521" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>zh</form>
+                </grapheme>
+                <grapheme envs="" segment="9d99421e-bca4-4c03-b68f-61f78d48e946" id="243d547e-d31b-4116-8bf3-8f88abd74791" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>Zh</form>
+                </grapheme>
+                <grapheme envs="" segment="9d99421e-bca4-4c03-b68f-61f78d48e946" id="bc4f8254-2e79-44f3-92dc-be9bb0ca90d5" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ZH</form>
+                </grapheme>
+            </graphemesAsList>
+            <nucleus>false</nucleus>
+            <onset>true</onset>
+            <segment>zh</segment>
+        </segment>
+    </segments>
+    <syllabificationParameters>
+        <codasAllowed>true</codasAllowed>
+        <onsetMaximization>false</onsetMaximization>
+        <onsetPrinciple>ALL_BUT_FIRST_HAS_ONSET</onsetPrinciple>
+        <onsetPrincipleEnum>ALL_BUT_FIRST_HAS_ONSET</onsetPrincipleEnum>
+    </syllabificationParameters>
+    <templates>
+        <template id="7f1f0b51-485e-4dc8-b201-4cd2b395df76" active="true">
+            <description>Allow an ssp violation between first, second and third consonants in  onset</description>
+            <slots>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Two or three consonant onset</templateFilterName>
+            <templateFilterRepresentation>*[C] *[C] (*[C])</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <templateFilterType>ONSET</templateFilterType>
+        </template>
+        <template id="e5d03c5b-c394-447b-86ef-edb03e6faae5" active="true">
+            <description>A nucleus has only one vowel (which may be a diphthong)</description>
+            <slots>
+                <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Single vowel nucleus</templateFilterName>
+            <templateFilterRepresentation>[V]</templateFilterRepresentation>
+            <type>Nucleus</type>
+            <valid>true</valid>
+            <templateFilterType>NUCLEUS</templateFilterType>
+        </template>
+        <template id="b80eac31-f1e8-452a-8170-b555d4a705b4" active="true">
+            <description>These go in an appendix; e.g., sekst, xakt</description>
+            <slots>
+                <slot natclass="8984d4a2-9903-478d-9a93-3a686c2820f8">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>false</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="8984d4a2-9903-478d-9a93-3a686c2820f8">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Allow two obstruents at end of word</templateFilterName>
+            <templateFilterRepresentation>*[Obs] ([Obs])</templateFilterRepresentation>
+            <type>Word final</type>
+            <valid>true</valid>
+            <templateFilterType>WORDFINAL</templateFilterType>
+        </template>
+    </templates>
+    <vernacularLanguage>
+        <code>zpi</code>
+        <color>#000000</color>
+        <fontFamily>Charis SIL AmArea</fontFamily>
+        <fontSize>16.0</fontSize>
+        <fontType>Regular</fontType>
+        <icuRules>&amp; a &lt; aa
+&amp; c &lt;&lt;&lt; C &lt; ch &lt;&lt;&lt; Ch &lt;&lt;&lt; CH
+&amp; d &lt;&lt;&lt;D &lt; dx &lt;&lt;&lt; Dx &lt;&lt;&lt; DX
+&amp; e &lt;&lt; é &lt; ë &lt; ee &lt;&lt; éé &lt; ëë
+&amp; g &lt;&lt;&lt; G &lt; gw &lt;&lt;&lt; gw &lt;&lt;&lt; GW
+&amp; GW &lt; gy &lt;&lt;&lt; gy &lt;&lt;&lt; GY
+&amp; i &lt;&lt; í &lt; ii &lt;&lt; íí
+&amp; k &lt;&lt;&lt; K &lt; kw &lt;&lt;&lt; Kw &lt;&lt;&lt; KW
+&amp; KW &lt; ky &lt;&lt;&lt; Ky &lt;&lt;&lt; KY
+&amp; n &lt;&lt;&lt; N &lt; ñ 
+&amp; o &lt;&lt; ó &lt; oo &lt;&lt; óó
+&amp; r &lt; rr &lt;&lt;&lt; Rr &lt;&lt;&lt; RR 
+&amp; t &lt;&lt;&lt; T &lt; ts &lt;&lt;&lt; Ts &lt;&lt;&lt; TS
+&amp; TS &lt; tx &lt;&lt;&lt; Tx &lt;&lt;&lt; TX
+&amp; u &lt;&lt; ú &lt; uu &lt;&lt; úú
+&amp; z &lt;&lt;&lt; Z &lt; zh &lt;&lt;&lt; Zh &lt;&lt;&lt; ZH
+</icuRules>
+        <languageName>Quiegolani Zapotec</languageName>
+        <ldmlFile></ldmlFile>
+        <rightToLeft>false</rightToLeft>
+        <sortingOption>CUSTOM_ICU_RULES</sortingOption>
+        <useSameLanguage></useSameLanguage>
+    </vernacularLanguage>
+    <words>
+    </words>
+</languageProject>

@@ -4,10 +4,12 @@
 	<import file="${basedir}/build-init-fx-tasks.xml" as="nested"/>
 	<import file="${basedir}/build-setup-staging-area.xml" as="nested"/>
 	<import file="${basedir}/build-do-compile.xml" as="nested"/>
+	<import file="${basedir}/build-windows-iss-file.xml" as="nested"/>
 
 	<property name="nativeBundles" value="exe"/>
 	<property name="processorType" value="-64bit"/>
 	<property name="mainFileName" value="Asheninka Syllable Parser"/>
+	<property name="ISSarchitecture" value="x64"/>
 
 	<target name="do-deploy" depends="nested.do-deploy"/>
 </project>

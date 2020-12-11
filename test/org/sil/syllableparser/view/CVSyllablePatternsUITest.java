@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2018 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -9,12 +9,9 @@ package org.sil.syllableparser.view;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -27,16 +24,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
-import org.sil.syllableparser.service.CVSegmenter;
 import org.sil.syllableparser.view.ApproachViewNavigator;
 import org.sil.syllableparser.view.CVSyllablePatternNaturalClassChooserController;
+import org.sil.utility.view.JavaFXThreadingRule;
 
 /**
  * @author Andy Black
