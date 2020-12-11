@@ -17,6 +17,8 @@
 				<include name="diff-match-patchREADME.txt" />
 				<include name="antlr-4.7-complete.jar"/>
 				<include name="ANTLR-4-License.txt"/>
+				<include name="icu4j-*.jar"/>
+				<include name="LingTree.jar"/>
 			</fileset>
 		</copy>
 

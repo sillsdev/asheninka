@@ -24,6 +24,12 @@
 				<include name="antlr-4.7-complete.jar"/>
 				<include name="ANTLR-4-License.txt"/>
 			</fileset>
+			<fileset dir="../ICU">
+				<include name="icu4j-67_1.jar"/>
+			</fileset>
+			<fileset dir="../lingtree">
+				<include name="LingTree.jar"/>
+			</fileset>
 		</copy>
 
 		<mkdir dir="doc" />
