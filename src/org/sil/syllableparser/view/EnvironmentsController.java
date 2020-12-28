@@ -25,10 +25,10 @@ import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-import org.sil.utility.StringUtilities;
 import org.sil.antlr4.environmentparser.EnvironmentConstants;
 import org.sil.antlr4.environmentparser.EnvironmentErrorInfo;
 import org.sil.antlr4.environmentparser.EnvironmentErrorListener;
@@ -54,7 +54,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
@@ -615,29 +614,7 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
-		setColumnICURules();
-		setTextFieldColors();
-		iRepresentationCaretPosition = 6;
-		fGncChoicesUsingMouse = false;
-
-		// Add observable list data to the table
-		environmentTable.setItems(cvApproachData.getLanguageProject().getEnvironments());
-		int max = environmentTable.getItems().size();
-		if (max > 0) {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVEnvironmentsViewItemUsed();
-					iLastIndex = adjustIndexValue(iLastIndex, max);
-					// select the last one used
-					environmentTable.requestFocus();
-					environmentTable.getSelectionModel().select(iLastIndex);
-					environmentTable.getFocusModel().focus(iLastIndex);
-					environmentTable.scrollTo(iLastIndex);
-				}
-			});
-		}
+		setDataCommon(ApplicationPreferences.LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 
 	protected void setColumnICURules() {
@@ -649,6 +626,10 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
+
+	protected void setDataCommon(String sPref) {
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
 		setTextFieldColors();
@@ -656,14 +637,13 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 		fGncChoicesUsingMouse = false;
 
 		// Add observable list data to the table
-		environmentTable.setItems(shApproachData.getLanguageProject().getEnvironments());
+		environmentTable.setItems(languageProject.getEnvironments());
 		int max = environmentTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastSHEnvironmentsViewItemUsed();
+					int iLastIndex = mainApp.getApplicationPreferences().getIntegerValue(sPref, 0);
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					// select the last one used
 					environmentTable.requestFocus();
@@ -678,30 +658,13 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
-		cvApproach = languageProject.getCVApproach();
-		setColumnICURules();
-		setTextFieldColors();
-		iRepresentationCaretPosition = 6;
-		fGncChoicesUsingMouse = false;
+		setDataCommon(ApplicationPreferences.LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
 
-		// Add observable list data to the table
-		environmentTable.setItems(oncApproachData.getLanguageProject().getEnvironments());
-		int max = environmentTable.getItems().size();
-		if (max > 0) {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastONCEnvironmentsViewItemUsed();
-					iLastIndex = adjustIndexValue(iLastIndex, max);
-					// select the last one used
-					environmentTable.requestFocus();
-					environmentTable.getSelectionModel().select(iLastIndex);
-					environmentTable.getFocusModel().focus(iLastIndex);
-					environmentTable.scrollTo(iLastIndex);
-				}
-			});
-		}
+	public void setData(MoraicApproach muApproachData) {
+		muApproach = muApproachData;
+		languageProject = muApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_MORAIC_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 
 	protected void setTextFieldColors() {

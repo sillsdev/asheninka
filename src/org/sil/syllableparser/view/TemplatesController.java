@@ -27,6 +27,7 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.utility.StringUtilities;
 
@@ -46,6 +47,10 @@ public class TemplatesController extends TemplatesFiltersController {
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
+		setDataProcessing(ApplicationPreferences.LAST_ONC_TEMPLATES_VIEW_ITEM_USED);
+	}
+
+	protected void setDataProcessing(String sLastView) {
 		// no sorting allowed
 		templateList = languageProject.getTemplates();
 		iRepresentationCaretPosition = 6;
@@ -57,8 +62,8 @@ public class TemplatesController extends TemplatesFiltersController {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastONCTemplatesViewItemUsed();
+					ApplicationPreferences prefs = mainApp.getApplicationPreferences();
+					int iLastIndex = prefs.getIntegerValue(sLastView, 0);
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					selectAndScrollToItem(iLastIndex);
 				}
@@ -69,6 +74,12 @@ public class TemplatesController extends TemplatesFiltersController {
 			nameField.setStyle(sAnalysis);
 			descriptionField.setStyle(sAnalysis);
 		}
+	}
+
+	public void setData(MoraicApproach muApproachData) {
+		muApproach = muApproachData;
+		languageProject = muApproach.getLanguageProject();
+		setDataProcessing(ApplicationPreferences.LAST_MORAIC_TEMPLATES_VIEW_ITEM_USED);
 	}
 
 	@Override

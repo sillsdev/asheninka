@@ -146,8 +146,29 @@
 								<MenuItem mnemonicParsing="true" onAction="#handleONCEnvironments"
 									text="%cv.view.environments" />
 							</Menu>
-							<MenuItem mnemonicParsing="true" onAction="#handleMoraicApproach"
-								text="%approach.moraic" fx:id="menuItemMoraicApproach" />
+							<Menu mnemonicParsing="true" onAction="#handleMoraicApproach"
+								text="%approach.moraic" fx:id="menuItemMoraicApproach" >
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicSegmentInventory"
+									text="%cv.view.segmentinventory" />
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicSonorityHierarchy"
+									text="%sh.view.sonorityhierarchy" />
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicSyllabificationParameters"
+									text="%onc.view.syllabificationparameters" />
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicNaturalClasses"
+									text="%cv.view.naturalclass" />
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicTemplates"
+									text="%moraic.view.templates" />
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicFilters"
+									text="%moraic.view.filters" />
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicWords"
+									text="%moraic.view.words" />
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleMoraicWordsPredictedVsCorrect" text="%moraic.view.wordspredictedvscorrect" />
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicGraphemeNaturalClasses"
+									text="%onc.view.graphemenaturalclasses" />
+								<MenuItem mnemonicParsing="true" onAction="#handleMoraicEnvironments"
+									text="%onc.view.environments" />
+								</Menu>
 							<MenuItem mnemonicParsing="true"
 								onAction="#handleNuclearProjectionApproach" text="%approach.nuclearprojection"
 								fx:id="menuItemNuclearProjectionApproach" />

@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.cvapproach.CVApproachView;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproachView;
 import org.sil.syllableparser.model.oncapproach.ONCApproachView;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
 import org.sil.utility.*;
@@ -33,7 +34,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_CV_TRY_A_WORD_USED = "lastCVTryAWordUsed";
 	static final String LAST_CV_WORDS_VIEW_ITEM_USED = "lastCVWordsViewItemUsed";
 	static final String LAST_CV_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastCVGraphemeNaturalClassesViewItemUsed";
-	static final String LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED = "lastCVEnvironmentsViewItemUsed";
+	public static final String LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED = "lastCVEnvironmentsViewItemUsed";
 	static final String LAST_CV_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastCVWordPredictedVsCorrectViewItemUsed";
 
 	// last Sonority Hierarchy used
@@ -43,7 +44,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_SH_TRY_A_WORD_USED = "lastSHTryAWordUsed";
 	static final String LAST_SH_WORDS_VIEW_ITEM_USED = "lastSHWordsViewItemUsed";
 	static final String LAST_SH_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastSHGraphemeNaturalClassesViewItemUsed";
-	static final String LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED = "lastSHEnvironmentsViewItemUsed";
+	public static final String LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED = "lastSHEnvironmentsViewItemUsed";
 	static final String LAST_SH_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastSHWordPredictedVsCorrectViewItemUsed";
 
 	// last ONC view used
@@ -53,11 +54,24 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_ONC_TRY_A_WORD_USED = "lastONCTryAWordUsed";
 	static final String LAST_ONC_WORDS_VIEW_ITEM_USED = "lastONCWordsViewItemUsed";
 	static final String LAST_ONC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastONCGraphemeNaturalClassesViewItemUsed";
-	static final String LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED = "lastONCEnvironmentsViewItemUsed";
+	public static final String LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED = "lastONCEnvironmentsViewItemUsed";
 	static final String LAST_ONC_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastONCCVNaturalClassesViewItemUsed";
-	static final String LAST_ONC_TEMPLATES_VIEW_ITEM_USED = "lastONCTemplatesViewItemUsed";
-	static final String LAST_ONC_FILTERS_VIEW_ITEM_USED = "lastONCFiltersViewItemUsed";
+	public static final String LAST_ONC_TEMPLATES_VIEW_ITEM_USED = "lastONCTemplatesViewItemUsed";
+	public static final String LAST_ONC_FILTERS_VIEW_ITEM_USED = "lastONCFiltersViewItemUsed";
 	static final String LAST_ONC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastONCWordPredictedVsCorrectViewItemUsed";
+
+	// last Moraic view used
+	static final String LAST_MORAIC_APPROACH_VIEW_USED = "lastMoraicApproachViewUsed";
+	static final String LAST_MORAIC_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastMoraicSegmentInventoryViewItemUsed";
+	static final String LAST_MORAIC_SONORITY_HIERARCHY_VIEW_ITEM_USED = "lastMoraicSonorityHierarchViewItemUsed";
+	static final String LAST_MORAIC_TRY_A_WORD_USED = "lastMoraicTryAWordUsed";
+	static final String LAST_MORAIC_WORDS_VIEW_ITEM_USED = "lastMoraicWordsViewItemUsed";
+	static final String LAST_MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastMoraicGraphemeNaturalClassesViewItemUsed";
+	public static final String LAST_MORAIC_ENVIRONMENTS_VIEW_ITEM_USED = "lastMoraicEnvironmentsViewItemUsed";
+	static final String LAST_MORAIC_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastMoraicCVNaturalClassesViewItemUsed";
+	public static final String LAST_MORAIC_TEMPLATES_VIEW_ITEM_USED = "lastMoraicTemplatesViewItemUsed";
+	public static final String LAST_MORAIC_FILTERS_VIEW_ITEM_USED = "lastMoraicFiltersViewItemUsed";
+	static final String LAST_MORAIC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastMoraicWordPredictedVsCorrectViewItemUsed";
 
 	// Controller table column widths and splitter position
 	public static final String BACKUP_CHOOSER = "BACKUP_CHOOSER_";
@@ -72,6 +86,8 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String GRAPHEME_NATURAL_CLASS_CHOOSER = "GRAPHEME_NATURAL_CLASSE_CHOOSER_";
 	public static final String GRAPHEME_NATURAL_CLASSES = "GRAPHEME_NATURAL_CLASSES_";
 	public static final String PREDICTED_TO_CORRECT_CHOOSER = "PREDICTED_TO_CORRECT_CHOOSER_";
+	public static final String MORAIC_SEGMENTS = "MORAIC_SEGMENTS_";
+	public static final String MORAIC_WORDS = "MORAIC_WORDS_";
 	public static final String ONC_SEGMENTS = "ONC_SEGMENTS_";
 	public static final String ONC_WORDS = "ONC_WORDS_";
 	public static final String SH_SEGMENT_CHOOSER = "SH_SEGMENT_CHOOSER_";
@@ -113,6 +129,12 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_CV_FILTER_PREDICTED_SYLLABIFICATIONS = "lastCVFilterPredictedSyllabifications";
 	public static final String LAST_CV_FILTER_WORDS = "lastCVFilterWords";
 	public static final String LAST_CV_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastCVFilterWordsPredictedVsCorrect";
+	public static final String LAST_MORAIC_COMPARISON = "lastMoraicComparision";
+	public static final String LAST_MORAIC_SEGMENT_OR_NATURAL_CLASS = "lastMoraicSegmentOrNaturalClass";
+	public static final String LAST_MORAIC_TRY_A_WORD = "lastMoraicTryAWord";
+	public static final String LAST_MORAIC_WORDS_PREDICTED_VS_CORRECT = "lastMoraicWordPredictedVsCorrect";
+	public static final String LAST_MORAIC_GRAPHEME_OR_NATURAL_CLASS = "lastMoraicGraphemeOrNaturalClass";
+	public static final String LAST_MORAIC_ENVIRONMENTS_CHOOSER = "lastMoraicEnvironmentsChooser";
 	public static final String LAST_MORAIC_FILTER_CORRECT_SYLLABIFICATIONS = "lastMoraicFilterCorrectSyllabifications";
 	public static final String LAST_MORAIC_FILTER_PREDICTED_SYLLABIFICATIONS = "lastMoraicFilterPredictedSyllabifications";
 	public static final String LAST_MORAIC_FILTER_WORDS = "lastMoraicFilterWords";
@@ -363,6 +385,94 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 		setPreferencesKey(LAST_ONC_FILTERS_VIEW_ITEM_USED, value);
 	}
 
+	public String getLastMoraicApproachViewUsed() {
+		return prefs.get(LAST_MORAIC_APPROACH_VIEW_USED, MoraicApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastMoraicApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_MORAIC_APPROACH_VIEW_USED, lastApproachViewUsed);
+	}
+
+	public int getLastMoraicSegmentInventoryViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_SEGMENT_INVENTORY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicSegmentInventoryViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_SEGMENT_INVENTORY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastMoraicSonorityHierarchyViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_SONORITY_HIERARCHY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicSonorityHierarchyViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_SONORITY_HIERARCHY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastMoraicWordsViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_WORDS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicWordsViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_WORDS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastMoraicWordsPredictedVsCorrectViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicWordsPredictedVsCorrectViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastMoraicTryAWordUsed() {
+		return prefs.get(LAST_MORAIC_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastMoraicTryAWordUsed(String lastMoraicTryAWordUsed) {
+		setPreferencesKey(LAST_MORAIC_TRY_A_WORD_USED, lastMoraicTryAWordUsed);
+	}
+
+	public int getLastMoraicGraphemeNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicGraphemeNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastMoraicEnvironmentsViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_ENVIRONMENTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicEnvironmentsViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastMoraicCVNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_CV_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicCVNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_CV_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastMoraicTemplatesViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_TEMPLATES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicTemplatesViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_TEMPLATES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastMoraicFiltersViewItemUsed() {
+		return prefs.getInt(LAST_MORAIC_FILTERS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastMoraicFiltersViewItemUsed(int value) {
+		setPreferencesKey(LAST_MORAIC_FILTERS_VIEW_ITEM_USED, value);
+	}
+
 	public String getLastSHApproachViewUsed() {
 		return prefs.get(LAST_SH_APPROACH_VIEW_USED, SHApproachView.SEGMENT_INVENTORY.toString());
 	}
@@ -507,6 +617,10 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public Double getDoubleValue(String sKey, Double defaultValue) {
 		return prefs.getDouble(sKey, defaultValue);
+	}
+
+	public int getIntegerValue(String sKey, int defaultValue) {
+		return prefs.getInt(sKey, defaultValue);
 	}
 
 	public String getStringValue(String sKey, String defaultValue) {

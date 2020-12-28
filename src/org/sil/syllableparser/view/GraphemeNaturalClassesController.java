@@ -22,6 +22,7 @@ import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
@@ -451,15 +452,22 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
-		cvApproach = languageProject.getCVApproach();
-		setColumnICURules();
-		setTextFieldColors();
-		addDataToTable();
+		setDataCommon();
 	}
 
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	public void setData(MoraicApproach muApproachData) {
+		muApproach = muApproachData;
+		languageProject = muApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	protected void setDataCommon() {
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
 		setTextFieldColors();

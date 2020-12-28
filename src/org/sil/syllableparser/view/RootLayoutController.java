@@ -221,6 +221,7 @@ public class RootLayoutController implements Initializable {
 	private CVApproachController cvApproachController;
 	private SHApproachController shApproachController;
 	private ONCApproachController oncApproachController;
+	private MoraicApproachController muApproachController;
 	private ApproachController currentApproachController;
 
 	@FXML
@@ -273,6 +274,9 @@ public class RootLayoutController implements Initializable {
 		oncApproachController.setMainApp(mainApp);
 		oncApproachController.setPrefs(mainApp.getApplicationPreferences());
 		oncApproachController.setRootLayout(this);
+		muApproachController.setMainApp(mainApp);
+		muApproachController.setPrefs(mainApp.getApplicationPreferences());
+		muApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -288,6 +292,9 @@ public class RootLayoutController implements Initializable {
 		oncApproachController.setONCApproachData(languageProject.getONCApproach(),
 				languageProject.getWords());
 		oncApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		muApproachController.setMoraicApproachData(languageProject.getMoraicApproach(),
+				languageProject.getWords());
+		muApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -945,6 +952,8 @@ public class RootLayoutController implements Initializable {
 			applicationPreferences.setLastSHApproachViewUsed(sCurrentView);
 		} else if (currentApproachController instanceof ONCApproachController) {
 			applicationPreferences.setLastONCApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof MoraicApproachController) {
+			applicationPreferences.setLastMoraicApproachViewUsed(sCurrentView);
 		}
 	}
 
@@ -1154,15 +1163,87 @@ public class RootLayoutController implements Initializable {
 		selectApproachViewItem(Constants.ONC_ENVIRONMENTS_VIEW_INDEX);
 	}
 
-
-
 	/**
 	 * Moraic Approach
 	 */
 	@FXML
 	private void handleMoraicApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonMoraicApproach);
-		mainApp.showNotImplementedYet();
+		approachViews.setItems(muApproachController.getViews());
+		currentApproachController = muApproachController;
+		setInitialMoraicView();
+		setDisableForSomeMenuAndToolbarItems();
+	}
+
+	@FXML
+	private void handleMoraicSegmentInventory() {
+		currentApproachController = muApproachController;
+		muApproachController.handleMoraicSegmentInventory();
+		selectApproachViewItem(Constants.MORAIC_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicSonorityHierarchy() {
+		currentApproachController = muApproachController;
+		muApproachController.handleMoraicSonorityHierarchy();
+		selectApproachViewItem(Constants.MORAIC_SONORITY_HIERARCHY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicNaturalClasses() {
+		currentApproachController = muApproachController;
+		muApproachController.handleCVNaturalClasses();
+		selectApproachViewItem(Constants.MORAIC_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicSyllabificationParameters() {
+		currentApproachController = muApproachController;
+		muApproachController.handleMoraicSyllabificationParameters();
+		selectApproachViewItem(Constants.MORAIC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicTemplates() {
+		currentApproachController = muApproachController;
+		muApproachController.handleTemplates();;
+		selectApproachViewItem(Constants.MORAIC_TEMPLATES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicFilters() {
+		currentApproachController = muApproachController;
+		muApproachController.handleFilters();;
+		selectApproachViewItem(Constants.MORAIC_FILTERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicWords() {
+		currentApproachController = muApproachController;
+		muApproachController.handleMoraicWords();
+		selectApproachViewItem(Constants.MORAIC_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicWordsPredictedVsCorrect() {
+		currentApproachController = muApproachController;
+		muApproachController.handleMoraicWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.MORAIC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicGraphemeNaturalClasses() {
+		currentApproachController = muApproachController;
+		muApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicEnvironments() {
+		currentApproachController = muApproachController;
+		muApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.MORAIC_ENVIRONMENTS_VIEW_INDEX);
 	}
 
 	/**
@@ -1331,6 +1412,7 @@ public class RootLayoutController implements Initializable {
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		shApproachController = new SHApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle, bundle.getLocale());
+		muApproachController = new MoraicApproachController(bundle, bundle.getLocale());
 
 		createToolbarButtons(bundle);
 
@@ -1526,6 +1608,55 @@ public class RootLayoutController implements Initializable {
 		}
 	}
 
+	protected void setInitialMoraicView() {
+		String sLastMoraicApproachViewUsed = applicationPreferences.getLastMoraicApproachViewUsed();
+		switch (sLastMoraicApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(Constants.MORAIC_ENVIRONMENTS_VIEW_INDEX);
+			break;
+
+		case "FILTERS":
+			selectApproachViewItem(Constants.MORAIC_FILTERS_VIEW_INDEX);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(Constants.MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "NATURAL_CLASSES":
+			selectApproachViewItem(Constants.MORAIC_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(Constants.MORAIC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(Constants.MORAIC_SEGMENT_INVENTORY_VIEW_INDEX);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(Constants.MORAIC_SONORITY_HIERARCHY_VIEW_INDEX);
+			break;
+
+		case "SYLLABIFICATION_PARAMETERS":
+			selectApproachViewItem(Constants.MORAIC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+			break;
+
+		case "TEMPLATES":
+			selectApproachViewItem(Constants.MORAIC_TEMPLATES_VIEW_INDEX);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(Constants.MORAIC_WORDS_VIEW_INDEX);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
 	protected void createToolbarButtons(ResourceBundle bundle) {
 		tooltipToolbarFileNew = ControllerUtilities.createToolbarButtonWithImage("newAction.png",
 				buttonToolbarFileNew, tooltipToolbarFileNew, bundle.getString("tooltip.new"),
@@ -1672,6 +1803,10 @@ public class RootLayoutController implements Initializable {
 			sApproach = ApproachType.ONSET_NUCLEUS_CODA.name();
 			break;
 
+		case "org.sil.syllableparser.view.MoraicApproachController":
+			sApproach = ApproachType.MORAIC.name();
+			break;
+
 		default:
 			break;
 		}
@@ -1692,6 +1827,10 @@ public class RootLayoutController implements Initializable {
 
 		case "org.sil.syllableparser.view.ONCApproachController":
 			approach = ApproachType.ONSET_NUCLEUS_CODA;
+			break;
+
+		case "org.sil.syllableparser.view.MoraicApproachController":
+			approach = ApproachType.MORAIC;
 			break;
 
 		default:

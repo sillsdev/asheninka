@@ -39,6 +39,7 @@ public class Segment extends SylParserObject {
 	private BooleanProperty onset;
 	private BooleanProperty nucleus;
 	private BooleanProperty coda;
+	private final StringProperty morasBorn;
 
 	public Segment() {
 		super();
@@ -50,10 +51,11 @@ public class Segment extends SylParserObject {
 		this.onset = new SimpleBooleanProperty(false);
 		this.nucleus = new SimpleBooleanProperty(false);
 		this.coda = new SimpleBooleanProperty(false);
+		this.morasBorn = new SimpleStringProperty("0");
 		createUUID();
 	}
 
-	public Segment(String segment, String graphsRepresentation, String description) {
+	public Segment(String segment, String graphsRepresentation, String description, String morasBorn) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
 		this.graphemes = new SimpleStringProperty(graphsRepresentation);
@@ -63,10 +65,11 @@ public class Segment extends SylParserObject {
 		this.onset = new SimpleBooleanProperty(false);
 		this.nucleus = new SimpleBooleanProperty(false);
 		this.coda = new SimpleBooleanProperty(false);
+		this.morasBorn = new SimpleStringProperty(morasBorn);
 		createUUID();
 	}
 
-	public Segment(String segment, String description, SimpleListProperty<Grapheme> graphemeList) {
+	public Segment(String segment, String description, SimpleListProperty<Grapheme> graphemeList, String morasBorn) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
 		// this.graphemes = new SimpleStringProperty(graphsRepresentation);
@@ -75,6 +78,7 @@ public class Segment extends SylParserObject {
 		String graphs = graphemeList.stream().map(Grapheme::getForm)
 				.collect(Collectors.joining(" "));
 		this.graphemes = new SimpleStringProperty(graphs);
+		this.morasBorn = new SimpleStringProperty(morasBorn);
 		createUUID();
 	}
 
@@ -150,6 +154,19 @@ public class Segment extends SylParserObject {
 	public boolean isCoda() {
 		return coda.get();
 	}
+
+	public String getMorasBorn() {
+		return morasBorn.get().trim();
+	}
+
+	public StringProperty morasBornProperty() {
+		return morasBorn;
+	}
+
+	public void setMorasBorn(String morasBorn) {
+		this.morasBorn.set(morasBorn);
+	}
+
 
 	@XmlElementWrapper(name = "graphemesAsList")
 	@XmlElement(name = "grapheme")

@@ -14,6 +14,7 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVPredictedSyllabification;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
@@ -113,6 +114,8 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 				}
 				break;
 			}
+			default:
+				break;
 			}
 		});
 
@@ -197,6 +200,18 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		addWordsToTable();
 	}
 
+	private void createListOfDifferentMoraicWords(ObservableList<Word> words) {
+		for (Word oncWord : words) {
+			if (!oncWord.getMuPredictedSyllabification().isEmpty()
+					&& !oncWord.getMuPredictedSyllabification().equals(oncWord.getCorrectSyllabification())) {
+				currentPredictedSyllabification = new CVPredictedSyllabification(
+						oncWord.getMuPredictedSyllabification(), oncWord.getID());
+				cvPredictedSyllabifications.add(currentPredictedSyllabification);
+			}
+		}
+		addWordsToTable();
+	}
+
 	protected void addWordsToTable() {
 		cvPredictedSyllabificationTable.setItems(cvPredictedSyllabifications);
 		if (cvPredictedSyllabificationTable.getItems().size() > 0) {
@@ -219,6 +234,13 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		languageProject = oncApproachData.getLanguageProject();
 		this.words = words;
 		createListOfDifferentONCWords(words);
+	}
+
+	public void setData(MoraicApproach muApproachData, ObservableList<Word> words) {
+		muApproach = muApproachData;
+		languageProject = muApproachData.getLanguageProject();
+		this.words = words;
+		createListOfDifferentMoraicWords(words);
 	}
 
 	/**

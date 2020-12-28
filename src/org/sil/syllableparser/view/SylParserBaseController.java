@@ -15,6 +15,7 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.SylParserBase;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
@@ -44,6 +45,7 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 	protected CVApproach cvApproach;
 	protected SHApproach shApproach;
 	protected ONCApproach oncApproach;
+	protected MoraicApproach muApproach;
 	protected String sICURules = "";
 	protected RuleBasedCollator collatorViaRules;
 

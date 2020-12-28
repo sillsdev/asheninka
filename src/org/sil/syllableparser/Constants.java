@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 public class Constants {
 	// program wide constants
-	public static final String VERSION_NUMBER = "0.7.0.0 Beta";
+	public static final String VERSION_NUMBER = "0.8.0.0 Beta";
 	public static final int SAVE_DATA_PERIODICITY = 15;
 	public static final int CURRENT_DATABASE_VERSION = 2;
 
@@ -93,6 +93,17 @@ public class Constants {
 	public static final int ONC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 7;
 	public static final int ONC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 8;
 	public static final int ONC_ENVIRONMENTS_VIEW_INDEX = 9;
+
+	public static final int MORAIC_SEGMENT_INVENTORY_VIEW_INDEX = 0;
+	public static final int MORAIC_SONORITY_HIERARCHY_VIEW_INDEX = 1;
+	public static final int MORAIC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX = 2;
+	public static final int MORAIC_NATURAL_CLASSES_VIEW_INDEX = 3;
+	public static final int MORAIC_TEMPLATES_VIEW_INDEX = 4;
+	public static final int MORAIC_FILTERS_VIEW_INDEX = 5;
+	public static final int MORAIC_WORDS_VIEW_INDEX = 6;
+	public static final int MORAIC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 7;
+	public static final int MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 8;
+	public static final int MORAIC_ENVIRONMENTS_VIEW_INDEX = 9;
 
 	// Unit Testing constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/org/sil/syllableparser/testData/CVTestData.";

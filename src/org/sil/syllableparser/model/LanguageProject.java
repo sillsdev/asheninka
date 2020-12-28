@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
@@ -32,6 +33,7 @@ public class LanguageProject {
 	private CVApproach cvApproach;
 	private SHApproach shApproach;
 	private ONCApproach oncApproach;
+	private MoraicApproach muApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
@@ -56,6 +58,8 @@ public class LanguageProject {
 		shApproach.setLanguageProject(this);
 		oncApproach = new ONCApproach();
 		oncApproach.setLanguageProject(this);
+		muApproach = new MoraicApproach();
+		muApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
 		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
@@ -71,6 +75,7 @@ public class LanguageProject {
 		cvApproach.clear();
 		shApproach.clear();
 		oncApproach.clear();
+		muApproach.clear();
 		segmentInventory.clear();
 		words.clear();
 		environments.clear();
@@ -113,6 +118,15 @@ public class LanguageProject {
 	@XmlElement(name = "oncApproach")
 	public void setONCApproach(ONCApproach oncApproach) {
 		this.oncApproach = oncApproach;
+	}
+
+	public MoraicApproach getMoraicApproach() {
+		return muApproach;
+	}
+
+	@XmlElement(name = "moraicApproach")
+	public void setMoraicApproach(MoraicApproach muApproach) {
+		this.muApproach = muApproach;
 	}
 
 	/**
@@ -246,6 +260,8 @@ public class LanguageProject {
 		shApproach.setLanguageProject(this);
 		oncApproach.load(languageProjectLoaded.getONCApproach());
 		oncApproach.setLanguageProject(this);
+		muApproach.load(languageProjectLoaded.getMoraicApproach());
+		muApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
 				.getSegmentInventory();
 		for (Segment segment : segmentInventoryLoadedData) {

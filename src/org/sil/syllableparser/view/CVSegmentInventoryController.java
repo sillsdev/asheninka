@@ -19,6 +19,7 @@ import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
@@ -444,6 +445,14 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 		setColumnICURules();
 		setTextFieldColors();
 		populateSegmentTable(ApproachType.ONSET_NUCLEUS_CODA);
+	}
+
+	public void setData(MoraicApproach muApproachData) {
+		currentApproach = muApproach = muApproachData;
+		languageProject = muApproach.getLanguageProject();
+		setColumnICURules();
+		setTextFieldColors();
+		populateSegmentTable(ApproachType.MORAIC);
 	}
 
 	protected void setColumnICURules() {

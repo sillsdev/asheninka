@@ -88,7 +88,7 @@ public class ParaTExt7SegmentImporter extends SegmentImporter {
 					graphemes.add(grapheme);
 				}
 				String sName = chars[0];
-				Segment seg = new Segment(sName, "", "");
+				Segment seg = new Segment(sName, "", "", "0");
 				seg.setGraphs(graphemes);
 				languageProject.getSegmentInventory().add(seg);
 			}

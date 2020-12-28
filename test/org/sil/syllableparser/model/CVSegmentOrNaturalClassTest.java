@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -55,11 +55,11 @@ public class CVSegmentOrNaturalClassTest {
 		ObservableList<Grapheme> dGraphemes = FXCollections.observableArrayList();
 		dGraphemes.add(dLower);
 		dGraphemes.add(dUpper);
-		Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
+		Segment segA = new Segment("a", "a A", "low mid unrounded vowel", "0");
 		segA.setGraphs(aGraphemes);
-		Segment segB = new Segment("b", "b B", "voiced bilabial stop");
+		Segment segB = new Segment("b", "b B", "voiced bilabial stop", "0");
 		segB.setGraphs(bGraphemes);
-		Segment segD = new Segment("d", "d D", "voiced alveolar stop");
+		Segment segD = new Segment("d", "d D", "voiced alveolar stop", "0");
 		segD.setGraphs(dGraphemes);
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);

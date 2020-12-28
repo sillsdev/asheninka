@@ -18,6 +18,7 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
@@ -460,6 +461,10 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 
 	public void setData(ONCApproach oncApproachData) {
 		setData(oncApproachData.getLanguageProject().getSHApproach());
+	}
+
+	public void setData(MoraicApproach muApproachData) {
+		setData(muApproachData.getLanguageProject().getSHApproach());
 	}
 
 	@Override

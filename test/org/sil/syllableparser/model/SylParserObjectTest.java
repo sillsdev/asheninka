@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2020 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -44,9 +44,9 @@ public class SylParserObjectTest {
 	public void findIndexInListByUuidTest() {
 		ObservableList<Segment> cvSegmentInventory = FXCollections.observableArrayList();
 		ObservableList<CVNaturalClass> cvNaturalClasses = FXCollections.observableArrayList();
-		Segment segA = new Segment("a", "a A", "low mid unrounded vowel");
-		Segment segB = new Segment("b", "b B", "voiced bilabial stop");
-		Segment segD = new Segment("d", "d D", "voiced alveolar stop");
+		Segment segA = new Segment("a", "a A", "low mid unrounded vowel", "0");
+		Segment segB = new Segment("b", "b B", "voiced bilabial stop", "0");
+		Segment segD = new Segment("d", "d D", "voiced alveolar stop", "0");
 		cvSegmentInventory.add(segA);
 		cvSegmentInventory.add(segB);
 		cvSegmentInventory.add(segD);
