@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -17,6 +17,9 @@ public class Constants {
 	public static final String VERSION_NUMBER = "0.8.0.0 Beta";
 	public static final int SAVE_DATA_PERIODICITY = 15;
 	public static final int CURRENT_DATABASE_VERSION = 2;
+	public static final String SYLLABLE_SYMBOL = "σ";
+	public static final String MORA_SYMBOL = "μ";
+	public static final String CODA_IN_MORA_SYMBOL = "c";
 
 	// file-related constants
 	public static final String ASHENINKA_BACKUP_FILE_EXTENSION = "ashebackup";

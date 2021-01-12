@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -16,6 +16,7 @@ import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
+import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.service.TemplateFilterMatcher;
@@ -58,7 +59,18 @@ public class Onset extends ONCConstituent {
 	}
 
 	public void createLingTreeDescription(StringBuilder sb) {
-		super.createLingTreeDescription(sb, "O");
+		if (graphemes.size() > 0) {
+			sb.append("(");
+			sb.append("O");
+			for (CVSegmentInSyllable cvSegmentInSyllable : graphemes) {
+				sb.append("(\\L ");
+				sb.append(cvSegmentInSyllable.getSegment().getSegment());
+				sb.append("(\\G ");
+				sb.append(cvSegmentInSyllable.getGrapheme());
+				sb.append("))");
+			}
+			sb.append(")");
+		}
 	}
 	
 	public void getONCPattern(StringBuilder sb) {

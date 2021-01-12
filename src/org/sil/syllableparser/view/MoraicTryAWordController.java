@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International 
+// Copyright (c) 2020-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -10,13 +10,13 @@ import java.util.List;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicSegmentInSyllable;
 import org.sil.syllableparser.model.moraicapproach.MoraicTraceInfo;
-import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.MoraicSegmenter;
 import org.sil.syllableparser.service.parsing.MoraicSyllabifier;
 import org.sil.syllableparser.service.parsing.MoraicSyllabifierResult;
 import org.sil.syllableparser.service.parsing.MoraicTryAWordHTMLFormatter;
-import org.sil.syllableparser.service.parsing.ONCSegmenter;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -29,10 +29,10 @@ import javafx.fxml.FXML;
  */
 public class MoraicTryAWordController extends TryAWordController {
 
-	private MoraicApproach oncApproach;
+	private MoraicApproach muApproach;
 
-	public void setData(MoraicApproach oncApproachData) {
-		oncApproach = oncApproachData;
+	public void setData(MoraicApproach muApproachData) {
+		muApproach = muApproachData;
 	}
 
 	/**
@@ -64,13 +64,13 @@ public class MoraicTryAWordController extends TryAWordController {
 			@Override
 			public void handle(WorkerStateEvent event) {
 
-				ONCSegmenter segmenter;
+				MoraicSegmenter segmenter;
 				MoraicSyllabifier syllabifier;
 
-				segmenter = new ONCSegmenter(oncApproach.getLanguageProject()
-						.getActiveGraphemes(), oncApproach.getLanguageProject()
+				segmenter = new MoraicSegmenter(muApproach.getLanguageProject()
+						.getActiveGraphemes(), muApproach.getLanguageProject()
 						.getActiveGraphemeNaturalClasses());
-				syllabifier = new MoraicSyllabifier(oncApproach);
+				syllabifier = new MoraicSyllabifier(muApproach);
 				MoraicTraceInfo traceInfo = new MoraicTraceInfo(sWordToTry, segmenter, syllabifier);
 
 				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
@@ -78,7 +78,7 @@ public class MoraicTryAWordController extends TryAWordController {
 				String sLingTreeDescription = "";
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
-					List<ONCSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<MoraicSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 						syllabifier.setDoTrace(true);
 						traceInfo.setSyllabifier(syllabifier);
 						fSuccess = syllabifier.syllabify(segmentsInWord);
@@ -88,7 +88,7 @@ public class MoraicTryAWordController extends TryAWordController {
 						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
 				}
 				MoraicTryAWordHTMLFormatter formatter = new MoraicTryAWordHTMLFormatter(traceInfo,
-						oncApproach.getLanguageProject(), locale);
+						muApproach.getLanguageProject(), locale);
 				formatter.setLingTreeDescription(sLingTreeDescription);
 				String sResult = formatter.format();
 				webEngine.loadContent(sResult);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 SIL International
+ * Copyright (c) 2020-2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -9,10 +9,10 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
-import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
+import org.sil.syllableparser.model.moraicapproach.MoraicSyllabificationStatus;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
-import org.sil.syllableparser.service.parsing.ONCSyllabifierState;
+import org.sil.syllableparser.service.parsing.MoraicSyllabifierState;
 
 /**
  * @author Andy Black
@@ -25,8 +25,8 @@ public class MoraicTracingStep {
 	public Segment segment2 = null;
 	public SHNaturalClass naturalClass2 = null;
 	public SHComparisonResult comparisonResult = null;
-	private ONCSyllabificationStatus status = ONCSyllabificationStatus.UNKNOWN;
-	private ONCSyllabifierState oncState = ONCSyllabifierState.UNKNOWN;
+	private MoraicSyllabificationStatus status = MoraicSyllabificationStatus.UNKNOWN;
+	private MoraicSyllabifierState moaricState = MoraicSyllabifierState.UNKNOWN;
 	private TemplateFilter templateFilterUsed;
 	public String sMissingNaturalClass = "No Natural Class";
 	public static final String NULL_REPRESENTATION = "&#xa0;&#x2014";
@@ -37,16 +37,16 @@ public class MoraicTracingStep {
 		super();
 	}
 
-	public MoraicTracingStep(Segment segment, ONCSyllabificationStatus status) {
+	public MoraicTracingStep(Segment segment, MoraicSyllabificationStatus status) {
 		super();
 		this.segment1 = segment;
 		this.status = status;
 	}
 
-	public MoraicTracingStep(Segment segment, ONCSyllabifierState oncState) {
+	public MoraicTracingStep(Segment segment, MoraicSyllabifierState oncState) {
 		super();
 		this.segment1 = segment;
-		this.oncState = oncState;
+		this.moaricState = oncState;
 	}
 
 	public MoraicTracingStep(Segment segment1, SHNaturalClass naturalClass1, Segment segment2,
@@ -127,28 +127,25 @@ public class MoraicTracingStep {
 		}
 	}
 
-	public ONCSyllabificationStatus getStatus() {
+	public MoraicSyllabificationStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(ONCSyllabificationStatus status) {
+	public void setStatus(MoraicSyllabificationStatus status) {
 		setSuccessBasedOnStatus(status);
 		this.status = status;
 	}
 
-	protected void setSuccessBasedOnStatus(ONCSyllabificationStatus status) {
+	protected void setSuccessBasedOnStatus(MoraicSyllabificationStatus status) {
 		switch (status) {
-		case ADDED_AS_NUCLEUS:
+		case ADDED_AS_MORA:
 		case ADDED_AS_ONSET:
-		case ADDED_AS_CODA:
-		case ADDED_AS_CODA_START_NEW_SYLLABLE:
 		case ADDED_AS_WORD_FINAL_APPENDIX:
 		case ADDED_AS_WORD_INITIAL_APPENDIX:
 		case ADDING_FINAL_SYLLABLE_TO_WORD:
 		case ADDING_SYLLABLE_TO_WORD:
 		case CODA_TEMPLATE_MATCHED:
 		case ONSET_FILTER_REPAIR_APPLIED:
-		case NUCLEUS_TEMPLATE_MATCHED:
 			successful = true;
 			break;
 		default:
@@ -189,12 +186,12 @@ public class MoraicTracingStep {
 		this.naturalClass2 = naturalClass2;
 	}
 
-	public ONCSyllabifierState getOncState() {
-		return oncState;
+	public MoraicSyllabifierState getMoraicState() {
+		return moaricState;
 	}
 
-	public void setOncState(ONCSyllabifierState oncState) {
-		this.oncState = oncState;
+	public void setMoraicState(MoraicSyllabifierState oncState) {
+		this.moaricState = oncState;
 	}
 
 	public SHComparisonResult getComparisonResult() {
@@ -223,36 +220,24 @@ public class MoraicTracingStep {
 
 	public String getMoraicStateLocalized() {
 		String result = "";
-		switch (oncState) {
-		case CODA:
-			result = bundle.getString("label.oncstatecoda");
-			break;
-		case CODA_OR_ONSET:
-			result = bundle.getString("label.oncstatecodaoronset");
-			break;
+		switch (moaricState) {
 		case FILTER_FAILED:
-			result = bundle.getString("label.oncstatefilterfailed");
+			result = bundle.getString("label.moraicstatefilterfailed");
 			break;
 		case FILTER_REPAIR_APPLIED:
-			result = bundle.getString("label.oncstatefilterrepairapplied");
+			result = bundle.getString("label.moraicstatefilterrepairapplied");
 			break;
-		case NUCLEUS:
-			result = bundle.getString("label.oncstatenucleus");
-			break;
-		case NUCLEUS_OR_CODA:
-			result = bundle.getString("label.oncstatenucleusorcoda");
+		case MORA:
+			result = bundle.getString("label.moraicstatemora");
 			break;
 		case ONSET:
-			result = bundle.getString("label.oncstateonset");
-			break;
-		case ONSET_OR_NUCLEUS:
-			result = bundle.getString("label.oncstateonsetornucleus");
+			result = bundle.getString("label.moraicstateonset");
 			break;
 		case TEMPLATE_FAILED:
-			result = bundle.getString("label.oncstatetemplatefailed");
+			result = bundle.getString("label.moraicstatetemplatefailed");
 			break;
 		case UNKNOWN:
-			result = bundle.getString("label.oncstateunknown");
+			result = bundle.getString("label.moraicstateunknown");
 			break;
 		default:
 			break;
@@ -263,13 +248,7 @@ public class MoraicTracingStep {
 	public String getStatusLocalized() {
 		String result = "";
 		switch (status) {
-		case ADDED_AS_CODA:
-			result = bundle.getString("label.oncstiaddedascoda");
-			break;
-		case ADDED_AS_CODA_START_NEW_SYLLABLE:
-			result = bundle.getString("label.oncstiaddedascodastartnewsyllable");
-			break;
-		case ADDED_AS_NUCLEUS:
+		case ADDED_AS_MORA:
 			result = bundle.getString("label.oncstiaddedasnucleus");
 			break;
 		case ADDED_AS_ONSET:
@@ -299,43 +278,11 @@ public class MoraicTracingStep {
 		case CODA_TEMPLATE_MATCHED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodatemplatematched"));
 			break;
-		case EXPECTED_NUCLEUS_NOT_FOUND:
-			result = bundle.getString("label.oncstiexpectednucleusnotfound");
-			break;
-		case EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_CODAS_NOT_ALLOWED_START_NEW_SYLLABLE:
-			result = bundle
-					.getString("label.oncstiexpectednucleusorcodabutnotnucleusandcodasnotallowedstartnewsyllable");
-			break;
-		case EXPECTED_NUCLEUS_OR_CODA_BUT_NOT_NUCLEUS_AND_NOT_CODA_START_NEW_SYLLABLE:
-			result = bundle
-					.getString("label.oncstiexpectednucleusorcodabutnotnucleusandnotcodastartnewsyllable");
-			break;
-		case EXPECTED_ONSET_OR_NUCLEUS_NOT_FOUND:
-			result = bundle.getString("label.oncstiexpectedonsetornucleusnotfound");
-			break;
 		case NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT:
 			result = bundle.getString("label.oncstinaturalclassnotfoundforsegment");
 			break;
 		case NO_WORD_INITIAL_TEMPLATE_MATCHED:
 			result = bundle.getString("label.oncstinowordinitialtemplatematched");
-			break;
-		case NUCLEUS_FILTER_FAILED:
-			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleusfilterfailed"));
-			break;
-		case NUCLEUS_FILTER_REPAIR_COULD_NOT_APPLY:
-			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleusrepairnotapply"));
-			break;
-		case NUCLEUS_TEMPLATE_BLOCKS_ADDING_ANOTHER_NUCLEUS_CREATE_NEW_SYLLABLE:
-			result = bundle.getString("label.oncstinucleustemplateblocksadding");
-			break;
-		case NUCLEUS_TEMPLATE_BLOCKS_ADDING_NUCLEUS_ONSET_REQUIRED_BUT_WONT_BE_ONE:
-			result = bundle.getString("label.oncstinucleustemplateblocksaddingonsetrequiredbutwontbeone");
-			break;
-		case NUCLEUS_TEMPLATE_MATCHED:
-			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstinucleustemplatematched"));
-			break;
-		case NUCLEUS_TEMPLATES_ALL_FAIL:
-			result = bundle.getString("label.oncstinucleustemplatesallfail");
 			break;
 		case ONSET_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetfilterfailed"));
@@ -357,12 +304,6 @@ public class MoraicTracingStep {
 			break;
 		case ONSET_TEMPLATE_MATCHED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsettemplatematched"));
-			break;
-		case RIME_FILTER_FAILED:
-			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstirimefilterfailed"));
-			break;
-		case RIME_FILTER_REPAIR_COULD_NOT_APPLY:
-			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstirimerepairnotapply"));
 			break;
 		case SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE:
 			result = bundle

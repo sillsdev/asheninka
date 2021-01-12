@@ -493,7 +493,7 @@ public class ONCSyllabifierWithTemplateTest extends ONCSyllabifierTestBase {
 
 	@Test
 	public void traceOnsetTemplateTest() {
-		// get the nucleus template that allows only one vowel in a nucleus
+		// get the onset template which allows /s/ in an onset which violates the SSP
 		Optional<Template> sInOnset = languageProject.getActiveAndValidTemplates().stream()
 				.filter(t -> t.getID().equals("b364b517-5938-466e-b707-db5191821765")).findFirst();
 		assertTrue(sInOnset.isPresent());

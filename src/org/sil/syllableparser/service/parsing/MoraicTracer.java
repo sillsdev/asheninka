@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 SIL International
+ * Copyright (c) 2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -11,7 +11,7 @@ import java.util.List;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.moraicapproach.MoraicTracingStep;
-import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
+import org.sil.syllableparser.model.moraicapproach.MoraicSyllabificationStatus;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -63,9 +63,9 @@ public class MoraicTracer {
 		tracingSteps.clear();
 	}
 
-	public void initStep(ONCSyllabifierState oncState, ONCSyllabificationStatus status, TemplateFilter filter) {
+	public void initStep(MoraicSyllabifierState oncState, MoraicSyllabificationStatus status, TemplateFilter filter) {
 		if (tracing) {
-			tracingStep.setOncState(oncState);
+			tracingStep.setMoraicState(oncState);
 			tracingStep.setStatus(status);
 			tracingStep.setTemplateFilterUsed(filter);
 			tracingStep.setSuccessful(false);
@@ -73,7 +73,7 @@ public class MoraicTracer {
 	}
 
 	public void initStep(Segment seg1, SHNaturalClass nc1, Segment seg2, SHNaturalClass nc2,
-			SHComparisonResult result, ONCSyllabificationStatus status, ONCSyllabifierState oncState) {
+			SHComparisonResult result, MoraicSyllabificationStatus status, MoraicSyllabifierState oncState) {
 		if (tracing) {
 			tracingStep.setSegment1(seg1);
 			tracingStep.setNaturalClass1(nc1);
@@ -81,7 +81,7 @@ public class MoraicTracer {
 			tracingStep.setNaturalClass2(nc2);
 			tracingStep.setComparisonResult(result);
 			tracingStep.setStatus(status);
-			tracingStep.setOncState(oncState);
+			tracingStep.setMoraicState(oncState);
 		}
 	}
 
@@ -97,15 +97,15 @@ public class MoraicTracer {
 		}
 	}
 
-	public void setStatus(ONCSyllabificationStatus status) {
+	public void setStatus(MoraicSyllabificationStatus status) {
 		if (tracing) {
 			tracingStep.setStatus(status);
 		}
 	}
 
-	public void setOncState(ONCSyllabifierState oncState) {
+	public void setMoraicState(MoraicSyllabifierState oncState) {
 		if (tracing) {
-			tracingStep.setOncState(oncState);
+			tracingStep.setMoraicState(oncState);
 		}
 	}
 

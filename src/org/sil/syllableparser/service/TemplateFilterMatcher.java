@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -12,10 +12,12 @@ import javafx.collections.FXCollections;
 
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
+import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegment;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.moraicapproach.MoraicSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.service.parsing.SHSonorityComparer;
@@ -142,5 +144,18 @@ public class TemplateFilterMatcher {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * @param t
+	 * @param subList
+	 * @param sonorityComparer
+	 * @param sspComparisonNeeded
+	 * @return
+	 */
+	public boolean matches(Template t, List<MoraicSegmentInSyllable> subList,
+			SHSonorityComparer sonorityComparer, Object sspComparisonNeeded) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

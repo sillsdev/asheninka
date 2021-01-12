@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.sil.utility.StringUtilities;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -40,6 +42,7 @@ public class Segment extends SylParserObject {
 	private BooleanProperty nucleus;
 	private BooleanProperty coda;
 	private final StringProperty morasBorn;
+	private int moras;
 
 	public Segment() {
 		super();
@@ -52,6 +55,7 @@ public class Segment extends SylParserObject {
 		this.nucleus = new SimpleBooleanProperty(false);
 		this.coda = new SimpleBooleanProperty(false);
 		this.morasBorn = new SimpleStringProperty("0");
+		convertMorasBornToInt(morasBorn.getValue());
 		createUUID();
 	}
 
@@ -66,6 +70,7 @@ public class Segment extends SylParserObject {
 		this.nucleus = new SimpleBooleanProperty(false);
 		this.coda = new SimpleBooleanProperty(false);
 		this.morasBorn = new SimpleStringProperty(morasBorn);
+		convertMorasBornToInt(morasBorn);
 		createUUID();
 	}
 
@@ -79,6 +84,7 @@ public class Segment extends SylParserObject {
 				.collect(Collectors.joining(" "));
 		this.graphemes = new SimpleStringProperty(graphs);
 		this.morasBorn = new SimpleStringProperty(morasBorn);
+		convertMorasBornToInt(morasBorn);
 		createUUID();
 	}
 
@@ -165,8 +171,22 @@ public class Segment extends SylParserObject {
 
 	public void setMorasBorn(String morasBorn) {
 		this.morasBorn.set(morasBorn);
+		convertMorasBornToInt(morasBorn);
 	}
 
+	public int getMoras() {
+		return moras;
+	}
+
+	public void setMoras(int moras) {
+		this.moras = moras;
+	}
+
+	protected void convertMorasBornToInt(String morasBorn) {
+		if (!StringUtilities.isNullOrEmpty(morasBorn)) {
+			moras = Integer.parseInt(morasBorn);
+		}
+	}
 
 	@XmlElementWrapper(name = "graphemesAsList")
 	@XmlElement(name = "grapheme")
