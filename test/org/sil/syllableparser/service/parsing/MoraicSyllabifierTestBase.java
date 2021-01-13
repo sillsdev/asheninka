@@ -23,9 +23,9 @@ import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.moraicapproach.MoraicSegmentInSyllable;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicSyllabificationStatus;
 import org.sil.syllableparser.model.moraicapproach.MoraicSyllable;
 import org.sil.syllableparser.model.moraicapproach.MoraicTracingStep;
-import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -107,7 +107,7 @@ public class MoraicSyllabifierTestBase {
 			}
 
 	protected void checkTracingStep(MoraicTracingStep tracingStep, String seg1, String nc1, String seg2,
-			String nc2, SHComparisonResult result, ONCSyllabifierState oncState, ONCSyllabificationStatus status, boolean success) {
+			String nc2, SHComparisonResult result, MoraicSyllabificationStatus status, boolean success) {
 				if (seg1 == null) {
 					assertNull(tracingStep.getSegment1());
 				} else {
@@ -129,7 +129,6 @@ public class MoraicSyllabifierTestBase {
 					assertEquals(nc2, tracingStep.getNaturalClass2().getNCName());
 				}
 				assertEquals(result, tracingStep.comparisonResult);
-				assertEquals(oncState, tracingStep.getMoraicState());
 				assertEquals(status, tracingStep.getStatus());
 				assertEquals(success, tracingStep.isSuccessful());
 			}

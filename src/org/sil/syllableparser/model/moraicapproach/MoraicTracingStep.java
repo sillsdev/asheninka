@@ -12,7 +12,6 @@ import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.moraicapproach.MoraicSyllabificationStatus;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
-import org.sil.syllableparser.service.parsing.MoraicSyllabifierState;
 
 /**
  * @author Andy Black
@@ -26,7 +25,6 @@ public class MoraicTracingStep {
 	public SHNaturalClass naturalClass2 = null;
 	public SHComparisonResult comparisonResult = null;
 	private MoraicSyllabificationStatus status = MoraicSyllabificationStatus.UNKNOWN;
-	private MoraicSyllabifierState moaricState = MoraicSyllabifierState.UNKNOWN;
 	private TemplateFilter templateFilterUsed;
 	public String sMissingNaturalClass = "No Natural Class";
 	public static final String NULL_REPRESENTATION = "&#xa0;&#x2014";
@@ -41,12 +39,6 @@ public class MoraicTracingStep {
 		super();
 		this.segment1 = segment;
 		this.status = status;
-	}
-
-	public MoraicTracingStep(Segment segment, MoraicSyllabifierState oncState) {
-		super();
-		this.segment1 = segment;
-		this.moaricState = oncState;
 	}
 
 	public MoraicTracingStep(Segment segment1, SHNaturalClass naturalClass1, Segment segment2,
@@ -186,14 +178,6 @@ public class MoraicTracingStep {
 		this.naturalClass2 = naturalClass2;
 	}
 
-	public MoraicSyllabifierState getMoraicState() {
-		return moaricState;
-	}
-
-	public void setMoraicState(MoraicSyllabifierState oncState) {
-		this.moaricState = oncState;
-	}
-
 	public SHComparisonResult getComparisonResult() {
 		return comparisonResult;
 	}
@@ -218,41 +202,14 @@ public class MoraicTracingStep {
 		this.successful = successful;
 	}
 
-	public String getMoraicStateLocalized() {
-		String result = "";
-		switch (moaricState) {
-		case FILTER_FAILED:
-			result = bundle.getString("label.moraicstatefilterfailed");
-			break;
-		case FILTER_REPAIR_APPLIED:
-			result = bundle.getString("label.moraicstatefilterrepairapplied");
-			break;
-		case MORA:
-			result = bundle.getString("label.moraicstatemora");
-			break;
-		case ONSET:
-			result = bundle.getString("label.moraicstateonset");
-			break;
-		case TEMPLATE_FAILED:
-			result = bundle.getString("label.moraicstatetemplatefailed");
-			break;
-		case UNKNOWN:
-			result = bundle.getString("label.moraicstateunknown");
-			break;
-		default:
-			break;
-		}
-		return result;
-	}
-
 	public String getStatusLocalized() {
 		String result = "";
 		switch (status) {
 		case ADDED_AS_MORA:
-			result = bundle.getString("label.oncstiaddedasnucleus");
+			result = bundle.getString("label.moraicstiaddedwithmora");
 			break;
 		case ADDED_AS_ONSET:
-			result = bundle.getString("label.oncstiaddedasonset");
+			result = bundle.getString("label.moraicstiaddedasonsettosyllable");
 			break;
 		case ADDED_AS_WORD_FINAL_APPENDIX:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstiaddedaswordfinalappendix"));
@@ -266,6 +223,9 @@ public class MoraicTracingStep {
 		case ADDING_SYLLABLE_TO_WORD:
 			result = bundle.getString("label.oncstiaddingsyllabletoword");
 			break;
+		case APPENDED_TO_MORA:
+			result = bundle.getString("label.moraicstiappendedtomora");
+			break;
 		case CODA_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodafilterfailed"));
 			break;
@@ -277,6 +237,9 @@ public class MoraicTracingStep {
 			break;
 		case CODA_TEMPLATE_MATCHED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodatemplatematched"));
+			break;
+		case MAXIMUM_MORAS_IN_SYLLABLE_FOUND_START_NEW_SYLLABLE:
+			result = bundle.getString("label.moraicstimaxmorasstartnewsyllable");
 			break;
 		case NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT:
 			result = bundle.getString("label.oncstinaturalclassnotfoundforsegment");
@@ -333,7 +296,7 @@ public class MoraicTracingStep {
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstisyllablerepairnotapply"));
 			break;
 		case UNKNOWN:
-			result = bundle.getString("label.oncstiunknown");
+			result = bundle.getString("label.moraicstiunknown");
 			break;
 		default:
 			break;

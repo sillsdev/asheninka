@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International 
+// Copyright (c) 2020-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -86,9 +86,6 @@ public class MoraicTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		sb.append(bundle.getString("report.tawshsegment2"));
 		sb.append("</th>\n");
 		sb.append("<th>");
-		sb.append(bundle.getString("report.tawonctype"));
-		sb.append("</th>\n");
-		sb.append("<th>");
 		sb.append(bundle.getString("report.tawoncstatus"));
 		sb.append("</th>\n");
 		sb.append("</tr>\n");
@@ -140,11 +137,6 @@ public class MoraicTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sb.append(tracingStep.getNaturalClass2Result());
 			sb.append("</span>)&#xa0;");
 			sb.append("</span>\n");
-			sb.append("<td class='");
-			sb.append(rowStatus);
-			sb.append("'>&#xa0;");
-			sb.append(tracingStep.getMoraicStateLocalized());
-			sb.append("</td>");
 			sb.append("<td class='");
 			sb.append(rowStatus);
 			sb.append("'>&#xa0;");

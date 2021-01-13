@@ -63,9 +63,8 @@ public class MoraicTracer {
 		tracingSteps.clear();
 	}
 
-	public void initStep(MoraicSyllabifierState oncState, MoraicSyllabificationStatus status, TemplateFilter filter) {
+	public void initStep(MoraicSyllabificationStatus status, TemplateFilter filter) {
 		if (tracing) {
-			tracingStep.setMoraicState(oncState);
 			tracingStep.setStatus(status);
 			tracingStep.setTemplateFilterUsed(filter);
 			tracingStep.setSuccessful(false);
@@ -73,7 +72,7 @@ public class MoraicTracer {
 	}
 
 	public void initStep(Segment seg1, SHNaturalClass nc1, Segment seg2, SHNaturalClass nc2,
-			SHComparisonResult result, MoraicSyllabificationStatus status, MoraicSyllabifierState oncState) {
+			SHComparisonResult result, MoraicSyllabificationStatus status) {
 		if (tracing) {
 			tracingStep.setSegment1(seg1);
 			tracingStep.setNaturalClass1(nc1);
@@ -81,7 +80,6 @@ public class MoraicTracer {
 			tracingStep.setNaturalClass2(nc2);
 			tracingStep.setComparisonResult(result);
 			tracingStep.setStatus(status);
-			tracingStep.setMoraicState(oncState);
 		}
 	}
 
@@ -100,12 +98,6 @@ public class MoraicTracer {
 	public void setStatus(MoraicSyllabificationStatus status) {
 		if (tracing) {
 			tracingStep.setStatus(status);
-		}
-	}
-
-	public void setMoraicState(MoraicSyllabifierState oncState) {
-		if (tracing) {
-			tracingStep.setMoraicState(oncState);
 		}
 	}
 

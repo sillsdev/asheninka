@@ -57,7 +57,6 @@ public abstract class MoraicConstituent extends SyllableConstituent {
 							syllablesInCurrentWord.add(syl);
 						}
 					}
-					tracer.setMoraicState(MoraicSyllabifierState.FILTER_FAILED);
 					tracer.setStatus(status);
 					tracer.setTemplateFilterUsed(f);
 					tracer.setSuccessful(false);

@@ -308,19 +308,14 @@ public class MoraicSyllabifier implements Syllabifiable {
 			SHComparisonResult result = sonorityComparer.compare(seg1, seg2);
 			tracer.initStep(seg1, oncApproach.getNaturalClassContainingSegment(seg1), seg2,
 					oncApproach.getNaturalClassContainingSegment(seg2), result,
-					MoraicSyllabificationStatus.UNKNOWN, currentState);
+					MoraicSyllabificationStatus.UNKNOWN);
 			if (currentState == MoraicSyllabifierState.MORA && result == SHComparisonResult.LESS) {
 				if (seg1.getMoras() == 0) {
-					if (onsetMaximization || (seg2 != null && seg2.getMoras() == 1) || !isCoda(i, syl.getMoras().size(), result, segmentsInWord)) {
-					syllablesInCurrentWord.add(syl);
-					tracer.setSegment1(seg1);
-					tracer.setSegment2(seg2);
-//					tracer.setMoraicState(MoraicSyllabificationStatus.CODA);
-					tracer.setStatus(MoraicSyllabificationStatus.ADDING_SYLLABLE_TO_WORD);
-					tracer.recordStep();
-					syl = createNewSyllable();
-					currentState = MoraicSyllabifierState.ONSET;
-				}
+					if (onsetMaximization || (seg2 != null && seg2.getMoras() == 1)
+							|| !isCoda(i, syl.getMoras().size(), result, segmentsInWord)) {
+						syl = addSyllableToWord(seg1, syl, seg2, result);
+						currentState = MoraicSyllabifierState.ONSET;
+					}
 				}
 			}
 			switch (currentState) {
@@ -332,8 +327,14 @@ public class MoraicSyllabifier implements Syllabifiable {
 //					i = addMatchedSegmentsToOnset(segmentsInWord, syl, i, onset);
 //					currentState = MoraicSyllabificationStatus.NUCLEUS;
 //				} else 
-				if (seg1.getMoras() == 0 && result == SHComparisonResult.LESS) {
-					addSegmentToSyllableAsOnset(segmentsInWord, syl, i);
+				if (seg1.getMoras() == 0) {
+					if (result == SHComparisonResult.LESS) {
+						addSegmentToSyllableAsOnset(segmentsInWord, syl, i);
+					} else {
+						tracer.setStatus(MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET);
+						tracer.recordStep();
+						return false;
+					}
 				} else {
 					if (syl.getGraphemes().size() == 0 && opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
 						if ((syllablesInCurrentWord.size() > 0 && opType == OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET) 
@@ -378,6 +379,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 						syllablesInCurrentWord.add(syl);
 						syl = createNewSyllable();
 						tracer.setStatus(MoraicSyllabificationStatus.MAXIMUM_MORAS_IN_SYLLABLE_FOUND_START_NEW_SYLLABLE);
+						tracer.setSuccessful(true);
 						tracer.recordStep();
 					}
 				} else if (isCoda(i, morasInSyllable, result, segmentsInWord)) {
@@ -386,11 +388,19 @@ public class MoraicSyllabifier implements Syllabifiable {
 					} else {
 						syl.getMoras().get(morasInSyllable - 1).add(segmentsInWord.get(i));
 						syl.getGraphemes().add(segmentsInWord.get(i));
+						tracer.setStatus(MoraicSyllabificationStatus.APPENDED_TO_MORA);
+						tracer.setSuccessful(true);
+						tracer.recordStep();
 					}
 				} else {
 					if (morasInSyllable > 0) {
 							//&& (result == SHComparisonResult.MISSING1 || result == SHComparisonResult.MISSING2)) {
-						syllablesInCurrentWord.add(syl);
+						addSyllableToWord(seg1, syl, seg2, result);
+						if (result == SHComparisonResult.MISSING1 || result == SHComparisonResult.MISSING2) {
+							tracer.setStatus(MoraicSyllabificationStatus.NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT);
+						} else {
+							tracer.setStatus(MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET);
+						}
 					} else {
 						tracer.setStatus(MoraicSyllabificationStatus.EXPECTED_MORA_NOT_FOUND);
 					}
@@ -423,6 +433,20 @@ public class MoraicSyllabifier implements Syllabifiable {
 			tracer.recordStep();
 		}
 		return true;
+	}
+
+	protected MoraicSyllable addSyllableToWord(Segment seg1, MoraicSyllable syl, Segment seg2,
+			SHComparisonResult result) {
+		syllablesInCurrentWord.add(syl);
+		tracer.setSegment1(seg1);
+		tracer.setSegment2(seg2);
+		tracer.setStatus(MoraicSyllabificationStatus.ADDING_SYLLABLE_TO_WORD);
+		tracer.recordStep();
+		syl = createNewSyllable();
+		tracer.initStep(seg1, oncApproach.getNaturalClassContainingSegment(seg1), seg2,
+				oncApproach.getNaturalClassContainingSegment(seg2), result,
+				MoraicSyllabificationStatus.UNKNOWN);
+		return syl;
 	}
 
 	protected boolean isCoda(int segIndex, int morasInSyllable, SHComparisonResult result, List<MoraicSegmentInSyllable> segmentsInWord) {
@@ -544,7 +568,6 @@ public class MoraicSyllabifier implements Syllabifiable {
 		mora.add(segmentsInWord.get(i));
 		syl.getMoras().add(mora);
 		currentState = MoraicSyllabifierState.MORA;
-		tracer.setMoraicState(MoraicSyllabifierState.MORA);
 		tracer.setStatus(MoraicSyllabificationStatus.ADDED_AS_MORA);
 		tracer.recordStep();
 //		currentState = nucleus.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
@@ -583,7 +606,6 @@ public class MoraicSyllabifier implements Syllabifiable {
 			tracer.setSegment1(segInSyl.getSegment());
 			tracer.getTracingStep().setNaturalClass1(
 					oncApproach.getNaturalClassContainingSegment(segInSyl.getSegment()));
-//			tracer.setMoraicState(MoraicSyllabificationStatus.ONSET);
 			tracer.setStatus(MoraicSyllabificationStatus.ADDED_AS_ONSET);
 			tracer.recordStep();
 		}
