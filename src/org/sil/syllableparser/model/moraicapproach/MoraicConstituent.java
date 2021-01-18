@@ -38,9 +38,9 @@ public abstract class MoraicConstituent extends SyllableConstituent {
 		}
 	}
 	
-	public MoraicSyllabifierState applyAnyFailFilters(List<ONCSegmentInSyllable> segmentsInWord,
-			int iSegmentInWord, MoraicSyllabifierState currentState, ONCSyllable syl,
-			MoraicSyllabificationStatus status, LinkedList<ONCSyllable> syllablesInCurrentWord,
+	public MoraicSyllabifierState applyAnyFailFilters(List<MoraicSegmentInSyllable> segmentsInWord,
+			int iSegmentInWord, MoraicSyllabifierState currentState, MoraicSyllable syl,
+			MoraicSyllabificationStatus status, LinkedList<MoraicSyllable> syllablesInCurrentWord,
 			SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
 		MoraicTracer tracer = MoraicTracer.getInstance();
 		TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();

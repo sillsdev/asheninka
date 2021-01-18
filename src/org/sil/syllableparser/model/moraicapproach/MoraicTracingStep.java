@@ -131,12 +131,15 @@ public class MoraicTracingStep {
 	protected void setSuccessBasedOnStatus(MoraicSyllabificationStatus status) {
 		switch (status) {
 		case ADDED_AS_MORA:
+		case ADDED_AS_TWO_MORAS:
+		case ADDED_AS_THREE_MORAS:
 		case ADDED_AS_ONSET:
 		case ADDED_AS_WORD_FINAL_APPENDIX:
 		case ADDED_AS_WORD_INITIAL_APPENDIX:
 		case ADDING_FINAL_SYLLABLE_TO_WORD:
 		case ADDING_SYLLABLE_TO_WORD:
 		case CODA_TEMPLATE_MATCHED:
+		case NON_INITIAL_ONSET_TEMPLATE_MATCHED_START_NEW_SYLLABLE:
 		case ONSET_FILTER_REPAIR_APPLIED:
 			successful = true;
 			break;
@@ -211,6 +214,12 @@ public class MoraicTracingStep {
 		case ADDED_AS_ONSET:
 			result = bundle.getString("label.moraicstiaddedasonsettosyllable");
 			break;
+		case ADDED_AS_TWO_MORAS:
+			result = bundle.getString("label.moraicstiaddedwithtwomoras");
+			break;
+		case ADDED_AS_THREE_MORAS:
+			result = bundle.getString("label.moraicstiaddedwiththreemoras");
+			break;
 		case ADDED_AS_WORD_FINAL_APPENDIX:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstiaddedaswordfinalappendix"));
 			break;
@@ -238,6 +247,9 @@ public class MoraicTracingStep {
 		case CODA_TEMPLATE_MATCHED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncsticodatemplatematched"));
 			break;
+		case EXPECTED_MORA_NOT_FOUND:
+			result = bundle.getString("label.moraicstiexpectedmoranotfound");
+			break;
 		case MAXIMUM_MORAS_IN_SYLLABLE_FOUND_START_NEW_SYLLABLE:
 			result = bundle.getString("label.moraicstimaxmorasstartnewsyllable");
 			break;
@@ -246,6 +258,9 @@ public class MoraicTracingStep {
 			break;
 		case NO_WORD_INITIAL_TEMPLATE_MATCHED:
 			result = bundle.getString("label.oncstinowordinitialtemplatematched");
+			break;
+		case NON_INITIAL_ONSET_TEMPLATE_MATCHED_START_NEW_SYLLABLE:
+			result = bundle.getString("label.moraicstinoninitialonsettemplatematchedstartnewsyllable");
 			break;
 		case ONSET_FILTER_FAILED:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstionsetfilterfailed"));

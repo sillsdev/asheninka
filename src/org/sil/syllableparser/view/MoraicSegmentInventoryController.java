@@ -54,7 +54,7 @@ public class MoraicSegmentInventoryController extends CVSegmentInventoryControll
 					if (!Character.isDigit(text.charAt(i)))
 						return null;
 				}
-				if (text.length() > 0) {
+				if (text.length() > 0 && currentSegment != null) {
 					currentSegment.setMorasBorn(text);
 				}
 				return change;

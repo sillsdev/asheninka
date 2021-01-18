@@ -10,6 +10,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 
+import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Template;
@@ -17,6 +18,7 @@ import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegment;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.moraicapproach.MoraicSegmentInSyllable;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
@@ -65,7 +67,7 @@ public class TemplateFilterMatcher {
 		return iSegMatchCount;
 	}
 
-	public boolean matches(TemplateFilter tf, List<ONCSegmentInSyllable> segmentsToMatch, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
+	public boolean matches(TemplateFilter tf, List<? extends CVSegmentInSyllable> segmentsToMatch, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
 		slotAndSegment.clear();
 		int iSlot = 0;
 		List<TemplateFilterSlotSegmentOrNaturalClass> slots = tf.getSlots();
@@ -73,7 +75,7 @@ public class TemplateFilterMatcher {
 		TemplateFilterSlotSegmentOrNaturalClass slot;
 		while (iSlot < slots.size() && iSegMatchCount < segmentsToMatch.size()) {
 			slot = slots.get(iSlot);
-			ONCSegmentInSyllable segInSyl = segmentsToMatch.get(iSegMatchCount);
+			CVSegmentInSyllable segInSyl = segmentsToMatch.get(iSegMatchCount);
 			Segment seg = segInSyl.getSegment();
 			if (slot.isSegment()) {
 				Segment referringSegment = slot.getReferringSegment();
@@ -144,18 +146,5 @@ public class TemplateFilterMatcher {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * @param t
-	 * @param subList
-	 * @param sonorityComparer
-	 * @param sspComparisonNeeded
-	 * @return
-	 */
-	public boolean matches(Template t, List<MoraicSegmentInSyllable> subList,
-			SHSonorityComparer sonorityComparer, Object sspComparisonNeeded) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
