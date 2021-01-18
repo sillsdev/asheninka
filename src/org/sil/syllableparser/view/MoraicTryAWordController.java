@@ -100,16 +100,16 @@ public class MoraicTryAWordController extends TryAWordController {
 
 	@Override
 	protected String getLastTryAWord() {
-		return ApplicationPreferences.LAST_ONC_TRY_A_WORD;
+		return ApplicationPreferences.LAST_MORAIC_TRY_A_WORD;
 	}
 
 	@Override
 	protected String getLastTryAWordUsed() {
-		return preferences.getLastONCTryAWordUsed();
+		return preferences.getLastMoraicTryAWordUsed();
 	}
 
 	@Override
 	protected void setLastTryAWordUsed(String lastWordTried) {
-		mainApp.getApplicationPreferences().setLastONCTryAWordUsed(lastWordTried);
+		mainApp.getApplicationPreferences().setLastMoraicTryAWordUsed(lastWordTried);
 	}
 }
