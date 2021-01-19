@@ -10,17 +10,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javafx.collections.ObservableList;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
-import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SyllabificationParameters;
 import org.sil.syllableparser.model.Template;
+import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.moraicapproach.Mora;
@@ -30,11 +33,6 @@ import org.sil.syllableparser.model.moraicapproach.MoraicSegmentUsageType;
 import org.sil.syllableparser.model.moraicapproach.MoraicSyllabificationStatus;
 import org.sil.syllableparser.model.moraicapproach.MoraicSyllable;
 import org.sil.syllableparser.model.moraicapproach.MoraicTracingStep;
-import org.sil.syllableparser.model.oncapproach.ONCApproach;
-import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
-import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
-import org.sil.syllableparser.model.oncapproach.ONCSyllable;
-import org.sil.syllableparser.model.oncapproach.Onset;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.service.TemplateFilterMatcher;
@@ -57,6 +55,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 	private boolean onsetMaximization;
 	private OnsetPrincipleType opType;
 	private int maxMorasInSyllable;
+	private boolean useWeightByPosition;
 	private MoraicSyllabifierState currentState;
 	private int iSegmentMatchesInTemplate = 0;
 	
@@ -65,20 +64,12 @@ public class MoraicSyllabifier implements Syllabifiable {
 	List<MoraicSegmentInSyllable> segmentsInWordInitialAppendix = new LinkedList<MoraicSegmentInSyllable>();
 	List<MoraicSegmentInSyllable> segmentsInWordFinalAppendix = new LinkedList<MoraicSegmentInSyllable>();
 	String sSyllabifiedWord;
-	private List<Filter> codaFailFilters = new ArrayList<Filter>();
-	private List<Filter> codaRepairFilters = new ArrayList<Filter>();
-	private List<Filter> nucleusFailFilters = new ArrayList<Filter>();
-	private List<Filter> nucleusRepairFilters = new ArrayList<Filter>();
 	private List<Filter> onsetFailFilters = new ArrayList<Filter>();
 	private List<Filter> onsetRepairFilters = new ArrayList<Filter>();
-	private List<Filter> rimeFailFilters = new ArrayList<Filter>();
-	private List<Filter> rimeRepairFilters = new ArrayList<Filter>();
 	private List<Filter> syllableFailFilters = new ArrayList<Filter>();
 	private List<Filter> syllableRepairFilters = new ArrayList<Filter>();
-	private List<Template> codaTemplates = new ArrayList<Template>();
 	private List<Template> nucleusTemplates = new ArrayList<Template>();
 	private List<Template> onsetTemplates = new ArrayList<Template>();
-	private List<Template> rimeTemplates = new ArrayList<Template>();
 	private List<Template> syllableTemplates = new ArrayList<Template>();
 	private List<Template> wordFinalTemplates = new ArrayList<Template>();
 	private List<Template> wordInitialTemplates = new ArrayList<Template>();
@@ -107,17 +98,11 @@ public class MoraicSyllabifier implements Syllabifiable {
 	}
 
 	protected void initializeTemplates() {
-		codaTemplates = languageProject.getActiveAndValidTemplates().stream()
-				.filter(t -> t.getTemplateFilterType() == TemplateType.CODA)
-				.collect(Collectors.toList());
 		nucleusTemplates = languageProject.getActiveAndValidTemplates().stream()
 				.filter(t -> t.getTemplateFilterType() == TemplateType.NUCLEUS)
 				.collect(Collectors.toList());
 		onsetTemplates = languageProject.getActiveAndValidTemplates().stream()
 				.filter(t -> t.getTemplateFilterType() == TemplateType.ONSET)
-				.collect(Collectors.toList());
-		rimeTemplates = languageProject.getActiveAndValidTemplates().stream()
-				.filter(t -> t.getTemplateFilterType() == TemplateType.RIME)
 				.collect(Collectors.toList());
 		syllableTemplates = languageProject.getActiveAndValidTemplates().stream()
 				.filter(t -> t.getTemplateFilterType() == TemplateType.SYLLABLE)
@@ -131,29 +116,11 @@ public class MoraicSyllabifier implements Syllabifiable {
 	}
 
 	protected void initializeFilters() {
-		codaFailFilters = languageProject.getActiveAndValidFilters().stream()
-				.filter(f -> f.getTemplateFilterType() == FilterType.CODA && !f.getAction().isDoRepair())
-				.collect(Collectors.toList());
-		codaRepairFilters = languageProject.getActiveAndValidFilters().stream()
-				.filter(f -> f.getTemplateFilterType() == FilterType.CODA && f.getAction().isDoRepair())
-				.collect(Collectors.toList());
-		nucleusFailFilters = languageProject.getActiveAndValidFilters().stream()
-				.filter(f -> f.getTemplateFilterType() == FilterType.NUCLEUS && !f.getAction().isDoRepair())
-				.collect(Collectors.toList());
-		nucleusRepairFilters = languageProject.getActiveAndValidFilters().stream()
-				.filter(f -> f.getTemplateFilterType() == FilterType.NUCLEUS && f.getAction().isDoRepair())
-				.collect(Collectors.toList());
 		onsetFailFilters = languageProject.getActiveAndValidFilters().stream()
 				.filter(f -> f.getTemplateFilterType() == FilterType.ONSET && !f.getAction().isDoRepair())
 				.collect(Collectors.toList());
 		onsetRepairFilters = languageProject.getActiveAndValidFilters().stream()
 				.filter(f -> f.getTemplateFilterType() == FilterType.ONSET && f.getAction().isDoRepair())
-				.collect(Collectors.toList());
-		rimeFailFilters = languageProject.getActiveAndValidFilters().stream()
-				.filter(f -> f.getTemplateFilterType() == FilterType.RIME && !f.getAction().isDoRepair())
-				.collect(Collectors.toList());
-		rimeRepairFilters = languageProject.getActiveAndValidFilters().stream()
-				.filter(f -> f.getTemplateFilterType() == FilterType.RIME && f.getAction().isDoRepair())
 				.collect(Collectors.toList());
 		syllableFailFilters = languageProject.getActiveAndValidFilters().stream()
 				.filter(f -> f.getTemplateFilterType() == FilterType.SYLLABLE && !f.getAction().isDoRepair())
@@ -184,28 +151,12 @@ public class MoraicSyllabifier implements Syllabifiable {
 		tracer.setTracing(tracing);
 	}
 
-	public List<Filter> getCodaFilters() {
-		return codaFailFilters;
-	}
-
-	public List<Filter> getNucleusFilters() {
-		return nucleusFailFilters;
-	}
-
 	public List<Filter> getOnsetFilters() {
 		return onsetFailFilters;
 	}
 
-	public List<Filter> getRimeFilters() {
-		return rimeFailFilters;
-	}
-
 	public List<Filter> getSyllableFilters() {
 		return syllableFailFilters;
-	}
-
-	public List<Template> getCodaTemplates() {
-		return codaTemplates;
 	}
 
 	public List<Template> getNucleusTemplates() {
@@ -214,10 +165,6 @@ public class MoraicSyllabifier implements Syllabifiable {
 
 	public List<Template> getOnsetTemplates() {
 		return onsetTemplates;
-	}
-
-	public List<Template> getRimeTemplates() {
-		return rimeTemplates;
 	}
 
 	public List<Template> getSyllableTemplates() {
@@ -269,7 +216,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 		syllablesInCurrentWord.clear();
 		segmentsInWordInitialAppendix.clear();
 		segmentsInWordFinalAppendix.clear();
-		boolean useWeightByPosition = languageProject.getSyllabificationParameters().isUseWeightByPosition();
+		useWeightByPosition = languageProject.getSyllabificationParameters().isUseWeightByPosition();
 
 		if (!tryWordInitialTemplates) {
 			tracer.resetSteps();
@@ -372,7 +319,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 				}
 				break;
 			case MORA:
-				int morasInSyllable = syl.getMoras().size();
+				int morasInSyllable = getCountOfMorasInSyllable(syl);
 				int morasInSegment = seg1.getMoras();
 				if (morasInSegment > 0) {
 					if (morasInSyllable < maxMorasInSyllable) {
@@ -422,7 +369,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 //							currentState = MoraicSyllabifierState.MORA;
 //						} else 
 						{
-						syl.getMoras().get(morasInSyllable - 1).add(segmentsInWord.get(i));
+						syl.getMoras().get(syl.getMoras().size() - 1).add(segmentsInWord.get(i));
 						syl.getGraphemes().add(segmentsInWord.get(i));
 						tracer.setStatus(MoraicSyllabificationStatus.APPENDED_TO_MORA);
 						tracer.setSuccessful(true);
@@ -475,6 +422,21 @@ public class MoraicSyllabifier implements Syllabifiable {
 			tracer.recordStep();
 		}
 		return true;
+	}
+
+	protected int getCountOfMorasInSyllable(MoraicSyllable syl) {
+		int morasInSyllable = 0;
+		for (Mora mora : syl.getMoras()) {
+			for (CVSegmentInSyllable segInSyl : mora.getGraphemes()) {
+				int moras = segInSyl.getSegment().getMoras();
+				if (moras > 0) {
+					morasInSyllable += moras;
+				} else {
+					morasInSyllable++;
+				}
+			}
+		}
+		return morasInSyllable;
 	}
 
 	protected MoraicSyllable addSyllableToWord(Segment seg1, MoraicSyllable syl, Segment seg2,
@@ -642,16 +604,12 @@ public class MoraicSyllabifier implements Syllabifiable {
 		tracer.getTracingStep().setComparisonResult(comparisonResult);
 	}
 
-	protected MoraicSyllabificationStatus addSegmentToSyllableAsOnset(
+	protected void addSegmentToSyllableAsOnset(
 			List<MoraicSegmentInSyllable> segmentsInWord, MoraicSyllable syl, int i) {
-		MoraicSyllabificationStatus currentState = null;
 		MoraicSegmentInSyllable segInSyl = segmentsInWord.get(i);
 		segInSyl.setUsage(MoraicSegmentUsageType.ONSET);
 		syl.add(segInSyl);
 		syl.getOnset().add(segInSyl);
-//		Onset onset = syl.getOnset();
-//		onset.add(segInSyl);
-//		currentState = MoraicSyllabificationStatus.ONSET_OR_NUCLEUS;
 		if (tracer.isTracing()) {
 			tracer.setSegment1(segInSyl.getSegment());
 			tracer.getTracingStep().setNaturalClass1(
@@ -659,13 +617,191 @@ public class MoraicSyllabifier implements Syllabifiable {
 			tracer.setStatus(MoraicSyllabificationStatus.ADDED_AS_ONSET);
 			tracer.recordStep();
 		}
-//		onset.applyAnyRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord,
-//				sonorityComparer, SHComparisonResult.LESS);
-//
-//		currentState = onset.applyAnyFailFilters(segmentsInWord, i, currentState, syl,
-//				MoraicSyllabificationStatus.ONSET_FILTER_FAILED, syllablesInCurrentWord,
-//				sonorityComparer, SHComparisonResult.LESS);
-		return currentState;
+		applyAnyOnsetRepairFilters(segmentsInWord, i, syl, syllablesInCurrentWord,
+				sonorityComparer, SHComparisonResult.LESS);
+
+		applyAnyOnsetFailFilters(segmentsInWord, i, syl,
+				syllablesInCurrentWord,
+				sonorityComparer, SHComparisonResult.LESS);
+	}
+
+	private void applyAnyOnsetFailFilters(List<MoraicSegmentInSyllable> segmentsInWord,
+			int iSegmentInWord, MoraicSyllable syl,
+			LinkedList<MoraicSyllable> syllablesInCurrentWord,
+			SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
+		MoraicTracer tracer = MoraicTracer.getInstance();
+		TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();
+		for (Filter f : onsetFailFilters) {
+			int iItemsInFilter = f.getSlots().size();
+			int iSegmentsInConstituent = syl.getGraphemes().size();
+			if (iSegmentsInConstituent >= iItemsInFilter) {
+				int iStart = iSegmentInWord - (iItemsInFilter - 1);
+				if (matcher.matches(f, segmentsInWord.subList(iStart, iSegmentInWord + 1),
+						sonorityComparer, sspComparisonNeeded)) {
+					currentState = MoraicSyllabifierState.FILTER_FAILED;
+					if (!syllablesInCurrentWord.contains(syl)) {
+						if (syl.getSegmentsInSyllable().size() > 0) {
+							syllablesInCurrentWord.add(syl);
+						}
+					}
+					tracer.setStatus(MoraicSyllabificationStatus.ONSET_FILTER_FAILED);
+					tracer.setTemplateFilterUsed(f);
+					tracer.setSuccessful(false);
+					tracer.recordStep();
+				}
+			}
+		}
+	}
+
+	// TODO: May need to refactor this which is also (mostly) in Onset.java
+	public void applyAnyOnsetRepairFilters(List<MoraicSegmentInSyllable> segmentsInWord, int iSegmentInWord,
+			MoraicSyllable syl, LinkedList<MoraicSyllable> syllablesInCurrentWord, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
+		MoraicTracer tracer = MoraicTracer.getInstance();
+		TemplateFilterMatcher matcher = TemplateFilterMatcher.getInstance();
+		for (Filter f : onsetRepairFilters) {
+			int iItemsInFilter = f.getSlots().size();
+			// find repair slot position
+			int iConstituentBeginPosition = findConstituentBeginPosition(f);
+			int iSegmentsInConstituent = syl.getGraphemes().size();
+			if (iSegmentsInConstituent >= iItemsInFilter || iConstituentBeginPosition > 0) {
+				int iStart = iSegmentInWord - (iItemsInFilter - 1);
+				if (iConstituentBeginPosition > 0) {
+					iStart = iSegmentInWord - iConstituentBeginPosition;
+				}
+				if (iStart < 0)
+					continue;
+				int iEnd = iSegmentInWord + iItemsInFilter - iConstituentBeginPosition;
+				iEnd = Math.min(iEnd, segmentsInWord.size());
+				if (matcher.matches(f, segmentsInWord.subList(iStart, iEnd), sonorityComparer, null)) {
+					if (syllablesInCurrentWord.size() <= 0) {
+						tracer.initStep(
+								MoraicSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_NO_PREVIOUS_SYLLABLE,
+								f);
+						tracer.recordStep();
+						break;
+					}
+					MoraicSyllable previousSyl = syllablesInCurrentWord.getLast();
+					Optional<TemplateFilterSlotSegmentOrNaturalClass> oSlot = f.getSlots().stream()
+							.filter(s -> s.isRepairLeftwardFromHere()).findFirst();
+					if (!oSlot.isPresent())
+						continue;
+					TemplateFilterSlotSegmentOrNaturalClass slot = oSlot.get();
+					int iSlotPos = f.getSlots().indexOf(slot);
+					MoraicSegmentInSyllable segment = segmentsInWord.get(iStart + iSlotPos);
+					if (codasAllowed && segment.getSegment().getMoras() == 0) {
+						if (previousSyl.getGraphemes().size() > 1) {
+							applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segmentsInWord, iStart + iSlotPos, iConstituentBeginPosition);
+						} else if (nextMatchingSegmentCanBeOnset(f.getSlots(), iSlotPos, segmentsInWord, iStart)) {
+							applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segmentsInWord, iStart + iSlotPos, -1);
+						} else {
+							switch (opType) {
+							case ALL_BUT_FIRST_HAS_ONSET:  // fall through
+							case EVERY_SYLLABLE_HAS_ONSET:
+								tracer.initStep(
+										MoraicSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE,
+										f);
+								tracer.recordStep();
+								break;
+							case ONSETS_NOT_REQUIRED:
+								applyRepairToCoda(syl, syllablesInCurrentWord, tracer, f, segmentsInWord, iStart + iSlotPos, -1);
+								break;
+							}
+						}
+					} else if (segment.getSegment().isNucleus()) {
+						// NOTE: this code has not been tested via a unit test
+						// Until we have templates working which can place a
+						// segment which can be either an onset or a nucleus as
+						// an onset, we will not get here; the segment is always
+						// added as a nucleus
+						switch (opType) {
+						case ALL_BUT_FIRST_HAS_ONSET:  // fall through
+						case EVERY_SYLLABLE_HAS_ONSET:
+							if (syllablesInCurrentWord.indexOf(previousSyl) != 0) {
+								applyRepairToNucleus(syl, tracer, f, previousSyl, segment);
+							} else {
+								tracer.initStep(
+										MoraicSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_REQUIRED_BUT_WONT_BE_ONE,
+										f);
+								tracer.recordStep();
+							}
+							break;
+						case ONSETS_NOT_REQUIRED:
+							applyRepairToNucleus(syl, tracer, f, previousSyl, segment);
+							break;
+						}
+					} else {
+						tracer.initStep(
+								MoraicSyllabificationStatus.ONSET_FILTER_REPAIR_COULD_NOT_APPLY_ONSET_COULD_NOT_GO_IN_PREVIOUS_SYLLABLE,
+								f);
+						tracer.recordStep();
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	// TODO: need to refactor this which is also in Onset.java
+	protected int findConstituentBeginPosition(Filter f) {
+		int iConstituentBeginPosition = 1;
+		for (TemplateFilterSlotSegmentOrNaturalClass slot : f.getSlots()) {
+			if (slot.isConstituentBeginsHere()) {
+				return iConstituentBeginPosition;
+			}
+			iConstituentBeginPosition++;
+		}
+		return -1;
+	}
+
+	private boolean nextMatchingSegmentCanBeOnset(
+			ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots, int iSlotPos,
+			List<MoraicSegmentInSyllable> segmentsInWord, int iStart) {
+		iSlotPos++;
+		if (iSlotPos >= slots.size()) {
+			return false;
+		}
+		MoraicSegmentInSyllable segment = segmentsInWord.get(iStart + iSlotPos);
+		if (segment.getSegment().getMoras() > 0) {
+			return false;
+		}
+		return true;
+	}
+
+	public void applyRepairToNucleus(MoraicSyllable syl, MoraicTracer tracer, Filter f,
+			MoraicSyllable previousSyl, MoraicSegmentInSyllable segment) {
+		Mora mora = previousSyl.getMoras().get(previousSyl.getMoras().size()-1);
+		mora.add(segment);
+		syl.getGraphemes().remove(0);
+		syl.getSegmentsInSyllable().remove(0);
+		tracer.initStep(MoraicSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
+		tracer.setSuccessful(true);
+		tracer.recordStep();
+	}
+
+	public void applyRepairToCoda(MoraicSyllable syl,
+			LinkedList<MoraicSyllable> syllablesInCurrentWord, MoraicTracer tracer, Filter f,
+			List<MoraicSegmentInSyllable> segmentsInWord, int iRepairPosition,
+			int iConstituentBeginPosition) {
+		int iSlotPosition = iRepairPosition;
+		if (iConstituentBeginPosition >= 0) {
+			iSlotPosition = iRepairPosition - iConstituentBeginPosition;
+		}
+		while (iSlotPosition <= iRepairPosition && syl.getGraphemes().size() > 0) {
+			MoraicSegmentInSyllable segInSyl = segmentsInWord.get(iSlotPosition);
+			int morasInSyllable = syllablesInCurrentWord.getLast().getMoras().size();
+			if (useWeightByPosition && morasInSyllable < maxMorasInSyllable) {
+				addSegmentToSyllableAsMora(segmentsInWord, syllablesInCurrentWord.getLast(), segInSyl.getSegment(), iSlotPosition);
+			} else {
+				syllablesInCurrentWord.getLast().getMoras().get(morasInSyllable - 1).add(segInSyl);
+				syllablesInCurrentWord.getLast().getSegmentsInSyllable().add(segInSyl);
+			}
+			syl.getOnset().remove(0);
+			syl.getSegmentsInSyllable().remove(0);
+			iSlotPosition++;
+		}
+		tracer.initStep(MoraicSyllabificationStatus.ONSET_FILTER_REPAIR_APPLIED, f);
+		tracer.setSuccessful(true);
+		tracer.recordStep();
 	}
 
 	protected MoraicSyllabificationStatus updateTypeForNewSyllable() {

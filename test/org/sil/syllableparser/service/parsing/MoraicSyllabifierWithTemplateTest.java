@@ -164,8 +164,8 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		muSyllabifier = new MoraicSyllabifier(muApproach);
 		checkSyllabification("moʊst", true, 1, "moʊst", "σμμca",
 				"(W(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
-		checkSyllabification("ətmoʊst", true, 2, "ə.tmoʊst", "μ.σσμμca",
-				"(W(σ(μ(\\L ə(\\G ə))))(σ(\\L t(\\G t))(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
+		checkSyllabification("ətmoʊst", true, 2, "ət.moʊst", "μc.σμμca",
+				"(W(σ(μ(\\L ə(\\G ə))(\\L t(\\G t))))(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
 		checkSyllabification("sɪks", true, 1, "sɪks", "σμca",
 				"(W(σ(\\L s(\\G s))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k))))(A(\\L s(\\G s))))");
 		checkSyllabification("sɪksθ", true, 1, "sɪksθ", "σμcaa",

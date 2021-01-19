@@ -200,6 +200,33 @@
             <action doRepair="true" repairStartPos="0"/>
             <templateFilterType>ONSET</templateFilterType>
         </filter>
+        <filter id="526bcecb-ba24-4727-a4e9-50557393fd54" active="true">
+            <description>/s/ /j/ is not allowed in an onset</description>
+            <slots>
+                <slot segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>s</segmentString>
+                </slot>
+                <slot segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>j</segmentString>
+                </slot>
+            </slots>
+            <templateFilterName>Bad Onset</templateFilterName>
+            <templateFilterRepresentation>s j</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="false" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
+        </filter>
     </filters>
     <graphemeNaturalClassess/>
     <hyphenationParametersListWord>
