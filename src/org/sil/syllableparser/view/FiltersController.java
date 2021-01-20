@@ -22,24 +22,19 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
-import org.sil.syllableparser.model.oncapproach.ONCApproach;
-import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
  *
  */
-public class FiltersController extends TemplatesFiltersController {
+public abstract class FiltersController extends TemplatesFiltersController {
 
 	@FXML
 	protected ComboBox<FilterType> typeComboBox;
@@ -53,12 +48,6 @@ public class FiltersController extends TemplatesFiltersController {
 	private RadioButton failRadioButton;
 
 	protected ObservableList<Filter> filterList = FXCollections.observableArrayList();
-
-	public void setData(ONCApproach oncApproachData) {
-		oncApproach = oncApproachData;
-		languageProject = oncApproach.getLanguageProject();
-		setDataProcessing(ApplicationPreferences.LAST_ONC_FILTERS_VIEW_ITEM_USED);
-	}
 
 	protected void setDataProcessing(String sLastView) {
 		// no sorting allowed
@@ -85,12 +74,6 @@ public class FiltersController extends TemplatesFiltersController {
 			nameField.setStyle(sAnalysis);
 			descriptionField.setStyle(sAnalysis);
 		}
-	}
-
-	public void setData(MoraicApproach moraicApproachData) {
-		moraicApproach = moraicApproachData;
-		languageProject = moraicApproach.getLanguageProject();
-		setDataProcessing(ApplicationPreferences.LAST_MORAIC_FILTERS_VIEW_ITEM_USED);
 	}
 
 	protected void showFilterDetails(Filter tf) {
@@ -153,11 +136,6 @@ public class FiltersController extends TemplatesFiltersController {
 		filterTable.getSelectionModel().select(index);
 		filterTable.getFocusModel().focus(index);
 		filterTable.scrollTo(index);
-	}
-
-	protected void rememberSelection(int iCurrentIndex) {
-		mainApp.getApplicationPreferences().setLastONCFiltersViewItemUsed(
-				iCurrentIndex);
 	}
 
 	@Override

@@ -108,11 +108,11 @@ public class MoraicApproachController extends ApproachController  {
 			sView = MoraicApproachView.NATURAL_CLASSES.toString();
 			break;
 
-		case "org.sil.syllableparser.view.TemplatesController":
+		case "org.sil.syllableparser.view.MoraicTemplatesController":
 			sView = MoraicApproachView.TEMPLATES.toString();
 			break;
 
-		case "org.sil.syllableparser.view.FiltersController":
+		case "org.sil.syllableparser.view.MoraicFiltersController":
 			sView = MoraicApproachView.FILTERS.toString();
 			break;
 
@@ -203,8 +203,8 @@ public class MoraicApproachController extends ApproachController  {
 	}
 
 	public void handleTemplates() {
-		FXMLLoader loader = createFXMLLoader("fxml/Templates.fxml");
-		TemplatesController controller = loader.getController();
+		FXMLLoader loader = createFXMLLoader("fxml/MoraicTemplates.fxml");
+		MoraicTemplatesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(moraicApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
@@ -215,8 +215,8 @@ public class MoraicApproachController extends ApproachController  {
 	}
 
 	public void handleFilters() {
-		FXMLLoader loader = createFXMLLoader("fxml/Filters.fxml");
-		FiltersController controller = loader.getController();
+		FXMLLoader loader = createFXMLLoader("fxml/MoraicFilters.fxml");
+		MoraicFiltersController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(moraicApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();

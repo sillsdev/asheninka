@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2019-2020 SIL International
+<!-- Copyright (c) 2019-2021 SIL International
     This software is licensed under the LGPL, version 2.1 or later
     (http://www.gnu.org/licenses/lgpl-2.1.html) -->
 
@@ -20,7 +20,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 
-<StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.FiltersController">
+<StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.MoraicFiltersController">
    <children>
       <SplitPane fx:id="splitPane" dividerPositions="0.4373040752351097" prefHeight="160.0" prefWidth="200.0">
         <items>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -19,23 +19,20 @@ import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
-import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
-import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
  *
  */
-public class TemplatesController extends TemplatesFiltersController {
+public abstract class TemplatesController extends TemplatesFiltersController {
 
 	@FXML
 	protected TableView<Template> templateTable;
@@ -43,12 +40,6 @@ public class TemplatesController extends TemplatesFiltersController {
 	protected ComboBox<TemplateType> typeComboBox;
 
 	protected ObservableList<Template> templateList = FXCollections.observableArrayList();
-
-	public void setData(ONCApproach oncApproachData) {
-		oncApproach = oncApproachData;
-		languageProject = oncApproach.getLanguageProject();
-		setDataProcessing(ApplicationPreferences.LAST_ONC_TEMPLATES_VIEW_ITEM_USED);
-	}
 
 	protected void setDataProcessing(String sLastView) {
 		// no sorting allowed
@@ -74,12 +65,6 @@ public class TemplatesController extends TemplatesFiltersController {
 			nameField.setStyle(sAnalysis);
 			descriptionField.setStyle(sAnalysis);
 		}
-	}
-
-	public void setData(MoraicApproach moraicApproachData) {
-		moraicApproach = moraicApproachData;
-		languageProject = moraicApproach.getLanguageProject();
-		setDataProcessing(ApplicationPreferences.LAST_MORAIC_TEMPLATES_VIEW_ITEM_USED);
 	}
 
 	@Override
@@ -139,8 +124,6 @@ public class TemplatesController extends TemplatesFiltersController {
 			nameField.setText(tf.getTemplateFilterName());
 			descriptionField.setText(tf.getDescription());
 			representationField.setText(tf.getTemplateFilterRepresentation());
-			NodeOrientation vernacularOrientation = languageProject.getVernacularLanguage()
-					.getOrientation();
 			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
 					.getOrientation();
 			nameField.setNodeOrientation(analysisOrientation);
@@ -172,11 +155,6 @@ public class TemplatesController extends TemplatesFiltersController {
 		}
 	}
 
-	protected void rememberSelection(int iCurrentIndex) {
-		mainApp.getApplicationPreferences().setLastONCTemplatesViewItemUsed(
-				iCurrentIndex);
-	}
-	
 	@Override
 	public void setViewItemUsed(int value) {
 		int max = templateTable.getItems().size();
