@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International 
+// Copyright (c) 2020-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -116,8 +116,8 @@ public class MoraicApproachLanguageComparisonHTMLFormatter extends
 			sb.append("</th>\n<th>");
 			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
 			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
-			List<SHNaturalClass> sonorityHierarchy1 = muComparer.getMua1().getMuSonorityHierarchy();
-			List<SHNaturalClass> sonorityHierarchy2 = muComparer.getMua2().getMuSonorityHierarchy();
+			List<SHNaturalClass> sonorityHierarchy1 = muComparer.getMua1().getMoraicSonorityHierarchy();
+			List<SHNaturalClass> sonorityHierarchy2 = muComparer.getMua2().getMoraicSonorityHierarchy();
 			int size1 = sonorityHierarchy1.size();
 			int size2 = sonorityHierarchy2.size();
 			int maxSize = Math.max(size1, size2);
@@ -305,10 +305,10 @@ public class MoraicApproachLanguageComparisonHTMLFormatter extends
 
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
-		if (word == null || word.getMuPredictedSyllabification().length() == 0) {
+		if (word == null || word.getMoraicPredictedSyllabification().length() == 0) {
 			sb.append("&#xa0;");
 		} else {
-			sb.append(word.getMuPredictedSyllabification());
+			sb.append(word.getMoraicPredictedSyllabification());
 		}
 	}
 }

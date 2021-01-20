@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International
+// Copyright (c) 2020-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -45,8 +45,8 @@ public class MoraicComparisonController extends ComparisonController {
 		dialogStage = preferences.getLastWindowParameters(sWindowParams, dialogStage, 533.0, 637.0);
 	}
 
-	public void setData(MoraicApproach muApproachData) {
-		currentMua = muApproachData;
+	public void setData(MoraicApproach moraicApproachData) {
+		currentMua = moraicApproachData;
 	}
 
 	/**

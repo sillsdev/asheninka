@@ -53,8 +53,8 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		if (nucSingleVowel.isPresent()) {
 			nucSingleVowel.get().setActive(false);
 		}
-		muSyllabifier = new MoraicSyllabifier(muApproach);
-		sonorityComparer = new SHSonorityComparer(muApproach.getLanguageProject());
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
+		sonorityComparer = new SHSonorityComparer(moraicApproach.getLanguageProject());
 		}
 
 	/*
@@ -273,14 +273,14 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 
 		// codas not allowed, onsets not required, /t/ is onset or coda, tl splits to t.l
 		languageProject.getSyllabificationParameters().setCodasAllowed(false);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("ætlæntɪk", false, 2, "æ.tlæ", "μ.σσμ",
 				"(W(σ(μ(\\L æ(\\G æ))))(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ)))))");
 
 		// codas allowed, all but first has onset, /t/ is onset or coda, tl splits to t.l
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("ætlæntɪk", true, 3, "æt.læn.tɪk", "μμ.σμμ.σμμ",
 				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
 
@@ -291,7 +291,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 
 		// codas allowed, onsets not required, /t/ is onset or coda, t splits to t.
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("ætæntɪk", true, 3, "æt.ænt.ɪk", "μμ.μμc.μμ",
 				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L t(\\G t))))(σ(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))(\\L t(\\G t))))(σ(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
 	}
@@ -358,7 +358,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 
 		// codas not allowed, onsets not required, /t/ is onset or coda, tl splits to t.l
 		languageProject.getSyllabificationParameters().setCodasAllowed(false);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabifyWord("ætlæntɪk", false, 2, "æ.tlæ", "μ.σσμ",
 				"(W(σ(μ(\\L æ(\\G æ))))(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
@@ -392,7 +392,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		// codas allowed, all but first has onset, /t/ is onset or coda, tl splits to t.l
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabifyWord("ætlæntɪk", true, 3, "æt.læn.tɪk", "μc.σμc.σμc",
 				"(W(σ(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
@@ -426,7 +426,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		// codas allowed, every syllable has onset, /t/ is onset or coda, tl splits to t.l
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabifyWord("tætlæntɪk", true, 3, "tæt.læn.tɪk", "σμc.σμc.σμc",
 				"(W(σ(\\L t(\\G t))(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
@@ -463,7 +463,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		// codas allowed, all but first has onset, /t/ is onset or coda, t splits to t.
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		f.getSlots().remove(1);
 		checkSyllabifyWord("ætæntɪk", false, 2, "æ.tænt", "μ.σμcc",
 				"(W(σ(μ(\\L æ(\\G æ))))(σ(\\L t(\\G t))(μ(\\L æ(\\G æ))(\\L n(\\G n))(\\L t(\\G t)))))");
@@ -493,7 +493,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 
 		// codas allowed, onsets not required, /t/ is onset or coda, t splits to t.
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabifyWord("ætæntɪk", true, 3, "æt.ænt.ɪk", "μc.μcc.μc",
 				"(W(σ(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(μ(\\L æ(\\G æ))(\\L n(\\G n))(\\L t(\\G t))))(σ(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();

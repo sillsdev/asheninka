@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -45,7 +45,7 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 	protected CVApproach cvApproach;
 	protected SHApproach shApproach;
 	protected ONCApproach oncApproach;
-	protected MoraicApproach muApproach;
+	protected MoraicApproach moraicApproach;
 	protected String sICURules = "";
 	protected RuleBasedCollator collatorViaRules;
 

@@ -328,15 +328,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 						tracer.recordStep();
 					}
 				} else if (isCoda(i, morasInSyllable, result, segmentsInWord)) {
-					boolean haveCodaAlready = false;
-					for (Mora mora : syl.getMoras()) {
-						for (CVSegmentInSyllable item : mora.getGraphemes()) {
-							if (item.getSegment().getMoras() == 0) {
-								haveCodaAlready = true;
-								break;
-							}
-						}
-					}
+					boolean haveCodaAlready = syllableAlreadyHasCoda(syl);
 					if (haveCodaAlready && applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, syl, i,
 							sonorityComparer, tracer, oncApproach)) {
 						currentState = MoraicSyllabifierState.ONSET;
@@ -403,6 +395,19 @@ public class MoraicSyllabifier implements Syllabifiable {
 			tracer.recordStep();
 		}
 		return true;
+	}
+
+	protected boolean syllableAlreadyHasCoda(MoraicSyllable syl) {
+		boolean haveCodaAlready = false;
+		for (Mora mora : syl.getMoras()) {
+			for (CVSegmentInSyllable item : mora.getGraphemes()) {
+				if (item.getSegment().getMoras() == 0) {
+					haveCodaAlready = true;
+					break;
+				}
+			}
+		}
+		return haveCodaAlready;
 	}
 
 	protected int getCountOfMorasInSyllable(MoraicSyllable syl) {

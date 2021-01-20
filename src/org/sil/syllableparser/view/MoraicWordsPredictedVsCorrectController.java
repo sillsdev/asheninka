@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International
+// Copyright (c) 2020-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -25,32 +25,32 @@ import javafx.scene.control.TableView;
 public class MoraicWordsPredictedVsCorrectController extends WordsPredictedVsCorrectCommonController {
 
 	@FXML
-	protected TableView<Word> muWordsPredictedVsCorrectTable;
+	protected TableView<Word> moraicWordsPredictedVsCorrectTable;
 
-	public TableView<Word> getMuWordsPredictedVsCorrectTable() {
-		return muWordsPredictedVsCorrectTable;
+	public TableView<Word> getMoraicWordsPredictedVsCorrectTable() {
+		return moraicWordsPredictedVsCorrectTable;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.setWordsTable(muWordsPredictedVsCorrectTable);
+		super.setWordsTable(moraicWordsPredictedVsCorrectTable);
 		super.initialize(location, resources);
 		wordPredictedVsCorrectColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.muPredictedVsCorrectSyllabificationProperty());
+				.moraicPredictedVsCorrectSyllabificationProperty());
 	}
 	
-	public void setData(MoraicApproach muApproachData, ObservableList<Word> words) {
-		muApproach = muApproachData;
+	public void setData(MoraicApproach moraicApproachData, ObservableList<Word> words) {
+		moraicApproach = moraicApproachData;
 		this.words = words;
-		languageProject = muApproachData.getLanguageProject();
+		languageProject = moraicApproachData.getLanguageProject();
 		setColumnICURules(wordPredictedVsCorrectColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
 
 		ObservableList<Word> wordsToShow = words.filtered(word -> (!word
 				.getCorrectSyllabification().isEmpty()
-				&& !word.getMuPredictedSyllabification().isEmpty() && !word
-				.getMuPredictedSyllabification().equals(word.getCorrectSyllabification())));
+				&& !word.getMoraicPredictedSyllabification().isEmpty() && !word
+				.getMoraicPredictedSyllabification().equals(word.getCorrectSyllabification())));
 		SortedList<Word> wordsSorted = wordsToShow.sorted();
-		wordsSorted.comparatorProperty().bind(muWordsPredictedVsCorrectTable.comparatorProperty());
+		wordsSorted.comparatorProperty().bind(moraicWordsPredictedVsCorrectTable.comparatorProperty());
 		wordsPredictedVsCorrectTable.setItems(wordsSorted);
 		int iLastIndex = mainApp.getApplicationPreferences().getLastMoraicWordsPredictedVsCorrectViewItemUsed();
 		focusOnLastItemUsed(iLastIndex);
@@ -59,13 +59,13 @@ public class MoraicWordsPredictedVsCorrectController extends WordsPredictedVsCor
 
 	public void handleFilterWords() {
 		wordsPredictedVsCorrectTable.refresh();
-		setData(muApproach, languageProject.getWords());
+		setData(moraicApproach, languageProject.getWords());
 		super.handleFilterWords();
 	}
 
 	public void handleRemoveFiltersWord() {
 		super.handleRemoveFiltersWord();
-		setData(muApproach, languageProject.getWords());
+		setData(moraicApproach, languageProject.getWords());
 	}
 
 }

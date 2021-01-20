@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -447,9 +447,9 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 		populateSegmentTable(ApproachType.ONSET_NUCLEUS_CODA);
 	}
 
-	public void setData(MoraicApproach muApproachData) {
-		currentApproach = muApproach = muApproachData;
-		languageProject = muApproach.getLanguageProject();
+	public void setData(MoraicApproach moraicApproachData) {
+		currentApproach = moraicApproach = moraicApproachData;
+		languageProject = moraicApproach.getLanguageProject();
 		setColumnICURules();
 		setTextFieldColors();
 		populateSegmentTable(ApproachType.MORAIC);

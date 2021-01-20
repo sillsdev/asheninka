@@ -35,7 +35,7 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
  */
 public class MoraicSyllabifierTestBase {
 
-	protected MoraicApproach muApproach;
+	protected MoraicApproach moraicApproach;
 	protected ObservableList<SHNaturalClass> naturalClasses;
 	protected MoraicSegmenter segmenter;
 	protected ObservableList<Segment> segmentInventory;
@@ -59,11 +59,11 @@ public class MoraicSyllabifierTestBase {
 		activeGraphemes = languageProject.getActiveGraphemes();
 		segmenter = new MoraicSegmenter(activeGraphemes,
 				languageProject.getActiveGraphemeNaturalClasses());
-		muApproach = languageProject.getMoraicApproach();
-		shNaturalClasses = muApproach.getActiveSHNaturalClasses();
+		moraicApproach = languageProject.getMoraicApproach();
+		shNaturalClasses = moraicApproach.getActiveSHNaturalClasses();
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 	}
 
 	/**

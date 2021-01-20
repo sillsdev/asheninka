@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -28,8 +28,8 @@ public class Word extends SylParserObject {
 	protected StringProperty shPredictedSyllabification;
 	protected StringProperty oncParserResult;
 	protected StringProperty oncPredictedSyllabification;
-	protected StringProperty muParserResult;
-	protected StringProperty muPredictedSyllabification;
+	protected StringProperty moraicParserResult;
+	protected StringProperty moraicPredictedSyllabification;
 	protected StringProperty cvLingTreeDescription;
 	protected StringProperty shLingTreeDescription;
 	protected StringProperty oncLingTreeDescription;
@@ -46,8 +46,8 @@ public class Word extends SylParserObject {
 		this.shPredictedSyllabification = new SimpleStringProperty("");
 		this.oncParserResult = new SimpleStringProperty("");
 		this.oncPredictedSyllabification = new SimpleStringProperty("");
-		this.muParserResult = new SimpleStringProperty("");
-		this.muPredictedSyllabification = new SimpleStringProperty("");
+		this.moraicParserResult = new SimpleStringProperty("");
+		this.moraicPredictedSyllabification = new SimpleStringProperty("");
 		this.cvLingTreeDescription = new SimpleStringProperty("");
 		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
@@ -66,8 +66,8 @@ public class Word extends SylParserObject {
 		this.shPredictedSyllabification = new SimpleStringProperty("");
 		this.oncParserResult = new SimpleStringProperty(parserResult);
 		this.oncPredictedSyllabification = new SimpleStringProperty("");
-		this.muParserResult = new SimpleStringProperty(parserResult);
-		this.muPredictedSyllabification = new SimpleStringProperty("");
+		this.moraicParserResult = new SimpleStringProperty(parserResult);
+		this.moraicPredictedSyllabification = new SimpleStringProperty("");
 		this.cvLingTreeDescription = new SimpleStringProperty("");
 		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
@@ -207,34 +207,33 @@ public class Word extends SylParserObject {
 		return s;
 	}
 
-	public StringProperty muParserResultProperty() {
-		return muParserResult;
+	public StringProperty moraicParserResultProperty() {
+		return moraicParserResult;
 	}
 
-	public String getMuParserResult() {
-		return muParserResult.get();
+	public String getMoriacParserResult() {
+		return moraicParserResult.get();
 	}
 
-	public void setMuParserResult(String parserResult) {
-		this.muParserResult.set(parserResult);
+	public void setMoraicParserResult(String parserResult) {
+		this.moraicParserResult.set(parserResult);
 	}
 
-	public String getMuPredictedSyllabification() {
-		return muPredictedSyllabification.get();
+	public String getMoraicPredictedSyllabification() {
+		return moraicPredictedSyllabification.get();
 	}
 
-	public StringProperty muPredictedSyllabificationProperty() {
-		return muPredictedSyllabification;
+	public StringProperty moraicPredictedSyllabificationProperty() {
+		return moraicPredictedSyllabification;
 	}
 
-	@XmlElement(name = "muPredictedSyllabification")
-	public void setMuPredictedSyllabification(String string) {
-		this.muPredictedSyllabification.set(string);
+	public void setMoraicPredictedSyllabification(String string) {
+		this.moraicPredictedSyllabification.set(string);
 	}
 
-	public StringProperty muPredictedVsCorrectSyllabificationProperty() {
+	public StringProperty moraicPredictedVsCorrectSyllabificationProperty() {
 		SimpleStringProperty s = new SimpleStringProperty();
-		s.bind(Bindings.concat(muPredictedSyllabificationProperty(), "\n",
+		s.bind(Bindings.concat(moraicPredictedSyllabificationProperty(), "\n",
 				correctSyllabificationProperty()));
 		return s;
 	}
@@ -275,15 +274,16 @@ public class Word extends SylParserObject {
 		this.oncLingTreeDescription.set(ltDescription);
 	}
 
-	public String getMuLingTreeDescription() {
+	public String getMoraicLingTreeDescription() {
 		return muLingTreeDescription.get();
 	}
 
-	public StringProperty muLingTreeDescriptionProperty() {
+	public StringProperty moraicLingTreeDescriptionProperty() {
 		return muLingTreeDescription;
 	}
 
-	public void setMuLingTreeDescription(String ltDescription) {
+	@XmlElement(name = "moraicLingTreeDescription")
+	public void setMoraicLingTreeDescription(String ltDescription) {
 		this.muLingTreeDescription.set(ltDescription);
 	}
 
@@ -293,7 +293,7 @@ public class Word extends SylParserObject {
 				+ cvPredictedSyllabification.getValueSafe()
 				+ shPredictedSyllabification.getValueSafe()
 				+ oncPredictedSyllabification.getValueSafe()
-				+ muPredictedSyllabification.getValueSafe()
+				+ moraicPredictedSyllabification.getValueSafe()
 				+ correctSyllabification.getValueSafe();
 		return sCombo.hashCode();
 	}
@@ -322,8 +322,8 @@ public class Word extends SylParserObject {
 							otherWord.getONCPredictedSyllabification())) {
 						result = false;
 					} else {
-						if (!getMuPredictedSyllabification().equals(
-								otherWord.getMuPredictedSyllabification())) {
+						if (!getMoraicPredictedSyllabification().equals(
+								otherWord.getMoraicPredictedSyllabification())) {
 							result = false;
 						}
 					}

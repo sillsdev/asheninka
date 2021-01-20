@@ -33,8 +33,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
@@ -86,8 +86,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", false, 0, "", "", "(W)");
@@ -139,8 +139,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
@@ -192,8 +192,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
@@ -248,8 +248,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", false, 0, "", "", "(W)");
@@ -307,8 +307,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
@@ -360,8 +360,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
@@ -404,8 +404,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", false, 0, "", "", "(W)");
@@ -451,8 +451,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		languageProject.getSyllabificationParameters().setMaxMorasPerSyllable(2);
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
@@ -1057,8 +1057,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT, false);
 		
 		languageProject.getSyllabificationParameters().setCodasAllowed(false);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("tan", false, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
@@ -1080,8 +1080,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET, false);
 
 		languageProject.getSyllabificationParameters().setOnsetPrinciple(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET.toString());
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("a", false, 0, "", "", "(W)");
 		tracingSteps = muSyllabifier.getTracingSteps();
@@ -1098,8 +1098,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("tanlo", true, 2, "ta.nlo", "σμ.σσμ",
 				"(W(σ(\\L t(\\G t))(μ(\\L a(\\G a))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L o(\\G o)))))");
@@ -1136,8 +1136,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("tano", true, 2, "ta.no", "σμ.σμ",
 				"(W(σ(\\L t(\\G t))(μ(\\L a(\\G a))))(σ(\\L n(\\G n))(μ(\\L o(\\G o)))))");
@@ -1190,8 +1190,8 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
-		muApproach = languageProject.getMoraicApproach();
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		moraicApproach = languageProject.getMoraicApproach();
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("etan", false, 1, "e", "μ", "(W(σ(μ(\\L e(\\G e)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -221,7 +221,7 @@ public class RootLayoutController implements Initializable {
 	private CVApproachController cvApproachController;
 	private SHApproachController shApproachController;
 	private ONCApproachController oncApproachController;
-	private MoraicApproachController muApproachController;
+	private MoraicApproachController moraicApproachController;
 	private ApproachController currentApproachController;
 
 	@FXML
@@ -274,9 +274,9 @@ public class RootLayoutController implements Initializable {
 		oncApproachController.setMainApp(mainApp);
 		oncApproachController.setPrefs(mainApp.getApplicationPreferences());
 		oncApproachController.setRootLayout(this);
-		muApproachController.setMainApp(mainApp);
-		muApproachController.setPrefs(mainApp.getApplicationPreferences());
-		muApproachController.setRootLayout(this);
+		moraicApproachController.setMainApp(mainApp);
+		moraicApproachController.setPrefs(mainApp.getApplicationPreferences());
+		moraicApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -292,9 +292,9 @@ public class RootLayoutController implements Initializable {
 		oncApproachController.setONCApproachData(languageProject.getONCApproach(),
 				languageProject.getWords());
 		oncApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
-		muApproachController.setMoraicApproachData(languageProject.getMoraicApproach(),
+		moraicApproachController.setMoraicApproachData(languageProject.getMoraicApproach(),
 				languageProject.getWords());
-		muApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		moraicApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -1170,79 +1170,79 @@ public class RootLayoutController implements Initializable {
 	private void handleMoraicApproach() {
 		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonMoraicApproach);
-		approachViews.setItems(muApproachController.getViews());
-		currentApproachController = muApproachController;
+		approachViews.setItems(moraicApproachController.getViews());
+		currentApproachController = moraicApproachController;
 		setInitialMoraicView();
 		setDisableForSomeMenuAndToolbarItems();
 	}
 
 	@FXML
 	private void handleMoraicSegmentInventory() {
-		currentApproachController = muApproachController;
-		muApproachController.handleMoraicSegmentInventory();
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicSegmentInventory();
 		selectApproachViewItem(Constants.MORAIC_SEGMENT_INVENTORY_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicSonorityHierarchy() {
-		currentApproachController = muApproachController;
-		muApproachController.handleMoraicSonorityHierarchy();
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicSonorityHierarchy();
 		selectApproachViewItem(Constants.MORAIC_SONORITY_HIERARCHY_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicNaturalClasses() {
-		currentApproachController = muApproachController;
-		muApproachController.handleCVNaturalClasses();
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleCVNaturalClasses();
 		selectApproachViewItem(Constants.MORAIC_NATURAL_CLASSES_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicSyllabificationParameters() {
-		currentApproachController = muApproachController;
-		muApproachController.handleMoraicSyllabificationParameters();
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicSyllabificationParameters();
 		selectApproachViewItem(Constants.MORAIC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicTemplates() {
-		currentApproachController = muApproachController;
-		muApproachController.handleTemplates();;
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleTemplates();;
 		selectApproachViewItem(Constants.MORAIC_TEMPLATES_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicFilters() {
-		currentApproachController = muApproachController;
-		muApproachController.handleFilters();;
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleFilters();;
 		selectApproachViewItem(Constants.MORAIC_FILTERS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicWords() {
-		currentApproachController = muApproachController;
-		muApproachController.handleMoraicWords();
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicWords();
 		selectApproachViewItem(Constants.MORAIC_WORDS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicWordsPredictedVsCorrect() {
-		currentApproachController = muApproachController;
-		muApproachController.handleMoraicWordsPredictedVsCorrect();
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicWordsPredictedVsCorrect();
 		selectApproachViewItem(Constants.MORAIC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicGraphemeNaturalClasses() {
-		currentApproachController = muApproachController;
-		muApproachController.handleGraphemeNaturalClasses();
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleGraphemeNaturalClasses();
 		selectApproachViewItem(Constants.MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
 	}
 
 	@FXML
 	private void handleMoraicEnvironments() {
-		currentApproachController = muApproachController;
-		muApproachController.handleEnvironments();
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleEnvironments();
 		selectApproachViewItem(Constants.MORAIC_ENVIRONMENTS_VIEW_INDEX);
 	}
 
@@ -1412,7 +1412,7 @@ public class RootLayoutController implements Initializable {
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		shApproachController = new SHApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle, bundle.getLocale());
-		muApproachController = new MoraicApproachController(bundle, bundle.getLocale());
+		moraicApproachController = new MoraicApproachController(bundle, bundle.getLocale());
 
 		createToolbarButtons(bundle);
 

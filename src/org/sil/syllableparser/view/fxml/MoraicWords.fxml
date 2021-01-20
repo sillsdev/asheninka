@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Copyright (c) 2020 SIL International 
+<!-- Copyright (c) 2020-2021 SIL International 
     This software is licensed under the LGPL, version 2.1 or later 
     (http://www.gnu.org/licenses/lgpl-2.1.html) -->
 
@@ -22,7 +22,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView fx:id="muWordsTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="moraicWordsTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="wordColumn" prefWidth="63.0" text="%label.word" />
                       <TableColumn fx:id="commentColumn" prefWidth="63.0" text="%label.comment" />

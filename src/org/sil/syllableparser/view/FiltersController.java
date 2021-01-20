@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -87,9 +87,9 @@ public class FiltersController extends TemplatesFiltersController {
 		}
 	}
 
-	public void setData(MoraicApproach muApproachData) {
-		muApproach = muApproachData;
-		languageProject = muApproach.getLanguageProject();
+	public void setData(MoraicApproach moraicApproachData) {
+		moraicApproach = moraicApproachData;
+		languageProject = moraicApproach.getLanguageProject();
 		setDataProcessing(ApplicationPreferences.LAST_MORAIC_FILTERS_VIEW_ITEM_USED);
 	}
 

@@ -51,7 +51,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		if (nucTwoVowel.isPresent()) {
 			nucTwoVowel.get().setActive(false);
 		}
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 	}
 
 	/*
@@ -76,7 +76,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		// onsets required, codas OK
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("sp", false, 0, "", "", "(W)");
 		checkSyllabification("spat", true, 1, "spat", "σσμc",
 				"(W(σ(\\L s(\\G s))(\\L p(\\G p))(μ(\\L a(\\G a))(\\L t(\\G t)))))");
@@ -106,7 +106,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		// onsets not required, nucleus can be only one vowel
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("psoʊt", true, 1, "psoʊt", "aaμμc",
 				"(W(A(\\L p(\\G p))(\\L s(\\G s)))(σ(μ μ(\\L oʊ(\\G oʊ))(\\L t(\\G t)))))");
 		checkSyllabification("poʊt", true, 1, "poʊt", "σμμc",
@@ -161,7 +161,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		// onsets not required, nucleus can be only one vowel
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("moʊst", true, 1, "moʊst", "σμμca",
 				"(W(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
 		checkSyllabification("ətmoʊst", true, 2, "ət.moʊst", "μc.σμμca",
@@ -193,7 +193,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		// onsets not required, nucleus can be only one vowel
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("moʊst", true, 1, "moʊst", "σμμca",
 				"(W(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
@@ -232,7 +232,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		// onsets required, codas OK
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
-		muSyllabifier = new MoraicSyllabifier(muApproach);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("spat", true, 1, "spat", "σσμc",
 				"(W(σ(\\L s(\\G s))(\\L p(\\G p))(μ(\\L a(\\G a))(\\L t(\\G t)))))");

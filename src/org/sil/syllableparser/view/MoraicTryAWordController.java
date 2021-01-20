@@ -29,10 +29,10 @@ import javafx.fxml.FXML;
  */
 public class MoraicTryAWordController extends TryAWordController {
 
-	private MoraicApproach muApproach;
+	private MoraicApproach moraicApproach;
 
-	public void setData(MoraicApproach muApproachData) {
-		muApproach = muApproachData;
+	public void setData(MoraicApproach moraicApproachData) {
+		moraicApproach = moraicApproachData;
 	}
 
 	/**
@@ -67,10 +67,10 @@ public class MoraicTryAWordController extends TryAWordController {
 				MoraicSegmenter segmenter;
 				MoraicSyllabifier syllabifier;
 
-				segmenter = new MoraicSegmenter(muApproach.getLanguageProject()
-						.getActiveGraphemes(), muApproach.getLanguageProject()
+				segmenter = new MoraicSegmenter(moraicApproach.getLanguageProject()
+						.getActiveGraphemes(), moraicApproach.getLanguageProject()
 						.getActiveGraphemeNaturalClasses());
-				syllabifier = new MoraicSyllabifier(muApproach);
+				syllabifier = new MoraicSyllabifier(moraicApproach);
 				MoraicTraceInfo traceInfo = new MoraicTraceInfo(sWordToTry, segmenter, syllabifier);
 
 				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
@@ -88,7 +88,7 @@ public class MoraicTryAWordController extends TryAWordController {
 						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
 				}
 				MoraicTryAWordHTMLFormatter formatter = new MoraicTryAWordHTMLFormatter(traceInfo,
-						muApproach.getLanguageProject(), locale);
+						moraicApproach.getLanguageProject(), locale);
 				formatter.setLingTreeDescription(sLingTreeDescription);
 				String sResult = formatter.format();
 				webEngine.loadContent(sResult);

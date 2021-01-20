@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International 
+// Copyright (c) 2020-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -31,7 +31,7 @@ import javafx.scene.text.Text;
 public class MoraicWordsController extends WordsControllerCommon {
 
 	@FXML
-	protected TableView<Word> muWordsTable;
+	protected TableView<Word> moraicWordsTable;
 
 	protected final class ParserResultWrappingTableCell extends TableCell<Word, String> {
 		private Text text;
@@ -48,8 +48,8 @@ public class MoraicWordsController extends WordsControllerCommon {
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				Word word = (Word) this.getTableRow().getItem();
-				if (word != null && word.getMuParserResult().length() > 0
-						&& word.getMuPredictedSyllabification().length() == 0) {
+				if (word != null && word.getMoriacParserResult().length() > 0
+						&& word.getMoraicPredictedSyllabification().length() == 0) {
 					text.setFill(Constants.PARSER_FAILURE);
 				} else {
 					text.setFill(Constants.PARSER_SUCCESS);
@@ -63,7 +63,7 @@ public class MoraicWordsController extends WordsControllerCommon {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.setApproach(ApplicationPreferences.MORAIC_WORDS);
-		super.setWordsTable(muWordsTable);
+		super.setWordsTable(moraicWordsTable);
 		super.initialize(location, resources);
 
 		parserResultColumn.setCellFactory(column -> {
@@ -71,13 +71,13 @@ public class MoraicWordsController extends WordsControllerCommon {
 		});
 
 		predictedSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.muPredictedSyllabificationProperty());
+				.moraicPredictedSyllabificationProperty());
 		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.muParserResultProperty());
+				.moraicParserResultProperty());
 		predictedSyllabificationField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
 					if (currentWord != null) {
-						currentWord.setMuPredictedSyllabification(predictedSyllabificationField
+						currentWord.setMoraicPredictedSyllabification(predictedSyllabificationField
 								.getText());
 					}
 					if (languageProject != null) {
@@ -88,7 +88,7 @@ public class MoraicWordsController extends WordsControllerCommon {
 		parserResultField.textProperty().addListener((observable, oldValue, newValue) -> {
 			Platform.runLater(() -> {
 				if (currentWord != null) {
-					currentWord.setMuParserResult(parserResultField.getText());
+					currentWord.setMoraicParserResult(parserResultField.getText());
 				}
 				if (languageProject != null) {
 					parserResultField.setFont(languageProject.getAnalysisLanguage().getFont());
@@ -99,15 +99,15 @@ public class MoraicWordsController extends WordsControllerCommon {
 			});
 		});
 		// Clear onc word details.
-		showMuWordDetails(null);
+		showMoraicWordDetails(null);
 		// Listen for selection changes and show the details when changed.
 		wordsTable.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> showMuWordDetails(newValue));
+				.addListener((observable, oldValue, newValue) -> showMoraicWordDetails(newValue));
 	}
 	
-	public void setData(MoraicApproach muApproachData, ObservableList<Word> words) {
-		muApproach = muApproachData;
-		languageProject = muApproach.getLanguageProject();
+	public void setData(MoraicApproach moraicApproachData, ObservableList<Word> words) {
+		moraicApproach = moraicApproachData;
+		languageProject = moraicApproach.getLanguageProject();
 		setDataCommon(words);
 		int max = wordsTable.getItems().size();
 		// mainApp null test is to make some tests work
@@ -120,14 +120,14 @@ public class MoraicWordsController extends WordsControllerCommon {
 
 	public ObservableList<Word> getPredictedWords() {
 		return wordsTable.getItems().filtered(
-				w -> !StringUtilities.isNullOrEmpty(w.getMuPredictedSyllabification()));
+				w -> !StringUtilities.isNullOrEmpty(w.getMoraicPredictedSyllabification()));
 	}
 
 	public ObservableList<Word> getPredictedEqualsCorrectWords() {
 		return wordsTable.getItems()
 				.filtered(
-						w -> !StringUtilities.isNullOrEmpty(w.getMuPredictedSyllabification())
-								&& w.getMuPredictedSyllabification().equals(
+						w -> !StringUtilities.isNullOrEmpty(w.getMoraicPredictedSyllabification())
+								&& w.getMoraicPredictedSyllabification().equals(
 										w.getCorrectSyllabification()));
 	}
 
@@ -135,21 +135,21 @@ public class MoraicWordsController extends WordsControllerCommon {
 	 * Fills all text fields to show details about the ONC word. If the specified
 	 * word is null, all text fields are cleared.
 	 * 
-	 * @param muWord
+	 * @param moraicWord
 	 *            the segment or null
 	 */
-	private void showMuWordDetails(Word muWord) {
-		currentWord = muWord;
-		if (muWord != null) {
+	private void showMoraicWordDetails(Word moraicWord) {
+		currentWord = moraicWord;
+		if (moraicWord != null) {
 			// Fill the text fields with info from the segment object.
-			wordField.setText(muWord.getWord());
-			commentField.setText(muWord.getComment());
-			predictedSyllabificationField.setText(muWord.getMuPredictedSyllabification());
-			correctSyllabificationField.setText(muWord.getCorrectSyllabification());
-			parserResultField.setText(muWord.getMuParserResult());
-			setParserResultFieldColor(muWord.getMuParserResult());
-			showParserResultAndLingTree(muWord.getMuPredictedSyllabification(), muWord.getMuParserResult(),
-					muWord.getMuLingTreeDescription());
+			wordField.setText(moraicWord.getWord());
+			commentField.setText(moraicWord.getComment());
+			predictedSyllabificationField.setText(moraicWord.getMoraicPredictedSyllabification());
+			correctSyllabificationField.setText(moraicWord.getCorrectSyllabification());
+			parserResultField.setText(moraicWord.getMoriacParserResult());
+			setParserResultFieldColor(moraicWord.getMoriacParserResult());
+			showParserResultAndLingTree(moraicWord.getMoraicPredictedSyllabification(), moraicWord.getMoriacParserResult(),
+					moraicWord.getMoraicLingTreeDescription());
 			setNodeOrientationOnFields();
 		} else {
 			// Segment is null, remove all the text.
@@ -160,7 +160,7 @@ public class MoraicWordsController extends WordsControllerCommon {
 			parserResultField.setText("");
 		}
 
-		if (muWord != null) {
+		if (moraicWord != null) {
 			int currentItem = updateStatusBarWords(getPredictedWords(), getPredictedEqualsCorrectWords());
 			mainApp.getApplicationPreferences().setLastMoraicWordsViewItemUsed(currentItem);
 		} else {
@@ -168,12 +168,12 @@ public class MoraicWordsController extends WordsControllerCommon {
 		}
 	}
 
-	public TableView<Word> getMuWordsTable() {
+	public TableView<Word> getMoraicWordsTable() {
 		return wordsTable;
 	}
 
 	public void handleRemoveAllFilters() {
 		super.handleRemoveAllFilters();
-		setData(muApproach, languageProject.getWords());
+		setData(moraicApproach, languageProject.getWords());
 	}
 }

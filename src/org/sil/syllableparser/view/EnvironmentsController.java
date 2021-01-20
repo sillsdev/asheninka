@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -661,9 +661,9 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 		setDataCommon(ApplicationPreferences.LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 
-	public void setData(MoraicApproach muApproachData) {
-		muApproach = muApproachData;
-		languageProject = muApproach.getLanguageProject();
+	public void setData(MoraicApproach moraicApproachData) {
+		moraicApproach = moraicApproachData;
+		languageProject = moraicApproach.getLanguageProject();
 		setDataCommon(ApplicationPreferences.LAST_MORAIC_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 

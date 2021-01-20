@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -201,11 +201,11 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 	}
 
 	private void createListOfDifferentMoraicWords(ObservableList<Word> words) {
-		for (Word oncWord : words) {
-			if (!oncWord.getMuPredictedSyllabification().isEmpty()
-					&& !oncWord.getMuPredictedSyllabification().equals(oncWord.getCorrectSyllabification())) {
+		for (Word moraicWord : words) {
+			if (!moraicWord.getMoraicPredictedSyllabification().isEmpty()
+					&& !moraicWord.getMoraicPredictedSyllabification().equals(moraicWord.getCorrectSyllabification())) {
 				currentPredictedSyllabification = new CVPredictedSyllabification(
-						oncWord.getMuPredictedSyllabification(), oncWord.getID());
+						moraicWord.getMoraicPredictedSyllabification(), moraicWord.getID());
 				cvPredictedSyllabifications.add(currentPredictedSyllabification);
 			}
 		}
@@ -236,9 +236,9 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		createListOfDifferentONCWords(words);
 	}
 
-	public void setData(MoraicApproach muApproachData, ObservableList<Word> words) {
-		muApproach = muApproachData;
-		languageProject = muApproachData.getLanguageProject();
+	public void setData(MoraicApproach moraicApproachData, ObservableList<Word> words) {
+		moraicApproach = moraicApproachData;
+		languageProject = moraicApproachData.getLanguageProject();
 		this.words = words;
 		createListOfDifferentMoraicWords(words);
 	}

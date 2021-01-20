@@ -76,9 +76,9 @@ public class TemplatesController extends TemplatesFiltersController {
 		}
 	}
 
-	public void setData(MoraicApproach muApproachData) {
-		muApproach = muApproachData;
-		languageProject = muApproach.getLanguageProject();
+	public void setData(MoraicApproach moraicApproachData) {
+		moraicApproach = moraicApproachData;
+		languageProject = moraicApproach.getLanguageProject();
 		setDataProcessing(ApplicationPreferences.LAST_MORAIC_TEMPLATES_VIEW_ITEM_USED);
 	}
 

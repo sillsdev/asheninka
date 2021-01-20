@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International
+// Copyright (c) 2020-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -117,8 +117,8 @@ public class MoraicApproachLanguageComparer extends ApproachLanguageComparer {
 	}
 
 	public void compareSonorityHierarchy() {
-		List<SHNaturalClass> naturalClasses1 = mua1.getMuSonorityHierarchy();
-		List<SHNaturalClass> naturalClasses2 = mua2.getMuSonorityHierarchy();
+		List<SHNaturalClass> naturalClasses1 = mua1.getMoraicSonorityHierarchy();
+		List<SHNaturalClass> naturalClasses2 = mua2.getMoraicSonorityHierarchy();
 
 		Set<SHNaturalClass> difference1from2 = new HashSet<SHNaturalClass>(naturalClasses1);
 		// use set difference (removeAll)
@@ -261,7 +261,7 @@ public class MoraicApproachLanguageComparer extends ApproachLanguageComparer {
 		for (Word word : words) {
 			boolean fSuccess = moraicSyllabifier.convertStringToSyllables(word.getWord());
 			if (fSuccess) {
-				word.setMuPredictedSyllabification(moraicSyllabifier.getSyllabificationOfCurrentWord());
+				word.setMoraicPredictedSyllabification(moraicSyllabifier.getSyllabificationOfCurrentWord());
 			}
 		}
 	}
@@ -275,7 +275,7 @@ public class MoraicApproachLanguageComparer extends ApproachLanguageComparer {
 
 	protected String createTextFromSonorityHierarchy(MoraicApproach mua) {
 		StringBuilder sb = new StringBuilder();
-		mua.getMuSonorityHierarchy().stream().forEach(nc -> {
+		mua.getMoraicSonorityHierarchy().stream().forEach(nc -> {
 			sb.append(nc.getNCName());
 			sb.append("\t");
 			sb.append(nc.getSegmentsRepresentation());
@@ -286,8 +286,8 @@ public class MoraicApproachLanguageComparer extends ApproachLanguageComparer {
 
 	@Override
 	protected boolean predictedSyllabificationAreSame(DifferentWord diffWord, Word word) {
-		return word.getMuPredictedSyllabification().equals(
-				((Word) diffWord.getObjectFrom1()).getMuPredictedSyllabification());
+		return word.getMoraicPredictedSyllabification().equals(
+				((Word) diffWord.getObjectFrom1()).getMoraicPredictedSyllabification());
 	}
 
 	@Override

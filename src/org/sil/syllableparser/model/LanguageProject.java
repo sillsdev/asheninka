@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -33,7 +33,7 @@ public class LanguageProject {
 	private CVApproach cvApproach;
 	private SHApproach shApproach;
 	private ONCApproach oncApproach;
-	private MoraicApproach muApproach;
+	private MoraicApproach moraicApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
@@ -58,8 +58,8 @@ public class LanguageProject {
 		shApproach.setLanguageProject(this);
 		oncApproach = new ONCApproach();
 		oncApproach.setLanguageProject(this);
-		muApproach = new MoraicApproach();
-		muApproach.setLanguageProject(this);
+		moraicApproach = new MoraicApproach();
+		moraicApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
 		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
@@ -75,7 +75,7 @@ public class LanguageProject {
 		cvApproach.clear();
 		shApproach.clear();
 		oncApproach.clear();
-		muApproach.clear();
+		moraicApproach.clear();
 		segmentInventory.clear();
 		words.clear();
 		environments.clear();
@@ -121,12 +121,12 @@ public class LanguageProject {
 	}
 
 	public MoraicApproach getMoraicApproach() {
-		return muApproach;
+		return moraicApproach;
 	}
 
 	@XmlElement(name = "moraicApproach")
-	public void setMoraicApproach(MoraicApproach muApproach) {
-		this.muApproach = muApproach;
+	public void setMoraicApproach(MoraicApproach moraicApproach) {
+		this.moraicApproach = moraicApproach;
 	}
 
 	/**
@@ -260,8 +260,8 @@ public class LanguageProject {
 		shApproach.setLanguageProject(this);
 		oncApproach.load(languageProjectLoaded.getONCApproach());
 		oncApproach.setLanguageProject(this);
-		muApproach.load(languageProjectLoaded.getMoraicApproach());
-		muApproach.setLanguageProject(this);
+		moraicApproach.load(languageProjectLoaded.getMoraicApproach());
+		moraicApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
 				.getSegmentInventory();
 		for (Segment segment : segmentInventoryLoadedData) {

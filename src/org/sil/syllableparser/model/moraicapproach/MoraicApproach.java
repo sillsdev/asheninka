@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International
+// Copyright (c) 2020-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -22,7 +22,7 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
  * @author Andy Black
  *
  */
-// @XmlAccessorType(XmlAccessType.FIELD)
+
 public class MoraicApproach extends Approach {
 
 	LanguageProject langProj;
@@ -32,19 +32,19 @@ public class MoraicApproach extends Approach {
 	 * Clear out all data in this Sonority Hierarchy approach
 	 */
 	public void clear() {
-//		shSonorityHierarchy.clear();
+		//	Nothing to do that is not already done
 	}
 
-	public void load(MoraicApproach muApproachLoaded) {
+	public void load(MoraicApproach moraicApproachLoaded) {
 		langProj = this.getLanguageProject();
 		shApproach = langProj.getSHApproach();
 	}
 
 	protected String getPredictedSyllabificationOfWord(Word word) {
-		return word.getMuPredictedSyllabification();
+		return word.getMoraicPredictedSyllabification();
 	}
 
-	public ObservableList<SHNaturalClass> getMuSonorityHierarchy() {
+	public ObservableList<SHNaturalClass> getMoraicSonorityHierarchy() {
 		return getLanguageProject().getSHApproach().getSHSonorityHierarchy();
 	}
 
