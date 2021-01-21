@@ -364,9 +364,14 @@ public class MoraicSyllabifier implements Syllabifiable {
 				} else {
 					if (morasInSyllable > 0) {
 							//&& (result == SHComparisonResult.MISSING1 || result == SHComparisonResult.MISSING2)) {
-						addSyllableToWord(seg1, syl, seg2, result);
+						syl = addSyllableToWord(seg1, syl, seg2, result);
 						if (result == SHComparisonResult.MISSING1 || result == SHComparisonResult.MISSING2) {
 							tracer.setStatus(MoraicSyllabificationStatus.NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT);
+						} else if (applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, syl, i,
+								sonorityComparer, tracer)) {
+							i = addMatchedSegmentsToOnset(segmentsInWord, syl, i) + 1;
+							currentState = MoraicSyllabifierState.MORA;
+							continue;
 						} else {
 							tracer.setStatus(MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET);
 							if (applyAnyWordFinalTemplates(segmentsInWord, i - 1)) {
