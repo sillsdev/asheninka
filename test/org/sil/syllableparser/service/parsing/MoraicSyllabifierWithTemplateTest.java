@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -91,6 +92,43 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		checkSyllabification("smanstil", true, 2, "sman.stil", "σσμc.σσμc",
 				"(W(σ(\\L s(\\G s))(\\L m(\\G m))(μ(\\L a(\\G a))(\\L n(\\G n))))(σ(\\L s(\\G s))(\\L t(\\G t))(μ(\\L i(\\G i))(\\L l(\\G l)))))");
 		}
+
+	@Test
+	public void syllableTemplateTest() {
+		initSyllableTemplate();
+
+		checkSyllabification("səm", true, 1, "səm", "σμc", "(W(σ(\\L s(\\G s))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabification("asəm", true, 2, "a.səm", "μ.σμc",
+				"(W(σ(μ(\\L a(\\G a))))(σ(\\L s(\\G s))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabification("sləm", true, 1, "sləm", "σσμc", "(W(σ(\\L s(\\G s))(\\L l(\\G l))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabification("asləm", true, 2, "a.sləm", "μ.σσμc",
+				"(W(σ(μ(\\L a(\\G a))))(σ(\\L s(\\G s))(\\L l(\\G l))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabification("slwəm", true, 1, "slwəm", "σσσμc",
+				"(W(σ(\\L s(\\G s))(\\L l(\\G l))(\\L w(\\G w))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabification("aslwəm", true, 2, "a.slwəm", "μ.σσσμc",
+				"(W(σ(μ(\\L a(\\G a))))(σ(\\L s(\\G s))(\\L l(\\G l))(\\L w(\\G w))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabification("moʊndlo", true, 2, "moʊn.dlo", "σμμc.σσμ",
+				"(W(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L n(\\G n))))(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+		checkSyllabification("dlomoʊn", true, 2, "dlo.moʊn", "σσμ.σμμc",
+				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L n(\\G n)))))");
+		checkSyllabification("snlwəm", false, 0, "", "", "(W)");
+		checkSyllabification("asnlwəm", false, 1, "a", "μ", "(W(σ(μ(\\L a(\\G a)))))");
+		checkSyllabification("moʊst", false, 0, "", "", "(W)");
+		checkSyllabification("ətmoʊst", false, 1, "ət", "μc", "(W(σ(μ(\\L ə(\\G ə))(\\L t(\\G t)))))");
+	}
+
+	protected void initSyllableTemplate() {
+		// onsets not required, codas allowed, syllable pattern is ([C]) ([C]) ([C]) [V] ([N])
+		languageProject.getSyllabificationParameters().setCodasAllowed(true);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		Optional<Template> syllableTemplate = languageProject.getTemplates().stream()
+				.filter(t -> t.getID().equals("603e7989-7664-4bb6-840e-3ef2c2899805")).findFirst();
+		assertTrue(syllableTemplate.isPresent());
+		Template sylTemplate = syllableTemplate.get();
+		assertEquals(TemplateType.SYLLABLE, sylTemplate.getTemplateFilterType());
+		syllableTemplate.get().setActive(true);
+		muSyllabifier = new MoraicSyllabifier(moraicApproach);
+	}
 
 	@Test
 	public void wordInitialTemplateTest() {
@@ -257,5 +295,204 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		tracingStep = tracingSteps.get(5);
 		checkTracingStep(tracingStep, "t", null, null, null, null,
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
+	}
+	@Test
+	public void traceSyllableTemplateTest() {
+		initSyllableTemplate();
+		muSyllabifier.setDoTrace(true);
+
+		checkSyllabifyWord("səm", true, 1, "səm", "σμc", "(W(σ(\\L s(\\G s))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		List<MoraicTracingStep> tracingSteps = muSyllabifier.getTracingSteps();
+		assertEquals(8, tracingSteps.size());
+		MoraicTracingStep tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "s", "Obstruents", "ə", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("səm", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "s", "Obstruents", "ə", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "ə", "Vowels", "m", "Nasals", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "ə", "Vowels", "m", "Nasals", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("səm", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "ə", "Vowels", "m", "Nasals", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDED_AS_MORA, true);
+		tracingStep = tracingSteps.get(5);
+		checkTracingStep(tracingStep, "m", "Nasals", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("səm", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(6);
+		checkTracingStep(tracingStep,  "m", "Nasals", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.APPENDED_TO_MORA, true);
+		tracingStep = tracingSteps.get(7);
+		checkTracingStep(tracingStep, "m", null, null, null, null,
+				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
+
+		checkSyllabifyWord("sət", false, 0, "", "", "(W)");
+		tracingSteps = muSyllabifier.getTracingSteps();
+		assertEquals(6, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "s", "Obstruents", "ə", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("sə", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "s", "Obstruents", "ə", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "ə", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "ə", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("sə", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "ə", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDED_AS_MORA, true);
+		tracingStep = tracingSteps.get(5);
+		checkTracingStep(tracingStep, "t", "Obstruents", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATES_FAILED, false);
+
+		checkSyllabifyWord("koʊmə", true, 2, "koʊ.mə", "σμμ.σμ",
+				"(W(σ(\\L k(\\G k))(μ μ(\\L oʊ(\\G oʊ))))(σ(\\L m(\\G m))(μ(\\L ə(\\G ə)))))");
+		tracingSteps = muSyllabifier.getTracingSteps();
+		assertEquals(12, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "k", "Obstruents", "oʊ", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("koʊm", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "k", "Obstruents", "oʊ", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "m", "Nasals", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "m", "Nasals", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("koʊm", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "oʊ", "Vowels", "m", "Nasals", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDED_AS_TWO_MORAS, true);
+		tracingStep = tracingSteps.get(5);
+		checkTracingStep(tracingStep, "m", "Nasals", "ə", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDING_SYLLABLE_TO_WORD, true);
+		tracingStep = tracingSteps.get(6);
+		checkTracingStep(tracingStep, "m", "Nasals", "ə", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("mə", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(7);
+		checkTracingStep(tracingStep, "m", "Nasals", "ə", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(8);
+		checkTracingStep(tracingStep, "ə", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(9);
+		checkTracingStep(tracingStep, "ə", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("mə", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(10);
+		checkTracingStep(tracingStep, "ə", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDED_AS_MORA, true);
+		tracingStep = tracingSteps.get(11);
+		checkTracingStep(tracingStep, "ə", null, null, null, null,
+				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
+
+		checkSyllabifyWord("sni", true, 1, "sni", "σσμ",
+				"(W(σ(\\L s(\\G s))(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+		tracingSteps = muSyllabifier.getTracingSteps();
+		assertEquals(8, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "s", "Obstruents", "n", "Nasals", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("sni", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "s", "Obstruents", "n", "Nasals", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "n", "Nasals", "i", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("sni", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "n", "Nasals", "i", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(5);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("sni", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(6);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDED_AS_MORA, true);
+		tracingStep = tracingSteps.get(7);
+		checkTracingStep(tracingStep, "i", null, null, null, null,
+				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
+
+		checkSyllabifyWord("snwi", true, 1, "snwi", "σσσμ",
+				"(W(σ(\\L s(\\G s))(\\L n(\\G n))(\\L w(\\G w))(μ(\\L i(\\G i)))))");
+		tracingSteps = muSyllabifier.getTracingSteps();
+		assertEquals(10, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "s", "Obstruents", "n", "Nasals", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("snwi", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "s", "Obstruents", "n", "Nasals", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "n", "Nasals", "w", "Glides", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("snwi", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "n", "Nasals", "w", "Glides", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep,  "w", "Glides", "i", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("snwi", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(5);
+		checkTracingStep(tracingStep,  "w", "Glides", "i", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(6);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(7);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("snwi", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(8);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDED_AS_MORA, true);
+		tracingStep = tracingSteps.get(9);
+		checkTracingStep(tracingStep, "i", null, null, null, null,
+				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
+
+		checkSyllabifyWord("snlwi", false, 0, "", "", "(W)");
+		tracingSteps = muSyllabifier.getTracingSteps();
+		assertEquals(1, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "s", "Obstruents", "n", "Nasals", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATES_FAILED, false);
 	}
 }

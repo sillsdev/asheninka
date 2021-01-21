@@ -113,6 +113,12 @@ public class MoraicTracer {
 		}
 	}
 
+	public void setGraphemesInMatchedTemplate(String matchedGraphemes) {
+		if (tracing) {
+			tracingStep.setGraphemesInMatchedSyllableTemplate(matchedGraphemes);
+		}
+	}
+
 	public void recordStep() {
 		if (tracing) {
 			tracingSteps.add(tracingStep);

@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 
@@ -21,6 +22,7 @@ import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.moraicapproach.MoraicSegmentInSyllable;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicSyllabificationStatus;
@@ -63,6 +65,11 @@ public class MoraicSyllabifierTestBase {
 		shNaturalClasses = moraicApproach.getActiveSHNaturalClasses();
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		Optional<Template> sylTemplate = languageProject.getActiveAndValidTemplates().stream()
+				.filter(t -> t.getID().equals("f6679cc7-f616-468b-85a2-75276f0373ef")).findFirst();
+		if (sylTemplate.isPresent()) {
+			sylTemplate.get().setActive(false);
+		}
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 	}
 

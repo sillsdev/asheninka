@@ -26,6 +26,7 @@ public class MoraicTracingStep {
 	public SHComparisonResult comparisonResult = null;
 	private MoraicSyllabificationStatus status = MoraicSyllabificationStatus.UNKNOWN;
 	private TemplateFilter templateFilterUsed;
+	private String graphemesInMatchedSyllableTemplate;
 	public String sMissingNaturalClass = "No Natural Class";
 	public static final String NULL_REPRESENTATION = "&#xa0;&#x2014";
 	protected ResourceBundle bundle;
@@ -141,6 +142,7 @@ public class MoraicTracingStep {
 		case CODA_TEMPLATE_MATCHED:
 		case NON_INITIAL_ONSET_TEMPLATE_MATCHED_START_NEW_SYLLABLE:
 		case ONSET_FILTER_REPAIR_APPLIED:
+		case ONSET_TEMPLATE_MATCHED:
 			successful = true;
 			break;
 		default:
@@ -310,6 +312,13 @@ public class MoraicTracingStep {
 		case SYLLABLE_FILTER_REPAIR_COULD_NOT_APPLY:
 			result = addTemplateFilterIDToStatus(bundle.getString("label.oncstisyllablerepairnotapply"));
 			break;
+		case SYLLABLE_TEMPLATES_FAILED:
+			result = bundle.getString("label.moraicstisyllabletemplatefailed");
+			break;
+		case SYLLABLE_TEMPLATE_MATCHED:
+			result = addTemplateFilterIDToStatus(bundle.getString("label.moraicstisyllabletemplatematched"));
+			result = addMatchedGraphemesToStatus(result);
+			break;
 		case UNKNOWN:
 			result = bundle.getString("label.moraicstiunknown");
 			break;
@@ -320,8 +329,12 @@ public class MoraicTracingStep {
 	}
 
 	private String addTemplateFilterIDToStatus(String statusMessage) {
-		return statusMessage.replace("{0}", templateFilterUsed.getTemplateFilterName() + " ("
-				+ templateFilterUsed.getTemplateFilterRepresentation() + ")");
+		return statusMessage.replace("{0}", "(" + templateFilterUsed.getTemplateFilterName() + " \""
+				+ templateFilterUsed.getTemplateFilterRepresentation() + "\")");
+	}
+
+	private String addMatchedGraphemesToStatus(String statusMessage) {
+		return statusMessage.replace("{1}", getGraphemesInMatchedSyllableTemplate());
 	}
 
 	public TemplateFilter getTemplateFilterUsed() {
@@ -330,5 +343,13 @@ public class MoraicTracingStep {
 
 	public void setTemplateFilterUsed(TemplateFilter templateFilterUsed) {
 		this.templateFilterUsed = templateFilterUsed;
+	}
+
+	public String getGraphemesInMatchedSyllableTemplate() {
+		return graphemesInMatchedSyllableTemplate;
+	}
+
+	public void setGraphemesInMatchedSyllableTemplate(String segmentsInMatchedSyllableTemplate) {
+		this.graphemesInMatchedSyllableTemplate = segmentsInMatchedSyllableTemplate;
 	}
 }

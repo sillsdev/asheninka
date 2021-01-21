@@ -61,7 +61,16 @@ public class MoraicSyllable extends MoraicConstituent {
 	public void add(MoraicSegmentInSyllable seg) {
 		segmentsInSyllable.add(seg);
 	}
-	
+
+	public String getGraphemesInSyllable() {
+		StringBuilder sb = new StringBuilder();
+
+		for (MoraicSegmentInSyllable seg : segmentsInSyllable) {
+			sb.append(seg.getGrapheme());
+		}
+		return sb.toString();
+	}
+
 	public String getSegmentNamesInSyllable() {
 		StringBuilder sb = new StringBuilder();
 		

@@ -10,17 +10,13 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 
-import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegment;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.moraicapproach.MoraicSegmentInSyllable;
-import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.service.parsing.SHSonorityComparer;
 

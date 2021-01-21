@@ -1218,6 +1218,51 @@
             <valid>true</valid>
             <templateFilterType>WORDFINAL</templateFilterType>
         </template>
+        <template id="603e7989-7664-4bb6-840e-3ef2c2899805" active="false">
+            <description>A syllable can have up to three consonants, a required vowel, and a nasal coda</description>
+            <slots>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Syllable Template</templateFilterName>
+            <templateFilterRepresentation>([C]) ([C]) ([C]) [V] ([N]) </templateFilterRepresentation>
+            <type>Syllable</type>
+            <valid>true</valid>
+            <templateFilterType>SYLLABLE</templateFilterType>
+        </template>
     </templates>
     <vernacularLanguage>
         <code></code>
@@ -1240,7 +1285,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L d(\G d))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1257,7 +1301,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L g(\G g))(\L n(\G n)))(R(N(\L a(\G a)))(C(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1274,7 +1317,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1291,7 +1333,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L m(\G m)))))(σ(O(\L b(\G b)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L g(\G g))(\L j(\G j)))(R(N(\L u(\G u))(\L ɪ(\G ɪ)))))(σ(O(\L t(\G t)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1308,7 +1349,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t))(\L l(\G l)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1325,7 +1365,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L p(\G p))(\L n(\G n)))(R(N(\L i(\G i))(\L ə(\G ə))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1342,7 +1381,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1359,7 +1397,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1376,7 +1413,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1393,7 +1429,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1410,7 +1445,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1427,7 +1461,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L aɪ(\G aɪ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1444,7 +1477,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L eɪ(\G eɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1461,7 +1493,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L i(\G i)))))(σ(O(\L t(\G t)))(R(N(\L l̩(\G l̩))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1478,7 +1509,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L j(\G j)))(R(N(\L u(\G u)))))(σ(O(\L t(\G t)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1495,7 +1525,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1512,7 +1541,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1529,7 +1557,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1546,7 +1573,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ə(\G ə)))(C(\L l(\G l))(\L t͡ʃ(\G t͡ʃ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1563,7 +1589,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))(\L t͡ʃ(\G t͡ʃ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1580,7 +1605,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1597,7 +1621,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ʊ(\G ʊ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1614,7 +1637,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L u(\G u)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1631,7 +1653,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L w(\G w)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1648,7 +1669,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L ɑ(\G ɑ))(\L i(\G i)))(C(\L k(\G k)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1665,7 +1685,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L ɛ(\G ɛ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1682,7 +1701,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L i(\G i)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1699,7 +1717,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L i(\G i)))(C(\L m(\G m))(\L d(\G d))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1716,7 +1733,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1733,7 +1749,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1750,7 +1765,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L eɪ(\G eɪ)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1767,7 +1781,6 @@
             <comment></comment>
             <correctSyllabification>eɪ.oɹ.tə</correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L eɪ(\G eɪ))(\L o(\G o)))(C(\L ɹ(\G ɹ)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1784,7 +1797,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1801,7 +1813,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L v(\G v))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1818,7 +1829,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L v(\G v))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1835,7 +1845,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1852,7 +1861,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L l(\G l)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1869,7 +1877,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L ɪ(\G ɪ)))(C(\L f(\G f))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1886,7 +1893,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L ɪ(\G ɪ)))(C(\L f(\G f))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1903,7 +1909,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L ɹ(\G ɹ)))(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1920,7 +1925,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L ɹ(\G ɹ)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1937,7 +1941,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L d(\G d))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1954,7 +1957,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L w(\G w)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -1971,7 +1973,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L g(\G g)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -1988,7 +1989,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2005,7 +2005,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2022,7 +2021,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2039,7 +2037,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L θ(\G θ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2056,7 +2053,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2073,7 +2069,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2090,7 +2085,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɪ(\G ɪ)))(C(\L n(\G n))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2107,7 +2101,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L j(\G j)))(R(N(\L ə(\G ə)))(C(\L ɹ(\G ɹ))(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2124,7 +2117,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2141,7 +2133,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L aʊ(\G aʊ)))(C(\L n(\G n)))))(σ(O(\L s(\G s)))(R(N(\L ə(\G ə)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2158,7 +2149,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L i(\G i)))(C(\L l(\G l))(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2175,7 +2165,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2192,7 +2181,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L l(\G l)))(R(N(\L i(\G i)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2209,7 +2197,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L oɪ(\G oɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2226,7 +2213,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L w(\G w)))(R(N(\L ɪ(\G ɪ)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2243,7 +2229,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2260,7 +2245,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L ɹ(\G ɹ)))(R(N(\L a(\G a)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2277,7 +2261,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L l(\G l)))(R(N(\L aʊ(\G aʊ)))(C(\L s(\G s))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2294,7 +2277,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L a(\G a)))(C(\L n(\G n))(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2311,7 +2293,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2328,7 +2309,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L l(\G l))(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2345,7 +2325,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L n(\G n)))(R(N(\L a(\G a)))(C(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2362,7 +2341,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L n(\G n)))(R(N(\L u(\G u)))))(σ(O(\L m(\G m)))(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2379,7 +2357,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L a(\G a)))(C(\L l(\G l))(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2396,7 +2373,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2413,7 +2389,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2430,7 +2405,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p))(\L l(\G l)))(R(N(\L e(\G e))(\L i(\G i)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2447,7 +2421,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L ɛ(\G ɛ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2464,7 +2437,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription></ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse into segments beginning at 'rist'.</ONCParserResult>
@@ -2481,7 +2453,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2498,7 +2469,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2515,7 +2485,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2532,7 +2501,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2549,7 +2517,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2566,7 +2533,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2583,7 +2549,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L l(\G l)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2600,7 +2565,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L l(\G l)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2617,7 +2581,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L m(\G m)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2634,7 +2597,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L n(\G n)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2651,7 +2613,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2668,7 +2629,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2685,7 +2645,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2702,7 +2661,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2719,7 +2677,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2736,7 +2693,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2753,7 +2709,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2770,7 +2725,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2787,7 +2741,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L u(\G u)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2804,7 +2757,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L w(\G w)))(R(N(\L i(\G i)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2821,7 +2773,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2838,7 +2789,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2855,7 +2805,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L m(\G m))(\L p(\G p)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2872,7 +2821,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L eɪ(\G eɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2889,7 +2837,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L u(\G u)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2906,7 +2853,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L w(\G w)))(R(N(\L ɪ(\G ɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2923,7 +2869,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L ɛ(\G ɛ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
@@ -2940,7 +2885,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))(\L θ(\G θ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2957,7 +2901,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2974,7 +2917,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L aɪ(\G aɪ))(\L ə(\G ə)))(C(\L m(\G m))(\L f(\G f))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -2991,7 +2933,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t͡ʃ(\G t͡ʃ)))(R(N(\L eɪ(\G eɪ)))(C(\L m(\G m)))))(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3008,7 +2949,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L w(\G w)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L m(\G m))(\L θ(\G θ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3025,7 +2965,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L w(\G w)))(R(N(\L ɑ(\G ɑ))(\L ɪ(\G ɪ)))(C(\L l(\G l))(\L d(\G d))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3042,7 +2981,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))(C(\L s(\G s)))))(σ(O(\L p(\G p)))(R(N(\L eɪ(\G eɪ)))))(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L g(\G g)))(R(N(\L ə(\G ə)))(C(\L s(\G s))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3059,7 +2997,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))))(σ(O(\L t(\G t)))(R(N(\L a(\G a)))))(σ(O(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3076,7 +3013,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))))(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L oʊ(\G oʊ)))))(σ(O(\L ʃ(\G ʃ)))(R(N(\L ɪ(\G ɪ)))(C(\L s(\G s))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3093,7 +3029,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L f(\G f))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3110,7 +3045,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription></ONCLingTreeDescription>
             <ONCParserResult></ONCParserResult>
@@ -3127,7 +3061,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n)))))(σ(O(\L θ(\G θ)))(R(N(\L u(\G u)))(C(\L z(\G z))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3144,7 +3077,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L ð(\G ð))(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3161,7 +3093,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L ð(\G ð)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3178,7 +3109,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L ʃ(\G ʃ))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3195,7 +3125,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3212,7 +3141,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ))(\L w(\G w)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
@@ -3229,7 +3157,6 @@
             <comment></comment>
             <correctSyllabification></correctSyllabification>
             <moraicLingTreeDescription></moraicLingTreeDescription>
-            <moraicParserResult></moraicParserResult>
             <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ))(\L ɹ(\G ɹ)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
