@@ -48,7 +48,7 @@ public class MoraicWordsController extends WordsControllerCommon {
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				Word word = (Word) this.getTableRow().getItem();
-				if (word != null && word.getMoriacParserResult().length() > 0
+				if (word != null && word.getMoraicParserResult().length() > 0
 						&& word.getMoraicPredictedSyllabification().length() == 0) {
 					text.setFill(Constants.PARSER_FAILURE);
 				} else {
@@ -146,9 +146,9 @@ public class MoraicWordsController extends WordsControllerCommon {
 			commentField.setText(moraicWord.getComment());
 			predictedSyllabificationField.setText(moraicWord.getMoraicPredictedSyllabification());
 			correctSyllabificationField.setText(moraicWord.getCorrectSyllabification());
-			parserResultField.setText(moraicWord.getMoriacParserResult());
-			setParserResultFieldColor(moraicWord.getMoriacParserResult());
-			showParserResultAndLingTree(moraicWord.getMoraicPredictedSyllabification(), moraicWord.getMoriacParserResult(),
+			parserResultField.setText(moraicWord.getMoraicParserResult());
+			setParserResultFieldColor(moraicWord.getMoraicParserResult());
+			showParserResultAndLingTree(moraicWord.getMoraicPredictedSyllabification(), moraicWord.getMoraicParserResult(),
 					moraicWord.getMoraicLingTreeDescription());
 			setNodeOrientationOnFields();
 		} else {

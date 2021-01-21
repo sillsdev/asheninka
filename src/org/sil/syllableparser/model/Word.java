@@ -211,7 +211,7 @@ public class Word extends SylParserObject {
 		return moraicParserResult;
 	}
 
-	public String getMoriacParserResult() {
+	public String getMoraicParserResult() {
 		return moraicParserResult.get();
 	}
 
