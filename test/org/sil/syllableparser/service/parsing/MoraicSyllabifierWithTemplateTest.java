@@ -539,5 +539,60 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		tracingStep = tracingSteps.get(0);
 		checkTracingStep(tracingStep, "s", "Obstruents", "n", "Nasals", SHComparisonResult.LESS,
 				MoraicSyllabificationStatus.SYLLABLE_TEMPLATES_FAILED, false);
+
+		checkSyllabifyWord("uɪti", true, 3, "u.ɪ.ti", "μ.μ.σμ",
+				"(W(σ(μ(\\L u(\\G u))))(σ(μ(\\L ɪ(\\G ɪ))))(σ(\\L t(\\G t))(μ(\\L i(\\G i)))))");
+		tracingSteps = muSyllabifier.getTracingSteps();
+		assertEquals(14, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkTracingStep(tracingStep, "u", "Vowels", "ɪ", "Vowels", SHComparisonResult.EQUAL,
+				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(1);
+		checkTracingStep(tracingStep, "u", "Vowels", "ɪ", "Vowels", SHComparisonResult.EQUAL,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("u", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(2);
+		checkTracingStep(tracingStep, "u", "Vowels", "ɪ", "Vowels", SHComparisonResult.EQUAL,
+				MoraicSyllabificationStatus.ADDED_AS_MORA, true);
+		tracingStep = tracingSteps.get(3);
+		checkTracingStep(tracingStep, "ɪ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATES_FAILED, false);
+		tracingStep = tracingSteps.get(4);
+		checkTracingStep(tracingStep, "ɪ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDING_SYLLABLE_TO_WORD, true);
+		tracingStep = tracingSteps.get(5);
+		checkTracingStep(tracingStep, "ɪ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
+		MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("ɪ", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(6);
+		checkTracingStep(tracingStep, "ɪ", "Vowels", "t", "Obstruents", SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDED_AS_MORA, true);
+		tracingStep = tracingSteps.get(7);
+		checkTracingStep(tracingStep, "t", "Obstruents", "i", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDING_SYLLABLE_TO_WORD, true);
+		tracingStep = tracingSteps.get(8);
+		checkTracingStep(tracingStep, "t", "Obstruents", "i", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("ti", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(9);
+		checkTracingStep(tracingStep, "t", "Obstruents", "i", "Vowels", SHComparisonResult.LESS,
+				MoraicSyllabificationStatus.ADDED_AS_ONSET, true);
+		tracingStep = tracingSteps.get(10);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_NOT_AN_ONSET, false);
+		tracingStep = tracingSteps.get(11);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.SYLLABLE_TEMPLATE_MATCHED, true);
+		assertEquals("603e7989-7664-4bb6-840e-3ef2c2899805", tracingStep.getTemplateFilterUsed().getID());
+		assertEquals("ti", tracingStep.getGraphemesInMatchedSyllableTemplate());
+		tracingStep = tracingSteps.get(12);
+		checkTracingStep(tracingStep, "i", "Vowels", null, null, SHComparisonResult.MORE,
+				MoraicSyllabificationStatus.ADDED_AS_MORA, true);
+		tracingStep = tracingSteps.get(13);
+		checkTracingStep(tracingStep, "i", null, null, null, null,
+				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 	}
 }

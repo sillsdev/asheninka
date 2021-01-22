@@ -321,9 +321,16 @@ public class MoraicSyllabifier implements Syllabifiable {
 				if (morasInSegment > 0) {
 					if (morasInSyllable < maxMorasInSyllable) {
 						if (!applyAnySyllableTemplates(seg1, seg2, result, segmentsInWord, syl, i, sonorityComparer, tracer)) {
-							return false;
+							// Assume it failed because there is a syllable break here
+							i--;
+							syllablesInCurrentWord.add(syl);
+							syl = createNewSyllable();
+							tracer.setStatus(MoraicSyllabificationStatus.ADDING_SYLLABLE_TO_WORD);
+							tracer.setSuccessful(true);
+							tracer.recordStep();
+						} else {
+							syl = addSegmentToSyllableAsMora(segmentsInWord, syl, seg1, i);
 						}
-						syl = addSegmentToSyllableAsMora(segmentsInWord, syl, seg1, i);
 					} else {
 						i--;
 						currentState = MoraicSyllabifierState.ONSET;
@@ -787,7 +794,9 @@ public class MoraicSyllabifier implements Syllabifiable {
 						iSegmentMatchesInTemplate = matcher.getMatchCount();
 						if (iSegmentMatchesInTemplate <= iSegmentsInSyllable) {
 							continue;
-						}
+						} //else if (iSegmentMatchesInTemplate == iSegmentsInSyllable && iSegmentMatchesInTemplate < t.getNumberOfRequiredSlots()) {
+//							continue;
+//						}
 						if (tracer.isTracing()) {
 							tracer.setSegment1(seg1);
 							SHNaturalClass shClass = moraicApproach
