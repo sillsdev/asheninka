@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -69,6 +69,8 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(false);
+		comparer.setUseMoraicApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
@@ -88,6 +90,8 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(false);
+		comparer.setUseMoraicApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
@@ -107,6 +111,8 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(false);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
@@ -126,6 +132,8 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(false);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
@@ -145,6 +153,8 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
@@ -164,6 +174,8 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
@@ -183,6 +195,8 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(false);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
@@ -202,6 +216,8 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(false);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
