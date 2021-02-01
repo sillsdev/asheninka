@@ -167,10 +167,13 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 				sb.append(bundle.getString("report.graphemes"));
 				sb.append("</th>\n<th>");
 				sb.append(bundle.getString("report.environments"));
-				sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+				sb.append("</th>\n");
+				formatApproachSpecificSegmentHeader(sb, seg);
+				sb.append("</tr>\n</thead>\n<tbody>\n");
 				sb.append("<tr>\n");
 				sb.append("<td rowspan=\"" + iNumGraphemes + "\" valign=\"top\">");
 				sb.append(seg.getSegment());
+				sb.append("</td>\n");
 				int i = 0;
 				for (Grapheme grapheme : graphemes) {
 					if (i > 0) {
@@ -180,12 +183,24 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 					sb.append(grapheme.getForm());
 					sb.append("</td>\n<td>");
 					sb.append(grapheme.getEnvsRepresentation());
-					sb.append("</td>\n</tr>\n");
+					sb.append("</td>\n");
+					if (i == 0) {
+						formatApproachSpecificSegmentInfo(sb, seg, iNumGraphemes);
+					}
+					sb.append("</tr>\n");
 					i++;
 				}
-				sb.append("</tbody>\n</table>\n");
 			}
+			sb.append("</tbody>\n</table>\n");
 		}
+	}
+
+	protected void formatApproachSpecificSegmentHeader(StringBuilder sb, Segment seg) {
+		// default is to do nothing extra
+	}
+
+	protected void formatApproachSpecificSegmentInfo(StringBuilder sb, Segment seg, int iNumGraphemes) {
+		// default is to do nothing extra
 	}
 
 	protected void formatGraphemeNaturalClasses(StringBuilder sb) {
@@ -364,6 +379,11 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		} else {
 			sb.append("<p>" + bundle.getString("report.sameonsetprinciple") + "</p>\n");
 		}
+		formatApproachSpecificSyllabificationParameters(sb);
+	}
+
+	protected void formatApproachSpecificSyllabificationParameters(StringBuilder sb) {
+		// default is to do nothing extra
 	}
 
 	protected void formatSyllabificationParameterInfo(StringBuilder sb, String sTitle, String s1,

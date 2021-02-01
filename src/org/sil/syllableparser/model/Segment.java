@@ -280,7 +280,7 @@ public class Segment extends SylParserObject {
 	@Override
 	public int hashCode() {
 		String sCombo = segment.getValueSafe() + graphemes.getValueSafe() + checked.getValue()
-				+ onset.getValue() + nucleus.getValue() + coda.getValue();
+				+ onset.getValue() + nucleus.getValue() + coda.getValue() + moras;
 		return sCombo.hashCode();
 	}
 
@@ -306,6 +306,8 @@ public class Segment extends SylParserObject {
 			result = false;
 		} else if (isCoda() != seg.isCoda()) {
 			result = false;
+		} else if (moras != seg.moras) {
+			return false;
 		}
 		return result;
 	}

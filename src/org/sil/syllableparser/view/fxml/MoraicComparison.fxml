@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) 2016 SIL International 
+<!-- Copyright (c) 2021 SIL International 
     This software is licensed under the LGPL, version 2.1 or later 
     (http://www.gnu.org/licenses/lgpl-2.1.html) -->
 <?import javafx.geometry.*?>
@@ -9,7 +9,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="533.0" prefWidth="637.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.ONCComparisonController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="533.0" prefWidth="637.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.MoraicComparisonController">
 	<children>
 		<HBox layoutX="78.0" layoutY="62.0" prefHeight="22.0" prefWidth="471.0">
 			<children>

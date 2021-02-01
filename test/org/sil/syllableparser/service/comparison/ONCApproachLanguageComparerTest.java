@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -121,7 +121,6 @@ public class ONCApproachLanguageComparerTest {
 		compareGraphemeNaturalClasses(comparer);
 		compareEnvironments(comparer);
 		compareSonorityHierarchy(comparer);
-		compareSyllabificationParameters(comparer);
 		compareFilters(comparer);
 		compareTemplates(comparer);
 		compareWords(comparer);
@@ -196,7 +195,7 @@ public class ONCApproachLanguageComparerTest {
 		assertTrue(seg2.isCoda());
 		assertFalse(seg2.isNucleus());
 		assertTrue(seg2.isOnset());
-		diffSeg = listOfDiffs.get(24);
+		diffSeg = listOfDiffs.get(16);
 		seg1 = ((Segment) diffSeg.getObjectFrom1());
 		assertEquals("eleventh's 1 is a /ɲ/", "ɲ", seg1.getSegment());
 		assertNull("eleventh's 2 is null", diffSeg.getObjectFrom2());
@@ -217,14 +216,14 @@ public class ONCApproachLanguageComparerTest {
 		assertNull(grapheme1);
 		assertEquals("'", grapheme2.getForm());
 		assertEquals(0, grapheme2.getEnvs().size());
-		diffGrapheme = listOfDiffs.get(1);
+		diffGrapheme = listOfDiffs.get(4);
 		assertNull(diffGrapheme.getObjectFrom1());
 		grapheme2 = ((Grapheme) diffGrapheme.getObjectFrom2());
 		assertEquals("C", grapheme2.getForm());
 		assertEquals(0, grapheme2.getEnvs().size());
 		assertEquals("C",
 				((Grapheme) diffGrapheme.getObjectFrom2()).getForm());
-		diffGrapheme = listOfDiffs.get(3);
+		diffGrapheme = listOfDiffs.get(5);
 		grapheme1 = ((Grapheme) diffGrapheme.getObjectFrom1());
 		assertEquals("Ch", grapheme1.getForm());
 		assertNull(diffGrapheme.getObjectFrom2());
@@ -415,28 +414,6 @@ public class ONCApproachLanguageComparerTest {
 		assertEquals("third's 2 is null", null, ((Word) diffWord.getObjectFrom2()));
 		assertEquals("third's 1's parse is ''", "",
 				((Word) diffWord.getObjectFrom1()).getONCPredictedSyllabification());
-	}
-
-	@Test
-	public void compareSyllablePatternOrderTest() {
-		// setup
-		LanguageProject languageProject3 = new LanguageProject();
-		Locale locale = new Locale("en");
-		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
-		File file = new File(Constants.UNIT_TEST_DATA_FILE_3);
-		xmlBackEndProvider.loadLanguageDataFromFile(file);
-		ONCApproach cva3 = languageProject3.getONCApproach();
-		LanguageProject languageProject4 = new LanguageProject();
-		xmlBackEndProvider = new XMLBackEndProvider(languageProject4, locale);
-		file = new File(Constants.UNIT_TEST_DATA_FILE_4);
-		xmlBackEndProvider.loadLanguageDataFromFile(file);
-		ONCApproach cva4 = languageProject4.getONCApproach();
-		ApproachLanguageComparer comparer = new ONCApproachLanguageComparer(cva3, cva4);
-		// test (we only use this as a way to tell if the the two orders are the
-		// same or not)
-//		comparer.compareSyllablePatternOrder();
-//		LinkedList<Diff> differences = comparer.getSyllablePatternOrderDifferences();
-//		assertEquals(7, differences.size());
 	}
 
 	@Test

@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -150,7 +150,7 @@ public class SHApproachLanguageComparerTest {
 		assertEquals("number of graphemes in segment2", 1, seg2.getGraphs().size());
 		assertEquals("first's 2's graphemes are '\''", "'",
 				((Segment) diffSeg.getObjectFrom2()).getGraphemes());
-		diffSeg = listOfDiffs.get(17);
+		diffSeg = listOfDiffs.get(11);
 		seg1 = ((Segment) diffSeg.getObjectFrom1());
 		assertEquals("eleventh's 1 is a /ɲ/", "ɲ", seg1.getSegment());
 		assertNull("eleventh's 2 is null", diffSeg.getObjectFrom2());
@@ -171,14 +171,14 @@ public class SHApproachLanguageComparerTest {
 		assertNull(grapheme1);
 		assertEquals("'", grapheme2.getForm());
 		assertEquals(0, grapheme2.getEnvs().size());
-		diffGrapheme = listOfDiffs.get(1);
+		diffGrapheme = listOfDiffs.get(4);
 		assertNull(diffGrapheme.getObjectFrom1());
 		grapheme2 = ((Grapheme) diffGrapheme.getObjectFrom2());
 		assertEquals("C", grapheme2.getForm());
 		assertEquals(0, grapheme2.getEnvs().size());
 		assertEquals("C",
 				((Grapheme) diffGrapheme.getObjectFrom2()).getForm());
-		diffGrapheme = listOfDiffs.get(3);
+		diffGrapheme = listOfDiffs.get(5);
 		grapheme1 = ((Grapheme) diffGrapheme.getObjectFrom1());
 		assertEquals("Ch", grapheme1.getForm());
 		assertNull(diffGrapheme.getObjectFrom2());
@@ -234,7 +234,7 @@ public class SHApproachLanguageComparerTest {
 		assertEquals("number of different words", 4611, diffs.size());
 		List<DifferentWord> listOfDiffs = new ArrayList<DifferentWord>();
 		listOfDiffs.addAll(diffs);
-		DifferentWord diffWord = listOfDiffs.get(2026);
+		DifferentWord diffWord = listOfDiffs.get(2062);
 		assertEquals("2026's 1 is motankwakwetsak", "motankwakwetsak",
 				((Word) diffWord.getObjectFrom1()).getWord());
 		assertEquals("2026's 2 is motankwakwetsak", "motankwakwetsak",
