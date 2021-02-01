@@ -639,7 +639,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 								break;
 							}
 						}
-					} else if (segment.getSegment().isNucleus()) {
+					} else if (segment.getSegment().getMoras() > 0) {
 						// NOTE: this code has not been tested via a unit test
 						// Until we have templates working which can place a
 						// segment which can be either an onset or a nucleus as
@@ -740,7 +740,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 			List<MoraicSegmentInSyllable> segmentsInWord, MoraicSyllable syl, int i,
 			SHSonorityComparer sonorityComparer, MoraicTracer tracer) {
 		iSegmentMatchesInTemplate = 0;
-		if (seg1 == null || seg2 == null || !seg1.isOnset() || !seg2.isOnset())
+		if (seg1 == null || seg2 == null)
 			return false;
 		if (onsetTemplates.size() > 0) {
 			int iSegmentsInWord = segmentsInWord.size();
