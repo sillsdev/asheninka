@@ -54,14 +54,15 @@ public class MoraicSegmentInventoryController extends CVSegmentInventoryControll
 					if (!Character.isDigit(text.charAt(i)))
 						return null;
 				}
-				if (text.length() > 0 && currentSegment != null) {
-					currentSegment.setMorasBorn(text);
-				}
 				return change;
 			}
 		};
 		morasField.setTextFormatter(new TextFormatter<String>(filter));
-
+		morasField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentSegment != null) {
+				currentSegment.setMorasBorn(morasField.getText());
+			}
+		});
 	}
 
 	/**

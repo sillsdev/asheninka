@@ -91,15 +91,17 @@ public class MoraicSyllabificationParametersController extends SylParserBaseCont
 					if (!Character.isDigit(text.charAt(i)))
 						return null;
 				}
-				if (text.length() > 0) {
-					int value = Integer.valueOf(text);
-					syllabificationParameters.setMaxMorasPerSyllable(value);
-				}
 				return change;
 			}
 		};
 		maxMoras.setTextFormatter(new TextFormatter<String>(filter));
-		
+		maxMoras.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (syllabificationParameters != null) {
+				int value = Integer.valueOf(maxMoras.getText());
+				syllabificationParameters.setMaxMorasPerSyllable(value);
+			}
+		});
+
 		allButFirstOPRadioButton.setText(bundle.getString("radio.allbutfirst"));
 		everySyllableOPRadioButton.setText(bundle.getString("radio.everysyllable"));
 		onsetsNotRequiredOPRadioButton.setText(bundle.getString("radio.onsetsnotrequired"));
