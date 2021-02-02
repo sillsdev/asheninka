@@ -87,6 +87,7 @@
         <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
         <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
     </hyphenationParametersXLingPaper>
+    <moraicApproach/>
     <oncApproach/>
     <shApproach>
         <shSonorityHierarchy>
@@ -136,6 +137,8 @@
                     <form>A</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>a</segment>
@@ -158,6 +161,8 @@
                     <form>B</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>b</segment>
@@ -180,6 +185,8 @@
                     <form>D</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>d</segment>
@@ -202,6 +209,8 @@
                     <form>E</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>e</segment>
@@ -224,6 +233,8 @@
                     <form>F</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>f</segment>
@@ -246,6 +257,8 @@
                     <form>G</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>g</segment>
@@ -268,6 +281,8 @@
                     <form>H</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>h</segment>
@@ -290,6 +305,8 @@
                     <form>I</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>i</segment>
@@ -312,6 +329,8 @@
                     <form>K</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>k</segment>
@@ -334,6 +353,8 @@
                     <form>L</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>l</segment>
@@ -356,6 +377,8 @@
                     <form>M</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>m</segment>
@@ -378,6 +401,8 @@
                     <form>N</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>n</segment>
@@ -400,6 +425,8 @@
                     <form>Ñ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>ɲ</segment>
@@ -422,6 +449,8 @@
                     <form>O</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>o</segment>
@@ -444,6 +473,8 @@
                     <form>P</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>p</segment>
@@ -466,6 +497,8 @@
                     <form>Q</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>q</segment>
@@ -488,6 +521,8 @@
                     <form>R</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>r</segment>
@@ -510,6 +545,8 @@
                     <form>S</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>s</segment>
@@ -532,6 +569,8 @@
                     <form>T</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>t</segment>
@@ -554,6 +593,8 @@
                     <form>U</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>u</segment>
@@ -576,6 +617,8 @@
                     <form>V</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>v</segment>
@@ -598,6 +641,8 @@
                     <form>W</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>w</segment>
@@ -620,6 +665,8 @@
                     <form>X</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>x</segment>
@@ -642,6 +689,8 @@
                     <form>Y</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>y</segment>
@@ -664,6 +713,8 @@
                     <form>Z</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>z</segment>
@@ -671,9 +722,11 @@
     </segments>
     <syllabificationParameters>
         <codasAllowed>true</codasAllowed>
+        <maxMorasPerSyllable>2</maxMorasPerSyllable>
         <onsetMaximization>false</onsetMaximization>
         <onsetPrinciple></onsetPrinciple>
         <onsetPrincipleEnum>EVERY_SYLLABLE_HAS_ONSET</onsetPrincipleEnum>
+        <useWeightByPosition>false</useWeightByPosition>
     </syllabificationParameters>
     <templates/>
     <vernacularLanguage>
