@@ -23,14 +23,18 @@ import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
+import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.oncapproach.ONCSegmentInSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.ONCSegmenter;
 import org.sil.syllableparser.service.parsing.SHSonorityComparer;
+import org.sil.syllableparser.view.TemplatesController;
+import org.sil.syllableparser.view.TemplatesFiltersController;
 
 /**
  * @author Andy Black
@@ -170,5 +174,59 @@ public class TemplateFilterMatcherTest {
 		assertEquals(fExpectedResult, fResult);
 		assertEquals(expectedMatchCount, matcher.getMatchCount());
 	}
+	@Test
+	public void syllableMatcherTest() {
+		createSyllableTemplate();
+		// ([C]) ([C]) [V] ([C]) ([C])
+		assertNotNull(tf);
+		checkMatch("a", 1, true, 1);
+		checkMatch("ta", 2, true, 2);
+		checkMatch("tad", 3, true, 3);
+		checkMatch("tlad", 4, true, 4);
+		checkMatch("atl", 3, true, 3);
+		checkMatch("lta", 3, false, 3);
+		checkMatch("mtakn", 5, false, 5);
+		checkMatch("t", 1, false, 1);
+		// (*[C]) (*[C]) [V] (*[C]) (*[C])
+		ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots = tf.getSlots();
+		slots.get(0).setObeysSSP(false);
+		slots.get(1).setObeysSSP(false);
+		slots.get(3).setObeysSSP(false);
+		slots.get(4).setObeysSSP(false);
+		checkMatch("a", 1, true, 1);
+		checkMatch("ta", 2, true, 2);
+		checkMatch("tad", 3, true, 3);
+		checkMatch("tlad", 4, true, 4);
+		checkMatch("atl", 3, true, 3);
+		checkMatch("lta", 3, true, 3);
+		checkMatch("mtakn", 5, true, 5);
+		checkMatch("t", 1, false, 1);
+	}
 
+	protected void createSyllableTemplate() {
+		CVNaturalClass c = languageProject.getONCApproach().getActiveCVNaturalClasses().get(0);
+		CVNaturalClass v = languageProject.getONCApproach().getActiveCVNaturalClasses().get(1);
+		ObservableList<TemplateFilterSlotSegmentOrNaturalClass> slots = FXCollections.observableArrayList();
+		TemplateFilterSlotSegmentOrNaturalClass slot1 = new TemplateFilterSlotSegmentOrNaturalClass(c);
+		slot1.setObeysSSP(true);
+		slot1.setOptional(true);
+		slots.add(slot1);
+		TemplateFilterSlotSegmentOrNaturalClass slot2 = new TemplateFilterSlotSegmentOrNaturalClass(c);
+		slot2.setObeysSSP(true);
+		slot2.setOptional(true);
+		slots.add(slot2);
+		TemplateFilterSlotSegmentOrNaturalClass slot3 = new TemplateFilterSlotSegmentOrNaturalClass(v);
+		slot3.setObeysSSP(true);
+		slot3.setOptional(false);
+		slots.add(slot3);
+		TemplateFilterSlotSegmentOrNaturalClass slot4 = new TemplateFilterSlotSegmentOrNaturalClass(c);
+		slot4.setObeysSSP(true);
+		slot4.setOptional(true);
+		slots.add(slot4);
+		TemplateFilterSlotSegmentOrNaturalClass slot5 = new TemplateFilterSlotSegmentOrNaturalClass(c);
+		slot5.setObeysSSP(true);
+		slot5.setOptional(true);
+		slots.add(slot5);
+		tf = new Template("Syllable template", "type", "description", "([C])([C])[V]([C])([C])", slots, TemplateType.SYLLABLE);
+	}
 }

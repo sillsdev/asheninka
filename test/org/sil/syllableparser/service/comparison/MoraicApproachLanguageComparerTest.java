@@ -159,7 +159,7 @@ public class MoraicApproachLanguageComparerTest {
 	protected void compareWords(ApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
-		assertEquals("number of different words", 3901, diffs.size());
+		assertEquals("number of different words", 2566, diffs.size());
 		List<DifferentWord> listOfDiffs = new ArrayList<DifferentWord>();
 		listOfDiffs.addAll(diffs);
 		DifferentWord diffWord = listOfDiffs.get(0);

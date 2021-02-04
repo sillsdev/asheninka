@@ -395,7 +395,7 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 		}
 	}
 
-	protected boolean parseSlotsRepresentation(String sRep) {
+	public boolean parseSlotsRepresentation(String sRep) {
 		CharStream input = CharStreams.fromString(sRep);
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
 		TemplateFilterLexer.slotPosition = fAllowSlotPosition;

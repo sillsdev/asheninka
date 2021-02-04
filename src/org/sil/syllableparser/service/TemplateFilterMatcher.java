@@ -10,11 +10,15 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 
+import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
+import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegment;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
+import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
@@ -63,7 +67,8 @@ public class TemplateFilterMatcher {
 		return iSegMatchCount;
 	}
 
-	public boolean matches(TemplateFilter tf, List<? extends CVSegmentInSyllable> segmentsToMatch, SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
+	public boolean matches(TemplateFilter tf, List<? extends CVSegmentInSyllable> segmentsToMatch,
+			SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
 		slotAndSegment.clear();
 		int iSlot = 0;
 		List<TemplateFilterSlotSegmentOrNaturalClass> slots = tf.getSlots();
@@ -80,6 +85,8 @@ public class TemplateFilterMatcher {
 				}
 				if (seg.equals(referringSegment)) {
 					iSegMatchCount++;
+					TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
+					slotAndSegment.add(ss);
 				} else if (!slot.isOptional()) {
 					return false;
 				}
@@ -92,13 +99,15 @@ public class TemplateFilterMatcher {
 						FXCollections.observableList(natClass.getAllSegments()), seg.getID());
 				if (index >= 0) {
 					iSegMatchCount++;
+					TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
+					slotAndSegment.add(ss);
 				} else if (!slot.isOptional()) {
 					return false;
 				}
 			}
 			iSlot++;
-			TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
-			slotAndSegment.add(ss);
+//			TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
+//			slotAndSegment.add(ss);
 		}
 		while (iSlot < slots.size()) {
 			// not all slots were tested; remaining slots must be optional
@@ -110,37 +119,116 @@ public class TemplateFilterMatcher {
 		}
 		if (iSlot == slots.size()) {
 			// now check for sonority requirements
-			return sonorityIsValid(sonorityComparer, sspComparisonNeeded, slotAndSegment);
+			return sonorityIsValid(tf, sonorityComparer, sspComparisonNeeded, slotAndSegment);
 		}	
 		return false;
 	}
 
-	private boolean sonorityIsValid(SHSonorityComparer sonorityComparer,
+	private boolean sonorityIsValid(TemplateFilter tf, SHSonorityComparer sonorityComparer,
 			SHComparisonResult sspComparisonNeeded, List<TemplateFilterSlotSegment> slotAndSegment) {
-		TemplateFilterSlotSegmentOrNaturalClass slot;
-		if (sspComparisonNeeded != null && slotAndSegment.size() > 1) {
-			TemplateFilterSlotSegment ssPrevious = slotAndSegment.get(0);
-			for (int i = 1; i < slotAndSegment.size(); i++) {
-				TemplateFilterSlotSegment ssCurrent = slotAndSegment.get(i);
-				slot = ssCurrent.getSlot();
-				if (slot.isObeysSSP()) {
-					TemplateFilterSlotSegmentOrNaturalClass slotPrevious = ssPrevious.getSlot();
-					if (slotPrevious.isObeysSSP()) {
-						Segment segPrevious = ssPrevious.getSegment();
-						Segment segCurrent = ssCurrent.getSegment();
-						SHComparisonResult result = sonorityComparer.compare(segPrevious,
-								segCurrent);
-						if (result != SHComparisonResult.MISSING1
-								&& result != SHComparisonResult.MISSING2) {
-							if (result != sspComparisonNeeded) {
-								return false;
-							}
-						}
-					}
-					ssPrevious = ssCurrent;
-				}
+		if (slotAndSegment.size() <= 1)
+			return true;
+		if (sspComparisonNeeded != null) {
+			return checkSonorityToNeeded(slotAndSegment, sonorityComparer, sspComparisonNeeded);
+		} else {
+			boolean isSyllableTemplate = tf instanceof Template
+					&& ((Template) tf).getTemplateFilterType() == TemplateType.SYLLABLE;
+			boolean isSyllableFilter = tf instanceof Filter
+					&& ((Filter) tf).getTemplateFilterType() == FilterType.SYLLABLE;
+			if (isSyllableTemplate || isSyllableFilter) {
+				return checkSonorityOverSyllable(slotAndSegment, sonorityComparer);
 			}
 		}
 		return true;
+	}
+
+	protected boolean checkSonorityToNeeded(List<TemplateFilterSlotSegment> slotAndSegment,
+			SHSonorityComparer sonorityComparer, SHComparisonResult sspComparisonNeeded) {
+		TemplateFilterSlotSegmentOrNaturalClass slot;
+		TemplateFilterSlotSegment ssPrevious = slotAndSegment.get(0);
+		for (int i = 1; i < slotAndSegment.size(); i++) {
+			TemplateFilterSlotSegment ssCurrent = slotAndSegment.get(i);
+			slot = ssCurrent.getSlot();
+			if (slot.isObeysSSP()) {
+				TemplateFilterSlotSegmentOrNaturalClass slotPrevious = ssPrevious.getSlot();
+				if (slotPrevious.isObeysSSP()) {
+					Segment segPrevious = ssPrevious.getSegment();
+					Segment segCurrent = ssCurrent.getSegment();
+					SHComparisonResult result = sonorityComparer.compare(segPrevious,
+							segCurrent);
+					if (result != SHComparisonResult.MISSING1
+							&& result != SHComparisonResult.MISSING2) {
+						if (result != sspComparisonNeeded) {
+							return false;
+						}
+					}
+				}
+				ssPrevious = ssCurrent;
+			}
+		}
+		return true;
+	}
+
+	protected boolean checkSonorityOverSyllable(List<TemplateFilterSlotSegment> slotAndSegment,
+			SHSonorityComparer sonorityComparer) {
+		TemplateFilterSlotSegmentOrNaturalClass slot;
+		int iPeak = getPeak(sonorityComparer, slotAndSegment);
+		TemplateFilterSlotSegment ssPrevious = slotAndSegment.get(0);
+		for (int i = 1; i < slotAndSegment.size(); i++) {
+			TemplateFilterSlotSegment ssCurrent = slotAndSegment.get(i);
+			slot = ssCurrent.getSlot();
+			if (slot.isObeysSSP()) {
+				TemplateFilterSlotSegmentOrNaturalClass slotPrevious = ssPrevious.getSlot();
+				if (slotPrevious.isObeysSSP()) {
+					Segment segPrevious = ssPrevious.getSegment();
+					Segment segCurrent = ssCurrent.getSegment();
+					SHComparisonResult result = sonorityComparer.compare(segPrevious,
+							segCurrent);
+					int currentIndex = i - 1;
+					switch (result) {
+					case EQUAL:
+						// is OK only if at top level of hierarchy
+						if (currentIndex != iPeak
+								&& sonorityComparer.getLevel(segCurrent) != iPeak)
+							return false;
+						break;
+					case LESS:
+						// is OK only if before top level and is optional
+						if (currentIndex >= iPeak && !ssCurrent.getSlot().isOptional())
+							return false;
+						break;
+					case MISSING1:
+						break;
+					case MISSING2:
+						break;
+					case MORE:
+						// is OK only if at or after top level
+						if (currentIndex < iPeak)
+							return false;
+						break;
+					default:
+						break;
+					}
+				}
+				ssPrevious = ssCurrent;
+			}
+		}
+		return true;
+	}
+
+	protected int getPeak(SHSonorityComparer sonorityComparer,
+			List<TemplateFilterSlotSegment> slotAndSegment) {
+		int topLevel = 1000000;
+		int iPeak = -1;
+		for (int i = 0; i < slotAndSegment.size(); i++) {
+			TemplateFilterSlotSegment ss = slotAndSegment.get(i);
+			Segment segment = ss.getSegment();
+			int level = sonorityComparer.getLevel(segment);
+			if (level < topLevel) {
+				topLevel = level;
+				iPeak = i;
+			}
+		}
+		return iPeak;
 	}
 }
