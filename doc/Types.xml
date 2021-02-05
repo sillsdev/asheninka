@@ -216,8 +216,41 @@ font-weight="bold"
 id="tKey"
 ></type
 ><type
+before="Maximum number of moras per syllable"
+id="tMaxMoras"
+></type
+><type
 color="maroon"
 id="tMenuItem"
+></type
+><type
+after="μ"
+font-family="Times New Roman"
+id="tMora"
+></type
+><type
+before="Moraic approach"
+id="tMoraicApproach"
+></type
+><type
+before="Predicted vs.​ Correct Moraic Words"
+id="tMoraicPredictedVsCorrectWords"
+types="tView"
+></type
+><type
+before="Segment Inventory"
+id="tMoraicSegmentInventory"
+types="tView"
+></type
+><type
+before="Sonority Hierarchy"
+id="tMoraicSonorityHierarchy"
+types="tView"
+></type
+><type
+before="Moraic Words"
+id="tMoraicWords"
+types="tView"
 ></type
 ><type
 before="Onset-nucleus-coda approach"
@@ -351,6 +384,10 @@ id="TT"
 color="purple"
 font-weight="bold"
 id="tView"
+></type
+><type
+before="Use weight-by-position"
+id="tWeightByPosition"
 ></type
 ><type
 before="XLingPaper"

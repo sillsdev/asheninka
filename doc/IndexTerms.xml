@@ -170,6 +170,23 @@ id="iFailureSHSegmenter"
 ></indexTerms
 ></indexTerm
 ><indexTerm
+id="iMoraicFailures"
+><term
+>Moraic approach</term
+><indexTerms
+><indexTerm
+id="iFailureMoraicNaturalClasser"
+><term
+>Parse into natural classes</term
+></indexTerm
+><indexTerm
+id="iFailureMoraicSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
 id="iONCFailures"
 ><term
 >ONC approach</term
@@ -333,6 +350,78 @@ id="iLDMLFile"
 id="iMoraicApproach"
 ><term
 >Moraic approach</term
+><indexTerms
+><indexTerm
+id="iMoraicApproachAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iMoraicCompare2Implementstions"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iMoraicEnvironments"
+><term
+>Environments</term
+></indexTerm
+><indexTerm
+id="iMoraicFilter"
+><term
+>Filters</term
+></indexTerm
+><indexTerm
+id="iMoraicGraphemeNaturalClasses"
+><term
+>Grapheme natural classes</term
+></indexTerm
+><indexTerm
+id="iMoraicGraphemes"
+><term
+>Graphemes</term
+></indexTerm
+><indexTerm
+id="iMoraicNaturalClasses"
+><term
+>Natural classes</term
+></indexTerm
+><indexTerm
+id="iMoraicPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="iMoraicSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iMoraicSonorityHierarchy"
+><term
+>Sonority hierarchy</term
+></indexTerm
+><indexTerm
+id="iMoraicSyllabificationParameters"
+><term
+>Syllabification parameters</term
+></indexTerm
+><indexTerm
+id="iMoraicTemplates"
+><term
+>Templates</term
+></indexTerm
+><indexTerm
+id="iMoraicTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iMoraicWords"
+><term
+>Words</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iNewProject"
@@ -482,6 +571,11 @@ id="iCVPredictedSyllabification"
 id="iCVPredictedSyllabificationCompare"
 ><term
 >Comparing with correct (CV)</term
+></indexTerm
+><indexTerm
+id="iMoraicPredictedSyllabificationCompare"
+><term
+>Comparing with correct (Moraic)</term
 ></indexTerm
 ><indexTerm
 id="iONCPredictedSyllabificationCompare"
@@ -695,6 +789,11 @@ id="iCodasAllowed"
 >Codas allowed</term
 ></indexTerm
 ><indexTerm
+id="iMaxMoras"
+><term
+>Maximum moras per syllable</term
+></indexTerm
+><indexTerm
 id="iOnsetMaximization"
 ><term
 >Onset maximization</term
@@ -720,6 +819,11 @@ id="iOnsetsNotRequired"
 >Onsets not required</term
 ></indexTerm
 ></indexTerms
+></indexTerm
+><indexTerm
+id="iUseWeightByPosition"
+><term
+>Use weight by position</term
 ></indexTerm
 ></indexTerms
 ></indexTerm
