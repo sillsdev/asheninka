@@ -40,44 +40,44 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
-		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("dangem", true, 2, "dan.gem", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dankgem", true, 2, "dank.gem", "σμμc.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dampidon", true, 3, "dam.pi.don", "σμμ.σμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(\\L p(\\G p))(μ(\\L i(\\G i))))(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(O(\\L p(\\G p)))(μ(\\L i(\\G i))))(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
 		checkSyllabification("dovdek", true, 2, "dov.dek", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(\\L d(\\G d))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
-		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
-		checkSyllabification("fungt", false, 1, "fung", "σμμc", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(O(\\L d(\\G d)))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
+		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
+		checkSyllabification("fungt", false, 1, "fung", "σμμc", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fug", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
 		checkSyllabification("dlofun", true, 2, "dlo.fun", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
-		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
+		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funglo", true, 2, "fun.glo", "σμμ.σσμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
-		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
+		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae",false, 1, "ia", "μμ", "(W(σ(μ(\\L i(\\G i)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("ibabe", false, 1, "i", "μ", "(W(σ(μ(\\L i(\\G i)))))"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "do.nli", "σμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "σμ.σσσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donni", true, 2, "don.ni", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donnli", true, 2, "don.nli", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("dolnti", true, 2, "doln.ti", "σμμc.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L i(\\G i)))))");
 	}
 
 	@Test
@@ -93,44 +93,44 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", false, 0, "", "", "(W)");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
-		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("dangem", true, 2, "dan.gem", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dankgem", true, 2, "dank.gem", "σμμc.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dampidon", true, 3, "dam.pi.don", "σμμ.σμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(\\L p(\\G p))(μ(\\L i(\\G i))))(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(O(\\L p(\\G p)))(μ(\\L i(\\G i))))(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
 		checkSyllabification("dovdek", true, 2, "dov.dek", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(\\L d(\\G d))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
-		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
-		checkSyllabification("fungt", false, 1, "fung", "σμμc", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(O(\\L d(\\G d)))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
+		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
+		checkSyllabification("fungt", false, 1, "fung", "σμμc", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fug", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
 		checkSyllabification("dlofun", true, 2, "dlo.fun", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
-		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
+		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funglo", true, 2, "fun.glo", "σμμ.σσμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
-		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
+		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae", false, 0, "", "", "(W)");
 		checkSyllabification("ibabe", false, 0, "", "", "(W)"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "do.nli", "σμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "σμ.σσσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donni", true, 2, "don.ni", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donnli", true, 2, "don.nli", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("dolnti", true, 2, "doln.ti", "σμμc.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L i(\\G i)))))");
 	}
 
 	@Test
@@ -146,44 +146,44 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
-		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("dangem", true, 2, "dan.gem", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dankgem", true, 2, "dank.gem", "σμμc.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dampidon", true, 3, "dam.pi.don", "σμμ.σμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(\\L p(\\G p))(μ(\\L i(\\G i))))(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(O(\\L p(\\G p)))(μ(\\L i(\\G i))))(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
 		checkSyllabification("dovdek", true, 2, "dov.dek", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(\\L d(\\G d))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
-		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
-		checkSyllabification("fungt", false, 1, "fung", "σμμc", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(O(\\L d(\\G d)))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
+		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
+		checkSyllabification("fungt", false, 1, "fung", "σμμc", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fug", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
 		checkSyllabification("dlofun", true, 2, "dlo.fun", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
-		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
+		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funglo", true, 2, "fun.glo", "σμμ.σσμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
-		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
+		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae", true, 2, "ia.e", "μμ.μ", "(W(σ(μ(\\L i(\\G i)))(μ(\\L a(\\G a))))(σ(μ(\\L e(\\G e)))))");
 		checkSyllabification("ibabe", false, 1, "i", "μ", "(W(σ(μ(\\L i(\\G i)))))"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "do.nli", "σμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "σμ.σσσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donni", true, 2, "don.ni", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donnli", true, 2, "don.nli", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("dolnti", true, 2, "doln.ti", "σμμc.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L i(\\G i)))))");
 	}
 
 	@Test
@@ -199,47 +199,47 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");	
-		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");	
+		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("dangem", true, 2, "dan.gem", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dankgem", true, 2, "dank.gem", "σμμc.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dampidon", true, 3, "dam.pi.don", "σμμ.σμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(\\L p(\\G p))(μ(\\L i(\\G i))))(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(O(\\L p(\\G p)))(μ(\\L i(\\G i))))(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
 		checkSyllabification("dovdek", true, 2, "dov.dek", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(\\L d(\\G d))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
-		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(O(\\L d(\\G d)))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
+		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
 		checkSyllabification("fungt", false, 1, "fung", "σμμc",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fug", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
 		checkSyllabification("dlofun", true, 2, "dlo.fun", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
 		checkSyllabification("do", true, 1, "do", "σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funglo", true, 2, "fung.lo", "σμμc.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g))))(σ(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g))))(σ(O(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("flu", true, 1, "flu", "σσμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae", false, 1, "ia", "μμ", "(W(σ(μ(\\L i(\\G i)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("ibabe", false, 1, "i", "μ", "(W(σ(μ(\\L i(\\G i)))))"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "don.li", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "don.lyi", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donni", true, 2, "don.ni", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donnli", true, 2, "don.nli", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("dolnti", true, 2, "doln.ti", "σμμc.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L i(\\G i)))))");
 	}
 
 	@Test
@@ -255,50 +255,50 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", false, 0, "", "", "(W)");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
-		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(false);
-		checkSyllabification("tad", true, 1, "tad", "σμc", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a))(\\L d(\\G d)))))");
+		checkSyllabification("tad", true, 1, "tad", "σμc", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a))(\\L d(\\G d)))))");
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("dangem", true, 2, "dan.gem", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dankgem", true, 2, "dank.gem", "σμμc.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dampidon", true, 3, "dam.pi.don", "σμμ.σμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(\\L p(\\G p))(μ(\\L i(\\G i))))(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(O(\\L p(\\G p)))(μ(\\L i(\\G i))))(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
 		checkSyllabification("dovdek", true, 2, "dov.dek", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(\\L d(\\G d))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
-		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(O(\\L d(\\G d)))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
+		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
 		checkSyllabification("fungt", false, 1, "fung", "σμμc",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fug", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
 		checkSyllabification("dlofun", true, 2, "dlo.fun", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
 		checkSyllabification("do", true, 1, "do", "σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funglo", true, 2, "fung.lo", "σμμc.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g))))(σ(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g))))(σ(O(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("flu", true, 1, "flu", "σσμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae", false, 0, "", "", "(W)");
 		checkSyllabification("ibabe", false, 0, "", "", "(W)"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "don.li", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "don.lyi", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donni", true, 2, "don.ni", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donnli", true, 2, "don.nli", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("dolnti", true, 2, "doln.ti", "σμμc.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L i(\\G i)))))");
 	}
 
 	@Test
@@ -314,44 +314,44 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
-		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("tad", true, 1, "tad", "σμμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))(μ(\\L d(\\G d)))))");
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("dangem", true, 2, "dan.gem", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dankgem", true, 2, "dank.gem", "σμμc.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n))(\\L k(\\G k))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L m(\\G m)))))");
 		checkSyllabification("dampidon", true, 3, "dam.pi.don", "σμμ.σμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(\\L p(\\G p))(μ(\\L i(\\G i))))(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(O(\\L p(\\G p)))(μ(\\L i(\\G i))))(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
 		checkSyllabification("dovdek", true, 2, "dov.dek", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(\\L d(\\G d))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
-		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
-		checkSyllabification("fungt", false, 1, "fung", "σμμc", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L v(\\G v))))(σ(O(\\L d(\\G d)))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
+		checkSyllabification("fuhgt", false, 1, "fuh", "σμμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L h(\\G h)))))");
+		checkSyllabification("fungt", false, 1, "fung", "σμμc", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fug", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L g(\\G g)))))");
 		checkSyllabification("dlofun", true, 2, "dlo.fun", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
-		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
+		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funglo", true, 2, "fung.lo", "σμμc.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g))))(σ(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))(\\L g(\\G g))))(σ(O(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
-		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
+		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae", true, 2, "ia.e", "μμ.μ", "(W(σ(μ(\\L i(\\G i)))(μ(\\L a(\\G a))))(σ(μ(\\L e(\\G e)))))");
 		checkSyllabification("ibabe", false, 1, "i", "μ", "(W(σ(μ(\\L i(\\G i)))))"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "don.li", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "don.lyi", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donni", true, 2, "don.ni", "σμμ.σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donnli", true, 2, "don.nli", "σμμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("dolnti", true, 2, "doln.ti", "σμμc.σμ", 
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L i(\\G i)))))");
 		// now check for syllable template case of dyesyesyete
 		Optional<Template> sylTemplate = languageProject.getActiveAndValidTemplates().stream()
 				.filter(t -> t.getID().equals("f6679cc7-f616-468b-85a2-75276f0373ef")).findFirst();
@@ -359,7 +359,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 			sylTemplate.get().setActive(true);
 		}
 		checkSyllabification("dyesyesyete", true, 4, "dyes.yes.ye.te", "σσμμ.σμμ.σμ.σμ", 
-				"(W(σ(\\L d(\\G d))(\\L y(\\G y))(μ(\\L e(\\G e)))(μ(\\L s(\\G s))))(σ(\\L y(\\G y))(μ(\\L e(\\G e)))(μ(\\L s(\\G s))))(σ(\\L y(\\G y))(μ(\\L e(\\G e))))(σ(\\L t(\\G t))(μ(\\L e(\\G e)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L y(\\G y)))(μ(\\L e(\\G e)))(μ(\\L s(\\G s))))(σ(O(\\L y(\\G y)))(μ(\\L e(\\G e)))(μ(\\L s(\\G s))))(σ(O(\\L y(\\G y)))(μ(\\L e(\\G e))))(σ(O(\\L t(\\G t)))(μ(\\L e(\\G e)))))");
 	}
 
 	@Test
@@ -375,35 +375,35 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
-		checkSyllabification("tad", false, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("tad", false, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
-		checkSyllabification("dangem", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
-		checkSyllabification("dankgem", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
-		checkSyllabification("dampidon", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
-		checkSyllabification("dovdek", false, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("fuhgt", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
-		checkSyllabification("fungt", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("dangem", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("dankgem", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("dampidon", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("dovdek", false, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
+		checkSyllabification("fungt", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fu", "σσμ.σμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("dlofun", false, 2, "dlo.fu", "σσμ.σμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
-		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("funglo", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
+		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("funglo", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
-		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
+		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae", false, 1, "ia", "μμ", "(W(σ(μ(\\L i(\\G i)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("ibabe", false, 1, "i", "μ", "(W(σ(μ(\\L i(\\G i)))))"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "do.nli", "σμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "σμ.σσσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
-		checkSyllabification("donni", false, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("dolnti", false, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
+		checkSyllabification("donni", false, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("dolnti", false, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 	}
 
 	@Test
@@ -419,38 +419,38 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", false, 0, "", "", "(W)");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
-		checkSyllabification("tad", false, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("tad", false, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
 
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
-		checkSyllabification("dangem", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
-		checkSyllabification("dankgem", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
-		checkSyllabification("dampidon", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("dangem", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("dankgem", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("dampidon", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("dovdek", false, 1, "do", "σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("fuhgt", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
-		checkSyllabification("fungt", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
+		checkSyllabification("fungt", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fu", "σσμ.σμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("dlofun", false, 2, "dlo.fu", "σσμ.σμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
-		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("funglo", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
+		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("funglo", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
-		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
+		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae", false, 0, "", "", "(W)");
 		checkSyllabification("ibabe", false, 0, "", "", "(W)"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "do.nli", "σμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "σμ.σσσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donni", false, 1, "do", "σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("dolnti", false, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("dolnti", false, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 	}
 
 	@Test
@@ -466,37 +466,37 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkSyllabification("", false, 0, "", "", "(W)");
 		checkSyllabification("b", false, 0, "", "", "(W)");
 		checkSyllabification("A", true, 1, "A", "μ", "(W(σ(μ(\\L a(\\G A)))))");
-		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
-		checkSyllabification("tad", false, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
+		checkSyllabification("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("tad", false, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
-		checkSyllabification("dangem", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
-		checkSyllabification("dankgem", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
-		checkSyllabification("dampidon", false, 1, "da", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("dangem", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("dankgem", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
+		checkSyllabification("dampidon", false, 1, "da", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("dovdek", false, 1, "do", "σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("fuhgt", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
-		checkSyllabification("fungt", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("fuhgt", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
+		checkSyllabification("fungt", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("dlofugh", false, 2, "dlo.fu", "σσμ.σμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("dlofun", false, 2, "dlo.fu", "σσμ.σμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
-		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("funglo", false, 1, "fu", "σμ", "(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
+		checkSyllabification("do", true, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("funglo", false, 1, "fu", "σμ", "(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("funi", true, 2, "fu.ni", "σμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u))))(σ(\\L n(\\G n))(μ(\\L i(\\G i)))))");
-		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u))))(σ(O(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
+		checkSyllabification("flu", true, 1, "flu", "σσμ", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "σσμ.σμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u))))(σ(\\L k(\\G k))(μ(\\L a(\\G a)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u))))(σ(O(\\L k(\\G k)))(μ(\\L a(\\G a)))))");
 		checkSyllabification("iae", true, 2, "ia.e", "μμ.μ", "(W(σ(μ(\\L i(\\G i)))(μ(\\L a(\\G a))))(σ(μ(\\L e(\\G e)))))");
 		checkSyllabification("ibabe", false, 1, "i", "μ", "(W(σ(μ(\\L i(\\G i)))))"); // b not in hierarchy
 		checkSyllabification("donli", true, 2, "do.nli", "σμ.σσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donlyi", true, 2, "do.nlyi", "σμ.σσσμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))))(σ(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))))(σ(O(\\L n(\\G n))(\\L l(\\G l))(\\L y(\\G y)))(μ(\\L i(\\G i)))))");
 		checkSyllabification("donni", false, 1, "do", "σμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
-		checkSyllabification("dolnti", false, 1, "do", "σμ", "(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
+		checkSyllabification("dolnti", false, 1, "do", "σμ", "(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))))");
 	}
 
 	@Test
@@ -519,7 +519,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkTracingStep(tracingStep, "a", null, null, null, null,
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
-		checkSyllabifyWord("ta", true, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
+		checkSyllabifyWord("ta", true, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(4, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -536,7 +536,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(false);
-		checkSyllabifyWord("tan", true, 1, "tan", "σμc", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a))(\\L n(\\G n)))))");
+		checkSyllabifyWord("tan", true, 1, "tan", "σμc", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a))(\\L n(\\G n)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -556,7 +556,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
-		checkSyllabifyWord("tan", true, 1, "tan", "σμμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))(μ(\\L n(\\G n)))))");
+		checkSyllabifyWord("tan", true, 1, "tan", "σμμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))(μ(\\L n(\\G n)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -576,7 +576,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		checkSyllabifyWord("Chiko", true, 2, "Chi.ko", "σμ.σμ",
-				"(W(σ(\\L ch(\\G Ch))(μ(\\L i(\\G i))))(σ(\\L k(\\G k))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L ch(\\G Ch)))(μ(\\L i(\\G i))))(σ(O(\\L k(\\G k)))(μ(\\L o(\\G o)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(8, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -606,7 +606,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(false);
 		checkSyllabifyWord("tampidon", true, 3, "tam.pi.don", "σμc.σμ.σμc",
-				"(W(σ(\\L t(\\G t))(μ(\\L a(\\G a))(\\L m(\\G m))))(σ(\\L p(\\G p))(μ(\\L i(\\G i))))(σ(\\L d(\\G d))(μ(\\L o(\\G o))(\\L n(\\G n)))))");
+				"(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a))(\\L m(\\G m))))(σ(O(\\L p(\\G p)))(μ(\\L i(\\G i))))(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))(\\L n(\\G n)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(14, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -654,7 +654,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
 		checkSyllabifyWord("tampidon", true, 3, "tam.pi.don", "σμμ.σμ.σμμ",
-				"(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(\\L p(\\G p))(μ(\\L i(\\G i))))(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))(μ(\\L m(\\G m))))(σ(O(\\L p(\\G p)))(μ(\\L i(\\G i))))(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L n(\\G n)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(14, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -702,7 +702,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(false);
 		checkSyllabifyWord("dapgek", true, 2, "dap.gek", "σμc.σμc",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a))(\\L p(\\G p))))(σ(\\L g(\\G g))(μ(\\L e(\\G e))(\\L k(\\G k)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a))(\\L p(\\G p))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e))(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(10, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -738,7 +738,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
 		checkSyllabifyWord("dapgek", true, 2, "dap.gek", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L a(\\G a)))(μ(\\L p(\\G p))))(σ(\\L g(\\G g))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L a(\\G a)))(μ(\\L p(\\G p))))(σ(O(\\L g(\\G g)))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(10, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -774,7 +774,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(false);
 		checkSyllabifyWord("doldek", true, 2, "dol.dek", "σμc.σμc",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o))(\\L l(\\G l))))(σ(\\L d(\\G d))(μ(\\L e(\\G e))(\\L k(\\G k)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o))(\\L l(\\G l))))(σ(O(\\L d(\\G d)))(μ(\\L e(\\G e))(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(10, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -810,7 +810,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
 		checkSyllabifyWord("doldek", true, 2, "dol.dek", "σμμ.σμμ",
-				"(W(σ(\\L d(\\G d))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))))(σ(\\L d(\\G d))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
+				"(W(σ(O(\\L d(\\G d)))(μ(\\L o(\\G o)))(μ(\\L l(\\G l))))(σ(O(\\L d(\\G d)))(μ(\\L e(\\G e)))(μ(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(10, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -846,7 +846,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
 		checkSyllabifyWord("dlofun", true, 2, "dlo.fun", "σσμ.σμμ",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(10, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -881,7 +881,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		checkSyllabifyWord("funmo", true, 2, "fun.mo", "σμμ.σμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(\\L m(\\G m))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(O(\\L m(\\G m)))(μ(\\L o(\\G o)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(9, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -913,7 +913,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		checkSyllabifyWord("funmlo", true, 2, "fun.mlo", "σμμ.σσμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(\\L m(\\G m))(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n))))(σ(O(\\L m(\\G m))(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(10, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -948,7 +948,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		checkSyllabifyWord("funmdo", false, 1, "fun", "σμμ",
-				"(W(σ(\\L f(\\G f))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
+				"(W(σ(O(\\L f(\\G f)))(μ(\\L u(\\G u)))(μ(\\L n(\\G n)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(6, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -970,7 +970,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		checkTracingStep(tracingStep, "m", "Nasals", "d", "Obstruents", SHComparisonResult.MORE,
 				MoraicSyllabificationStatus.SEGMENT_TRIED_AS_ONSET_BUT_SONORITY_BLOCKS_IT_AS_AN_ONSET, false);
 
-		checkSyllabifyWord("flu", true, 1, "flu", "σσμ", "(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))))");
+		checkSyllabifyWord("flu", true, 1, "flu", "σσμ", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -990,7 +990,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		checkSyllabifyWord("flum", true, 1, "flum", "σσμμ",
-				"(W(σ(\\L f(\\G f))(\\L l(\\G l))(μ(\\L u(\\G u)))(μ(\\L m(\\G m)))))");
+				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(μ(\\L u(\\G u)))(μ(\\L m(\\G m)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(6, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -1070,7 +1070,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		moraicApproach = languageProject.getMoraicApproach();
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
-		checkSyllabifyWord("tan", false, 1, "ta", "σμ", "(W(σ(\\L t(\\G t))(μ(\\L a(\\G a)))))");
+		checkSyllabifyWord("tan", false, 1, "ta", "σμ", "(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(5, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -1112,7 +1112,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("tanlo", true, 2, "ta.nlo", "σμ.σσμ",
-				"(W(σ(\\L t(\\G t))(μ(\\L a(\\G a))))(σ(\\L n(\\G n))(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a))))(σ(O(\\L n(\\G n))(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(9, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -1150,7 +1150,7 @@ public class MoraicSyllabifierTest extends MoraicSyllabifierTestBase {
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("tano", true, 2, "ta.no", "σμ.σμ",
-				"(W(σ(\\L t(\\G t))(μ(\\L a(\\G a))))(σ(\\L n(\\G n))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a))))(σ(O(\\L n(\\G n)))(μ(\\L o(\\G o)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(8, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);

@@ -994,7 +994,12 @@ public class MoraicSyllabifier implements Syllabifiable {
 		for (MoraicSyllable syl : syllablesInCurrentWord) {
 			sb.append("(");
 			sb.append(Constants.SYLLABLE_SYMBOL);
-			createLingTreeDescription(sb, syl.getOnset());
+			List<MoraicSegmentInSyllable> onsetSegments = syl.getOnset();
+			if (!onsetSegments.isEmpty()) {
+				sb.append("(O");
+				createLingTreeDescription(sb, syl.getOnset());
+				sb.append(")");
+			}
 			for (Mora mora : syl.getMoras()) {
 				sb.append("(");
 				sb.append(Constants.MORA_SYMBOL);

@@ -80,39 +80,39 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("sp", false, 0, "", "", "(W)");
 		checkSyllabification("spat", true, 1, "spat", "σσμc",
-				"(W(σ(\\L s(\\G s))(\\L p(\\G p))(μ(\\L a(\\G a))(\\L t(\\G t)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L p(\\G p)))(μ(\\L a(\\G a))(\\L t(\\G t)))))");
 		checkSyllabification("stap", true, 1, "stap", "σσμc",
-				"(W(σ(\\L s(\\G s))(\\L t(\\G t))(μ(\\L a(\\G a))(\\L p(\\G p)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L t(\\G t)))(μ(\\L a(\\G a))(\\L p(\\G p)))))");
 		checkSyllabification("spɹeɪ", true, 1, "spɹeɪ", "σσσμμ",
-				"(W(σ(\\L s(\\G s))(\\L p(\\G p))(\\L ɹ(\\G ɹ))(μ μ(\\L eɪ(\\G eɪ)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L p(\\G p))(\\L ɹ(\\G ɹ)))(μ μ(\\L eɪ(\\G eɪ)))))");
 		checkSyllabification("stɹap", true, 1, "stɹap", "σσσμc",
-				"(W(σ(\\L s(\\G s))(\\L t(\\G t))(\\L ɹ(\\G ɹ))(μ(\\L a(\\G a))(\\L p(\\G p)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L t(\\G t))(\\L ɹ(\\G ɹ)))(μ(\\L a(\\G a))(\\L p(\\G p)))))");
 		checkSyllabification("manstəɹ", true, 2, "man.stəɹ", "σμc.σσμc",
-				"(W(σ(\\L m(\\G m))(μ(\\L a(\\G a))(\\L n(\\G n))))(σ(\\L s(\\G s))(\\L t(\\G t))(μ(\\L ə(\\G ə))(\\L ɹ(\\G ɹ)))))");
+				"(W(σ(O(\\L m(\\G m)))(μ(\\L a(\\G a))(\\L n(\\G n))))(σ(O(\\L s(\\G s))(\\L t(\\G t)))(μ(\\L ə(\\G ə))(\\L ɹ(\\G ɹ)))))");
 		checkSyllabification("smanstil", true, 2, "sman.stil", "σσμc.σσμc",
-				"(W(σ(\\L s(\\G s))(\\L m(\\G m))(μ(\\L a(\\G a))(\\L n(\\G n))))(σ(\\L s(\\G s))(\\L t(\\G t))(μ(\\L i(\\G i))(\\L l(\\G l)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L m(\\G m)))(μ(\\L a(\\G a))(\\L n(\\G n))))(σ(O(\\L s(\\G s))(\\L t(\\G t)))(μ(\\L i(\\G i))(\\L l(\\G l)))))");
 		checkSyllabification("tɛkstjuɹ", true, 2, "tɛk.stjuɹ", "σμc.σσσμc",
-				"(W(σ(\\L t(\\G t))(μ(\\L ɛ(\\G ɛ))(\\L k(\\G k))))(σ(\\L s(\\G s))(\\L t(\\G t))(\\L j(\\G j))(μ(\\L u(\\G u))(\\L ɹ(\\G ɹ)))))");
+				"(W(σ(O(\\L t(\\G t)))(μ(\\L ɛ(\\G ɛ))(\\L k(\\G k))))(σ(O(\\L s(\\G s))(\\L t(\\G t))(\\L j(\\G j)))(μ(\\L u(\\G u))(\\L ɹ(\\G ɹ)))))");
 		}
 
 	@Test
 	public void syllableTemplateTest() {
 		initSyllableTemplate();
 
-		checkSyllabification("səm", true, 1, "səm", "σμc", "(W(σ(\\L s(\\G s))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabification("səm", true, 1, "səm", "σμc", "(W(σ(O(\\L s(\\G s)))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
 		checkSyllabification("asəm", true, 2, "a.səm", "μ.σμc",
-				"(W(σ(μ(\\L a(\\G a))))(σ(\\L s(\\G s))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
-		checkSyllabification("sləm", true, 1, "sləm", "σσμc", "(W(σ(\\L s(\\G s))(\\L l(\\G l))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+				"(W(σ(μ(\\L a(\\G a))))(σ(O(\\L s(\\G s)))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabification("sləm", true, 1, "sləm", "σσμc", "(W(σ(O(\\L s(\\G s))(\\L l(\\G l)))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
 		checkSyllabification("asləm", true, 2, "a.sləm", "μ.σσμc",
-				"(W(σ(μ(\\L a(\\G a))))(σ(\\L s(\\G s))(\\L l(\\G l))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+				"(W(σ(μ(\\L a(\\G a))))(σ(O(\\L s(\\G s))(\\L l(\\G l)))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
 		checkSyllabification("slwəm", true, 1, "slwəm", "σσσμc",
-				"(W(σ(\\L s(\\G s))(\\L l(\\G l))(\\L w(\\G w))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L l(\\G l))(\\L w(\\G w)))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
 		checkSyllabification("aslwəm", true, 2, "a.slwəm", "μ.σσσμc",
-				"(W(σ(μ(\\L a(\\G a))))(σ(\\L s(\\G s))(\\L l(\\G l))(\\L w(\\G w))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+				"(W(σ(μ(\\L a(\\G a))))(σ(O(\\L s(\\G s))(\\L l(\\G l))(\\L w(\\G w)))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
 		checkSyllabification("moʊndlo", true, 2, "moʊn.dlo", "σμμc.σσμ",
-				"(W(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L n(\\G n))))(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o)))))");
+				"(W(σ(O(\\L m(\\G m)))(μ μ(\\L oʊ(\\G oʊ))(\\L n(\\G n))))(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o)))))");
 		checkSyllabification("dlomoʊn", true, 2, "dlo.moʊn", "σσμ.σμμc",
-				"(W(σ(\\L d(\\G d))(\\L l(\\G l))(μ(\\L o(\\G o))))(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L n(\\G n)))))");
+				"(W(σ(O(\\L d(\\G d))(\\L l(\\G l)))(μ(\\L o(\\G o))))(σ(O(\\L m(\\G m)))(μ μ(\\L oʊ(\\G oʊ))(\\L n(\\G n)))))");
 		checkSyllabification("snlwəm", false, 0, "", "", "(W)");
 		checkSyllabification("asnlwəm", false, 1, "a", "μ", "(W(σ(μ(\\L a(\\G a)))))");
 		checkSyllabification("moʊst", false, 0, "", "", "(W)");
@@ -150,9 +150,9 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		checkSyllabification("psoʊt", true, 1, "psoʊt", "aaμμc",
 				"(W(A(\\L p(\\G p))(\\L s(\\G s)))(σ(μ μ(\\L oʊ(\\G oʊ))(\\L t(\\G t)))))");
 		checkSyllabification("poʊt", true, 1, "poʊt", "σμμc",
-				"(W(σ(\\L p(\\G p))(μ μ(\\L oʊ(\\G oʊ))(\\L t(\\G t)))))");
+				"(W(σ(O(\\L p(\\G p)))(μ μ(\\L oʊ(\\G oʊ))(\\L t(\\G t)))))");
 		checkSyllabification("snoʊt", true, 1, "snoʊt", "σσμμc",
-				"(W(σ(\\L s(\\G s))(\\L n(\\G n))(μ μ(\\L oʊ(\\G oʊ))(\\L t(\\G t)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L n(\\G n)))(μ μ(\\L oʊ(\\G oʊ))(\\L t(\\G t)))))");
 
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("psoʊt", true, 1, "psoʊt", "aaμμc",
@@ -203,22 +203,22 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("moʊst", true, 1, "moʊst", "σμμca",
-				"(W(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
+				"(W(σ(O(\\L m(\\G m)))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
 		checkSyllabification("ətmoʊst", true, 2, "ət.moʊst", "μc.σμμca",
-				"(W(σ(μ(\\L ə(\\G ə))(\\L t(\\G t))))(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
+				"(W(σ(μ(\\L ə(\\G ə))(\\L t(\\G t))))(σ(O(\\L m(\\G m)))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
 		checkSyllabification("sɪks", true, 1, "sɪks", "σμca",
-				"(W(σ(\\L s(\\G s))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k))))(A(\\L s(\\G s))))");
+				"(W(σ(O(\\L s(\\G s)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k))))(A(\\L s(\\G s))))");
 		checkSyllabification("sɪksθ", true, 1, "sɪksθ", "σμcaa",
-				"(W(σ(\\L s(\\G s))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k))))(A(\\L s(\\G s))(\\L θ(\\G θ))))");
+				"(W(σ(O(\\L s(\\G s)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k))))(A(\\L s(\\G s))(\\L θ(\\G θ))))");
 		checkSyllabification("sɪksθs", true, 1, "sɪksθs", "σμcaaa",
-				"(W(σ(\\L s(\\G s))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k))))(A(\\L s(\\G s))(\\L θ(\\G θ))(\\L s(\\G s))))");
-		checkSyllabification("sɪlk", true, 1, "sɪlk", "σμcc", "(W(σ(\\L s(\\G s))(μ(\\L ɪ(\\G ɪ))(\\L l(\\G l))(\\L k(\\G k)))))");
+				"(W(σ(O(\\L s(\\G s)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k))))(A(\\L s(\\G s))(\\L θ(\\G θ))(\\L s(\\G s))))");
+		checkSyllabification("sɪlk", true, 1, "sɪlk", "σμcc", "(W(σ(O(\\L s(\\G s)))(μ(\\L ɪ(\\G ɪ))(\\L l(\\G l))(\\L k(\\G k)))))");
 		checkSyllabification("sɪlks", true, 1, "sɪlks", "σμcca",
-				"(W(σ(\\L s(\\G s))(μ(\\L ɪ(\\G ɪ))(\\L l(\\G l))(\\L k(\\G k))))(A(\\L s(\\G s))))");
-		checkSyllabification("gæsg", false, 1, "gæs", "σμc", "(W(σ(\\L g(\\G g))(μ(\\L æ(\\G æ))(\\L s(\\G s)))))");
-		checkSyllabification("gæsp", true, 1, "gæsp", "σμca", "(W(σ(\\L g(\\G g))(μ(\\L æ(\\G æ))(\\L s(\\G s))))(A(\\L p(\\G p))))");
+				"(W(σ(O(\\L s(\\G s)))(μ(\\L ɪ(\\G ɪ))(\\L l(\\G l))(\\L k(\\G k))))(A(\\L s(\\G s))))");
+		checkSyllabification("gæsg", false, 1, "gæs", "σμc", "(W(σ(O(\\L g(\\G g)))(μ(\\L æ(\\G æ))(\\L s(\\G s)))))");
+		checkSyllabification("gæsp", true, 1, "gæsp", "σμca", "(W(σ(O(\\L g(\\G g)))(μ(\\L æ(\\G æ))(\\L s(\\G s))))(A(\\L p(\\G p))))");
 		checkSyllabification("moʊtdto", false, 1, "moʊt", "σμμc",
-				"(W(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L t(\\G t)))))");
+				"(W(σ(O(\\L m(\\G m)))(μ μ(\\L oʊ(\\G oʊ))(\\L t(\\G t)))))");
 	}
 
 	@Test
@@ -236,7 +236,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("moʊst", true, 1, "moʊst", "σμμca",
-				"(W(σ(\\L m(\\G m))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
+				"(W(σ(O(\\L m(\\G m)))(μ μ(\\L oʊ(\\G oʊ))(\\L s(\\G s))))(A(\\L t(\\G t))))");
 		List<MoraicTracingStep> tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(6, tracingSteps.size());
 		MoraicTracingStep tracingStep = tracingSteps.get(0);
@@ -275,7 +275,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		muSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("spat", true, 1, "spat", "σσμc",
-				"(W(σ(\\L s(\\G s))(\\L p(\\G p))(μ(\\L a(\\G a))(\\L t(\\G t)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L p(\\G p)))(μ(\\L a(\\G a))(\\L t(\\G t)))))");
 		List<MoraicTracingStep> tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(6, tracingSteps.size());
 		MoraicTracingStep tracingStep = tracingSteps.get(0);
@@ -299,7 +299,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		checkSyllabifyWord("tɛkstjuɹ", true, 2, "tɛk.stjuɹ", "σμc.σσσμc",
-				"(W(σ(\\L t(\\G t))(μ(\\L ɛ(\\G ɛ))(\\L k(\\G k))))(σ(\\L s(\\G s))(\\L t(\\G t))(\\L j(\\G j))(μ(\\L u(\\G u))(\\L ɹ(\\G ɹ)))))");
+				"(W(σ(O(\\L t(\\G t)))(μ(\\L ɛ(\\G ɛ))(\\L k(\\G k))))(σ(O(\\L s(\\G s))(\\L t(\\G t))(\\L j(\\G j)))(μ(\\L u(\\G u))(\\L ɹ(\\G ɹ)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(12, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -346,7 +346,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 		initSyllableTemplate();
 		muSyllabifier.setDoTrace(true);
 
-		checkSyllabifyWord("səm", true, 1, "səm", "σμc", "(W(σ(\\L s(\\G s))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
+		checkSyllabifyWord("səm", true, 1, "səm", "σμc", "(W(σ(O(\\L s(\\G s)))(μ(\\L ə(\\G ə))(\\L m(\\G m)))))");
 		List<MoraicTracingStep> tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(8, tracingSteps.size());
 		MoraicTracingStep tracingStep = tracingSteps.get(0);
@@ -407,7 +407,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 				MoraicSyllabificationStatus.SYLLABLE_TEMPLATES_FAILED, false);
 
 		checkSyllabifyWord("koʊmə", true, 2, "koʊ.mə", "σμμ.σμ",
-				"(W(σ(\\L k(\\G k))(μ μ(\\L oʊ(\\G oʊ))))(σ(\\L m(\\G m))(μ(\\L ə(\\G ə)))))");
+				"(W(σ(O(\\L k(\\G k)))(μ μ(\\L oʊ(\\G oʊ))))(σ(O(\\L m(\\G m)))(μ(\\L ə(\\G ə)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(12, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -456,7 +456,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		checkSyllabifyWord("sni", true, 1, "sni", "σσμ",
-				"(W(σ(\\L s(\\G s))(\\L n(\\G n))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L n(\\G n)))(μ(\\L i(\\G i)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(8, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -491,7 +491,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 				MoraicSyllabificationStatus.ADDING_FINAL_SYLLABLE_TO_WORD, true);
 
 		checkSyllabifyWord("snwi", true, 1, "snwi", "σσσμ",
-				"(W(σ(\\L s(\\G s))(\\L n(\\G n))(\\L w(\\G w))(μ(\\L i(\\G i)))))");
+				"(W(σ(O(\\L s(\\G s))(\\L n(\\G n))(\\L w(\\G w)))(μ(\\L i(\\G i)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(10, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -541,7 +541,7 @@ public class MoraicSyllabifierWithTemplateTest extends MoraicSyllabifierTestBase
 				MoraicSyllabificationStatus.SYLLABLE_TEMPLATES_FAILED, false);
 
 		checkSyllabifyWord("uɪti", true, 3, "u.ɪ.ti", "μ.μ.σμ",
-				"(W(σ(μ(\\L u(\\G u))))(σ(μ(\\L ɪ(\\G ɪ))))(σ(\\L t(\\G t))(μ(\\L i(\\G i)))))");
+				"(W(σ(μ(\\L u(\\G u))))(σ(μ(\\L ɪ(\\G ɪ))))(σ(O(\\L t(\\G t)))(μ(\\L i(\\G i)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(15, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);

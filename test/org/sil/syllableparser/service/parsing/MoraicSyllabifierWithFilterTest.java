@@ -215,9 +215,9 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		Filter f = languageProject.getActiveAndValidFilters().get(3);
 		assertEquals(false, f.getAction().isDoRepair());
 		assertEquals(FilterType.ONSET, f.getTemplateFilterType());
-		checkSyllabification("sjat", false, 1, "sj", "σσ", "(W(σ(\\L s(\\G s))(\\L j(\\G j))))");
+		checkSyllabification("sjat", false, 1, "sj", "σσ", "(W(σ(O(\\L s(\\G s))(\\L j(\\G j)))))");
 		checkSyllabification("tatsjat", false, 2, "tat.sj", "σμc.σσ",
-				"(W(σ(\\L t(\\G t))(μ(\\L a(\\G a))(\\L t(\\G t))))(σ(\\L s(\\G s))(\\L j(\\G j))))");
+				"(W(σ(O(\\L t(\\G t)))(μ(\\L a(\\G a))(\\L t(\\G t))))(σ(O(\\L s(\\G s))(\\L j(\\G j)))))");
 	}
 
 	@Test
@@ -226,7 +226,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		Filter f = languageProject.getActiveAndValidFilters().get(3);
 		assertEquals(false, f.getAction().isDoRepair());
 		assertEquals(FilterType.ONSET, f.getTemplateFilterType());
-		checkSyllabifyWord("sjat", false, 1, "sj", "σσ", "(W(σ(\\L s(\\G s))(\\L j(\\G j))))");
+		checkSyllabifyWord("sjat", false, 1, "sj", "σσ", "(W(σ(O(\\L s(\\G s))(\\L j(\\G j)))))");
 		List<MoraicTracingStep> tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(3, tracingSteps.size());
 		MoraicTracingStep tracingStep = tracingSteps.get(0);
@@ -250,42 +250,42 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 
 		// codas allowed, onsets not required, no weight by position, /t/ is onset or coda, tl splits to t.l
 		checkSyllabification("ætlæntɪk", true, 3, "æt.læn.tɪk", "μc.σμc.σμc",
-				"(W(σ(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
+				"(W(σ(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(O(\\L l(\\G l)))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		checkSyllabification("tlæntɪk", true, 2, "tlæn.tɪk", "σσμc.σμc",
-				"(W(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
+				"(W(σ(O(\\L t(\\G t))(\\L l(\\G l)))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		checkSyllabification("æitlæintɪk", true, 3, "æit.læin.tɪk", "μμc.σμμc.σμc",
-				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
+				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L t(\\G t))))(σ(O(\\L l(\\G l)))(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		checkSyllabification("tlæintɪk", true, 2, "tlæin.tɪk", "σσμμc.σμc",
-				"(W(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
+				"(W(σ(O(\\L t(\\G t))(\\L l(\\G l)))(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 
 		// codas allowed, onsets not required, use weight by position, /t/ is onset or coda, tl splits to t.l
 		languageProject.getSyllabificationParameters().setUseWeightByPosition(true);
 		checkSyllabification("ætlæntɪk", true, 3, "æt.læn.tɪk", "μμ.σμμ.σμμ",
-				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
+				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L t(\\G t))))(σ(O(\\L l(\\G l)))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
 		checkSyllabification("tlæntɪk", true, 2, "tlæn.tɪk", "σσμμ.σμμ",
-				"(W(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
+				"(W(σ(O(\\L t(\\G t))(\\L l(\\G l)))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
 		checkSyllabification("æitlæintɪk", true, 3, "æit.læin.tɪk", "μμc.σμμc.σμμ",
-				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
+				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L t(\\G t))))(σ(O(\\L l(\\G l)))(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
 		checkSyllabification("tlæintɪk", true, 2, "tlæin.tɪk", "σσμμc.σμμ",
-				"(W(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
+				"(W(σ(O(\\L t(\\G t))(\\L l(\\G l)))(μ(\\L æ(\\G æ)))(μ(\\L i(\\G i))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
 
 		// codas not allowed, onsets not required, /t/ is onset or coda, tl splits to t.l
 		languageProject.getSyllabificationParameters().setCodasAllowed(false);
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("ætlæntɪk", false, 2, "æ.tlæ", "μ.σσμ",
-				"(W(σ(μ(\\L æ(\\G æ))))(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ)))))");
+				"(W(σ(μ(\\L æ(\\G æ))))(σ(O(\\L t(\\G t))(\\L l(\\G l)))(μ(\\L æ(\\G æ)))))");
 
 		// codas allowed, all but first has onset, /t/ is onset or coda, tl splits to t.l
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabification("ætlæntɪk", true, 3, "æt.læn.tɪk", "μμ.σμμ.σμμ",
-				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
+				"(W(σ(μ(\\L æ(\\G æ)))(μ(\\L t(\\G t))))(σ(O(\\L l(\\G l)))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ)))(μ(\\L k(\\G k)))))");
 
 		// codas allowed, all but first has onset, /t/ is onset or coda, t splits to t.
 		f.getSlots().remove(1);
 		checkSyllabification("ætæntɪk", false, 2, "æ.tænt", "μ.σμμc",
-				"(W(σ(μ(\\L æ(\\G æ))))(σ(\\L t(\\G t))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))(\\L t(\\G t)))))");
+				"(W(σ(μ(\\L æ(\\G æ))))(σ(O(\\L t(\\G t)))(μ(\\L æ(\\G æ)))(μ(\\L n(\\G n))(\\L t(\\G t)))))");
 
 		// codas allowed, onsets not required, /t/ is onset or coda, t splits to t.
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
@@ -303,7 +303,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		muSyllabifier.setDoTrace(true);
 
 		checkSyllabifyWord("tlæntɪk", true, 2, "tlæn.tɪk", "σσμc.σμc",
-				"(W(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
+				"(W(σ(O(\\L t(\\G t))(\\L l(\\G l)))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		List<MoraicTracingStep> tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(12, tracingSteps.size());
 		MoraicTracingStep tracingStep = tracingSteps.get(0);
@@ -325,7 +325,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 
 		// codas allowed, onsets not required, /t/ is onset or coda, tl splits to t.l
 		checkSyllabifyWord("ætlæntɪk", true, 3, "æt.læn.tɪk", "μc.σμc.σμc",
-				"(W(σ(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
+				"(W(σ(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(O(\\L l(\\G l)))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(15, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -358,7 +358,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		languageProject.getSyllabificationParameters().setCodasAllowed(false);
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabifyWord("ætlæntɪk", false, 2, "æ.tlæ", "μ.σσμ",
-				"(W(σ(μ(\\L æ(\\G æ))))(σ(\\L t(\\G t))(\\L l(\\G l))(μ(\\L æ(\\G æ)))))");
+				"(W(σ(μ(\\L æ(\\G æ))))(σ(O(\\L t(\\G t))(\\L l(\\G l)))(μ(\\L æ(\\G æ)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(10, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -392,7 +392,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabifyWord("ætlæntɪk", true, 3, "æt.læn.tɪk", "μc.σμc.σμc",
-				"(W(σ(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
+				"(W(σ(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(O(\\L l(\\G l)))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(15, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -426,7 +426,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		checkSyllabifyWord("tætlæntɪk", true, 3, "tæt.læn.tɪk", "σμc.σμc.σμc",
-				"(W(σ(\\L t(\\G t))(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(\\L l(\\G l))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(\\L t(\\G t))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
+				"(W(σ(O(\\L t(\\G t)))(μ(\\L æ(\\G æ))(\\L t(\\G t))))(σ(O(\\L l(\\G l)))(μ(\\L æ(\\G æ))(\\L n(\\G n))))(σ(O(\\L t(\\G t)))(μ(\\L ɪ(\\G ɪ))(\\L k(\\G k)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(16, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
@@ -464,7 +464,7 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		muSyllabifier = new MoraicSyllabifier(moraicApproach);
 		f.getSlots().remove(1);
 		checkSyllabifyWord("ætæntɪk", false, 2, "æ.tænt", "μ.σμcc",
-				"(W(σ(μ(\\L æ(\\G æ))))(σ(\\L t(\\G t))(μ(\\L æ(\\G æ))(\\L n(\\G n))(\\L t(\\G t)))))");
+				"(W(σ(μ(\\L æ(\\G æ))))(σ(O(\\L t(\\G t)))(μ(\\L æ(\\G æ))(\\L n(\\G n))(\\L t(\\G t)))))");
 		tracingSteps = muSyllabifier.getTracingSteps();
 		assertEquals(12, tracingSteps.size());
 		tracingStep = tracingSteps.get(0);
