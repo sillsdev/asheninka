@@ -829,7 +829,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 					}
 				}
 			}
-			if (tracer.isTracing()) {
+			if (tracer != null && tracer.isTracing()) {
 				tracer.setSegment1(seg1);
 				SHNaturalClass shClass = moraicApproach
 						.getNaturalClassContainingSegment(seg1);
