@@ -350,7 +350,6 @@ public class MoraicSyllabifier implements Syllabifiable {
 					boolean haveCodaAlready = syllableAlreadyHasCoda(syl);
 					if (haveCodaAlready && applyAnyOnsetTemplates(seg1, seg2, result, segmentsInWord, syl, i,
 							sonorityComparer, tracer)) {
-						currentState = MoraicSyllabifierState.ONSET;
 						syllablesInCurrentWord.add(syl);
 						syl = createNewSyllable();
 						tracer.setStatus(MoraicSyllabificationStatus.NON_INITIAL_ONSET_TEMPLATE_MATCHED_START_NEW_SYLLABLE);
@@ -358,8 +357,7 @@ public class MoraicSyllabifier implements Syllabifiable {
 						tracer.recordStep();
 						i = addMatchedSegmentsToOnset(segmentsInWord, syl, i);
 						currentState = MoraicSyllabifierState.MORA;
-					} else 
-					if (useWeightByPosition && morasInSyllable < maxMorasInSyllable) {
+					} else if (useWeightByPosition && morasInSyllable < maxMorasInSyllable) {
 						if (!applyAnySyllableTemplates(seg1, seg2, result, segmentsInWord, syl, i, sonorityComparer, tracer)) {
 							return false;
 						}
