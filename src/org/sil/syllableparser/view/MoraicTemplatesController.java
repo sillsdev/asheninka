@@ -6,6 +6,7 @@
 package org.sil.syllableparser.view;
 
 import org.sil.syllableparser.ApplicationPreferences;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 
 /**
@@ -24,4 +25,18 @@ public class MoraicTemplatesController extends TemplatesController {
 		mainApp.getApplicationPreferences().setLastMoraicTemplatesViewItemUsed(iCurrentIndex);
 	}
 
+	@Override
+	protected void showTypeWarning(TemplateFilter templateFilter) {
+		switch (templateFilter.getType()) {
+		case "Coda":
+		case "Nucleus":
+		case "Rime":
+			typeWarningMessage.setText(bundle.getString("label.moraictemplatewarning"));
+			typeWarningMessage.setVisible(true);
+			break;
+		default:
+			typeWarningMessage.setVisible(false);
+			break;
+		}
+	}
 }

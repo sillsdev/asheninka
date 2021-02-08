@@ -6,6 +6,7 @@
 package org.sil.syllableparser.view;
 
 import org.sil.syllableparser.ApplicationPreferences;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 
 /**
@@ -22,5 +23,18 @@ public class ONCFiltersController extends FiltersController {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
 		setDataProcessing(ApplicationPreferences.LAST_ONC_FILTERS_VIEW_ITEM_USED);
+	}
+
+	@Override
+	protected void showTypeWarning(TemplateFilter filter) {
+		switch (filter.getType()) {
+		case "Syllable":
+			typeWarningMessage.setText(bundle.getString("label.oncfilterwarning"));
+			typeWarningMessage.setVisible(true);
+			break;
+		default:
+			typeWarningMessage.setVisible(false);
+			break;
+		}
 	}
 }

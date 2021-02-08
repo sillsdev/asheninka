@@ -23,10 +23,9 @@ import javafx.util.StringConverter;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.model.Template;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
-import org.sil.syllableparser.model.oncapproach.ONCApproach;
 
 /**
  * @author Andy Black
@@ -102,8 +101,8 @@ public abstract class TemplatesController extends TemplatesFiltersController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-//						System.out.println("SelectedValue="	+ selectedValue);
 						currentTemplateFilter.setTemplateFilterType(selectedValue);
+						showTypeWarning(currentTemplateFilter);
 					}
 				});
 			}
@@ -111,6 +110,7 @@ public abstract class TemplatesController extends TemplatesFiltersController {
 		typeComboBox.setPromptText(resources.getString("label.choosetype"));
 	}
 
+	protected abstract void showTypeWarning(TemplateFilter template);
 	/**
 	 * Fills all text fields to show details about the environment.
 	 *

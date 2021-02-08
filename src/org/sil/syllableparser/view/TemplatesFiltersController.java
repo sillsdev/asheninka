@@ -117,6 +117,8 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 	@FXML
 	protected Label slotsErrorMessage;
 	@FXML
+	protected Label typeWarningMessage;
+	@FXML
 	protected ComboBox<String> sncChoicesComboBox;
 
 	protected TemplateFilter currentTemplateFilter;
@@ -205,6 +207,10 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 
 		slotsErrorMessage.setTextFill(Constants.SLOTS_ERROR_MESSAGE);
 		slotsErrorMessage.setWrapText(true);
+
+		typeWarningMessage.setTextFill(Constants.TYPE_WARNING_MESSAGE);
+		typeWarningMessage.setWrapText(true);
+		typeWarningMessage.setVisible(false);
 
 		representationField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentTemplateFilter != null) {

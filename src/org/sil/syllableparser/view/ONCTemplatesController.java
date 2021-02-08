@@ -6,6 +6,7 @@
 package org.sil.syllableparser.view;
 
 import org.sil.syllableparser.ApplicationPreferences;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 
 /**
@@ -22,5 +23,18 @@ public class ONCTemplatesController extends TemplatesController {
 
 	protected void rememberSelection(int iCurrentIndex) {
 		mainApp.getApplicationPreferences().setLastONCTemplatesViewItemUsed(iCurrentIndex);
+	}
+
+	@Override
+	protected void showTypeWarning(TemplateFilter templateFilter) {
+		switch (templateFilter.getType()) {
+		case "Syllable":
+			typeWarningMessage.setText(bundle.getString("label.onctemplatewarning"));
+			typeWarningMessage.setVisible(true);
+			break;
+		default:
+			typeWarningMessage.setVisible(false);
+			break;
+		}
 	}
 }

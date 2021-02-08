@@ -75,6 +75,7 @@ public abstract class FiltersController extends TemplatesFiltersController {
 			descriptionField.setStyle(sAnalysis);
 		}
 	}
+	protected abstract void showTypeWarning(TemplateFilter filter);
 
 	protected void showFilterDetails(Filter tf) {
 		currentTemplateFilter = tf;
@@ -175,8 +176,8 @@ public abstract class FiltersController extends TemplatesFiltersController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-//						System.out.println("SelectedValue="	+ selectedValue);
 						currentTemplateFilter.setTemplateFilterType(selectedValue);
+						showTypeWarning(currentTemplateFilter);
 					}
 				});
 			}

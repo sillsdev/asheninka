@@ -6,6 +6,7 @@
 package org.sil.syllableparser.view;
 
 import org.sil.syllableparser.ApplicationPreferences;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 
 /**
@@ -22,6 +23,19 @@ public class MoraicFiltersController extends FiltersController {
 		moraicApproach = moraicApproachData;
 		languageProject = moraicApproach.getLanguageProject();
 		setDataProcessing(ApplicationPreferences.LAST_MORAIC_FILTERS_VIEW_ITEM_USED);
+	}
+
+	@Override
+	protected void showTypeWarning(TemplateFilter filter) {
+		switch (filter.getType()) {
+		case "Onset":
+			typeWarningMessage.setVisible(false);
+			break;
+		default:
+			typeWarningMessage.setText(bundle.getString("label.moraicfilterwarning"));
+			typeWarningMessage.setVisible(true);
+			break;
+		}
 	}
 
 }

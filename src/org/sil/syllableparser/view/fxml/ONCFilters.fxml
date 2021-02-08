@@ -60,6 +60,7 @@
                       <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" />
                     </rowConstraints>
@@ -81,8 +82,9 @@
                			</RadioButton>
 						<RadioButton fx:id="failRadioButton" mnemonicParsing="false" onAction="#handleFailRadioButton" GridPane.columnIndex="1" GridPane.rowIndex="4" text="%radio.failaction" toggleGroup="$group"/>
                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="7" promptText="Choose class" />
+                        <Label fx:id="typeWarningMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label fx:id="slotsErrorMessage" text="" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <ComboBox fx:id="sncChoicesComboBox" prefHeight="25.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="8" promptText="Choose class" />
                      </children>
                   </GridPane>
                </children>
