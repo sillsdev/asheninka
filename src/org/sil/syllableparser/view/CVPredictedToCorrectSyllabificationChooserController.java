@@ -15,6 +15,7 @@ import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVPredictedSyllabification;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
@@ -212,6 +213,18 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		addWordsToTable();
 	}
 
+	private void createListOfDifferentNPWords(ObservableList<Word> words) {
+		for (Word npWord : words) {
+			if (!npWord.getNPPredictedSyllabification().isEmpty()
+					&& !npWord.getNPPredictedSyllabification().equals(npWord.getCorrectSyllabification())) {
+				currentPredictedSyllabification = new CVPredictedSyllabification(
+						npWord.getNPPredictedSyllabification(), npWord.getID());
+				cvPredictedSyllabifications.add(currentPredictedSyllabification);
+			}
+		}
+		addWordsToTable();
+	}
+
 	protected void addWordsToTable() {
 		cvPredictedSyllabificationTable.setItems(cvPredictedSyllabifications);
 		if (cvPredictedSyllabificationTable.getItems().size() > 0) {
@@ -241,6 +254,13 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		languageProject = moraicApproachData.getLanguageProject();
 		this.words = words;
 		createListOfDifferentMoraicWords(words);
+	}
+
+	public void setData(NPApproach npApproachData, ObservableList<Word> words) {
+		npApproach = npApproachData;
+		languageProject = npApproachData.getLanguageProject();
+		this.words = words;
+		createListOfDifferentNPWords(words);
 	}
 
 	/**

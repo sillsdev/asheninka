@@ -20,6 +20,7 @@ import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
@@ -389,16 +390,34 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 			this.mainApp.updateStatusBarNumberOfItems((currentSegmentNumber + 1) + "/"
 					+ cvSegmentTable.getItems().size() + " ");
 
-			String sApproach = this.rootController.getApproachUsed();
-			if (sApproach.equals(ApproachType.CV.name())) {
-				mainApp.getApplicationPreferences().setLastCVSegmentInventoryViewItemUsed(
-						currentSegmentNumber);
-			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+			ApproachType approach = this.rootController.getCurrentApproach();
+			switch (approach) {
+			case CV:
+				mainApp.getApplicationPreferences()
+						.setLastCVSegmentInventoryViewItemUsed(currentSegmentNumber);
+				break;
+
+			case SONORITY_HIERARCHY:
 				mainApp.getApplicationPreferences().setLastSHSegmentInventoryViewItemUsed(
 						currentSegmentNumber);
-			} else if (sApproach.equals(ApproachType.ONSET_NUCLEUS_CODA.name())) {
+				break;
+
+			case ONSET_NUCLEUS_CODA:
 				mainApp.getApplicationPreferences().setLastONCSegmentInventoryViewItemUsed(
 						currentSegmentNumber);
+				break;
+
+			case MORAIC:
+				mainApp.getApplicationPreferences().setLastMoraicSegmentInventoryViewItemUsed(
+						currentSegmentNumber);
+				break;
+
+			case NUCLEAR_PROJECTION:
+				mainApp.getApplicationPreferences().setLastNPSegmentInventoryViewItemUsed(
+						currentSegmentNumber);
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -425,34 +444,34 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 
 	public void setData(CVApproach cvApproachData) {
 		currentApproach = cvApproach = cvApproachData;
-		languageProject = cvApproach.getLanguageProject();
+		setDataCommon(ApproachType.CV);
+	}
+
+	protected void setDataCommon(ApproachType approachType) {
+		languageProject = currentApproach.getLanguageProject();
 		setColumnICURules();
 		setTextFieldColors();
-		populateSegmentTable(ApproachType.CV);
+		populateSegmentTable(approachType);
 	}
 
 	public void setData(SHApproach shApproachData) {
 		currentApproach = shApproach = shApproachData;
-		languageProject = shApproach.getLanguageProject();
-		setColumnICURules();
-		setTextFieldColors();
-		populateSegmentTable(ApproachType.SONORITY_HIERARCHY);
+		setDataCommon(ApproachType.SONORITY_HIERARCHY);
 	}
 
 	public void setData(ONCApproach oncApproachData) {
 		currentApproach = oncApproach = oncApproachData;
-		languageProject = oncApproach.getLanguageProject();
-		setColumnICURules();
-		setTextFieldColors();
-		populateSegmentTable(ApproachType.ONSET_NUCLEUS_CODA);
+		setDataCommon(ApproachType.ONSET_NUCLEUS_CODA);
 	}
 
 	public void setData(MoraicApproach moraicApproachData) {
 		currentApproach = moraicApproach = moraicApproachData;
-		languageProject = moraicApproach.getLanguageProject();
-		setColumnICURules();
-		setTextFieldColors();
-		populateSegmentTable(ApproachType.MORAIC);
+		setDataCommon(ApproachType.MORAIC);
+	}
+
+	public void setData(NPApproach npApproachData) {
+		currentApproach = npApproach = npApproachData;
+		setDataCommon(ApproachType.NUCLEAR_PROJECTION);
 	}
 
 	protected void setColumnICURules() {
@@ -479,15 +498,29 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 				@Override
 				public void run() {
 					int iLastIndex = 0;
-					if (appType == ApproachType.CV) {
+					switch (appType) {
+					case CV:
 						iLastIndex = mainApp.getApplicationPreferences()
 								.getLastCVSegmentInventoryViewItemUsed();
-					} else if (appType == ApproachType.SONORITY_HIERARCHY) {
-						iLastIndex = mainApp.getApplicationPreferences()
-								.getLastSHSegmentInventoryViewItemUsed();
-					} else if (appType == ApproachType.ONSET_NUCLEUS_CODA) {
-						iLastIndex = mainApp.getApplicationPreferences()
-								.getLastONCSegmentInventoryViewItemUsed();
+						break;
+
+					case SONORITY_HIERARCHY:
+						iLastIndex = mainApp.getApplicationPreferences().getLastSHSegmentInventoryViewItemUsed();
+						break;
+
+					case ONSET_NUCLEUS_CODA:
+						iLastIndex = mainApp.getApplicationPreferences().getLastONCSegmentInventoryViewItemUsed();
+						break;
+
+					case MORAIC:
+						iLastIndex = mainApp.getApplicationPreferences().getLastMoraicSegmentInventoryViewItemUsed();
+						break;
+
+					case NUCLEAR_PROJECTION:
+						iLastIndex = mainApp.getApplicationPreferences().getLastNPSegmentInventoryViewItemUsed();
+						break;
+					default:
+						break;
 					}
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					cvSegmentTable.requestFocus();

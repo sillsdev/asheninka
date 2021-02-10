@@ -23,6 +23,7 @@ import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
@@ -305,13 +306,34 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ graphemeNaturalClassTable.getItems().size() + " ");
 			// remember the selection
-			String sApproach = this.rootController.getApproachUsed();
-			if (sApproach.equals(ApproachType.CV.name())) {
-				mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(
-						iCurrentIndex);
-			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+			ApproachType approach = this.rootController.getCurrentApproach();
+			switch (approach) {
+			case CV:
+				mainApp.getApplicationPreferences()
+						.setLastCVGraphemeNaturalClassesViewItemUsed(iCurrentIndex);
+				break;
+
+			case SONORITY_HIERARCHY:
 				mainApp.getApplicationPreferences().setLastSHGraphemeNaturalClassesViewItemUsed(
 						iCurrentIndex);
+				break;
+
+			case ONSET_NUCLEUS_CODA:
+				mainApp.getApplicationPreferences().setLastONCGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+
+			case MORAIC:
+				mainApp.getApplicationPreferences().setLastMoraicGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+
+			case NUCLEAR_PROJECTION:
+				mainApp.getApplicationPreferences().setLastNPGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -464,6 +486,12 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 	public void setData(MoraicApproach moraicApproachData) {
 		moraicApproach = moraicApproachData;
 		languageProject = moraicApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	public void setData(NPApproach npApproachData) {
+		npApproach = npApproachData;
+		languageProject = npApproach.getLanguageProject();
 		setDataCommon();
 	}
 

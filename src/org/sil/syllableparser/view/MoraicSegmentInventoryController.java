@@ -42,7 +42,7 @@ public class MoraicSegmentInventoryController extends CVSegmentInventoryControll
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.initialize(location, resources);
-		super.setApproach(ApplicationPreferences.ONC_SEGMENTS);
+		super.setApproach(ApplicationPreferences.MORAIC_SEGMENTS);
 
 		morasColumn.setCellValueFactory(cellData -> cellData.getValue().morasBornProperty());
 

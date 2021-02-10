@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2021 SIL International
+// Copyright (c) 2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -16,7 +16,6 @@ import java.util.Set;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
-import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
@@ -54,7 +53,7 @@ import javafx.stage.Stage;
  *
  */
 
-public class SHSonorityHierarchyController extends SplitPaneWithTableViewController {
+public class NPRulesController extends SplitPaneWithTableViewController {
 
 	protected final class AnalysisWrappingTableCell extends TableCell<SHNaturalClass, String> {
 		private Text text;
@@ -126,7 +125,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 
 	private SHNaturalClass currentNaturalClass;
 
-	public SHSonorityHierarchyController() {
+	public NPRulesController() {
 
 	}
 
@@ -307,31 +306,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 			int currentItem = shSonorityHierarchyTable.getItems().indexOf(currentNaturalClass);
 			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
 					+ shSonorityHierarchyTable.getItems().size() + " ");
-
-			ApproachType approach = this.rootController.getCurrentApproach();
-			switch (approach) {
-			case SONORITY_HIERARCHY:
-				mainApp.getApplicationPreferences().setLastSHSonorityHierarchyViewItemUsed(
-						currentItem);
-				break;
-
-			case ONSET_NUCLEUS_CODA:
-				mainApp.getApplicationPreferences().setLastONCSonorityHierarchyViewItemUsed(
-						currentItem);
-				break;
-
-			case MORAIC:
-				mainApp.getApplicationPreferences().setLastMoraicSonorityHierarchyViewItemUsed(
-						currentItem);
-				break;
-
-			case NUCLEAR_PROJECTION:
-				mainApp.getApplicationPreferences().setLastNPSonorityHierarchyViewItemUsed(
-						currentItem);
-				break;
-			default:
-				break;
-			}
+			mainApp.getApplicationPreferences().setLastSHSonorityHierarchyViewItemUsed(currentItem);
 		}
 	}
 
@@ -462,30 +437,11 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 		shSonorityHierarchyTable.setItems(shApproachData.getSHSonorityHierarchy());
 		int max = shSonorityHierarchyTable.getItems().size();
 		if (max > 0) {
-			ApproachType approach = this.rootController.getCurrentApproach();
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = 0;
-					switch (approach) {
-					case SONORITY_HIERARCHY:
-						iLastIndex = mainApp.getApplicationPreferences().getLastSHSonorityHierarchyViewItemUsed();
-						break;
-
-					case ONSET_NUCLEUS_CODA:
-						iLastIndex = mainApp.getApplicationPreferences().getLastONCSonorityHierarchyViewItemUsed();
-						break;
-
-					case MORAIC:
-						iLastIndex = mainApp.getApplicationPreferences().getLastMoraicSonorityHierarchyViewItemUsed();
-						break;
-
-					case NUCLEAR_PROJECTION:
-						iLastIndex = mainApp.getApplicationPreferences().getLastNPSonorityHierarchyViewItemUsed();
-						break;
-					default:
-						break;
-					}
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastSHSonorityHierarchyViewItemUsed();
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					shSonorityHierarchyTable.requestFocus();
 					shSonorityHierarchyTable.getSelectionModel().select(iLastIndex);

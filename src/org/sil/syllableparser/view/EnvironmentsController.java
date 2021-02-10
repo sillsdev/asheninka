@@ -26,6 +26,7 @@ import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
@@ -600,6 +601,16 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 				mainApp.getApplicationPreferences().setLastONCEnvironmentsViewItemUsed(
 						iCurrentIndex);
 				break;
+
+			case MORAIC:
+				mainApp.getApplicationPreferences()
+						.setLastMoraicEnvironmentsViewItemUsed(iCurrentIndex);
+				break;
+
+			case NUCLEAR_PROJECTION:
+				mainApp.getApplicationPreferences().setLastNPEnvironmentsViewItemUsed(
+						iCurrentIndex);
+				break;
 			default:
 				break;
 			}
@@ -665,6 +676,12 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 		moraicApproach = moraicApproachData;
 		languageProject = moraicApproach.getLanguageProject();
 		setDataCommon(ApplicationPreferences.LAST_MORAIC_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
+
+	public void setData(NPApproach npApproachData) {
+		npApproach = npApproachData;
+		languageProject = npApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_NP_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 
 	protected void setTextFieldColors() {

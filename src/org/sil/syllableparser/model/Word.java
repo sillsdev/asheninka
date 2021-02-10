@@ -30,10 +30,13 @@ public class Word extends SylParserObject {
 	protected StringProperty oncPredictedSyllabification;
 	protected StringProperty moraicParserResult;
 	protected StringProperty moraicPredictedSyllabification;
+	protected StringProperty npParserResult;
+	protected StringProperty npPredictedSyllabification;
 	protected StringProperty cvLingTreeDescription;
 	protected StringProperty shLingTreeDescription;
 	protected StringProperty oncLingTreeDescription;
 	protected StringProperty muLingTreeDescription;
+	protected StringProperty npLingTreeDescription;
 
 	public Word() {
 		super();
@@ -48,10 +51,13 @@ public class Word extends SylParserObject {
 		this.oncPredictedSyllabification = new SimpleStringProperty("");
 		this.moraicParserResult = new SimpleStringProperty("");
 		this.moraicPredictedSyllabification = new SimpleStringProperty("");
+		this.npParserResult = new SimpleStringProperty("");
+		this.npPredictedSyllabification = new SimpleStringProperty("");
 		this.cvLingTreeDescription = new SimpleStringProperty("");
 		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
 		this.muLingTreeDescription = new SimpleStringProperty("");
+		this.npLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -68,10 +74,13 @@ public class Word extends SylParserObject {
 		this.oncPredictedSyllabification = new SimpleStringProperty("");
 		this.moraicParserResult = new SimpleStringProperty(parserResult);
 		this.moraicPredictedSyllabification = new SimpleStringProperty("");
+		this.npParserResult = new SimpleStringProperty(parserResult);
+		this.npPredictedSyllabification = new SimpleStringProperty("");
 		this.cvLingTreeDescription = new SimpleStringProperty("");
 		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
 		this.muLingTreeDescription = new SimpleStringProperty("");
+		this.npLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -238,6 +247,38 @@ public class Word extends SylParserObject {
 		return s;
 	}
 
+	public String getNPParserResult() {
+		return npParserResult.get();
+	}
+
+	public StringProperty npParserResultProperty() {
+		return npParserResult;
+	}
+
+	public void setNPParserResult(String parserResult) {
+		this.npParserResult.set(parserResult);
+	}
+
+	public String getNPPredictedSyllabification() {
+		return npPredictedSyllabification.get();
+	}
+
+	public StringProperty npPredictedSyllabificationProperty() {
+		return npPredictedSyllabification;
+	}
+
+	@XmlElement(name = "npPredictedSyllabification")
+	public void setNPPredictedSyllabification(String predictedSyllabification) {
+		this.npPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public StringProperty npPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(npPredictedSyllabificationProperty(), "\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
 	public String getCVLingTreeDescription() {
 		return cvLingTreeDescription.get();
 	}
@@ -287,6 +328,18 @@ public class Word extends SylParserObject {
 		this.muLingTreeDescription.set(ltDescription);
 	}
 
+	public String getNPLingTreeDescription() {
+		return npLingTreeDescription.get();
+	}
+
+	public StringProperty npLingTreeDescriptionProperty() {
+		return npLingTreeDescription;
+	}
+
+	public void setNPLingTreeDescription(String ltDescription) {
+		this.npLingTreeDescription.set(ltDescription);
+	}
+
 	@Override
 	public int hashCode() {
 		String sCombo = word.getValueSafe() + comment.getValueSafe()
@@ -294,6 +347,7 @@ public class Word extends SylParserObject {
 				+ shPredictedSyllabification.getValueSafe()
 				+ oncPredictedSyllabification.getValueSafe()
 				+ moraicPredictedSyllabification.getValueSafe()
+				+ npPredictedSyllabification.getValueSafe()
 				+ correctSyllabification.getValueSafe();
 		return sCombo.hashCode();
 	}
@@ -325,6 +379,10 @@ public class Word extends SylParserObject {
 						if (!getMoraicPredictedSyllabification().equals(
 								otherWord.getMoraicPredictedSyllabification())) {
 							result = false;
+						} else {
+							if (!getNPPredictedSyllabification().equals(otherWord.getNPPredictedSyllabification())) {
+								result = false;
+							}
 						}
 					}
 				}

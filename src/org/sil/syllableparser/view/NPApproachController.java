@@ -1,4 +1,4 @@
-// Copyright (c) 2020-2021 SIL International 
+// Copyright (c) 2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -22,12 +22,12 @@ import org.sil.syllableparser.model.ApproachView;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
-import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
-import org.sil.syllableparser.model.moraicapproach.MoraicApproachView;
-import org.sil.syllableparser.model.moraicapproach.MoraicSegmentInSyllable;
+import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
+import org.sil.syllableparser.model.npapproach.NPApproach;
+import org.sil.syllableparser.model.npapproach.NPApproachView;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
-import org.sil.syllableparser.service.parsing.MoraicSegmenter;
-import org.sil.syllableparser.service.parsing.MoraicSyllabifier;
+import org.sil.syllableparser.service.parsing.NPSyllabifier;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -49,32 +49,32 @@ import javafx.stage.Stage;
  * @author Andy Black
  *
  */
-public class MoraicApproachController extends ApproachController  {
+public class NPApproachController extends ApproachController  {
 	
 	private ObservableList<ApproachView> views = FXCollections.observableArrayList();
 	private LanguageProject languageProject;
-	private MoraicApproach moraicApproachData;
+	private NPApproach npApproachData;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String backupDirectoryPath;
-	private ApproachEditorController currentMoraicApproachController;
+	private ApproachEditorController currentNPApproachController;
 
-	public MoraicApproachController(ResourceBundle bundle, Locale locale) {
+	public NPApproachController(ResourceBundle bundle, Locale locale) {
 		super();
 		this.bundle = bundle;
 		this.locale = locale;
-		views.add(new ApproachView(bundle.getString("onc.view.segmentinventory"),
-				"handleMoraicSegmentInventory"));
+		views.add(new ApproachView(bundle.getString("cv.view.segmentinventory"),
+				"handleNPSegmentInventory"));
 		views.add(new ApproachView(bundle.getString("onc.view.sonorityhierarchy"),
-				"handleMoraicSonorityHierarchy"));
+				"handleNPSonorityHierarchy"));
 		views.add(new ApproachView(bundle.getString("onc.view.syllabificationparameters"),
-				"handleMoraicSyllabificationParameters"));
+				"handleNPSyllabificationParameters"));
 		views.add(new ApproachView(bundle.getString("cv.view.naturalclass"),
 				"handleCVNaturalClasses"));
-		views.add(new ApproachView(bundle.getString("moraic.view.templates"), "handleTemplates"));
-		views.add(new ApproachView(bundle.getString("moraic.view.filters"), "handleFilters"));
-		views.add(new ApproachView(bundle.getString("moraic.view.words"), "handleMoraicWords"));
-		views.add(new ApproachView(bundle.getString("moraic.view.wordspredictedvscorrect"),
-				"handleMoraicWordsPredictedVsCorrect"));
+		views.add(new ApproachView(bundle.getString("np.view.rules"), "handleRules"));
+		views.add(new ApproachView(bundle.getString("np.view.filters"), "handleFilters"));
+		views.add(new ApproachView(bundle.getString("np.view.words"), "handleNPWords"));
+		views.add(new ApproachView(bundle.getString("np.view.wordspredictedvscorrect"),
+				"handleNPWordsPredictedVsCorrect"));
 		views.add(new ApproachView(bundle.getString("onc.view.graphemenaturalclasses"),
 				"handleGraphemeNaturalClasses"));
 		views.add(new ApproachView(bundle.getString("onc.view.environments"), "handleEnvironments"));
@@ -86,50 +86,50 @@ public class MoraicApproachController extends ApproachController  {
 
 	public String getViewUsed() {
 		String sView = "unknown";
-		if (currentMoraicApproachController == null) {
-			sView = prefs.getLastMoraicApproachViewUsed();
+		if (currentNPApproachController == null) {
+			sView = prefs.getLastNPApproachViewUsed();
 			return sView;
 		}
-		String sClass = currentMoraicApproachController.getClass().getName();
+		String sClass = currentNPApproachController.getClass().getName();
 		switch (sClass) {
-		case "org.sil.syllableparser.view.MoraicSegmentInventoryController":
-			sView = MoraicApproachView.SEGMENT_INVENTORY.toString();
+		case "org.sil.syllableparser.view.CVSegmentInventoryController":
+			sView = NPApproachView.SEGMENT_INVENTORY.toString();
 			break;
 
 		case "org.sil.syllableparser.view.SHSonorityHierarchyController":
-			sView = MoraicApproachView.SONORITY_HIERARCHY.toString();
+			sView = NPApproachView.SONORITY_HIERARCHY.toString();
 			break;
 
-		case "org.sil.syllableparser.view.MoraicSyllabificationParametersController":
-			sView = MoraicApproachView.SYLLABIFICATION_PARAMETERS.toString();
+		case "org.sil.syllableparser.view.NPSyllabificationParametersController":
+			sView = NPApproachView.SYLLABIFICATION_PARAMETERS.toString();
 			break;
 
 		case "org.sil.syllableparser.view.CVNaturalClassesController":
-			sView = MoraicApproachView.NATURAL_CLASSES.toString();
+			sView = NPApproachView.NATURAL_CLASSES.toString();
 			break;
 
-		case "org.sil.syllableparser.view.MoraicTemplatesController":
-			sView = MoraicApproachView.TEMPLATES.toString();
+		case "org.sil.syllableparser.view.NPRulesController":
+			sView = NPApproachView.RULES.toString();
 			break;
 
-		case "org.sil.syllableparser.view.MoraicFiltersController":
-			sView = MoraicApproachView.FILTERS.toString();
+		case "org.sil.syllableparser.view.NPFiltersController":
+			sView = NPApproachView.FILTERS.toString();
 			break;
 
-		case "org.sil.syllableparser.view.MoraicWordsController":
-			sView = MoraicApproachView.WORDS.toString();
+		case "org.sil.syllableparser.view.NPWordsController":
+			sView = NPApproachView.WORDS.toString();
 			break;
 
-		case "org.sil.syllableparser.view.MoraicWordsPredictedVsCorrectController":
-			sView = MoraicApproachView.PREDICTED_VS_CORRECT_WORDS.toString();
+		case "org.sil.syllableparser.view.NPWordsPredictedVsCorrectController":
+			sView = NPApproachView.PREDICTED_VS_CORRECT_WORDS.toString();
 			break;
 
 		case "org.sil.syllableparser.view.EnvironmentsController":
-			sView = MoraicApproachView.ENVIRONMENTS.toString();
+			sView = NPApproachView.ENVIRONMENTS.toString();
 			break;
 
 		case "org.sil.syllableparser.view.GraphemeNaturalClassesController":
-			sView = MoraicApproachView.GRAPHEME_NATURAL_CLASSES.toString();
+			sView = NPApproachView.GRAPHEME_NATURAL_CLASSES.toString();
 			break;
 
 		default:
@@ -138,20 +138,20 @@ public class MoraicApproachController extends ApproachController  {
 		return sView;
 	}
 
-	public void setMoraicApproachData(MoraicApproach moraicApproach, ObservableList<Word> words) {
-		this.moraicApproachData = moraicApproach;
-		languageProject = moraicApproach.getLanguageProject();
+	public void setNPApproachData(NPApproach npApproach, ObservableList<Word> words) {
+		this.npApproachData = npApproach;
+		languageProject = npApproach.getLanguageProject();
 		this.words = words;
 	}
 
-	public void handleMoraicSegmentInventory() {
-		FXMLLoader loader = createFXMLLoader("fxml/MoraicSegmentInventory.fxml");
-		MoraicSegmentInventoryController controller = loader.getController();
+	public void handleNPSegmentInventory() {
+		FXMLLoader loader = createFXMLLoader("fxml/CVSegmentInventory.fxml");
+		CVSegmentInventoryController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData);
+		controller.setData(npApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
-		controller.setViewItemUsed(prefs.getLastMoraicSegmentInventoryViewItemUsed());
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		controller.setViewItemUsed(prefs.getLastNPSegmentInventoryViewItemUsed());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
 	}
 
@@ -162,29 +162,29 @@ public class MoraicApproachController extends ApproachController  {
 	}
 
 	private void initializeApproachEditorController(ApproachEditorController controller) {
-		currentMoraicApproachController = controller;
+		currentNPApproachController = controller;
 		controller.setMainApp(mainApp);
 		controller.setRootLayout(rootController);
 		controller.setLocale(locale);
 		controller.setToolBarDelegate(rootController.toolBarDelegate);
 	}
 
-	public void handleMoraicSonorityHierarchy() {
+	public void handleNPSonorityHierarchy() {
 		FXMLLoader loader = createFXMLLoader("fxml/SHSonorityHierarchy.fxml");
 		SHSonorityHierarchyController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData);
+		controller.setData(npApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		prefs.setLastMoraicApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
 	}
 
-	public void handleMoraicSyllabificationParameters() {
-		FXMLLoader loader = createFXMLLoader("fxml/MoraicSyllabificationParameters.fxml");
-		MoraicSyllabificationParametersController controller = loader.getController();
+	public void handleNPSyllabificationParameters() {
+		FXMLLoader loader = createFXMLLoader("fxml/NPSyllabificationParameters.fxml");
+		NPSyllabificationParametersController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData.getLanguageProject());
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		controller.setData(npApproachData.getLanguageProject());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
 	}
 
@@ -192,86 +192,86 @@ public class MoraicApproachController extends ApproachController  {
 		FXMLLoader loader = createFXMLLoader("fxml/CVNaturalClasses.fxml");
 		CVNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData.getLanguageProject().getCVApproach(),
-				ApproachType.MORAIC);
+		controller.setData(npApproachData.getLanguageProject().getCVApproach(),
+				ApproachType.NUCLEAR_PROJECTION);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
-		int i = prefs.getLastMoraicCVNaturalClassesViewItemUsed();
+		int i = prefs.getLastNPCVNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
 	}
 
-	public void handleTemplates() {
-		FXMLLoader loader = createFXMLLoader("fxml/MoraicTemplates.fxml");
-		MoraicTemplatesController controller = loader.getController();
+	public void handleRules() {
+		FXMLLoader loader = createFXMLLoader("fxml/NPRules.fxml");
+		NPRulesController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData);
+		controller.setData(npApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
-		int i = prefs.getLastMoraicTemplatesViewItemUsed();
+		int i = prefs.getLastNPRulesViewItemUsed();
 		controller.setViewItemUsed(i);
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	public void handleFilters() {
-		FXMLLoader loader = createFXMLLoader("fxml/MoraicFilters.fxml");
-		MoraicFiltersController controller = loader.getController();
+		FXMLLoader loader = createFXMLLoader("fxml/NPFilters.fxml");
+		NPFiltersController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData);
+		controller.setData(npApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
-		int i = prefs.getLastMoraicFiltersViewItemUsed();
+		int i = prefs.getLastNPFiltersViewItemUsed();
 		controller.setViewItemUsed(i);
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
 	}
 
-	public void handleMoraicWords() {
-		handleMoraicWords(0, false, false);
+	public void handleNPWords() {
+		handleNPWords(0, false, false);
 	}
 
-	public void handleMoraicWords(int index, boolean fResetIndex, boolean fCheckFilters) {
-		FXMLLoader loader = createFXMLLoader("fxml/MoraicWords.fxml");
-		MoraicWordsController controller = loader.getController();
+	public void handleNPWords(int index, boolean fResetIndex, boolean fCheckFilters) {
+		FXMLLoader loader = createFXMLLoader("fxml/NPWords.fxml");
+		NPWordsController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData, words);
+		controller.setData(npApproachData, words);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		controller.applyWordFilters();
 		mainApp.updateStatusBarNumberOfItems("");
 		if (fResetIndex) {
 			controller.setFocusOnWord(index, fCheckFilters);
 		}
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false);
 	}
 
-	public void handleMoraicWordsPredictedVsCorrect(int index) {
-		FXMLLoader loader = createFXMLLoader("fxml/MoraicWordsPredictedVsCorrect.fxml");
-		MoraicWordsPredictedVsCorrectController controller = loader.getController();
+	public void handleNPWordsPredictedVsCorrect(int index) {
+		FXMLLoader loader = createFXMLLoader("fxml/NPWordsPredictedVsCorrect.fxml");
+		NPWordsPredictedVsCorrectController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData, words);
+		controller.setData(npApproachData, words);
 		controller.initWordsFilter();
 		controller.applyWordFilter();
 		controller.setFocusOnWord(index);
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false, true);
 	}
 
-	public void handleMoraicWordsPredictedVsCorrect() {
-		handleMoraicWordsPredictedVsCorrect(0);
+	public void handleNPWordsPredictedVsCorrect() {
+		handleNPWordsPredictedVsCorrect(0);
 	}
 
 	public void handleGraphemeNaturalClasses() {
 		FXMLLoader loader = createFXMLLoader("fxml/GraphemeNaturalClasses.fxml");
 		GraphemeNaturalClassesController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData);
+		controller.setData(npApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
-		int i = prefs.getLastMoraicGraphemeNaturalClassesViewItemUsed();
+		int i = prefs.getLastNPGraphemeNaturalClassesViewItemUsed();
 		controller.setViewItemUsed(i);
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
 	}
 
@@ -279,33 +279,33 @@ public class MoraicApproachController extends ApproachController  {
 		FXMLLoader loader = createFXMLLoader("fxml/Environments.fxml");
 		EnvironmentsController controller = loader.getController();
 		initializeApproachEditorController(controller);
-		controller.setData(moraicApproachData);
+		controller.setData(npApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
 		mainApp.updateStatusBarNumberOfItems("");
-		int i = prefs.getLastMoraicEnvironmentsViewItemUsed();
+		int i = prefs.getLastNPEnvironmentsViewItemUsed();
 		controller.setViewItemUsed(i);
-		prefs.setLastMoraicApproachViewUsed(getViewUsed());
+		prefs.setLastNPApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
 	}
 
 	@Override
 	void handleInsertNewItem() {
-		currentMoraicApproachController.handleInsertNewItem();
+		currentNPApproachController.handleInsertNewItem();
 	}
 
 	@Override
 	void handleRemoveItem() {
-		currentMoraicApproachController.handleRemoveItem();
+		currentNPApproachController.handleRemoveItem();
 	}
 
 	@Override
 	void handlePreviousItem() {
-		currentMoraicApproachController.handlePreviousItem();
+		currentNPApproachController.handlePreviousItem();
 	}
 
 	@Override
 	void handleNextItem() {
-		currentMoraicApproachController.handleNextItem();
+		currentNPApproachController.handleNextItem();
 	}
 
 	@Override
@@ -321,12 +321,12 @@ public class MoraicApproachController extends ApproachController  {
 				Scene scene = statusBar.getScene();
 				Cursor currentCursor = scene.getCursor();
 				scene.setCursor(Cursor.WAIT);
-				MoraicSegmenter segmenter;
-				MoraicSyllabifier syllabifier;
+				CVSegmenter segmenter;
+				NPSyllabifier syllabifier;
 
-				segmenter = new MoraicSegmenter(languageProject.getActiveGraphemes(),
+				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
 						languageProject.getActiveGraphemeNaturalClasses());
-				syllabifier = new MoraicSyllabifier(languageProject.getMoraicApproach());
+				syllabifier = new NPSyllabifier(languageProject.getNPApproach());
 
 				int max = words.size();
 				int i = 0;
@@ -338,17 +338,17 @@ public class MoraicApproachController extends ApproachController  {
 					CVSegmenterResult result = segmenter.segmentWord(sWord);
 					boolean fSuccess = result.success;
 					if (!fSuccess) {
-						word.setMoraicParserResult(sSegmentFailure.replace("{0}",
+						word.setNPParserResult(sSegmentFailure.replace("{0}",
 								sWord.substring(result.iPositionOfFailure)));
-						word.setMoraicPredictedSyllabification("");
+						word.setNPPredictedSyllabification("");
 						continue;
 					}
-					List<MoraicSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					fSuccess = syllabifier.syllabify(segmentsInWord);
-					word.setMoraicLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
+					word.setNPLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
 					if (!fSuccess) {
-						word.setMoraicParserResult(sSyllabificationFailure);
-						word.setMoraicPredictedSyllabification("");
+						word.setNPParserResult(sSyllabificationFailure);
+						word.setNPPredictedSyllabification("");
 						continue;
 					}
 					word.setMoraicPredictedSyllabification(syllabifier
@@ -373,10 +373,10 @@ public class MoraicApproachController extends ApproachController  {
 			statusBar.textProperty().unbind();
 			statusBar.progressProperty().unbind();
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
-			if (currentMoraicApproachController instanceof MoraicWordsController) {
-				MoraicWordsController muController = (MoraicWordsController) currentMoraicApproachController;
-				muController.updateStatusBarWords(muController.getPredictedWords(),
-						muController.getPredictedEqualsCorrectWords());
+			if (currentNPApproachController instanceof NPWordsController) {
+				NPWordsController npController = (NPWordsController) currentNPApproachController;
+				npController.updateStatusBarWords(npController.getPredictedWords(),
+						npController.getPredictedEqualsCorrectWords());
 			}
 		});
 
@@ -397,7 +397,7 @@ public class MoraicApproachController extends ApproachController  {
 					.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
-			controller.setData(moraicApproachData, words);
+			controller.setData(npApproachData, words);
 			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
@@ -413,16 +413,16 @@ public class MoraicApproachController extends ApproachController  {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
-			String resource = "fxml/MoraicComparison.fxml";
+			String resource = "fxml/NPComparison.fxml";
 			String title = bundle.getString("label.compareimplementations");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
 					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
 
-			MoraicComparisonController controller = loader.getController();
+			NPComparisonController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setLocale(locale);
-			controller.setData(moraicApproachData);
+			controller.setData(npApproachData);
 			controller.setBackupDirectoryPath(backupDirectoryPath);
 
 			dialogStage.initModality(Modality.NONE);
@@ -450,9 +450,9 @@ public class MoraicApproachController extends ApproachController  {
 
 			ObservableList<String> listOfWords = FXCollections.observableArrayList();
 			ObservableList<Word> wordsToUse = words;
-			if (currentMoraicApproachController instanceof MoraicWordsPredictedVsCorrectController) {
-				MoraicWordsPredictedVsCorrectController predController = (MoraicWordsPredictedVsCorrectController) currentMoraicApproachController;
-				wordsToUse = predController.getMoraicWordsPredictedVsCorrectTable().getItems();
+			if (currentNPApproachController instanceof NPWordsPredictedVsCorrectController) {
+				NPWordsPredictedVsCorrectController predController = (NPWordsPredictedVsCorrectController) currentNPApproachController;
+				wordsToUse = predController.getNPWordsPredictedVsCorrectTable().getItems();
 			}
 			for (Word word : wordsToUse) {
 				listOfWords.add(word.getWord());
@@ -461,11 +461,11 @@ public class MoraicApproachController extends ApproachController  {
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(word -> {
 				int index = listOfWords.indexOf(result.get());
-				if (currentMoraicApproachController instanceof MoraicWordsPredictedVsCorrectController) {
-					handleMoraicWordsPredictedVsCorrect(index);
+				if (currentNPApproachController instanceof NPWordsPredictedVsCorrectController) {
+					handleNPWordsPredictedVsCorrect(index);
 				} else {
-					handleMoraicWords(index, true, true);
-					rootController.selectApproachViewItem(Constants.MORAIC_WORDS_VIEW_INDEX);
+					handleNPWords(index, true, true);
+					rootController.selectApproachViewItem(Constants.NP_WORDS_VIEW_INDEX);
 				}
 			});
 
@@ -477,17 +477,17 @@ public class MoraicApproachController extends ApproachController  {
 
 	@Override
 	public ArrayList<String> getHyphenatedWordsListWord(ObservableList<Word> words) {
-		return moraicApproachData.getHyphenatedWordsListWord(words);
+		return npApproachData.getHyphenatedWordsListWord(words);
 	}
 
 	@Override
 	public ArrayList<String> getHyphenatedWordsParaTExt(ObservableList<Word> words) {
-		return moraicApproachData.getHyphenatedWordsParaTExt(words);
+		return npApproachData.getHyphenatedWordsParaTExt(words);
 	}
 
 	@Override
 	public ArrayList<String> getHyphenatedWordsXLingPaper(ObservableList<Word> words) {
-		return moraicApproachData.getHyphenatedWordsXLingPaper(words);
+		return npApproachData.getHyphenatedWordsXLingPaper(words);
 	}
 
 	public ObservableList<Word> getWords() {
@@ -501,7 +501,7 @@ public class MoraicApproachController extends ApproachController  {
 	 */
 	@Override
 	public void handleCopy() {
-		currentMoraicApproachController.handleCopy();
+		currentNPApproachController.handleCopy();
 	}
 
 	/*
@@ -511,7 +511,7 @@ public class MoraicApproachController extends ApproachController  {
 	 */
 	@Override
 	public void handleCut() {
-		currentMoraicApproachController.handleCut();
+		currentNPApproachController.handleCut();
 	}
 
 	/*
@@ -521,7 +521,7 @@ public class MoraicApproachController extends ApproachController  {
 	 */
 	@Override
 	public void handlePaste() {
-		currentMoraicApproachController.handlePaste();
+		currentNPApproachController.handlePaste();
 	}
 
 	/*
@@ -531,8 +531,8 @@ public class MoraicApproachController extends ApproachController  {
 	 */
 	@Override
 	boolean anythingSelected() {
-		if (currentMoraicApproachController != null) {
-			return currentMoraicApproachController.anythingSelected();
+		if (currentNPApproachController != null) {
+			return currentNPApproachController.anythingSelected();
 		}
 		return false;
 	}
@@ -544,7 +544,7 @@ public class MoraicApproachController extends ApproachController  {
 	 */
 	@Override
 	public void handleToolBarCopy() {
-		currentMoraicApproachController.handleToolBarCopy();
+		currentNPApproachController.handleToolBarCopy();
 	}
 
 	/*
@@ -554,7 +554,7 @@ public class MoraicApproachController extends ApproachController  {
 	 */
 	@Override
 	public void handleToolBarPaste() {
-		currentMoraicApproachController.handleToolBarPaste();
+		currentNPApproachController.handleToolBarPaste();
 	}
 
 	/*
@@ -564,7 +564,7 @@ public class MoraicApproachController extends ApproachController  {
 	 */
 	@Override
 	public void handleToolBarCut() {
-		currentMoraicApproachController.handleToolBarCut();
+		currentNPApproachController.handleToolBarCut();
 	}
 
 	public String getBackupDirectoryPath() {
@@ -583,24 +583,24 @@ public class MoraicApproachController extends ApproachController  {
 	void handleTryAWord() {
 		try {
 			Stage tryAWordDialogStage = new Stage();
-			String resource = "fxml/MoraicTryAWord.fxml";
+			String resource = "fxml/NPTryAWord.fxml";
 			String title = bundle.getString("label.tryaword");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
 					Constants.RESOURCE_LOCATION);
 
-			MoraicTryAWordController controller = loader.getController();
+			NPTryAWordController controller = loader.getController();
 			controller.setDialogStage(tryAWordDialogStage);
 			controller.setMainApp(mainApp);
 			controller.setLocale(locale);
-			controller.setData(moraicApproachData);
+			controller.setData(npApproachData);
 
-			if (currentMoraicApproachController instanceof MoraicWordsController) {
-				MoraicWordsController npWordsController = (MoraicWordsController) currentMoraicApproachController;
-				setWordForTryAWord(controller, npWordsController.getMoraicWordsTable());
-			} else if (currentMoraicApproachController instanceof MoraicWordsPredictedVsCorrectController) {
-				MoraicWordsPredictedVsCorrectController predController = (MoraicWordsPredictedVsCorrectController) currentMoraicApproachController;
-				setWordForTryAWord(controller, predController.getMoraicWordsPredictedVsCorrectTable());
+			if (currentNPApproachController instanceof NPWordsController) {
+				NPWordsController npWordsController = (NPWordsController) currentNPApproachController;
+				setWordForTryAWord(controller, npWordsController.getNPWordsTable());
+			} else if (currentNPApproachController instanceof NPWordsPredictedVsCorrectController) {
+				NPWordsPredictedVsCorrectController predController = (NPWordsPredictedVsCorrectController) currentNPApproachController;
+				setWordForTryAWord(controller, predController.getNPWordsPredictedVsCorrectTable());
 			}
 
 			tryAWordDialogStage.initModality(Modality.NONE);
@@ -613,54 +613,54 @@ public class MoraicApproachController extends ApproachController  {
 
 	@Override
 	public void toggleView() {
-		String sClass = currentMoraicApproachController.getClass().getName();
+		String sClass = currentNPApproachController.getClass().getName();
 		switch (sClass) {
-		case "org.sil.syllableparser.view.MoraicSegmentInventoryController":
-			handleMoraicSyllabificationParameters();
-			handleMoraicSegmentInventory();
+		case "org.sil.syllableparser.view.CVSegmentInventoryController":
+			handleNPSyllabificationParameters();
+			handleNPSegmentInventory();
 			break;
 
 		case "org.sil.syllableparser.view.SHSonorityHierarchyController":
-			handleMoraicSyllabificationParameters();
-			handleMoraicSonorityHierarchy();
+			handleNPSyllabificationParameters();
+			handleNPSonorityHierarchy();
 			break;
 
-		case "org.sil.syllableparser.view.MoraicSyllabificationParametersController":
+		case "org.sil.syllableparser.view.SyllabificationParametersController":
 			// nothing to do
 			break;
 
 		case "org.sil.syllableparser.view.CVNaturalClassesController":
-			handleMoraicSyllabificationParameters();
+			handleNPSyllabificationParameters();
 			handleCVNaturalClasses();
 			break;
 
-		case "org.sil.syllableparser.view.TemplatesController":
-			handleMoraicSyllabificationParameters();
-			handleTemplates();
+		case "org.sil.syllableparser.view.RulesController":
+			handleNPSyllabificationParameters();
+			handleRules();
 			break;
 
 		case "org.sil.syllableparser.view.FiltersController":
-			handleMoraicSyllabificationParameters();
+			handleNPSyllabificationParameters();
 			handleFilters();
 			break;
 
-		case "org.sil.syllableparser.view.MoraicWordsController":
-			handleMoraicSyllabificationParameters();
-			handleMoraicWords();
+		case "org.sil.syllableparser.view.NPWordsController":
+			handleNPSyllabificationParameters();
+			handleNPWords();
 			break;
 
-		case "org.sil.syllableparser.view.MoraicWordsPredictedVsCorrectController":
-			handleMoraicSyllabificationParameters();
-			handleMoraicWordsPredictedVsCorrect();
+		case "org.sil.syllableparser.view.NPWordsPredictedVsCorrectController":
+			handleNPSyllabificationParameters();
+			handleNPWordsPredictedVsCorrect();
 			break;
 
 		case "org.sil.syllableparser.view.EnvironmentsController":
-			handleMoraicSyllabificationParameters();
+			handleNPSyllabificationParameters();
 			handleEnvironments();
 			break;
 
 		case "org.sil.syllableparser.view.GraphemeNaturalClassesController":
-			handleMoraicSyllabificationParameters();
+			handleNPSyllabificationParameters();
 			handleGraphemeNaturalClasses();
 			break;
 
@@ -671,37 +671,37 @@ public class MoraicApproachController extends ApproachController  {
 
 	@Override
 	void handleFilterCorrectSyllabifications() {
-		if (currentMoraicApproachController instanceof MoraicWordsController ) {
-			WordsControllerCommon controller = (WordsControllerCommon) currentMoraicApproachController;
+		if (currentNPApproachController instanceof NPWordsController ) {
+			WordsControllerCommon controller = (WordsControllerCommon) currentNPApproachController;
 			controller.handleFilterCorrectSyllabifications();
 		}
 	}
 
 	@Override
 	void handleFilterPredictedSyllabifications() {
-		if (currentMoraicApproachController instanceof MoraicWordsController ) {
-			WordsControllerCommon controller = (WordsControllerCommon) currentMoraicApproachController;
+		if (currentNPApproachController instanceof NPWordsController ) {
+			WordsControllerCommon controller = (WordsControllerCommon) currentNPApproachController;
 			controller.handleFilterPredictedSyllabifications();
 		}
 	}
 
 	public void handleFilterWords() {
-		if (currentMoraicApproachController instanceof MoraicWordsController ) {
-			WordsControllerCommon controller = (WordsControllerCommon) currentMoraicApproachController;
+		if (currentNPApproachController instanceof NPWordsController ) {
+			WordsControllerCommon controller = (WordsControllerCommon) currentNPApproachController;
 			controller.handleFilterWords();
-		} else if (currentMoraicApproachController instanceof MoraicWordsPredictedVsCorrectController ) {
-			MoraicWordsPredictedVsCorrectController controller = (MoraicWordsPredictedVsCorrectController) currentMoraicApproachController;
+		} else if (currentNPApproachController instanceof NPWordsPredictedVsCorrectController ) {
+			NPWordsPredictedVsCorrectController controller = (NPWordsPredictedVsCorrectController) currentNPApproachController;
 			controller.handleFilterWords();
 		}
 	}
 
 	@Override
 	void handleRemoveAllFilters() {
-		if (currentMoraicApproachController instanceof MoraicWordsController ) {
-			WordsControllerCommon controller = (WordsControllerCommon) currentMoraicApproachController;
+		if (currentNPApproachController instanceof NPWordsController ) {
+			WordsControllerCommon controller = (WordsControllerCommon) currentNPApproachController;
 			controller.handleRemoveAllFilters();
-		} else if (currentMoraicApproachController instanceof MoraicWordsPredictedVsCorrectController ) {
-			MoraicWordsPredictedVsCorrectController controller = (MoraicWordsPredictedVsCorrectController) currentMoraicApproachController;
+		} else if (currentNPApproachController instanceof NPWordsPredictedVsCorrectController ) {
+			NPWordsPredictedVsCorrectController controller = (NPWordsPredictedVsCorrectController) currentNPApproachController;
 			controller.handleRemoveFiltersWord();
 		}
 	}

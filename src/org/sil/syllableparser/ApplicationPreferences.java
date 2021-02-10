@@ -9,6 +9,7 @@ import java.util.prefs.Preferences;
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.cvapproach.CVApproachView;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproachView;
+import org.sil.syllableparser.model.npapproach.NPApproachView;
 import org.sil.syllableparser.model.oncapproach.ONCApproachView;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
 import org.sil.utility.*;
@@ -73,6 +74,19 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_MORAIC_FILTERS_VIEW_ITEM_USED = "lastMoraicFiltersViewItemUsed";
 	static final String LAST_MORAIC_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastMoraicWordPredictedVsCorrectViewItemUsed";
 
+	// last NP view used
+	static final String LAST_NP_APPROACH_VIEW_USED = "lastNPApproachViewUsed";
+	static final String LAST_NP_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastNPSegmentInventoryViewItemUsed";
+	static final String LAST_NP_SONORITY_HIERARCHY_VIEW_ITEM_USED = "lastNPSonorityHierarchViewItemUsed";
+	static final String LAST_NP_TRY_A_WORD_USED = "lastNPTryAWordUsed";
+	static final String LAST_NP_WORDS_VIEW_ITEM_USED = "lastNPWordsViewItemUsed";
+	static final String LAST_NP_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastNPGraphemeNaturalClassesViewItemUsed";
+	public static final String LAST_NP_ENVIRONMENTS_VIEW_ITEM_USED = "lastNPEnvironmentsViewItemUsed";
+	static final String LAST_NP_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastNPCVNaturalClassesViewItemUsed";
+	public static final String LAST_NP_RULES_VIEW_ITEM_USED = "lastNPRulessViewItemUsed";
+	public static final String LAST_NP_FILTERS_VIEW_ITEM_USED = "lastNPFiltersViewItemUsed";
+	static final String LAST_NP_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastNPWordPredictedVsCorrectViewItemUsed";
+
 	// Controller table column widths and splitter position
 	public static final String BACKUP_CHOOSER = "BACKUP_CHOOSER_";
 	public static final String CV_NATURAL_CLASSES = "CV_NATURAL_CLASSES_";
@@ -88,6 +102,8 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String PREDICTED_TO_CORRECT_CHOOSER = "PREDICTED_TO_CORRECT_CHOOSER_";
 	public static final String MORAIC_SEGMENTS = "MORAIC_SEGMENTS_";
 	public static final String MORAIC_WORDS = "MORAIC_WORDS_";
+	public static final String NP_SEGMENTS = "NP_SEGMENTS_";
+	public static final String NP_WORDS = "NP_WORDS_";
 	public static final String ONC_SEGMENTS = "ONC_SEGMENTS_";
 	public static final String ONC_WORDS = "ONC_WORDS_";
 	public static final String SH_SEGMENT_CHOOSER = "SH_SEGMENT_CHOOSER_";
@@ -139,6 +155,12 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_MORAIC_FILTER_PREDICTED_SYLLABIFICATIONS = "lastMoraicFilterPredictedSyllabifications";
 	public static final String LAST_MORAIC_FILTER_WORDS = "lastMoraicFilterWords";
 	public static final String LAST_MORAIC_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastMoraicFilterWordsPredictedVsCorrect";
+	public static final String LAST_NP_COMPARISON = "lastNPComparision";
+	public static final String LAST_NP_SEGMENT_OR_NATURAL_CLASS = "lastNPSegmentOrNaturalClass";
+	public static final String LAST_NP_TRY_A_WORD = "lastNPTryAWord";
+	public static final String LAST_NP_WORDS_PREDICTED_VS_CORRECT = "lastNPWordPredictedVsCorrect";
+	public static final String LAST_NP_GRAPHEME_OR_NATURAL_CLASS = "lastNPGraphemeOrNaturalClass";
+	public static final String LAST_NP_ENVIRONMENTS_CHOOSER = "lastNPEnvironmentsChooser";
 	public static final String LAST_NUCLEAR_PROJECTION_FILTER_CORRECT_SYLLABIFICATIONS = "lastNuclearProjectionFilterCorrectSyllabifications";
 	public static final String LAST_NUCLEAR_PROJECTION_FILTER_PREDICTED_SYLLABIFICATIONS = "lastNuclearProjectionFilterPredictedSyllabifications";
 	public static final String LAST_NUCLEAR_PROJECTION_FILTER_WORDS = "lastNuclearProjectionFilterWords";
@@ -471,6 +493,94 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastMoraicFiltersViewItemUsed(int value) {
 		setPreferencesKey(LAST_MORAIC_FILTERS_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastNPApproachViewUsed() {
+		return prefs.get(LAST_NP_APPROACH_VIEW_USED, NPApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastNPApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_NP_APPROACH_VIEW_USED, lastApproachViewUsed);
+	}
+
+	public int getLastNPSegmentInventoryViewItemUsed() {
+		return prefs.getInt(LAST_NP_SEGMENT_INVENTORY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPSegmentInventoryViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_SEGMENT_INVENTORY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastNPSonorityHierarchyViewItemUsed() {
+		return prefs.getInt(LAST_NP_SONORITY_HIERARCHY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPSonorityHierarchyViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_SONORITY_HIERARCHY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastNPWordsViewItemUsed() {
+		return prefs.getInt(LAST_NP_WORDS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPWordsViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_WORDS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastNPWordsPredictedVsCorrectViewItemUsed() {
+		return prefs.getInt(LAST_NP_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPWordsPredictedVsCorrectViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastNPTryAWordUsed() {
+		return prefs.get(LAST_NP_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastNPTryAWordUsed(String lastNPTryAWordUsed) {
+		setPreferencesKey(LAST_NP_TRY_A_WORD_USED, lastNPTryAWordUsed);
+	}
+
+	public int getLastNPGraphemeNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_NP_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPGraphemeNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastNPEnvironmentsViewItemUsed() {
+		return prefs.getInt(LAST_NP_ENVIRONMENTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPEnvironmentsViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastNPCVNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_NP_CV_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPCVNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_CV_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastNPRulesViewItemUsed() {
+		return prefs.getInt(LAST_NP_RULES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPRulesViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_RULES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastNPFiltersViewItemUsed() {
+		return prefs.getInt(LAST_NP_FILTERS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastNPFiltersViewItemUsed(int value) {
+		setPreferencesKey(LAST_NP_FILTERS_VIEW_ITEM_USED, value);
 	}
 
 	public String getLastSHApproachViewUsed() {

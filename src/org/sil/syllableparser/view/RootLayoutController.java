@@ -222,6 +222,7 @@ public class RootLayoutController implements Initializable {
 	private SHApproachController shApproachController;
 	private ONCApproachController oncApproachController;
 	private MoraicApproachController moraicApproachController;
+	private NPApproachController npApproachController;
 	private ApproachController currentApproachController;
 
 	@FXML
@@ -277,6 +278,9 @@ public class RootLayoutController implements Initializable {
 		moraicApproachController.setMainApp(mainApp);
 		moraicApproachController.setPrefs(mainApp.getApplicationPreferences());
 		moraicApproachController.setRootLayout(this);
+		npApproachController.setMainApp(mainApp);
+		npApproachController.setPrefs(mainApp.getApplicationPreferences());
+		npApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -295,6 +299,9 @@ public class RootLayoutController implements Initializable {
 		moraicApproachController.setMoraicApproachData(languageProject.getMoraicApproach(),
 				languageProject.getWords());
 		moraicApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		npApproachController.setNPApproachData(languageProject.getNPApproach(),
+				languageProject.getWords());
+		npApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -954,6 +961,8 @@ public class RootLayoutController implements Initializable {
 			applicationPreferences.setLastONCApproachViewUsed(sCurrentView);
 		} else if (currentApproachController instanceof MoraicApproachController) {
 			applicationPreferences.setLastMoraicApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof NPApproachController) {
+			applicationPreferences.setLastNPApproachViewUsed(sCurrentView);
 		}
 	}
 
@@ -1251,8 +1260,82 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleNuclearProjectionApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonNuclearProjectionApproach);
-		mainApp.showNotImplementedYet();
+		approachViews.setItems(npApproachController.getViews());
+		currentApproachController = npApproachController;
+		setInitialNPView();
+		setDisableForSomeMenuAndToolbarItems();
+	}
+
+	@FXML
+	private void handleNPSegmentInventory() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPSegmentInventory();
+		selectApproachViewItem(Constants.NP_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPSonorityHierarchy() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPSonorityHierarchy();
+		selectApproachViewItem(Constants.NP_SONORITY_HIERARCHY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPNaturalClasses() {
+		currentApproachController = npApproachController;
+		npApproachController.handleCVNaturalClasses();
+		selectApproachViewItem(Constants.NP_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPSyllabificationParameters() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPSyllabificationParameters();
+		selectApproachViewItem(Constants.NP_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPRules() {
+		currentApproachController = npApproachController;
+		npApproachController.handleRules();;
+		selectApproachViewItem(Constants.NP_RULES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPFilters() {
+		currentApproachController = npApproachController;
+		npApproachController.handleFilters();;
+		selectApproachViewItem(Constants.NP_FILTERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPWords() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPWords();
+		selectApproachViewItem(Constants.NP_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPWordsPredictedVsCorrect() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.NP_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPGraphemeNaturalClasses() {
+		currentApproachController = npApproachController;
+		npApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.NP_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPEnvironments() {
+		currentApproachController = npApproachController;
+		npApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.NP_ENVIRONMENTS_VIEW_INDEX);
 	}
 
 	/**
@@ -1413,6 +1496,7 @@ public class RootLayoutController implements Initializable {
 		shApproachController = new SHApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle, bundle.getLocale());
 		moraicApproachController = new MoraicApproachController(bundle, bundle.getLocale());
+		npApproachController = new NPApproachController(bundle, bundle.getLocale());
 
 		createToolbarButtons(bundle);
 
@@ -1657,6 +1741,55 @@ public class RootLayoutController implements Initializable {
 		}
 	}
 
+	protected void setInitialNPView() {
+		String sLastNPApproachViewUsed = applicationPreferences.getLastNPApproachViewUsed();
+		switch (sLastNPApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(Constants.NP_ENVIRONMENTS_VIEW_INDEX);
+			break;
+
+		case "FILTERS":
+			selectApproachViewItem(Constants.NP_FILTERS_VIEW_INDEX);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(Constants.NP_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "NATURAL_CLASSES":
+			selectApproachViewItem(Constants.NP_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(Constants.NP_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+			break;
+
+		case "RULES":
+			selectApproachViewItem(Constants.NP_RULES_VIEW_INDEX);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(Constants.NP_SEGMENT_INVENTORY_VIEW_INDEX);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(Constants.NP_SONORITY_HIERARCHY_VIEW_INDEX);
+			break;
+
+		case "SYLLABIFICATION_PARAMETERS":
+			selectApproachViewItem(Constants.NP_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(Constants.NP_WORDS_VIEW_INDEX);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
 	protected void createToolbarButtons(ResourceBundle bundle) {
 		tooltipToolbarFileNew = ControllerUtilities.createToolbarButtonWithImage("newAction.png",
 				buttonToolbarFileNew, tooltipToolbarFileNew, bundle.getString("tooltip.new"),
@@ -1807,6 +1940,10 @@ public class RootLayoutController implements Initializable {
 			sApproach = ApproachType.MORAIC.name();
 			break;
 
+		case "org.sil.syllableparser.view.NPApproachController":
+			sApproach = ApproachType.NUCLEAR_PROJECTION.name();
+			break;
+
 		default:
 			break;
 		}
@@ -1831,6 +1968,10 @@ public class RootLayoutController implements Initializable {
 
 		case "org.sil.syllableparser.view.MoraicApproachController":
 			approach = ApproachType.MORAIC;
+			break;
+
+		case "org.sil.syllableparser.view.NPApproachController":
+			approach = ApproachType.NUCLEAR_PROJECTION;
 			break;
 
 		default:
