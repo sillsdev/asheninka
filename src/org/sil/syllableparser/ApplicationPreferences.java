@@ -102,6 +102,8 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String PREDICTED_TO_CORRECT_CHOOSER = "PREDICTED_TO_CORRECT_CHOOSER_";
 	public static final String MORAIC_SEGMENTS = "MORAIC_SEGMENTS_";
 	public static final String MORAIC_WORDS = "MORAIC_WORDS_";
+	public static final String NP_RULES = "NP_RULES_";
+	public static final String NP_SEGMENT_NATURAL_CLASS_CHOOSER = "NP_SEGMENT_NATURAL_CLASS_CHOOSER_";
 	public static final String NP_SEGMENTS = "NP_SEGMENTS_";
 	public static final String NP_WORDS = "NP_WORDS_";
 	public static final String ONC_SEGMENTS = "ONC_SEGMENTS_";

@@ -1,10 +1,14 @@
 /**
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
  * Used in a chooser
  */
 package org.sil.syllableparser.model.cvapproach;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import org.sil.syllableparser.model.SylParserBase;
 
@@ -17,6 +21,7 @@ import javafx.beans.property.StringProperty;
  * @author Andy Black
  *
  */
+@XmlAccessorType(XmlAccessType.NONE)
 public class CVSegmentOrNaturalClass extends SylParserBase  {
 
 	private StringProperty segmentOrNaturalClass;
@@ -59,10 +64,12 @@ public class CVSegmentOrNaturalClass extends SylParserBase  {
 		return uuid;
 	}
 
+	@XmlAttribute(name="segOrNC")
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 
+	@XmlAttribute(name="isSegment")
 	public boolean isSegment() {
 		return isSegment;
 	}
@@ -74,6 +81,7 @@ public class CVSegmentOrNaturalClass extends SylParserBase  {
 	public void setDescription(String description) {
 		this.description.set(description);
 	}
+
 	public void setChecked(boolean value) {
 		this.checked.set(value);	
 	}

@@ -7,7 +7,12 @@
 package org.sil.syllableparser.model.npapproach;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.sil.syllableparser.model.Approach;
@@ -27,17 +32,36 @@ public class NPApproach extends Approach {
 
 	LanguageProject langProj;
 	SHApproach shApproach;
+	private ObservableList<NPRule> rules = FXCollections.observableArrayList();
+
+	@XmlElementWrapper(name = "rules")
+	@XmlElement(name = "rule")
+	public ObservableList<NPRule> getNPRules() {
+		return rules;
+	}
+	public void setNPRules(ObservableList<NPRule> rules) {
+		this.rules = rules;
+	}
+
+	public List<NPRule> getActiveNPRules() {
+		return rules.stream().filter(rule -> rule.isActive())
+				.collect(Collectors.toList());
+	}
+
 
 	/**
 	 * Clear out all data in this Sonority Hierarchy approach
 	 */
 	public void clear() {
-		//	Nothing to do that is not already done
+		rules.clear();
 	}
 
 	public void load(NPApproach npApproachLoaded) {
 		langProj = this.getLanguageProject();
 		shApproach = langProj.getSHApproach();
+		for (NPRule rule : npApproachLoaded.getNPRules()) {
+			rules.add(rule);
+		}
 	}
 
 	protected String getPredictedSyllabificationOfWord(Word word) {

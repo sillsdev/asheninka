@@ -9,44 +9,49 @@ package org.sil.syllableparser.view;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
-import org.sil.syllableparser.model.oncapproach.ONCApproach;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.syllableparser.model.npapproach.NPRule;
+import org.sil.syllableparser.model.npapproach.NPRuleAction;
+import org.sil.syllableparser.model.npapproach.NPRuleLevel;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SegmentInSHNaturalClass;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 /**
  * @author Andy Black
@@ -55,7 +60,7 @@ import javafx.stage.Stage;
 
 public class NPRulesController extends SplitPaneWithTableViewController {
 
-	protected final class AnalysisWrappingTableCell extends TableCell<SHNaturalClass, String> {
+	protected final class AnalysisWrappingTableCell extends TableCell<NPRule, String> {
 		private Text text;
 
 		@Override
@@ -65,17 +70,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		}
 	}
 
-	protected final class VernacularWrappingTableCell extends TableCell<SHNaturalClass, String> {
-		private Text text;
-
-		@Override
-		protected void updateItem(String item, boolean empty) {
-			super.updateItem(item, empty);
-			processVernacularTableCell(this, text, item, empty);
-		}
-	}
-
-	protected final class WrappingTableCell extends TableCell<SHNaturalClass, String> {
+	protected final class WrappingTableCell extends TableCell<NPRule, String> {
 		private Text text;
 
 		@Override
@@ -86,15 +81,23 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	}
 
 	@FXML
-	private TableView<SHNaturalClass> shSonorityHierarchyTable;
+	private TableView<NPRule> npRulesTable;
 	@FXML
-	private TableColumn<SHNaturalClass, String> nameColumn;
+	private TableColumn<NPRule, String> nameColumn;
 	@FXML
-	private TableColumn<SHNaturalClass, String> naturalClassColumn;
+	private TableColumn<NPRule, String> descriptionColumn;
 	@FXML
-	private TableColumn<SHNaturalClass, String> descriptionColumn;
+	private TableColumn<NPRule, String> affectedSegmentOrNaturalClassColumn;
 	@FXML
-	private TableColumn<SHNaturalClass, Boolean> checkBoxColumn;
+	private TableColumn<NPRule, String> contextColumn;
+	@FXML
+	private TableColumn<NPRule, String> actionColumn;
+	@FXML
+	private TableColumn<NPRule, String> levelColumn;
+	@FXML
+	private TableColumn<NPRule, Boolean> obeysSSPColumn;
+	@FXML
+	private TableColumn<NPRule, Boolean> checkBoxColumn;
 	@FXML
 	private CheckBox checkBoxColumnHead;
 
@@ -105,11 +108,17 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	@FXML
 	private TextField descriptionField;
 	@FXML
-	private FlowPane ncsField;
+	private FlowPane affectedField;
 	@FXML
-	private TextFlow ncsTextFlow;
+	private TextField affectedTextFlow;
 	@FXML
-	private Button ncsButton;
+	private Button affectedButton;
+	@FXML
+	private FlowPane contextField;
+	@FXML
+	private TextField contextTextFlow;
+	@FXML
+	private Button contextButton;
 	@FXML
 	private CheckBox activeCheckBox;
 	@FXML
@@ -121,9 +130,15 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	@FXML
 	private Tooltip tooltipMoveDown;
 	@FXML
-	private TextArea errorTextArea;
+	private TextArea ruleTextArea;
+	@FXML
+	protected ComboBox<NPRuleAction> actionComboBox;
+	@FXML
+	protected ComboBox<NPRuleLevel> levelComboBox;
+	@FXML
+	private CheckBox obeysSSPCheckBox;
 
-	private SHNaturalClass currentNaturalClass;
+	private NPRule currentRule;
 
 	public NPRulesController() {
 
@@ -135,8 +150,8 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.setApproach(ApplicationPreferences.SH_SONORITY_HIERARCHY);
-		super.setTableView(shSonorityHierarchyTable);
+		super.setApproach(ApplicationPreferences.NP_RULES);
+		super.setTableView(npRulesTable);
 		super.initialize(location, resources);
 
 		bundle = resources;
@@ -148,72 +163,204 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 				buttonMoveDown, tooltipMoveDown, bundle.getString("sh.view.sonorityhierarchy.down"),
 				Constants.RESOURCE_SOURCE_LOCATION);
 
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
-		naturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.segmentsRepresentationProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ruleNameProperty());
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+		affectedSegmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.affectedSegmentOrNaturalClassProperty());
+		contextColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.contextProperty());
+		actionColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.ActionProperty());
+		levelColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.LevelProperty());
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
-		naturalClassColumn.setCellFactory(column -> {
-			return new VernacularWrappingTableCell();
-		});
 		descriptionColumn.setCellFactory(column -> {
+			return new AnalysisWrappingTableCell();
+		});
+		affectedSegmentOrNaturalClassColumn.setCellFactory(column -> {
+			return new WrappingTableCell();
+		});
+		contextColumn.setCellFactory(column -> {
+			return new WrappingTableCell();
+		});
+		actionColumn.setCellFactory(column -> {
+			return new AnalysisWrappingTableCell();
+		});
+		levelColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
 
 		makeColumnHeaderWrappable(nameColumn);
-		makeColumnHeaderWrappable(naturalClassColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
+		makeColumnHeaderWrappable(affectedSegmentOrNaturalClassColumn);
+		makeColumnHeaderWrappable(contextColumn);
+		makeColumnHeaderWrappable(actionColumn);
+		makeColumnHeaderWrappable(levelColumn);
 
 		// Since sonority items are sorted manually, we do not
 		// want the user to be able to click on a column header and sort it
 		nameColumn.setSortable(false);
-		naturalClassColumn.setSortable(false);
 		descriptionColumn.setSortable(false);
-		errorTextArea.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + "red" + Constants.TEXT_COLOR_CSS_END);
+		affectedSegmentOrNaturalClassColumn.setSortable(false);
+		contextColumn.setSortable(false);
+		obeysSSPColumn.setSortable(false);
+		actionColumn.setSortable(false);
+		levelColumn.setSortable(false);
 
 		// Clear sonority hierarchy details.
-		showSHNaturalClassDetails(null);
+		showNPRuleDetails(null);
 
 		// Listen for selection changes and show the details when changed.
-		shSonorityHierarchyTable
+		npRulesTable
 				.getSelectionModel()
 				.selectedItemProperty()
 				.addListener(
-						(observable, oldValue, newValue) -> showSHNaturalClassDetails(newValue));
+						(observable, oldValue, newValue) -> showNPRuleDetails(newValue));
+		
+		actionComboBox.setConverter(new StringConverter<NPRuleAction>() {
+			@Override
+			public String toString(NPRuleAction object) {
+				String localizedName = bundle.getString("nprule.action." + object.toString().toLowerCase());
+				if (currentRule != null)
+					currentRule.setAction(localizedName);
+				return localizedName;
+			}
+
+			@Override
+			public NPRuleAction fromString(String string) {
+				// nothing to do
+				return null;
+			}
+		});
+		actionComboBox.getSelectionModel().selectedItemProperty()
+		.addListener(new ChangeListener<NPRuleAction>() {
+			@Override
+			public void changed(ObservableValue<? extends NPRuleAction> selected,
+					NPRuleAction oldValue, NPRuleAction selectedValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						currentRule.setRuleAction(selectedValue);
+					}
+				});
+			}
+		});
+		actionComboBox.setPromptText(resources.getString("label.chooseruleaction"));
+
+		levelComboBox.setConverter(new StringConverter<NPRuleLevel>() {
+			@Override
+			public String toString(NPRuleLevel object) {
+				String localizedName = bundle.getString("nprule.level." + object.toString().toLowerCase());
+				if (currentRule != null)
+					currentRule.setLevel(localizedName);
+				return localizedName;
+			}
+
+			@Override
+			public NPRuleLevel fromString(String string) {
+				// nothing to do
+				return null;
+			}
+		});
+		levelComboBox.getSelectionModel().selectedItemProperty()
+		.addListener(new ChangeListener<NPRuleLevel>() {
+			@Override
+			public void changed(ObservableValue<? extends NPRuleLevel> selected,
+					NPRuleLevel oldValue, NPRuleLevel selectedValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						currentRule.setRuleLevel(selectedValue);
+					}
+				});
+			}
+		});
+		levelComboBox.setPromptText(resources.getString("label.chooserulelevel"));
 
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (currentNaturalClass != null) {
-				currentNaturalClass.setNCName(nameField.getText());
+			if (currentRule != null) {
+				currentRule.setRuleName(nameField.getText());
 			}
 			if (languageProject != null) {
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (currentNaturalClass != null) {
-				currentNaturalClass.setDescription(descriptionField.getText());
+			if (currentRule != null) {
+				currentRule.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-
-		activeCheckBox.setOnAction((event) -> {
-			if (currentNaturalClass != null) {
-				currentNaturalClass.setActive(activeCheckBox.isSelected());
-				showNaturalClassesContent();
-				forceTableRowToRedisplayPerActiveSetting(currentNaturalClass);
+		affectedTextFlow.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (languageProject != null) {
+				Language lang = languageProject.getAnalysisLanguage();
+				if (currentRule.getAffectedSegOrNC() != null && currentRule.getAffectedSegOrNC().isSegment()) {
+					lang = languageProject.getVernacularLanguage();
+				}
+				affectedTextFlow.setFont(lang.getFont());
+				affectedTextFlow.setNodeOrientation(lang.getOrientation());
+				String sVernacular = mainApp.getStyleFromColor(lang.getColor());
+				affectedTextFlow.setStyle(sVernacular);
 			}
-			displayFieldsPerActiveSetting(currentNaturalClass);
+			if (currentRule != null) {
+				affectedTextFlow.setText(newValue);
+			}
+		});
+		contextTextFlow.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (languageProject != null) {
+				Language lang = languageProject.getAnalysisLanguage();
+				if (currentRule.getContextSegOrNC() != null && currentRule.getContextSegOrNC().isSegment()) {
+					lang = languageProject.getVernacularLanguage();
+				}
+				contextTextFlow.setFont(lang.getFont());
+				contextTextFlow.setNodeOrientation(lang.getOrientation());
+				String sVernacular = mainApp.getStyleFromColor(lang.getColor());
+				contextTextFlow.setStyle(sVernacular);
+			}
+			if (currentRule != null) {
+				contextTextFlow.setText(currentRule.getContext());
+			}
 		});
 
-		errorTextArea.setEditable(false);
+		obeysSSPColumn.setCellValueFactory(cellData -> cellData.getValue().obeysSSPProperty());
+		obeysSSPColumn.setCellFactory(CheckBoxTableCell.forTableColumn(obeysSSPColumn));
+		obeysSSPColumn.setEditable(true);
+
+		npRulesTable.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Object o = event.getTarget();
+				handleClickOnCheckBoxInTable(o);
+			}
+		});
+
+		activeCheckBox.setOnAction((event) -> {
+			if (currentRule != null) {
+				currentRule.setActive(activeCheckBox.isSelected());
+				showRuleContent();
+				forceTableRowToRedisplayPerActiveSetting(currentRule);
+			}
+			displayFieldsPerActiveSetting(currentRule);
+		});
+
+		obeysSSPCheckBox.setOnAction((event) -> {
+			if (currentRule != null) {
+				currentRule.setObeysSSP(obeysSSPCheckBox.isSelected());
+				showRuleContent();
+				forceTableRowToRedisplayPerActiveSetting(currentRule);
+			}
+			displayFieldsPerActiveSetting(currentRule);
+		});
+
+		ruleTextArea.setEditable(false);
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -225,62 +372,143 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 
 		nameField.requestFocus();
 
+		actionComboBox.setConverter(new StringConverter<NPRuleAction>() {
+			@Override
+			public String toString(NPRuleAction object) {
+				String localizedName = bundle.getString("nprule.action." + object.toString().toLowerCase());
+				if (currentRule != null)
+					currentRule.setAction(localizedName);
+				return localizedName;
+			}
+
+			@Override
+			public NPRuleAction fromString(String string) {
+				// nothing to do
+				return null;
+			}
+		});
+		actionComboBox.getSelectionModel().selectedItemProperty()
+		.addListener(new ChangeListener<NPRuleAction>() {
+			@Override
+			public void changed(ObservableValue<? extends NPRuleAction> selected,
+					NPRuleAction oldValue, NPRuleAction selectedValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						currentRule.setRuleAction(selectedValue);
+					}
+				});
+			}
+		});
+		actionComboBox.setPromptText(resources.getString("label.chooseruleaction"));
+
+		levelComboBox.setConverter(new StringConverter<NPRuleLevel>() {
+			@Override
+			public String toString(NPRuleLevel object) {
+				String localizedName = bundle.getString("nprule.level." + object.toString().toLowerCase());
+				if (currentRule != null)
+					currentRule.setLevel(localizedName);
+				return localizedName;
+			}
+
+			@Override
+			public NPRuleLevel fromString(String string) {
+				// nothing to do
+				return null;
+			}
+		});
+		levelComboBox.getSelectionModel().selectedItemProperty()
+		.addListener(new ChangeListener<NPRuleLevel>() {
+			@Override
+			public void changed(ObservableValue<? extends NPRuleLevel> selected,
+					NPRuleLevel oldValue, NPRuleLevel selectedValue) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						currentRule.setRuleLevel(selectedValue);
+					}
+				});
+			}
+		});
+		levelComboBox.setPromptText(resources.getString("label.chooserulelevel"));
 	}
 
-	public void displayFieldsPerActiveSetting(SHNaturalClass syllablePattern) {
+	protected void handleClickOnCheckBoxInTable(Object o) {
+		if (o instanceof CheckBoxTableCell) {
+			@SuppressWarnings("unchecked")
+			CheckBoxTableCell<NPRule, Boolean> cbtc = (CheckBoxTableCell<NPRule, Boolean>) o;
+			int index = cbtc.getIndex();
+			if (index < 0) {
+				return;
+			}
+			NPRule segment = npRulesTable.getItems().get(index);
+			boolean value;
+			if (segment != null) {
+				value = !segment.isObeysSSP();
+				segment.setObeysSSP(value);
+				obeysSSPCheckBox.setSelected(value);
+			}
+		}
+	}
+
+	public void displayFieldsPerActiveSetting(NPRule rule) {
 		boolean fIsActive;
-		if (syllablePattern == null) {
+		if (rule == null) {
 			fIsActive = false;
 		} else {
-			fIsActive = syllablePattern.isActive();
+			fIsActive = rule.isActive();
 		}
 		nameField.setDisable(!fIsActive);
-		ncsTextFlow.setDisable(!fIsActive);
-		ncsButton.setDisable(!fIsActive);
+		affectedTextFlow.setDisable(!fIsActive);
+		affectedButton.setDisable(!fIsActive);
+		contextTextFlow.setDisable(!fIsActive);
+		contextButton.setDisable(!fIsActive);
 		descriptionField.setDisable(!fIsActive);
 	}
 
-	private void hideErrors(){
-		errorTextArea.setText("");
-		errorTextArea.setVisible(false);
-	}
-
-	private void forceTableRowToRedisplayPerActiveSetting(SHNaturalClass naturalCLass) {
+	private void forceTableRowToRedisplayPerActiveSetting(NPRule rule) {
 		// we need to make the content of the row cells change in order for
 		// the cell factory to fire.
 		// We do this by getting the value, blanking it, and then restoring it.
-		String temp = naturalCLass.getNCName();
-		naturalCLass.setNCName("");
-		naturalCLass.setNCName(temp);
-		temp = naturalCLass.getSegmentsRepresentation();
-		naturalCLass.setSegmentsRepresentation("");
-		naturalCLass.setSegmentsRepresentation(temp);
-		temp = naturalCLass.getDescription();
-		naturalCLass.setDescription("");
-		naturalCLass.setDescription(temp);
+		String temp = rule.getRuleName();
+		rule.setRuleName("");
+		rule.setRuleName(temp);
+		temp = rule.getDescription();
+		rule.setDescription("");
+		rule.setDescription(temp);
+		temp = rule.getAffectedSegmentOrNaturalClass();
+		rule.setAffectedSegmentOrNaturalClass("");
+		rule.setAffectedSegmentOrNaturalClass(temp);
 	}
 
 	/**
 	 * Fills all text fields to show details about the CV natural class. If the
 	 * specified segment is null, all text fields are cleared.
 	 *
-	 * @param naturalClass
+	 * @param rule
 	 *            the segment or null
 	 */
-	private void showSHNaturalClassDetails(SHNaturalClass naturalClass) {
-		currentNaturalClass = naturalClass;
-		if (naturalClass != null) {
-			// Fill the text fields with info from the person object.
-			nameField.setText(naturalClass.getNCName());
-			descriptionField.setText(naturalClass.getDescription());
+	private void showNPRuleDetails(NPRule rule) {
+		currentRule = rule;
+		if (rule != null) {
+			// Fill the text fields with info from the NPRule object.
+			nameField.setText(rule.getRuleName());
+			descriptionField.setText(rule.getDescription());
 			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
 					.getOrientation();
 			nameField.setNodeOrientation(analysisOrientation);
 			descriptionField.setNodeOrientation(analysisOrientation);
-			ncsTextFlow.setNodeOrientation(languageProject.getVernacularLanguage()
+			affectedTextFlow.setText(rule.getAffectedSegmentOrNaturalClass());
+			contextTextFlow.setNodeOrientation(languageProject.getVernacularLanguage()
 					.getOrientation());
-			activeCheckBox.setSelected(naturalClass.isActive());
-			showNaturalClassesContent();
+			contextTextFlow.setText(rule.getContext());
+			actionComboBox.getItems().setAll(NPRuleAction.values());
+			actionComboBox.getSelectionModel().select(rule.getRuleAction());
+			levelComboBox.getItems().setAll(NPRuleLevel.values());
+			levelComboBox.getSelectionModel().select(rule.getRuleLevel());
+			obeysSSPCheckBox.setSelected(rule.isObeysSSP());
+			activeCheckBox.setSelected(rule.isActive());
+			showRuleContent();
 			setUpDownButtonDisabled();
 
 		} else {
@@ -291,79 +519,35 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			if (descriptionField != null) {
 				descriptionField.setText("");
 			}
-			if (ncsTextFlow != null) {
-				ncsTextFlow.getChildren().clear();
+			if (affectedTextFlow != null) {
+				affectedTextFlow.setText("");
+			}
+			if (contextTextFlow != null) {
+				contextTextFlow.setText("");
 			}
 			buttonMoveDown.setDisable(true);
 			buttonMoveUp.setDisable(true);
 		}
-		displayFieldsPerActiveSetting(naturalClass);
+		displayFieldsPerActiveSetting(rule);
 
-		if (shApproach != null)
-			showAnySegmentBasedErrrors();
-
-		if (naturalClass != null) {
-			int currentItem = shSonorityHierarchyTable.getItems().indexOf(currentNaturalClass);
+		if (rule != null) {
+			int currentItem = npRulesTable.getItems().indexOf(currentRule);
 			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
-					+ shSonorityHierarchyTable.getItems().size() + " ");
-			mainApp.getApplicationPreferences().setLastSHSonorityHierarchyViewItemUsed(currentItem);
+					+ npRulesTable.getItems().size() + " ");
+			mainApp.getApplicationPreferences().setLastNPRulesViewItemUsed(currentItem);
 		}
-	}
-
-	protected void showAnySegmentBasedErrrors() {
-		hideErrors();
-		Set<Segment> missingSegments = shApproach.getMissingSegmentsFromSonorityHierarchy();
-		if (missingSegments.size() > 0) {
-			errorTextArea.setVisible(true);
-			showMissingSegments(missingSegments);
-		}
-		List<SegmentInSHNaturalClass> duplicateSegments = shApproach.getDuplicateSegmentsFromSonorityHierarchy();
-		if (duplicateSegments.size() > 0) {
-			errorTextArea.setVisible(true);
-			showDuplicateSegments(duplicateSegments);
-		}
-	}
-
-	/**
-	 * @param duplicateSegments
-	 */
-	private void showDuplicateSegments(List<SegmentInSHNaturalClass> duplicateSegments) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(bundle.getString("sonorityhierarchyerror.duplicatesegmentsinhierarchy"));
-		sb.append("\n");
-		for (SegmentInSHNaturalClass segInClass : duplicateSegments) {
-			sb.append(segInClass.getSegment().getSegment());
-			sb.append("\t");
-			sb.append(segInClass.getNaturalClass().getNCName());
-			sb.append("\n");
-		}
-		errorTextArea.setText(sb.toString());
-	}
-
-	/**
-	 * @param missingSegments
-	 */
-	private void showMissingSegments(Set<Segment> missingSegments) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(bundle.getString("sonorityhierarchyerror.missingsegmentsinhierarchy"));
-		sb.append("\n");
-		for (Segment seg : missingSegments) {
-			sb.append(seg.getSegment());
-			sb.append("\n");
-		}
-		errorTextArea.setText(sb.toString());
 	}
 
 	@Override
 	public void setViewItemUsed(int value) {
-		int max = shSonorityHierarchyTable.getItems().size();
+		int max = npRulesTable.getItems().size();
 		value = adjustIndexValue(value, max);
-		shSonorityHierarchyTable.getSelectionModel().clearAndSelect(value);
+		npRulesTable.getSelectionModel().clearAndSelect(value);
 	}
 
 	protected void setUpDownButtonDisabled() {
-		int iThis = shApproach.getSHSonorityHierarchy().indexOf(currentNaturalClass) + 1;
-		int iSize = shApproach.getSHSonorityHierarchy().size();
+		int iThis = npApproach.getNPRules().indexOf(currentRule) + 1;
+		int iSize = npApproach.getNPRules().size();
 		if (iThis > 1) {
 			buttonMoveUp.setDisable(false);
 		} else {
@@ -376,19 +560,18 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		}
 	}
 
-	private void showNaturalClassesContent() {
-		// TODO: can we do this with lambdas?
+	private void showRuleContent() {
 		StringBuilder sb = new StringBuilder();
-		ncsTextFlow.getChildren().clear();
-		ObservableList<Segment> segments = currentNaturalClass.getSegments();
-		if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
-			fillNcsTextFlow(sb, segments);
-		} else {
-			FXCollections.reverse(segments);
-			fillNcsTextFlow(sb, segments);
-			FXCollections.reverse(segments);
-		}
-		currentNaturalClass.setSegmentsRepresentation(sb.toString());
+//		affectedTextFlow.getChildren().clear();
+//		ObservableList<Segment> segments = currentRule.getSegments();
+//		if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+//			fillNcsTextFlow(sb, segments);
+//		} else {
+//			FXCollections.reverse(segments);
+//			fillNcsTextFlow(sb, segments);
+//			FXCollections.reverse(segments);
+//		}
+		currentRule.setRuleRepresentation(sb.toString());
 	}
 
 	protected void fillNcsTextFlow(StringBuilder sb, ObservableList<Segment> segments) {
@@ -414,7 +597,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		}
 		Text tBar = new Text(" | ");
 		tBar.setStyle("-fx-stroke: lightgrey;");
-		ncsTextFlow.getChildren().addAll(t, tBar);
+//		affectedTextFlow.getChildren().addAll(t, tBar);
 		sb.append(sName);
 	}
 
@@ -428,28 +611,28 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	 *
 	 * @param cvApproachController
 	 */
-	public void setData(SHApproach shApproachData) {
-		shApproach = shApproachData;
-		languageProject = shApproach.getLanguageProject();
+	public void setData(NPApproach npApproachData) {
+		npApproach = npApproachData;
+		languageProject = npApproach.getLanguageProject();
 		// no sorting needed
 
 		// Add observable list data to the table
-		shSonorityHierarchyTable.setItems(shApproachData.getSHSonorityHierarchy());
-		int max = shSonorityHierarchyTable.getItems().size();
+		npRulesTable.setItems(npApproachData.getNPRules());
+		int max = npRulesTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
 					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastSHSonorityHierarchyViewItemUsed();
+							.getLastNPRulesViewItemUsed();
 					iLastIndex = adjustIndexValue(iLastIndex, max);
-					shSonorityHierarchyTable.requestFocus();
-					shSonorityHierarchyTable.getSelectionModel().select(iLastIndex);
-					shSonorityHierarchyTable.getFocusModel().focus(iLastIndex);
+					npRulesTable.requestFocus();
+					npRulesTable.getSelectionModel().select(iLastIndex);
+					npRulesTable.getFocusModel().focus(iLastIndex);
 					// want to do following only if the selected item is not
 					// visible
 					// SHNaturalClassTable.isVisible();
-					shSonorityHierarchyTable.scrollTo(iLastIndex);
+					npRulesTable.scrollTo(iLastIndex);
 				}
 			});
 		}
@@ -460,56 +643,49 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		}
 	}
 
-	public void setData(ONCApproach oncApproachData) {
-		setData(oncApproachData.getLanguageProject().getSHApproach());
-	}
-
-	public void setData(MoraicApproach moraicApproachData) {
-		setData(moraicApproachData.getLanguageProject().getSHApproach());
-	}
-
-	public void setData(NPApproach npApproachData) {
-		setData(npApproachData.getLanguageProject().getSHApproach());
-	}
-
 	@Override
 	void handleInsertNewItem() {
-		SHNaturalClass newNaturalCLass = new SHNaturalClass();
-		shApproach.getSHSonorityHierarchy().add(newNaturalCLass);
-		handleInsertNewItem(shApproach.getSHSonorityHierarchy(), shSonorityHierarchyTable);
+		NPRule newRule = new NPRule();
+		npApproach.getNPRules().add(newRule);
+		handleInsertNewItem(npApproach.getNPRules(), npRulesTable);
 	}
 
 	@Override
 	void handleRemoveItem() {
-		handleRemoveItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
+		handleRemoveItem(npApproach.getNPRules(), currentRule, npRulesTable);
 	}
 
 	@Override
 	void handlePreviousItem() {
-		handlePreviousItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
+		handlePreviousItem(npApproach.getNPRules(), currentRule, npRulesTable);
 	}
 
 	@Override
 	void handleNextItem() {
-		handleNextItem(shApproach.getSHSonorityHierarchy(), currentNaturalClass, shSonorityHierarchyTable);
+		handleNextItem(npApproach.getNPRules(), currentRule, npRulesTable);
 	}
 
 	@FXML
-	void handleLaunchSegmentChooser() {
-		showSegmentChooser();
-		showNaturalClassesContent();
-		showAnySegmentBasedErrrors();
+	void handleLaunchAffectedSegOrNCChooser() {
+		showSegmentChooser(true);
+		showRuleContent();
+	}
+
+	@FXML
+	void handleLaunchContextSegOrNCChooser() {
+		showSegmentChooser(false);
+		showRuleContent();
 	}
 
 	/**
 	 * Opens a dialog to show and set segments
 	 */
-	public void showSegmentChooser() {
+	public void showSegmentChooser(boolean isAffected) {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ApproachViewNavigator.class
-					.getResource("fxml/SHSegmentChooser.fxml"));
+					.getResource("fxml/NPSegmentNaturalClassChooser.fxml"));
 			loader.setResources(ResourceBundle.getBundle(
 					"org.sil.syllableparser.resources.SyllableParser", locale));
 
@@ -523,14 +699,22 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
 			dialogStage.setTitle(MainApp.kApplicationTitle);
 
-			SHSegmentChooserController controller = loader.getController();
+			NPSegmentNaturalClassChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
-			controller.setNaturalClass(currentNaturalClass);
-			controller.setData(shApproach);
+			controller.setRule(currentRule);
+			controller.setData(npApproach.getLanguageProject(), isAffected);
 			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
+			
+			if (controller.isOkClicked()) {
+				if (isAffected) {
+					affectedTextFlow.setText(controller.getRule().getAffectedSegmentOrNaturalClass());
+				} else {
+					contextTextFlow.setText(controller.getRule().getContext());
+				}
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -540,42 +724,42 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 
 	@FXML
 	void handleMoveDown() {
-		int i = shApproach.getSHSonorityHierarchy().indexOf(currentNaturalClass);
-		if ((i + 1) < shApproach.getSHSonorityHierarchy().size()) {
-			Collections.swap(shApproach.getSHSonorityHierarchy(), i, i + 1);
+		int i = npApproach.getNPRules().indexOf(currentRule);
+		if ((i + 1) < npApproach.getNPRules().size()) {
+			Collections.swap(npApproach.getNPRules(), i, i + 1);
 		}
 	}
 
 	@FXML
 	void handleMoveUp() {
-		int i = shApproach.getSHSonorityHierarchy().indexOf(currentNaturalClass);
+		int i = npApproach.getNPRules().indexOf(currentRule);
 		if (i > 0) {
-			Collections.swap(shApproach.getSHSonorityHierarchy(), i, i - 1);
+			Collections.swap(npApproach.getNPRules(), i, i - 1);
 		}
 	}
 
 	protected void handleCheckBoxSelectAll() {
-		for (SHNaturalClass syllablePattern : shApproach.getSHSonorityHierarchy()) {
-			syllablePattern.setActive(true);
-			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
+		for (NPRule rule : npApproach.getNPRules()) {
+			rule.setActive(true);
+			forceTableRowToRedisplayPerActiveSetting(rule);
 		}
 	}
 
 	protected void handleCheckBoxClearAll() {
-		for (SHNaturalClass syllablePattern : shApproach.getSHSonorityHierarchy()) {
-			syllablePattern.setActive(false);
-			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
+		for (NPRule rule : npApproach.getNPRules()) {
+			rule.setActive(false);
+			forceTableRowToRedisplayPerActiveSetting(rule);
 		}
 	}
 
 	protected void handleCheckBoxToggle() {
-		for (SHNaturalClass syllablePattern : shApproach.getSHSonorityHierarchy()) {
-			if (syllablePattern.isActive()) {
-				syllablePattern.setActive(false);
+		for (NPRule rule : npApproach.getNPRules()) {
+			if (rule.isActive()) {
+				rule.setActive(false);
 			} else {
-				syllablePattern.setActive(true);
+				rule.setActive(true);
 			}
-			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
+			forceTableRowToRedisplayPerActiveSetting(rule);
 		}
 	}
 
