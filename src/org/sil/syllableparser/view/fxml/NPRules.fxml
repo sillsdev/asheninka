@@ -86,7 +86,7 @@
                         <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES" />
                         <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                            <children>
-                              <TextField fx:id="affectedTextFlow" prefWidth="234.0" editable="false"/>
+                              <TextField fx:id="affectedTextField" prefWidth="234.0" editable="false"/>
                               <Button fx:id="affectedButton" mnemonicParsing="false" onAction="#handleLaunchAffectedSegOrNCChooser" text="...">
                                  <FlowPane.margin>
                                     <Insets left="3.0" />
@@ -96,7 +96,7 @@
                          </FlowPane>
                         <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
                            <children>
-                              <TextField fx:id="contextTextFlow" prefWidth="234.0" editable="false"/>
+                              <TextField fx:id="contextTextField" prefWidth="234.0" editable="false"/>
                               <Button fx:id="contextButton" mnemonicParsing="false" onAction="#handleLaunchContextSegOrNCChooser" text="...">
                                  <FlowPane.margin>
                                     <Insets left="3.0" />

@@ -6,14 +6,9 @@
  */
 package org.sil.syllableparser.model.npapproach;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlIDREF;
 
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.TemplateType;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 
 import javafx.beans.property.BooleanProperty;
@@ -31,20 +26,13 @@ import javafx.collections.ObservableList;
 public class NPRule extends SylParserObject {
 	private final StringProperty ruleName;
 	private final StringProperty description;
-	private final StringProperty affectedSegmentOrNaturalClass; // use GUID
-	private final StringProperty context; // use GUID
+	private final StringProperty affectedSegmentOrNaturalClass;
+	private final StringProperty contextSegmentOrNaturalClass;
 	private final StringProperty action;
 	private final StringProperty level;
 	private final BooleanProperty obeysSSP;
 	private final StringProperty ruleRepresentation;
-	ObservableList<SylParserObject> snc = FXCollections.observableArrayList();
 
-	private Segment affectedSegment;
-	private CVNaturalClass affectedCVNaturalClass;
-	private Segment contextSegment;
-	private CVNaturalClass contextCVNaturalClass;
-	private boolean affectedIsSegment = true;
-	private boolean contextIsSegment = true;
 	private NPRuleAction ruleAction = NPRuleAction.ATTACH;
 	private NPRuleLevel ruleLevel = NPRuleLevel.N_DOUBLE_BAR;
 	private CVSegmentOrNaturalClass affectedSegOrNC;
@@ -55,7 +43,7 @@ public class NPRule extends SylParserObject {
 		this.ruleName = new SimpleStringProperty("");
 		this.description = new SimpleStringProperty("");
 		this.affectedSegmentOrNaturalClass = new SimpleStringProperty("");
-		this.context = new SimpleStringProperty("");
+		this.contextSegmentOrNaturalClass = new SimpleStringProperty("");
 		this.action = new SimpleStringProperty("");
 		this.level = new SimpleStringProperty("");
 		this.obeysSSP = new SimpleBooleanProperty(true);
@@ -69,7 +57,7 @@ public class NPRule extends SylParserObject {
 		this.ruleName = new SimpleStringProperty(className);
 		this.description = new SimpleStringProperty(description);
 		this.affectedSegmentOrNaturalClass = new SimpleStringProperty(affectedSegmentOrNaturalClass);
-		this.context = new SimpleStringProperty(context);
+		this.contextSegmentOrNaturalClass = new SimpleStringProperty(context);
 		this.action = new SimpleStringProperty(action);
 		this.level = new SimpleStringProperty(level);
 		this.obeysSSP = new SimpleBooleanProperty(true);
@@ -122,16 +110,16 @@ public class NPRule extends SylParserObject {
 		this.affectedSegOrNC = affectedSegOrNC;
 	}
 
-	public String getContext() {
-		return context.get();
+	public String getContextSegmentOrNaturalClass() {
+		return contextSegmentOrNaturalClass.get();
 	}
 
-	public StringProperty contextProperty() {
-		return context;
+	public StringProperty contextSegmentOrNaturalClassProperty() {
+		return contextSegmentOrNaturalClass;
 	}
 
-	public void setContext(String value) {
-		this.context.set(value);
+	public void setContextSegmentOrNaturalClass(String value) {
+		this.contextSegmentOrNaturalClass.set(value);
 	}
 
 	@XmlElement(name="contextSegOrNC")
@@ -207,69 +195,6 @@ public class NPRule extends SylParserObject {
 		this.ruleRepresentation.set(ruleRepresentation);
 	}
 
-	public CVNaturalClass getAffectedCVNaturalClass() {
-		return affectedCVNaturalClass;
-	}
-
-	@XmlAttribute(name="affectedNatclass")
-	@XmlIDREF
-	public void setAffectedCVNaturalClass(CVNaturalClass cvNaturalClass) {
-		this.affectedCVNaturalClass = cvNaturalClass;
-		this.affectedIsSegment = false;
-	}
-
-	public CVNaturalClass getContextCVNaturalClass() {
-		return contextCVNaturalClass;
-	}
-
-	@XmlAttribute(name="contextNatclass")
-	@XmlIDREF
-	public void setContextCVNaturalClass(CVNaturalClass cvNaturalClass) {
-		this.contextCVNaturalClass = cvNaturalClass;
-		this.contextIsSegment = false;
-	}
-
-	public Segment getAffectedSegment() {
-		return affectedSegment;
-	}
-
-	@XmlAttribute(name="affectedSegment")
-	@XmlIDREF
-	public void setAffectedSegment(Segment segment) {
-		this.affectedSegment = segment;
-		this.affectedIsSegment = true;
-	}
-
-	@XmlElement(name="affectedIsSegment")
-	public boolean isAffectedSegment() {
-		return affectedIsSegment;
-	}
-
-	public void setIsAffectedSegment(boolean isSegment) {
-		this.affectedIsSegment = isSegment;
-	}
-
-	public Segment getContextSegment() {
-		return contextSegment;
-	}
-
-	@XmlAttribute(name="contextSegment")
-	@XmlIDREF
-	public void setContextSegment(Segment segment) {
-		this.contextSegment = segment;
-		this.contextIsSegment = true;
-	}
-
-	@XmlElement(name="contextIsSegment")
-	public boolean isConetxtSegment() {
-		return contextIsSegment;
-	}
-
-	public void setIsContextSegment(boolean isSegment) {
-		this.contextIsSegment = isSegment;
-	}
-
-
 	/**
 	 * @return
 	 */
@@ -280,7 +205,7 @@ public class NPRule extends SylParserObject {
 	@Override
 	public int hashCode() {
 		String sCombo = ruleName.getValueSafe() + description.getValueSafe()
-				+ affectedSegmentOrNaturalClass.getValueSafe() + context.getValueSafe()
+				+ affectedSegmentOrNaturalClass.getValueSafe() + contextSegmentOrNaturalClass.getValueSafe()
 				+ action.getValueSafe() + level.getValueSafe() + obeysSSP.getValue()
 				+ ruleRepresentation.getValueSafe();
 		return sCombo.hashCode();
@@ -303,7 +228,7 @@ public class NPRule extends SylParserObject {
 		} else if (!getAffectedSegmentOrNaturalClass().equals(
 				rule.getAffectedSegmentOrNaturalClass())) {
 			result = false;
-		} else if (!getContext().equals(rule.getContext())) {
+		} else if (!getContextSegmentOrNaturalClass().equals(rule.getContextSegmentOrNaturalClass())) {
 			result = false;
 		} else if (!getAction().equals(rule.getAction())) {
 			result = false;

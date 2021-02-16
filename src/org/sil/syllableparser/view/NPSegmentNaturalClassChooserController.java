@@ -36,7 +36,8 @@ import javafx.stage.Stage;
  */
 public class NPSegmentNaturalClassChooserController extends TableViewController {
 
-	protected final class AnalysisWrappingTableCell extends TableCell<CVSegmentOrNaturalClass, String> {
+	protected final class AnalysisWrappingTableCell extends
+			TableCell<CVSegmentOrNaturalClass, String> {
 		private Text text;
 
 		@Override
@@ -104,7 +105,8 @@ public class NPSegmentNaturalClassChooserController extends TableViewController 
 			return new AnalysisWrappingTableCell();
 		});
 
-		noneOption = new CVSegmentOrNaturalClass(resources.getString("label.none"), resources.getString("label.nonedescription"), false, null, true);
+		noneOption = new CVSegmentOrNaturalClass(resources.getString("label.none"),
+				resources.getString("label.nonedescription"), false, null, true);
 	}
 
 	/**
@@ -176,14 +178,14 @@ public class NPSegmentNaturalClassChooserController extends TableViewController 
 				rule.setAffectedSegmentOrNaturalClass(addParensINeeded(segOrClass));
 			} else {
 				rule.setContextSegOrNC(segOrClass);
-				rule.setContext(addParensINeeded(segOrClass));
+				rule.setContextSegmentOrNaturalClass(addParensINeeded(segOrClass));
 			}
 		} else if (isAffected) {
 			rule.setAffectedSegOrNC(null);
 			rule.setAffectedSegmentOrNaturalClass("");
 		} else {
 			rule.setContextSegOrNC(null);
-			rule.setContext("");
+			rule.setContextSegmentOrNaturalClass("");
 		}
 
 		okClicked = true;
@@ -197,20 +199,22 @@ public class NPSegmentNaturalClassChooserController extends TableViewController 
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Called when the user clicks cancel.
 	 */
 	@FXML
 	private void handleCancel() {
-		preferences.setLastWindowParameters(ApplicationPreferences.LAST_NP_SEGMENT_OR_NATURAL_CLASS, dialogStage);
+		preferences.setLastWindowParameters(
+				ApplicationPreferences.LAST_NP_SEGMENT_OR_NATURAL_CLASS, dialogStage);
 		dialogStage.close();
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		preferences = mainApp.getApplicationPreferences();
-		dialogStage = preferences.getLastWindowParameters(ApplicationPreferences.LAST_NP_SEGMENT_OR_NATURAL_CLASS, dialogStage, 400., 400.);
+		dialogStage = preferences.getLastWindowParameters(
+				ApplicationPreferences.LAST_NP_SEGMENT_OR_NATURAL_CLASS, dialogStage, 400., 400.);
 	}
 
 	/**
@@ -229,7 +233,8 @@ public class NPSegmentNaturalClassChooserController extends TableViewController 
 		this.rule = rule;
 	}
 
-	// code taken from http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
 	@Override
 	TextField[] createTextFields() {
 		return null;
@@ -245,16 +250,23 @@ public class NPSegmentNaturalClassChooserController extends TableViewController 
 		// nothing to do
 	}
 
-	/* (non-Javadoc)
-	 * @see org.sil.syllableparser.view.ApproachEditorController#handleInsertNewItem()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.sil.syllableparser.view.ApproachEditorController#handleInsertNewItem
+	 * ()
 	 */
 	@Override
 	void handleInsertNewItem() {
 		// nothing to do
 	}
 
-	/* (non-Javadoc)
-	 * @see org.sil.syllableparser.view.ApproachEditorController#handleRemoveItem()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.sil.syllableparser.view.ApproachEditorController#handleRemoveItem()
 	 */
 	@Override
 	void handleRemoveItem() {

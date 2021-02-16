@@ -14,20 +14,16 @@ import java.util.ResourceBundle;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
-import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.Language;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPRuleAction;
 import org.sil.syllableparser.model.npapproach.NPRuleLevel;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +32,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -46,9 +41,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -96,10 +89,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	private TableColumn<NPRule, String> levelColumn;
 	@FXML
 	private TableColumn<NPRule, Boolean> obeysSSPColumn;
-	@FXML
-	private TableColumn<NPRule, Boolean> checkBoxColumn;
-	@FXML
-	private CheckBox checkBoxColumnHead;
 
 	@FXML
 	private TextField nameField;
@@ -108,15 +97,11 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	@FXML
 	private TextField descriptionField;
 	@FXML
-	private FlowPane affectedField;
-	@FXML
-	private TextField affectedTextFlow;
+	private TextField affectedTextField;
 	@FXML
 	private Button affectedButton;
 	@FXML
-	private FlowPane contextField;
-	@FXML
-	private TextField contextTextFlow;
+	private TextField contextTextField;
 	@FXML
 	private Button contextButton;
 	@FXML
@@ -169,7 +154,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		affectedSegmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.affectedSegmentOrNaturalClassProperty());
 		contextColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.contextProperty());
+				.contextSegmentOrNaturalClassProperty());
 		actionColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.ActionProperty());
 		levelColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -208,9 +193,9 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		descriptionColumn.setSortable(false);
 		affectedSegmentOrNaturalClassColumn.setSortable(false);
 		contextColumn.setSortable(false);
-		obeysSSPColumn.setSortable(false);
 		actionColumn.setSortable(false);
 		levelColumn.setSortable(false);
+		obeysSSPColumn.setSortable(false);
 
 		// Clear sonority hierarchy details.
 		showNPRuleDetails(null);
@@ -299,34 +284,34 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
-		affectedTextFlow.textProperty().addListener((observable, oldValue, newValue) -> {
+		affectedTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (languageProject != null) {
 				Language lang = languageProject.getAnalysisLanguage();
 				if (currentRule.getAffectedSegOrNC() != null && currentRule.getAffectedSegOrNC().isSegment()) {
 					lang = languageProject.getVernacularLanguage();
 				}
-				affectedTextFlow.setFont(lang.getFont());
-				affectedTextFlow.setNodeOrientation(lang.getOrientation());
+				affectedTextField.setFont(lang.getFont());
+				affectedTextField.setNodeOrientation(lang.getOrientation());
 				String sVernacular = mainApp.getStyleFromColor(lang.getColor());
-				affectedTextFlow.setStyle(sVernacular);
+				affectedTextField.setStyle(sVernacular);
 			}
 			if (currentRule != null) {
-				affectedTextFlow.setText(newValue);
+				affectedTextField.setText(newValue);
 			}
 		});
-		contextTextFlow.textProperty().addListener((observable, oldValue, newValue) -> {
+		contextTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (languageProject != null) {
 				Language lang = languageProject.getAnalysisLanguage();
 				if (currentRule.getContextSegOrNC() != null && currentRule.getContextSegOrNC().isSegment()) {
 					lang = languageProject.getVernacularLanguage();
 				}
-				contextTextFlow.setFont(lang.getFont());
-				contextTextFlow.setNodeOrientation(lang.getOrientation());
+				contextTextField.setFont(lang.getFont());
+				contextTextField.setNodeOrientation(lang.getOrientation());
 				String sVernacular = mainApp.getStyleFromColor(lang.getColor());
-				contextTextFlow.setStyle(sVernacular);
+				contextTextField.setStyle(sVernacular);
 			}
 			if (currentRule != null) {
-				contextTextFlow.setText(currentRule.getContext());
+				contextTextField.setText(currentRule.getContextSegmentOrNaturalClass());
 			}
 		});
 
@@ -459,11 +444,14 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			fIsActive = rule.isActive();
 		}
 		nameField.setDisable(!fIsActive);
-		affectedTextFlow.setDisable(!fIsActive);
-		affectedButton.setDisable(!fIsActive);
-		contextTextFlow.setDisable(!fIsActive);
-		contextButton.setDisable(!fIsActive);
 		descriptionField.setDisable(!fIsActive);
+		affectedTextField.setDisable(!fIsActive);
+		affectedButton.setDisable(!fIsActive);
+		contextTextField.setDisable(!fIsActive);
+		contextButton.setDisable(!fIsActive);
+		actionComboBox.setDisable(!fIsActive);
+		levelComboBox.setDisable(!fIsActive);
+		obeysSSPCheckBox.setDisable(!fIsActive);
 	}
 
 	private void forceTableRowToRedisplayPerActiveSetting(NPRule rule) {
@@ -479,6 +467,15 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		temp = rule.getAffectedSegmentOrNaturalClass();
 		rule.setAffectedSegmentOrNaturalClass("");
 		rule.setAffectedSegmentOrNaturalClass(temp);
+		temp = rule.getContextSegmentOrNaturalClass();
+		rule.setContextSegmentOrNaturalClass("");
+		rule.setContextSegmentOrNaturalClass(temp);
+		temp = rule.getAction();
+		rule.setAction("");
+		rule.setAction(temp);
+		temp = rule.getLevel();
+		rule.setLevel("");
+		rule.setLevel(temp);
 	}
 
 	/**
@@ -498,10 +495,10 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 					.getOrientation();
 			nameField.setNodeOrientation(analysisOrientation);
 			descriptionField.setNodeOrientation(analysisOrientation);
-			affectedTextFlow.setText(rule.getAffectedSegmentOrNaturalClass());
-			contextTextFlow.setNodeOrientation(languageProject.getVernacularLanguage()
+			affectedTextField.setText(rule.getAffectedSegmentOrNaturalClass());
+			contextTextField.setNodeOrientation(languageProject.getVernacularLanguage()
 					.getOrientation());
-			contextTextFlow.setText(rule.getContext());
+			contextTextField.setText(rule.getContextSegmentOrNaturalClass());
 			actionComboBox.getItems().setAll(NPRuleAction.values());
 			actionComboBox.getSelectionModel().select(rule.getRuleAction());
 			levelComboBox.getItems().setAll(NPRuleLevel.values());
@@ -519,11 +516,11 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			if (descriptionField != null) {
 				descriptionField.setText("");
 			}
-			if (affectedTextFlow != null) {
-				affectedTextFlow.setText("");
+			if (affectedTextField != null) {
+				affectedTextField.setText("");
 			}
-			if (contextTextFlow != null) {
-				contextTextFlow.setText("");
+			if (contextTextField != null) {
+				contextTextField.setText("");
 			}
 			buttonMoveDown.setDisable(true);
 			buttonMoveUp.setDisable(true);
@@ -574,43 +571,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		currentRule.setRuleRepresentation(sb.toString());
 	}
 
-	protected void fillNcsTextFlow(StringBuilder sb, ObservableList<Segment> segments) {
-		int i = 1;
-		int iCount = segments.size();
-		for (Segment seg : segments) {
-			addNameToContent(sb, seg.getSegment(), seg.isActive());
-			if (i++ < iCount) {
-				sb.append(", ");
-			}
-		}
-	}
-
-	protected void addNameToContent(StringBuilder sb, String sName, boolean isActive) {
-		Language vernacular = languageProject.getVernacularLanguage();
-		Text t = new Text(sName);
-		if (isActive && activeCheckBox.isSelected()) {
-			t.setFont(vernacular.getFont());
-			t.setFill(vernacular.getColor());
-			t.setNodeOrientation(vernacular.getOrientation());
-		} else {
-			t.setFill(Constants.INACTIVE);
-		}
-		Text tBar = new Text(" | ");
-		tBar.setStyle("-fx-stroke: lightgrey;");
-//		affectedTextFlow.getChildren().addAll(t, tBar);
-		sb.append(sName);
-	}
-
-	public void setSyllablePattern(SHNaturalClass syllablePattern) {
-		nameField.setText(syllablePattern.getNCName());
-		descriptionField.setText(syllablePattern.getDescription());
-	}
-
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 *
-	 * @param cvApproachController
-	 */
 	public void setData(NPApproach npApproachData) {
 		npApproach = npApproachData;
 		languageProject = npApproach.getLanguageProject();
@@ -629,9 +589,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 					npRulesTable.requestFocus();
 					npRulesTable.getSelectionModel().select(iLastIndex);
 					npRulesTable.getFocusModel().focus(iLastIndex);
-					// want to do following only if the selected item is not
-					// visible
-					// SHNaturalClassTable.isVisible();
 					npRulesTable.scrollTo(iLastIndex);
 				}
 			});
@@ -710,9 +667,9 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			
 			if (controller.isOkClicked()) {
 				if (isAffected) {
-					affectedTextFlow.setText(controller.getRule().getAffectedSegmentOrNaturalClass());
+					affectedTextField.setText(controller.getRule().getAffectedSegmentOrNaturalClass());
 				} else {
-					contextTextFlow.setText(controller.getRule().getContext());
+					contextTextField.setText(controller.getRule().getContextSegmentOrNaturalClass());
 				}
 			}
 
@@ -735,31 +692,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		int i = npApproach.getNPRules().indexOf(currentRule);
 		if (i > 0) {
 			Collections.swap(npApproach.getNPRules(), i, i - 1);
-		}
-	}
-
-	protected void handleCheckBoxSelectAll() {
-		for (NPRule rule : npApproach.getNPRules()) {
-			rule.setActive(true);
-			forceTableRowToRedisplayPerActiveSetting(rule);
-		}
-	}
-
-	protected void handleCheckBoxClearAll() {
-		for (NPRule rule : npApproach.getNPRules()) {
-			rule.setActive(false);
-			forceTableRowToRedisplayPerActiveSetting(rule);
-		}
-	}
-
-	protected void handleCheckBoxToggle() {
-		for (NPRule rule : npApproach.getNPRules()) {
-			if (rule.isActive()) {
-				rule.setActive(false);
-			} else {
-				rule.setActive(true);
-			}
-			forceTableRowToRedisplayPerActiveSetting(rule);
 		}
 	}
 
