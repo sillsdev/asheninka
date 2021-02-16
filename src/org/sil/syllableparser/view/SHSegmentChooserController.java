@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
@@ -33,28 +32,24 @@ import javafx.stage.Stage;
  */
 public class SHSegmentChooserController extends TableViewWithCheckBoxColumnController {
 
+	protected final class AnalysisWrappingTableCell extends
+			TableCell<Segment, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
+
 	protected final class WrappingTableCell extends TableCell<Segment, String> {
 		private Text text;
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			if (item == null || empty) {
-				setText(null);
-				setStyle("");
-			} else {
-				setStyle("");
-				text = new Text(item.toString());
-				// Get it to wrap.
-				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
-				Segment seg = (Segment) this.getTableRow().getItem();
-				if (seg != null && seg.isActive()) {
-					text.setFill(Constants.ACTIVE);
-				} else {
-					text.setFill(Constants.INACTIVE);
-				}
-				setGraphic(text);
-			}
+			processVernacularTableCell(this, text, item, empty);
 		}
 	}
 
@@ -102,7 +97,7 @@ public class SHSegmentChooserController extends TableViewWithCheckBoxColumnContr
 			return new WrappingTableCell();
 		});
 		descriptionColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new AnalysisWrappingTableCell();
 		});
 
 		initializeCheckBoxContextMenu(resources);

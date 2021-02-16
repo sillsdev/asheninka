@@ -69,7 +69,16 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			processTableCell(this, text, item, empty);
+			NPRule rule = (NPRule) this.getTableRow().getItem();
+			if (rule != null) {
+				if (rule.getAffectedSegOrNC().isSegment()) {
+					processVernacularTableCell(this, text, item, empty);
+				} else {
+					processAnalysisTableCell(this, text, item, empty);
+				}
+			} else {
+				processTableCell(this, text, item, empty);
+			}
 		}
 	}
 
