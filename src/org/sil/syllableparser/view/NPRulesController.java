@@ -15,6 +15,7 @@ import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
+import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPRuleAction;
@@ -65,13 +66,24 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 
 	protected final class WrappingTableCell extends TableCell<NPRule, String> {
 		private Text text;
+		private boolean isAffected = false;
+
+		WrappingTableCell(boolean isAffected) {
+			this.isAffected = isAffected;
+		}
 
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
 			NPRule rule = (NPRule) this.getTableRow().getItem();
 			if (rule != null) {
-				if (rule.getAffectedSegOrNC().isSegment()) {
+				CVSegmentOrNaturalClass segOrNC = rule.getAffectedSegOrNC();
+				if (!isAffected) {
+					segOrNC = rule.getContextSegOrNC();
+				}
+				if (segOrNC == null) {
+					processTableCell(this, text, item, empty);
+				} else if (segOrNC.isSegment()) {
 					processVernacularTableCell(this, text, item, empty);
 				} else {
 					processAnalysisTableCell(this, text, item, empty);
@@ -177,10 +189,10 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			return new AnalysisWrappingTableCell();
 		});
 		affectedSegmentOrNaturalClassColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new WrappingTableCell(true);
 		});
 		contextColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new WrappingTableCell(false);
 		});
 		actionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
