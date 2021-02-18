@@ -148,6 +148,7 @@ public class Constants {
 	public static final Color ENVIRONMENT_ERROR_MESSAGE = Color.CRIMSON;
 	public static final Color SLOTS_ERROR_MESSAGE = Color.CRIMSON;
 	public static final Color TYPE_WARNING_MESSAGE = Color.ORANGERED;
+	public static final Color RULES_ERROR_MESSAGE = Color.CRIMSON;
 	
 	// Try a Word constants
 	public static final String TRY_A_WORD_INTERBLOCK_CSS = ".interblock {\n"

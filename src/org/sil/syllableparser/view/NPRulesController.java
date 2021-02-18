@@ -20,6 +20,7 @@ import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPRuleAction;
 import org.sil.syllableparser.model.npapproach.NPRuleLevel;
+import org.sil.syllableparser.service.NPRuleValidator;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -33,10 +34,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -136,7 +137,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	@FXML
 	private Tooltip tooltipMoveDown;
 	@FXML
-	private TextArea ruleTextArea;
+	private Label invalidRuleMessage;
 	@FXML
 	protected ComboBox<NPRuleAction> actionComboBox;
 	@FXML
@@ -145,6 +146,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	private CheckBox obeysSSPCheckBox;
 
 	private NPRule currentRule;
+	private NPRuleValidator validator;
 
 	public NPRulesController() {
 
@@ -218,7 +220,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		levelColumn.setSortable(false);
 		obeysSSPColumn.setSortable(false);
 
-		// Clear sonority hierarchy details.
+		// Clear rule details.
 		showNPRuleDetails(null);
 
 		// Listen for selection changes and show the details when changed.
@@ -318,6 +320,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			}
 			if (currentRule != null) {
 				affectedTextField.setText(newValue);
+				reportAnyValidationMessage();
 			}
 		});
 		contextTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -333,6 +336,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			}
 			if (currentRule != null) {
 				contextTextField.setText(currentRule.getContextSegmentOrNaturalClass());
+				reportAnyValidationMessage();
 			}
 		});
 
@@ -366,7 +370,8 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			displayFieldsPerActiveSetting(currentRule);
 		});
 
-		ruleTextArea.setEditable(false);
+		invalidRuleMessage.setTextFill(Constants.RULES_ERROR_MESSAGE);
+		invalidRuleMessage.setWrapText(true);
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -402,6 +407,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 					@Override
 					public void run() {
 						currentRule.setRuleAction(selectedValue);
+						reportAnyValidationMessage();
 					}
 				});
 			}
@@ -432,11 +438,25 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 					@Override
 					public void run() {
 						currentRule.setRuleLevel(selectedValue);
+						reportAnyValidationMessage();
 					}
 				});
 			}
 		});
 		levelComboBox.setPromptText(resources.getString("label.chooserulelevel"));
+	}
+
+	protected void reportAnyValidationMessage() {
+		validator = NPRuleValidator.getInstance();
+		validator.setRule(currentRule);
+		validator.validate();
+		if (validator.isValid()) {
+			invalidRuleMessage.setVisible(false);
+		} else {
+			invalidRuleMessage.setVisible(true);
+			invalidRuleMessage.setText(bundle.getString(validator.getErrorMessageProperty()));
+		}
+		currentRule.setIsValid(validator.isValid());
 	}
 
 	protected void handleClickOnCheckBoxInTable(Object o) {
@@ -528,7 +548,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			activeCheckBox.setSelected(rule.isActive());
 			showRuleContent();
 			setUpDownButtonDisabled();
-
 		} else {
 			// Segment is null, remove all the text.
 			if (nameField != null) {

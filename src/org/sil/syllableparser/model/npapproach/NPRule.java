@@ -15,8 +15,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
@@ -31,6 +29,7 @@ public class NPRule extends SylParserObject {
 	private final StringProperty action;
 	private final StringProperty level;
 	private final BooleanProperty obeysSSP;
+	private final BooleanProperty isValid;
 	private final StringProperty ruleRepresentation;
 
 	private NPRuleAction ruleAction = NPRuleAction.ATTACH;
@@ -47,20 +46,42 @@ public class NPRule extends SylParserObject {
 		this.action = new SimpleStringProperty("");
 		this.level = new SimpleStringProperty("");
 		this.obeysSSP = new SimpleBooleanProperty(true);
+		this.isValid = new SimpleBooleanProperty(false);
 		this.ruleRepresentation = new SimpleStringProperty("");
 		createUUID();
 	}
 
-	public NPRule(String className, String description, String affectedSegmentOrNaturalClass,
-			String context, String action, String level, boolean obeysSSP, String ruleRepresentation) {
+	public NPRule(String ruleName, String description, String affectedSegmentOrNaturalClass,
+			String context, String action, String level, boolean obeysSSP, boolean isValid, String ruleRepresentation) {
 		super();
-		this.ruleName = new SimpleStringProperty(className);
+		this.ruleName = new SimpleStringProperty(ruleName);
 		this.description = new SimpleStringProperty(description);
 		this.affectedSegmentOrNaturalClass = new SimpleStringProperty(affectedSegmentOrNaturalClass);
 		this.contextSegmentOrNaturalClass = new SimpleStringProperty(context);
 		this.action = new SimpleStringProperty(action);
 		this.level = new SimpleStringProperty(level);
-		this.obeysSSP = new SimpleBooleanProperty(true);
+		this.obeysSSP = new SimpleBooleanProperty(obeysSSP);
+		this.isValid = new SimpleBooleanProperty(isValid);
+		this.ruleRepresentation = new SimpleStringProperty(ruleRepresentation);
+		createUUID();
+	}
+
+	public NPRule(String ruleName, String description, CVSegmentOrNaturalClass affectedSegOrNC,
+			CVSegmentOrNaturalClass contextSegOrNC, NPRuleAction action, NPRuleLevel level,
+			boolean obeysSSP, boolean isValid, String ruleRepresentation) {
+		super();
+		this.ruleName = new SimpleStringProperty(ruleName);
+		this.description = new SimpleStringProperty(description);
+		this.affectedSegmentOrNaturalClass = new SimpleStringProperty("");
+		this.contextSegmentOrNaturalClass = new SimpleStringProperty("");
+		this.action = new SimpleStringProperty("");
+		this.level = new SimpleStringProperty("");
+		this.affectedSegOrNC = affectedSegOrNC;
+		this.contextSegOrNC = contextSegOrNC;
+		this.ruleAction = action;
+		this.ruleLevel = level;
+		this.obeysSSP = new SimpleBooleanProperty(obeysSSP);
+		this.isValid = new SimpleBooleanProperty(isValid);
 		this.ruleRepresentation = new SimpleStringProperty(ruleRepresentation);
 		createUUID();
 	}
@@ -183,6 +204,19 @@ public class NPRule extends SylParserObject {
 		this.obeysSSP.set(value);
 	}
 
+	@XmlElement(name="valid")
+	public boolean isValid() {
+		return isValid.get();
+	}
+
+	public BooleanProperty isValidProperty() {
+		return isValid;
+	}
+
+	public void setIsValid(boolean value) {
+		this.isValid.set(value);
+	}
+
 	public String getRuleRepresentation() {
 		return ruleRepresentation.get();
 	}
@@ -206,7 +240,7 @@ public class NPRule extends SylParserObject {
 	public int hashCode() {
 		String sCombo = ruleName.getValueSafe() + description.getValueSafe()
 				+ affectedSegmentOrNaturalClass.getValueSafe() + contextSegmentOrNaturalClass.getValueSafe()
-				+ action.getValueSafe() + level.getValueSafe() + obeysSSP.getValue()
+				+ action.getValueSafe() + level.getValueSafe() + obeysSSP.getValue() + isValid.getValue()
 				+ ruleRepresentation.getValueSafe();
 		return sCombo.hashCode();
 	}
@@ -235,6 +269,8 @@ public class NPRule extends SylParserObject {
 		} else if (!getLevel().equals(rule.getLevel())) {
 			result = false;
 		} else if (isObeysSSP() != rule.isObeysSSP()) {
+			result = false;
+		} else if (isValid() != rule.isValid()) {
 			result = false;
 		} else if (!getRuleRepresentation().equals(rule.getRuleRepresentation())) {
 			result = false;

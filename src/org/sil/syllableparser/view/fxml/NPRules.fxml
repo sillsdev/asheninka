@@ -12,7 +12,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -20,7 +19,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.TextFlow?>
 
 <StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.NPRulesController">
    <children>
@@ -86,7 +84,7 @@
                         <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES" />
                         <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                            <children>
-                              <TextField fx:id="affectedTextField" prefWidth="234.0" editable="false"/>
+                              <TextField fx:id="affectedTextField" editable="false" prefWidth="234.0" />
                               <Button fx:id="affectedButton" mnemonicParsing="false" onAction="#handleLaunchAffectedSegOrNCChooser" text="...">
                                  <FlowPane.margin>
                                     <Insets left="3.0" />
@@ -96,7 +94,7 @@
                          </FlowPane>
                         <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
                            <children>
-                              <TextField fx:id="contextTextField" prefWidth="234.0" editable="false"/>
+                              <TextField fx:id="contextTextField" editable="false" prefWidth="234.0" />
                               <Button fx:id="contextButton" mnemonicParsing="false" onAction="#handleLaunchContextSegOrNCChooser" text="...">
                                  <FlowPane.margin>
                                     <Insets left="3.0" />
@@ -110,7 +108,7 @@
                          <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                      </children>
                   </GridPane>
-                  <TextArea fx:id="ruleTextArea" layoutX="52.0" layoutY="374.0" prefHeight="200.0" prefWidth="-1.0" />
+                  <Label fx:id="invalidRuleMessage" layoutX="70.0" layoutY="225" prefHeight="180.0" prefWidth="400.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="20.0" />
                </children>
             </AnchorPane>
         </items>
