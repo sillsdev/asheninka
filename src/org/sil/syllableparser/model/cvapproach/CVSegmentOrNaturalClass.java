@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.SylParserBase;
 
 import javafx.beans.property.BooleanProperty;
@@ -108,5 +109,13 @@ public class CVSegmentOrNaturalClass extends SylParserBase  {
 	 */
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getSegmentOrNaturalClassForShow() {
+		String s = getSegmentOrNaturalClass();
+		if (!isSegment) {
+			s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
+		}
+		return s;
 	}
 }

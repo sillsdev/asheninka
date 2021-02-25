@@ -23,6 +23,7 @@ public class NPRuleValidatorTest {
 
 	NPRuleValidator validator;
 	NPRule rule;
+	String errorProperty = "";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -45,25 +46,26 @@ public class NPRuleValidatorTest {
 		rule.setRuleLevel(NPRuleLevel.N);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.buildall", validator.getErrorMessageProperty());
+		errorProperty = "nprule.message.buildall";
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setRuleLevel(NPRuleLevel.N_BAR);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.buildall", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setRuleLevel(NPRuleLevel.N_DOUBLE_BAR);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.buildall", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setRuleLevel(NPRuleLevel.ALL);
 		rule.setContextSegOrNC(new CVSegmentOrNaturalClass());
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.buildall", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setContextSegOrNC(null);
 		rule.setAffectedSegOrNC(null);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.buildall", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 	}
 
 	@Test
@@ -87,17 +89,53 @@ public class NPRuleValidatorTest {
 		rule.setRuleLevel(NPRuleLevel.ALL);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.attach", validator.getErrorMessageProperty());
+		errorProperty = "nprule.message.attach";
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setRuleLevel(NPRuleLevel.N_BAR);
 		rule.setContextSegOrNC(null);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.attach", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setContextSegOrNC(new CVSegmentOrNaturalClass());
 		rule.setAffectedSegOrNC(null);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.attach", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
+	}
+
+	@Test
+	public void ruleAugmentTest() {
+		// action Attach cannot be level All and has both an affected item and a context item
+		rule = new NPRule("augment", "", new CVSegmentOrNaturalClass(),
+				new CVSegmentOrNaturalClass(), NPRuleAction.AUGMENT, NPRuleLevel.N, true, false, "");
+		validator.setRule(rule);
+		validator.validate();
+		assertTrue(validator.isValid());
+		assertEquals("", validator.getErrorMessageProperty());
+		rule.setRuleLevel(NPRuleLevel.N_BAR);
+		validator.validate();
+		assertTrue(validator.isValid());
+		assertEquals("", validator.getErrorMessageProperty());
+		rule.setRuleLevel(NPRuleLevel.N_DOUBLE_BAR);
+		validator.validate();
+		assertTrue(validator.isValid());
+		assertEquals("", validator.getErrorMessageProperty());
+
+		rule.setRuleLevel(NPRuleLevel.ALL);
+		validator.validate();
+		assertFalse(validator.isValid());
+		errorProperty = "nprule.message.augment";
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
+		rule.setRuleLevel(NPRuleLevel.N_BAR);
+		rule.setContextSegOrNC(null);
+		validator.validate();
+		assertFalse(validator.isValid());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
+		rule.setContextSegOrNC(new CVSegmentOrNaturalClass());
+		rule.setAffectedSegOrNC(null);
+		validator.validate();
+		assertFalse(validator.isValid());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 	}
 
 	@Test
@@ -121,17 +159,18 @@ public class NPRuleValidatorTest {
 		rule.setRuleLevel(NPRuleLevel.ALL);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.adjoin", validator.getErrorMessageProperty());
+		errorProperty = "nprule.message.adjoin";
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setRuleLevel(NPRuleLevel.N_BAR);
 		rule.setContextSegOrNC(null);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.adjoin", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setContextSegOrNC(new CVSegmentOrNaturalClass());
 		rule.setAffectedSegOrNC(null);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.adjoin", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 	}
 
 	@Test
@@ -155,17 +194,18 @@ public class NPRuleValidatorTest {
 		rule.setRuleLevel(NPRuleLevel.ALL);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.adjoin", validator.getErrorMessageProperty());
+		errorProperty = "nprule.message.adjoin";
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setRuleLevel(NPRuleLevel.N_BAR);
 		rule.setContextSegOrNC(null);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.adjoin", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 		rule.setContextSegOrNC(new CVSegmentOrNaturalClass());
 		rule.setAffectedSegOrNC(null);
 		validator.validate();
 		assertFalse(validator.isValid());
-		assertEquals("nprule.message.adjoin", validator.getErrorMessageProperty());
+		assertEquals(errorProperty, validator.getErrorMessageProperty());
 	}
 
 }

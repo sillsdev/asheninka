@@ -71,4 +71,20 @@ public class LingTreeInteractor {
 		}
 		return result;
 	}
+
+	public FontInfo getLexicalFontInfo() {
+		return origTree.getLexicalFontInfo();
+	}
+
+	public void setLexicalFontInfo(FontInfo fi) {
+		origTree.setLexicalFontInfo(fi);
+	}
+
+	public double getVerticalGap() {
+		return origTree.getVerticalGap();
+	}
+
+	public void setVerticalGap(double gap) {
+		origTree.setVerticalGap(gap);
+	}
 }

@@ -7,7 +7,9 @@
 package org.sil.syllableparser.model.npapproach;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 
@@ -128,7 +130,13 @@ public class NPRule extends SylParserObject {
 	}
 
 	public void setAffectedSegOrNC(CVSegmentOrNaturalClass affectedSegOrNC) {
-		this.affectedSegOrNC = affectedSegOrNC;
+		if (affectedSegOrNC == null) {
+			this.affectedSegOrNC = null;
+		} else {
+			this.affectedSegOrNC = new CVSegmentOrNaturalClass(getAffectedSegmentOrNaturalClass(),
+					affectedSegOrNC.getDescription(), affectedSegOrNC.isSegment(),
+					affectedSegOrNC.getUuid(), affectedSegOrNC.isActive());
+		}
 	}
 
 	public String getContextSegmentOrNaturalClass() {
@@ -148,10 +156,17 @@ public class NPRule extends SylParserObject {
 		return contextSegOrNC;
 	}
 
-	public void setContextSegOrNC(CVSegmentOrNaturalClass levelSegOrNC) {
-		this.contextSegOrNC = levelSegOrNC;
+	public void setContextSegOrNC(CVSegmentOrNaturalClass contextSegOrNC) {
+		if (contextSegOrNC == null) {
+			this.contextSegOrNC = null;
+		} else {
+			this.contextSegOrNC = new CVSegmentOrNaturalClass(getContextSegmentOrNaturalClass(),
+					contextSegOrNC.getDescription(), contextSegOrNC.isSegment(),
+					contextSegOrNC.getUuid(), contextSegOrNC.isActive());
+		}
 	}
 
+	@XmlTransient
 	public String getAction() {
 		return action.get();
 	}
@@ -172,6 +187,7 @@ public class NPRule extends SylParserObject {
 		this.ruleAction = value;
 	}
 
+	@XmlTransient
 	public String getLevel() {
 		return level.get();
 	}
@@ -234,6 +250,261 @@ public class NPRule extends SylParserObject {
 	 */
 	public StringProperty ruleProperty() {
 		return this.ruleName;
+	}
+
+	public String createLingTreeDescription() {
+		if (!isValid()) {
+			setRuleRepresentation("");
+			return "";
+		}
+		StringBuilder sb = new StringBuilder();
+		switch (ruleAction) {
+		case ATTACH:
+			switch (ruleLevel) {
+			case ALL:
+				break;
+			case N:
+				// diphthong
+				sb.append("(N(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append(")(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append("))");
+				break;
+			case N_BAR:
+				// coda
+				sb.append("(N'(N(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append("))(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append("))");
+				break;
+			case N_DOUBLE_BAR:
+				// onset
+				sb.append("(N''(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append(")(N'(N(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append("))))");
+				break;
+			default:
+				break;
+			}
+			break;
+		case AUGMENT:
+			switch (ruleLevel) {
+			case ALL:
+				break;
+			case N:
+				// diphthong
+				sb.append("(N(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append(")(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append("))");
+				break;
+			case N_BAR:
+				// coda
+				sb.append("(N'(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append(")(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append("))");
+				break;
+			case N_DOUBLE_BAR:
+				// onset
+				sb.append("(N''(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append(")(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append("))");
+				break;
+			default:
+				break;
+			}
+			break;
+		case BUILD:
+			sb.append("(N''(N'(N(\\L ");
+			sb.append(getAffectedValueForLingTree());
+			sb.append("))))");
+			break;
+		case LEFT_ADJOIN:
+			switch (ruleLevel) {
+			case ALL:
+				break;
+			case N:
+				sb.append("(N(N(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append("))(N(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append(")))");
+				break;
+			case N_BAR:
+				sb.append("(N'(N'(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append("))(N'(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append(")))");
+				break;
+			case N_DOUBLE_BAR:
+				sb.append("(N''(N''(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append("))(N''(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append(")))");
+				break;
+			default:
+				break;
+			}			break;
+		case RIGHT_ADJOIN:
+			switch (ruleLevel) {
+			case ALL:
+				break;
+			case N:
+				sb.append("(N(N(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append("))(N(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append(")))");
+				break;
+			case N_BAR:
+				sb.append("(N'(N'(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append("))(N'(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append(")))");
+				break;
+			case N_DOUBLE_BAR:
+				sb.append("(N''(N''(\\L ");
+				sb.append(contextSegOrNC.getSegmentOrNaturalClass());
+				sb.append("))(N''(\\L ");
+				sb.append(getAffectedValueForLingTree());
+				sb.append(")))");
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		setRuleRepresentation(sb.toString());
+		return sb.toString();
+	}
+
+	protected String getAffectedValueForLingTree() {
+		StringBuilder sb = new StringBuilder();
+		if (!isObeysSSP()) {
+			sb.append("*");
+		}
+		sb.append(affectedSegOrNC.getSegmentOrNaturalClass());
+		return sb.toString();
+	}
+
+	public String adjustForAffectedSVG(String svg) {
+		switch (ruleAction) {
+		case ATTACH:
+			// same as augment
+		case AUGMENT:
+			switch (ruleLevel) {
+			case ALL:
+				break;
+			case N:
+				// diphthong;  change last line (which should have x1 < x2) to use dashed line
+				// same as coda so fall through
+			case N_BAR:
+				// coda; change last line (which should have x1 < x2) to use dashed line
+				svg = adjustLastLine(svg);
+				break;
+			case N_DOUBLE_BAR:
+				// onset; change first line (which should have x1 > x2) to use dashed line
+				svg = adjustFirstLine(svg);
+				break;
+			default:
+				break;
+			}
+			break;
+		case BUILD:
+			break;
+		case LEFT_ADJOIN:
+			switch (ruleLevel) {
+			case ALL:
+				break;
+			case N:
+				// fall through
+			case N_BAR:
+				// fall through
+			case N_DOUBLE_BAR:
+				// change first, second, and third lines to use dashed line
+				// first line (which should have x1 > x2)
+				// second line (which should have x1 == x2)
+				// third line (which should have x1 < x2)
+				svg = adjustFirstLine(svg);
+				svg = adjustSecondLine(svg);
+				svg = adjustThirdLine(svg);
+				break;
+			default:
+				break;
+			}
+			break;
+		case RIGHT_ADJOIN:
+			switch (ruleLevel) {
+			case ALL:
+				break;
+			case N:
+				// fall through
+			case N_BAR:
+				// fall through
+			case N_DOUBLE_BAR:
+				// change first, third, and last (fourth) lines to use dashed line
+				// first line (which should have x1 > x2)
+				// third line (which should have x1 < x2)
+				// last/fourth line (which should have x1 == x2)
+				svg = adjustFirstLine(svg);
+				svg = adjustThirdLine(svg);
+				svg = adjustLastLine(svg);
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		return svg;
+	}
+
+	protected String adjustFirstLine(String svg) {
+		int i = svg.indexOf("<line ");
+		int j = svg.substring(i).indexOf("/>");
+		svg = svg.substring(0, i + j) + Constants.SVG_DASHED_LINE + svg.substring(i + j);
+		return svg;
+	}
+
+	protected String adjustSecondLine(String svg) {
+		int i1 = svg.indexOf("<line ");
+		int i2 = svg.substring(i1 + 1).indexOf("<line ");
+		int i = i1 + i2;
+		int j = svg.substring(i).indexOf("/>");
+		svg = svg.substring(0, i + j) + Constants.SVG_DASHED_LINE + svg.substring(i + j);
+		return svg;
+	}
+
+	protected String adjustThirdLine(String svg) {
+		int i1 = svg.indexOf("<line ");
+		int i2 = svg.substring(i1 + 1).indexOf("<line ");
+		int i3 = svg.substring(i1 + i2 + 2).indexOf("<line ");
+		int i = i1 + i2 + i3;
+		int j = svg.substring(i).indexOf("/>");
+		svg = svg.substring(0, i + j) + Constants.SVG_DASHED_LINE + svg.substring(i + j);
+		return svg;
+	}
+
+	protected String adjustLastLine(String svg) {
+		int i = svg.lastIndexOf("<line ");
+		int j = svg.substring(i).indexOf("/>");
+		svg = svg.substring(0, i + j) + Constants.SVG_DASHED_LINE + svg.substring(i + j);
+		return svg;
 	}
 
 	@Override

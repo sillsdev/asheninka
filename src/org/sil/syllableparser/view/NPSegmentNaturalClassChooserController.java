@@ -184,10 +184,10 @@ public class NPSegmentNaturalClassChooserController extends TableViewController 
 		if (!segOrClass.equals(noneOption)) {
 			if (isAffected) {
 				rule.setAffectedSegOrNC(segOrClass);
-				rule.setAffectedSegmentOrNaturalClass(addParensINeeded(segOrClass));
+				rule.setAffectedSegmentOrNaturalClass(segOrClass.getSegmentOrNaturalClassForShow());
 			} else {
 				rule.setContextSegOrNC(segOrClass);
-				rule.setContextSegmentOrNaturalClass(addParensINeeded(segOrClass));
+				rule.setContextSegmentOrNaturalClass(segOrClass.getSegmentOrNaturalClassForShow());
 			}
 		} else if (isAffected) {
 			rule.setAffectedSegOrNC(null);
@@ -199,14 +199,6 @@ public class NPSegmentNaturalClassChooserController extends TableViewController 
 
 		okClicked = true;
 		handleCancel();
-	}
-
-	private String addParensINeeded(CVSegmentOrNaturalClass segOrClass) {
-		String result = segOrClass.getSegmentOrNaturalClass();
-		if (!segOrClass.isSegment()) {
-			result = "[" + result + "]";
-		}
-		return result;
 	}
 
 	/**

@@ -11,15 +11,20 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
+import org.sil.lingtree.model.FontInfo;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
+import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.SylParserObject;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPRuleAction;
 import org.sil.syllableparser.model.npapproach.NPRuleLevel;
+import org.sil.syllableparser.service.LingTreeInteractor;
 import org.sil.syllableparser.service.NPRuleValidator;
 import org.sil.utility.view.ControllerUtilities;
 
@@ -43,7 +48,10 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -144,12 +152,19 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	protected ComboBox<NPRuleLevel> levelComboBox;
 	@FXML
 	private CheckBox obeysSSPCheckBox;
+	@FXML
+	protected Label ruleTreeLabel;
+	@FXML
+	protected WebView ruleLingTreeSVG;
+	@FXML
+	protected WebEngine webEngine;
 
 	private NPRule currentRule;
 	private NPRuleValidator validator;
+	protected LingTreeInteractor ltInteractor;
 
 	public NPRulesController() {
-
+		ltInteractor = LingTreeInteractor.getInstance();
 	}
 
 	/**
@@ -161,6 +176,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		super.setApproach(ApplicationPreferences.NP_RULES);
 		super.setTableView(npRulesTable);
 		super.initialize(location, resources);
+		webEngine = ruleLingTreeSVG.getEngine();
 
 		bundle = resources;
 		// Initialize the button icons
@@ -234,8 +250,9 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			@Override
 			public String toString(NPRuleAction object) {
 				String localizedName = bundle.getString("nprule.action." + object.toString().toLowerCase());
-				if (currentRule != null)
+				if (currentRule != null) {
 					currentRule.setAction(localizedName);
+				}
 				return localizedName;
 			}
 
@@ -254,6 +271,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 					@Override
 					public void run() {
 						currentRule.setRuleAction(selectedValue);
+						reportAnyValidationMessage();
 					}
 				});
 			}
@@ -264,8 +282,9 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			@Override
 			public String toString(NPRuleLevel object) {
 				String localizedName = bundle.getString("nprule.level." + object.toString().toLowerCase());
-				if (currentRule != null)
+				if (currentRule != null) {
 					currentRule.setLevel(localizedName);
+				}
 				return localizedName;
 			}
 
@@ -284,6 +303,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 					@Override
 					public void run() {
 						currentRule.setRuleLevel(selectedValue);
+						reportAnyValidationMessage();
 					}
 				});
 			}
@@ -308,7 +328,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			}
 		});
 		affectedTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (languageProject != null) {
+			if (languageProject != null && currentRule != null) {
 				Language lang = languageProject.getAnalysisLanguage();
 				if (currentRule.getAffectedSegOrNC() != null && currentRule.getAffectedSegOrNC().isSegment()) {
 					lang = languageProject.getVernacularLanguage();
@@ -320,11 +340,13 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			}
 			if (currentRule != null) {
 				affectedTextField.setText(newValue);
+				currentRule.setAffectedSegmentOrNaturalClass(newValue);
 				reportAnyValidationMessage();
+				showRuleContent();
 			}
 		});
 		contextTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (languageProject != null) {
+			if (languageProject != null && currentRule != null) {
 				Language lang = languageProject.getAnalysisLanguage();
 				if (currentRule.getContextSegOrNC() != null && currentRule.getContextSegOrNC().isSegment()) {
 					lang = languageProject.getVernacularLanguage();
@@ -336,7 +358,9 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			}
 			if (currentRule != null) {
 				contextTextField.setText(currentRule.getContextSegmentOrNaturalClass());
+				currentRule.setContextSegmentOrNaturalClass(newValue);
 				reportAnyValidationMessage();
+				showRuleContent();
 			}
 		});
 
@@ -382,68 +406,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		});
 
 		nameField.requestFocus();
-
-		actionComboBox.setConverter(new StringConverter<NPRuleAction>() {
-			@Override
-			public String toString(NPRuleAction object) {
-				String localizedName = bundle.getString("nprule.action." + object.toString().toLowerCase());
-				if (currentRule != null)
-					currentRule.setAction(localizedName);
-				return localizedName;
-			}
-
-			@Override
-			public NPRuleAction fromString(String string) {
-				// nothing to do
-				return null;
-			}
-		});
-		actionComboBox.getSelectionModel().selectedItemProperty()
-		.addListener(new ChangeListener<NPRuleAction>() {
-			@Override
-			public void changed(ObservableValue<? extends NPRuleAction> selected,
-					NPRuleAction oldValue, NPRuleAction selectedValue) {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						currentRule.setRuleAction(selectedValue);
-						reportAnyValidationMessage();
-					}
-				});
-			}
-		});
-		actionComboBox.setPromptText(resources.getString("label.chooseruleaction"));
-
-		levelComboBox.setConverter(new StringConverter<NPRuleLevel>() {
-			@Override
-			public String toString(NPRuleLevel object) {
-				String localizedName = bundle.getString("nprule.level." + object.toString().toLowerCase());
-				if (currentRule != null)
-					currentRule.setLevel(localizedName);
-				return localizedName;
-			}
-
-			@Override
-			public NPRuleLevel fromString(String string) {
-				// nothing to do
-				return null;
-			}
-		});
-		levelComboBox.getSelectionModel().selectedItemProperty()
-		.addListener(new ChangeListener<NPRuleLevel>() {
-			@Override
-			public void changed(ObservableValue<? extends NPRuleLevel> selected,
-					NPRuleLevel oldValue, NPRuleLevel selectedValue) {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						currentRule.setRuleLevel(selectedValue);
-						reportAnyValidationMessage();
-					}
-				});
-			}
-		});
-		levelComboBox.setPromptText(resources.getString("label.chooserulelevel"));
 	}
 
 	protected void reportAnyValidationMessage() {
@@ -452,9 +414,14 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		validator.validate();
 		if (validator.isValid()) {
 			invalidRuleMessage.setVisible(false);
+			ruleLingTreeSVG.setVisible(true);
+			ruleTreeLabel.setVisible(true);
+			showRuleContent();
 		} else {
 			invalidRuleMessage.setVisible(true);
 			invalidRuleMessage.setText(bundle.getString(validator.getErrorMessageProperty()));
+			ruleLingTreeSVG.setVisible(false);
+			ruleTreeLabel.setVisible(false);
 		}
 		currentRule.setIsValid(validator.isValid());
 	}
@@ -598,17 +565,13 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	}
 
 	private void showRuleContent() {
-		StringBuilder sb = new StringBuilder();
-//		affectedTextFlow.getChildren().clear();
-//		ObservableList<Segment> segments = currentRule.getSegments();
-//		if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
-//			fillNcsTextFlow(sb, segments);
-//		} else {
-//			FXCollections.reverse(segments);
-//			fillNcsTextFlow(sb, segments);
-//			FXCollections.reverse(segments);
-//		}
-		currentRule.setRuleRepresentation(sb.toString());
+		if (currentRule.getRuleAction() != null && currentRule.getRuleLevel() != null) {
+			String sLingTreeDescription = currentRule.createLingTreeDescription();
+			if (!sLingTreeDescription.equals("")) {
+				currentRule.setRuleRepresentation(sLingTreeDescription);
+				showLingTreeSVG(sLingTreeDescription);
+			}
+		}
 	}
 
 	public void setData(NPApproach npApproachData) {
@@ -637,7 +600,38 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
 			nameField.setStyle(sAnalysis);
 			descriptionField.setStyle(sAnalysis);
+			for (NPRule rule : npApproachData.getNPRules()) {
+				if (rule.getAffectedSegOrNC() != null) {
+					rule.setAffectedSegOrNC(createCVSegmentOrNaturalClass(rule.getAffectedSegOrNC()));
+				}
+				if (rule.getContextSegOrNC() != null) {
+					rule.setContextSegOrNC(createCVSegmentOrNaturalClass(rule.getContextSegOrNC()));
+				}
+				String localizedName = bundle.getString("nprule.action." + rule.getRuleAction().toString().toLowerCase());
+				rule.setAction(localizedName);
+				localizedName = bundle.getString("nprule.level." + rule.getRuleLevel().toString().toLowerCase());
+				rule.setLevel(localizedName);
+			}
 		}
+	}
+	
+	protected CVSegmentOrNaturalClass createCVSegmentOrNaturalClass(CVSegmentOrNaturalClass segOrNC) {
+		String name = "";
+		String description = "";
+		if (segOrNC.isSegment()) {
+			int i = SylParserObject.findIndexInListByUuid(languageProject.getSegmentInventory(), segOrNC.getUuid());
+			Segment segment = languageProject.getSegmentInventory().get(i);
+			name = segment.getSegment();
+			description = segment.getDescription();
+		} else {
+			int i = SylParserObject.findIndexInListByUuid(languageProject.getCVApproach().getCVNaturalClasses(), segOrNC.getUuid());
+			CVNaturalClass segment = languageProject.getCVApproach().getCVNaturalClasses().get(i);
+			name = segment.getNCName();
+			description = segment.getDescription();
+		}
+		segOrNC.setSegmentOrNaturalClass(name);
+		segOrNC.setDescription(description);
+		return segOrNC;
 	}
 
 	@Override
@@ -708,8 +702,10 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			if (controller.isOkClicked()) {
 				if (isAffected) {
 					affectedTextField.setText(controller.getRule().getAffectedSegmentOrNaturalClass());
+					currentRule.setAffectedSegOrNC(controller.getRule().getAffectedSegOrNC());
 				} else {
 					contextTextField.setText(controller.getRule().getContextSegmentOrNaturalClass());
+					currentRule.setContextSegOrNC(controller.getRule().getContextSegOrNC());
 				}
 			}
 
@@ -717,6 +713,23 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			e.printStackTrace();
 			MainApp.reportException(e, bundle);
 		}
+	}
+
+	protected void showLingTreeSVG(String sLingTreeDescription) {
+		ltInteractor.initializeParameters(languageProject);
+		FontInfo fiAnalysis = new FontInfo(languageProject.getAnalysisLanguage().getFont());
+		fiAnalysis.setColor(Color.BLACK);
+		ltInteractor.setLexicalFontInfo(fiAnalysis);
+
+		ltInteractor.setVerticalGap(30.0);
+		String ltSVG = ltInteractor.createSVG(sLingTreeDescription, true);
+		ltSVG = currentRule.adjustForAffectedSVG(ltSVG);
+		StringBuilder sb = new StringBuilder();
+		sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head>");
+		sb.append("<body><div style=\"text-align:left\">");
+		sb.append(ltSVG);
+		sb.append("</div></body></html>");
+		webEngine.loadContent(sb.toString());
 	}
 
 	@FXML

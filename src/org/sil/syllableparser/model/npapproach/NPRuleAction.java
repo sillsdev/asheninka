@@ -11,6 +11,7 @@ package org.sil.syllableparser.model.npapproach;
  */
 public enum NPRuleAction {
 	ATTACH,
+	AUGMENT,
 	BUILD,
 	LEFT_ADJOIN,
 	RIGHT_ADJOIN,

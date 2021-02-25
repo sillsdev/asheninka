@@ -69,6 +69,7 @@ public class Constants {
 	public static final String TEXT_COLOR_CSS_END = ";";
 	public static final String PARSER_SUCCESS_COLOR_STRING = "green";
 	public static final String PARSER_FAILURE_COLOR_STRING = "red";
+	public static final String SVG_DASHED_LINE = " stroke-dasharray=\"7,7\"";
 
 	// View constants
 	public static final int CV_SEGMENT_INVENTORY_VIEW_INDEX = 0;

@@ -59,6 +59,9 @@ public class NPRuleValidator {
 			isValid = validateAttachAction();
 		}
 		if (isValid) {
+			isValid = validateAugmentAction();
+		}
+		if (isValid) {
 			isValid = validateAdjoinAction();
 		}
 	}
@@ -88,6 +91,22 @@ public class NPRuleValidator {
 					&& (rule.getContextSegOrNC() != null));
 			if (!passes) {
 				errorMessageProperty = "nprule.message.attach";
+			} else {
+				errorMessageProperty = "";
+			}
+		}
+		return passes;
+	}
+
+	protected boolean validateAugmentAction() {
+		// action Attach cannot be level All and must have both an affected item and a context item
+		boolean passes = true;
+		if (rule.getRuleAction() == NPRuleAction.AUGMENT) {
+			passes = ((rule.getRuleLevel() != NPRuleLevel.ALL)
+					&& (rule.getAffectedSegOrNC() != null)
+					&& (rule.getContextSegOrNC() != null));
+			if (!passes) {
+				errorMessageProperty = "nprule.message.augment";
 			} else {
 				errorMessageProperty = "";
 			}
