@@ -48,6 +48,11 @@ public class NPApproach extends Approach {
 				.collect(Collectors.toList());
 	}
 
+	public List<NPRule> getValidActiveNPRules() {
+		return rules.stream().filter(rule -> rule.isValid() && rule.isActive())
+				.collect(Collectors.toList());
+	}
+
 
 	/**
 	 * Clear out all data in this Sonority Hierarchy approach

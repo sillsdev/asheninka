@@ -6,6 +6,7 @@
  */
 package org.sil.syllableparser.model.npapproach;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -48,7 +49,7 @@ public class NPRule extends SylParserObject {
 		this.action = new SimpleStringProperty("");
 		this.level = new SimpleStringProperty("");
 		this.obeysSSP = new SimpleBooleanProperty(true);
-		this.isValid = new SimpleBooleanProperty(false);
+		this.isValid = new SimpleBooleanProperty(true);
 		this.ruleRepresentation = new SimpleStringProperty("");
 		createUUID();
 	}
@@ -220,7 +221,7 @@ public class NPRule extends SylParserObject {
 		this.obeysSSP.set(value);
 	}
 
-	@XmlElement(name="valid")
+	@XmlAttribute(name="valid")
 	public boolean isValid() {
 		return isValid.get();
 	}

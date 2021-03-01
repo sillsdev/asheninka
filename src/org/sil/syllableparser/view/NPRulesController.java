@@ -600,6 +600,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
 			nameField.setStyle(sAnalysis);
 			descriptionField.setStyle(sAnalysis);
+			validator = NPRuleValidator.getInstance();
 			for (NPRule rule : npApproachData.getNPRules()) {
 				if (rule.getAffectedSegOrNC() != null) {
 					rule.setAffectedSegOrNC(createCVSegmentOrNaturalClass(rule.getAffectedSegOrNC()));
@@ -611,6 +612,9 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 				rule.setAction(localizedName);
 				localizedName = bundle.getString("nprule.level." + rule.getRuleLevel().toString().toLowerCase());
 				rule.setLevel(localizedName);
+				validator.setRule(rule);
+				validator.validate();
+				rule.setIsValid(validator.isValid());
 			}
 		}
 	}

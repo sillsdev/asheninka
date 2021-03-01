@@ -8,12 +8,10 @@ package org.sil.syllableparser.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.collections.FXCollections;
 
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegment;
@@ -95,9 +93,7 @@ public class TemplateFilterMatcher {
 				if (!activeClasses.contains(natClass)) {
 					return false;
 				}
-				int index = SylParserObject.findIndexInListByUuid(
-						FXCollections.observableList(natClass.getAllSegments()), seg.getID());
-				if (index >= 0) {
+				if (natClass.hasSegment(seg)) {
 					iSegMatchCount++;
 					TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
 					slotAndSegment.add(ss);

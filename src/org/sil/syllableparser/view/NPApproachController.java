@@ -22,11 +22,11 @@ import org.sil.syllableparser.model.ApproachView;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
-import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.npapproach.NPApproachView;
-import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.NPSegmenter;
 import org.sil.syllableparser.service.parsing.NPSyllabifier;
 import org.sil.utility.view.ControllerUtilities;
 
@@ -321,10 +321,10 @@ public class NPApproachController extends ApproachController  {
 				Scene scene = statusBar.getScene();
 				Cursor currentCursor = scene.getCursor();
 				scene.setCursor(Cursor.WAIT);
-				CVSegmenter segmenter;
+				NPSegmenter segmenter;
 				NPSyllabifier syllabifier;
 
-				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
+				segmenter = new NPSegmenter(languageProject.getActiveGraphemes(),
 						languageProject.getActiveGraphemeNaturalClasses());
 				syllabifier = new NPSyllabifier(languageProject.getNPApproach());
 
@@ -343,7 +343,7 @@ public class NPApproachController extends ApproachController  {
 						word.setNPPredictedSyllabification("");
 						continue;
 					}
-					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<NPSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					fSuccess = syllabifier.syllabify(segmentsInWord);
 					word.setNPLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
 					if (!fSuccess) {
