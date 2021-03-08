@@ -97,7 +97,6 @@ public class NPRuleMatcherTest {
 		checkMatch("tlabi", 5, 2, new int[] {1, 3}, -1);
 		checkMatch("tlabit", 6, 2, new int[] {1, 3}, -1);
 		checkMatch("tlablit", 7, 2, new int[] {1, 4}, -1);
-		checkMatch("tla", 3, 0, new int[1], 1);
 	}
 
 	@Test
@@ -116,7 +115,6 @@ public class NPRuleMatcherTest {
 		checkMatch("tlami", 5, 1, new int[] {3}, -1);
 		checkMatch("tlamin", 6, 2, new int[] {3, 5}, -1);
 		checkMatch("tlamlin", 7, 2, new int[] {3, 6}, -1);
-		checkMatch("tlam", 4, 0, new int[1], 3);
 
 		matcher.setCodasAllowed(false);
 		checkMatch("", 0, 0, new int[1], -1);
@@ -147,7 +145,6 @@ public class NPRuleMatcherTest {
 		checkMatch("tlabi", 5, 1, new int[] {0}, -1);
 		checkMatch("tlabit", 6, 1, new int[] {0}, -1);
 		checkMatch("tlablit", 7, 2, new int[] {0, 3}, -1);
-		checkMatch("tla", 3, 0, new int[1], 0);
 	}
 
 	@Test
@@ -158,15 +155,15 @@ public class NPRuleMatcherTest {
 		rule = augmentCodaRule.get();
 		checkMatch("", 0, 0, new int[1], -1);
 		checkMatch("t", 1, 0, new int[1], -1);
-		checkMatch("tly", 3, 2, new int[] {1, 2}, -1);
+		checkMatch("tly", 3, 0, new int[1], -1);
 		checkMatch("a", 1, 0, new int[1], -1);
 		checkMatch("ta", 2, 0, new int[1], -1);
-		checkMatch("tla", 3, 1, new int[] {1}, -1);
-		checkMatch("tlab", 4, 1, new int[] {1}, -1);
-		checkMatch("tlabi", 5, 1, new int[] {1}, -1);
-		checkMatch("tlabit", 6, 1, new int[] {1}, -1);
-		checkMatch("tlablit", 7, 2, new int[] {1, 4}, -1);
-		checkMatch("tlabl", 5, 1, new int[] {1}, 4);
+		checkMatch("tla", 3, 0, new int[1], -1);
+		checkMatch("tlam", 4, 0, new int[1], -1);
+		checkMatch("tlabi", 5, 0, new int[1], -1);
+		checkMatch("tlabit", 6, 0, new int[1], -1);
+		checkMatch("tlablit", 7, 0, new int[1], -1);
+		checkMatch("tlamn", 5, 1, new int[] {4}, 4);
 
 		matcher.setCodasAllowed(false);
 		checkMatch("", 0, 0, new int[1], -1);

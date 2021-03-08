@@ -103,7 +103,7 @@ public class NPRuleMatcher {
 		int iSegInSyl = 0;
 		for (NPSegmentInSyllable segInSyl : segmentsInWord) {
 			boolean segMatches = false;
-			if (segInSyl.getNode() != null) {
+			if (segInSyl.getSyllable() != null) {
 				// If it has a node, then it has been included in a syllable already;
 				// skip it.
 				iSegInSyl++;

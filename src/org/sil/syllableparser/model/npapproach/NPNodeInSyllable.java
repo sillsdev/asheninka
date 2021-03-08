@@ -17,6 +17,7 @@ public class NPNodeInSyllable {
 
 	private List<NPNodeInSyllable> nodes = new ArrayList<NPNodeInSyllable>();
 	private List<NPSegmentInSyllable> segments = new ArrayList<NPSegmentInSyllable>();
+	private NPNodeLevel level = NPNodeLevel.UNKNOWN;
 	
 	public NPNodeInSyllable() {
 	}
@@ -25,6 +26,10 @@ public class NPNodeInSyllable {
 		super();
 		this.nodes = nodes;
 		this.segments = segments;
+	}
+
+	public NPNodeInSyllable(NPNodeLevel level) {
+		this.level = level;
 	}
 
 	public List<NPNodeInSyllable> getNodes() {
@@ -43,4 +48,11 @@ public class NPNodeInSyllable {
 		this.segments = segments;
 	}
 
+	public NPNodeLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(NPNodeLevel level) {
+		this.level = level;
+	}
 }
