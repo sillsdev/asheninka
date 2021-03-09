@@ -412,18 +412,33 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		validator = NPRuleValidator.getInstance();
 		validator.setRule(currentRule);
 		validator.validate();
-		if (validator.isValid()) {
+		boolean firstRuleIsBuild = checkFirstRuleIsBuildAll();
+		if (validator.isValid() && firstRuleIsBuild) {
 			invalidRuleMessage.setVisible(false);
 			ruleLingTreeSVG.setVisible(true);
 			ruleTreeLabel.setVisible(true);
 			showRuleContent();
 		} else {
 			invalidRuleMessage.setVisible(true);
-			invalidRuleMessage.setText(bundle.getString(validator.getErrorMessageProperty()));
+			if (firstRuleIsBuild) {
+				invalidRuleMessage.setText(bundle.getString(validator.getErrorMessageProperty()));
+			}
 			ruleLingTreeSVG.setVisible(false);
 			ruleTreeLabel.setVisible(false);
 		}
-		currentRule.setIsValid(validator.isValid());
+		currentRule.setIsValid(validator.isValid() && !firstRuleIsBuild);
+	}
+
+	protected boolean checkFirstRuleIsBuildAll() {
+		if (npRulesTable.getItems().size() > 0) {
+			NPRule firstRule = npRulesTable.getItems().get(0);
+			if (firstRule.getRuleAction() != NPRuleAction.BUILD) {
+				String msg = bundle.getString("nprule.message.buildisfirst");
+				invalidRuleMessage.setText(msg);
+				return false;
+			}
+		}
+		return true;
 	}
 
 	protected void handleClickOnCheckBoxInTable(Object o) {
@@ -539,6 +554,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
 					+ npRulesTable.getItems().size() + " ");
 			mainApp.getApplicationPreferences().setLastNPRulesViewItemUsed(currentItem);
+			reportAnyValidationMessage();
 		}
 	}
 
@@ -742,6 +758,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		if ((i + 1) < npApproach.getNPRules().size()) {
 			Collections.swap(npApproach.getNPRules(), i, i + 1);
 		}
+		reportAnyValidationMessage();
 	}
 
 	@FXML
@@ -750,6 +767,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		if (i > 0) {
 			Collections.swap(npApproach.getNPRules(), i, i - 1);
 		}
+		reportAnyValidationMessage();
 	}
 
 	// code taken from
