@@ -295,13 +295,15 @@ public class NPSyllabifier implements Syllabifiable {
 	protected void addSegmentToSyllable(List<NPSegmentInSyllable> segmentsInWord,
 			NPRule rule, Integer i, int iContext) {
 		NPSyllable syl = segmentsInWord.get(iContext).getSyllable();
-		addSegmentToNode(segmentsInWord, rule, i, syl);
-		if (i < iContext) {
-			syl.getSegmentsInSyllable().add(0, segmentsInWord.get(i));
-		} else {
-			syl.getSegmentsInSyllable().add(segmentsInWord.get(i));
+		if (syl != null) {
+			addSegmentToNode(segmentsInWord, rule, i, syl);
+			if (i < iContext) {
+				syl.getSegmentsInSyllable().add(0, segmentsInWord.get(i));
+			} else {
+				syl.getSegmentsInSyllable().add(segmentsInWord.get(i));
+			}
+			segmentsInWord.get(i).setSyllable(syl);
 		}
-		segmentsInWord.get(i).setSyllable(syl);
 	}
 
 	protected boolean checkSonority(List<NPSegmentInSyllable> segmentsInWord, Integer iAffected, int iContext) {
