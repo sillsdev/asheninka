@@ -13,7 +13,7 @@ import java.util.List;
  *
  * Object value
  */
-public class NPNodeInSyllable {
+public class NPNodeInSyllable implements Cloneable {
 
 	private List<NPNodeInSyllable> nodes = new ArrayList<NPNodeInSyllable>();
 	private List<NPSegmentInSyllable> segments = new ArrayList<NPSegmentInSyllable>();
@@ -54,5 +54,16 @@ public class NPNodeInSyllable {
 
 	public void setLevel(NPNodeLevel level) {
 		this.level = level;
+	}
+
+	@Override
+	public NPNodeInSyllable clone() {
+		List<NPNodeInSyllable> nodesInSyllableNow = new ArrayList<NPNodeInSyllable>(getNodes().size());
+		for (NPNodeInSyllable node : getNodes()) {
+			nodesInSyllableNow.add(node.clone());
+		}
+		NPNodeInSyllable nis = new NPNodeInSyllable(nodesInSyllableNow, segments);
+		nis.setLevel(getLevel());
+		return nis;
 	}
 }

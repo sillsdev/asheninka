@@ -71,7 +71,7 @@ public class CVSegmenterTest {
 		String grapheme = activeGraphemes.get(0).getForm().trim();
 		assertEquals("First grapheme is /a/", "a", grapheme);
 		grapheme = activeGraphemes.get(53).getForm().trim();
-		assertEquals("Last grapheme is /ɲ/", "Ñ", grapheme);
+		assertEquals("Last grapheme is /z/", "Z", grapheme);
 		HashMap<String, List<Grapheme>> graphemes = segmenter.getGraphemeToSegmentMapping();
 		assertEquals("Hash map size is 54", 54, graphemes.size());
 	}

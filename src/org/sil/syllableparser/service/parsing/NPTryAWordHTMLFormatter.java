@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.Locale;
 
 import org.sil.syllableparser.model.LanguageProject;
+import org.sil.syllableparser.model.npapproach.NPSyllabificationStatus;
 import org.sil.syllableparser.model.npapproach.NPTraceInfo;
 import org.sil.syllableparser.model.npapproach.NPTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
+import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
 
 /**
  * @author Andy Black
@@ -59,7 +61,7 @@ public class NPTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			createSVGOfTree(sb, fSuccess);
 		}
 
-		sb.append("<p>" + formatDetailsStringWithColorWords("report.tawmoraicdetails") + "</p>\n");
+		sb.append("<p>" + formatDetailsStringWithColorWords("report.tawnpdetails") + "</p>\n");
 		sb.append("<div>");
 		List<NPTracingStep> tracingSteps = syllabifier.getTracingSteps();
 		formatNPSyllabificationDetails(sb, tracingSteps);
@@ -76,19 +78,12 @@ public class NPTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		sb.append("<table border='1'>\n");
 		sb.append("<tr valign='top'>");
 		sb.append("<th>");
-		sb.append(bundle.getString("report.tawshsegment1"));
-		sb.append("</th>\n");
-		sb.append("<th>");
-		sb.append(bundle.getString("report.tawshrelation"));
-		sb.append("</th>\n");
-		sb.append("<th>");
-		sb.append(bundle.getString("report.tawshsegment2"));
-		sb.append("</th>\n");
-		sb.append("<th>");
 		sb.append(bundle.getString("report.tawoncstatus"));
 		sb.append("</th>\n");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawnpinfo"));
+		sb.append("</th>\n");
 		sb.append("</tr>\n");
-		int i = 0;
 		for (NPTracingStep tracingStep : tracingSteps) {
 			tracingStep.setBundle(bundle);
 			if (tracingStep.comparisonResult == SHComparisonResult.MISSING1) {
@@ -103,50 +98,89 @@ public class NPTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 				rowStatus = FAILURE;
 			}
 			sb.append("<tr valign='top'>");
-			sb.append("<td>");
-			sb.append("<span class='");
-			sb.append(rowStatus);
-			sb.append("'>&#xa0;<span class='vernacular'>");
-			sb.append(tracingStep.getSegment1Result());
-			sb.append("</span> (<span class='analysis'>");
-			sb.append(tracingStep.getNaturalClass1Result());
-			sb.append("</span>)&#xa0;");
-			sb.append("</span>\n");
-			sb.append("</td>");
-
-			sb.append("<td align=\"center\">");
-			sb.append("<span class='");
-			if (tracingStep.comparisonResult == SHComparisonResult.MISSING1
-					|| tracingStep.comparisonResult == SHComparisonResult.MISSING2) {
-				sb.append(FAILURE);
-			} else {
-				sb.append(SUCCESS);
-			}
-			sb.append("'>");
-			sb.append(tracingStep.getComparisonResultAsString());
-			sb.append("</span>\n");
-			sb.append("</td>");
-
-			sb.append("<td>");
-			sb.append("<span class='");
-			sb.append(rowStatus);
-			sb.append("'>&#xa0;<span class='vernacular'>");
-			sb.append(tracingStep.getSegment2Result());
-			sb.append("</span> (<span class='analysis'>");
-			sb.append(tracingStep.getNaturalClass2Result());
-			sb.append("</span>)&#xa0;");
-			sb.append("</span>\n");
 			sb.append("<td class='");
 			sb.append(rowStatus);
+			if (tracingStep.getStatus() == NPSyllabificationStatus.APPLYING_RULE) {
+				sb.append("' colspan='2'");
+			}
 			sb.append("'>&#xa0;");
 			sb.append(tracingStep.getStatusLocalized());
 			sb.append("</td>");
-			sb.append("</tr>\n");
-			i++;
-			if (i < tracingSteps.size()) {
-				sb.append("<tr><td colspan=\"5\"/></td>\n");
+			if (tracingStep.getStatus() != NPSyllabificationStatus.APPLYING_RULE) {
+				sb.append("<td class='");
+				sb.append(rowStatus);
+				sb.append("'>");
+				if (tracingStep.getStatus() == NPSyllabificationStatus.SSP_FAILED
+						|| tracingStep.getStatus() == NPSyllabificationStatus.SSP_PASSED) {
+					formatSSPInfo(sb, rowStatus, tracingStep);
+				} else {
+					formatWordTreeInfo(sb, tracingStep);
+				}
+				sb.append("</td>");
 			}
 		}
+		sb.append("</table>\n");
+	}
+
+	protected void formatWordTreeInfo(StringBuilder sb, NPTracingStep tracingStep) {
+		NPSyllabifier syllabifier = traceInfo.getSyllabifier();
+		if (tracingStep.getSegmentsInWord() == null || tracingStep.getSegmentsInWord().size() == 0) {
+			sb.append(SHTracingStep.NULL_REPRESENTATION);
+		} else {
+			syllabifier.setSegmentsInWord(tracingStep.getSegmentsInWord());
+			setLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
+			createSVGOfTree(sb, tracingStep.isSuccessful());
+		}
+	}
+
+	protected void formatSSPInfo(StringBuilder sb, String rowStatus, NPTracingStep tracingStep) {
+		sb.append("<table border='1'>\n");
+		sb.append("<tr valign='top'>");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawshsegment1"));
+		sb.append("</th>\n");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawshrelation"));
+		sb.append("</th>\n");
+		sb.append("<th>");
+		sb.append(bundle.getString("report.tawshsegment2"));
+		sb.append("</th>\n");
+		sb.append("</tr>\n");
+		sb.append("<tr>\n");
+		sb.append("<td>");
+		sb.append("<span class='");
+		sb.append(rowStatus);
+		sb.append("'>&#xa0;<span class='vernacular'>");
+		sb.append(tracingStep.getSegment1Result());
+		sb.append("</span> (<span class='analysis'>");
+		sb.append(tracingStep.getNaturalClass1Result());
+		sb.append("</span>)&#xa0;");
+		sb.append("</span>\n");
+		sb.append("</td>");
+
+		sb.append("<td align=\"center\">");
+		sb.append("<span class='");
+		if (tracingStep.comparisonResult == SHComparisonResult.MISSING1
+				|| tracingStep.comparisonResult == SHComparisonResult.MISSING2) {
+			sb.append(FAILURE);
+		} else {
+			sb.append(SUCCESS);
+		}
+		sb.append("'>");
+		sb.append(tracingStep.getComparisonResultAsString());
+		sb.append("</span>\n");
+		sb.append("</td>");
+		sb.append("<td>");
+		sb.append("<span class='");
+		sb.append(rowStatus);
+		sb.append("'>&#xa0;<span class='vernacular'>");
+		sb.append(tracingStep.getSegment2Result());
+		sb.append("</span> (<span class='analysis'>");
+		sb.append(tracingStep.getNaturalClass2Result());
+		sb.append("</span>)&#xa0;");
+		sb.append("</span>\n");
+		sb.append("</td>");
+		sb.append("</tr>\n");
 		sb.append("</table>\n");
 	}
 }

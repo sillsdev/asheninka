@@ -9,11 +9,11 @@ package org.sil.syllableparser.view;
 import java.util.List;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.npapproach.NPApproach;
+import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
 import org.sil.syllableparser.model.npapproach.NPTraceInfo;
-import org.sil.syllableparser.service.parsing.CVSegmenter;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.NPSegmenter;
 import org.sil.syllableparser.service.parsing.NPSyllabifier;
 import org.sil.syllableparser.service.parsing.NPSyllabifierResult;
 import org.sil.syllableparser.service.parsing.NPTryAWordHTMLFormatter;
@@ -29,10 +29,10 @@ import javafx.fxml.FXML;
  */
 public class NPTryAWordController extends TryAWordController {
 
-	private NPApproach moraicApproach;
+	private NPApproach npApproach;
 
 	public void setData(NPApproach moraicApproachData) {
-		moraicApproach = moraicApproachData;
+		npApproach = moraicApproachData;
 	}
 
 	/**
@@ -64,13 +64,13 @@ public class NPTryAWordController extends TryAWordController {
 			@Override
 			public void handle(WorkerStateEvent event) {
 
-				CVSegmenter segmenter;
+				NPSegmenter segmenter;
 				NPSyllabifier syllabifier;
 
-				segmenter = new CVSegmenter(moraicApproach.getLanguageProject()
-						.getActiveGraphemes(), moraicApproach.getLanguageProject()
+				segmenter = new NPSegmenter(npApproach.getLanguageProject()
+						.getActiveGraphemes(), npApproach.getLanguageProject()
 						.getActiveGraphemeNaturalClasses());
-				syllabifier = new NPSyllabifier(moraicApproach);
+				syllabifier = new NPSyllabifier(npApproach);
 				NPTraceInfo traceInfo = new NPTraceInfo(sWordToTry, segmenter, syllabifier);
 
 				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
@@ -78,7 +78,7 @@ public class NPTryAWordController extends TryAWordController {
 				String sLingTreeDescription = "";
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
-					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					List<NPSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 						syllabifier.setDoTrace(true);
 						traceInfo.setSyllabifier(syllabifier);
 						fSuccess = syllabifier.syllabify(segmentsInWord);
@@ -88,7 +88,7 @@ public class NPTryAWordController extends TryAWordController {
 						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
 				}
 				NPTryAWordHTMLFormatter formatter = new NPTryAWordHTMLFormatter(traceInfo,
-						moraicApproach.getLanguageProject(), locale);
+						npApproach.getLanguageProject(), locale);
 				formatter.setLingTreeDescription(sLingTreeDescription);
 				String sResult = formatter.format();
 				webEngine.loadContent(sResult);

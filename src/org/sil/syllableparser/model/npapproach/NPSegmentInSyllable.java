@@ -12,7 +12,7 @@ import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
  * @author Andy Black
  *
  */
-public class NPSegmentInSyllable extends CVSegmentInSyllable {
+public class NPSegmentInSyllable extends CVSegmentInSyllable implements Cloneable {
 	NPNodeInSyllable node = null;
 	NPSyllable syllable = null;
 
@@ -34,5 +34,15 @@ public class NPSegmentInSyllable extends CVSegmentInSyllable {
 
 	public void setSyllable(NPSyllable syllable) {
 		this.syllable = syllable;
+	}
+
+	@Override
+	public NPSegmentInSyllable clone() {
+		NPSegmentInSyllable sis = new NPSegmentInSyllable(segment, grapheme);
+		if (node != null)
+			sis.setNode(node.clone());
+		if (syllable != null)
+			sis.setSyllable(syllable.clone());
+		return sis;
 	}
 }

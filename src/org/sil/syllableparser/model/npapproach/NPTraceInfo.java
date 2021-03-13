@@ -9,7 +9,7 @@
 package org.sil.syllableparser.model.npapproach;
 
 import org.sil.syllableparser.model.TraceInfo;
-import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.NPSegmenter;
 import org.sil.syllableparser.service.parsing.NPSyllabifier;
 import org.sil.syllableparser.service.parsing.NPSyllabifierResult;
 
@@ -23,7 +23,7 @@ public class NPTraceInfo extends TraceInfo {
 		this.sWord = sWord;
 	}
 
-	public NPTraceInfo(String sWord, CVSegmenter segmenter, NPSyllabifier syllabifier2) {
+	public NPTraceInfo(String sWord, NPSegmenter segmenter, NPSyllabifier syllabifier2) {
 		super(sWord, segmenter);
 		this.syllabifier = syllabifier2;
 	}

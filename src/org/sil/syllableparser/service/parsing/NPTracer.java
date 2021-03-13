@@ -8,9 +8,12 @@ package org.sil.syllableparser.service.parsing;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.TemplateFilter;
-import org.sil.syllableparser.model.moraicapproach.MoraicSyllabificationStatus;
+import org.sil.syllableparser.model.npapproach.NPRule;
+import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
+import org.sil.syllableparser.model.npapproach.NPSyllabificationStatus;
+import org.sil.syllableparser.model.npapproach.NPSyllable;
 import org.sil.syllableparser.model.npapproach.NPTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
@@ -63,16 +66,16 @@ public class NPTracer {
 		tracingSteps.clear();
 	}
 
-	public void initStep(MoraicSyllabificationStatus status, TemplateFilter filter) {
+	public void initStep(NPSyllabificationStatus status, Filter filter) {
 		if (tracing) {
 			tracingStep.setStatus(status);
-			tracingStep.setTemplateFilterUsed(filter);
+			tracingStep.setFilterUsed(filter);
 			tracingStep.setSuccessful(false);
 		}
 	}
 
 	public void initStep(Segment seg1, SHNaturalClass nc1, Segment seg2, SHNaturalClass nc2,
-			SHComparisonResult result, MoraicSyllabificationStatus status) {
+			SHComparisonResult result, NPSyllabificationStatus status) {
 		if (tracing) {
 			tracingStep.setSegment1(seg1);
 			tracingStep.setNaturalClass1(nc1);
@@ -80,6 +83,12 @@ public class NPTracer {
 			tracingStep.setNaturalClass2(nc2);
 			tracingStep.setComparisonResult(result);
 			tracingStep.setStatus(status);
+		}
+	}
+
+	public void setRule(NPRule rule) {
+		if (tracing) {
+			tracingStep.setRule(rule);
 		}
 	}
 
@@ -95,9 +104,54 @@ public class NPTracer {
 		}
 	}
 
-	public void setStatus(MoraicSyllabificationStatus status) {
+	public void setNaturalClass1(SHNaturalClass cls) {
+		if (tracing) {
+			tracingStep.setNaturalClass1(cls);
+		}
+	}
+
+	public void setNaturalClass2(SHNaturalClass cls) {
+		if (tracing) {
+			tracingStep.setNaturalClass2(cls);
+		}
+	}
+
+	public void setSHComparisonResult(SHComparisonResult result) {
+		if (tracing) {
+			tracingStep.setComparisonResult(result);
+		}
+	}
+
+	public void setSegmentsInWord(List<NPSegmentInSyllable> segmentsInWord) {
+		if (tracing) {
+			List<NPSegmentInSyllable> segsInWordNow = new ArrayList<NPSegmentInSyllable>(segmentsInWord.size());
+			NPSyllable currentSyl = null;
+			NPSyllable lastNewSyl = null;
+			NPSyllable lastCurrentSyl = null;
+			for (NPSegmentInSyllable sis : segmentsInWord) {
+				currentSyl = sis.getSyllable();
+				NPSegmentInSyllable sisNow = sis.clone();
+				if (lastCurrentSyl != currentSyl) {
+					lastCurrentSyl = currentSyl;
+					lastNewSyl = sisNow.getSyllable();
+				} else {
+					sisNow.setSyllable(lastNewSyl);
+				}
+				segsInWordNow.add(sisNow);
+			}
+			tracingStep.setSegmentsInWord(segsInWordNow);
+		}
+	}
+
+	public void setStatus(NPSyllabificationStatus status) {
 		if (tracing) {
 			tracingStep.setStatus(status);
+		}
+	}
+
+	public void setSyllable(NPSyllable syl) {
+		if (tracing) {
+			tracingStep.setSyllable(syl);
 		}
 	}
 
@@ -107,9 +161,9 @@ public class NPTracer {
 		}
 	}
 
-	public void setTemplateFilterUsed(TemplateFilter tf) {
+	public void setFilterUsed(Filter tf) {
 		if (tracing) {
-			tracingStep.setTemplateFilterUsed(tf);;
+			tracingStep.setFilterUsed(tf);;
 		}
 	}
 

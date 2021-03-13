@@ -426,7 +426,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			ruleLingTreeSVG.setVisible(false);
 			ruleTreeLabel.setVisible(false);
 		}
-		currentRule.setIsValid(validator.isValid() && !firstRuleIsBuild);
+		currentRule.setIsValid(validator.isValid() && firstRuleIsBuild);
 	}
 
 	protected boolean checkFirstRuleIsBuildAll() {

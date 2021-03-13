@@ -13,10 +13,10 @@ import java.util.List;
  *
  * Object value
  */
-public class NPSyllable {
+public class NPSyllable implements Cloneable {
 
 	private List<NPSegmentInSyllable> segmentsInSyllable = new ArrayList<NPSegmentInSyllable>();
-	private NPNodeInSyllable node;
+	private NPNodeInSyllable node = null;
 
 	public NPSyllable(List<NPSegmentInSyllable> segmentsInSyllable, NPNodeInSyllable node) {
 		super();
@@ -34,5 +34,15 @@ public class NPSyllable {
 	}
 	public void setNode(NPNodeInSyllable node) {
 		this.node = node;
+	}
+
+	@Override
+	public NPSyllable clone() {
+		NPSyllable sylNow;
+		if (node != null)
+			sylNow = new NPSyllable(segmentsInSyllable, node.clone());
+		else
+			sylNow = new NPSyllable(segmentsInSyllable, null);
+		return sylNow;
 	}
 }

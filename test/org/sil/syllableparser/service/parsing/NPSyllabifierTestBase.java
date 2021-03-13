@@ -27,7 +27,6 @@ import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
 import org.sil.syllableparser.model.npapproach.NPSyllable;
 import org.sil.syllableparser.model.npapproach.NPTracingStep;
 import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
-import org.sil.syllableparser.model.oncapproach.ONCTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -107,32 +106,29 @@ public class NPSyllabifierTestBase {
 						npSyllabifier.getLingTreeDescriptionOfCurrentWord());
 			}
 
-	protected void checkTracingStep(NPTracingStep tracingStep, String seg1, String nc1, String seg2,
-			String nc2, SHComparisonResult result, ONCSyllabifierState oncState, ONCSyllabificationStatus status, boolean success) {
-//				if (seg1 == null) {
-//					assertNull(tracingStep.getSegment1());
-//				} else {
-//					assertEquals(seg1, tracingStep.getSegment1().getSegment());
-//				}
-//				if (nc1 == null) {
-//					assertNull(tracingStep.getNaturalClass1());
-//				} else {
-//					assertEquals(nc1, tracingStep.getNaturalClass1().getNCName());
-//				}
-//				if (seg2 == null) {
-//					assertNull(tracingStep.getSegment2());
-//				} else {
-//					assertEquals(seg2, tracingStep.getSegment2().getSegment());
-//				}
-//				if (nc2 == null) {
-//					assertNull(tracingStep.getNaturalClass2());
-//				} else {
-//					assertEquals(nc2, tracingStep.getNaturalClass2().getNCName());
-//				}
-//				assertEquals(result, tracingStep.comparisonResult);
-//				assertEquals(oncState, tracingStep.getOncState());
-//				assertEquals(status, tracingStep.getStatus());
-//				assertEquals(success, tracingStep.isSuccessful());
+	protected void checkSSPTracingStep(NPTracingStep tracingStep, String seg1, String nc1, String seg2,
+			String nc2, SHComparisonResult result) {
+				if (seg1 == null) {
+					assertNull(tracingStep.getSegment1());
+				} else {
+					assertEquals(seg1, tracingStep.getSegment1().getSegment());
+				}
+				if (nc1 == null) {
+					assertNull(tracingStep.getNaturalClass1());
+				} else {
+					assertEquals(nc1, tracingStep.getNaturalClass1().getNCName());
+				}
+				if (seg2 == null) {
+					assertNull(tracingStep.getSegment2());
+				} else {
+					assertEquals(seg2, tracingStep.getSegment2().getSegment());
+				}
+				if (nc2 == null) {
+					assertNull(tracingStep.getNaturalClass2());
+				} else {
+					assertEquals(nc2, tracingStep.getNaturalClass2().getNCName());
+				}
+				assertEquals(result, tracingStep.comparisonResult);
 			}
 
 }

@@ -122,7 +122,7 @@ public class SHSonorityComparerTest {
 		result = sonorityComparer.compare(segmentD, segmentL);
 		assertEquals(SHComparisonResult.LESS, result);
 
-		Segment segmentR = segmentInventory.get(15);
+		Segment segmentR = segmentInventory.get(16);
 		assertEquals("r", segmentR.getSegment());
 		result = sonorityComparer.compare(segmentR, segmentL);
 		assertEquals(SHComparisonResult.EQUAL, result);
@@ -151,7 +151,7 @@ public class SHSonorityComparerTest {
 		result = sonorityComparer.compare(segmentM, segmentN);
 		assertEquals(SHComparisonResult.EQUAL, result);
 
-		Segment segmentW = segmentInventory.get(21);
+		Segment segmentW = segmentInventory.get(22);
 		assertEquals("w", segmentW.getSegment());
 		result = sonorityComparer.compare(segmentW, segmentA);
 		assertEquals(SHComparisonResult.LESS, result);
@@ -170,7 +170,7 @@ public class SHSonorityComparerTest {
 		result = sonorityComparer.compare(segmentD, segmentW);
 		assertEquals(SHComparisonResult.LESS, result);
 
-		Segment segmentY = segmentInventory.get(23);
+		Segment segmentY = segmentInventory.get(24);
 		assertEquals("y", segmentY.getSegment());
 		result = sonorityComparer.compare(segmentY, segmentW);
 		assertEquals(SHComparisonResult.EQUAL, result);
@@ -190,11 +190,11 @@ public class SHSonorityComparerTest {
 		checkLevel(segmentInventory.get(2), "ch", 4);
 		checkLevel(segmentInventory.get(4), "e", 0);
 		checkLevel(segmentInventory.get(10), "l", 2);
-		checkLevel(segmentInventory.get(15), "r", 2);
+		checkLevel(segmentInventory.get(16), "r", 2);
 		checkLevel(segmentInventory.get(11), "m", 3);
 		checkLevel(segmentInventory.get(12), "n", 3);
-		checkLevel(segmentInventory.get(21), "w", 1);
-		checkLevel(segmentInventory.get(23), "y", 1);
+		checkLevel(segmentInventory.get(22), "w", 1);
+		checkLevel(segmentInventory.get(24), "y", 1);
 	}
 
 	private void checkLevel(Segment segment, String form, int expectedLevel) {

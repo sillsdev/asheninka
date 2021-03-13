@@ -23,10 +23,10 @@ import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPRuleAction;
 import org.sil.syllableparser.model.npapproach.NPRuleLevel;
 import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
+import org.sil.syllableparser.model.npapproach.NPSyllabificationStatus;
 import org.sil.syllableparser.model.npapproach.NPSyllable;
 import org.sil.syllableparser.model.npapproach.NPTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.service.NPRuleMatcher;
 
 /**
@@ -44,11 +44,10 @@ public class NPSyllabifier implements Syllabifiable {
 	NPTracer tracer = null;
 	private boolean fDoTrace = false;
 	private OnsetPrincipleType onsetType = OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET;
-	private List<NPTracingStep> syllabifierTraceInfoList = new ArrayList<NPTracingStep>();
 
 	LinkedList<NPSyllable> syllablesInCurrentWord = new LinkedList<NPSyllable>(
 			Arrays.asList(new NPSyllable(null, null)));
-	List<NPSegmentInSyllable> segmentsInWord;
+	List<NPSegmentInSyllable> segmentsInWord = new ArrayList<NPSegmentInSyllable>();
 	String sSyllabifiedWord;
 	String sLevelNDoubleBar = "N''";
 	String sLevelNBar = "N'";
@@ -73,11 +72,8 @@ public class NPSyllabifier implements Syllabifiable {
 		this.syllablesInCurrentWord = syllablesInCurrentWord;
 	}
 
-	public List<NPTracingStep> getSyllabifierTraceInfo() {
-		return syllabifierTraceInfoList;
-	}
-
 	public List<NPTracingStep> getTracingSteps() {
+		tracer = NPTracer.getInstance();
 		return tracer.getTracingSteps();
 	}
 
@@ -119,9 +115,12 @@ public class NPSyllabifier implements Syllabifiable {
 		this.sLevelN = sLevelN;
 	}
 
+	public void setSegmentsInWord(List<NPSegmentInSyllable> segmentsInWord) {
+		this.segmentsInWord = segmentsInWord;
+	}
+
 	public boolean convertStringToSyllables(String word) {
 		syllablesInCurrentWord.clear();
-		syllabifierTraceInfoList.clear();
 		boolean fSuccess = false;
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		fSuccess = segResult.success;
@@ -142,9 +141,10 @@ public class NPSyllabifier implements Syllabifiable {
 
 	public boolean syllabify(List<NPSegmentInSyllable> segsInWord) {
 		syllablesInCurrentWord.clear();
-		syllabifierTraceInfoList.clear();
 		this.segmentsInWord = segsInWord;
-		NPTracingStep traceInfo = null;
+		tracer = NPTracer.getInstance();
+		tracer.resetSteps();
+		tracer.setTracing(fDoTrace);
 		int segmentCount = segmentsInWord.size();
 		if (segmentCount == 0) {
 			return false;
@@ -153,8 +153,17 @@ public class NPSyllabifier implements Syllabifiable {
 		matcher.setLanguageProject(languageProject);
 		List<Integer> matches;
 		for (NPRule rule : npApproach.getValidActiveNPRules()) {
+			if (fDoTrace) {
+				tracer.setStatus(NPSyllabificationStatus.APPLYING_RULE);
+				tracer.setRule(rule);
+				tracer.recordStep();
+			}
 			matches = matcher.match(rule, segmentsInWord);
 			if (matches.size() == 0) {
+				if (fDoTrace) {
+					tracer.setStatus(NPSyllabificationStatus.NO_SEGMENTS_MATCHED_RULE);
+					tracer.recordStep();
+				}
 				continue;
 			}
 			if (matches.size() > 1 && (rule.getRuleAction() == NPRuleAction.LEFT_ADJOIN
@@ -171,9 +180,16 @@ public class NPSyllabifier implements Syllabifiable {
 					if (rule.getRuleLevel() != NPRuleLevel.N_DOUBLE_BAR) {
 						iContext = i - 1;
 					}
-					if (rule.isObeysSSP() && !checkSonority(segmentsInWord, i, iContext)) {
-						// TODO: report in trace
+					if (!rule.isObeysSSP()) {
+						tracer.setStatus(NPSyllabificationStatus.RULE_IGNORES_SSP);
+						tracer.recordStep();
+					} else if (!checkSonority(segmentsInWord, i, iContext)) {
+						tracer.setStatus(NPSyllabificationStatus.SSP_FAILED);
+						tracer.recordStep();
 						continue;
+					} else {
+						tracer.setStatus(NPSyllabificationStatus.SSP_PASSED);
+						tracer.recordStep();
 					}
 					addSegmentToSyllable(segmentsInWord, rule, i, iContext);
 				}
@@ -190,87 +206,32 @@ public class NPSyllabifier implements Syllabifiable {
 				
 			}
 		}
-//		NPSyllable syl = new NPSyllable(new ArrayList<NPSegmentInSyllable>(), new NPNodeInSyllable());
-//		syl.getSegmentsInSyllable().add(segmentsInWord.get(0));
-//		Segment seg1 = segmentsInWord.get(0).getSegment();
-//		SHNaturalClass natClass = npApproach.getNaturalClassContainingSegment(seg1);
-//		if (natClass == null) {
-//			if (fDoTrace) {
-//				traceInfo = new NPTracingStep(seg1, null, null, null, SHComparisonResult.MISSING1);
-//				syllabifierTraceInfoList.add(traceInfo);
-//			}
-//			return false;
-//		}
-//		int i = 1;
-//		while (i < segmentCount) {
-//			seg1 = segmentsInWord.get(i - 1).getSegment();
-//			Segment seg2 = segmentsInWord.get(i).getSegment();
-//			SHComparisonResult result = sonorityComparer.compare(seg1, seg2);
-//			if (fDoTrace) {
-//				traceInfo = new NPTracingStep(seg1,
-//						npApproach.getNaturalClassContainingSegment(seg1), seg2,
-//						npApproach.getNaturalClassContainingSegment(seg2), result);
-//				if (fLastStartedSyllable) {
-//					traceInfo.startsSyllable = true;
-//					fLastStartedSyllable = false;
-//				}
-//				syllabifierTraceInfoList.add(traceInfo);
-//			}
-//			if (result == SHComparisonResult.MORE) {
-//				int j = i + 1;
-//				if (j < segmentCount) {
-//					Segment seg3 = segmentsInWord.get(j).getSegment();
-//					result = sonorityComparer.compare(seg2, seg3);
-//					if (result == SHComparisonResult.EQUAL || result == SHComparisonResult.MORE) {
-//						syl.add(segmentsInWord.get(i));
-//						i++;
-//						if (fDoTrace) {
-//							traceInfo = new SHTracingStep(seg2,
-//									npApproach.getNaturalClassContainingSegment(seg2), seg3,
-//									npApproach.getNaturalClassContainingSegment(seg3), result);
-//							syllabifierTraceInfoList.add(traceInfo);
-//						}
-//					}
-//					syl = endThisSyllableStartNew(segmentsInWord, syl, i);
-//					fLastStartedSyllable = true;
-//				} else {
-//					syl.add(segmentsInWord.get(i));
-//				}
-//			} else if (result == SHComparisonResult.LESS) {
-//				syl.add(segmentsInWord.get(i));
-//			} else if (result == SHComparisonResult.EQUAL) {
-//				syl = endThisSyllableStartNew(segmentsInWord, syl, i);
-//				fLastStartedSyllable = true;
-//			} else {
-//				return false;
-//			}
-//			i++;
-//		}
-//		if (syl.getSegmentsInSyllable().size() > 0) {
-//			syllablesInCurrentWord.add(syl);
-//			if (fDoTrace && fLastStartedSyllable) {
-//				Segment seg = segmentsInWord.get(segmentCount -1).getSegment();
-//				traceInfo = new SHTracingStep(seg,
-//						npApproach.getNaturalClassContainingSegment(seg), null,
-//						null, null);
-//				traceInfo.startsSyllable = true;
-//				syllabifierTraceInfoList.add(traceInfo);
-//			}
-//		}
 		for (NPSegmentInSyllable seg : segmentsInWord) {
 			if (seg.getSyllable() == null) {
 				// not every segment was processed
+				if (fDoTrace) {
+					tracer.setStatus(NPSyllabificationStatus.SOME_SEGMENTS_NOT_SYLLABIFIED);
+					tracer.recordStep();
+				}
 				return false;
 			}
 		}
 		switch (onsetType) {
 		case ALL_BUT_FIRST_HAS_ONSET:
 			if (!foundRequiredOnsets(1)) {
+				if (fDoTrace) {
+					tracer.setStatus(NPSyllabificationStatus.ONSET_REQUIRED_IN_ALL_BUT_FIRST_SYLLABLE_BUT_SOME_NONINITIAL_SYLLABLE_DOES_NOT_HAVE_AN_ONSET);
+					tracer.recordStep();
+				}
 				return false;				
 			}
 			break;
 		case EVERY_SYLLABLE_HAS_ONSET:
 			if (!foundRequiredOnsets(0)) {
+				if (fDoTrace) {
+					tracer.setStatus(NPSyllabificationStatus.ONSET_REQUIRED_IN_EVERY_SYLLABLE_BUT_SOME_SYLLABLE_DOES_NOT_HAVE_AN_ONSET);
+					tracer.recordStep();
+				}
 				return false;				
 			}
 			break;
@@ -299,10 +260,19 @@ public class NPSyllabifier implements Syllabifiable {
 			addSegmentToNode(segmentsInWord, rule, i, syl);
 			if (i < iContext) {
 				syl.getSegmentsInSyllable().add(0, segmentsInWord.get(i));
+				segmentsInWord.get(i).setSyllable(syl);
+				if (fDoTrace) {
+					tracer.setStatus(NPSyllabificationStatus.PREPENDED_SEGMENT_TO_SYLLABLE);
+					rememberSyllabificationStateInTracer(segmentsInWord, syl, i);
+				}
 			} else {
 				syl.getSegmentsInSyllable().add(segmentsInWord.get(i));
+				segmentsInWord.get(i).setSyllable(syl);
+				if (fDoTrace) {
+					tracer.setStatus(NPSyllabificationStatus.APPENDED_SEGMENT_TO_SYLLABLE);
+					rememberSyllabificationStateInTracer(segmentsInWord, syl, i);
+				}
 			}
-			segmentsInWord.get(i).setSyllable(syl);
 		}
 	}
 
@@ -310,12 +280,21 @@ public class NPSyllabifier implements Syllabifiable {
 		Segment seg1 = segmentsInWord.get(iContext).getSegment();
 		Segment seg2 = segmentsInWord.get(iAffected).getSegment();
 		SHComparisonResult result = sonorityComparer.compare(seg1, seg2);
-//						if (fDoTrace) {
-//							traceInfo = new NPTracingStep(seg1,
-//									npApproach.getNaturalClassContainingSegment(seg1), seg2,
-//									npApproach.getNaturalClassContainingSegment(seg2), result);
-//							syllabifierTraceInfoList.add(traceInfo);
-//						}
+		if (fDoTrace) {
+			if (iAffected < iContext) {
+				tracer.setSegment1(seg2);
+				tracer.setNaturalClass1(npApproach.getNaturalClassContainingSegment(seg2));
+				tracer.setSegment2(seg1);
+				tracer.setNaturalClass2(npApproach.getNaturalClassContainingSegment(seg1));
+				tracer.setSHComparisonResult(sonorityComparer.compare(seg2, seg1));
+			} else {
+				tracer.setSegment1(seg1);
+				tracer.setNaturalClass1(npApproach.getNaturalClassContainingSegment(seg1));
+				tracer.setSegment2(seg2);
+				tracer.setNaturalClass2(npApproach.getNaturalClassContainingSegment(seg2));
+				tracer.setSHComparisonResult(result);
+			}
+		}
 		return result == SHComparisonResult.MORE;
 	}
 
@@ -370,7 +349,18 @@ public class NPSyllabifier implements Syllabifiable {
 			NPSyllable syl = new NPSyllable(syllableSegments, nodeNDoubleBar);
 			segmentsInWord.get(i).setSyllable(syl);
 			syllablesInCurrentWord.add(syl);
+			if (fDoTrace) {
+				tracer.setStatus(NPSyllabificationStatus.BUILT_ALL_NODES);
+				rememberSyllabificationStateInTracer(segmentsInWord, syl, i);
+			}
 		}
+	}
+
+	protected void rememberSyllabificationStateInTracer(List<NPSegmentInSyllable> segmentsInWord,
+			NPSyllable syl, int i) {
+		tracer.setSegmentsInWord(segmentsInWord);
+		tracer.setSegment1(segmentsInWord.get(i).getSegment());
+		tracer.recordStep();
 	}
 
 	protected NPNodeInSyllable findNodeAtLevel(NPNodeInSyllable node, NPNodeLevel level) {
@@ -385,14 +375,6 @@ public class NPSyllabifier implements Syllabifiable {
 		}
 		return null;
 	}
-
-//	protected SHSyllable endThisSyllableStartNew(
-//			List<? extends CVSegmentInSyllable> segmentsInWord, SHSyllable syl, int i) {
-//		syllablesInCurrentWord.add(syl);
-//		syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
-//		syl.add(segmentsInWord.get(i));
-//		return syl;
-//	}
 
 	public String getSyllabificationOfCurrentWord() {
 		StringBuilder sb = new StringBuilder();
@@ -476,34 +458,4 @@ public class NPSyllabifier implements Syllabifiable {
 			sb.append("))");
 		}
 	}
-
-	public String getNaturalClassesInCurrentWord() {
-		StringBuilder sb = new StringBuilder();
-		int iSize = syllabifierTraceInfoList.size();
-		for (int i = 0; i < iSize; i++) {
-			NPTracingStep info = syllabifierTraceInfoList.get(i);
-			if (i > 0) {
-				sb.append(", ");
-			}
-			sb.append(getNCName(info.naturalClass1));
-			if (i == iSize - 1) {
-				sb.append(", ");
-				sb.append(getNCName(info.naturalClass2));
-			}
-		}
-		return sb.toString();
-	}
-
-	private String getNCName(SHNaturalClass natClass) {
-		if (natClass == null) {
-			return "null";
-		} else {
-			return natClass.getNCName();
-		}
-	}
-
-//	public String getSonorityValuesInCurrentWord() {
-//		return syllabifierTraceInfoList.stream().map(NPTracingStep::getComparisonResult)
-//				.collect(Collectors.joining(", "));
-//	}
 }
