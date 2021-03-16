@@ -138,8 +138,14 @@ public class NPTracingStep {
 		case APPENDED_SEGMENT_TO_SYLLABLE:
 		case APPLYING_RULE:
 		case BUILT_ALL_NODES:
+		case LEFT_ADJOINED_SEGMENT_TO_N_BAR_NODE:
+		case LEFT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE:
+		case LEFT_ADJOINED_SEGMENT_TO_N_NODE:
 		case NO_SEGMENTS_MATCHED_RULE:
 		case PREPENDED_SEGMENT_TO_SYLLABLE:
+		case RIGHT_ADJOINED_SEGMENT_TO_N_BAR_NODE:
+		case RIGHT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE:
+		case RIGHT_ADJOINED_SEGMENT_TO_N_NODE:
 		case RULE_IGNORES_SSP:
 		case SSP_PASSED:
 		case SUCCESS:
@@ -227,6 +233,15 @@ public class NPTracingStep {
 		case FILTER_FAILED:
 			result = bundle.getString("label.npstifilterfailed");
 			break;
+		case LEFT_ADJOINED_SEGMENT_TO_N_BAR_NODE:
+			result = addSegment1ToStatus(bundle.getString("label.npstileftadjoinedsegmenttonbarnode"));
+			break;
+		case LEFT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE:
+			result = addSegment1ToStatus(bundle.getString("label.npstileftadjoinedsegmenttondoublebarnode"));
+			break;
+		case LEFT_ADJOINED_SEGMENT_TO_N_NODE:
+			result = addSegment1ToStatus(bundle.getString("label.npstileftadjoinedsegmenttonnode"));
+			break;
 		case NATURAL_CLASS_NOT_FOUND_FOR_SEGMENT:
 			result = bundle.getString("label.oncstinaturalclassnotfoundforsegment");
 			break;
@@ -244,6 +259,15 @@ public class NPTracingStep {
 			break;
 		case PREPENDED_SEGMENT_TO_SYLLABLE:
 			result = addSegment1ToStatus(bundle.getString("label.npstiprependedsegmenttosyllable"));
+			break;
+		case RIGHT_ADJOINED_SEGMENT_TO_N_BAR_NODE:
+			result = addSegment1ToStatus(bundle.getString("label.npstirightadjoinedsegmenttonbarnode"));
+			break;
+		case RIGHT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE:
+			result = addSegment1ToStatus(bundle.getString("label.npstirightadjoinedsegmenttondoublebarnode"));
+			break;
+		case RIGHT_ADJOINED_SEGMENT_TO_N_NODE:
+			result = addSegment1ToStatus(bundle.getString("label.npstirightadjoinedsegmenttonnode"));
 			break;
 		case RULE_IGNORES_SSP:
 			result = bundle.getString("label.npstiruleignoresssp");

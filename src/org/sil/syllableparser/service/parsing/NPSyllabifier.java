@@ -198,8 +198,16 @@ public class NPSyllabifier implements Syllabifiable {
 				buildNucleus(segmentsInWord, matches);
 				break;
 			case LEFT_ADJOIN:
+				for (Integer i : matches) {
+					int iContext = i + 1;
+					applyAdjunctionRule(rule, i, iContext);
+				}
 				break;
 			case RIGHT_ADJOIN:
+				for (Integer i : matches) {
+					int iContext = i - 1;
+					applyAdjunctionRule(rule, i, iContext);
+				}
 				break;
 			default:
 				break;
@@ -240,6 +248,110 @@ public class NPSyllabifier implements Syllabifiable {
 			break;
 		}
 		return true;
+	}
+
+	protected void applyAdjunctionRule(NPRule rule, Integer i, int iContext) {
+		if (!rule.isObeysSSP()) {
+			tracer.setStatus(NPSyllabificationStatus.RULE_IGNORES_SSP);
+			tracer.recordStep();
+		} else if (!checkSonority(segmentsInWord, i, iContext)) {
+			tracer.setStatus(NPSyllabificationStatus.SSP_FAILED);
+			tracer.recordStep();
+		} else {
+			tracer.setStatus(NPSyllabificationStatus.SSP_PASSED);
+			tracer.recordStep();
+		}
+		NPSyllable syl = segmentsInWord.get(iContext).getSyllable();
+		if (syl != null) {
+			NPNodeLevel level = getNodeLevelFromRuleLevel(rule);
+			NPNodeInSyllable node = findNodeAtLevel(syl.getNode(), level);
+			if (node != null) {
+				NPNodeInSyllable newNodeAdjunct = new NPNodeInSyllable(level);
+				NPNodeInSyllable newNodeOrig = new NPNodeInSyllable(level);
+				List<NPNodeInSyllable> cloneOfNodes = new ArrayList<NPNodeInSyllable>();
+				for (NPNodeInSyllable nis : node.getNodes()) {
+					cloneOfNodes.add(nis.clone());
+				}
+				newNodeOrig.setNodes(cloneOfNodes);
+				NPNodeInSyllable terminal = new NPNodeInSyllable(NPNodeLevel.TERMINAL);
+				terminal.getSegments().add(segmentsInWord.get(i));
+				newNodeAdjunct.getNodes().add(terminal);
+				node.getNodes().clear();
+				segmentsInWord.get(i).setSyllable(syl);
+				if (rule.getRuleAction() == NPRuleAction.LEFT_ADJOIN) {
+					node.getNodes().add(newNodeAdjunct);
+					node.getNodes().add(newNodeOrig);
+					syl.getSegmentsInSyllable().add(0, segmentsInWord.get(i));
+				} else {
+					node.getNodes().add(newNodeOrig);
+					node.getNodes().add(newNodeAdjunct);
+					syl.getSegmentsInSyllable().add(segmentsInWord.get(i));
+				}
+				if (fDoTrace) {
+					tracer.setStatus(getAdjunctionStatus(rule));
+					rememberSyllabificationStateInTracer(segmentsInWord, syl, i);
+				}
+			}
+		}
+	}
+
+	protected NPSyllabificationStatus getAdjunctionStatus(NPRule rule) {
+		NPSyllabificationStatus status = NPSyllabificationStatus.UNKNOWN;
+		switch (rule.getRuleAction()) {
+		case LEFT_ADJOIN:
+			switch (rule.getRuleLevel()) {
+			case N:
+				status = NPSyllabificationStatus.LEFT_ADJOINED_SEGMENT_TO_N_NODE;
+				break;
+			case N_BAR:
+				status = NPSyllabificationStatus.LEFT_ADJOINED_SEGMENT_TO_N_BAR_NODE;
+				break;
+			case N_DOUBLE_BAR:
+				status = NPSyllabificationStatus.LEFT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE;
+				break;
+			default:
+				break;
+			}
+			break;
+		case RIGHT_ADJOIN:
+			switch (rule.getRuleLevel()) {
+			case N:
+				status = NPSyllabificationStatus.RIGHT_ADJOINED_SEGMENT_TO_N_NODE;
+				break;
+			case N_BAR:
+				status = NPSyllabificationStatus.RIGHT_ADJOINED_SEGMENT_TO_N_BAR_NODE;
+				break;
+			case N_DOUBLE_BAR:
+				status = NPSyllabificationStatus.RIGHT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE;
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		return status;
+	}
+
+	protected NPNodeLevel getNodeLevelFromRuleLevel(NPRule rule) {
+		NPNodeLevel level = NPNodeLevel.UNKNOWN;
+		switch (rule.getRuleLevel()) {
+		case ALL:
+			break;
+		case N:
+			level = NPNodeLevel.N;
+			break;
+		case N_BAR:
+			level = NPNodeLevel.N_BAR;
+			break;
+		case N_DOUBLE_BAR:
+			level = NPNodeLevel.N_DOUBLE_BAR;
+			break;
+		default:
+			break;
+		}
+		return level;
 	}
 
 	protected boolean foundRequiredOnsets(int initialSegment) {
@@ -300,22 +412,7 @@ public class NPSyllabifier implements Syllabifiable {
 
 	protected void addSegmentToNode(List<NPSegmentInSyllable> segmentsInWord, NPRule rule,
 			Integer i, NPSyllable syl) {
-		NPNodeLevel level = NPNodeLevel.UNKNOWN;
-		switch (rule.getRuleLevel()) {
-		case ALL:
-			break;
-		case N:
-			level = NPNodeLevel.N;
-			break;
-		case N_BAR:
-			level = NPNodeLevel.N_BAR;
-			break;
-		case N_DOUBLE_BAR:
-			level = NPNodeLevel.N_DOUBLE_BAR;
-			break;
-		default:
-			break;
-		}
+		NPNodeLevel level = getNodeLevelFromRuleLevel(rule);
 		NPNodeInSyllable node = findNodeAtLevel(syl.getNode(), level);
 		if (node != null) {
 			NPNodeInSyllable terminal = new NPNodeInSyllable(NPNodeLevel.TERMINAL);

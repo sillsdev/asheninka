@@ -16,10 +16,12 @@ import javafx.collections.ObservableList;
 
 import org.junit.Test;
 import org.sil.syllableparser.model.OnsetPrincipleType;
+import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import org.sil.syllableparser.model.npapproach.NPRule;
+import org.sil.syllableparser.model.npapproach.NPRuleAction;
+import org.sil.syllableparser.model.npapproach.NPRuleLevel;
 import org.sil.syllableparser.model.npapproach.NPSyllabificationStatus;
 import org.sil.syllableparser.model.npapproach.NPTracingStep;
-import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -408,6 +410,189 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		checkSyllabification("donni", false, 2, "do.ni", "(W(σ(N''(\\L d(\\G d))(N'(N(\\L o(\\G o))))))(\\O \\L n(\\G n))(σ(N''(\\L n(\\G n))(N'(N(\\L i(\\G i)))))))");
 		checkSyllabification("donnli", false, 2, "do.nli", "(W(σ(N''(\\L d(\\G d))(N'(N(\\L o(\\G o))))))(\\O \\L n(\\G n))(σ(N''(\\L n(\\G n))(\\L l(\\G l))(N'(N(\\L i(\\G i)))))))");
 		checkSyllabification("dolnti", false, 2, "do.ti", "(W(σ(N''(\\L d(\\G d))(N'(N(\\L o(\\G o))))))(\\O \\L l(\\G l))(\\O \\L n(\\G n))(σ(N''(\\L t(\\G t))(N'(N(\\L i(\\G i)))))))");
+	}
+
+	@Test
+	public void leftAdjoinRulesTest() {
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		npApproach = languageProject.getNPApproach();
+		CVSegmentOrNaturalClass affectedSegOrNC = new CVSegmentOrNaturalClass("y", "", true, "5b00fb26-005d-4e73-a7c0-5ffac83a3a97", true);
+		CVSegmentOrNaturalClass contextSegOrNC = new CVSegmentOrNaturalClass("V", "", false, "9821d4ba-8c34-432d-9afe-7c428dcd9afa", true);
+		NPRule leftAdjoinRule = new NPRule("LeftAdjoinAtN", "", affectedSegOrNC, contextSegOrNC, NPRuleAction.LEFT_ADJOIN, NPRuleLevel.N, true, true, "");
+		turnOffOnsetAndCodaRules();
+		npApproach.getNPRules().add(leftAdjoinRule);
+		npSyllabifier = new NPSyllabifier(npApproach);
+		checkSyllabification("", false, 0, "", "(W)");
+		checkSyllabification("a", true, 1, "a", "(W(σ(N''(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("ya", true, 1, "ya", "(W(σ(N''(N'(N(N(\\L y(\\G y)))(N(\\L a(\\G a))))))))");
+		checkSyllabification("ae", true, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aye", true, 2, "a.ye", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(N(\\L y(\\G y)))(N(\\L e(\\G e))))))))");
+		checkSyllabification("yad", false, 1, "ya", "(W(σ(N''(N'(N(N(\\L y(\\G y)))(N(\\L a(\\G a)))))))(\\O \\L d(\\G d)))");
+		checkSyllabification("ade", false, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(\\O \\L d(\\G d))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("ayed", false, 2, "a.ye", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(N(\\L y(\\G y)))(N(\\L e(\\G e)))))))(\\O \\L d(\\G d)))");
+		npSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("ya", true, 1, "ya", "(W(σ(N''(N'(N(N(\\L y(\\G y)))(N(\\L a(\\G a))))))))");
+		List<NPTracingStep> tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(5, tracingSteps.size());
+		NPTracingStep tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "y", true);
+		checkSSPTracingStep(tracingStep, "y", "Glides", "a", "Vowels", SHComparisonResult.LESS);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.LEFT_ADJOINED_SEGMENT_TO_N_NODE, "y", true);
+
+		npSyllabifier.setDoTrace(false);
+		leftAdjoinRule.setRuleLevel(NPRuleLevel.N_BAR);
+		checkSyllabification("", false, 0, "", "(W)");
+		checkSyllabification("a", true, 1, "a", "(W(σ(N''(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("ya", true, 1, "ya", "(W(σ(N''(N'(N'(\\L y(\\G y)))(N'(N(\\L a(\\G a))))))))");
+		checkSyllabification("ae", true, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aye", true, 2, "a.ye", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N'(\\L y(\\G y)))(N'(N(\\L e(\\G e))))))))");
+		checkSyllabification("yad", false, 1, "ya", "(W(σ(N''(N'(N'(\\L y(\\G y)))(N'(N(\\L a(\\G a)))))))(\\O \\L d(\\G d)))");
+		checkSyllabification("ade", false, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(\\O \\L d(\\G d))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("ayed", false, 2, "a.ye", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N'(\\L y(\\G y)))(N'(N(\\L e(\\G e)))))))(\\O \\L d(\\G d)))");
+		npSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("ya", true, 1, "ya", "(W(σ(N''(N'(N'(\\L y(\\G y)))(N'(N(\\L a(\\G a))))))))");
+		tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(5, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "y", true);
+		checkSSPTracingStep(tracingStep, "y", "Glides", "a", "Vowels", SHComparisonResult.LESS);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.LEFT_ADJOINED_SEGMENT_TO_N_BAR_NODE, "y", true);
+
+		npSyllabifier.setDoTrace(false);
+		leftAdjoinRule.setRuleLevel(NPRuleLevel.N_DOUBLE_BAR);
+		checkSyllabification("", false, 0, "", "(W)");
+		checkSyllabification("a", true, 1, "a", "(W(σ(N''(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("ya", true, 1, "ya", "(W(σ(N''(N''(\\L y(\\G y)))(N''(N'(N(\\L a(\\G a))))))))");
+		checkSyllabification("ae", true, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aye", true, 2, "a.ye", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N''(\\L y(\\G y)))(N''(N'(N(\\L e(\\G e))))))))");
+		checkSyllabification("yad", false, 1, "ya", "(W(σ(N''(N''(\\L y(\\G y)))(N''(N'(N(\\L a(\\G a)))))))(\\O \\L d(\\G d)))");
+		checkSyllabification("ade", false, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(\\O \\L d(\\G d))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("ayed", false, 2, "a.ye", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N''(\\L y(\\G y)))(N''(N'(N(\\L e(\\G e)))))))(\\O \\L d(\\G d)))");
+		npSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("ya", true, 1, "ya", "(W(σ(N''(N''(\\L y(\\G y)))(N''(N'(N(\\L a(\\G a))))))))");
+		tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(5, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "y", true);
+		checkSSPTracingStep(tracingStep, "y", "Glides", "a", "Vowels", SHComparisonResult.LESS);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.LEFT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE, "y", true);
+}
+
+	protected void turnOffOnsetAndCodaRules() {
+		// turn off onset and coda rules, both attach and augment ones
+		npApproach.getNPRules().get(1).setActive(false);
+		npApproach.getNPRules().get(2).setActive(false);
+		npApproach.getNPRules().get(3).setActive(false);
+		npApproach.getNPRules().get(4).setActive(false);
+	}
+
+	@Test
+	public void rightAdjoinRulesTest() {
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(OnsetPrincipleType.ONSETS_NOT_REQUIRED);
+		npApproach = languageProject.getNPApproach();
+		CVSegmentOrNaturalClass affectedSegOrNC = new CVSegmentOrNaturalClass("y", "", true, "5b00fb26-005d-4e73-a7c0-5ffac83a3a97", true);
+		CVSegmentOrNaturalClass contextSegOrNC = new CVSegmentOrNaturalClass("V", "", false, "9821d4ba-8c34-432d-9afe-7c428dcd9afa", true);
+		NPRule rightAdjoinRule = new NPRule("RightAdjoinAtN", "", affectedSegOrNC, contextSegOrNC, NPRuleAction.RIGHT_ADJOIN, NPRuleLevel.N, true, true, "");
+		turnOffOnsetAndCodaRules();
+		npApproach.getNPRules().add(rightAdjoinRule);
+		npSyllabifier = new NPSyllabifier(npApproach);
+		checkSyllabification("", false, 0, "", "(W)");
+		checkSyllabification("a", true, 1, "a", "(W(σ(N''(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("ay", true, 1, "ay", "(W(σ(N''(N'(N(N(\\L a(\\G a)))(N(\\L y(\\G y))))))))");
+		checkSyllabification("ae", true, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aey", true, 2, "a.ey", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(N(\\L e(\\G e)))(N(\\L y(\\G y))))))))");
+		checkSyllabification("ayd", false, 1, "ay", "(W(σ(N''(N'(N(N(\\L a(\\G a)))(N(\\L y(\\G y)))))))(\\O \\L d(\\G d)))");
+		checkSyllabification("ade", false, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(\\O \\L d(\\G d))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aeyd", false, 2, "a.ey", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(N(\\L e(\\G e)))(N(\\L y(\\G y)))))))(\\O \\L d(\\G d)))");
+		npSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("ay", true, 1, "ay", "(W(σ(N''(N'(N(N(\\L a(\\G a)))(N(\\L y(\\G y))))))))");
+		List<NPTracingStep> tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(5, tracingSteps.size());
+		NPTracingStep tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "a", true);
+		checkSSPTracingStep(tracingStep, "a", "Vowels", "y", "Glides", SHComparisonResult.MORE);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.RIGHT_ADJOINED_SEGMENT_TO_N_NODE, "y", true);
+
+		npSyllabifier.setDoTrace(false);
+		rightAdjoinRule.setRuleLevel(NPRuleLevel.N_BAR);
+		checkSyllabification("", false, 0, "", "(W)");
+		checkSyllabification("a", true, 1, "a", "(W(σ(N''(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("ay", true, 1, "ay", "(W(σ(N''(N'(N'(N(\\L a(\\G a))))(N'(\\L y(\\G y)))))))");
+		checkSyllabification("ae", true, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aey", true, 2, "a.ey", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N'(N(\\L e(\\G e))))(N'(\\L y(\\G y)))))))");
+		checkSyllabification("ayd", false, 1, "ay", "(W(σ(N''(N'(N'(N(\\L a(\\G a))))(N'(\\L y(\\G y))))))(\\O \\L d(\\G d)))");
+		checkSyllabification("ade", false, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(\\O \\L d(\\G d))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aeyd", false, 2, "a.ey", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N'(N(\\L e(\\G e))))(N'(\\L y(\\G y))))))(\\O \\L d(\\G d)))");
+		npSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("ay", true, 1, "ay", "(W(σ(N''(N'(N'(N(\\L a(\\G a))))(N'(\\L y(\\G y)))))))");
+		tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(5, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "a", true);
+		checkSSPTracingStep(tracingStep, "a", "Vowels", "y", "Glides", SHComparisonResult.MORE);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.RIGHT_ADJOINED_SEGMENT_TO_N_BAR_NODE, "y", true);
+
+		npSyllabifier.setDoTrace(false);
+		rightAdjoinRule.setRuleLevel(NPRuleLevel.N_DOUBLE_BAR);
+		checkSyllabification("", false, 0, "", "(W)");
+		checkSyllabification("a", true, 1, "a", "(W(σ(N''(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("ay", true, 1, "ay", "(W(σ(N''(N''(N'(N(\\L a(\\G a)))))(N''(\\L y(\\G y))))))");
+		checkSyllabification("ae", true, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aey", true, 2, "a.ey", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N''(N'(N(\\L e(\\G e)))))(N''(\\L y(\\G y))))))");
+		checkSyllabification("ayd", false, 1, "ay", "(W(σ(N''(N''(N'(N(\\L a(\\G a)))))(N''(\\L y(\\G y)))))(\\O \\L d(\\G d)))");
+		checkSyllabification("ade", false, 2, "a.e", "(W(σ(N''(N'(N(\\L a(\\G a))))))(\\O \\L d(\\G d))(σ(N''(N'(N(\\L e(\\G e)))))))");
+		checkSyllabification("aeyd", false, 2, "a.ey", "(W(σ(N''(N'(N(\\L a(\\G a))))))(σ(N''(N''(N'(N(\\L e(\\G e)))))(N''(\\L y(\\G y)))))(\\O \\L d(\\G d)))");
+		npSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("ay", true, 1, "ay", "(W(σ(N''(N''(N'(N(\\L a(\\G a)))))(N''(\\L y(\\G y))))))");
+		tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(5, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "a", true);
+		checkSSPTracingStep(tracingStep, "a", "Vowels", "y", "Glides", SHComparisonResult.MORE);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.RIGHT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE, "y", true);
+
 	}
 
 	@Test
