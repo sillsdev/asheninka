@@ -49,9 +49,10 @@ public abstract class FiltersController extends TemplatesFiltersController {
 
 	protected ObservableList<Filter> filterList = FXCollections.observableArrayList();
 
-	protected void setDataProcessing(String sLastView) {
+	@SuppressWarnings("unchecked")
+	protected void setDataProcessing(String sLastView, ObservableList<? extends Filter> filters) {
 		// no sorting allowed
-		filterList = languageProject.getFilters();
+		filterList = (ObservableList<Filter>) filters;
 		iRepresentationCaretPosition = 6;
 		fSncChoicesUsingMouse = false;
 

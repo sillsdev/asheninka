@@ -7,8 +7,10 @@ package org.sil.syllableparser.view;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.FilterAction;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.npapproach.NPApproach;
+import org.sil.syllableparser.model.npapproach.NPFilter;
 
 /**
  * @author Andy Black
@@ -23,7 +25,16 @@ public class NPFiltersController extends FiltersController {
 	public void setData(NPApproach npApproachData) {
 		npApproach = npApproachData;
 		languageProject = npApproach.getLanguageProject();
-		setDataProcessing(ApplicationPreferences.LAST_NP_FILTERS_VIEW_ITEM_USED);
+		setDataProcessing(ApplicationPreferences.LAST_NP_FILTERS_VIEW_ITEM_USED, npApproach.getNPFilters());
+	}
+
+	@Override
+	protected void handleInsertNewItem() {
+		Filter newFilter = new NPFilter();
+		newFilter.setAction(new FilterAction(0, false));
+		filterList.add(newFilter);
+		newFilter.setTemplateFilterRepresentation("");
+		handleInsertNewItem(filterList, filterTable);
 	}
 
 	@Override

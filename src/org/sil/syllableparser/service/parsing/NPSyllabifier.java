@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.npapproach.NPApproach;
+import org.sil.syllableparser.model.npapproach.NPFilter;
 import org.sil.syllableparser.model.npapproach.NPNodeInSyllable;
 import org.sil.syllableparser.model.npapproach.NPNodeLevel;
 import org.sil.syllableparser.model.npapproach.NPRule;
@@ -53,7 +53,7 @@ public class NPSyllabifier implements Syllabifiable {
 	LinkedList<NPSyllable> syllablesInCurrentWord = new LinkedList<NPSyllable>(
 			Arrays.asList(new NPSyllable(null, null)));
 	List<NPSegmentInSyllable> segmentsInWord = new ArrayList<NPSegmentInSyllable>();
-	List<Filter> failFilters = new ArrayList<Filter>();
+	List<NPFilter> failFilters = new ArrayList<NPFilter>();
 	String sSyllabifiedWord;
 	String sLevelNDoubleBar = "N''";
 	String sLevelNBar = "N'";
@@ -159,8 +159,7 @@ public class NPSyllabifier implements Syllabifiable {
 		if (segmentCount == 0) {
 			return false;
 		}
-		failFilters = languageProject.getActiveAndValidFilters().stream()
-				.filter(f -> !f.getAction().isDoRepair()).collect(Collectors.toList());
+		failFilters = npApproach.getValidActiveNPFilters().stream().collect(Collectors.toList());
 		NPRuleMatcher matcher = new NPRuleMatcher();
 		matcher.setLanguageProject(languageProject);
 		List<Integer> matches;
@@ -402,7 +401,7 @@ public class NPSyllabifier implements Syllabifiable {
 
 	protected boolean applyFailFilters(List<NPSegmentInSyllable> segmentsInWord,
 			NPRule rule, Integer i, int iContext) {
-		List<Filter> filters = new ArrayList<Filter>();
+		List<NPFilter> filters = new ArrayList<NPFilter>();
 		if (rule.getRuleAction() == NPRuleAction.ATTACH || rule.getRuleAction() == NPRuleAction.AUGMENT) {
 			SHComparisonResult sspComparisonNeeded = SHComparisonResult.MISSING1;
 			int iStart = i;
@@ -427,9 +426,9 @@ public class NPSyllabifier implements Syllabifiable {
 
 	protected boolean applyAnyFailFilters(List<NPSegmentInSyllable> segmentsInWord,
 			int iSegmentInWord, SHSonorityComparer sonorityComparer,
-			SHComparisonResult sspComparisonNeeded, List<Filter> filters) {
+			SHComparisonResult sspComparisonNeeded, List<NPFilter> filters) {
 		NPTracer tracer = NPTracer.getInstance();
-		for (Filter f : filters) {
+		for (NPFilter f : filters) {
 			int iItemsInFilter = f.getSlots().size();
 			int iEnd = Math.min(iSegmentInWord + iItemsInFilter, segmentsInWord.size());
 			if (filterMatcher.matches(f,

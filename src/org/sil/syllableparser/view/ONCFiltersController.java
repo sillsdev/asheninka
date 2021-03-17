@@ -22,7 +22,7 @@ public class ONCFiltersController extends FiltersController {
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
-		setDataProcessing(ApplicationPreferences.LAST_ONC_FILTERS_VIEW_ITEM_USED);
+		setDataProcessing(ApplicationPreferences.LAST_ONC_FILTERS_VIEW_ITEM_USED, languageProject.getFilters());
 	}
 
 	@Override

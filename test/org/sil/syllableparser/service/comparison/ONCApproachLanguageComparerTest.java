@@ -96,7 +96,7 @@ public class ONCApproachLanguageComparerTest {
 		assertEquals("Sonority Hierarchy size", 5, sonorityHierarchy.size());
 		// filters
 		ObservableList<Filter> filters = onca1.getLanguageProject().getFilters();
-		assertEquals("Filter count", 7, filters.size());
+		assertEquals("Filter count", 4, filters.size());
 		filters = onca2.getLanguageProject().getFilters();
 		assertEquals("Filter count", 3, filters.size());
 		// templates

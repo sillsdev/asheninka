@@ -16,9 +16,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.junit.Test;
-import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import org.sil.syllableparser.model.npapproach.NPFilter;
 import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPRuleAction;
 import org.sil.syllableparser.model.npapproach.NPRuleLevel;
@@ -736,19 +736,10 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		}
 
 	protected void turnOnTestingFilters() {
-		List<Filter> filters = languageProject.getFilters().stream().filter(filter -> !filter.getAction().isDoRepair() && filter.isValid())
+		List<NPFilter> filters = npApproach.getNPFilters().stream().filter(filter -> filter.isValid())
 				.collect(Collectors.toList());
-		// turn off the two active fail filters
-		Optional<Filter> filter = filters.stream()
-				.filter(f -> f.getID().equals("6ca80344-ac5e-4d62-8750-5b2eb9782ebf")).findFirst();
-		assertTrue(filter.isPresent());
-		filter.get().setActive(false);
-		filter = filters.stream()
-				.filter(r -> r.getID().equals("fafebf02-85e4-4fdd-986a-3f565a38dd7b")).findFirst();
-		assertTrue(filter.isPresent());
-		filter.get().setActive(false);
 		// turn on the three inactive fail filters we're testing with
-		filter = filters.stream()
+		Optional<NPFilter> filter = filters.stream()
 				.filter(r -> r.getID().equals("0b187b16-3dc2-414a-9c8a-76bbfccd8a47")).findFirst();
 		assertTrue(filter.isPresent());
 		filter.get().setActive(true);

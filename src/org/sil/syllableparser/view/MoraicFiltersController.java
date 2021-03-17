@@ -22,7 +22,7 @@ public class MoraicFiltersController extends FiltersController {
 	public void setData(MoraicApproach moraicApproachData) {
 		moraicApproach = moraicApproachData;
 		languageProject = moraicApproach.getLanguageProject();
-		setDataProcessing(ApplicationPreferences.LAST_MORAIC_FILTERS_VIEW_ITEM_USED);
+		setDataProcessing(ApplicationPreferences.LAST_MORAIC_FILTERS_VIEW_ITEM_USED, languageProject.getFilters());
 	}
 
 	@Override

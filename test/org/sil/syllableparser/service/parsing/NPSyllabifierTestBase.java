@@ -26,7 +26,6 @@ import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
 import org.sil.syllableparser.model.npapproach.NPSyllable;
 import org.sil.syllableparser.model.npapproach.NPTracingStep;
-import org.sil.syllableparser.model.oncapproach.ONCSyllabificationStatus;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 

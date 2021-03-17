@@ -59,7 +59,7 @@ public class BackupFileCreatorTest {
 			assertEquals(1, zipFile.size());
 			ZipEntry entry = zipFile.getEntry(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_NAME);
 			assertEquals(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_NAME, entry.getName());
-			assertEquals(11407974, entry.getSize());
+			assertEquals(11408335, entry.getSize());
 			assertEquals(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_COMMENT, zipFile.getComment());
 			zipFile.close();
 		} catch (ZipException e) {

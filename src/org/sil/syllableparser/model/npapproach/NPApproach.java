@@ -33,6 +33,7 @@ public class NPApproach extends Approach {
 	LanguageProject langProj;
 	SHApproach shApproach;
 	private ObservableList<NPRule> rules = FXCollections.observableArrayList();
+	private ObservableList<NPFilter> filters = FXCollections.observableArrayList();
 
 	@XmlElementWrapper(name = "rules")
 	@XmlElement(name = "rule")
@@ -53,12 +54,31 @@ public class NPApproach extends Approach {
 				.collect(Collectors.toList());
 	}
 
+	@XmlElementWrapper(name = "filters")
+	@XmlElement(name = "filter")
+	public ObservableList<NPFilter> getNPFilters() {
+		return filters;
+	}
+	public void setNPFilters(ObservableList<NPFilter> filters) {
+		this.filters = filters;
+	}
+
+	public List<NPFilter> getActiveNPFilters() {
+		return filters.stream().filter(filter -> filter.isActive())
+				.collect(Collectors.toList());
+	}
+
+	public List<NPFilter> getValidActiveNPFilters() {
+		return filters.stream().filter(filter -> filter.isValid() && filter.isActive())
+				.collect(Collectors.toList());
+	}
 
 	/**
 	 * Clear out all data in this Sonority Hierarchy approach
 	 */
 	public void clear() {
 		rules.clear();
+		filters.clear();
 	}
 
 	public void load(NPApproach npApproachLoaded) {
@@ -66,6 +86,9 @@ public class NPApproach extends Approach {
 		shApproach = langProj.getSHApproach();
 		for (NPRule rule : npApproachLoaded.getNPRules()) {
 			rules.add(rule);
+		}
+		for (NPFilter filter : npApproachLoaded.getNPFilters()) {
+			filters.add(filter);
 		}
 	}
 
