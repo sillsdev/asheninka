@@ -204,6 +204,7 @@ public abstract class FiltersController extends TemplatesFiltersController {
 													// reason...
 		fAllowSlotPosition = true;
 		processRepresentationFieldContents();
+		showTypeWarning(f);
 	}
 
 	@FXML
@@ -216,6 +217,7 @@ public abstract class FiltersController extends TemplatesFiltersController {
 													// reason...
 		fAllowSlotPosition = false;
 		processRepresentationFieldContents();
+		showTypeWarning(f);
 	}
 
 	@Override

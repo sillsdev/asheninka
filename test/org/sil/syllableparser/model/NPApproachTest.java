@@ -54,15 +54,15 @@ public class NPApproachTest {
 	// make sure the setup is what we expect
 	@Test
 	public void getActiveAndValidItemsTest() {
-		assertEquals(5, npa.getNPRules().size());
+		assertEquals(6, npa.getNPRules().size());
 		assertEquals(5, npa.getActiveNPRules().size());
 		assertEquals(5, npa.getValidActiveNPRules().size());
 		npa.getNPRules().get(0).setActive(false);
-		assertEquals(5, npa.getNPRules().size());
+		assertEquals(6, npa.getNPRules().size());
 		assertEquals(4, npa.getActiveNPRules().size());
 		assertEquals(4, npa.getValidActiveNPRules().size());
 		npa.getNPRules().get(1).setIsValid(false);
-		assertEquals(5, npa.getNPRules().size());
+		assertEquals(6, npa.getNPRules().size());
 		assertEquals(4, npa.getActiveNPRules().size());
 		assertEquals(3, npa.getValidActiveNPRules().size());
 	}

@@ -227,11 +227,8 @@ public class NPTracingStep {
 		case BUILT_ALL_NODES:
 			result = addSegment1ToStatus(bundle.getString("label.npstibuiltallnodes"));
 			break;
-		case CODA_FILTER_FAILED:
-			result = addFilterIDToStatus(bundle.getString("label.oncsticodafilterfailed"));
-			break;
 		case FILTER_FAILED:
-			result = bundle.getString("label.npstifilterfailed");
+			result = addFilterIDToStatus(bundle.getString("label.npstifilterfailed"));
 			break;
 		case LEFT_ADJOINED_SEGMENT_TO_N_BAR_NODE:
 			result = addSegment1ToStatus(bundle.getString("label.npstileftadjoinedsegmenttonbarnode"));
@@ -247,9 +244,6 @@ public class NPTracingStep {
 			break;
 		case NO_SEGMENTS_MATCHED_RULE:
 			result = bundle.getString("label.npstinosegmentsmatchedrule");
-			break;
-		case ONSET_FILTER_FAILED:
-			result = addFilterIDToStatus(bundle.getString("label.oncstionsetfilterfailed"));
 			break;
 		case ONSET_REQUIRED_IN_ALL_BUT_FIRST_SYLLABLE_BUT_SOME_NONINITIAL_SYLLABLE_DOES_NOT_HAVE_AN_ONSET:
 			result = bundle.getString("label.npstionsetsonallbutfirstbutmissingonset");

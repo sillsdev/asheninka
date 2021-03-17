@@ -11,8 +11,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
@@ -28,6 +31,7 @@ import org.sil.syllableparser.model.npapproach.NPSyllable;
 import org.sil.syllableparser.model.npapproach.NPTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.service.NPRuleMatcher;
+import org.sil.syllableparser.service.TemplateFilterMatcher;
 
 /**
  * @author Andy Black
@@ -44,10 +48,12 @@ public class NPSyllabifier implements Syllabifiable {
 	NPTracer tracer = null;
 	private boolean fDoTrace = false;
 	private OnsetPrincipleType onsetType = OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET;
+	private TemplateFilterMatcher filterMatcher;
 
 	LinkedList<NPSyllable> syllablesInCurrentWord = new LinkedList<NPSyllable>(
 			Arrays.asList(new NPSyllable(null, null)));
 	List<NPSegmentInSyllable> segmentsInWord = new ArrayList<NPSegmentInSyllable>();
+	List<Filter> failFilters = new ArrayList<Filter>();
 	String sSyllabifiedWord;
 	String sLevelNDoubleBar = "N''";
 	String sLevelNBar = "N'";
@@ -62,6 +68,10 @@ public class NPSyllabifier implements Syllabifiable {
 				languageProject.getActiveGraphemeNaturalClasses());
 		sonorityComparer = new SHSonorityComparer(npApproach.getLanguageProject());
 		sSyllabifiedWord = "";
+		filterMatcher = TemplateFilterMatcher.getInstance();
+		filterMatcher.setActiveSegments(languageProject.getActiveSegmentsInInventory());
+		filterMatcher.setActiveClasses(languageProject.getCVApproach().getActiveCVNaturalClasses());
+
 	}
 
 	public List<NPSyllable> getSyllablesInCurrentWord() {
@@ -149,6 +159,8 @@ public class NPSyllabifier implements Syllabifiable {
 		if (segmentCount == 0) {
 			return false;
 		}
+		failFilters = languageProject.getActiveAndValidFilters().stream()
+				.filter(f -> !f.getAction().isDoRepair()).collect(Collectors.toList());
 		NPRuleMatcher matcher = new NPRuleMatcher();
 		matcher.setLanguageProject(languageProject);
 		List<Integer> matches;
@@ -368,7 +380,7 @@ public class NPSyllabifier implements Syllabifiable {
 	protected void addSegmentToSyllable(List<NPSegmentInSyllable> segmentsInWord,
 			NPRule rule, Integer i, int iContext) {
 		NPSyllable syl = segmentsInWord.get(iContext).getSyllable();
-		if (syl != null) {
+		if (syl != null && applyFailFilters(segmentsInWord, rule, i, iContext)) {
 			addSegmentToNode(segmentsInWord, rule, i, syl);
 			if (i < iContext) {
 				syl.getSegmentsInSyllable().add(0, segmentsInWord.get(i));
@@ -386,6 +398,53 @@ public class NPSyllabifier implements Syllabifiable {
 				}
 			}
 		}
+	}
+
+	protected boolean applyFailFilters(List<NPSegmentInSyllable> segmentsInWord,
+			NPRule rule, Integer i, int iContext) {
+		List<Filter> filters = new ArrayList<Filter>();
+		if (rule.getRuleAction() == NPRuleAction.ATTACH || rule.getRuleAction() == NPRuleAction.AUGMENT) {
+			SHComparisonResult sspComparisonNeeded = SHComparisonResult.MISSING1;
+			int iStart = i;
+			switch (rule.getRuleLevel()) {
+			case N_BAR:
+				filters = failFilters.stream().filter(f -> f.getTemplateFilterType() == FilterType.CODA
+				|| f.getTemplateFilterType() == FilterType.RIME).collect(Collectors.toList());
+				sspComparisonNeeded = SHComparisonResult.MORE;
+				iStart = iContext;
+				break;
+			case N_DOUBLE_BAR:
+				filters = failFilters.stream().filter(f -> f.getTemplateFilterType() == FilterType.ONSET).collect(Collectors.toList());
+				sspComparisonNeeded = SHComparisonResult.LESS;
+				break;
+			default:
+				break;
+			}
+			return applyAnyFailFilters(segmentsInWord, iStart, sonorityComparer, sspComparisonNeeded, filters);
+		}
+		return true;
+	}
+
+	protected boolean applyAnyFailFilters(List<NPSegmentInSyllable> segmentsInWord,
+			int iSegmentInWord, SHSonorityComparer sonorityComparer,
+			SHComparisonResult sspComparisonNeeded, List<Filter> filters) {
+		NPTracer tracer = NPTracer.getInstance();
+		for (Filter f : filters) {
+			int iItemsInFilter = f.getSlots().size();
+			int iEnd = Math.min(iSegmentInWord + iItemsInFilter, segmentsInWord.size());
+			if (filterMatcher.matches(f,
+					segmentsInWord.subList(iSegmentInWord, iEnd),
+					sonorityComparer, sspComparisonNeeded)) {
+				if (fDoTrace) {
+					tracer.setStatus(NPSyllabificationStatus.FILTER_FAILED);
+					tracer.setFilterUsed(f);
+					tracer.setSuccessful(false);
+					tracer.recordStep();
+				}
+				return false;
+			}
+		}
+		return true;
 	}
 
 	protected boolean checkSonority(List<NPSegmentInSyllable> segmentsInWord, Integer iAffected, int iContext) {

@@ -10,11 +10,13 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.junit.Test;
+import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import org.sil.syllableparser.model.npapproach.NPRule;
@@ -327,7 +329,7 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 
 	protected void turnCodasAllowedOn() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
-		// coda off is handled by deactivating the coda-oriented rules
+		// coda on is handled by activating the coda-oriented rules
 		Optional<NPRule> codaRule = rules.stream()
 				.filter(r -> r.getID().equals("7d8c3b88-7d72-40ac-a8f2-0f1df56aeef1")).findFirst();
 		assertTrue(codaRule.isPresent());
@@ -505,6 +507,7 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		npApproach.getNPRules().get(2).setActive(false);
 		npApproach.getNPRules().get(3).setActive(false);
 		npApproach.getNPRules().get(4).setActive(false);
+		npApproach.getNPRules().get(5).setActive(false);
 	}
 
 	@Test
@@ -592,7 +595,171 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		checkSSPTracingStep(tracingStep, "a", "Vowels", "y", "Glides", SHComparisonResult.MORE);
 		tracingStep = tracingSteps.get(4);
 		checkNPTracingStep(tracingStep, NPSyllabificationStatus.RIGHT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE, "y", true);
+	}
 
+	@Test
+	public void filterOnsetCodaRimeTest() {
+		languageProject.getSyllabificationParameters().setOnsetMaximization(false);
+		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
+				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
+		npApproach = languageProject.getNPApproach();
+		turnOnTestingFilters();
+		Optional<NPRule> codaAugmentRule = rules.stream()
+				.filter(r -> r.getID().equals("b70cc8c6-13e8-4dc9-87ef-3a2f9cdcd7eb")).findFirst();
+		assertTrue(codaAugmentRule.isPresent());
+		CVSegmentOrNaturalClass soc = new CVSegmentOrNaturalClass("[C]", "", false, "b500749a-9617-444c-ae28-7552cb3236ec", true);
+		codaAugmentRule.get().setAffectedSegOrNC(soc);
+		npSyllabifier = new NPSyllabifier(npApproach);
+		checkSyllabification("ta", true, 1, "ta", "(W(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("tla", false, 1, "la", "(W(\\O \\L t(\\G t))(σ(N''(\\L l(\\G l))(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("tam", true, 1, "tam", "(W(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a)))(\\L m(\\G m))))))");
+		checkSyllabification("tamk", false, 1, "tam", "(W(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a)))(\\L m(\\G m)))))(\\O \\L k(\\G k)))");
+		checkSyllabification("potla", false, 2, "po.la", "(W(σ(N''(\\L p(\\G p))(N'(N(\\L o(\\G o))))))(\\O \\L t(\\G t))(σ(N''(\\L l(\\G l))(N'(N(\\L a(\\G a)))))))");
+		checkSyllabification("potam", true, 2, "po.tam", "(W(σ(N''(\\L p(\\G p))(N'(N(\\L o(\\G o))))))(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a)))(\\L m(\\G m))))))");
+		checkSyllabification("potamk", false, 2, "po.tam", "(W(σ(N''(\\L p(\\G p))(N'(N(\\L o(\\G o))))))(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a)))(\\L m(\\G m)))))(\\O \\L k(\\G k)))");
+
+		npSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("tla", false, 1, "la", "(W(\\O \\L t(\\G t))(σ(N''(\\L l(\\G l))(N'(N(\\L a(\\G a)))))))");
+		List<NPTracingStep> tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(13, tracingSteps.size());
+		NPTracingStep tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "l", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "l", true);
+		checkSSPTracingStep(tracingStep, "l", "Liquids", "a", "Vowels", SHComparisonResult.LESS);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.PREPENDED_SEGMENT_TO_SYLLABLE, "l", true);
+		tracingStep = tracingSteps.get(5);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "l", true);
+		tracingStep = tracingSteps.get(6);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.NO_SEGMENTS_MATCHED_RULE, "l", true);
+		tracingStep = tracingSteps.get(7);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "l", true);
+		tracingStep = tracingSteps.get(8);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "t", true);
+		checkSSPTracingStep(tracingStep, "t", "Obstruents", "l", "Liquids",  SHComparisonResult.LESS);
+		tracingStep = tracingSteps.get(9);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.FILTER_FAILED, "t", false);
+		assertEquals("0b187b16-3dc2-414a-9c8a-76bbfccd8a47", tracingStep.getFilterUsed().getID());
+		tracingStep = tracingSteps.get(10);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "l", true);
+		tracingStep = tracingSteps.get(11);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.NO_SEGMENTS_MATCHED_RULE, "l", true);
+		tracingStep = tracingSteps.get(12);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SOME_SEGMENTS_NOT_SYLLABIFIED, "l", false);
+
+		checkSyllabifyWord("tamk", false, 1, "tam", "(W(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a)))(\\L m(\\G m)))))(\\O \\L k(\\G k)))");
+		tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(14, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "t", true);
+		checkSSPTracingStep(tracingStep, "t", "Obstruents", "a", "Vowels", SHComparisonResult.LESS);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.PREPENDED_SEGMENT_TO_SYLLABLE, "t", true);
+		tracingStep = tracingSteps.get(5);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "m", true);
+		tracingStep = tracingSteps.get(6);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "a", true);
+		checkSSPTracingStep(tracingStep, "a", "Vowels", "m", "Nasals", SHComparisonResult.MORE);
+		tracingStep = tracingSteps.get(7);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPENDED_SEGMENT_TO_SYLLABLE, "m", true);
+		tracingStep = tracingSteps.get(8);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "k", true);
+		tracingStep = tracingSteps.get(9);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.NO_SEGMENTS_MATCHED_RULE, "l", true);
+		tracingStep = tracingSteps.get(10);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "l", true);
+		tracingStep = tracingSteps.get(11);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "m", true);
+		checkSSPTracingStep(tracingStep, "m", "Nasals", "k", "Obstruents", SHComparisonResult.MORE);
+		tracingStep = tracingSteps.get(12);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.FILTER_FAILED, "k", false);
+		assertEquals("c366bc4d-cb94-44f9-830d-49ae4404596c", tracingStep.getFilterUsed().getID());
+		tracingStep = tracingSteps.get(13);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SOME_SEGMENTS_NOT_SYLLABIFIED, "k", false);
+
+		Optional<NPRule> codaAttachRule = rules.stream()
+				.filter(r -> r.getID().equals("7d8c3b88-7d72-40ac-a8f2-0f1df56aeef1")).findFirst();
+		assertTrue(codaAttachRule.isPresent());
+		codaAttachRule.get().setActive(false);
+		Optional<NPRule> codaAttachFilterRule = npApproach.getNPRules().stream()
+				.filter(r -> r.getID().equals("3714c6f9-26c7-4ffb-b127-ea34569b6e41")).findFirst();
+		assertTrue(codaAttachFilterRule.isPresent());
+		codaAttachFilterRule.get().setActive(true);
+		npSyllabifier.setDoTrace(false);
+		checkSyllabification("tañ", false, 1, "ta", "(W(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a))))))(\\O \\L ɲ(\\G ñ)))");
+		checkSyllabification("potañ", false, 2, "po.ta", "(W(σ(N''(\\L p(\\G p))(N'(N(\\L o(\\G o))))))(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a))))))(\\O \\L ɲ(\\G ñ)))");
+
+		npSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("tañ", false, 1, "ta", "(W(σ(N''(\\L t(\\G t))(N'(N(\\L a(\\G a))))))(\\O \\L ɲ(\\G ñ)))");
+		tracingSteps = npSyllabifier.getTracingSteps();
+		assertEquals(13, tracingSteps.size());
+		tracingStep = tracingSteps.get(0);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(1);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.BUILT_ALL_NODES, "a", true);
+		tracingStep = tracingSteps.get(2);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "t", true);
+		tracingStep = tracingSteps.get(3);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "t", true);
+		checkSSPTracingStep(tracingStep, "t", "Obstruents", "a", "Vowels", SHComparisonResult.LESS);
+		tracingStep = tracingSteps.get(4);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.PREPENDED_SEGMENT_TO_SYLLABLE, "t", true);
+		tracingStep = tracingSteps.get(5);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "a", true);
+		tracingStep = tracingSteps.get(6);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SSP_PASSED, "a", true);
+		checkSSPTracingStep(tracingStep, "a", "Vowels", "ɲ", "Nasals", SHComparisonResult.MORE);
+		tracingStep = tracingSteps.get(7);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.FILTER_FAILED, "", false);
+		assertEquals("710653a7-e536-4815-ae69-5ecec206b19e", tracingStep.getFilterUsed().getID());
+		tracingStep = tracingSteps.get(8);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
+		tracingStep = tracingSteps.get(9);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.NO_SEGMENTS_MATCHED_RULE, "l", true);
+		tracingStep = tracingSteps.get(10);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "l", true);
+		tracingStep = tracingSteps.get(11);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.NO_SEGMENTS_MATCHED_RULE, "l", true);
+		tracingStep = tracingSteps.get(12);
+		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SOME_SEGMENTS_NOT_SYLLABIFIED, "k", false);
+		}
+
+	protected void turnOnTestingFilters() {
+		List<Filter> filters = languageProject.getFilters().stream().filter(filter -> !filter.getAction().isDoRepair() && filter.isValid())
+				.collect(Collectors.toList());
+		// turn off the two active fail filters
+		Optional<Filter> filter = filters.stream()
+				.filter(f -> f.getID().equals("6ca80344-ac5e-4d62-8750-5b2eb9782ebf")).findFirst();
+		assertTrue(filter.isPresent());
+		filter.get().setActive(false);
+		filter = filters.stream()
+				.filter(r -> r.getID().equals("fafebf02-85e4-4fdd-986a-3f565a38dd7b")).findFirst();
+		assertTrue(filter.isPresent());
+		filter.get().setActive(false);
+		// turn on the three inactive fail filters we're testing with
+		filter = filters.stream()
+				.filter(r -> r.getID().equals("0b187b16-3dc2-414a-9c8a-76bbfccd8a47")).findFirst();
+		assertTrue(filter.isPresent());
+		filter.get().setActive(true);
+		filter = filters.stream()
+				.filter(r -> r.getID().equals("c366bc4d-cb94-44f9-830d-49ae4404596c")).findFirst();
+		assertTrue(filter.isPresent());
+		filter.get().setActive(true);
+		filter = filters.stream()
+				.filter(r -> r.getID().equals("710653a7-e536-4815-ae69-5ecec206b19e")).findFirst();
+		assertTrue(filter.isPresent());
+		filter.get().setActive(true);
 	}
 
 	@Test

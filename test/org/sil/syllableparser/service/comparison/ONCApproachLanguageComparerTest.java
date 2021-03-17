@@ -96,7 +96,7 @@ public class ONCApproachLanguageComparerTest {
 		assertEquals("Sonority Hierarchy size", 5, sonorityHierarchy.size());
 		// filters
 		ObservableList<Filter> filters = onca1.getLanguageProject().getFilters();
-		assertEquals("Filter count", 4, filters.size());
+		assertEquals("Filter count", 7, filters.size());
 		filters = onca2.getLanguageProject().getFilters();
 		assertEquals("Filter count", 3, filters.size());
 		// templates
@@ -323,7 +323,7 @@ public class ONCApproachLanguageComparerTest {
 		assertEquals(false, f2.getAction().isDoRepair());
 		assertEquals("t d b k | p", f1.getTemplateFilterRepresentation());
 		assertEquals("s a e i o u", f2.getTemplateFilterRepresentation());
-		diffFilter = listOfDiffs.get(1);
+		diffFilter = listOfDiffs.get(2);
 		f1 = (Filter) diffFilter.getObjectFrom1();
 		f2 = (Filter) diffFilter.getObjectFrom2();
 		assertNull(f1);
@@ -331,7 +331,7 @@ public class ONCApproachLanguageComparerTest {
 		assertEquals(true, f2.getAction().isDoRepair());
 		assertEquals(FilterType.NUCLEUS, f2.getTemplateFilterType());
 		assertEquals("x [V] t s d | i", f2.getTemplateFilterRepresentation());
-		diffFilter = listOfDiffs.get(2);
+		diffFilter = listOfDiffs.get(3);
 		f1 = (Filter) diffFilter.getObjectFrom1();
 		f2 = (Filter) diffFilter.getObjectFrom2();
 		assertEquals("Onset repair", f1.getTemplateFilterName());
@@ -342,7 +342,7 @@ public class ONCApproachLanguageComparerTest {
 		assertEquals(FilterType.ONSET, f2.getTemplateFilterType());
 		assertEquals("s d g h t | l", f1.getTemplateFilterRepresentation());
 		assertEquals("s d g h t | l h", f2.getTemplateFilterRepresentation());
-		diffFilter = listOfDiffs.get(3);
+		diffFilter = listOfDiffs.get(1);
 		f1 = (Filter) diffFilter.getObjectFrom1();
 		f2 = (Filter) diffFilter.getObjectFrom2();
 		assertNull(f2);
@@ -421,7 +421,7 @@ public class ONCApproachLanguageComparerTest {
 		ONCApproachLanguageComparer comparer = new ONCApproachLanguageComparer(onca1, onca2);
 		comparer.compareFilterOrder();
 		LinkedList<Diff> differences = comparer.getFilterOrderDifferences();
-		assertEquals(59, differences.size());
+		assertEquals(48, differences.size());
 	}
 
 	@Test
