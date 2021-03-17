@@ -351,9 +351,9 @@ public class NPApproachController extends ApproachController  {
 						word.setNPPredictedSyllabification("");
 						continue;
 					}
-					word.setMoraicPredictedSyllabification(syllabifier
+					word.setNPPredictedSyllabification(syllabifier
 							.getSyllabificationOfCurrentWord());
-					word.setMoraicParserResult(sSuccess);
+					word.setNPParserResult(sSuccess);
 				}
 				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
 				scene.setCursor(currentCursor);
