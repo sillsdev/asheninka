@@ -71,7 +71,7 @@ public class SyllabificationComparisonControllerTest {
 		assertEquals(false, controller.isUseMoraicApproach());
 		assertEquals(false, controller.isUseMoraicApproachDisabled());
 		assertEquals(false, controller.isUseNuclearProjectionApproach());
-		assertEquals(true, controller.isUseNuclearProjectionApproachDisabled());
+		assertEquals(false, controller.isUseNuclearProjectionApproachDisabled());
 		assertEquals(false, controller.isUseOTApproach());
 		assertEquals(true, controller.isUseOTApproachDisabled());
 		
@@ -94,6 +94,8 @@ public class SyllabificationComparisonControllerTest {
 		controller.setUseSHApproach(true);
 		controller.setUseONCApproach(true);
 		controller.setUseMoraicApproach(true);
+		controller.setUseNuclearProjectionApproach(false);
+		controller.setUseOTApproach(false);
 		assertEquals(true, controller.twoOrMoreToCompare());
 		controller.setUseCVApproach(false);
 		assertEquals(true, controller.twoOrMoreToCompare());

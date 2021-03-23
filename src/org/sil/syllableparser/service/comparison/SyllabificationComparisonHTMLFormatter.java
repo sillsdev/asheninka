@@ -64,6 +64,14 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 			formatApproachLabelDescription(sb, bundle.getString("report.moraicapproachabbreviation"),
 					bundle.getString("approach.moraic"));
 		}
+		if (sylComparer.isUseNPApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.npapproachabbreviation"),
+					bundle.getString("approach.nuclearprojection"));
+		}
+		if (sylComparer.isUseOTApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.otapproachabbreviation"),
+					bundle.getString("approach.ot"));
+		}
 		sb.append("</tbody>\n</table>\n<p/>\n");
 	}
 
@@ -107,6 +115,16 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 					formatApproachRow(sb, bundle.getString("report.moraicapproachabbreviation"),
 							differentWord.getMoraicPredictedSyllabification(), isFirstRow);
 					isFirstRow = false;
+				}
+				if (sylComparer.isUseNPApproach()) {
+					formatApproachRow(sb, bundle.getString("report.npapproachabbreviation"),
+							differentWord.getNPPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
+				}
+				if (sylComparer.isUseOTApproach()) {
+//					formatApproachRow(sb, bundle.getString("report.otapproachabbreviation"),
+//							differentWord.getNPPredictedSyllabification(), isFirstRow);
+//					isFirstRow = false;
 				}
 			}
 			sb.append("</tbody>\n</table>\n");

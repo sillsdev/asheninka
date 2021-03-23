@@ -19,7 +19,7 @@
             <CheckBox fx:id="useSHApproach" layoutX="37.0" layoutY="42.0" mnemonicParsing="false" text="%label.useshapproach" />
             <CheckBox fx:id="useONCApproach" layoutX="37.0" layoutY="72.0" mnemonicParsing="false" text="%label.useoncapproach" />
             <CheckBox fx:id="useMoraicApproach" layoutX="332.0" layoutY="13.0" mnemonicParsing="false" text="%label.usemoraicapproach" />
-            <CheckBox fx:id="useNuclearProjectionApproach" disable="true" layoutX="332.0" layoutY="42.0" mnemonicParsing="false" text="%label.usenpapproach" />
+            <CheckBox fx:id="useNuclearProjectionApproach" layoutX="332.0" layoutY="42.0" mnemonicParsing="false" text="%label.usenpapproach" />
             <CheckBox fx:id="useOTApproach" disable="true" layoutX="332.0" layoutY="72.0" mnemonicParsing="false" text="%label.useotapproach" />
          </children>
       </Pane>
