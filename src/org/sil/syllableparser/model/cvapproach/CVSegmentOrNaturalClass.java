@@ -118,4 +118,29 @@ public class CVSegmentOrNaturalClass extends SylParserBase  {
 		}
 		return s;
 	}
+
+	public static boolean equalsCVSegOrNC(CVSegmentOrNaturalClass thisOne, CVSegmentOrNaturalClass thatOne) {
+		boolean result = true;
+		if (thisOne != null) {
+			if (thatOne != null) {
+				if (!thisOne.getUuid().equals(thatOne.getUuid())) {
+					result = false;
+				}
+			} else {
+				result = false;
+			}
+		} else if (thatOne != null) {
+			result = false;
+		}
+		return result;
+	}
+
+	public static void createTextFromCVSegOrNC(CVSegmentOrNaturalClass cvsegc, StringBuilder sb) {
+		if (cvsegc != null) {
+			sb.append(cvsegc.getUuid());
+		} else {
+			sb.append(Constants.NULL_AS_STRING);
+		}
+	}
+
 }

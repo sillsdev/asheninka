@@ -323,22 +323,22 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 			sb.append("</th>\n<th>");
 			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
 			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
-			List<Filter> sonorityHierarchy1 = oncComparer.getOnca1().getLanguageProject().getActiveAndValidFilters();
-			List<Filter> sonorityHierarchy2 = oncComparer.getOnca2().getLanguageProject().getActiveAndValidFilters();
-			int size1 = sonorityHierarchy1.size();
-			int size2 = sonorityHierarchy2.size();
+			List<Filter> filters1 = oncComparer.getOnca1().getLanguageProject().getActiveAndValidFilters();
+			List<Filter> filters2 = oncComparer.getOnca2().getLanguageProject().getActiveAndValidFilters();
+			int size1 = filters1.size();
+			int size2 = filters2.size();
 			int maxSize = Math.max(size1, size2);
 			for (int i = 0; i < maxSize; i++) {
 				sb.append("<tr>\n<td class=\"");
 				sb.append(ANALYSIS_1);
 				sb.append("\">");
-				Filter naturalClass = (Filter) formatSylParserObjectInOrder(sonorityHierarchy1,
+				Filter naturalClass = (Filter) formatSylParserObjectInOrder(filters1,
 						size1, i);
 				formatFilterInfo(sb, naturalClass);
 				sb.append("</td>\n<td class=\"");
 				sb.append(ANALYSIS_2);
 				sb.append("\">");
-				naturalClass = (Filter) formatSylParserObjectInOrder(sonorityHierarchy2, size2, i);
+				naturalClass = (Filter) formatSylParserObjectInOrder(filters2, size2, i);
 				formatFilterInfo(sb, naturalClass);
 				sb.append("</td>\n</tr>\n");
 			}

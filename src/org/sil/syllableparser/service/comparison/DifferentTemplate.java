@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International 
+// Copyright (c) 2020-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,7 +15,7 @@ import org.sil.syllableparser.model.TemplateFilter;
  */
 public class DifferentTemplate extends DifferentSylParserObject {
 
-	public DifferentTemplate(TemplateFilter FilterFrom1, TemplateFilter FilterFrom2) {
-		super((SylParserObject) FilterFrom1, (SylParserObject) FilterFrom2);
+	public DifferentTemplate(TemplateFilter templateFilterFrom1, TemplateFilter templateFilterFrom2) {
+		super((SylParserObject) templateFilterFrom1, (SylParserObject) templateFilterFrom2);
 	}
 }

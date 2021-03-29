@@ -252,8 +252,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 			sb.append("\n");
 		});
 		return sb.toString();
-
 	}
+
 	@Override
 	protected void syllabifyWords(List<Word> words1, List<Word> words2) {
 		syllabifyWords(onca1, words1);

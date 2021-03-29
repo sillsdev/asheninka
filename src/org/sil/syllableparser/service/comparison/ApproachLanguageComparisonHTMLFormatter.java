@@ -350,6 +350,11 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		} else {
 			sb.append("<p>" + bundle.getString("report.sameonsetmaximization") + "</p>\n");
 		}
+		formatOnsetPrinciple(sb, s1, s2);
+		formatApproachSpecificSyllabificationParameters(sb);
+	}
+
+	protected void formatOnsetPrinciple(StringBuilder sb, String s1, String s2) {
 		if (comparer.onsetPrincipleDiffers) {
 			switch (comparer.langProj1OnsetPrinciple)
 			{
@@ -379,7 +384,6 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		} else {
 			sb.append("<p>" + bundle.getString("report.sameonsetprinciple") + "</p>\n");
 		}
-		formatApproachSpecificSyllabificationParameters(sb);
 	}
 
 	protected void formatApproachSpecificSyllabificationParameters(StringBuilder sb) {

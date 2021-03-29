@@ -510,10 +510,15 @@ public class NPRule extends SylParserObject {
 
 	@Override
 	public int hashCode() {
-		String sCombo = ruleName.getValueSafe() + description.getValueSafe()
-				+ affectedSegmentOrNaturalClass.getValueSafe() + contextSegmentOrNaturalClass.getValueSafe()
-				+ action.getValueSafe() + level.getValueSafe() + obeysSSP.getValue() + isValid.getValue()
-				+ ruleRepresentation.getValueSafe();
+		String affectedValue = "";
+		if (affectedSegOrNC != null)
+			affectedValue = affectedSegOrNC.getUuid();
+		String contextValue = "";
+		if (contextSegOrNC != null)
+			contextValue = contextSegOrNC.getUuid();
+		String sCombo = id +  ruleName.getValueSafe() + description.getValueSafe()
+				+ affectedValue + contextValue + ruleAction + ruleLevel
+				+ obeysSSP.getValue() + isValid.getValue() + isActive();
 		return sCombo.hashCode();
 	}
 
@@ -527,32 +532,33 @@ public class NPRule extends SylParserObject {
 			return false;
 		boolean result = true;
 		NPRule rule = (NPRule) obj;
-		if (!getRuleName().equals(rule.getRuleName())) {
+		if (!id.equals(rule.getID())) {
+			result = false;
+		} else if (!getRuleName().equals(rule.getRuleName())) {
 			result = false;
 		} else if (!getDescription().equals(rule.getDescription())) {
 			result = false;
-		} else if (!getAffectedSegmentOrNaturalClass().equals(
-				rule.getAffectedSegmentOrNaturalClass())) {
+		} else if (!CVSegmentOrNaturalClass.equalsCVSegOrNC(affectedSegOrNC, rule.getAffectedSegOrNC())) {
 			result = false;
-		} else if (!getContextSegmentOrNaturalClass().equals(rule.getContextSegmentOrNaturalClass())) {
+		} else if (!CVSegmentOrNaturalClass.equalsCVSegOrNC(contextSegOrNC, rule.getContextSegOrNC())) {
 			result = false;
-		} else if (!getAction().equals(rule.getAction())) {
+		} else if (!getRuleAction().equals(rule.getRuleAction())) {
 			result = false;
-		} else if (!getLevel().equals(rule.getLevel())) {
+		} else if (!getRuleLevel().equals(rule.getRuleLevel())) {
 			result = false;
 		} else if (isObeysSSP() != rule.isObeysSSP()) {
 			result = false;
-		} else if (isValid() != rule.isValid()) {
+		} else if (isActive() != rule.isActive()) {
 			result = false;
-		} else if (!getRuleRepresentation().equals(rule.getRuleRepresentation())) {
+		} else if (isValid() != rule.isValid()) {
 			result = false;
 		}
 		return result;
 	}
 
+
 	@Override
 	public String getSortingValue() {
 		return getRuleName();
 	}
-
 }
