@@ -88,6 +88,70 @@
         <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
     </hyphenationParametersXLingPaper>
     <moraicApproach/>
+    <npApproach>
+        <filters/>
+        <rules>
+            <rule valid="true" id="db138518-fc24-42f5-bd96-ce0257748893" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <affectedSegmentOrNaturalClass>[V]</affectedSegmentOrNaturalClass>
+                <contextSegmentOrNaturalClass></contextSegmentOrNaturalClass>
+                <description>Build nucleus</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>BUILD</ruleAction>
+                <ruleLevel>ALL</ruleLevel>
+                <ruleName>Nucleus</ruleName>
+                <ruleRepresentation>(N''(N'(N(\L [V]))))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="05630978-d262-4aa6-ba24-71dc2a5aa45b" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <contextSegmentOrNaturalClass>[V]</contextSegmentOrNaturalClass>
+                <description>Attach onset to N''</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>ATTACH</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>Onset</ruleName>
+                <ruleRepresentation>(N''(\L [C])(N'(N(\L [V]))))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="5c22d9d8-d09b-4d9d-96f7-d420b66a20fd" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <contextSegmentOrNaturalClass>[V]</contextSegmentOrNaturalClass>
+                <description>Attach coda to N'</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>ATTACH</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Coda</ruleName>
+                <ruleRepresentation>(N'(N(\L [V]))(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="564ef549-8fe4-4714-ba61-adccdd5ca5a9" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description>Augment onset with another onset</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>Additional onset</ruleName>
+                <ruleRepresentation>(N''(\L [C])(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="2ac593ef-7cf3-4a0a-be45-52b7bd386408" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description>Augment coda with another coda</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Additional coda</ruleName>
+                <ruleRepresentation>(N'(\L [C])(\L [C]))</ruleRepresentation>
+            </rule>
+        </rules>
+    </npApproach>
     <oncApproach/>
     <shApproach>
         <shSonorityHierarchy>
