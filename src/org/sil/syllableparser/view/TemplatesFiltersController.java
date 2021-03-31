@@ -132,6 +132,7 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 	
 	protected ObservableList<TemplateFilter> contentList = FXCollections.observableArrayList();
 	protected boolean fAllowSlotPosition = false;
+	protected boolean fAllowConstituentBeginMarker = false;
 
 	public TemplatesFiltersController() {
 
@@ -405,6 +406,7 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 		CharStream input = CharStreams.fromString(sRep);
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
 		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
+		TemplateFilterLexer.constituentBeginMarker = fAllowConstituentBeginMarker;
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
 		parser.removeErrorListeners();

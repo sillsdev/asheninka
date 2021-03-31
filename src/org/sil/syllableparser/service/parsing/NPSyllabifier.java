@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.sil.syllableparser.Constants;
@@ -18,6 +19,7 @@ import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.npapproach.NPFilter;
 import org.sil.syllableparser.model.npapproach.NPNodeInSyllable;
@@ -430,9 +432,22 @@ public class NPSyllabifier implements Syllabifiable {
 		NPTracer tracer = NPTracer.getInstance();
 		for (NPFilter f : filters) {
 			int iItemsInFilter = f.getSlots().size();
+			int iStart = iSegmentInWord;
+			Optional<TemplateFilterSlotSegmentOrNaturalClass> slot = f.getSlots().stream()
+					.filter(s -> s.isConstituentBeginsHere()).findFirst();
+			if (slot.isPresent()) {
+				//adjust where we begin to match
+				int iSlot = f.getSlots().indexOf(slot.get());
+				int iSlotAdjust = calculateWhereToStartMatch(segmentsInWord, iSegmentInWord, slot,
+						iSlot, f);
+				iStart -= iSlotAdjust;
+				if (iSlot < 0 || iStart < 0) {
+					continue;
+				}
+			}
 			int iEnd = Math.min(iSegmentInWord + iItemsInFilter, segmentsInWord.size());
 			if (filterMatcher.matches(f,
-					segmentsInWord.subList(iSegmentInWord, iEnd),
+					segmentsInWord.subList(iStart, iEnd),
 					sonorityComparer, sspComparisonNeeded)) {
 				if (fDoTrace) {
 					tracer.setStatus(NPSyllabificationStatus.FILTER_FAILED);
@@ -444,6 +459,27 @@ public class NPSyllabifier implements Syllabifiable {
 			}
 		}
 		return true;
+	}
+
+	protected int calculateWhereToStartMatch(List<NPSegmentInSyllable> segmentsInWord,
+			int iSegmentInWord, Optional<TemplateFilterSlotSegmentOrNaturalClass> slot, int iSlot,
+			NPFilter f) {
+		int iSlotAdjust = 0;
+		for (int i = 0; i <= iSlot; i++) {
+			if (f.getSlots().get(i).isOptional()) {
+				int indexOfSegmentToMatch = iSegmentInWord - (iSlot-i) - 1;
+				if (indexOfSegmentToMatch < 0) {
+					continue;
+				}
+				Segment seg = segmentsInWord.get(indexOfSegmentToMatch).getSegment();
+				if (filterMatcher.segMatchesSlot(seg, slot.get(), true)) {
+					iSlotAdjust++;
+				}
+			} else {
+				iSlotAdjust++;
+			}
+		}
+		return iSlotAdjust;
 	}
 
 	protected boolean checkSonority(List<NPSegmentInSyllable> segmentsInWord, Integer iAffected, int iContext) {

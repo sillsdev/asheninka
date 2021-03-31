@@ -10,15 +10,10 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import org.junit.Test;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
-import org.sil.syllableparser.model.npapproach.NPFilter;
 import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPRuleAction;
 import org.sil.syllableparser.model.npapproach.NPRuleLevel;
@@ -36,7 +31,7 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 	@Test
 	public void wordToSegmentToSyllableCodasOnMaxAllButFirstTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
-		turnOnseMaximizationOn();
+		turnOnsetMaximizationOn();
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
 				OnsetPrincipleType.ALL_BUT_FIRST_HAS_ONSET);
 		npApproach = languageProject.getNPApproach();
@@ -70,30 +65,10 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		checkSyllabification("dolnti", false, 2, "do.ti", "(W(σ(N''(\\L d(\\G d))(N'(N(\\L o(\\G o))))))(\\O \\L l(\\G l))(\\O \\L n(\\G n))(σ(N''(\\L t(\\G t))(N'(N(\\L i(\\G i)))))))");
 	}
 
-	protected void turnOnseMaximizationOff() {
-		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
-		// onset maximization is handled by ordering the rules
-		rule = rules.get(3);
-		rules.add(2, rule);
-		rules.remove(4);
-		ObservableList<NPRule> orules = FXCollections.observableArrayList(rules);
-		npApproach.setNPRules(orules);
-	}
-
-	protected void turnOnseMaximizationOn() {
-		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
-		// onset maximization is handled by ordering the rules
-		rule = rules.get(3);
-		rules.add(2, rule);
-		rules.remove(4);
-		ObservableList<NPRule> orules = FXCollections.observableArrayList(rules);
-		npApproach.setNPRules(orules);
-	}
-
 	@Test
 	public void wordToSegmentToSyllableCodasOnMaxEveryTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
-		turnOnseMaximizationOn();
+		turnOnsetMaximizationOn();
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
 				OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 		npApproach = languageProject.getNPApproach();
@@ -131,7 +106,7 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 	@Test
 	public void wordToSegmentToSyllableCodasOnMaxNoOnsetsRequiredTest() {
 		languageProject.getSyllabificationParameters().setCodasAllowed(true);
-		turnOnseMaximizationOn();
+		turnOnsetMaximizationOn();
 		languageProject.getSyllabificationParameters().setOnsetPrincipleEnum(
 				OnsetPrincipleType.ONSETS_NOT_REQUIRED);
 		npApproach = languageProject.getNPApproach();
@@ -314,32 +289,6 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		checkSyllabification("dolnti", false, 2, "do.ti", "(W(σ(N''(\\L d(\\G d))(N'(N(\\L o(\\G o))))))(\\O \\L l(\\G l))(\\O \\L n(\\G n))(σ(N''(\\L t(\\G t))(N'(N(\\L i(\\G i)))))))");
 	}
 
-	protected void turnCodasAllowedOff() {
-		languageProject.getSyllabificationParameters().setCodasAllowed(false);
-		// coda off is handled by deactivating the coda-oriented rules
-		Optional<NPRule> codaRule = rules.stream()
-				.filter(r -> r.getID().equals("7d8c3b88-7d72-40ac-a8f2-0f1df56aeef1")).findFirst();
-		assertTrue(codaRule.isPresent());
-		codaRule.get().setActive(false);
-		codaRule = rules.stream()
-				.filter(r -> r.getID().equals("b70cc8c6-13e8-4dc9-87ef-3a2f9cdcd7eb")).findFirst();
-		assertTrue(codaRule.isPresent());
-		codaRule.get().setActive(false);
-	}
-
-	protected void turnCodasAllowedOn() {
-		languageProject.getSyllabificationParameters().setCodasAllowed(true);
-		// coda on is handled by activating the coda-oriented rules
-		Optional<NPRule> codaRule = rules.stream()
-				.filter(r -> r.getID().equals("7d8c3b88-7d72-40ac-a8f2-0f1df56aeef1")).findFirst();
-		assertTrue(codaRule.isPresent());
-		codaRule.get().setActive(true);
-		codaRule = rules.stream()
-				.filter(r -> r.getID().equals("b70cc8c6-13e8-4dc9-87ef-3a2f9cdcd7eb")).findFirst();
-		assertTrue(codaRule.isPresent());
-		codaRule.get().setActive(true);
-	}
-
 	@Test
 	public void wordToSegmentToSyllableNoCodasOnEveryTest() {
 		turnCodasAllowedOff();
@@ -500,15 +449,6 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		tracingStep = tracingSteps.get(4);
 		checkNPTracingStep(tracingStep, NPSyllabificationStatus.LEFT_ADJOINED_SEGMENT_TO_N_DOUBLE_BAR_NODE, "y", true);
 }
-
-	protected void turnOffOnsetAndCodaRules() {
-		// turn off onset and coda rules, both attach and augment ones
-		npApproach.getNPRules().get(1).setActive(false);
-		npApproach.getNPRules().get(2).setActive(false);
-		npApproach.getNPRules().get(3).setActive(false);
-		npApproach.getNPRules().get(4).setActive(false);
-		npApproach.getNPRules().get(5).setActive(false);
-	}
 
 	@Test
 	public void rightAdjoinRulesTest() {
@@ -734,24 +674,6 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		tracingStep = tracingSteps.get(12);
 		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SOME_SEGMENTS_NOT_SYLLABIFIED, "k", false);
 		}
-
-	protected void turnOnTestingFilters() {
-		List<NPFilter> filters = npApproach.getNPFilters().stream().filter(filter -> filter.isValid())
-				.collect(Collectors.toList());
-		// turn on the three inactive fail filters we're testing with
-		Optional<NPFilter> filter = filters.stream()
-				.filter(r -> r.getID().equals("0b187b16-3dc2-414a-9c8a-76bbfccd8a47")).findFirst();
-		assertTrue(filter.isPresent());
-		filter.get().setActive(true);
-		filter = filters.stream()
-				.filter(r -> r.getID().equals("c366bc4d-cb94-44f9-830d-49ae4404596c")).findFirst();
-		assertTrue(filter.isPresent());
-		filter.get().setActive(true);
-		filter = filters.stream()
-				.filter(r -> r.getID().equals("710653a7-e536-4815-ae69-5ecec206b19e")).findFirst();
-		assertTrue(filter.isPresent());
-		filter.get().setActive(true);
-	}
 
 	@Test
 	public void traceSyllabifyWordTest() {
@@ -1466,7 +1388,7 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 		checkNPTracingStep(tracingStep, NPSyllabificationStatus.SOME_SEGMENTS_NOT_SYLLABIFIED, "", false);
 
 	turnCodasAllowedOn();
-	turnOnseMaximizationOn();
+	turnOnsetMaximizationOn();
 	languageProject.getSyllabificationParameters().setOnsetPrinciple(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET.toString());
 	npApproach = languageProject.getNPApproach();
 	npSyllabifier = new NPSyllabifier(npApproach);
@@ -1507,12 +1429,5 @@ public class NPSyllabifierTest extends NPSyllabifierTestBase {
 	checkNPTracingStep(tracingStep, NPSyllabificationStatus.APPLYING_RULE, "", true);
 	tracingStep = tracingSteps.get(14);
 	checkNPTracingStep(tracingStep, NPSyllabificationStatus.NO_SEGMENTS_MATCHED_RULE, "", true);
-	}
-
-	private void checkNPTracingStep(NPTracingStep step, NPSyllabificationStatus status, String segment, boolean success) {
-		assertEquals(status, step.getStatus());
-		if (step.getSegment1() != null)
-			assertEquals(segment, step.getSegment1().getSegment());
-		assertEquals(success, step.isSuccessful());
 	}
 }

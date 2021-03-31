@@ -50,6 +50,26 @@
                 <NCName>Stop</NCName>
                 <SNCRepresentation>b, d, g, k, p, t</SNCRepresentation>
             </cvNaturalClass>
+            <cvNaturalClass snc="0c349a88-de1d-4bd8-8845-18775f142719 309bc43b-27b1-43d8-a88d-0d53db07720e 65be3575-5c87-4a7d-8560-d1f32a816b2f e651a3d3-98cd-4d89-a5e4-d971c7356808" id="6ae9e40e-87cd-4f31-8bd6-bf26965e37fe" active="true">
+                <description></description>
+                <NCName>Non-stridentCoronal</NCName>
+                <SNCRepresentation>d, ð, t, θ</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="399e1b20-f7ed-4952-82dd-68b44485673a d4d9613d-4213-471e-986f-e39e8d5452bd 0da358b2-1156-4614-96dd-10a9964fe3c7 cd228d00-8c1d-41b8-a612-aa7d96411f5e" id="9f26fda8-5622-4b4d-96b9-fc5aec82e158" active="true">
+                <description></description>
+                <NCName>Alveo-palatal</NCName>
+                <SNCRepresentation>d͡ʒ, ʃ, t͡ʃ, ʒ</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="5b00fb26-005d-4e73-a7c0-5ffac83a3a97 101d2651-cd84-4671-a286-0d37e22759e4 76e0b311-b742-4eb5-98f9-8670dfce5149 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" id="8edc52bb-46ce-4fc5-8523-998e039be814" active="true">
+                <description></description>
+                <NCName>Sonorant</NCName>
+                <SNCRepresentation>j, l, ɹ, w, [N]</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="0701fe22-3ac3-43a9-8d0d-78940f0ec514 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b d4d9613d-4213-471e-986f-e39e8d5452bd 65be3575-5c87-4a7d-8560-d1f32a816b2f 0da358b2-1156-4614-96dd-10a9964fe3c7 e651a3d3-98cd-4d89-a5e4-d971c7356808" id="55ed444a-0e90-4908-b2d8-b2714d35de61" active="true">
+                <description>voiceless obstruents</description>
+                <NCName>VoicelessObstruent</NCName>
+                <SNCRepresentation>f, h, k, p, s, ʃ, t, t͡ʃ, θ</SNCRepresentation>
+            </cvNaturalClass>
         </cvNaturalClasses>
         <cvSyllablePatterns>
             <cvSyllablePattern ncs="b500749a-9617-444c-ae28-7552cb3236ec 9821d4ba-8c34-432d-9afe-7c428dcd9afa" id="5059b228-2994-4195-a881-e62958bff0c5" active="true">
@@ -245,6 +265,197 @@
         <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
     </hyphenationParametersXLingPaper>
     <moraicApproach/>
+    <npApproach>
+        <filters>
+            <filter id="4192f242-3cde-45e7-ae6f-3eb06e277faf" active="true">
+                <description>Example: ætlæntɪk should be æt.læn.tɪk, not æ.tlæn.tɪk</description>
+                <slots>
+                    <slot natclass="6ae9e40e-87cd-4f31-8bd6-bf26965e37fe">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot segment="101d2651-cd84-4671-a286-0d37e22759e4">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>true</isSegment>
+                        <segmentString>l</segmentString>
+                    </slot>
+                </slots>
+                <templateFilterName>Disallow non-strident coronal before labial in onset</templateFilterName>
+                <templateFilterRepresentation>[Non-stridentCoronal] l</templateFilterRepresentation>
+                <type>Onset</type>
+                <valid>true</valid>
+                <action doRepair="false" repairStartPos="0"/>
+                <templateFilterType>ONSET</templateFilterType>
+            </filter>
+            <filter id="2b96a172-8809-463a-8712-534724d0a6b7" active="true">
+                <description>Example: æpniə should be æp.ni.ə, not æ.pni.ə</description>
+                <slots>
+                    <slot natclass="e8f6af08-9f56-43a3-9d86-993c9235df20">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot natclass="6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                </slots>
+                <templateFilterName>Disallow stop/nasal in onset</templateFilterName>
+                <templateFilterRepresentation>[Stop] [N]</templateFilterRepresentation>
+                <type>Onset</type>
+                <valid>true</valid>
+                <action doRepair="false" repairStartPos="0"/>
+                <templateFilterType>ONSET</templateFilterType>
+            </filter>
+            <filter id="1e4076a3-1127-4882-8668-5212d021ece3" active="true">
+                <description>Example: kæʃlɛs should be kæʃ.lɛs, not kæ.ʃlɛs and maɹʃlænd should be maɹʃ.lænd, not maɹ.ʃlænd</description>
+                <slots>
+                    <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>false</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot natclass="8edc52bb-46ce-4fc5-8523-998e039be814">
+                        <constituentBeginsHere>true</constituentBeginsHere>
+                        <obeysSSP>false</obeysSSP>
+                        <isOptional>true</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot natclass="9f26fda8-5622-4b4d-96b9-fc5aec82e158">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot natclass="8edc52bb-46ce-4fc5-8523-998e039be814">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                </slots>
+                <templateFilterName>Disallow alveo-palatal before sonorant in non-intial onsets</templateFilterName>
+                <templateFilterRepresentation>*[V] (*[Sonorant]) _ [Alveo-palatal]  [Sonorant]</templateFilterRepresentation>
+                <type>Onset</type>
+                <valid>true</valid>
+                <action doRepair="false" repairStartPos="0"/>
+                <templateFilterType>ONSET</templateFilterType>
+            </filter>
+        </filters>
+        <rules>
+            <rule valid="true" id="b558925e-ea0e-4bea-a9b2-903a08503bb9" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <affectedSegmentOrNaturalClass>[V]</affectedSegmentOrNaturalClass>
+                <contextSegmentOrNaturalClass></contextSegmentOrNaturalClass>
+                <description>Build nucleus</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>BUILD</ruleAction>
+                <ruleLevel>ALL</ruleLevel>
+                <ruleName>Nucleus</ruleName>
+                <ruleRepresentation>(N''(N'(N(\L [V]))))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="c1a2c50d-870d-4b4c-90f2-e813704f5f47" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <contextSegmentOrNaturalClass>[V]</contextSegmentOrNaturalClass>
+                <description>Attach onset to nucleus</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>ATTACH</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>Onset</ruleName>
+                <ruleRepresentation>(N''(\L [C])(N'(N(\L [V]))))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="9ab72b84-1720-4f99-8e8b-17afa6cb2cda" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description></description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>Augment onset with another onset</ruleName>
+                <ruleRepresentation>(N''(\L [C])(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="7d8c3b88-7d72-40ac-a8f2-0f1df56aeef1" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <contextSegmentOrNaturalClass>[V]</contextSegmentOrNaturalClass>
+                <description>Attach coda to N'</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>ATTACH</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Coda</ruleName>
+                <ruleRepresentation>(N'(N(\L [V]))(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="5cce0bbc-28db-4169-a1ca-21f67a2ed1f2" active="true">
+                <affectedSegOrNC isSegment="true" segOrNC="25bdfcdf-242a-49d8-94d2-74e2f666f88b" active="true"/>
+                <affectedSegmentOrNaturalClass>s</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description></description>
+                <obeysSSP>false</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>s case</ruleName>
+                <ruleRepresentation>(N''(\L *s)(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="b70cc8c6-13e8-4dc9-87ef-3a2f9cdcd7eb" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description></description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Augment coda with another coda</ruleName>
+                <ruleRepresentation>(N'(\L [C])(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="8b5b4b5d-feb2-4ce9-8a54-d9bba1f6f7c6" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="55ed444a-0e90-4908-b2d8-b2714d35de61" active="true"/>
+                <affectedSegmentOrNaturalClass>[VoicelessObstruent]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="55ed444a-0e90-4908-b2d8-b2714d35de61" active="true"/>
+                <contextSegmentOrNaturalClass>[VoicelessObstruent]</contextSegmentOrNaturalClass>
+                <description>Example: gɹæspt</description>
+                <obeysSSP>false</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Augment coda with obstruents</ruleName>
+                <ruleRepresentation>(N'(\L [VoicelessObstruent])(\L *[VoicelessObstruent]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="b10dd9ab-5480-40eb-bfd7-64e0e77b05fa" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c" active="true"/>
+                <affectedSegmentOrNaturalClass>[Coronal]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description></description>
+                <obeysSSP>false</obeysSSP>
+                <ruleAction>RIGHT_ADJOIN</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>word final adjoin</ruleName>
+                <ruleRepresentation>(N''(N''(\L [C]))(N''(\L *[Coronal])))</ruleRepresentation>
+            </rule>
+        </rules>
+    </npApproach>
     <oncApproach/>
     <shApproach>
         <shSonorityHierarchy>

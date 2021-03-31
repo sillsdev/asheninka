@@ -76,34 +76,11 @@ public class TemplateFilterMatcher {
 			slot = slots.get(iSlot);
 			CVSegmentInSyllable segInSyl = segmentsToMatch.get(iSegMatchCount);
 			Segment seg = segInSyl.getSegment();
-			if (slot.isSegment()) {
-				Segment referringSegment = slot.getReferringSegment();
-				if (!activeSegments.contains(referringSegment)) {
-					return false;
-				}
-				if (seg.equals(referringSegment)) {
-					iSegMatchCount++;
-					TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
-					slotAndSegment.add(ss);
-				} else if (!slot.isOptional()) {
-					return false;
-				}
+			if (segMatchesSlot(seg, slot, false)) {
+				iSlot++;
 			} else {
-				CVNaturalClass natClass = slot.getCVNaturalClass();
-				if (!activeClasses.contains(natClass)) {
-					return false;
-				}
-				if (natClass.hasSegment(seg)) {
-					iSegMatchCount++;
-					TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
-					slotAndSegment.add(ss);
-				} else if (!slot.isOptional()) {
-					return false;
-				}
+				return false;
 			}
-			iSlot++;
-//			TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
-//			slotAndSegment.add(ss);
 		}
 		while (iSlot < slots.size()) {
 			// not all slots were tested; remaining slots must be optional
@@ -118,6 +95,35 @@ public class TemplateFilterMatcher {
 			return sonorityIsValid(tf, sonorityComparer, sspComparisonNeeded, slotAndSegment);
 		}	
 		return false;
+	}
+
+	public boolean segMatchesSlot(Segment seg, TemplateFilterSlotSegmentOrNaturalClass slot, boolean ignoreSlotOptionality) {
+		if (slot.isSegment()) {
+			Segment referringSegment = slot.getReferringSegment();
+			if (!activeSegments.contains(referringSegment)) {
+				return false;
+			}
+			if (seg.equals(referringSegment)) {
+				iSegMatchCount++;
+				TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
+				slotAndSegment.add(ss);
+			} else if (!slot.isOptional() || ignoreSlotOptionality) {
+				return false;
+			}
+		} else {
+			CVNaturalClass natClass = slot.getCVNaturalClass();
+			if (!activeClasses.contains(natClass)) {
+				return false;
+			}
+			if (natClass.hasSegment(seg)) {
+				iSegMatchCount++;
+				TemplateFilterSlotSegment ss = new TemplateFilterSlotSegment(slot, seg);
+				slotAndSegment.add(ss);
+			} else if (!slot.isOptional() || ignoreSlotOptionality) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean sonorityIsValid(TemplateFilter tf, SHSonorityComparer sonorityComparer,

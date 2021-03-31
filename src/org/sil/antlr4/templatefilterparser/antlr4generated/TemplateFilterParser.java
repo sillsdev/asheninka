@@ -192,7 +192,7 @@ public class TemplateFilterParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(33);
+			setState(36);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
@@ -200,26 +200,33 @@ public class TemplateFilterParser extends Parser {
 				setState(26);
 				constituentBeginMarkerTerm();
 				setState(27);
-				termSequence(5);
+				termSequence(6);
 				}
 				break;
 			case 2:
 				{
 				setState(29);
-				term();
+				constituentBeginMarkerTerm();
+				notifyErrorListeners("missingClassOrSegment");
 				}
 				break;
 			case 3:
 				{
-				setState(30);
+				setState(32);
 				term();
-				setState(31);
+				}
+				break;
+			case 4:
+				{
+				setState(33);
+				term();
+				setState(34);
 				termSequence(1);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(53);
+			setState(56);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -227,40 +234,40 @@ public class TemplateFilterParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(51);
+					setState(54);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 					case 1:
 						{
 						_localctx = new TermSequenceContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_termSequence);
-						setState(35);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(36);
+						setState(38);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(39);
 						slotPositionTerm();
-						setState(37);
-						termSequence(8);
+						setState(40);
+						termSequence(9);
 						}
 						break;
 					case 2:
 						{
 						_localctx = new TermSequenceContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_termSequence);
-						setState(39);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(40);
+						setState(42);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(43);
 						constituentBeginMarkerTerm();
-						setState(41);
-						termSequence(7);
+						setState(44);
+						termSequence(8);
 						}
 						break;
 					case 3:
 						{
 						_localctx = new TermSequenceContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_termSequence);
-						setState(43);
-						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(44);
+						setState(46);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(47);
 						slotPositionTerm();
 						notifyErrorListeners("missingClassOrSegment");
 						}
@@ -269,9 +276,9 @@ public class TemplateFilterParser extends Parser {
 						{
 						_localctx = new TermSequenceContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_termSequence);
-						setState(47);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(48);
+						setState(50);
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						setState(51);
 						constituentBeginMarkerTerm();
 						notifyErrorListeners("missingClassOrSegment");
 						}
@@ -279,7 +286,7 @@ public class TemplateFilterParser extends Parser {
 					}
 					} 
 				}
-				setState(55);
+				setState(58);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			}
@@ -318,7 +325,7 @@ public class TemplateFilterParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(56);
+			setState(59);
 			match(SLOT_POSITION);
 			}
 		}
@@ -355,7 +362,7 @@ public class TemplateFilterParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58);
+			setState(61);
 			match(CONSTITUENT_BEGIN_MARKER);
 			}
 		}
@@ -395,20 +402,20 @@ public class TemplateFilterParser extends Parser {
 		TermContext _localctx = new TermContext(_ctx, getState());
 		enterRule(_localctx, 8, RULE_term);
 		try {
-			setState(62);
+			setState(65);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(60);
+				setState(63);
 				optionalSegment();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(61);
+				setState(64);
 				segment();
 				}
 				break;
@@ -447,24 +454,24 @@ public class TemplateFilterParser extends Parser {
 		OptionalSegmentContext _localctx = new OptionalSegmentContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_optionalSegment);
 		try {
-			setState(81);
+			setState(84);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(64);
+				setState(67);
 				match(T__0);
-				setState(65);
+				setState(68);
 				segment();
-				setState(66);
+				setState(69);
 				match(T__1);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(68);
+				setState(71);
 				match(T__0);
 				notifyErrorListeners("missingClassOrSegment");
 				}
@@ -472,9 +479,9 @@ public class TemplateFilterParser extends Parser {
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(70);
+				setState(73);
 				match(T__0);
-				setState(71);
+				setState(74);
 				match(T__1);
 				notifyErrorListeners("missingClassOrSegment");
 				}
@@ -482,9 +489,9 @@ public class TemplateFilterParser extends Parser {
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(73);
+				setState(76);
 				match(T__0);
-				setState(74);
+				setState(77);
 				segment();
 				notifyErrorListeners("missingClosingParen");
 				}
@@ -492,9 +499,9 @@ public class TemplateFilterParser extends Parser {
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(77);
+				setState(80);
 				segment();
-				setState(78);
+				setState(81);
 				match(T__1);
 				notifyErrorListeners("missingOpeningParen");
 				}
@@ -540,45 +547,45 @@ public class TemplateFilterParser extends Parser {
 		SegmentContext _localctx = new SegmentContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_segment);
 		try {
-			setState(94);
+			setState(97);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(83);
+				setState(86);
 				ssp();
-				setState(84);
+				setState(87);
 				natClass();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(86);
+				setState(89);
 				natClass();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(87);
+				setState(90);
 				ssp();
-				setState(88);
+				setState(91);
 				literal();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(90);
+				setState(93);
 				literal();
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(91);
+				setState(94);
 				ssp();
 				notifyErrorListeners("missingClassOrSegment");
 				}
@@ -617,7 +624,7 @@ public class TemplateFilterParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(96);
+			setState(99);
 			match(T__2);
 			}
 		}
@@ -656,38 +663,38 @@ public class TemplateFilterParser extends Parser {
 		enterRule(_localctx, 16, RULE_natClass);
 		int _la;
 		try {
-			setState(118);
+			setState(121);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(98);
+				setState(101);
 				match(T__3);
-				setState(100); 
+				setState(103); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(99);
+					setState(102);
 					match(ID);
 					}
 					}
-					setState(102); 
+					setState(105); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==ID );
-				setState(104);
+				setState(107);
 				match(T__4);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(105);
+				setState(108);
 				match(T__3);
-				setState(106);
+				setState(109);
 				match(ID);
 				notifyErrorListeners("missingClosingSquareBracket");
 				}
@@ -695,9 +702,9 @@ public class TemplateFilterParser extends Parser {
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(108);
+				setState(111);
 				match(ID);
-				setState(109);
+				setState(112);
 				match(T__4);
 				notifyErrorListeners("missingOpeningSquareBracket");
 				}
@@ -705,7 +712,7 @@ public class TemplateFilterParser extends Parser {
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(111);
+				setState(114);
 				match(T__3);
 				notifyErrorListeners("missingClassAfterOpeningSquareBracket");
 				}
@@ -713,9 +720,9 @@ public class TemplateFilterParser extends Parser {
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(113);
+				setState(116);
 				match(T__3);
-				setState(114);
+				setState(117);
 				match(T__4);
 				notifyErrorListeners("missingClassAfterOpeningSquareBracket");
 				}
@@ -723,7 +730,7 @@ public class TemplateFilterParser extends Parser {
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(116);
+				setState(119);
 				match(T__4);
 				notifyErrorListeners("missingOpeningSquareBracket");
 				}
@@ -763,7 +770,7 @@ public class TemplateFilterParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120);
+			setState(123);
 			match(ID);
 			}
 		}
@@ -788,49 +795,50 @@ public class TemplateFilterParser extends Parser {
 	private boolean termSequence_sempred(TermSequenceContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 7);
+			return precpred(_ctx, 8);
 		case 1:
-			return precpred(_ctx, 6);
+			return precpred(_ctx, 7);
 		case 2:
-			return precpred(_ctx, 4);
+			return precpred(_ctx, 5);
 		case 3:
-			return precpred(_ctx, 3);
+			return precpred(_ctx, 4);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\13}\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\3"+
-		"\2\3\2\3\2\5\2\32\n\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3$\n\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\66\n\3\f"+
-		"\3\16\39\13\3\3\4\3\4\3\5\3\5\3\6\3\6\5\6A\n\6\3\7\3\7\3\7\3\7\3\7\3\7"+
-		"\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7T\n\7\3\b\3\b\3\b\3\b"+
-		"\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\ba\n\b\3\t\3\t\3\n\3\n\6\ng\n\n\r\n\16"+
-		"\nh\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\ny\n\n\3"+
-		"\13\3\13\3\13\2\3\4\f\2\4\6\b\n\f\16\20\22\24\2\2\2\u0088\2\31\3\2\2\2"+
-		"\4#\3\2\2\2\6:\3\2\2\2\b<\3\2\2\2\n@\3\2\2\2\fS\3\2\2\2\16`\3\2\2\2\20"+
-		"b\3\2\2\2\22x\3\2\2\2\24z\3\2\2\2\26\32\5\4\3\2\27\30\7\2\2\3\30\32\b"+
-		"\2\1\2\31\26\3\2\2\2\31\27\3\2\2\2\32\3\3\2\2\2\33\34\b\3\1\2\34\35\5"+
-		"\b\5\2\35\36\5\4\3\7\36$\3\2\2\2\37$\5\n\6\2 !\5\n\6\2!\"\5\4\3\3\"$\3"+
-		"\2\2\2#\33\3\2\2\2#\37\3\2\2\2# \3\2\2\2$\67\3\2\2\2%&\f\t\2\2&\'\5\6"+
-		"\4\2\'(\5\4\3\n(\66\3\2\2\2)*\f\b\2\2*+\5\b\5\2+,\5\4\3\t,\66\3\2\2\2"+
-		"-.\f\6\2\2./\5\6\4\2/\60\b\3\1\2\60\66\3\2\2\2\61\62\f\5\2\2\62\63\5\b"+
-		"\5\2\63\64\b\3\1\2\64\66\3\2\2\2\65%\3\2\2\2\65)\3\2\2\2\65-\3\2\2\2\65"+
-		"\61\3\2\2\2\669\3\2\2\2\67\65\3\2\2\2\678\3\2\2\28\5\3\2\2\29\67\3\2\2"+
-		"\2:;\7\t\2\2;\7\3\2\2\2<=\7\n\2\2=\t\3\2\2\2>A\5\f\7\2?A\5\16\b\2@>\3"+
-		"\2\2\2@?\3\2\2\2A\13\3\2\2\2BC\7\3\2\2CD\5\16\b\2DE\7\4\2\2ET\3\2\2\2"+
-		"FG\7\3\2\2GT\b\7\1\2HI\7\3\2\2IJ\7\4\2\2JT\b\7\1\2KL\7\3\2\2LM\5\16\b"+
-		"\2MN\b\7\1\2NT\3\2\2\2OP\5\16\b\2PQ\7\4\2\2QR\b\7\1\2RT\3\2\2\2SB\3\2"+
-		"\2\2SF\3\2\2\2SH\3\2\2\2SK\3\2\2\2SO\3\2\2\2T\r\3\2\2\2UV\5\20\t\2VW\5"+
-		"\22\n\2Wa\3\2\2\2Xa\5\22\n\2YZ\5\20\t\2Z[\5\24\13\2[a\3\2\2\2\\a\5\24"+
-		"\13\2]^\5\20\t\2^_\b\b\1\2_a\3\2\2\2`U\3\2\2\2`X\3\2\2\2`Y\3\2\2\2`\\"+
-		"\3\2\2\2`]\3\2\2\2a\17\3\2\2\2bc\7\5\2\2c\21\3\2\2\2df\7\6\2\2eg\7\13"+
-		"\2\2fe\3\2\2\2gh\3\2\2\2hf\3\2\2\2hi\3\2\2\2ij\3\2\2\2jy\7\7\2\2kl\7\6"+
-		"\2\2lm\7\13\2\2my\b\n\1\2no\7\13\2\2op\7\7\2\2py\b\n\1\2qr\7\6\2\2ry\b"+
-		"\n\1\2st\7\6\2\2tu\7\7\2\2uy\b\n\1\2vw\7\7\2\2wy\b\n\1\2xd\3\2\2\2xk\3"+
-		"\2\2\2xn\3\2\2\2xq\3\2\2\2xs\3\2\2\2xv\3\2\2\2y\23\3\2\2\2z{\7\13\2\2"+
-		"{\25\3\2\2\2\13\31#\65\67@S`hx";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\13\u0080\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
+		"\t\13\3\2\3\2\3\2\5\2\32\n\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\5\3\'\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\7\39\n\3\f\3\16\3<\13\3\3\4\3\4\3\5\3\5\3\6\3\6\5\6D\n\6\3\7\3"+
+		"\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7W\n"+
+		"\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bd\n\b\3\t\3\t\3\n\3"+
+		"\n\6\nj\n\n\r\n\16\nk\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n"+
+		"\3\n\3\n\5\n|\n\n\3\13\3\13\3\13\2\3\4\f\2\4\6\b\n\f\16\20\22\24\2\2\2"+
+		"\u008c\2\31\3\2\2\2\4&\3\2\2\2\6=\3\2\2\2\b?\3\2\2\2\nC\3\2\2\2\fV\3\2"+
+		"\2\2\16c\3\2\2\2\20e\3\2\2\2\22{\3\2\2\2\24}\3\2\2\2\26\32\5\4\3\2\27"+
+		"\30\7\2\2\3\30\32\b\2\1\2\31\26\3\2\2\2\31\27\3\2\2\2\32\3\3\2\2\2\33"+
+		"\34\b\3\1\2\34\35\5\b\5\2\35\36\5\4\3\b\36\'\3\2\2\2\37 \5\b\5\2 !\b\3"+
+		"\1\2!\'\3\2\2\2\"\'\5\n\6\2#$\5\n\6\2$%\5\4\3\3%\'\3\2\2\2&\33\3\2\2\2"+
+		"&\37\3\2\2\2&\"\3\2\2\2&#\3\2\2\2\':\3\2\2\2()\f\n\2\2)*\5\6\4\2*+\5\4"+
+		"\3\13+9\3\2\2\2,-\f\t\2\2-.\5\b\5\2./\5\4\3\n/9\3\2\2\2\60\61\f\7\2\2"+
+		"\61\62\5\6\4\2\62\63\b\3\1\2\639\3\2\2\2\64\65\f\6\2\2\65\66\5\b\5\2\66"+
+		"\67\b\3\1\2\679\3\2\2\28(\3\2\2\28,\3\2\2\28\60\3\2\2\28\64\3\2\2\29<"+
+		"\3\2\2\2:8\3\2\2\2:;\3\2\2\2;\5\3\2\2\2<:\3\2\2\2=>\7\t\2\2>\7\3\2\2\2"+
+		"?@\7\n\2\2@\t\3\2\2\2AD\5\f\7\2BD\5\16\b\2CA\3\2\2\2CB\3\2\2\2D\13\3\2"+
+		"\2\2EF\7\3\2\2FG\5\16\b\2GH\7\4\2\2HW\3\2\2\2IJ\7\3\2\2JW\b\7\1\2KL\7"+
+		"\3\2\2LM\7\4\2\2MW\b\7\1\2NO\7\3\2\2OP\5\16\b\2PQ\b\7\1\2QW\3\2\2\2RS"+
+		"\5\16\b\2ST\7\4\2\2TU\b\7\1\2UW\3\2\2\2VE\3\2\2\2VI\3\2\2\2VK\3\2\2\2"+
+		"VN\3\2\2\2VR\3\2\2\2W\r\3\2\2\2XY\5\20\t\2YZ\5\22\n\2Zd\3\2\2\2[d\5\22"+
+		"\n\2\\]\5\20\t\2]^\5\24\13\2^d\3\2\2\2_d\5\24\13\2`a\5\20\t\2ab\b\b\1"+
+		"\2bd\3\2\2\2cX\3\2\2\2c[\3\2\2\2c\\\3\2\2\2c_\3\2\2\2c`\3\2\2\2d\17\3"+
+		"\2\2\2ef\7\5\2\2f\21\3\2\2\2gi\7\6\2\2hj\7\13\2\2ih\3\2\2\2jk\3\2\2\2"+
+		"ki\3\2\2\2kl\3\2\2\2lm\3\2\2\2m|\7\7\2\2no\7\6\2\2op\7\13\2\2p|\b\n\1"+
+		"\2qr\7\13\2\2rs\7\7\2\2s|\b\n\1\2tu\7\6\2\2u|\b\n\1\2vw\7\6\2\2wx\7\7"+
+		"\2\2x|\b\n\1\2yz\7\7\2\2z|\b\n\1\2{g\3\2\2\2{n\3\2\2\2{q\3\2\2\2{t\3\2"+
+		"\2\2{v\3\2\2\2{y\3\2\2\2|\23\3\2\2\2}~\7\13\2\2~\25\3\2\2\2\13\31&8:C"+
+		"Vck{";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

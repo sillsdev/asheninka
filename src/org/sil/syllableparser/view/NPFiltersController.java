@@ -26,6 +26,7 @@ public class NPFiltersController extends FiltersController {
 		npApproach = npApproachData;
 		languageProject = npApproach.getLanguageProject();
 		setDataProcessing(ApplicationPreferences.LAST_NP_FILTERS_VIEW_ITEM_USED, npApproach.getNPFilters());
+		fAllowConstituentBeginMarker = true;
 	}
 
 	@Override

@@ -10,7 +10,10 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.junit.After;
@@ -22,8 +25,10 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.npapproach.NPApproach;
+import org.sil.syllableparser.model.npapproach.NPFilter;
 import org.sil.syllableparser.model.npapproach.NPRule;
 import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
+import org.sil.syllableparser.model.npapproach.NPSyllabificationStatus;
 import org.sil.syllableparser.model.npapproach.NPSyllable;
 import org.sil.syllableparser.model.npapproach.NPTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
@@ -129,5 +134,85 @@ public class NPSyllabifierTestBase {
 				}
 				assertEquals(result, tracingStep.comparisonResult);
 			}
+
+	protected void turnOnseMaximizationOff() {
+		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
+		// onset maximization is handled by ordering the rules
+		rule = rules.get(3);
+		rules.add(2, rule);
+		rules.remove(4);
+		ObservableList<NPRule> orules = FXCollections.observableArrayList(rules);
+		npApproach.setNPRules(orules);
+	}
+
+	protected void turnOnsetMaximizationOn() {
+		languageProject.getSyllabificationParameters().setOnsetMaximization(true);
+		// onset maximization is handled by ordering the rules
+		rule = rules.get(3);
+		rules.add(2, rule);
+		rules.remove(4);
+		ObservableList<NPRule> orules = FXCollections.observableArrayList(rules);
+		npApproach.setNPRules(orules);
+	}
+
+	protected void turnCodasAllowedOff() {
+		languageProject.getSyllabificationParameters().setCodasAllowed(false);
+		// coda off is handled by deactivating the coda-oriented rules
+		Optional<NPRule> codaRule = rules.stream()
+				.filter(r -> r.getID().equals("7d8c3b88-7d72-40ac-a8f2-0f1df56aeef1")).findFirst();
+		assertTrue(codaRule.isPresent());
+		codaRule.get().setActive(false);
+		codaRule = rules.stream()
+				.filter(r -> r.getID().equals("b70cc8c6-13e8-4dc9-87ef-3a2f9cdcd7eb")).findFirst();
+		assertTrue(codaRule.isPresent());
+		codaRule.get().setActive(false);
+	}
+
+	protected void turnCodasAllowedOn() {
+		languageProject.getSyllabificationParameters().setCodasAllowed(true);
+		// coda on is handled by activating the coda-oriented rules
+		Optional<NPRule> codaRule = rules.stream()
+				.filter(r -> r.getID().equals("7d8c3b88-7d72-40ac-a8f2-0f1df56aeef1")).findFirst();
+		assertTrue(codaRule.isPresent());
+		codaRule.get().setActive(true);
+		codaRule = rules.stream()
+				.filter(r -> r.getID().equals("b70cc8c6-13e8-4dc9-87ef-3a2f9cdcd7eb")).findFirst();
+		assertTrue(codaRule.isPresent());
+		codaRule.get().setActive(true);
+	}
+
+	protected void turnOffOnsetAndCodaRules() {
+		// turn off onset and coda rules, both attach and augment ones
+		npApproach.getNPRules().get(1).setActive(false);
+		npApproach.getNPRules().get(2).setActive(false);
+		npApproach.getNPRules().get(3).setActive(false);
+		npApproach.getNPRules().get(4).setActive(false);
+		npApproach.getNPRules().get(5).setActive(false);
+	}
+
+	protected void turnOnTestingFilters() {
+		List<NPFilter> filters = npApproach.getNPFilters().stream().filter(filter -> filter.isValid())
+				.collect(Collectors.toList());
+		// turn on the three inactive fail filters we're testing with
+		Optional<NPFilter> filter = filters.stream()
+				.filter(r -> r.getID().equals("0b187b16-3dc2-414a-9c8a-76bbfccd8a47")).findFirst();
+		assertTrue(filter.isPresent());
+		filter.get().setActive(true);
+		filter = filters.stream()
+				.filter(r -> r.getID().equals("c366bc4d-cb94-44f9-830d-49ae4404596c")).findFirst();
+		assertTrue(filter.isPresent());
+		filter.get().setActive(true);
+		filter = filters.stream()
+				.filter(r -> r.getID().equals("710653a7-e536-4815-ae69-5ecec206b19e")).findFirst();
+		assertTrue(filter.isPresent());
+		filter.get().setActive(true);
+	}
+
+	protected void checkNPTracingStep(NPTracingStep step, NPSyllabificationStatus status, String segment, boolean success) {
+		assertEquals(status, step.getStatus());
+		if (step.getSegment1() != null)
+			assertEquals(segment, step.getSegment1().getSegment());
+		assertEquals(success, step.isSuccessful());
+	}
 
 }
