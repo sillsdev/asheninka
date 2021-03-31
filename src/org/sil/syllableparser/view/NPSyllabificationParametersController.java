@@ -29,6 +29,7 @@ public class NPSyllabificationParametersController extends SyllabificationParame
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		codasAllowedCheckBox = new CheckBox();
+		onsetMaximizationCheckBox = new CheckBox();
 		super.initialize(location, resources);
 	}
 }

@@ -32,16 +32,14 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="%label.onsetmaximization" GridPane.rowIndex="0" />
-                        <Label text="%label.onsetprinciple" GridPane.rowIndex="1" />
-                        <CheckBox fx:id="onsetMaximizationCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-						<RadioButton fx:id="allButFirstOPRadioButton" mnemonicParsing="false" onAction="#handleAllButFirstOPRadioButton" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="1" text="%radio.allbutfirst">
+                        <Label text="%label.onsetprinciple" GridPane.rowIndex="0" />
+						<RadioButton fx:id="allButFirstOPRadioButton" mnemonicParsing="false" onAction="#handleAllButFirstOPRadioButton" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="0" text="%radio.allbutfirst">
                				<toggleGroup>
                   				<ToggleGroup fx:id="group" />
                				</toggleGroup>
                			</RadioButton>
-						<RadioButton fx:id="everySyllableOPRadioButton" mnemonicParsing="false" onAction="#handleEverySyllableOPRadioButton" GridPane.columnIndex="1" GridPane.rowIndex="2" text="%radio.everysyllable" toggleGroup="$group"/>
-						<RadioButton fx:id="onsetsNotRequiredOPRadioButton" mnemonicParsing="false" onAction="#handleOnsetsNotRequiredOPRadioButton" GridPane.columnIndex="1" GridPane.rowIndex="3" text="%radio.everysyllable" toggleGroup="$group"/>
+						<RadioButton fx:id="everySyllableOPRadioButton" mnemonicParsing="false" onAction="#handleEverySyllableOPRadioButton" GridPane.columnIndex="1" GridPane.rowIndex="1" text="%radio.everysyllable" toggleGroup="$group"/>
+						<RadioButton fx:id="onsetsNotRequiredOPRadioButton" mnemonicParsing="false" onAction="#handleOnsetsNotRequiredOPRadioButton" GridPane.columnIndex="1" GridPane.rowIndex="2" text="%radio.everysyllable" toggleGroup="$group"/>
                      </children>
                   </GridPane>
                </children>
