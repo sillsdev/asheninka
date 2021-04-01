@@ -9,6 +9,7 @@ package org.sil.syllableparser.view;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.sil.lingtree.model.FontInfo;
@@ -144,8 +145,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	private Tooltip tooltipMoveUp;
 	@FXML
 	private Tooltip tooltipMoveDown;
-	@FXML
-	private Label invalidRuleMessage;
 	@FXML
 	protected ComboBox<NPRuleAction> actionComboBox;
 	@FXML
@@ -342,7 +341,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 				affectedTextField.setText(newValue);
 				currentRule.setAffectedSegmentOrNaturalClass(newValue);
 				reportAnyValidationMessage();
-				showRuleContent();
 			}
 		});
 		contextTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -360,7 +358,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 				contextTextField.setText(currentRule.getContextSegmentOrNaturalClass());
 				currentRule.setContextSegmentOrNaturalClass(newValue);
 				reportAnyValidationMessage();
-				showRuleContent();
 			}
 		});
 
@@ -379,7 +376,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		activeCheckBox.setOnAction((event) -> {
 			if (currentRule != null) {
 				currentRule.setActive(activeCheckBox.isSelected());
-				showRuleContent();
+				reportAnyValidationMessage();
 				forceTableRowToRedisplayPerActiveSetting(currentRule);
 			}
 			displayFieldsPerActiveSetting(currentRule);
@@ -388,14 +385,11 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		obeysSSPCheckBox.setOnAction((event) -> {
 			if (currentRule != null) {
 				currentRule.setObeysSSP(obeysSSPCheckBox.isSelected());
-				showRuleContent();
+				reportAnyValidationMessage();
 				forceTableRowToRedisplayPerActiveSetting(currentRule);
 			}
 			displayFieldsPerActiveSetting(currentRule);
 		});
-
-		invalidRuleMessage.setTextFill(Constants.RULES_ERROR_MESSAGE);
-		invalidRuleMessage.setWrapText(true);
 
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
@@ -413,28 +407,38 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		validator.setRule(currentRule);
 		validator.validate();
 		boolean firstRuleIsBuild = checkFirstRuleIsBuildAll();
+		ruleLingTreeSVG.setVisible(true);
 		if (validator.isValid() && firstRuleIsBuild) {
-			invalidRuleMessage.setVisible(false);
-			ruleLingTreeSVG.setVisible(true);
+			currentRule.setIsValid(true);
 			ruleTreeLabel.setVisible(true);
 			showRuleContent();
 		} else {
-			invalidRuleMessage.setVisible(true);
-			if (firstRuleIsBuild) {
-				invalidRuleMessage.setText(bundle.getString(validator.getErrorMessageProperty()));
-			}
-			ruleLingTreeSVG.setVisible(false);
 			ruleTreeLabel.setVisible(false);
+			StringBuilder sb = new StringBuilder();
+			sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head>");
+			sb.append("<body><div style=\"text-align:left;");
+			sb.append("color:");
+			sb.append(Constants.RULES_ERROR_MESSAGE);
+			sb.append("\">");
+			if (firstRuleIsBuild) {
+				sb.append(bundle.getString(validator.getErrorMessageProperty()));
+			} else {
+				sb.append(bundle.getString("nprule.message.buildisfirst"));
+			}
+			sb.append("</div></body></html>");
+			webEngine.loadContent(sb.toString());
 		}
 		currentRule.setIsValid(validator.isValid() && firstRuleIsBuild);
 	}
 
 	protected boolean checkFirstRuleIsBuildAll() {
 		if (npRulesTable.getItems().size() > 0) {
-			NPRule firstRule = npRulesTable.getItems().get(0);
+			Optional<NPRule> rule1 = npRulesTable.getItems().stream().filter(r -> r.isActive()).findFirst();
+			if (!rule1.isPresent()) {
+				return false;
+			}
+			NPRule firstRule = rule1.get();
 			if (firstRule.getRuleAction() != NPRuleAction.BUILD) {
-				String msg = bundle.getString("nprule.message.buildisfirst");
-				invalidRuleMessage.setText(msg);
 				return false;
 			}
 		}
@@ -501,13 +505,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		rule.setLevel(temp);
 	}
 
-	/**
-	 * Fills all text fields to show details about the CV natural class. If the
-	 * specified segment is null, all text fields are cleared.
-	 *
-	 * @param rule
-	 *            the segment or null
-	 */
 	private void showNPRuleDetails(NPRule rule) {
 		currentRule = rule;
 		if (rule != null) {
@@ -528,8 +525,12 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			levelComboBox.getSelectionModel().select(rule.getRuleLevel());
 			obeysSSPCheckBox.setSelected(rule.isObeysSSP());
 			activeCheckBox.setSelected(rule.isActive());
-			showRuleContent();
 			setUpDownButtonDisabled();
+			int currentItem = npRulesTable.getItems().indexOf(currentRule);
+			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
+					+ npRulesTable.getItems().size() + " ");
+			mainApp.getApplicationPreferences().setLastNPRulesViewItemUsed(currentItem);
+			reportAnyValidationMessage();
 		} else {
 			// Segment is null, remove all the text.
 			if (nameField != null) {
@@ -548,14 +549,6 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			buttonMoveUp.setDisable(true);
 		}
 		displayFieldsPerActiveSetting(rule);
-
-		if (rule != null) {
-			int currentItem = npRulesTable.getItems().indexOf(currentRule);
-			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
-					+ npRulesTable.getItems().size() + " ");
-			mainApp.getApplicationPreferences().setLastNPRulesViewItemUsed(currentItem);
-			reportAnyValidationMessage();
-		}
 	}
 
 	@Override
@@ -679,13 +672,13 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	@FXML
 	void handleLaunchAffectedSegOrNCChooser() {
 		showSegmentChooser(true);
-		showRuleContent();
+		reportAnyValidationMessage();
 	}
 
 	@FXML
 	void handleLaunchContextSegOrNCChooser() {
 		showSegmentChooser(false);
-		showRuleContent();
+		reportAnyValidationMessage();
 	}
 
 	/**

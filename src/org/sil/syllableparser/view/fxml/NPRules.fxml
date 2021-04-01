@@ -102,12 +102,11 @@
                          <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 						<AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS">
                            <children>
-                              <WebView fx:id="ruleLingTreeSVG" prefHeight="400.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                              <WebView fx:id="ruleLingTreeSVG" prefHeight="300.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                            </children>
                         </AnchorPane>
                      </children>
                   </GridPane>
-                  <Label fx:id="invalidRuleMessage" layoutX="70.0" layoutY="225" prefHeight="180.0" prefWidth="400.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="20.0" />
                </children>
             </AnchorPane>
         </items>
