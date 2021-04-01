@@ -179,6 +179,7 @@ public abstract class FiltersController extends TemplatesFiltersController {
 					public void run() {
 						currentTemplateFilter.setTemplateFilterType(selectedValue);
 						showTypeWarning(currentTemplateFilter);
+						processRepresentationFieldContents();
 					}
 				});
 			}

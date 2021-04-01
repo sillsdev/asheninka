@@ -8,6 +8,7 @@ package org.sil.syllableparser.view;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterAction;
+import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.npapproach.NPFilter;
@@ -26,7 +27,6 @@ public class NPFiltersController extends FiltersController {
 		npApproach = npApproachData;
 		languageProject = npApproach.getLanguageProject();
 		setDataProcessing(ApplicationPreferences.LAST_NP_FILTERS_VIEW_ITEM_USED, npApproach.getNPFilters());
-		fAllowConstituentBeginMarker = true;
 	}
 
 	@Override
@@ -36,6 +36,19 @@ public class NPFiltersController extends FiltersController {
 		filterList.add(newFilter);
 		newFilter.setTemplateFilterRepresentation("");
 		handleInsertNewItem(filterList, filterTable);
+	}
+
+	@Override
+	protected void processRepresentationFieldContents() {
+		if (currentTemplateFilter != null) {
+			NPFilter npf = (NPFilter) currentTemplateFilter;
+			if (npf.getTemplateFilterType() == FilterType.ONSET) {
+				fAllowConstituentBeginMarker = true;
+			} else {
+				fAllowConstituentBeginMarker = false;
+			}
+			super.processRepresentationFieldContents();
+		}
 	}
 
 	@Override
