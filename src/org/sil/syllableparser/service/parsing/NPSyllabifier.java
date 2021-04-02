@@ -193,32 +193,32 @@ public class NPSyllabifier implements Syllabifiable {
 					if (rule.getRuleLevel() != NPRuleLevel.N_DOUBLE_BAR) {
 						iContext = i - 1;
 					}
-					if (!rule.isObeysSSP()) {
-						tracer.setStatus(NPSyllabificationStatus.RULE_IGNORES_SSP);
-						tracer.recordStep();
-					} else if (!checkSonority(segmentsInWord, i, iContext)) {
-						tracer.setStatus(NPSyllabificationStatus.SSP_FAILED);
-						tracer.recordStep();
+					if (!applySSP(rule, i, iContext)) {
 						continue;
-					} else {
-						tracer.setStatus(NPSyllabificationStatus.SSP_PASSED);
-						tracer.recordStep();
 					}
 					addSegmentToSyllable(segmentsInWord, rule, i, iContext);
 				}
 				break;
 			case BUILD:
-				buildNucleus(segmentsInWord, matches);
+				for (Integer i : matches) {
+					buildNucleus(segmentsInWord, i);
+				}
 				break;
 			case LEFT_ADJOIN:
 				for (Integer i : matches) {
 					int iContext = i + 1;
+					if (!applySSP(rule, i, iContext)) {
+						continue;
+					}
 					applyAdjunctionRule(rule, i, iContext);
 				}
 				break;
 			case RIGHT_ADJOIN:
 				for (Integer i : matches) {
 					int iContext = i - 1;
+					if (!applySSP(rule, i, iContext)) {
+						continue;
+					}
 					applyAdjunctionRule(rule, i, iContext);
 				}
 				break;
@@ -263,17 +263,23 @@ public class NPSyllabifier implements Syllabifiable {
 		return true;
 	}
 
-	protected void applyAdjunctionRule(NPRule rule, Integer i, int iContext) {
+	protected boolean applySSP(NPRule rule, int i, int iContext) {
+		boolean result = true;
 		if (!rule.isObeysSSP()) {
 			tracer.setStatus(NPSyllabificationStatus.RULE_IGNORES_SSP);
 			tracer.recordStep();
 		} else if (!checkSonority(segmentsInWord, i, iContext)) {
 			tracer.setStatus(NPSyllabificationStatus.SSP_FAILED);
 			tracer.recordStep();
+			result = false;
 		} else {
 			tracer.setStatus(NPSyllabificationStatus.SSP_PASSED);
 			tracer.recordStep();
 		}
+		return result;
+	}
+
+	protected void applyAdjunctionRule(NPRule rule, Integer i, int iContext) {
 		NPSyllable syl = segmentsInWord.get(iContext).getSyllable();
 		if (syl != null) {
 			NPNodeLevel level = getNodeLevelFromRuleLevel(rule);
@@ -519,31 +525,29 @@ public class NPSyllabifier implements Syllabifiable {
 		}
 	}
 
-	protected void buildNucleus(List<NPSegmentInSyllable> segmentsInWord, List<Integer> matches) {
-		for (Integer i : matches) {
-			List<NPSegmentInSyllable> nodeNSegments = new ArrayList<NPSegmentInSyllable>();
-			List<NPSegmentInSyllable> syllableSegments = new ArrayList<NPSegmentInSyllable>();
-			nodeNSegments.add(segmentsInWord.get(i));
-			syllableSegments.add(segmentsInWord.get(i));
-			NPNodeInSyllable nodeNDoubleBar = new NPNodeInSyllable();
-			nodeNDoubleBar.setLevel(NPNodeLevel.N_DOUBLE_BAR);
-			NPNodeInSyllable nodeNBar = new NPNodeInSyllable();
-			nodeNBar.setLevel(NPNodeLevel.N_BAR);
-			NPNodeInSyllable nodeN = new NPNodeInSyllable();
-			nodeN.setLevel(NPNodeLevel.N);
-			NPNodeInSyllable nodeTerminal = new NPNodeInSyllable();
-			nodeTerminal.setLevel(NPNodeLevel.TERMINAL);
-			nodeTerminal.setSegments(nodeNSegments);
-			nodeN.getNodes().add(nodeTerminal);
-			nodeNBar.getNodes().add(nodeN);
-			nodeNDoubleBar.getNodes().add(nodeNBar);
-			NPSyllable syl = new NPSyllable(syllableSegments, nodeNDoubleBar);
-			segmentsInWord.get(i).setSyllable(syl);
-			syllablesInCurrentWord.add(syl);
-			if (fDoTrace) {
-				tracer.setStatus(NPSyllabificationStatus.BUILT_ALL_NODES);
-				rememberSyllabificationStateInTracer(segmentsInWord, syl, i);
-			}
+	protected void buildNucleus(List<NPSegmentInSyllable> segmentsInWord, int i) {
+		List<NPSegmentInSyllable> nodeNSegments = new ArrayList<NPSegmentInSyllable>();
+		List<NPSegmentInSyllable> syllableSegments = new ArrayList<NPSegmentInSyllable>();
+		nodeNSegments.add(segmentsInWord.get(i));
+		syllableSegments.add(segmentsInWord.get(i));
+		NPNodeInSyllable nodeNDoubleBar = new NPNodeInSyllable();
+		nodeNDoubleBar.setLevel(NPNodeLevel.N_DOUBLE_BAR);
+		NPNodeInSyllable nodeNBar = new NPNodeInSyllable();
+		nodeNBar.setLevel(NPNodeLevel.N_BAR);
+		NPNodeInSyllable nodeN = new NPNodeInSyllable();
+		nodeN.setLevel(NPNodeLevel.N);
+		NPNodeInSyllable nodeTerminal = new NPNodeInSyllable();
+		nodeTerminal.setLevel(NPNodeLevel.TERMINAL);
+		nodeTerminal.setSegments(nodeNSegments);
+		nodeN.getNodes().add(nodeTerminal);
+		nodeNBar.getNodes().add(nodeN);
+		nodeNDoubleBar.getNodes().add(nodeNBar);
+		NPSyllable syl = new NPSyllable(syllableSegments, nodeNDoubleBar);
+		segmentsInWord.get(i).setSyllable(syl);
+		syllablesInCurrentWord.add(syl);
+		if (fDoTrace) {
+			tracer.setStatus(NPSyllabificationStatus.BUILT_ALL_NODES);
+			rememberSyllabificationStateInTracer(segmentsInWord, syl, i);
 		}
 	}
 
