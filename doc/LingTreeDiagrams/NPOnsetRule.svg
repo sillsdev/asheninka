@@ -1,0 +1,16 @@
+<?xml version='1.0' standalone='no'?>
+<svg width='68.0966796875' height='176.1078125' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>
+<script  id="clientEventHandlersJS">
+function OnClickLingTreeNode(node){}
+</script>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="21.185302734375" y="9.1" font-family="Times New Roman" font-size="14.0" fill="#000000">N''</text>
+<text x="0.0" y="146.1078125" font-family="Times New Roman" font-size="14.0" fill="#000000">[C]</text>
+<line x1="28.855224609375" y1="15.1283203125" x2="9.3310546875" y2="130.1078125" stroke="#000000" stroke-width="1.0" stroke-dasharray="7,7"/>
+<text x="41.970703125" y="54.60390625" font-family="Times New Roman" font-size="14.0" fill="#000000">N'</text>
+<line x1="28.855224609375" y1="15.1283203125" x2="48.37939453125" y2="39.1283203125" stroke="#000000" stroke-width="1.0"/>
+<text x="43.23193359375" y="100.60390625" font-family="Times New Roman" font-size="14.0" fill="#000000">N</text>
+<line x1="48.37939453125" y1="60.6322265625" x2="48.37939453125" y2="85.1283203125" stroke="#000000" stroke-width="1.0"/>
+<text x="38.662109375" y="146.1078125" font-family="Times New Roman" font-size="14.0" fill="#000000">[V]</text>
+<line x1="48.37939453125" y1="106.6322265625" x2="48.37939453125" y2="130.1078125" stroke="#000000" stroke-width="1.0"/>
+</svg>

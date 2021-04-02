@@ -253,6 +253,99 @@ id="tMoraicWords"
 types="tView"
 ></type
 ><type
+before="Nuclear Projection approach"
+id="tNPApproach"
+></type
+><type
+before="NP filter"
+id="tNPFilter"
+></type
+><type
+before="NP filters"
+id="tNPFilters"
+></type
+><type
+before="NP rule"
+id="tNPRule"
+></type
+><type
+before="Action"
+id="tNPRuleAction"
+></type
+><type
+before="Attach"
+font-family="Courier New"
+id="tNPRuleActionAttach"
+></type
+><type
+before="Augment"
+font-family="Courier New"
+id="tNPRuleActionAugment"
+></type
+><type
+before="Build"
+font-family="Courier New"
+id="tNPRuleActionBuild"
+></type
+><type
+before="Left adjoin"
+font-family="Courier New"
+id="tNPRuleActionLeftAdjoin"
+></type
+><type
+before="Right adjoin"
+font-family="Courier New"
+id="tNPRuleActionRightAdjoin"
+></type
+><type
+before="Level"
+id="tNPRuleLevel"
+></type
+><type
+before="All"
+font-family="Courier New"
+id="tNPRuleLevelAll"
+></type
+><type
+before="N"
+font-family="Courier New"
+id="tNPRuleLevelN"
+></type
+><type
+before="N'"
+font-family="Courier New"
+id="tNPRuleLevelNBar"
+></type
+><type
+before="N''"
+font-family="Courier New"
+id="tNPRuleLevelNDoubleBar"
+></type
+><type
+before="NP rules"
+id="tNPRules"
+></type
+><type
+before="Predicted vs.​ Correct NP Words"
+id="tNPPredictedVsCorrectWords"
+types="tView"
+></type
+><type
+before="Segment Inventory"
+id="tNPSegmentInventory"
+types="tView"
+></type
+><type
+before="Sonority Hierarchy"
+id="tNPSonorityHierarchy"
+types="tView"
+></type
+><type
+before="NP Words"
+id="tNPWords"
+types="tView"
+></type
+><type
 before="Onset-nucleus-coda approach"
 id="tONCApproach"
 ></type
@@ -282,7 +375,7 @@ font-style="italic"
 id="tOPAllButFirstHasOnset"
 ></type
 ><type
-before="All But First Has Onset"
+before="Every Has Onset"
 font-style="italic"
 id="tOPEverySyllableHasOnset"
 ></type

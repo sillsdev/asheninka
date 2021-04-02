@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->5 February 2021</date
+>2 April 2021</date
 ><version
 >0.8.0 Alpha</version
 ><contents
@@ -569,7 +569,7 @@ textBefore="plural"
 sec="sOTApproach"
 textBefore="none"
 ></sectionRef
->. Only three are implemented in the current version. See <sectionRef
+>. Only five are implemented in the current version. See <sectionRef
 sec="sCVApproach"
 textBefore="plural"
 ></sectionRef
@@ -577,8 +577,16 @@ textBefore="plural"
 sec="sSonorityHiearchyApproach"
 textBefore="none"
 ></sectionRef
->, and <sectionRef
+>, <sectionRef
 sec="sONCApproach"
+textBefore="none"
+></sectionRef
+>, <sectionRef
+sec="sMoraicApproach"
+textBefore="none"
+></sectionRef
+> and <sectionRef
+sec="sNuclearProjectionApproach"
 textBefore="none"
 ></sectionRef
 >.</p
@@ -3228,17 +3236,17 @@ sec="sMoraicEnvironments"
 >If needed to successfully parse your language, you may also need to define these items:</p
 ><ol
 ><li
->CV Natural Classes which are used in the next two (section <sectionRef
+>CV Natural Classes which are used in the next two (<sectionRef
 sec="sMoraicCVNaturalClasses"
 ></sectionRef
 >)</li
 ><li
->templates (section <sectionRef
+>templates (<sectionRef
 sec="sMoraicTemplates"
 ></sectionRef
 >)</li
 ><li
->filters section <sectionRef
+>filters <sectionRef
 sec="sMoraicFilters"
 ></sectionRef
 >)</li
@@ -3731,7 +3739,7 @@ type="tCategory"
 type="tMora"
 ></object
 ></object
-> constituent.  Onset segments attach to an <object
+> constituent. Onset segments attach to an <object
 type="tCategory"
 >O</object
 > category and other segments attach to a <object
@@ -3849,12 +3857,1212 @@ lang="lVernacular"
 ><section1
 id="sNuclearProjectionApproach"
 ><secTitle
->Nuclear projection approach</secTitle
+><object
+type="tNPApproach"
+></object
+></secTitle
 ><p
 ><indexedItem
-term="iNuclearProjectionApproach"
+term="iNPApproach"
 ></indexedItem
->This approach has not been implemented yet.</p
+>For the <object
+type="tNPApproach"
+></object
+>, you need to define the following items:</p
+><ol
+><li
+>segments (<sectionRef
+sec="sNPSegmentInventory"
+></sectionRef
+>)</li
+><li
+>a sonority hierarchy via natural classes (<sectionRef
+sec="sNPSonorityHierarchy"
+></sectionRef
+>)</li
+><li
+>syllabification parameters (<sectionRef
+sec="sNPSyllabificationParameters"
+></sectionRef
+>)</li
+><li
+>CV Natural Classes <sectionRef
+sec="sNPCVNaturalClasses"
+></sectionRef
+>)</li
+><li
+><object
+type="tNPRules"
+></object
+> (<sectionRef
+sec="sNPRules"
+></sectionRef
+>)</li
+><li
+>grapheme natural classes (<sectionRef
+sec="sNPGraphemeNaturalClasses"
+></sectionRef
+>)</li
+><li
+>environments (<sectionRef
+sec="sNPEnvironments"
+></sectionRef
+>)</li
+></ol
+><p
+>If needed to successfully parse your language, you may also need to define <object
+type="tNPFilters"
+></object
+> <sectionRef
+sec="sNPFilters"
+></sectionRef
+>).</p
+><p
+>After that, you either use a existing word list, import a word list (see <sectionRef
+sec="sWords"
+></sectionRef
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
+type="tMenuItem"
+>Parser / Parse all Words </object
+> menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/SyllabifyWords.png"
+></img
+> tool bar button. This will apply the algorithm of the <object
+type="tNPApproach"
+></object
+> to all the words. You can then see the results in the <object
+type="tNPWords"
+></object
+> view. See <sectionRef
+sec="sNPWords"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sNPTryAWord"
+textBefore="none"
+></sectionRef
+> for ideas on how to check the results, among other things.</p
+><p
+>The main “game” to play with the <object
+type="tNPApproach"
+></object
+> in <object
+type="tAsheninka"
+></object
+> is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes), the syllabification parameters, and the <object
+type="tNPRules"
+></object
+> so that one gets most, if not all, words to syllabify correctly. You may also need to write <object
+type="tNPFilters"
+></object
+> to get some words to parse.</p
+><p
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to apply each rule in turn. If every segment in the word is in a syllable, then it considers the parse a success. See appendix <appendixRef
+app="aNPAlgorithm"
+></appendixRef
+> for details.</p
+><p
+>We now give more information on the various views available in the user interface for the <object
+type="tNPApproach"
+></object
+>.</p
+><section2
+id="sNPSegmentInventory"
+><secTitle
+>NP segment inventory</secTitle
+><p
+><indexedItem
+term="iNPSegments"
+></indexedItem
+>The <object
+type="tNPSegmentInventory"
+></object
+> view works exactly like the <object
+type="tCVSegmentInventory"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPSonorityHierarchy"
+><secTitle
+>Sonority hierarchy</secTitle
+><p
+><indexedItem
+term="iNPSonorityHierarchy"
+></indexedItem
+>The <object
+type="tNPSonorityHierarchy"
+></object
+> view works exactly like the <object
+type="tSHSonorityHierarchy"
+></object
+> view does for the <object
+type="tSHApproach"
+></object
+>. See <sectionRef
+sec="sSHSonorityHierarchy"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPSyllabificationParameters"
+><secTitle
+>Syllabification parameters</secTitle
+><p
+><indexedItem
+term="iNPSyllabificationParameters"
+></indexedItem
+><indexedItem
+term="iSyllabificationParameters"
+></indexedItem
+>The <object
+type="tSyllabificationParameters"
+></object
+> view is where you set the parameters to control syllabification for your language. To read more about these parameters, you can click <link
+href="Overview.pdf"
+>here</link
+> or use the <object
+type="tMenuItem"
+>Help / Introduction to syllabification</object
+> menu item. The <object
+type="tNPApproach"
+></object
+> has only one parameter:</p
+><p
+><indexedItem
+term="iOnsetPrinciple"
+></indexedItem
+>The <object
+type="tField"
+>Onset principle</object
+> field has three radio buttons. One of them must be set. The three options are:</p
+><ol
+><li
+><indexedItem
+term="iAllButFirst"
+></indexedItem
+>All but the first syllable must have an onset</li
+><li
+><indexedItem
+term="iEverySyllable"
+></indexedItem
+>Every syllable must have an onset</li
+><li
+><indexedItem
+term="iOnsetsNotRequired"
+></indexedItem
+>Onsets are not required</li
+></ol
+><p
+>The other two parameters are controlled by the <object
+type="tNPRules"
+></object
+>:</p
+><ul
+><li
+><indexedItem
+term="iCodasAllowed"
+></indexedItem
+>Whether codas are allowed or not is controlled by having coda-oriented rules or not having them.</li
+><li
+><indexedItem
+term="iOnsetMaximization"
+></indexedItem
+>Onset maximization is controlled by ordering onset-oriented rules before any coda rules.</li
+></ul
+></section2
+><section2
+id="sNPCVNaturalClasses"
+><secTitle
+>CV natural classes</secTitle
+><p
+>The <object
+type="tCVNaturalClasses"
+></object
+> view is exactly the same as the <object
+type="tCVNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See section <sectionRef
+sec="sCVNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPRules"
+><secTitle
+>NP rules</secTitle
+><p
+><indexedItem
+term="iNPRules"
+></indexedItem
+><object
+type="tNPRules"
+></object
+> drive the syllabification process in the <object
+type="tNPApproach"
+></object
+>. Typically, at least two to five rules need to be defined. The first one must always be one that builds a nucleus and all the needed structure and is usually built on vowels. The other rules add other segments to this.</p
+><p
+>When defining a <object
+type="tNPRule"
+></object
+>, you fill in the fields. The “Name” field is for you to remember this rule.</p
+><p
+>Its "Description” field lets you define it more fully, perhaps including some example words as to why you added the rule if it is not one of the standard rules.</p
+><p
+>The “Affected” field lets you select the segment or natural class that the rule applies to.</p
+><p
+>The “Context” field lets you select the segment or natural class that must occur before or after the affected item.</p
+><p
+>The “Action” drop-down chooser lets you select the kind of action the rule has. There are five possible values as shown in example <exampleRef
+letter="xRuleActions"
+num="xRuleActions"
+></exampleRef
+>.</p
+><example
+num="xRuleActions"
+><table
+border="1"
+><tr
+><th
+>Action</th
+><th
+>Description</th
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionAttach"
+></object
+></td
+><td
+>Attach the affected segment at the node level of the rule.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionAugment"
+></object
+></td
+><td
+>Augment the affected segment at the node level of the rule.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionBuild"
+></object
+></td
+><td
+>Build the initial nodes. The affected segment will be at the <object
+type="tNPRuleLevelN"
+></object
+> which will be in an <object
+type="tNPRuleLevelNBar"
+></object
+> node which will be in an <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> node which is the first item in a syllable.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionLeftAdjoin"
+></object
+></td
+><td
+>Adjoin the affected segment to the left of the context segment at the indicated node level.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionRightAdjoin"
+></object
+></td
+><td
+>Adjoin the affected segment to the right of the context segment at the indicated node level.</td
+></tr
+></table
+></example
+><p
+>The “Level” drop-down chooser lets you select the rule node level of the rule. There are four possible values as shown in example <exampleRef
+letter="xRuleLevels"
+num="xRuleLevels"
+></exampleRef
+>.</p
+><example
+num="xRuleLevels"
+><table
+border="1"
+><tr
+><th
+>Level</th
+><th
+>Description</th
+></tr
+><tr
+><td
+><object
+type="tNPRuleLevelAll"
+></object
+></td
+><td
+>This indicates the rule will build all the levels.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleLevelN"
+></object
+></td
+><td
+>This is the nucleus level.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleLevelNBar"
+></object
+></td
+><td
+>This is the rime level.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleLevelNDoubleBar"
+></object
+></td
+><td
+>This is the top level to which onsets are attached.</td
+></tr
+></table
+></example
+><p
+>The “Obeys SSP” check box indicates whether or not the affected item and the context item must obey the Sonority Sequencing Principle.</p
+><p
+>Example <exampleRef
+letter="xStandardRules"
+num="xStandardRules"
+></exampleRef
+> below lists the standard five rules. A dashed line indicates the item that being added.</p
+><example
+num="xStandardRules"
+><table
+border="1"
+><tr
+><th
+width="1.35in"
+>Rule</th
+><th
+width=".75in"
+>Affected</th
+><th
+width=".6in"
+>Context</th
+><th
+width=".75in"
+>Action</th
+><th
+width=".45in"
+>Level</th
+><th
+width=".7in"
+>Diagram</th
+></tr
+><tr
+><td
+>Nucleus</td
+><td
+>[V]</td
+><td
+> </td
+><td
+><object
+type="tNPRuleActionBuild"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelAll"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPNucleusRule.svg"
+></img
+></td
+></tr
+><tr
+><td
+>Onset</td
+><td
+>[C]</td
+><td
+>[V]</td
+><td
+><object
+type="tNPRuleActionAttach"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNDoubleBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPOnsetRule.svg"
+></img
+></td
+></tr
+><tr
+><td
+>Coda</td
+><td
+>[C]</td
+><td
+>[V]</td
+><td
+><object
+type="tNPRuleActionAttach"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPCodaRule.svg"
+></img
+></td
+></tr
+><tr
+><td
+>Augmented onsets</td
+><td
+>[C]</td
+><td
+>[C]</td
+><td
+><object
+type="tNPRuleActionAugment"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNDoubleBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPOnsetAugmentRule.svg"
+></img
+></td
+></tr
+><tr
+><td
+>Augmented codas</td
+><td
+>[C]</td
+><td
+>[C]</td
+><td
+><object
+type="tNPRuleActionAugment"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPCodaAugmentRule.svg"
+></img
+></td
+></tr
+></table
+></example
+><pc
+>Notice that the level determines whether the affected segment is attached before (as an onset) or after (as a coda). That is, an <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level means the affected item is attached before. An <object
+type="tNPRuleLevelNBar"
+></object
+> or <object
+type="tNPRuleLevelN"
+></object
+> level means the affected item is attached after.</pc
+><p
+><indexedItem
+term="iCodasAllowed"
+></indexedItem
+>If a language does not have any codas, then you can either de-activate any coda-oriented rules or you can remove them.</p
+><p
+><indexedItem
+term="iOnsetMaximization"
+></indexedItem
+>If a language uses onset maximization, then order the rules so that any onset-oriented rules occur before any coda rules.</p
+><p
+><object
+type="tAsheninka"
+></object
+> only allows certain combinations of affected, context, action and level. Any other combinations will result in an error message stating what the allowed possibilities are. Some of these are summarized here:</p
+><ul
+><li
+>The first active rule must use a <object
+type="tNPRuleActionBuild"
+></object
+> action.</li
+><li
+>Only the <object
+type="tNPRuleActionBuild"
+></object
+> action can use the <object
+type="tNPRuleLevelAll"
+></object
+> level.</li
+><li
+>A context item is required for all but a <object
+type="tNPRuleActionBuild"
+></object
+> action and a <object
+type="tNPRuleActionBuild"
+></object
+> action must not have a context item.</li
+></ul
+><p
+>Any adjunction rules will add the affected segment to the left (before) or to the right (after) depending on the action chosen.</p
+><p
+><indexedItem
+term="iEnglish"
+></indexedItem
+>Example <exampleRef
+letter="xAdjunctionRulesEnglish"
+num="xAdjunctionRulesEnglish"
+></exampleRef
+> has a <object
+type="tNPRuleActionRightAdjoin"
+></object
+> example from an English project. It is for the case of words like <langData
+lang="lIPA"
+>sɪksθ</langData
+> (<langData
+lang="lEnglishExmple"
+>sixth</langData
+>) and <langData
+lang="lIPA"
+>sɪksθs</langData
+> (<langData
+lang="lEnglishExmple"
+>sixths</langData
+>).</p
+><example
+num="xAdjunctionRulesEnglish"
+><table
+border="1"
+><tr
+><th
+width="1in"
+>Rule</th
+><th
+width=".75in"
+>Affected</th
+><th
+width=".6in"
+>Context</th
+><th
+width=".75in"
+>Action</th
+><th
+width=".45in"
+>Level</th
+><th
+width="1.05in"
+>Diagram</th
+></tr
+><tr
+><td
+>Word final adjoin</td
+><td
+>[Coronal]</td
+><td
+>[C]</td
+><td
+><object
+type="tNPRuleActionRightAdjoin"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNDoubleBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPWordFinalAdjoinRule.svg"
+></img
+></td
+></tr
+></table
+></example
+><pc
+>In this case, the SSP is not obeyed, which is indicated by the asterisk (*) before the affected segment. It uses the <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level because these segments are adjoined at the end of the word, like an appendix.</pc
+><p
+>Finally, the order in which the rules occur is important. The items are in order of application: the first to be tried is higher and the last to be tried is lower. You control the order of the rules by clicking on a rule in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+></section2
+><section2
+id="sNPFilters"
+><secTitle
+>NP filters</secTitle
+><p
+><indexedItem
+term="iNPFilter"
+></indexedItem
+>The set of filters for the <object
+type="tNPApproach"
+></object
+> is a completely different set of filters from those used by the <object
+type="tONCApproach"
+></object
+> and the <object
+type="tMoraicApproach"
+></object
+>. <object
+type="tNPFilters"
+></object
+> can be used for onsets, codas, and rimes in <object
+type="tAsheninka"
+></object
+> with the <object
+type="tNPApproach"
+></object
+>. More precisely, <object
+type="tNPFilters"
+></object
+> are applied to rules whose <object
+type="tNPRuleLevel"
+></object
+> is either <object
+type="tNPRuleLevelNBar"
+></object
+> or <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>. Every <object
+type="tNPFilter"
+></object
+> is a fail filter. There are no repair filters in the <object
+type="tNPApproach"
+></object
+>.</p
+><p
+>You define filters in a similar way to the filters for the <object
+type="tONCApproach"
+></object
+> and <object
+type="tMoraicApproach"
+></object
+>. See <sectionRef
+sec="sONCFilters"
+></sectionRef
+> for more on using filters.</p
+><p
+>One other difference is that for <object
+type="tNPFilters"
+></object
+>, you can use the underscore character ( _ ) at the point before the first segment or class which is being attached or augmented. <indexedItem
+term="iEnglish"
+></indexedItem
+>For example, in an English IPA project, there is an <object
+type="tNPFilter"
+></object
+> which fails whenever an alveo-palatal is to be added before a sonorant. This is to handle cases like <langData
+lang="lIPA"
+>kæʃlɛs</langData
+> (<langData
+lang="lEnglishExmple"
+>cashless</langData
+>) which should be syllabified as <langData
+lang="lIPA"
+>kæʃ.lɛs</langData
+>, not as <langData
+lang="lIPA"
+>kæ.ʃlɛs</langData
+> and <langData
+lang="lIPA"
+>maɹʃlænd</langData
+> (<langData
+lang="lEnglishExmple"
+>marshland</langData
+>) which should be syllabified as <langData
+lang="lIPA"
+>maɹʃ.lænd</langData
+>, not <langData
+lang="lIPA"
+>maɹ.ʃlænd</langData
+>. As an initial attempt, we might write this filter as in example <exampleRef
+letter="xNPFilterPlain"
+num="xNPFilterPlain"
+></exampleRef
+>. This says that when we are about to add a segment that is a member of the Alveo-palatal class and is immediately followed by a segment which is a member of the Sonorant class, do not add it.</p
+><example
+num="xNPFilterPlain"
+><chart
+>[Alveo-palatal] [Sonorant]</chart
+></example
+><pc
+>If we write this onset filter like this, we will discover that words such as <langData
+lang="lIPA"
+>ʃɹəb</langData
+> (<langData
+lang="lEnglishExmple"
+>shrub</langData
+>) will fail to syllabify (the filter blocks adding <langData
+lang="lIPA"
+>ʃ</langData
+> as an onset). To overcome this, we can write the filter as in example <exampleRef
+letter="xNPFilterConstituent"
+num="xNPFilterConstituent"
+></exampleRef
+>.</pc
+><example
+num="xNPFilterConstituent"
+><chart
+>*[V] (*[Sonorant]) _ [Alveo-palatal] [Sonorant]</chart
+></example
+><pc
+>What comes before the underscore is the preceding context (a vowel with an optionally following sonorant). Since a word like <langData
+lang="lIPA"
+>ʃɹəb</langData
+> does not meet this context, the filter will not block the <langData
+lang="lIPA"
+>ʃ</langData
+> being added as an onset. Notice that for both <langData
+lang="lIPA"
+>kæʃlɛs</langData
+> and <langData
+lang="lIPA"
+>maɹʃlænd</langData
+>, the context is met and so the filter does block adding the <langData
+lang="lIPA"
+>ʃ</langData
+> as desired.</pc
+></section2
+><section2
+id="sNPWords"
+><secTitle
+>NP words</secTitle
+><p
+><indexedItem
+term="iNPWords"
+></indexedItem
+>This works like the <object
+type="tCVWords"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>, except that the <object
+type="tPredictedSyllableBreaks"
+></object
+> values, the <object
+type="tParserResult"
+></object
+> values, and the <object
+type="tParserTreeDiagram"
+></object
+> are the result of the <object
+type="tNPApproach"
+></object
+> algorithm. If the parse fails and some word structure was built, then this partial word structure is shown by <object
+type="tParserTreeDiagram"
+></object
+>. In the tree diagram, a syllable always has onsets attached to <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>, a nucleus attached to <object
+type="tNPRuleLevelN"
+></object
+> and codas attached to <object
+type="tNPRuleLevelNBar"
+></object
+>. Any adjoined segments will show the adjoined level. See <sectionRef
+sec="sCVWords"
+></sectionRef
+> for more on this view.</p
+></section2
+><section2
+id="sNPPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct Moraic words</secTitle
+><p
+><indexedItem
+term="iNPPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iNPPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tNPPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the results of applying the <object
+type="tNPApproach"
+></object
+> differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
+></section2
+><section2
+id="sNPGraphemeNaturalClasses"
+><secTitle
+>Grapheme natural classes</secTitle
+><p
+><indexedItem
+term="iNPGraphemes"
+></indexedItem
+>This works exactly like the <object
+type="tGraphemeNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPEnvironments"
+><secTitle
+>Environments</secTitle
+><p
+><indexedItem
+term="iNPEnvironments"
+></indexedItem
+>This works exactly like the <object
+type="tEnvironments"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sEnvironments"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPTryAWord"
+><secTitle
+>NP Try a Word</secTitle
+><p
+><indexedItem
+term="iNPTryAWord"
+></indexedItem
+><indexedItem
+term="iTryAWord"
+></indexedItem
+>There are times when it may be difficult to know just why a given word is not syllabifying correctly. That's where the <object
+type="tTryAWord"
+></object
+> dialog box can be useful. To see it, use the <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> menu item. This brings up a dialog box like the one shown in example <exampleRef
+letter="xNPTryAWord"
+num="xNPTryAWord"
+></exampleRef
+>. Unlike most dialog boxes, you can keep the <object
+type="tTryAWord"
+></object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
+type="tTryAWord"
+></object
+> dialog box for the <object
+type="tCVPatternApproach"
+></object
+>, <object
+type="tSHApproach"
+></object
+>, the <object
+type="tONCApproach"
+></object
+>, the <object
+type="tMoraicApproach"
+></object
+>, and the one for the <object
+type="tNPApproach"
+></object
+> can be set independently; you can have several <object
+type="tTryAWord"
+></object
+> dialog boxes open at the same time if you wish.</p
+><example
+num="xNPTryAWord"
+><chart
+><img
+src="resources/CVTryAWord1.png"
+width="500"
+></img
+></chart
+></example
+><p
+>You can key a word to try in the text box. By default, <object
+type="tAsheninka"
+></object
+> shows the current word selected in the <object
+type="tNPWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tNPPredictedVsCorrectWords"
+></object
+> view (if you are showing that view) or the last word you used (or nothing if you've never used <object
+type="tTryAWord"
+></object
+> before and are not showing the <object
+type="tNPWords"
+></object
+> view).</p
+><p
+>When you either press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>Try it</object
+> button, <object
+type="tAsheninka"
+></object
+> will try to parse the word in the text box and report the result in the Results portion of the dialog box.</p
+><p
+>For the <object
+type="tNPApproach"
+></object
+>, there are at most two steps that are tried:</p
+><ol
+><li
+>Parsing into segments.</li
+><li
+>Parsing segments into syllables (via the nuclear projection algorithm; see appendix <appendixRef
+app="aNPAlgorithm"
+></appendixRef
+> below).</li
+></ol
+><p
+>The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into syllables. Successful steps are shown in <object
+type="tGreen"
+></object
+> while unsuccessful ones are shown in <object
+type="tRed"
+></object
+>. An example of a successful parse is shown in example <exampleRef
+letter="xNPTryAWordahwiyak1"
+num="xNPTryAWordahwiyak1"
+></exampleRef
+>.</p
+><example
+num="xNPTryAWordahwiyak1"
+><chart
+><img
+src="resources/NPTryAWord2.png"
+width="500"
+></img
+></chart
+></example
+><p
+><indexedItem
+term="iFailureNPSegmenter"
+></indexedItem
+>The parsing into segments part is exactly the same as it is for the <object
+type="tCVPatternApproach"
+></object
+>. If any constituent structure was built during the parse, the tree diagram is also shown. The <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>σ</object
+> constituent indicates a syllable. A syllable will have <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>, <object
+type="tNPRuleLevelNBar"
+></object
+>, and <object
+type="tNPRuleLevelN"
+></object
+> constituents. Onset segments attach to an <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level, nucleus segments attach to an <object
+type="tNPRuleLevelN"
+></object
+>, and coda segments attach to a <object
+type="tNPRuleLevelNBar"
+></object
+> level. Below these are the segment and then its grapheme. If the parse succeeded, then the segments and their graphemes are shown in green. If the parse failed but some of the tree was built, then the segments and their graphemes are shown in red.</p
+><p
+>Scrolling the results window down shows the next part:</p
+><example
+num="xNPTryAWordahwiyak2"
+><chart
+><img
+src="resources/NPTryAWord3.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>Whenever a rule is applied, its name is shown in a row by itself. In <exampleRef
+letter="xNPTryAWordahwiyak2"
+num="xNPTryAWordahwiyak2"
+></exampleRef
+>, it is the first rule which builds a nucleus on each vowel. The resulting tree diagram is shown for each step. Note that in this case, the rule is applied as it matches an affected segment from left to right.  <object
+type="tNPRuleActionAugment"
+></object
+> rules at the <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level and all <object
+type="tNPRuleActionLeftAdjoin"
+></object
+> rules are applied right to left. Scrolling down more, shows the next part:</pc
+><example
+num="xNPTryAWordahwiyak3"
+><chart
+><img
+src="resources/NPTryAWord4.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>This shows the onset rule being applied. The first row shows the checking of the SSP. It shows the sequence of segment pairs that were found along with their respective natural class and relationship. The <object
+type="tBold"
+>Relation</object
+> column uses mathematical symbols to indicate the relationship as given in example <exampleRef
+letter="xNPTryAWordRelation"
+num="xNPTryAWordRelation"
+></exampleRef
+>.</pc
+><example
+num="xNPTryAWordRelation"
+><table
+border="1"
+><tr
+><th
+align="center"
+>Relation</th
+><th
+>Meaning</th
+></tr
+><tr
+><td
+align="center"
+>&lt;</td
+><td
+>Segment 1 is less sonorous than segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>=</td
+><td
+>Segment 1 is equal in sonority to segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>&gt;</td
+><td
+>Segment 1 is more sonorous than segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>!!!</td
+><td
+>The segment was not in any natural class.</td
+></tr
+></table
+></example
+><pc
+>Scrolling down further shows the next part:</pc
+><example
+num="xNPTryAWordahwiyak4"
+><chart
+><img
+src="resources/NPTryAWord5.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>This shows the result of the coda rule and that the other two rules did not apply to any segments.</pc
+><p
+>As mentioned above, whenever one of the two steps fails, there is an error message shown for that step. Depending on the error and the state of the parser at the time, more steps may or may not be tried. See <sectionRef
+sec="sCVTryAWord"
+></sectionRef
+> for examples where the segments could not be parsed.</p
+><p
+><indexedItem
+term="iFailureNPNaturalClasser"
+></indexedItem
+>If a word contains a segment that is not in any natural class, the results table will end with a row whose <object
+type="tBold"
+>Relation</object
+> column contains “!!!” in red and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
+letter="xNPTryAWordNCFailure"
+num="xNPTryAWordNCFailure"
+></exampleRef
+>.</p
+><example
+num="xNPTryAWordNCFailure"
+><chart
+><img
+src="resources/NPTryAWordNCFailure.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>In this case, the word was <langData
+lang="lVernacular"
+>abay</langData
+>, but no natural class has the segment <langData
+lang="lVernacular"
+>b</langData
+> in it. So when it tried to find a natural class for <langData
+lang="lVernacular"
+>b</langData
+>, it failed</pc
+></section2
 ></section1
 ><section1
 id="sOTApproach"
@@ -5222,7 +6430,7 @@ sec="sMoraicTryAWord"
 ></sectionRef
 >).</li
 ><li
->If it succeeded in finding a sequence of segments, it then processes the segments one after the other.  It starts in an “Onset” state.</li
+>If it succeeded in finding a sequence of segments, it then processes the segments one after the other. It starts in an “Onset” state.</li
 ><li
 >When in the “Onset” state,<ol
 ><li
@@ -5250,7 +6458,7 @@ sec="sMoraicTryAWord"
 ><li
 >if onsets are required at this point in the parse of the word, syllabification fails.</li
 ><li
->Otherwise, it will see if the segment will work as a mora-bearing segment after checking for sonority issues.  That is, it changes the state to “Mora.”</li
+>Otherwise, it will see if the segment will work as a mora-bearing segment after checking for sonority issues. That is, it changes the state to “Mora.”</li
 ></ol
 ></li
 ></ol
@@ -5264,19 +6472,19 @@ sec="sMoraicTryAWord"
 ><li
 >If the syllable can have another mora,<ol
 ><li
->if no syllable templates apply and there is at least one mora in the syllable already, finish the current syllable and start a new one.  The state is changed to “Onset.”</li
+>if no syllable templates apply and there is at least one mora in the syllable already, finish the current syllable and start a new one. The state is changed to “Onset.”</li
 ><li
 >Otherwise, add the segment to the syllable as a mora-bearing segment.</li
 ></ol
 ></li
 ><li
->If the syllable cannot have another mora (because the maximum number of moras in a syllable has been reached), then finish this syllable and start a new one.  The state is changed to “Onset.”</li
+>If the syllable cannot have another mora (because the maximum number of moras in a syllable has been reached), then finish this syllable and start a new one. The state is changed to “Onset.”</li
 ></ol
 ></li
 ><li
 >If the segment can be a coda,<ol
 ><li
->if there already is a coda segment and an onset template applies, it finishes the current syllable, creates a new one, and adds the segments matching the onset template to the new syllable.    The state is changed to “Mora.”</li
+>if there already is a coda segment and an onset template applies, it finishes the current syllable, creates a new one, and adds the segments matching the onset template to the new syllable. The state is changed to “Mora.”</li
 ><li
 >If weight-by-position is in effect, and another mora can be added to the syllable, it adds the segment as mora-bearing.</li
 ><li
@@ -5286,7 +6494,7 @@ sec="sMoraicTryAWord"
 ><li
 >Otherwise,<ol
 ><li
->if the syllable has at least one mora it adds the syllable to the word and starts a new syllable.  The state is changed to “Onset.”<ol
+>if the syllable has at least one mora it adds the syllable to the word and starts a new syllable. The state is changed to “Onset.”<ol
 ><li
 >If any onset templates apply, it adds the matching segments to the syllable and the state is changed to “Mora.”</li
 ><li
@@ -5304,6 +6512,153 @@ sec="sMoraicTryAWord"
 ></ol
 ><p
 >Whenever a segment is added to a syllable as an onset, it also tries to apply any onset repair filters and applies any onset fail filters.</p
+></appendix
+><appendix
+id="aNPAlgorithm"
+><secTitle
+>Nuclear Projection algorithm in detail</secTitle
+><p
+><indexedItem
+term="iNPApproachAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm for the <object
+type="tNPApproach"
+></object
+> is as follows:</p
+><ol
+><li
+>For each rule:<ol
+><li
+>Determine the set of segments, if any, that match the affected/context/level part of the rule:<ol
+><li
+>If it is a <object
+type="tNPRuleActionBuild"
+></object
+> rule, match any affected segments.</li
+><li
+>If it is a <object
+type="tNPRuleActionAttach"
+></object
+> or <object
+type="tNPRuleActionAugment"
+></object
+> rule and the level is <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>, match the affected immediately before the context.</li
+><li
+>If it is a <object
+type="tNPRuleActionAttach"
+></object
+> or <object
+type="tNPRuleActionAugment"
+></object
+> rule and the level is not <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>, match the affected immediately after the context.</li
+><li
+>If it is a <object
+type="tNPRuleActionLeftAdjoin"
+></object
+> rule, match the affected immediately before the context.</li
+><li
+>If it is a <object
+type="tNPRuleActionRightAdjoin"
+></object
+> rule, match the affected immediately after the context.</li
+></ol
+></li
+><li
+>For each match:<ol
+><li
+>If the rule must obey the SSP, check the sonority between the affected and context segments. If the affected comes before the context, then sonority must be rising. If the affected comes after the context, then the sonority must decrease.</li
+><li
+>If sonority passes (or is ignored), then:<ol
+><li
+>If it is a <object
+type="tNPRuleActionBuild"
+></object
+> rule, create a new syllable and the constituent structure (syllable to <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> to <object
+type="tNPRuleLevelNBar"
+></object
+> to <object
+type="tNPRuleLevelN"
+></object
+> to the affected segment that matched).</li
+><li
+>If it is an <object
+type="tNPRuleActionAttach"
+></object
+> or <object
+type="tNPRuleActionAugment"
+></object
+> rule, apply any appropriate filters for the level (<object
+type="tNPRuleLevelNDoubleBar"
+></object
+> is onset and <object
+type="tNPRuleLevelNBar"
+></object
+> is rime and coda).  If any filter fails, quit.  Otherwise add the affected segment to the constituent structure at the rule's level.</li
+><li
+>If it is an <object
+type="tNPRuleActionLeftAdjoin"
+></object
+> or <object
+type="tNPRuleActionRightAdjoin"
+></object
+> rule, adjoin the segment to a new instance of the level node.</li
+></ol
+></li
+></ol
+></li
+></ol
+></li
+><li
+>Check every segment in the word to see if it has been made a part of a syllable.  If not, fail.</li
+><li
+>Check the Onset Principle setting:<ol
+><li
+><indexedItem
+term="iAllButFirst"
+></indexedItem
+>If the <object
+type="tOPAllButFirstHasOnset"
+></object
+> is set, then any syllable after the first does not have an onset (i.e., a segment in the <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level), fail.</li
+><li
+><indexedItem
+term="iEverySyllable"
+></indexedItem
+>If the <object
+type="tOPEverySyllableHasOnset"
+></object
+> is set, then if any syllable does not have an onset (i.e., a segment in the <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level), fail.</li
+><li
+><indexedItem
+term="iOnsetsNotRequired"
+></indexedItem
+>If the <object
+type="tOPOnsetsNotRequired"
+></object
+> is set, then there is nothing to do.</li
+></ol
+></li
+><li
+>Succeed.</li
+></ol
 ></appendix
 ><appendix
 id="aKnownIssues"

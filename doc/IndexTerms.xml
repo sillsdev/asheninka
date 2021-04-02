@@ -153,7 +153,7 @@ id="iFailureCVSyllables"
 ></indexTerms
 ></indexTerm
 ><indexTerm
-id="iCVFailures"
+id="iSHFailures"
 ><term
 >Sonority hierarchy approach</term
 ><indexTerms
@@ -183,6 +183,23 @@ id="iFailureMoraicNaturalClasser"
 id="iFailureMoraicSegmenter"
 ><term
 >Parse into segments</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iNPFailures"
+><term
+>NP approach</term
+><indexTerms
+><indexTerm
+id="iFailureNPSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+><indexTerm
+id="iFailureNPNaturalClasser"
+><term
+>Parse into syllables</term
 ></indexTerm
 ></indexTerms
 ></indexTerm
@@ -424,15 +441,87 @@ id="iMoraicWords"
 ></indexTerms
 ></indexTerm
 ><indexTerm
+id="iNPApproach"
+><term
+>Nuclear Projection approach</term
+><indexTerms
+><indexTerm
+id="iNPApproachAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iNPCompare2Implementstions"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iNPEnvironments"
+><term
+>Environments</term
+></indexTerm
+><indexTerm
+id="iNPFilter"
+><term
+>Filters</term
+></indexTerm
+><indexTerm
+id="iNPGraphemeNaturalClasses"
+><term
+>Grapheme natural classes</term
+></indexTerm
+><indexTerm
+id="iNPGraphemes"
+><term
+>Graphemes</term
+></indexTerm
+><indexTerm
+id="iNPNaturalClasses"
+><term
+>Natural classes</term
+></indexTerm
+><indexTerm
+id="iNPPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="iNPRules"
+><term
+>Rules</term
+></indexTerm
+><indexTerm
+id="iNPSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iNPSonorityHierarchy"
+><term
+>Sonority hierarchy</term
+></indexTerm
+><indexTerm
+id="iNPSyllabificationParameters"
+><term
+>Syllabification parameters</term
+></indexTerm
+><indexTerm
+id="iNPTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iNPWords"
+><term
+>Words</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
 id="iNewProject"
 see="iProjectNew"
 ><term
 >New project</term
-></indexTerm
-><indexTerm
-id="iNuclearProjectionApproach"
-><term
->Nuclear projection approach</term
 ></indexTerm
 ><indexTerm
 id="iONCApproach"
@@ -550,6 +639,18 @@ see="iCVPatternAlgorithm"
 >CV algorithm</term
 ></indexTerm
 ><indexTerm
+id="iAlgorithmMoraic"
+see="iMoraicApproachAlgorithm"
+><term
+>Moraic algorithm</term
+></indexTerm
+><indexTerm
+id="iAlgorithmNP"
+see="iNPApproachAlgorithm"
+><term
+>Nuclear Projection algorithm</term
+></indexTerm
+><indexTerm
 id="iParsingResult"
 ><term
 >Parsing result failure messages</term
@@ -576,6 +677,11 @@ id="iCVPredictedSyllabificationCompare"
 id="iMoraicPredictedSyllabificationCompare"
 ><term
 >Comparing with correct (Moraic)</term
+></indexTerm
+><indexTerm
+id="iNPPredictedSyllabificationCompare"
+><term
+>Comparing with correct (NP)</term
 ></indexTerm
 ><indexTerm
 id="iONCPredictedSyllabificationCompare"
