@@ -28,6 +28,7 @@ import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
 import org.sil.antlr4.environmentparser.EnvironmentConstants;
@@ -611,6 +612,11 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 				mainApp.getApplicationPreferences().setLastNPEnvironmentsViewItemUsed(
 						iCurrentIndex);
 				break;
+
+			case OPTIMALITY_THEORY:
+				mainApp.getApplicationPreferences().setLastOTEnvironmentsViewItemUsed(
+						iCurrentIndex);
+				break;
 			default:
 				break;
 			}
@@ -682,6 +688,12 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 		npApproach = npApproachData;
 		languageProject = npApproach.getLanguageProject();
 		setDataCommon(ApplicationPreferences.LAST_NP_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
+
+	public void setData(OTApproach otApproachData) {
+		otApproach = otApproachData;
+		languageProject = otApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_OT_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 
 	protected void setTextFieldColors() {

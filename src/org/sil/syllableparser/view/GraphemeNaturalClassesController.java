@@ -25,6 +25,7 @@ import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
 
@@ -332,6 +333,11 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 				mainApp.getApplicationPreferences().setLastNPGraphemeNaturalClassesViewItemUsed(
 						iCurrentIndex);
 				break;
+
+			case OPTIMALITY_THEORY:
+				mainApp.getApplicationPreferences().setLastOTGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
 			default:
 				break;
 			}
@@ -398,8 +404,6 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 		TextFlow tf = new TextFlow();
 		Language analysis = languageProject.getAnalysisLanguage();
 		Language vernacular = languageProject.getVernacularLanguage();
-		int i = 1;
-		int iCount = graphemesOrNaturalClasses.size();
 		for (SylParserObject gnc : graphemesOrNaturalClasses) {
 			Text t;
 			String s;
@@ -492,6 +496,12 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 	public void setData(NPApproach npApproachData) {
 		npApproach = npApproachData;
 		languageProject = npApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	public void setData(OTApproach otApproachData) {
+		otApproach = otApproachData;
+		languageProject = otApproach.getLanguageProject();
 		setDataCommon();
 	}
 

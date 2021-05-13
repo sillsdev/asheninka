@@ -11,6 +11,7 @@ import org.sil.syllableparser.model.cvapproach.CVApproachView;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproachView;
 import org.sil.syllableparser.model.npapproach.NPApproachView;
 import org.sil.syllableparser.model.oncapproach.ONCApproachView;
+import org.sil.syllableparser.model.otapproach.OTApproachView;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproachView;
 import org.sil.utility.*;
 
@@ -87,8 +88,21 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_NP_FILTERS_VIEW_ITEM_USED = "lastNPFiltersViewItemUsed";
 	static final String LAST_NP_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastNPWordPredictedVsCorrectViewItemUsed";
 
+	// last OT view info
+	static final String LAST_OT_APPROACH_VIEW_USED = "lastOTApproachViewUsed";
+	static final String LAST_OT_CV_NATURAL_CLASSES_VIEW_ITEM_USED = "lastOTCVNaturalClassesViewItemUsed";
+	static final String LAST_OT_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastOTSegmentInventoryViewItemUsed";
+	static final String LAST_OT_CONSTRAINTS_VIEW_ITEM_USED = "lastOTConstraintsViewItemUsed";
+	static final String LAST_OT_CONSTRAINT_RANKINGS_VIEW_ITEM_USED = "lastOTConstraintRankingsViewItemUsed";
+	static final String LAST_OT_TRY_A_WORD_USED = "lastOTTryAWordUsed";
+	static final String LAST_OT_WORDS_VIEW_ITEM_USED = "lastOTWordsViewItemUsed";
+	static final String LAST_OT_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastOTGraphemeNaturalClassesViewItemUsed";
+	public static final String LAST_OT_ENVIRONMENTS_VIEW_ITEM_USED = "lastOTEnvironmentsViewItemUsed";
+	static final String LAST_OT_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastOTWordPredictedVsCorrectViewItemUsed";
+
 	// Controller table column widths and splitter position
 	public static final String BACKUP_CHOOSER = "BACKUP_CHOOSER_";
+	public static final String CONSTRAINT_RANKING_CHOOSER = "CONSTRAINT_RANKING_CHOOSER_";
 	public static final String CV_NATURAL_CLASSES = "CV_NATURAL_CLASSES_";
 	public static final String CV_SEGMENTS = "CV_SEGMENTS_";
 	public static final String CV_SEGMENT_NATURAL_CLASS_CHOOSER = "CV_SEGMENT_NATURAL_CLASS_CHOOSER_";
@@ -108,6 +122,11 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String NP_WORDS = "NP_WORDS_";
 	public static final String ONC_SEGMENTS = "ONC_SEGMENTS_";
 	public static final String ONC_WORDS = "ONC_WORDS_";
+	public static final String OT_CONSTRAINT_RANKINGS = "OT_CONSTRAINT_RANKINGS_";
+	public static final String OT_CONSTRAINTS = "OT_CONSTRAINTS_";
+	public static final String OT_SEGMENT_NATURAL_CLASS_CHOOSER = "OT_SEGMENT_NATURAL_CLASS_CHOOSER_";
+	public static final String OT_SEGMENTS = "OT_SEGMENTS_";
+	public static final String OT_WORDS = "OT_WORDS_";
 	public static final String SH_SEGMENT_CHOOSER = "SH_SEGMENT_CHOOSER_";
 	public static final String SH_SEGMENTS = "SH_SEGMENTS_";
 	public static final String SH_SONORITY_HIERARCHY = "SH_SONORITY_HIERARCHY_";
@@ -171,10 +190,17 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_ONC_FILTER_PREDICTED_SYLLABIFICATIONS = "lastONCFilterPredictedSyllabifications";
 	public static final String LAST_ONC_FILTER_WORDS = "lastONCFilterWords";
 	public static final String LAST_ONC_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastONCFilterWordsPredictedVsCorrect";
+	public static final String LAST_OT_COMPARISON = "lastOTComparision";
+	public static final String LAST_OT_CONSTRAINT_RANKING = "lastOTConstraintRanking";
+	public static final String LAST_OT_SEGMENT_OR_NATURAL_CLASS = "lastOTSegmentOrNaturalClass";
 	public static final String LAST_OT_FILTER_CORRECT_SYLLABIFICATIONS = "lastOTFilterCorrectSyllabifications";
 	public static final String LAST_OT_FILTER_PREDICTED_SYLLABIFICATIONS = "lastOTFilterPredictedSyllabifications";
 	public static final String LAST_OT_FILTER_WORDS = "lastOTFilterWords";
 	public static final String LAST_OT_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastOTFilterWordsPredictedVsCorrect";
+	public static final String LAST_OT_TRY_A_WORD = "lastOTTryAWord";
+	public static final String LAST_OT_WORDS_PREDICTED_VS_CORRECT = "lastOTWordPredictedVsCorrect";
+	public static final String LAST_OT_GRAPHEME_OR_NATURAL_CLASS = "lastOTGraphemeOrNaturalClass";
+	public static final String LAST_OT_ENVIRONMENTS_CHOOSER = "lastOTEnvironmentsChooser";
 	public static final String LAST_SH_FILTER_CORRECT_SYLLABIFICATIONS = "lastSHFilterCorrectSyllabifications";
 	public static final String LAST_SH_FILTER_PREDICTED_SYLLABIFICATIONS = "lastSHFilterPredictedSyllabifications";
 	public static final String LAST_SH_FILTER_WORDS = "lastSHFilterWords";
@@ -583,6 +609,86 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastNPFiltersViewItemUsed(int value) {
 		setPreferencesKey(LAST_NP_FILTERS_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastOTApproachViewUsed() {
+		return prefs.get(LAST_OT_APPROACH_VIEW_USED, OTApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastOTApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_OT_APPROACH_VIEW_USED, lastApproachViewUsed);
+	}
+
+	public int getLastOTSegmentInventoryViewItemUsed() {
+		return prefs.getInt(LAST_OT_SEGMENT_INVENTORY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastOTSegmentInventoryViewItemUsed(int value) {
+		setPreferencesKey(LAST_OT_SEGMENT_INVENTORY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastOTWordsViewItemUsed() {
+		return prefs.getInt(LAST_OT_WORDS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastOTWordsViewItemUsed(int value) {
+		setPreferencesKey(LAST_OT_WORDS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastOTWordsPredictedVsCorrectViewItemUsed() {
+		return prefs.getInt(LAST_OT_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastOTWordsPredictedVsCorrectViewItemUsed(int value) {
+		setPreferencesKey(LAST_OT_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastOTTryAWordUsed() {
+		return prefs.get(LAST_OT_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastOTTryAWordUsed(String lastOTTryAWordUsed) {
+		setPreferencesKey(LAST_OT_TRY_A_WORD_USED, lastOTTryAWordUsed);
+	}
+
+	public int getLastOTGraphemeNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_OT_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastOTGraphemeNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_OT_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastOTEnvironmentsViewItemUsed() {
+		return prefs.getInt(LAST_OT_ENVIRONMENTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastOTEnvironmentsViewItemUsed(int value) {
+		setPreferencesKey(LAST_OT_ENVIRONMENTS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastOTCVNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_OT_CV_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastOTCVNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_OT_CV_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastOTConstraintsViewItemUsed() {
+		return prefs.getInt(LAST_OT_CONSTRAINTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastOTConstraintsViewItemUsed(int value) {
+		setPreferencesKey(LAST_OT_CONSTRAINTS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastOTConstraintRankingsViewItemUsed() {
+		return prefs.getInt(LAST_OT_CONSTRAINT_RANKINGS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastOTConstraintRankingsViewItemUsed(int value) {
+		setPreferencesKey(LAST_OT_CONSTRAINT_RANKINGS_VIEW_ITEM_USED, value);
 	}
 
 	public String getLastSHApproachViewUsed() {

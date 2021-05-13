@@ -17,6 +17,7 @@ import org.sil.syllableparser.model.cvapproach.CVPredictedSyllabification;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import javafx.collections.FXCollections;
@@ -259,6 +260,13 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 	public void setData(NPApproach npApproachData, ObservableList<Word> words) {
 		npApproach = npApproachData;
 		languageProject = npApproachData.getLanguageProject();
+		this.words = words;
+		createListOfDifferentNPWords(words);
+	}
+
+	public void setData(OTApproach otApproachData, ObservableList<Word> words) {
+		otApproach = otApproachData;
+		languageProject = otApproachData.getLanguageProject();
 		this.words = words;
 		createListOfDifferentNPWords(words);
 	}

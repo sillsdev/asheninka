@@ -305,6 +305,10 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 				mainApp.getApplicationPreferences().setLastNPCVNaturalClassesViewItemUsed(
 						iCurrentIndex);
 				break;
+			case OPTIMALITY_THEORY:
+				mainApp.getApplicationPreferences().setLastOTCVNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
 			default:
 				break;
 			}
@@ -444,6 +448,10 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 					case NUCLEAR_PROJECTION:
 						iLastIndex = mainApp.getApplicationPreferences()
 								.getLastNPCVNaturalClassesViewItemUsed();
+						break;
+					case OPTIMALITY_THEORY:
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastOTCVNaturalClassesViewItemUsed();
 						break;
 					default:
 						break;

@@ -32,11 +32,14 @@ public class Word extends SylParserObject {
 	protected StringProperty moraicPredictedSyllabification;
 	protected StringProperty npParserResult;
 	protected StringProperty npPredictedSyllabification;
+	protected StringProperty otParserResult;
+	protected StringProperty otPredictedSyllabification;
 	protected StringProperty cvLingTreeDescription;
 	protected StringProperty shLingTreeDescription;
 	protected StringProperty oncLingTreeDescription;
 	protected StringProperty muLingTreeDescription;
 	protected StringProperty npLingTreeDescription;
+	protected StringProperty otLingTreeDescription;
 
 	public Word() {
 		super();
@@ -53,11 +56,14 @@ public class Word extends SylParserObject {
 		this.moraicPredictedSyllabification = new SimpleStringProperty("");
 		this.npParserResult = new SimpleStringProperty("");
 		this.npPredictedSyllabification = new SimpleStringProperty("");
+		this.otParserResult = new SimpleStringProperty("");
+		this.otPredictedSyllabification = new SimpleStringProperty("");
 		this.cvLingTreeDescription = new SimpleStringProperty("");
 		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
 		this.muLingTreeDescription = new SimpleStringProperty("");
 		this.npLingTreeDescription = new SimpleStringProperty("");
+		this.otLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -76,11 +82,14 @@ public class Word extends SylParserObject {
 		this.moraicPredictedSyllabification = new SimpleStringProperty("");
 		this.npParserResult = new SimpleStringProperty(parserResult);
 		this.npPredictedSyllabification = new SimpleStringProperty("");
+		this.otParserResult = new SimpleStringProperty(parserResult);
+		this.otPredictedSyllabification = new SimpleStringProperty("");
 		this.cvLingTreeDescription = new SimpleStringProperty("");
 		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
 		this.muLingTreeDescription = new SimpleStringProperty("");
 		this.npLingTreeDescription = new SimpleStringProperty("");
+		this.otLingTreeDescription = new SimpleStringProperty("");
 		createUUID();
 	}
 
@@ -279,6 +288,38 @@ public class Word extends SylParserObject {
 		return s;
 	}
 
+	public String getOTParserResult() {
+		return otParserResult.get();
+	}
+
+	public StringProperty otParserResultProperty() {
+		return otParserResult;
+	}
+
+	public void setOTParserResult(String parserResult) {
+		this.otParserResult.set(parserResult);
+	}
+
+	public String getOTPredictedSyllabification() {
+		return otPredictedSyllabification.get();
+	}
+
+	public StringProperty otPredictedSyllabificationProperty() {
+		return otPredictedSyllabification;
+	}
+
+	@XmlElement(name = "otPredictedSyllabification")
+	public void setOTPredictedSyllabification(String predictedSyllabification) {
+		this.otPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public StringProperty otPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(otPredictedSyllabificationProperty(), "\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
 	public String getCVLingTreeDescription() {
 		return cvLingTreeDescription.get();
 	}
@@ -340,6 +381,18 @@ public class Word extends SylParserObject {
 		this.npLingTreeDescription.set(ltDescription);
 	}
 
+	public String getOTLingTreeDescription() {
+		return otLingTreeDescription.get();
+	}
+
+	public StringProperty otLingTreeDescriptionProperty() {
+		return otLingTreeDescription;
+	}
+
+	public void setOTLingTreeDescription(String ltDescription) {
+		this.otLingTreeDescription.set(ltDescription);
+	}
+
 	@Override
 	public int hashCode() {
 		String sCombo = word.getValueSafe() + comment.getValueSafe()
@@ -348,6 +401,7 @@ public class Word extends SylParserObject {
 				+ oncPredictedSyllabification.getValueSafe()
 				+ moraicPredictedSyllabification.getValueSafe()
 				+ npPredictedSyllabification.getValueSafe()
+				+ otPredictedSyllabification.getValueSafe()
 				+ correctSyllabification.getValueSafe();
 		return sCombo.hashCode();
 	}
@@ -382,6 +436,10 @@ public class Word extends SylParserObject {
 						} else {
 							if (!getNPPredictedSyllabification().equals(otherWord.getNPPredictedSyllabification())) {
 								result = false;
+							} else {
+								if (!getOTPredictedSyllabification().equals(otherWord.getOTPredictedSyllabification())) {
+									result = false;
+								}
 							}
 						}
 					}

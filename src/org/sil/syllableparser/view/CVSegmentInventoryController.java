@@ -22,6 +22,7 @@ import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
 
@@ -474,6 +475,11 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 		setDataCommon(ApproachType.NUCLEAR_PROJECTION);
 	}
 
+	public void setData(OTApproach cvApproachData) {
+		currentApproach = otApproach = cvApproachData;
+		setDataCommon(ApproachType.OPTIMALITY_THEORY);
+	}
+
 	protected void setColumnICURules() {
 		setColumnICURules(segmentColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
 		setColumnICURules(graphemesColumn, languageProject.getVernacularLanguage().getAnyIcuRules());
@@ -519,6 +525,11 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 					case NUCLEAR_PROJECTION:
 						iLastIndex = mainApp.getApplicationPreferences().getLastNPSegmentInventoryViewItemUsed();
 						break;
+
+					case OPTIMALITY_THEORY:
+						iLastIndex = mainApp.getApplicationPreferences().getLastOTSegmentInventoryViewItemUsed();
+						break;
+
 					default:
 						break;
 					}
