@@ -555,7 +555,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 			loader.setLocation(ApproachViewNavigator.class
 					.getResource("fxml/SHSegmentChooser.fxml"));
 			loader.setResources(ResourceBundle.getBundle(
-					"org.sil.syllableparser.resources.SyllableParser", locale));
+					Constants.RESOURCE_LOCATION, locale));
 
 			AnchorPane page = loader.load();
 			Stage dialogStage = new Stage();

@@ -691,7 +691,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 			loader.setLocation(ApproachViewNavigator.class
 					.getResource("fxml/NPSegmentNaturalClassChooser.fxml"));
 			loader.setResources(ResourceBundle.getBundle(
-					"org.sil.syllableparser.resources.SyllableParser", locale));
+					Constants.RESOURCE_LOCATION, locale));
 
 			AnchorPane page = loader.load();
 			Stage dialogStage = new Stage();
