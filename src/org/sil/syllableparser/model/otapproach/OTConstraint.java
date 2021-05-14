@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import org.sil.utility.StringUtilities;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -260,19 +261,24 @@ public class OTConstraint extends SylParserObject {
 
 	@XmlAttribute(name = "structuralOptions1")
 	public int getStructuralOptions1() {
+		setAll1Booleans();
 		return structuralOptions1;
 	}
 
 	public void setStructuralOptions1(int structuralOptions) {
 		this.structuralOptions1 = structuralOptions;
+		setAll1Booleans();
 	}
 
+	@XmlAttribute(name = "structuralOptions2")
 	public int getStructuralOptions2() {
+		setAll2Booleans();
 		return structuralOptions2;
 	}
 
 	public void setStructuralOptions2(int structuralOptions) {
 		this.structuralOptions2 = structuralOptions;
+		setAll2Booleans();
 	}
 
 	public boolean isWordInitial1() {
@@ -284,6 +290,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsWordInitial1(boolean value) {
+		structuralOptions1 = updateStructuralOptions(value, structuralOptions1,
+				OTStructuralOptions.WORD_INITIAL, OTStructuralOptions.REMOVE_WORD_INITIAL);
 		this.isWordInitial1.set(value);
 	}
 
@@ -296,6 +304,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsOnset1(boolean value) {
+		structuralOptions1 = updateStructuralOptions(value, structuralOptions1,
+				OTStructuralOptions.ONSET, OTStructuralOptions.REMOVE_ONSET);
 		this.isOnset1.set(value);
 	}
 
@@ -308,6 +318,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsNucleus1(boolean value) {
+		structuralOptions1 = updateStructuralOptions(value, structuralOptions1,
+				OTStructuralOptions.NUCLEUS, OTStructuralOptions.REMOVE_NUCLEUS);
 		this.isNucleus1.set(value);
 	}
 
@@ -320,6 +332,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsCoda1(boolean value) {
+		structuralOptions1 = updateStructuralOptions(value, structuralOptions1,
+				OTStructuralOptions.CODA, OTStructuralOptions.REMOVE_CODA);
 		this.isCoda1.set(value);
 	}
 
@@ -332,6 +346,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsUnparsed1(boolean value) {
+		structuralOptions1 = updateStructuralOptions(value, structuralOptions1,
+				OTStructuralOptions.UNPARSED, OTStructuralOptions.REMOVE_UNPARSED);
 		this.isUnparsed1.set(value);
 	}
 
@@ -344,6 +360,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsWordFinal1(boolean value) {
+		structuralOptions1 = updateStructuralOptions(value, structuralOptions1,
+				OTStructuralOptions.WORD_FINAL, OTStructuralOptions.REMOVE_WORD_FINAL);
 		this.isWordFinal1.set(value);
 	}
 
@@ -356,6 +374,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsWordInitial2(boolean value) {
+		structuralOptions2 = updateStructuralOptions(value, structuralOptions2,
+				OTStructuralOptions.WORD_INITIAL, OTStructuralOptions.REMOVE_WORD_INITIAL);
 		this.isWordInitial2.set(value);
 	}
 
@@ -368,6 +388,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsOnset2(boolean value) {
+		structuralOptions2 = updateStructuralOptions(value, structuralOptions2,
+				OTStructuralOptions.ONSET, OTStructuralOptions.REMOVE_ONSET);
 		this.isOnset2.set(value);
 	}
 
@@ -380,6 +402,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsNucleus2(boolean value) {
+		structuralOptions2 = updateStructuralOptions(value, structuralOptions2,
+				OTStructuralOptions.NUCLEUS, OTStructuralOptions.REMOVE_NUCLEUS);
 		this.isNucleus2.set(value);
 	}
 
@@ -392,6 +416,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsCoda2(boolean value) {
+		structuralOptions2 = updateStructuralOptions(value, structuralOptions2,
+				OTStructuralOptions.CODA, OTStructuralOptions.REMOVE_CODA);
 		this.isCoda2.set(value);
 	}
 
@@ -404,6 +430,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsUnparsed2(boolean value) {
+		structuralOptions2 = updateStructuralOptions(value, structuralOptions2,
+				OTStructuralOptions.UNPARSED, OTStructuralOptions.REMOVE_UNPARSED);
 		this.isUnparsed2.set(value);
 	}
 
@@ -416,6 +444,8 @@ public class OTConstraint extends SylParserObject {
 	}
 
 	public void setIsWordFinal2(boolean value) {
+		structuralOptions2 = updateStructuralOptions(value, structuralOptions2,
+				OTStructuralOptions.WORD_FINAL, OTStructuralOptions.REMOVE_WORD_FINAL);
 		this.isWordFinal2.set(value);
 	}
 
@@ -470,188 +500,125 @@ public class OTConstraint extends SylParserObject {
 		this.isValid.set(value);
 	}
 
+	protected int updateStructuralOptions(boolean value, int structuralOptions, int optionOn, int optionOff) {
+		if (value) {
+			structuralOptions |= optionOn;
+		} else {
+			structuralOptions &= optionOff;
+		}
+		return structuralOptions;
+	}
+
+	private void setAll1Booleans() {
+		isWordInitial1.set((structuralOptions1 & OTStructuralOptions.WORD_INITIAL) > 0);
+		isOnset1.set((structuralOptions1 & OTStructuralOptions.ONSET) > 0);
+		isNucleus1.set((structuralOptions1 & OTStructuralOptions.NUCLEUS) > 0);
+		isCoda1.set((structuralOptions1 & OTStructuralOptions.CODA) > 0);
+		isUnparsed1.set((structuralOptions1 & OTStructuralOptions.UNPARSED) > 0);
+		isWordFinal1.set((structuralOptions1 & OTStructuralOptions.WORD_FINAL) > 0);
+	}
+
+	private void setAll2Booleans() {
+		isWordInitial2.set((structuralOptions2 & OTStructuralOptions.WORD_INITIAL) > 0);
+		isOnset2.set((structuralOptions2 & OTStructuralOptions.ONSET) > 0);
+		isNucleus2.set((structuralOptions2 & OTStructuralOptions.NUCLEUS) > 0);
+		isCoda2.set((structuralOptions2 & OTStructuralOptions.CODA) > 0);
+		isUnparsed2.set((structuralOptions2 & OTStructuralOptions.UNPARSED) > 0);
+		isWordFinal2.set((structuralOptions2 & OTStructuralOptions.WORD_FINAL) > 0);
+	}
 
 	public String createLingTreeDescription() {
 		if (!isValid()) {
 			setConstraintRepresentation("");
 			return "";
 		}
-		 StringBuilder sb = new StringBuilder();
-		// switch (ruleAction) {
-		// case ATTACH:
-		// switch (ruleLevel) {
-		// case ALL:
-		// break;
-		// case N:
-		// // diphthong
-		// sb.append("(N(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append(")(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append("))");
-		// break;
-		// case N_BAR:
-		// // coda
-		// sb.append("(N'(N(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append("))(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append("))");
-		// break;
-		// case N_DOUBLE_BAR:
-		// // onset
-		// sb.append("(N''(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append(")(N'(N(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append("))))");
-		// break;
-		// default:
-		// break;
-		// }
-		// break;
-		// case AUGMENT:
-		// switch (ruleLevel) {
-		// case ALL:
-		// break;
-		// case N:
-		// // diphthong
-		// sb.append("(N(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append(")(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append("))");
-		// break;
-		// case N_BAR:
-		// // coda
-		// sb.append("(N'(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append(")(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append("))");
-		// break;
-		// case N_DOUBLE_BAR:
-		// // onset
-		// sb.append("(N''(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append(")(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append("))");
-		// break;
-		// default:
-		// break;
-		// }
-		// break;
-		// case BUILD:
-		// sb.append("(N''(N'(N(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append("))))");
-		// break;
-		// case LEFT_ADJOIN:
-		// switch (ruleLevel) {
-		// case ALL:
-		// break;
-		// case N:
-		// sb.append("(N(N(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append("))(N(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append(")))");
-		// break;
-		// case N_BAR:
-		// sb.append("(N'(N'(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append("))(N'(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append(")))");
-		// break;
-		// case N_DOUBLE_BAR:
-		// sb.append("(N''(N''(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append("))(N''(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append(")))");
-		// break;
-		// default:
-		// break;
-		// } break;
-		// case RIGHT_ADJOIN:
-		// switch (ruleLevel) {
-		// case ALL:
-		// break;
-		// case N:
-		// sb.append("(N(N(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append("))(N(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append(")))");
-		// break;
-		// case N_BAR:
-		// sb.append("(N'(N'(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append("))(N'(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append(")))");
-		// break;
-		// case N_DOUBLE_BAR:
-		// sb.append("(N''(N''(\\L ");
-		// sb.append(secondAffectedElementSegOrNC.getSegmentOrNaturalClass());
-		// sb.append("))(N''(\\L ");
-		// sb.append(getAffectedValueForLingTree());
-		// sb.append(")))");
-		// break;
-		// default:
-		// break;
-		// }
-		// break;
-		// default:
-		// break;
-		// }
-		 setConstraintRepresentation(sb.toString());
+		StringBuilder sb = new StringBuilder();
+		sb.append("(\\O");
+		createElement(sb, structuralOptions1, affectedElement1.get());
+		sb.append("(");
+		sb.append(getStructuralOptionsValueForLingTree(structuralOptions1));
+		sb.append("))");
+		if (StringUtilities.isNullOrEmpty(affectedElement2.get())) {
+			sb.append(")");
+		} else {
+			createElement(sb, structuralOptions2, affectedElement2.get());
+			sb.append("(");
+			sb.append(getStructuralOptionsValueForLingTree(structuralOptions2));
+			sb.append(")))");
+		}
+		 setLingTreeDescription(sb.toString());
 		 return sb.toString();
 	}
 
-	protected String getAffectedValueForLingTree() {
+	protected void createElement(StringBuilder sb, int options, String sElement) {
+		addAnyWordInitialSymbol(sb, options);
+		sb.append(sElement);
+		addAnyWordFinalSymbol(sb, options);
+	}
+
+	protected void addAnyWordFinalSymbol(StringBuilder sb, int options) {
+		if ((options & OTStructuralOptions.WORD_FINAL) > 0) {
+			sb.append(" ");
+			sb.append(Constants.WORD_BOUNDARY_SYMBOL);
+		}
+	}
+
+	protected void addAnyWordInitialSymbol(StringBuilder sb, int options) {
+		sb.append("(\\O");
+		if ((options & OTStructuralOptions.WORD_INITIAL) > 0) {
+			sb.append(Constants.WORD_BOUNDARY_SYMBOL);
+			sb.append(" ");
+		}
+	}
+
+	protected String getAffectedValueForLingTree(CVSegmentOrNaturalClass element) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(affectedElementSegOrNC1.getSegmentOrNaturalClass());
+		sb.append(element.getSegmentOrNaturalClass());
 		return sb.toString();
 	}
 
-	public String adjustForAffectedSVG(String svg) {
-		return svg;
+	protected String getStructuralOptionsValueForLingTree(int options) {
+		StringBuilder sb = new StringBuilder();
+		int numberOfCoreOptions = getNumberOfCoreOptionsSet(options);
+		if (numberOfCoreOptions > 1) {
+			sb.append("{");
+		}
+		int iCount = 0;
+		iCount = getStructuralOptionForLingTree(options, sb, numberOfCoreOptions, OTStructuralOptions.ONSET, iCount, "o");
+		iCount = getStructuralOptionForLingTree(options, sb, numberOfCoreOptions, OTStructuralOptions.NUCLEUS, iCount, "n");
+		iCount = getStructuralOptionForLingTree(options, sb, numberOfCoreOptions, OTStructuralOptions.CODA, iCount, "c");
+		iCount = getStructuralOptionForLingTree(options, sb, numberOfCoreOptions, OTStructuralOptions.UNPARSED, iCount, "u");
+		if (numberOfCoreOptions > 1) {
+			sb.append("}");
+		}
+		return sb.toString();
 	}
 
-	protected String adjustFirstLine(String svg) {
-		int i = svg.indexOf("<line ");
-		int j = svg.substring(i).indexOf("/>");
-		svg = svg.substring(0, i + j) + Constants.SVG_DASHED_LINE + svg.substring(i + j);
-		return svg;
+	protected int getStructuralOptionForLingTree(int options, StringBuilder sb,
+			int numberOfCoreOptions, int option, int iCount, String sOption) {
+		if ((options | option) == options) {
+			if (iCount > 0 && numberOfCoreOptions > 1 && iCount < numberOfCoreOptions)
+				sb.append(", ");
+			sb.append(sOption);
+			iCount++;
+		}
+		return iCount;
 	}
 
-	protected String adjustSecondLine(String svg) {
-		int i1 = svg.indexOf("<line ");
-		int i2 = svg.substring(i1 + 1).indexOf("<line ");
-		int i = i1 + i2;
-		int j = svg.substring(i).indexOf("/>");
-		svg = svg.substring(0, i + j) + Constants.SVG_DASHED_LINE + svg.substring(i + j);
-		return svg;
-	}
 
-	protected String adjustThirdLine(String svg) {
-		int i1 = svg.indexOf("<line ");
-		int i2 = svg.substring(i1 + 1).indexOf("<line ");
-		int i3 = svg.substring(i1 + i2 + 2).indexOf("<line ");
-		int i = i1 + i2 + i3;
-		int j = svg.substring(i).indexOf("/>");
-		svg = svg.substring(0, i + j) + Constants.SVG_DASHED_LINE + svg.substring(i + j);
-		return svg;
-	}
-
-	protected String adjustLastLine(String svg) {
-		int i = svg.lastIndexOf("<line ");
-		int j = svg.substring(i).indexOf("/>");
-		svg = svg.substring(0, i + j) + Constants.SVG_DASHED_LINE + svg.substring(i + j);
-		return svg;
+	public int getNumberOfCoreOptionsSet(int options) {
+		options &= OTStructuralOptions.REMOVE_WORD_INITIAL;
+		options &= OTStructuralOptions.REMOVE_WORD_FINAL;
+		int iCount = 0;
+		if ((options | OTStructuralOptions.ONSET) == options)
+			iCount++;
+		if ((options | OTStructuralOptions.NUCLEUS) == options)
+			iCount++;
+		if ((options | OTStructuralOptions.CODA) == options)
+			iCount++;
+		if ((options | OTStructuralOptions.UNPARSED) == options)
+			iCount++;
+		return iCount;
 	}
 
 	@Override

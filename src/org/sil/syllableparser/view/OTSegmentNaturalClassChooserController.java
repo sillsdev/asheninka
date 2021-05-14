@@ -67,7 +67,7 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 	}
 
 	@FXML
-	private TableView<CVSegmentOrNaturalClass> npSegmentOrNaturalClassTable;
+	private TableView<CVSegmentOrNaturalClass> otSegmentOrNaturalClassTable;
 	@FXML
 	private TableColumn<CVSegmentOrNaturalClass, String> segOrNCColumn;
 	@FXML
@@ -78,11 +78,13 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 	private ApplicationPreferences preferences;
 
 	private CVSegmentOrNaturalClass currentSegmentOrNaturalClass;
+	private CVSegmentOrNaturalClass anyOption;
 	private CVSegmentOrNaturalClass noneOption;
 	private ObservableList<CVSegmentOrNaturalClass> cvSegmentsOrNaturalClasses = FXCollections
 			.observableArrayList();
 	private OTConstraint constraint;
 	private boolean isAffected;
+	String any = "<Any>";
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -90,7 +92,7 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
 		super.setApproach(ApplicationPreferences.NP_SEGMENT_NATURAL_CLASS_CHOOSER);
-		super.setTableView(npSegmentOrNaturalClassTable);
+		super.setTableView(otSegmentOrNaturalClassTable);
 		super.initialize(location, resources);
 
 		segOrNCColumn.setCellValueFactory(cellData -> {
@@ -105,7 +107,7 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 		});
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-		npSegmentOrNaturalClassTable.setEditable(true);
+		otSegmentOrNaturalClassTable.setEditable(true);
 		// Custom rendering of the table cell.
 		segOrNCColumn.setCellFactory(column -> {
 			return new WrappingTableCell();
@@ -114,8 +116,11 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 			return new AnalysisWrappingTableCell();
 		});
 
-		noneOption = new CVSegmentOrNaturalClass(resources.getString("label.any"),
+		any = resources.getString("label.any");
+		anyOption = new CVSegmentOrNaturalClass(any,
 				resources.getString("label.anydescription"), false, null, true);
+		noneOption = new CVSegmentOrNaturalClass(resources.getString("label.none"),
+				resources.getString("label.nonedescription"), false, null, true);
 	}
 
 	/**
@@ -134,12 +139,12 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 		this.isAffected = isAffected;
 		generateCVSegmentsAndNaturalClasses(langProj.getCVApproach());
 		// Add observable list data to the table
-		npSegmentOrNaturalClassTable.setItems(cvSegmentsOrNaturalClasses);
-		if (npSegmentOrNaturalClassTable.getItems().size() > 0) {
+		otSegmentOrNaturalClassTable.setItems(cvSegmentsOrNaturalClasses);
+		if (otSegmentOrNaturalClassTable.getItems().size() > 0) {
 			// select one
-			npSegmentOrNaturalClassTable.requestFocus();
-			npSegmentOrNaturalClassTable.getSelectionModel().select(0);
-			npSegmentOrNaturalClassTable.getFocusModel().focus(0);
+			otSegmentOrNaturalClassTable.requestFocus();
+			otSegmentOrNaturalClassTable.getSelectionModel().select(0);
+			otSegmentOrNaturalClassTable.getFocusModel().focus(0);
 		}
 	}
 
@@ -160,6 +165,7 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 				cvSegmentsOrNaturalClasses.add(currentSegmentOrNaturalClass);
 			}
 		}
+		cvSegmentsOrNaturalClasses.add(anyOption);
 		if (!isAffected) {
 			cvSegmentsOrNaturalClasses.add(noneOption);
 		}
@@ -179,9 +185,9 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 	 */
 	@FXML
 	private void handleOk() {
-		CVSegmentOrNaturalClass segOrClass = npSegmentOrNaturalClassTable.getSelectionModel()
+		CVSegmentOrNaturalClass segOrClass = otSegmentOrNaturalClassTable.getSelectionModel()
 				.getSelectedItem();
-		if (!segOrClass.equals(noneOption)) {
+		if (!segOrClass.equals(anyOption) && !segOrClass.equals(noneOption)) {
 			if (isAffected) {
 				constraint.setAffectedSegOrNC1(segOrClass);
 				constraint.setAffectedElement1(segOrClass.getSegmentOrNaturalClassForShow());
@@ -189,9 +195,14 @@ public class OTSegmentNaturalClassChooserController extends TableViewController 
 				constraint.setAffectedSegOrNC2(segOrClass);
 				constraint.setAffectedElement2(segOrClass.getSegmentOrNaturalClassForShow());
 			}
-		} else if (isAffected) {
-			constraint.setAffectedSegOrNC1(null);
-			constraint.setAffectedElement1("");
+		} else if (segOrClass.equals(anyOption)) {
+			if (isAffected) {
+				constraint.setAffectedSegOrNC1(null);
+				constraint.setAffectedElement1(any);
+			} else {
+				constraint.setAffectedSegOrNC2(null);
+				constraint.setAffectedElement2(any);
+			}
 		} else {
 			constraint.setAffectedSegOrNC2(null);
 			constraint.setAffectedElement2("");

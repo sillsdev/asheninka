@@ -286,4 +286,10 @@ public class LingTreeInteractorTest {
 		ltInteractor.setVerticalGap(40.0);
 		assertEquals(gap, ltInteractor.getVerticalGap(), 0.0);
 	}
+
+	@Test
+	public void initialYCoordinateTest() {
+		ltInteractor.setInitialYCoordinate(40.0);
+		assertEquals(40.0, ltInteractor.getInitialYCoordinate(), 0.0);
+	}
 }

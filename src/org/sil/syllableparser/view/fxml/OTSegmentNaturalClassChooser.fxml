@@ -12,7 +12,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.NPSegmentNaturalClassChooserController">
+<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.OTSegmentNaturalClassChooserController">
    <children>
       <ButtonBar layoutX="114.0" layoutY="355.0" prefHeight="40.0" prefWidth="272.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="14.0">
         <buttons>
@@ -22,7 +22,7 @@
         </buttons>
       </ButtonBar>
       <Label layoutX="11.0" layoutY="14.0" text="%label.choosesnc1" />
-      <TableView fx:id="npSegmentOrNaturalClassTable" layoutX="11.0" layoutY="39.0" prefHeight="316.0" prefWidth="374.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="39.0">
+      <TableView fx:id="otSegmentOrNaturalClassTable" layoutX="11.0" layoutY="39.0" prefHeight="316.0" prefWidth="374.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="39.0">
         <columns>
             <TableColumn fx:id="segOrNCColumn" prefWidth="100.0" text="%label.segmentsandnaturalclasses" />
             <TableColumn fx:id="descriptionColumn" prefWidth="240.0" text="%label.description" />

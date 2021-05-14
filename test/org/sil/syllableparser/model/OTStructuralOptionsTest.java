@@ -40,19 +40,19 @@ public class OTStructuralOptionsTest {
 	@Test
 	public void removalTest() {
 		result = 0;
-		result = OTStructuralOptions.INITIALIZED & OTStructuralOptions.REMOVE_ONSET;
+		result = OTStructuralOptions.ALL_SET & OTStructuralOptions.REMOVE_ONSET;
 		assertEquals(62, result);
-		result = OTStructuralOptions.INITIALIZED & OTStructuralOptions.REMOVE_NUCLEUS;
+		result = OTStructuralOptions.ALL_SET & OTStructuralOptions.REMOVE_NUCLEUS;
 		assertEquals(61, result);
-		result = OTStructuralOptions.INITIALIZED & OTStructuralOptions.REMOVE_CODA;
+		result = OTStructuralOptions.ALL_SET & OTStructuralOptions.REMOVE_CODA;
 		assertEquals(59, result);
-		result = OTStructuralOptions.INITIALIZED & OTStructuralOptions.REMOVE_UNPARSED;
+		result = OTStructuralOptions.ALL_SET & OTStructuralOptions.REMOVE_UNPARSED;
 		assertEquals(55, result);
 	}
 	
 	@Test
 	public void isOptionTest() {
-		structuredOptions = OTStructuralOptions.INITIALIZED;
+		structuredOptions = OTStructuralOptions.ALL_SET;
 		assertTrue((structuredOptions & OTStructuralOptions.WORD_INITIAL) > 0);
 		assertTrue((structuredOptions & OTStructuralOptions.ONSET) > 0);
 		assertTrue((structuredOptions & OTStructuralOptions.NUCLEUS) > 0);

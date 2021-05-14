@@ -8,7 +8,6 @@ package org.sil.syllableparser.view;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 import org.sil.lingtree.model.FontInfo;
@@ -98,8 +97,8 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 	private TableColumn<OTConstraint, String> nameColumn;
 	@FXML
 	private TableColumn<OTConstraint, String> descriptionColumn;
-	@FXML
-	private TableColumn<OTConstraint, WebView> representationColumn;
+//	@FXML
+//	private TableColumn<OTConstraint, WebView> representationColumn;
 
 	@FXML
 	private TextField nameField;
@@ -140,8 +139,6 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 	@FXML
 	private CheckBox activeCheckBox;
 	@FXML
-	private CheckBox obeysSSPCheckBox;
-	@FXML
 	protected Label constraintTreeLabel;
 	@FXML
 	protected WebView constraintLingTreeSVG;
@@ -172,8 +169,7 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().constraintNameProperty());
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-//		representationColumn.setCellValueFactory(cellData -> cellData.getValue().
-//				.affectedSegmentOrNaturalClassProperty());
+//		representationColumn.setCellValueFactory(cellData -> cellData.getValue().getConstraintLingTreeSVG());
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
@@ -188,7 +184,7 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 
 		makeColumnHeaderWrappable(nameColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
-		makeColumnHeaderWrappable(representationColumn);
+//		makeColumnHeaderWrappable(representationColumn);
 
 		// Clear rule details.
 		showConstraintDetails(null);
@@ -419,7 +415,7 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		isCoda2CheckBox.setDisable(!fIsActive);
 		isUnparsed2CheckBox.setDisable(!fIsActive);
 		isWordFinal2CheckBox.setDisable(!fIsActive);
-
+		constraintLingTreeSVG.setDisable(!fIsActive);
 	}
 
 	private void forceTableRowToRedisplayPerActiveSetting(OTConstraint constraint) {
@@ -596,6 +592,10 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		reportAnyValidationMessage();
 	}
 
+	public WebView getConstraintLingTreeSVG() {
+		return constraintLingTreeSVG;
+	}
+
 	/**
 	 * Opens a dialog to show and set segments
 	 */
@@ -604,7 +604,7 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 			// Load the fxml file and create a new stage for the popup.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ApproachViewNavigator.class
-					.getResource("fxml/NPSegmentNaturalClassChooser.fxml"));
+					.getResource("fxml/OTSegmentNaturalClassChooser.fxml"));
 			loader.setResources(ResourceBundle.getBundle(
 					Constants.RESOURCE_LOCATION, locale));
 
@@ -632,8 +632,8 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 					affectedElement1TextField.setText(controller.getConstraint().getAffectedElement1());
 					currentConstraint.setAffectedSegOrNC1(controller.getConstraint().getAffectedSegOrNC1());
 				} else {
-					affectedElement1TextField.setText(controller.getConstraint().getAffectedElement2());
-					currentConstraint.setAffectedSegOrNC1(controller.getConstraint().getAffectedSegOrNC2());
+					affectedElement2TextField.setText(controller.getConstraint().getAffectedElement2());
+					currentConstraint.setAffectedSegOrNC2(controller.getConstraint().getAffectedSegOrNC2());
 				}
 			}
 
@@ -648,10 +648,11 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		FontInfo fiAnalysis = new FontInfo(languageProject.getAnalysisLanguage().getFont());
 		fiAnalysis.setColor(Color.BLACK);
 		ltInteractor.setLexicalFontInfo(fiAnalysis);
+		double yInit = ltInteractor.getInitialYCoordinate();
+		ltInteractor.setInitialYCoordinate(yInit-(2*ltInteractor.getVerticalGap()));
 
 		ltInteractor.setVerticalGap(30.0);
 		String ltSVG = ltInteractor.createSVG(sLingTreeDescription, true);
-		ltSVG = currentConstraint.adjustForAffectedSVG(ltSVG);
 		StringBuilder sb = new StringBuilder();
 		sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head>");
 		sb.append("<body><div style=\"text-align:left\">");

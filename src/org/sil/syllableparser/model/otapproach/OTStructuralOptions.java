@@ -18,10 +18,13 @@ public class OTStructuralOptions {
 	public static final int WORD_INITIAL = 16;
 	public static final int WORD_FINAL = 32;
 	
-	public static final int INITIALIZED = 63;
+	public static final int INITIALIZED = 0;
+	public static final int ALL_SET = 63;
 
 	public static final int REMOVE_ONSET = 62;
 	public static final int REMOVE_NUCLEUS = 61;
 	public static final int REMOVE_CODA = 59;
 	public static final int REMOVE_UNPARSED = 55;
+	public static final int REMOVE_WORD_INITIAL = 47;
+	public static final int REMOVE_WORD_FINAL = 31;
 }

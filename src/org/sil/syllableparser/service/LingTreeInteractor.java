@@ -87,4 +87,12 @@ public class LingTreeInteractor {
 	public void setVerticalGap(double gap) {
 		origTree.setVerticalGap(gap);
 	}
+
+	public double getInitialYCoordinate() {
+		return origTree.getInitialYCoordinate();
+	}
+
+	public void setInitialYCoordinate(double value) {
+		origTree.setInitialYCoordinate(value);
+	}
 }
