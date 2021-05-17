@@ -55,10 +55,17 @@ public class OTConstraintValidator {
 	public void validate() {
 		isValid = true;
 		errorMessageProperty = "";
-		String element1 = constraint.getAffectedElement1(); 
-		String element2 = constraint.getAffectedElement2(); 
+		String element1 = constraint.getAffectedElement1();
+		String element2 = constraint.getAffectedElement2();
+		int structuralOptions1 = constraint.getStructuralOptions1();
+		int structuralOptions2 = constraint.getStructuralOptions2();
+		if ((structuralOptions2 & OTStructuralOptions.WORD_INITIAL) > 0) {
+			isValid = false;
+			errorMessageProperty = "otconstraint.message.element2.nowordinitial";
+			return;
+		}
 		if (element1 == null || element1.length() > 0) {
-			isValid = validateStructuralOptions(constraint.getStructuralOptions1());
+			isValid = validateStructuralOptions(structuralOptions1);
 			if (!isValid) {
 				isValid = false;
 				errorMessageProperty = "otconstraint.message.element1.invalidoptions";
@@ -69,15 +76,22 @@ public class OTConstraintValidator {
 		}
 		if (isValid) {
 			if (element2 == null || element2.length() > 0) {
-				isValid = validateStructuralOptions(constraint.getStructuralOptions2());
+				isValid = validateStructuralOptions(structuralOptions2);
 				if (!isValid) {
 					errorMessageProperty = "otconstraint.message.element2.invalidoptions";
-				} 
-			} else if (constraint.getStructuralOptions2() > 0) {
+				} else if ((structuralOptions1 & OTStructuralOptions.WORD_FINAL) > 0) {
+					isValid = false;
+					errorMessageProperty = "otconstraint.message.element1.nowordfinal";
+				}
+			} else if (structuralOptions2 > 0) {
 				isValid = false;
-				errorMessageProperty = "otconstraint.message.element2.optionsignored";
+				if (structuralOptions2 == OTStructuralOptions.WORD_FINAL) {
+					errorMessageProperty = "otconstraint.message.element2.wordfinalignored";
+				} else {
+					errorMessageProperty = "otconstraint.message.element2.optionsignored";
+				}
 			}
-		} 
+		}
 	}
 
 	protected boolean validateStructuralOptions(int structuralOptions) {

@@ -29,10 +29,6 @@
                <children>
                   <TableView fx:id="otConstraintsTable" layoutY="100.0" prefHeight="395.0" prefWidth="287.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-<!--                       <TableColumn fx:id="checkBoxColumn" prefWidth="4.0"> -->
-<!--                         <graphic> -->
-<!--                           <CheckBox fx:id="checkBoxColumnHead" mnemonicParsing="false" onAction="#handleCheckBoxColumnHead" prefHeight="17.0" prefWidth="4.0" selected="true" /> -->
-<!--                         </graphic> -->
 <!--                       </TableColumn> -->
                       <TableColumn fx:id="nameColumn" prefWidth="76.0" text="%label.name" />
                       <TableColumn fx:id="descriptionColumn" prefWidth="94.0" text="%label.description" />
@@ -70,44 +66,52 @@
                         <Label fx:id="constraintTreeLabel" text="%label.otconstrainttree" GridPane.rowIndex="7" GridPane.valignment="TOP" />
                         <TextField fx:id="nameField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <TextField fx:id="affectedElement1TextField" editable="false" prefWidth="234.0" />
-                              <Button fx:id="affectedElement1Button" mnemonicParsing="false" onAction="#handleLaunchAffectedSegOrNC1Chooser" text="...">
-                                 <FlowPane.margin>
-                                    <Insets left="3.0" />
-                                 </FlowPane.margin>
-                              </Button>
-                           </children>
-                         </FlowPane>
+                              <CheckBox fx:id="isWordInitial1CheckBox" mnemonicParsing="false" text="# " />
+		                      <FlowPane hgap="4.0" prefWidth="180.0" vgap="8.0" GridPane.vgrow="ALWAYS">
+		                         <children>
+		                            <TextField fx:id="affectedElement1TextField" editable="false" prefWidth="140.0" />
+		                            <Button fx:id="affectedElement1Button" mnemonicParsing="false" onAction="#handleLaunchAffectedSegOrNC1Chooser" text="...">
+		                               <FlowPane.margin>
+		                                  <Insets left="3.0" />
+		                               </FlowPane.margin>
+		                            </Button>
+		                         </children>
+		                      </FlowPane>
+                              <CheckBox fx:id="isWordFinal1CheckBox" mnemonicParsing="false" text="#" />
+                          </children>
+                        </HBox>
                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <CheckBox fx:id="isWordInitial1CheckBox" mnemonicParsing="false" text="#     " />
                               <CheckBox fx:id="isOnset1CheckBox" mnemonicParsing="false" text="o     " />
                               <CheckBox fx:id="isNucleus1CheckBox" mnemonicParsing="false" text="n     " />
                               <CheckBox fx:id="isCoda1CheckBox" mnemonicParsing="false" text="c     " />
                               <CheckBox fx:id="isUnparsed1CheckBox" mnemonicParsing="false" text="u     " />
-                              <CheckBox fx:id="isWordFinal1CheckBox" mnemonicParsing="false" text="#" />
                           </children>
                         </HBox>
-                        <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <TextField fx:id="affectedElement2TextField" editable="false" prefWidth="234.0" />
-                              <Button fx:id="affectedElement2Button" mnemonicParsing="false" onAction="#handleLaunchAffectedSegOrNC2Chooser" text="...">
-                                 <FlowPane.margin>
-                                    <Insets left="3.0" />
-                                 </FlowPane.margin>
-                              </Button>
-                           </children>
-                         </FlowPane>
+                              <CheckBox fx:id="isWordInitial2CheckBox" mnemonicParsing="false" text="# " />
+		                      <FlowPane hgap="4.0" prefWidth="180.0" vgap="8.0" GridPane.vgrow="ALWAYS">
+		                         <children>
+		                            <TextField fx:id="affectedElement2TextField" editable="false" prefWidth="140.0" />
+		                            <Button fx:id="affectedElement2Button" mnemonicParsing="false" onAction="#handleLaunchAffectedSegOrNC2Chooser" text="...">
+		                               <FlowPane.margin>
+		                                  <Insets left="3.0" />
+		                               </FlowPane.margin>
+		                            </Button>
+		                         </children>
+		                      </FlowPane>
+                              <CheckBox fx:id="isWordFinal2CheckBox" mnemonicParsing="false" text="#" />
+                          </children>
+                        </HBox>
                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
-                              <CheckBox fx:id="isWordInitial2CheckBox" mnemonicParsing="false" text="#     " />
                               <CheckBox fx:id="isOnset2CheckBox" mnemonicParsing="false" text="o     " />
                               <CheckBox fx:id="isNucleus2CheckBox" mnemonicParsing="false" text="n     " />
                               <CheckBox fx:id="isCoda2CheckBox" mnemonicParsing="false" text="c     " />
                               <CheckBox fx:id="isUnparsed2CheckBox" mnemonicParsing="false" text="u     " />
-                              <CheckBox fx:id="isWordFinal2CheckBox" mnemonicParsing="false" text="#" />
                           </children>
                         </HBox>
                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />

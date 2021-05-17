@@ -117,8 +117,8 @@ public class OTConstraintValidatorTest {
 		assertTrue(validator.isValid());
 		assertEquals("", validator.getErrorMessageProperty());
 
-		constraint = new OTConstraint("one", "", affected1, affected2, OTStructuralOptions.ONSET,
-				OTStructuralOptions.WORD_INITIAL + OTStructuralOptions.ONSET, "", "", true);
+		constraint = new OTConstraint("one", "", affected1, affected2, OTStructuralOptions.WORD_INITIAL + OTStructuralOptions.ONSET,
+				OTStructuralOptions.ONSET, "", "", true);
 		validator.setConstraint(constraint);
 		validator.validate();
 		assertTrue(validator.isValid());
@@ -132,7 +132,7 @@ public class OTConstraintValidatorTest {
 		assertEquals("otconstraint.message.element2.invalidoptions", validator.getErrorMessageProperty());
 
 		constraint = new OTConstraint("one", "", affected1, affected2, OTStructuralOptions.ONSET,
-				OTStructuralOptions.WORD_INITIAL + OTStructuralOptions.WORD_FINAL, "", "", true);
+				OTStructuralOptions.WORD_FINAL, "", "", true);
 		validator.setConstraint(constraint);
 		validator.validate();
 		assertFalse(validator.isValid());
@@ -144,5 +144,27 @@ public class OTConstraintValidatorTest {
 		validator.validate();
 		assertFalse(validator.isValid());
 		assertEquals("otconstraint.message.element2.optionsignored", validator.getErrorMessageProperty());
+
+		constraint = new OTConstraint("one", "", affected1, affected2, OTStructuralOptions.ONSET + OTStructuralOptions.WORD_FINAL,
+				OTStructuralOptions.ONSET + OTStructuralOptions.WORD_FINAL, "", "", true);
+		validator.setConstraint(constraint);
+		validator.validate();
+		assertFalse(validator.isValid());
+		assertEquals("otconstraint.message.element1.nowordfinal", validator.getErrorMessageProperty());
+
+		constraint = new OTConstraint("one", "", affected1, affected2, OTStructuralOptions.ONSET + OTStructuralOptions.WORD_INITIAL,
+				OTStructuralOptions.ONSET + OTStructuralOptions.WORD_INITIAL, "", "", true);
+		validator.setConstraint(constraint);
+		validator.validate();
+		assertFalse(validator.isValid());
+		assertEquals("otconstraint.message.element2.nowordinitial", validator.getErrorMessageProperty());
+
+		constraint = new OTConstraint("one", "", affected1, "", OTStructuralOptions.ONSET,
+				OTStructuralOptions.WORD_FINAL, "", "", true);
+		validator.setConstraint(constraint);
+		validator.validate();
+		assertFalse(validator.isValid());
+		assertEquals("otconstraint.message.element2.wordfinalignored", validator.getErrorMessageProperty());
+
 	}
 }
