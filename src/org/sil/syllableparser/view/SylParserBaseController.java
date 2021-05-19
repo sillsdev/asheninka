@@ -185,12 +185,22 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 	}
 
 	protected double guessPrefHeight(Object g, double columnWidth) {
-		TextFlow tf = (TextFlow) g;
-		double area = tf.computeAreaInScreen();
 		Language analysis = languageProject.getAnalysisLanguage();
 		Language vernacular = languageProject.getVernacularLanguage();
 		double maxSize = Math.max(vernacular.getFontSize(),
 				analysis.getFontSize());
+		return calculatePrefHeight(g, columnWidth, maxSize);
+	}
+
+	protected double guessPrefHeightAnalysisOnly(Object g, double columnWidth) {
+		Language analysis = languageProject.getAnalysisLanguage();
+		double maxSize = analysis.getFontSize();
+		return calculatePrefHeight(g, columnWidth, maxSize);
+	}
+
+	protected double calculatePrefHeight(Object g, double columnWidth, double maxSize) {
+		TextFlow tf = (TextFlow) g;
+		double area = tf.computeAreaInScreen();
 		if (area > 0.0) {
 			double heightGuess = area / columnWidth;
 			if (heightGuess <= maxSize) {

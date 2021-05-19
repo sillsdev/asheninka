@@ -72,12 +72,11 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 
 	Stage dialogStage;
 	private boolean okClicked = false;
-	private MainApp mainApp;
 	private ApplicationPreferences preferences;
 
 	private OTConstraintRanking currentRanking;
-	private ObservableList<OTConstraint> constraints = FXCollections.observableArrayList();
 	private OTConstraint constraint;
+	private OTApproach otApproach;
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -87,12 +86,13 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 		super.setApproach(ApplicationPreferences.CONSTRAINT_RANKING_CHOOSER);
 		super.setTableView(constraintsTable);
 		super.initialize(location, resources);
+		bundle = resources;
 
 		constraintNameColumn.setCellValueFactory(cellData -> {
-				return cellData.getValue().constraintNameProperty();
+			return cellData.getValue().constraintNameProperty();
 		});
 		descriptionColumn
-		.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		constraintsTable.setEditable(false);
 		// Custom rendering of the table cell.
 		constraintNameColumn.setCellFactory(column -> {
@@ -107,8 +107,15 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 				buttonMoveUp, tooltipMoveUp, bundle.getString("sh.view.sonorityhierarchy.up"),
 				Constants.RESOURCE_SOURCE_LOCATION);
 		tooltipMoveDown = ControllerUtilities.createToolbarButtonWithImage("DownArrow.png",
-				buttonMoveDown, tooltipMoveDown, bundle.getString("sh.view.sonorityhierarchy.down"),
+				buttonMoveDown, tooltipMoveDown,
+				bundle.getString("sh.view.sonorityhierarchy.down"),
 				Constants.RESOURCE_SOURCE_LOCATION);
+
+		constraintsTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> {
+					constraint = newValue;
+					setUpDownButtonDisabled();
+				});
 	}
 
 	/**
@@ -124,7 +131,11 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 	}
 
 	public void setData(OTApproach otApproachData) {
-		constraints.addAll(otApproachData.getValidActiveOTConstraints());
+		otApproach = otApproachData;
+		this.languageProject = otApproach.getLanguageProject();
+		prefs = this.mainApp.getApplicationPreferences();
+		ObservableList<OTConstraint> constraints = FXCollections.observableArrayList();
+		constraints.addAll(otApproach.getValidActiveOTConstraints());
 		// Add observable list data to the table
 		constraintsTable.setItems(constraints);
 		if (constraintsTable.getItems().size() > 0) {
@@ -132,12 +143,13 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 			constraintsTable.requestFocus();
 			constraintsTable.getSelectionModel().select(0);
 			constraintsTable.getFocusModel().focus(0);
+			constraint = constraintsTable.getItems().get(0);
 		}
 	}
 
 	protected void setUpDownButtonDisabled() {
-		int iThis = otApproach.getValidActiveOTConstraints().indexOf(constraint) + 1;
-		int iSize = otApproach.getValidActiveOTConstraints().size();
+		int iThis = constraintsTable.getItems().indexOf(constraint) + 1;
+		int iSize = constraintsTable.getItems().size();
 		if (iThis > 1) {
 			buttonMoveUp.setDisable(false);
 		} else {
@@ -165,8 +177,7 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 	 */
 	@FXML
 	private void handleOk() {
-		currentRanking.getRanking().clear();
-		currentRanking.setRanking(constraints);
+		currentRanking.setRanking(constraintsTable.getItems());
 		okClicked = true;
 		handleCancel();
 	}
@@ -188,35 +199,38 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 				ApplicationPreferences.LAST_OT_CONSTRAINT_RANKING, dialogStage, 400., 400.);
 	}
 
-	/**
-	 * Called when the user clicks help.
-	 */
-	@FXML
-	private void handleHelp() {
-		mainApp.showNotImplementedYet();
-	}
-
 	public String getRankingRepresentation() {
 		return "ranking representation here";
 	}
 
 	public void setRanking(OTConstraintRanking ranking) {
 		this.currentRanking = ranking;
+		constraintsTable.getItems().clear();
+		constraintsTable.setItems(ranking.getRanking());
+		setUpDownButtonDisabled();
+	}
+
+	public OTConstraintRanking getCurrentRanking() {
+		return currentRanking;
+	}
+
+	public void setCurrentRanking(OTConstraintRanking currentRanking) {
+		this.currentRanking = currentRanking;
 	}
 
 	@FXML
 	void handleMoveDown() {
-		int i = otApproach.getOTConstraints().indexOf(constraint);
-		if ((i + 1) < otApproach.getOTConstraints().size()) {
-			Collections.swap(otApproach.getOTConstraints(), i, i + 1);
+		int i = constraintsTable.getItems().indexOf(constraint);
+		if ((i + 1) < constraintsTable.getItems().size()) {
+			Collections.swap(constraintsTable.getItems(), i, i + 1);
 		}
 	}
 
 	@FXML
 	void handleMoveUp() {
-		int i = otApproach.getOTConstraints().indexOf(constraint);
+		int i = constraintsTable.getItems().indexOf(constraint);
 		if (i > 0) {
-			Collections.swap(otApproach.getOTConstraints(), i, i - 1);
+			Collections.swap(constraintsTable.getItems(), i, i - 1);
 		}
 	}
 

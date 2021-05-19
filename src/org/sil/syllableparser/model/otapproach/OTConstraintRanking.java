@@ -5,6 +5,10 @@
  */
 package org.sil.syllableparser.model.otapproach;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlList;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -28,6 +32,7 @@ public class OTConstraintRanking extends SylParserObject {
 		this.name = new SimpleStringProperty("");
 		this.description = new SimpleStringProperty("");
 		this.rankingRepresentation = new SimpleStringProperty("");
+		createUUID();
 	}
 
 	public OTConstraintRanking(StringProperty name, StringProperty description,
@@ -37,6 +42,7 @@ public class OTConstraintRanking extends SylParserObject {
 		this.description = description;
 		this.ranking = ranking;
 		this.rankingRepresentation = rankingRepresentation;
+		createUUID();
 	}
 
 	public String getName() {
@@ -63,6 +69,9 @@ public class OTConstraintRanking extends SylParserObject {
 		this.description.set(description);
 	}
 
+	@XmlAttribute(name="ranking")
+	@XmlIDREF
+	@XmlList
 	public ObservableList<OTConstraint> getRanking() {
 		return ranking;
 	}

@@ -14,24 +14,28 @@ import java.util.ResourceBundle;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.otapproach.OTApproach;
+import org.sil.syllableparser.model.otapproach.OTConstraint;
 import org.sil.syllableparser.model.otapproach.OTConstraintRanking;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -54,17 +58,6 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 		}
 	}
 
-	protected final class WrappingTableCell extends TableCell<OTConstraintRanking, String> {
-		private Text text;
-		
-		// TODO: do we need this?
-		@Override
-		protected void updateItem(String item, boolean empty) {
-			super.updateItem(item, empty);
-				processAnalysisTableCell(this, text, item, empty);
-		}
-	}
-
 	@FXML
 	private TableView<OTConstraintRanking> otRankingsTable;
 	@FXML
@@ -80,8 +73,6 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 	private TextField descriptionField;
 	@FXML
 	private TextFlow rankingTextFlow;
-	@FXML
-	private TextField rankingRepresentationTextField;
 	@FXML
 	private Button rankingRepresentationButton;
 	@FXML
@@ -132,8 +123,46 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
+
 		rankingRepresentationColumn.setCellFactory(column -> {
-			return new WrappingTableCell();
+			return new TableCell<OTConstraintRanking, String>() {
+				// We override computePrefHeight because by default, the graphic's height
+				// gets set to the height of all items in the TextFlow as if none of them
+				// wrapped.  So for now, we're doing this hack.
+				@Override
+				protected double computePrefHeight(double width) {
+					Object g = getGraphic();
+					if (g instanceof TextFlow) {
+						return guessPrefHeightAnalysisOnly(g, column.widthProperty().get() - 20);
+					}
+					return super.computePrefHeight(-1);
+				}
+
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					OTConstraintRanking ranking = ((OTConstraintRanking) getTableRow().getItem());
+					if (item == null || empty || ranking == null) {
+						setGraphic(null);
+						setText(null);
+						setStyle("");
+					} else {
+						setGraphic(null);
+						TextFlow tf = new TextFlow();
+						if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+							tf = buildConstraintTextFlow(ranking.getRanking());
+							tf.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
+						} else {
+							FXCollections.reverse(ranking.getRanking());
+							tf = buildConstraintTextFlow(ranking.getRanking());
+							tf.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+							FXCollections.reverse(ranking.getRanking());
+						}
+						setGraphic(tf);
+						setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+					}
+				}
+			};
 		});
 
 		makeColumnHeaderWrappable(nameColumn);
@@ -147,7 +176,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 		rankingRepresentationColumn.setSortable(false);
 
 		// Clear details.
-		showOTRankingDetails(null);
+		//showOTRankingDetails(null);
 
 		// Listen for selection changes and show the details when changed.
 		otRankingsTable
@@ -177,6 +206,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 		activeCheckBox.setOnAction((event) -> {
 			if (currentRanking != null) {
 				currentRanking.setActive(activeCheckBox.isSelected());
+				showConstraintRankingContent();
 				forceTableRowToRedisplayPerActiveSetting(currentRanking);
 			}
 			displayFieldsPerActiveSetting(currentRanking);
@@ -231,11 +261,11 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 					.getOrientation();
 			nameField.setNodeOrientation(analysisOrientation);
 			descriptionField.setNodeOrientation(analysisOrientation);
-			//rankingRepresentationTextField.setText(ranking.getRankingRepresentation());
 			activeCheckBox.setSelected(ranking.isActive());
 			setUpDownButtonDisabled();
+			showConstraintRankingContent();
 			int currentItem = otRankingsTable.getItems().indexOf(currentRanking);
-			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
+			mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
 					+ otRankingsTable.getItems().size() + " ");
 			mainApp.getApplicationPreferences().setLastOTConstraintRankingsViewItemUsed(currentItem);
 		} else {
@@ -245,13 +275,50 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 			if (descriptionField != null) {
 				descriptionField.setText("");
 			}
-//			if (rankingRepresentationTextField != null) {
-//				rankingRepresentationTextField.setText("");
-//			}
 			buttonMoveDown.setDisable(true);
 			buttonMoveUp.setDisable(true);
 		}
 		displayFieldsPerActiveSetting(ranking);
+	}
+
+	private void showConstraintRankingContent() {
+		StringBuilder sb = new StringBuilder();
+		rankingTextFlow.getChildren().clear();
+		ObservableList<OTConstraint> rankings = currentRanking.getRanking();
+		if (languageProject.getVernacularLanguage().getOrientation() == NodeOrientation.LEFT_TO_RIGHT) {
+			fillRankingTextFlow(sb, rankings);
+		} else {
+			FXCollections.reverse(rankings);
+			fillRankingTextFlow(sb, rankings);
+			FXCollections.reverse(rankings);
+		}
+		currentRanking.setRankingRepresentation(sb.toString());
+	}
+
+	protected void fillRankingTextFlow(StringBuilder sb, ObservableList<OTConstraint> rankings) {
+		Language analysis = languageProject.getAnalysisLanguage();
+		int i = 1;
+		int iCount = rankings.size();
+		for (OTConstraint constraint : rankings) {
+			String s = constraint.getConstraintName();
+			Text t = new Text(s);
+			t.setFont(analysis.getFont());
+			t.setFill(analysis.getColor());
+			t.setNodeOrientation(analysis.getOrientation());
+			sb.append(s);
+			Text tBar = new Text(Constants.OT_SET_PRECEDES_OPERATOR);
+			tBar.setStyle("-fx-stroke: lightgrey;");
+			if (!(constraint.isActive() && activeCheckBox.isSelected())) {
+				t.setFill(Constants.INACTIVE);
+			}
+			if (i < iCount) {
+				sb.append(" < ");
+				rankingTextFlow.getChildren().addAll(t, tBar);
+				i++;
+			} else {
+				rankingTextFlow.getChildren().addAll(t);
+			}
+		}
 	}
 
 	@Override
@@ -310,7 +377,50 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 		// TODO: use a chooser that has two options:
 		// start with the ranking of another ranking
 		// use the current order of the contraints
+		ObservableList<OTConstraint> constraints = FXCollections.observableArrayList();
+		if (otRankingsTable.getItems().size() == 0) {
+			constraints = otApproach.getOTConstraints();
+		} else {
+			try {
+				// Load the fxml file and create a new stage for the popup.
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ApproachViewNavigator.class
+						.getResource("fxml/OTConstraintRankingsInitializationChooser.fxml"));
+				loader.setResources(ResourceBundle.getBundle(
+						Constants.RESOURCE_LOCATION, locale));
+
+				AnchorPane page = loader.load();
+				Stage dialogStage = new Stage();
+				dialogStage.initModality(Modality.WINDOW_MODAL);
+				dialogStage.initOwner(mainApp.getPrimaryStage());
+				Scene scene = new Scene(page);
+				dialogStage.setScene(scene);
+				// set the icon
+				dialogStage.getIcons().add(mainApp.getNewMainIconImage());
+				dialogStage.setTitle(MainApp.kApplicationTitle);
+
+				OTConstraintRankingsInitializationChooserController controller = loader.getController();
+				controller.setDialogStage(dialogStage);
+				controller.setMainApp(mainApp);
+				controller.setData(otApproach);
+				controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
+
+				dialogStage.showAndWait();
+
+				if (controller.isOkClicked()) {
+					currentRanking = controller.getCurrentRanking();
+					constraints = currentRanking.getRanking();
+				} else {
+					return;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				MainApp.reportException(e, bundle);
+			}
+		}
+
 		OTConstraintRanking newRanking = new OTConstraintRanking();
+		newRanking.setRanking(constraints);
 		otApproach.getOTConstraintRankings().add(newRanking);
 		handleInsertNewItem(otApproach.getOTConstraintRankings(), otRankingsTable);
 	}
@@ -353,21 +463,47 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 			OTConstraintRankingChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
-			controller.setRanking(currentRanking);
 			controller.setData(otApproach);
+			controller.setRanking(currentRanking);
 			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
 
 			dialogStage.showAndWait();
 			
 			if (controller.isOkClicked()) {
-//				rankingRepresentationTextField.setText(controller.getRankingRepresentation());
+				currentRanking = controller.getCurrentRanking();
 				currentRanking.setRankingRepresentation(controller.getRankingRepresentation());
 			}
-
+			showConstraintRankingContent();
 		} catch (IOException e) {
 			e.printStackTrace();
 			MainApp.reportException(e, bundle);
 		}
+	}
+
+	protected TextFlow buildConstraintTextFlow(ObservableList<OTConstraint> ranking) {
+		TextFlow tf = new TextFlow();
+		Language analysis = languageProject.getAnalysisLanguage();
+		int i = 1;
+		int iCount = ranking.size();
+		for (OTConstraint constraint : ranking) {
+			String s = constraint.getConstraintName();
+			Text t = new Text(s);
+			t.setFont(analysis.getFont());
+			t.setFill(analysis.getColor());
+			t.setNodeOrientation(analysis.getOrientation());
+			if (currentRanking != null && !(currentRanking.isActive() && activeCheckBox.isSelected())) {
+				t.setFill(Constants.INACTIVE);
+			}
+			Text tBar = new Text(Constants.OT_SET_PRECEDES_OPERATOR);
+			tBar.setStyle("-fx-stroke: lightgrey;");
+			if (i < iCount) {
+				tf.getChildren().addAll(t, tBar);
+				i++;
+			} else {
+				tf.getChildren().addAll(t);
+			}
+		}
+		return tf;
 	}
 
 	@FXML

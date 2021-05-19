@@ -103,6 +103,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	// Controller table column widths and splitter position
 	public static final String BACKUP_CHOOSER = "BACKUP_CHOOSER_";
 	public static final String CONSTRAINT_RANKING_CHOOSER = "CONSTRAINT_RANKING_CHOOSER_";
+	public static final String CONSTRAINT_RANKINGS_INITIALIZATION_CHOOSER = "CONSTRAINT_RANKINGs_INITIALIZATION_CHOOSER_";
 	public static final String CV_NATURAL_CLASSES = "CV_NATURAL_CLASSES_";
 	public static final String CV_SEGMENTS = "CV_SEGMENTS_";
 	public static final String CV_SEGMENT_NATURAL_CLASS_CHOOSER = "CV_SEGMENT_NATURAL_CLASS_CHOOSER_";
@@ -192,6 +193,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_ONC_FILTER_WORDS_PREDICTED_VS_CORRECT = "lastONCFilterWordsPredictedVsCorrect";
 	public static final String LAST_OT_COMPARISON = "lastOTComparision";
 	public static final String LAST_OT_CONSTRAINT_RANKING = "lastOTConstraintRanking";
+	public static final String LAST_OT_CONSTRAINT_RANKINGS_INITIALIZATION = "lastOTConstraintRankingInitialization";
 	public static final String LAST_OT_SEGMENT_OR_NATURAL_CLASS = "lastOTSegmentOrNaturalClass";
 	public static final String LAST_OT_FILTER_CORRECT_SYLLABIFICATIONS = "lastOTFilterCorrectSyllabifications";
 	public static final String LAST_OT_FILTER_PREDICTED_SYLLABIFICATIONS = "lastOTFilterPredictedSyllabifications";
