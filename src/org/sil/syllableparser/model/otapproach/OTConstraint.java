@@ -536,14 +536,14 @@ public class OTConstraint extends SylParserObject {
 		sb.append("(\\O");
 		createElement(sb, structuralOptions1, affectedElement1.get());
 		sb.append("(");
-		sb.append(getStructuralOptionsValueForLingTree(structuralOptions1));
+		sb.append(OTStructuralOptions.getStructuralOptions(structuralOptions1));
 		sb.append("))");
 		if (StringUtilities.isNullOrEmpty(affectedElement2.get())) {
 			sb.append(")");
 		} else {
 			createElement(sb, structuralOptions2, affectedElement2.get());
 			sb.append("(");
-			sb.append(getStructuralOptionsValueForLingTree(structuralOptions2));
+			sb.append(OTStructuralOptions.getStructuralOptions(structuralOptions2));
 			sb.append(")))");
 		}
 		 setLingTreeDescription(sb.toString());
@@ -577,48 +577,8 @@ public class OTConstraint extends SylParserObject {
 		return sb.toString();
 	}
 
-	protected String getStructuralOptionsValueForLingTree(int options) {
-		StringBuilder sb = new StringBuilder();
-		int numberOfCoreOptions = getNumberOfCoreOptionsSet(options);
-		if (numberOfCoreOptions > 1) {
-			sb.append("{");
-		}
-		int iCount = 0;
-		iCount = getStructuralOptionForLingTree(options, sb, numberOfCoreOptions, OTStructuralOptions.ONSET, iCount, "o");
-		iCount = getStructuralOptionForLingTree(options, sb, numberOfCoreOptions, OTStructuralOptions.NUCLEUS, iCount, "n");
-		iCount = getStructuralOptionForLingTree(options, sb, numberOfCoreOptions, OTStructuralOptions.CODA, iCount, "c");
-		iCount = getStructuralOptionForLingTree(options, sb, numberOfCoreOptions, OTStructuralOptions.UNPARSED, iCount, "u");
-		if (numberOfCoreOptions > 1) {
-			sb.append("}");
-		}
-		return sb.toString();
-	}
-
-	protected int getStructuralOptionForLingTree(int options, StringBuilder sb,
-			int numberOfCoreOptions, int option, int iCount, String sOption) {
-		if ((options | option) == options) {
-			if (iCount > 0 && numberOfCoreOptions > 1 && iCount < numberOfCoreOptions)
-				sb.append(", ");
-			sb.append(sOption);
-			iCount++;
-		}
-		return iCount;
-	}
-
-
 	public int getNumberOfCoreOptionsSet(int options) {
-		options &= OTStructuralOptions.REMOVE_WORD_INITIAL;
-		options &= OTStructuralOptions.REMOVE_WORD_FINAL;
-		int iCount = 0;
-		if ((options | OTStructuralOptions.ONSET) == options)
-			iCount++;
-		if ((options | OTStructuralOptions.NUCLEUS) == options)
-			iCount++;
-		if ((options | OTStructuralOptions.CODA) == options)
-			iCount++;
-		if ((options | OTStructuralOptions.UNPARSED) == options)
-			iCount++;
-		return iCount;
+		return OTStructuralOptions.getNumberOfCoreOptionsSet(options);
 	}
 
 	@Override

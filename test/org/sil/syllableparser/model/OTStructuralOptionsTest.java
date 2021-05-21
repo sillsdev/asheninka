@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.sil.syllableparser.model.otapproach.OTSegmentInSyllable;
 import org.sil.syllableparser.model.otapproach.OTStructuralOptions;
 
 /**
@@ -35,6 +36,83 @@ public class OTStructuralOptionsTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void operationsTest() {
+		OTSegmentInSyllable segInSyl = new OTSegmentInSyllable(null, null);
+		assertEquals(OTStructuralOptions.FOUR_CORE_OPTIONS_SET, segInSyl.getStructuralOptions());
+		assertEquals(4, segInSyl.getCoreOptionsLeft());
+		assertEquals(true, segInSyl.removeOnset());
+		assertEquals(3, segInSyl.getCoreOptionsLeft());
+		assertEquals(false, segInSyl.removeOnset());
+		assertEquals(3, segInSyl.getCoreOptionsLeft());
+
+		assertEquals(true, segInSyl.removeNuleus());
+		assertEquals(2, segInSyl.getCoreOptionsLeft());
+		assertEquals(false, segInSyl.removeNuleus());
+		assertEquals(2, segInSyl.getCoreOptionsLeft());
+
+		assertEquals(true, segInSyl.removeCoda());
+		assertEquals(1, segInSyl.getCoreOptionsLeft());
+		assertEquals(false, segInSyl.removeCoda());
+		assertEquals(1, segInSyl.getCoreOptionsLeft());
+
+		assertEquals(false, segInSyl.removeUnparsed());
+		assertEquals(1, segInSyl.getCoreOptionsLeft());
+		assertEquals(false, segInSyl.removeUnparsed());
+		assertEquals(1, segInSyl.getCoreOptionsLeft());
+
+		segInSyl = new OTSegmentInSyllable(null, null);
+		assertEquals(OTStructuralOptions.FOUR_CORE_OPTIONS_SET, segInSyl.getStructuralOptions());
+		assertEquals(true, segInSyl.removeUnparsed());
+		assertEquals(3, segInSyl.getCoreOptionsLeft());
+		assertEquals(false, segInSyl.removeUnparsed());
+		assertEquals(3, segInSyl.getCoreOptionsLeft());
+	}
+
+	@Test
+	public void isOptionAfterOperationTest() {
+		OTSegmentInSyllable segInSyl = new OTSegmentInSyllable(null, null);
+		// onset
+		segInSyl = new OTSegmentInSyllable(null, null);
+		segInSyl.removeUnparsed();
+		assertEquals(false, segInSyl.isUnparsed());
+		segInSyl.removeNuleus();
+		assertEquals(false, segInSyl.isNucleus());
+		segInSyl.removeCoda();
+		assertEquals(false, segInSyl.isCoda());
+		assertEquals(true, segInSyl.isOnset());
+
+		// nucleus
+		segInSyl = new OTSegmentInSyllable(null, null);
+		segInSyl.removeOnset();
+		assertEquals(false, segInSyl.isOnset());
+		segInSyl.removeUnparsed();
+		assertEquals(false, segInSyl.isUnparsed());
+		segInSyl.removeCoda();
+		assertEquals(false, segInSyl.isCoda());
+		assertEquals(true, segInSyl.isNucleus());
+
+		// coda
+		segInSyl = new OTSegmentInSyllable(null, null);
+		segInSyl.removeOnset();
+		assertEquals(false, segInSyl.isOnset());
+		segInSyl.removeNuleus();
+		assertEquals(false, segInSyl.isNucleus());
+		segInSyl.removeUnparsed();
+		assertEquals(false, segInSyl.isUnparsed());
+		assertEquals(true, segInSyl.isCoda());
+
+		// unparsed
+		segInSyl = new OTSegmentInSyllable(null, null);
+		segInSyl.removeOnset();
+		assertEquals(false, segInSyl.isOnset());
+		segInSyl.removeNuleus();
+		assertEquals(false, segInSyl.isNucleus());
+		segInSyl.removeCoda();
+		assertEquals(false, segInSyl.isCoda());
+		assertEquals(true, segInSyl.isUnparsed());
 	}
 
 	@Test

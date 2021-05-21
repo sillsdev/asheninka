@@ -15,7 +15,11 @@ import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
 import org.sil.syllableparser.model.cvapproach.CVTraceInfo;
+import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
+import org.sil.syllableparser.model.npapproach.NPTraceInfo;
 import org.sil.syllableparser.model.otapproach.OTApproach;
+import org.sil.syllableparser.model.otapproach.OTSegmentInSyllable;
+import org.sil.syllableparser.model.otapproach.OTTraceInfo;
 import org.sil.syllableparser.service.parsing.CVNaturalClasser;
 import org.sil.syllableparser.service.parsing.CVNaturalClasserResult;
 import org.sil.syllableparser.service.parsing.CVSegmenter;
@@ -23,6 +27,13 @@ import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.CVSyllabifier;
 import org.sil.syllableparser.service.parsing.CVSyllabifierResult;
 import org.sil.syllableparser.service.parsing.CVTryAWordHTMLFormatter;
+import org.sil.syllableparser.service.parsing.NPSegmenter;
+import org.sil.syllableparser.service.parsing.NPSyllabifier;
+import org.sil.syllableparser.service.parsing.NPSyllabifierResult;
+import org.sil.syllableparser.service.parsing.NPTryAWordHTMLFormatter;
+import org.sil.syllableparser.service.parsing.OTSegmenter;
+import org.sil.syllableparser.service.parsing.OTSyllabifier;
+import org.sil.syllableparser.service.parsing.OTTryAWordHTMLFormatter;
 
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -36,10 +47,10 @@ import javafx.fxml.FXML;
  */
 public class OTTryAWordController extends TryAWordController {
 
-	private OTApproach cva;
+	private OTApproach otApproach;
 
 	public void setData(OTApproach otApproachData) {
-		cva = otApproachData;
+		otApproach = otApproachData;
 	}
 
 	/**
@@ -71,54 +82,34 @@ public class OTTryAWordController extends TryAWordController {
 			@Override
 			public void handle(WorkerStateEvent event) {
 
-//				ObservableList<CVNaturalClass> naturalClasses;
-//				CVSegmenter segmenter;
-//				// ObservableList<Segment> segmentInventory;
-//				CVNaturalClasser naturalClasser;
-//				List<CVSyllablePattern> patterns;
-//				CVSyllabifier syllabifier;
-//				List<CVSyllablePattern> cvPatterns;
-//
-//				// segmentInventory =
-//				// cva.getLanguageProject().getSegmentInventory();
-//				segmenter = new CVSegmenter(cva.getLanguageProject().getActiveGraphemes(), cva
-//						.getLanguageProject().getActiveGraphemeNaturalClasses());
-//				naturalClasses = cva.getCVNaturalClasses();
-//				naturalClasser = new CVNaturalClasser(naturalClasses);
-//				patterns = cva.getActiveCVSyllablePatterns();
-//				syllabifier = new CVSyllabifier(patterns, null);
-//				cvPatterns = syllabifier.getActiveCVPatterns();
-//				CVTraceInfo traceInfo = new CVTraceInfo(sWordToTry, segmenter, naturalClasser,
-//						syllabifier);
-//
-//				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
-//				traceInfo.setSegmenterResult(segResult);
-//				String sLingTreeDescription = "";
-//				boolean fSuccess = segResult.success;
-//				if (fSuccess) {
-//					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-//					CVNaturalClasserResult ncResult = naturalClasser
-//							.convertSegmentsToNaturalClasses(segmentsInWord);
-//					traceInfo.setNaturalClasserResult(ncResult);
-//					fSuccess = ncResult.success;
-//					if (fSuccess) {
-//						List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
-//								.getNaturalClassListsInCurrentWord();
-//						syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
+				OTSegmenter segmenter;
+				OTSyllabifier syllabifier;
+
+				segmenter = new OTSegmenter(otApproach.getLanguageProject()
+						.getActiveGraphemes(), otApproach.getLanguageProject()
+						.getActiveGraphemeNaturalClasses());
+				syllabifier = new OTSyllabifier(otApproach);
+				OTTraceInfo traceInfo = new OTTraceInfo(sWordToTry, segmenter, syllabifier);
+
+				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
+				traceInfo.setSegmenterResult(segResult);
+				String sLingTreeDescription = "";
+				boolean fSuccess = segResult.success;
+				if (fSuccess) {
+					List<OTSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 //						syllabifier.setDoTrace(true);
-//						traceInfo.setSyllabifier(syllabifier);
-//						fSuccess = syllabifier.convertNaturalClassesToSyllables();
-//						CVSyllabifierResult syllabifierResult = new CVSyllabifierResult();
-//						syllabifierResult.success = fSuccess;
+						traceInfo.setSyllabifier(syllabifier);
+						fSuccess = syllabifier.syllabify(segmentsInWord);
+						NPSyllabifierResult syllabifierResult = new NPSyllabifierResult();
+						syllabifierResult.success = fSuccess;
 //						traceInfo.setSyllabifierResult(syllabifierResult);
-//						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
-//					}
-//				}
-//				CVTryAWordHTMLFormatter formatter = new CVTryAWordHTMLFormatter(traceInfo, cva
-//						.getLanguageProject(), locale);
-//				formatter.setLingTreeDescription(sLingTreeDescription);
-//				String sResult = formatter.format();
-//				webEngine.loadContent(sResult);
+						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
+				}
+				OTTryAWordHTMLFormatter formatter = new OTTryAWordHTMLFormatter(traceInfo,
+						otApproach.getLanguageProject(), locale);
+				formatter.setLingTreeDescription(sLingTreeDescription);
+				String sResult = formatter.format();
+				webEngine.loadContent(sResult);
 			}
 		});
 		new Thread(sleeper).start();
