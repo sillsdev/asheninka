@@ -148,7 +148,7 @@ public class OTConstraintMatcherTest {
 		checkMatch("t", false, 1);
 		checkMatch("tl", true, 2);
 		checkMatch("a", false, 1);
-		checkMatch("at", true, 2);
+		checkMatch("at", false, 2);
 	}
 
 	private void checkMatch(String wordPortion, boolean expectedMatch, int expectedSegments) {
