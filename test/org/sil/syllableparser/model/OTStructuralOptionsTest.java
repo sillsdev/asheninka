@@ -41,7 +41,7 @@ public class OTStructuralOptionsTest {
 	@Test
 	public void operationsTest() {
 		OTSegmentInSyllable segInSyl = new OTSegmentInSyllable(null, null);
-		assertEquals(OTStructuralOptions.FOUR_CORE_OPTIONS_SET, segInSyl.getStructuralOptions());
+		assertEquals(OTStructuralOptions.COMBO_O_N_C_U, segInSyl.getStructuralOptions());
 		assertEquals(4, segInSyl.getCoreOptionsLeft());
 		assertEquals(true, segInSyl.removeOnset());
 		assertEquals(3, segInSyl.getCoreOptionsLeft());
@@ -64,7 +64,7 @@ public class OTStructuralOptionsTest {
 		assertEquals(1, segInSyl.getCoreOptionsLeft());
 
 		segInSyl = new OTSegmentInSyllable(null, null);
-		assertEquals(OTStructuralOptions.FOUR_CORE_OPTIONS_SET, segInSyl.getStructuralOptions());
+		assertEquals(OTStructuralOptions.COMBO_O_N_C_U, segInSyl.getStructuralOptions());
 		assertEquals(true, segInSyl.removeUnparsed());
 		assertEquals(3, segInSyl.getCoreOptionsLeft());
 		assertEquals(false, segInSyl.removeUnparsed());

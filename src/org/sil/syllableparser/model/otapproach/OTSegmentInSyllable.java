@@ -25,7 +25,7 @@ public class OTSegmentInSyllable extends CVSegmentInSyllable {
 
 	public OTSegmentInSyllable(Segment segment, String grapheme) {
 		super(segment, grapheme);
-		this.structuralOptions = OTStructuralOptions.FOUR_CORE_OPTIONS_SET;
+		this.structuralOptions = OTStructuralOptions.COMBO_O_N_C_U;
 		coreOptionsLeft = 4;
 	}
 
@@ -103,5 +103,12 @@ public class OTSegmentInSyllable extends CVSegmentInSyllable {
 		StringBuilder sb = new StringBuilder();
 		sb.append(OTStructuralOptions.getStructuralOptions(structuralOptions));
 		return sb.toString();
+	}
+
+	@Override
+	public OTSegmentInSyllable clone() {
+		OTSegmentInSyllable sis = new OTSegmentInSyllable(segment, grapheme);
+		sis.setStructuralOptions(structuralOptions);
+		return sis;
 	}
 }

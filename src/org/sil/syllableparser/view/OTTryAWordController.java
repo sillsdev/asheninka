@@ -9,33 +9,15 @@ package org.sil.syllableparser.view;
 import java.util.List;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
-import org.sil.syllableparser.model.cvapproach.CVTraceInfo;
-import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
-import org.sil.syllableparser.model.npapproach.NPTraceInfo;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.otapproach.OTSegmentInSyllable;
 import org.sil.syllableparser.model.otapproach.OTTraceInfo;
-import org.sil.syllableparser.service.parsing.CVNaturalClasser;
-import org.sil.syllableparser.service.parsing.CVNaturalClasserResult;
-import org.sil.syllableparser.service.parsing.CVSegmenter;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
-import org.sil.syllableparser.service.parsing.CVSyllabifier;
-import org.sil.syllableparser.service.parsing.CVSyllabifierResult;
-import org.sil.syllableparser.service.parsing.CVTryAWordHTMLFormatter;
-import org.sil.syllableparser.service.parsing.NPSegmenter;
-import org.sil.syllableparser.service.parsing.NPSyllabifier;
-import org.sil.syllableparser.service.parsing.NPSyllabifierResult;
-import org.sil.syllableparser.service.parsing.NPTryAWordHTMLFormatter;
 import org.sil.syllableparser.service.parsing.OTSegmenter;
 import org.sil.syllableparser.service.parsing.OTSyllabifier;
+import org.sil.syllableparser.service.parsing.OTSyllabifierResult;
 import org.sil.syllableparser.service.parsing.OTTryAWordHTMLFormatter;
 
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -89,6 +71,7 @@ public class OTTryAWordController extends TryAWordController {
 						.getActiveGraphemes(), otApproach.getLanguageProject()
 						.getActiveGraphemeNaturalClasses());
 				syllabifier = new OTSyllabifier(otApproach);
+				syllabifier.setBundle(bundle);
 				OTTraceInfo traceInfo = new OTTraceInfo(sWordToTry, segmenter, syllabifier);
 
 				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
@@ -97,12 +80,12 @@ public class OTTryAWordController extends TryAWordController {
 				boolean fSuccess = segResult.success;
 				if (fSuccess) {
 					List<OTSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-//						syllabifier.setDoTrace(true);
+						syllabifier.setDoTrace(true);
 						traceInfo.setSyllabifier(syllabifier);
 						fSuccess = syllabifier.syllabify(segmentsInWord);
-						NPSyllabifierResult syllabifierResult = new NPSyllabifierResult();
+						OTSyllabifierResult syllabifierResult = new OTSyllabifierResult();
 						syllabifierResult.success = fSuccess;
-//						traceInfo.setSyllabifierResult(syllabifierResult);
+						traceInfo.setSyllabifierResult(syllabifierResult);
 						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
 				}
 				OTTryAWordHTMLFormatter formatter = new OTTryAWordHTMLFormatter(traceInfo,

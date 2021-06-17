@@ -10,17 +10,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSyllable;
 import org.sil.syllableparser.model.cvapproach.CVTraceSyllabifierInfo;
-import org.sil.syllableparser.model.npapproach.NPSegmentInSyllable;
-import org.sil.syllableparser.model.npapproach.NPTracingStep;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.otapproach.OTConstraint;
 import org.sil.syllableparser.model.otapproach.OTConstraintRanking;
@@ -50,6 +46,7 @@ public class OTSyllabifier implements Syllabifiable {
 	LinkedList<OTSyllable> syllablesInCurrentWord = new LinkedList<OTSyllable>(
 			Arrays.asList(new OTSyllable(null)));
 	String sSyllabifiedWord;
+	ResourceBundle bundle;
 
 	public OTSyllabifier(OTApproach ota) {
 		super();
@@ -62,6 +59,7 @@ public class OTSyllabifier implements Syllabifiable {
 		matcher = OTConstraintMatcher.getInstance();
 		matcher.setLanguageProject(languageProject);
 		sSyllabifiedWord = "";
+		tracer = OTTracer.getInstance();
 	}
 
 	public List<OTSyllable> getSyllablesInCurrentWord() {
@@ -90,6 +88,14 @@ public class OTSyllabifier implements Syllabifiable {
 		this.fDoTrace = fDoTrace;
 	}
 
+	public ResourceBundle getBundle() {
+		return bundle;
+	}
+
+	public void setBundle(ResourceBundle bundle) {
+		this.bundle = bundle;
+	}
+
 	public String getStructuralOptionsInParse() {
 		return "";
 	}
@@ -103,7 +109,7 @@ public class OTSyllabifier implements Syllabifiable {
 		fSuccess = segResult.success;
 		if (fSuccess) {
 			List<OTSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-			fSuccess = parseIntoSyllables(segmentsInWord);
+			fSuccess = syllabify(segmentsInWord);
 		}
 		return fSuccess;
 	}
@@ -120,21 +126,24 @@ public class OTSyllabifier implements Syllabifiable {
 	
 	public boolean parseIntoSyllables(List<OTSegmentInSyllable> segmentsInWord) {
 		sSyllabifiedWord = "";
-		OTTracingStep sylInfo = new OTTracingStep();
-		if (ota.getActiveOTConstraintRankings().size() == 0)
+		rememberSyllabificationStateInTracer(bundle.getString("report.tawotinitialization"), segmentsInWord);
+		if (ota.getActiveOTConstraintRankings().size() == 0) {
+			// TODO: report this
 			return false;
+		}
 		OTConstraintRanking ranking = ota.getActiveOTConstraintRankings().get(0);
 		applyHouseKeeping(segmentsInWord);
 		for (OTConstraint constraint : ranking.getRanking()) {
 			applyConstraint(segmentsInWord, constraint);
-			applyHouseKeeping(segmentsInWord);
+//TODO: is this needed? (the onset before a coda part)		applyHouseKeeping(segmentsInWord);
 			if (evalNoMore(segmentsInWord)) {
 				break;
 			}
 		}
-		sSyllabifiedWord = getSyllabificationOfCurrentWord(segmentsInWord);
 		buildSyllabificationOfCurrentWord(segmentsInWord);
+		sSyllabifiedWord = getSyllabificationOfCurrentWord(segmentsInWord);
 		if (evalNoMore(segmentsInWord)) {
+			tracer.setSuccessful(true);
 			return true;
 		}
 		return false;
@@ -145,6 +154,7 @@ public class OTSyllabifier implements Syllabifiable {
 		int wordFinalPos = segmentsInWord.size()-1;
 		segmentsInWord.get(wordFinalPos).removeOnset();
 		// TODO: remove an onset before a coda
+		rememberSyllabificationStateInTracer(bundle.getString("report.tawothousekeeping"), segmentsInWord);
 	}
 	
 	private void applyConstraint(List<OTSegmentInSyllable> segmentsInWord, OTConstraint constraint) {
@@ -162,23 +172,20 @@ public class OTSyllabifier implements Syllabifiable {
 				int constraintsSO = constraint.getStructuralOptions1();
 				if ((constraintsSO & OTStructuralOptions.ONSET) > 0) {
 					applied = segInSyl.removeOnset();
-					// record in trace
 				}
 				if ((constraintsSO & OTStructuralOptions.NUCLEUS) > 0) {
 					applied = segInSyl.removeNuleus();
-					// record in trace
 				}
 				if ((constraintsSO & OTStructuralOptions.CODA) > 0) {
 					applied = segInSyl.removeCoda();
-					// record in trace
 				}
 				if ((constraintsSO & OTStructuralOptions.UNPARSED) > 0) {
 					applied = segInSyl.removeUnparsed();
-					// record in trace
 				}
 			}
 			i++;
 		}
+		rememberSyllabificationStateInTracer(constraint.getConstraintName(), segmentsInWord);
 	}
 
 	private boolean evalNoMore(List<OTSegmentInSyllable> segmentsInWord) {
@@ -236,6 +243,12 @@ public class OTSyllabifier implements Syllabifiable {
 		return result;
 	}
 
+	protected void rememberSyllabificationStateInTracer(String constraintName, List<OTSegmentInSyllable> segmentsInWord) {
+		tracer.setConstraintName(constraintName);
+		tracer.setSegmentsInWord(segmentsInWord);
+		tracer.recordStep();
+	}
+
 	public void buildSyllabificationOfCurrentWord(List<OTSegmentInSyllable> segmentsInWord) {
 		int i = 0;
 		int iSize = segmentsInWord.size();
@@ -250,10 +263,14 @@ public class OTSyllabifier implements Syllabifiable {
 				OTSegmentInSyllable segInSyl2 = segmentsInWord.get(++i);
 				if (isSyllableBreak(segInSyl, segInSyl2)) {
 					syllablesInCurrentWord.add(syllable);
+					tracer.setSyllable(syllable);
+					tracer.recordStep();
 					syllable = new OTSyllable();
 				}
 			} else {
 				syllable.getSegmentsInSyllable().add(segInSyl);
+				tracer.setSyllable(syllable);
+				tracer.recordStep();
 			}
 		}
 		syllablesInCurrentWord.add(syllable);
