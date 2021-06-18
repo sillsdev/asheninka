@@ -9,16 +9,20 @@ package org.sil.syllableparser.service.comparison;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.parsing.CVSyllabifier;
 import org.sil.syllableparser.service.parsing.MoraicSyllabifier;
 import org.sil.syllableparser.service.parsing.NPSyllabifier;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
+import org.sil.syllableparser.service.parsing.OTSyllabifier;
 import org.sil.syllableparser.service.parsing.SHSyllabifier;
 
 /**
@@ -36,7 +40,7 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 	boolean useONCApproach = true;
 	boolean useMoraicApproach = true;
 	boolean useNPApproach = true;
-	boolean useOTApproach = false;
+	boolean useOTApproach = true;
 
 	final int usesCVApproach = 1;
 	final int usesSHApproach = 2;
@@ -122,6 +126,7 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 	public void compareSyllabifications() {
 		// make sure all approaches to compare have been syllabified
 		List<Word> words = langProject.getWords();
+
 		if (useCVApproach) {
 			syllabifyWordsCV(words);
 		}
@@ -198,8 +203,8 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 			iUsed++;
 		}
 		if ((approachesToUse & usesOTApproach) > 0) {
-//			syllabifications.add(word.getOTPredictedSyllabification());
-//			i++;
+			syllabifications.add(word.getOTPredictedSyllabification());
+			iUsed++;
 		}
 		return iUsed;
 	}
@@ -258,13 +263,15 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 	}
 
 	protected void syllabifyWordsOT(List<Word> words) {
-//		OTSyllabifier otSyllabifier = new OTSyllabifier(langProject.getNPApproach());
-//		for (Word word : words) {
-//			boolean fSuccess = otSyllabifier.convertStringToSyllables(word.getWord());
-//			if (fSuccess) {
-//				word.setOTPredictedSyllabification(npSyllabifier.getSyllabificationOfCurrentWord());
-//			}
-//		}
+		OTSyllabifier otSyllabifier = new OTSyllabifier(langProject.getOTApproach());
+		Locale locale = new Locale("en");
+		otSyllabifier.setBundle(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
+		for (Word word : words) {
+			boolean fSuccess = otSyllabifier.convertStringToSyllables(word.getWord());
+			if (fSuccess) {
+				word.setOTPredictedSyllabification(otSyllabifier.getSyllabificationOfCurrentWord());
+			}
+		}
 	}
 
 	public int numberOfApproachesBeingCompared() {

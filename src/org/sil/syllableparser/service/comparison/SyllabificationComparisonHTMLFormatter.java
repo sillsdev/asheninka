@@ -122,9 +122,9 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 					isFirstRow = false;
 				}
 				if (sylComparer.isUseOTApproach()) {
-//					formatApproachRow(sb, bundle.getString("report.otapproachabbreviation"),
-//							differentWord.getNPPredictedSyllabification(), isFirstRow);
-//					isFirstRow = false;
+					formatApproachRow(sb, bundle.getString("report.otapproachabbreviation"),
+							differentWord.getOTPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
 				}
 			}
 			sb.append("</tbody>\n</table>\n");

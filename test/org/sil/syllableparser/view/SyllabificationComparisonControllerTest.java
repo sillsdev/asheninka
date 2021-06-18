@@ -73,7 +73,6 @@ public class SyllabificationComparisonControllerTest {
 		assertEquals(false, controller.isUseNuclearProjectionApproach());
 		assertEquals(false, controller.isUseNuclearProjectionApproachDisabled());
 		assertEquals(false, controller.isUseOTApproach());
-		assertEquals(true, controller.isUseOTApproachDisabled());
 		
 		// set comparison buttons
 		controller.setUseCVApproach(true);

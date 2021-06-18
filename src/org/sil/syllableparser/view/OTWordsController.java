@@ -71,9 +71,9 @@ public class OTWordsController extends WordsControllerCommon {
 		});
 
 		predictedSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.cvPredictedSyllabificationProperty());
+				.otPredictedSyllabificationProperty());
 		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.cvParserResultProperty());
+				.otParserResultProperty());
 		predictedSyllabificationField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
 					if (currentWord != null) {

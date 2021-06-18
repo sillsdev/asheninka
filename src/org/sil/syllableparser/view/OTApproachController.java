@@ -8,6 +8,7 @@ package org.sil.syllableparser.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -19,6 +20,10 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.*;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.otapproach.OTApproachView;
+import org.sil.syllableparser.model.otapproach.OTSegmentInSyllable;
+import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.OTSegmenter;
+import org.sil.syllableparser.service.parsing.OTSyllabifier;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -27,6 +32,8 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -275,85 +282,59 @@ public class OTApproachController extends ApproachController {
 	void handleSyllabifyWords(StatusBar statusBar) {
 		String sSuccess = bundle.getString("label.success");
 		String sSegmentFailure = bundle.getString("label.cvsegmentfailure");
-		String sNaturalClassFailure = bundle.getString("label.cvnaturalclassfailure");
 		String sSyllabificationFailure = bundle.getString("label.otsyllabificationfailure");
 		long timeStart = System.currentTimeMillis();
 
 		Task<Void> task = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-//				Scene scene = statusBar.getScene();
-//				Cursor currentCursor = scene.getCursor();
-//				scene.setCursor(Cursor.WAIT);
-//				ObservableList<CVNaturalClass> naturalClasses;
-//				CVSegmenter segmenter;
-//				ObservableList<Segment> segmentInventory;
-//				// List<Segment> cvSegmentInventory;
-//				CVNaturalClasser naturalClasser;
-//				List<CVNaturalClass> cvNaturalClasses;
-//				List<CVSyllablePattern> patterns;
-//				CVSyllabifier syllabifier;
-//				List<CVSyllablePattern> cvPatterns;
-//
-//				// segmentInventory = languageProject.getSegmentInventory();
-//				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
-//						languageProject.getActiveGraphemeNaturalClasses());
-//				// cvSegmentInventory = segmenter.getActiveSegmentInventory();
-//				naturalClasses = otApproachData.getCVNaturalClasses();
-//				naturalClasser = new CVNaturalClasser(naturalClasses);
-//				cvNaturalClasses = naturalClasser.getActiveNaturalClasses();
-//				patterns = otApproachData.getActiveCVSyllablePatterns();
-//				syllabifier = new CVSyllabifier(patterns, null);
-//				cvPatterns = syllabifier.getActiveCVPatterns();
-//
-//				int max = words.size();
-//				int i = 0;
-//				for (Word word : words) {
-//					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
-//					updateProgress(i++, max);
-//
-//					String sWord = word.getWord();
-//					CVSegmenterResult result = segmenter.segmentWord(sWord);
-//					boolean fSuccess = result.success;
-//					if (!fSuccess) {
-//						word.setCVParserResult(sSegmentFailure.replace("{0}",
-//								sWord.substring(result.iPositionOfFailure)));
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-//					CVNaturalClasserResult ncResult = naturalClasser
-//							.convertSegmentsToNaturalClasses(segmentsInWord);
-//					fSuccess = ncResult.success;
-//					if (!fSuccess) {
-//						String sFailureMessage0 = sNaturalClassFailure.replace("{0}",
-//								ncResult.sClassesSoFar);
-//						String sFailureMessage1 = sFailureMessage0.replace("{1}",
-//								ncResult.sGraphemesSoFar);
-//						word.setCVParserResult(sFailureMessage1);
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
-//							.getNaturalClassListsInCurrentWord();
-//					syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
-//					fSuccess = syllabifier.convertNaturalClassesToSyllables();
-//					if (!fSuccess) {
-//						word.setCVParserResult(sSyllabificationFailure);
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					word.setCVPredictedSyllabification(syllabifier
-//							.getSyllabificationOfCurrentWord());
-//					word.setCVLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
-//					word.setCVParserResult(sSuccess);
-//				}
-//				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
-//				scene.setCursor(currentCursor);
-//				// sleep for a second since it all happens so quickly
-//				Thread.sleep(1000);
-//				updateProgress(0, 0);
-//				done();
+				Scene scene = statusBar.getScene();
+				Cursor currentCursor = scene.getCursor();
+				scene.setCursor(Cursor.WAIT);
+				OTSegmenter segmenter;
+				OTSyllabifier syllabifier;
+
+				segmenter = new OTSegmenter(languageProject.getActiveGraphemes(),
+						languageProject.getActiveGraphemeNaturalClasses());
+				syllabifier = new OTSyllabifier(languageProject.getOTApproach());
+				syllabifier.setBundle(bundle);
+
+				int max = words.size();
+				int i = 0;
+				for (Word word : words) {
+					System.out.println("parsing " + word.getWord());
+					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
+					updateProgress(i++, max);
+
+					String sWord = word.getWord();
+					CVSegmenterResult result = segmenter.segmentWord(sWord);
+					boolean fSuccess = result.success;
+					System.out.println("\tsegmentation: " + fSuccess);
+					if (!fSuccess) {
+						word.setOTParserResult(sSegmentFailure.replace("{0}",
+								sWord.substring(result.iPositionOfFailure)));
+						word.setOTPredictedSyllabification("");
+						continue;
+					}
+					List<OTSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					fSuccess = syllabifier.syllabify(segmentsInWord);
+					System.out.println("\tssyllabifying: " + fSuccess);
+					word.setOTLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
+					if (!fSuccess) {
+						word.setOTParserResult(sSyllabificationFailure);
+						word.setOTPredictedSyllabification("");
+						continue;
+					}
+					word.setOTPredictedSyllabification(syllabifier
+							.getSyllabificationOfCurrentWord());
+					word.setOTParserResult(sSuccess);
+				}
+				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
+				scene.setCursor(currentCursor);
+				// sleep for a second since it all happens so quickly
+				Thread.sleep(1000);
+				updateProgress(0, 0);
+				done();
 				return null;
 			}
 		};
@@ -366,7 +347,7 @@ public class OTApproachController extends ApproachController {
 			statusBar.textProperty().unbind();
 			statusBar.progressProperty().unbind();
 			ControllerUtilities.setDateInStatusBar(statusBar, bundle);
-			if (currentOTApproachController instanceof CVWordsController) {
+			if (currentOTApproachController instanceof OTWordsController) {
 				OTWordsController otController = (OTWordsController) currentOTApproachController;
 				otController.updateStatusBarWords(otController.getPredictedWords(),
 						otController.getPredictedEqualsCorrectWords());
@@ -374,7 +355,6 @@ public class OTApproachController extends ApproachController {
 		});
 
 		Platform.runLater(task);
-
 	}
 
 	@Override
