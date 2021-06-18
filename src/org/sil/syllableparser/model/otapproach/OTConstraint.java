@@ -43,6 +43,7 @@ public class OTConstraint extends SylParserObject {
 	private BooleanProperty isUnparsed2;
 	private BooleanProperty isWordFinal2;
 	private StringProperty constraintRepresentation2;
+	private BooleanProperty pruneElement2;
 	private final BooleanProperty isValid;
 
 	private CVSegmentOrNaturalClass affectedElementSegOrNC1;
@@ -61,16 +62,17 @@ public class OTConstraint extends SylParserObject {
 		structuralOptions2 = OTStructuralOptions.INITIALIZED;
 		initializeStructuralOptionsBooleans();
 		setStructuralOptions1Booleans(structuralOptions1);
-		setStructuralOptions2Booleans(structuralOptions1);
+		setStructuralOptions2Booleans(structuralOptions2);
 		this.constraintRepresentation1 = new SimpleStringProperty("");
 		this.constraintRepresentation2 = new SimpleStringProperty("");
+		this.pruneElement2 = new SimpleBooleanProperty(false);
 		this.isValid = new SimpleBooleanProperty(true);
 		createUUID();
 	}
 
 	public OTConstraint(String ruleName, String description, String affectedElement,
 			String secondAffectedElement, int structuralOptions1, int structuralOptions2,
-			String constraintRepresentation, String secondConstraintRepresentation, boolean isValid) {
+			String constraintRepresentation, String secondConstraintRepresentation, boolean pruneElement2, boolean isValid) {
 		super();
 		this.constraintName = new SimpleStringProperty(ruleName);
 		this.description = new SimpleStringProperty(description);
@@ -84,6 +86,7 @@ public class OTConstraint extends SylParserObject {
 		this.constraintRepresentation1 = new SimpleStringProperty(constraintRepresentation);
 		this.constraintRepresentation2 = new SimpleStringProperty(
 				secondConstraintRepresentation);
+		this.pruneElement2 = new SimpleBooleanProperty(pruneElement2);
 		this.isValid = new SimpleBooleanProperty(isValid);
 		createUUID();
 	}
@@ -92,7 +95,7 @@ public class OTConstraint extends SylParserObject {
 			CVSegmentOrNaturalClass affectedElementSegOrNC,
 			CVSegmentOrNaturalClass secondAffectedElementSegOrNC, int structuralOptions1,
 			int structuralOptions2, String constraintRepresentation,
-			String secondConstraintRepresentation, boolean isValid) {
+			String secondConstraintRepresentation, boolean pruneElement2, boolean isValid) {
 		super();
 		this.constraintName = new SimpleStringProperty(ruleName);
 		this.description = new SimpleStringProperty(description);
@@ -108,6 +111,7 @@ public class OTConstraint extends SylParserObject {
 		this.constraintRepresentation1 = new SimpleStringProperty(constraintRepresentation);
 		this.constraintRepresentation2 = new SimpleStringProperty(
 				secondConstraintRepresentation);
+		this.pruneElement2 = new SimpleBooleanProperty(pruneElement2);
 		this.isValid = new SimpleBooleanProperty(isValid);
 		createUUID();
 	}
@@ -487,6 +491,19 @@ public class OTConstraint extends SylParserObject {
 		this.constraintRepresentation2 = representation;
 	}
 
+	@XmlAttribute(name="pruneElement2")
+	public boolean isPruneElement2() {
+		return pruneElement2.get();
+	}
+
+	public BooleanProperty pruneElement2Property() {
+		return pruneElement2;
+	}
+
+	public void setPruneElement2(boolean value) {
+		this.pruneElement2.set(value);
+	}
+
 	@XmlAttribute(name="valid")
 	public boolean isValid() {
 		return isValid.get();
@@ -590,7 +607,8 @@ public class OTConstraint extends SylParserObject {
 		if (affectedElementSegOrNC2 != null)
 			affectedValue2 = affectedElementSegOrNC2.getUuid();
 		String sCombo = id + constraintName.getValueSafe() + description.getValueSafe()
-				+ affectedValue1 + affectedValue2 + structuralOptions1 + structuralOptions2 + isValid() + isActive();
+				+ affectedValue1 + affectedValue2 + structuralOptions1 + structuralOptions2
+				+ isPruneElement2() + isValid() + isActive();
 		return sCombo.hashCode();
 	}
 
@@ -621,6 +639,8 @@ public class OTConstraint extends SylParserObject {
 		} else if (structuralOptions2 != constraint.structuralOptions2) {
 			result = false;
 		} else if (isActive() != constraint.isActive()) {
+			result = false;
+		} else if (isPruneElement2() != constraint.isPruneElement2()) {
 			result = false;
 		} else if (isValid() != constraint.isValid()) {
 			result = false;

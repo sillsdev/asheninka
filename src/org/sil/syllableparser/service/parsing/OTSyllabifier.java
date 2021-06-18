@@ -14,8 +14,6 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVTraceSyllabifierInfo;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.otapproach.OTConstraint;
@@ -36,8 +34,6 @@ public class OTSyllabifier implements Syllabifiable {
 
 	private LanguageProject languageProject;
 	private OTApproach ota;
-	private List<Segment> activeSegmentInventory;
-	private List<CVNaturalClass> activeNaturalClasses;
 	private OTSegmenter segmenter;
 	OTTracer tracer = null;
 	private boolean fDoTrace = false;
@@ -52,8 +48,6 @@ public class OTSyllabifier implements Syllabifiable {
 		super();
 		this.ota = ota;
 		languageProject = ota.getLanguageProject();
-		activeSegmentInventory = languageProject.getActiveSegmentsInInventory();
-		activeNaturalClasses = ota.getActiveCVNaturalClasses();
 		segmenter = new OTSegmenter(languageProject.getActiveGraphemes(),
 				languageProject.getActiveGraphemeNaturalClasses());
 		matcher = OTConstraintMatcher.getInstance();
@@ -143,10 +137,24 @@ public class OTSyllabifier implements Syllabifiable {
 		buildSyllabificationOfCurrentWord(segmentsInWord);
 		sSyllabifiedWord = getSyllabificationOfCurrentWord(segmentsInWord);
 		if (evalNoMore(segmentsInWord)) {
-			tracer.setSuccessful(true);
-			return true;
+			if (allSegmentsParsed(segmentsInWord)) {
+				tracer.setSuccessful(true);
+				return true;
+			} else {
+				tracer.setSuccessful(false);
+				return false;
+			}
 		}
 		return false;
+	}
+
+	private boolean allSegmentsParsed(List<OTSegmentInSyllable> segmentsInWord) {
+		for (OTSegmentInSyllable sis : segmentsInWord) {
+			if (sis.isUnparsed()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void applyHouseKeeping(List<OTSegmentInSyllable> segmentsInWord) {
@@ -166,21 +174,22 @@ public class OTSyllabifier implements Syllabifiable {
 				segInSyl2 = segmentsInWord.get(i+1);
 			}
 			if (matcher.match(constraint, segInSyl1, segInSyl2, iSize - i)) {
-				boolean applied = false;
 				OTSegmentInSyllable segInSyl = segInSyl1;
-				int so = segInSyl.getStructuralOptions();
+				if (constraint.isPruneElement2()) {
+					segInSyl = segInSyl2;
+				}
 				int constraintsSO = constraint.getStructuralOptions1();
 				if ((constraintsSO & OTStructuralOptions.ONSET) > 0) {
-					applied = segInSyl.removeOnset();
+					segInSyl.removeOnset();
 				}
 				if ((constraintsSO & OTStructuralOptions.NUCLEUS) > 0) {
-					applied = segInSyl.removeNuleus();
+					 segInSyl.removeNuleus();
 				}
 				if ((constraintsSO & OTStructuralOptions.CODA) > 0) {
-					applied = segInSyl.removeCoda();
+					segInSyl.removeCoda();
 				}
 				if ((constraintsSO & OTStructuralOptions.UNPARSED) > 0) {
-					applied = segInSyl.removeUnparsed();
+					segInSyl.removeUnparsed();
 				}
 			}
 			i++;
@@ -254,11 +263,15 @@ public class OTSyllabifier implements Syllabifiable {
 		int iSize = segmentsInWord.size();
 		OTSyllable syllable = new OTSyllable();
 		for (OTSegmentInSyllable segInSyl: segmentsInWord) {
+			if (segInSyl.getCoreOptionsLeft() != 1) {
+				// parsing failed; stop here
+				break;
+			}
+			if (segInSyl.isUnparsed()) {
+				// parsing failed; stop here
+				break;
+			}
 			if ((i+1) < iSize) {
-				if (segInSyl.getCoreOptionsLeft() != 1) {
-					// parsing failed; stop here
-					break;
-				}
 				syllable.getSegmentsInSyllable().add(segInSyl);
 				OTSegmentInSyllable segInSyl2 = segmentsInWord.get(++i);
 				if (isSyllableBreak(segInSyl, segInSyl2)) {

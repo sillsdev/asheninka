@@ -23,6 +23,7 @@ import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.otapproach.OTConstraint;
 import org.sil.syllableparser.service.LingTreeInteractor;
 import org.sil.syllableparser.service.OTConstraintValidator;
+import org.sil.utility.*;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -97,8 +98,6 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 	private TableColumn<OTConstraint, String> nameColumn;
 	@FXML
 	private TableColumn<OTConstraint, String> descriptionColumn;
-//	@FXML
-//	private TableColumn<OTConstraint, WebView> representationColumn;
 
 	@FXML
 	private TextField nameField;
@@ -137,6 +136,8 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 	@FXML
 	private CheckBox isWordFinal2CheckBox;
 	@FXML
+	private CheckBox pruneElement2CheckBox;
+	@FXML
 	private CheckBox activeCheckBox;
 	@FXML
 	protected Label constraintTreeLabel;
@@ -169,7 +170,6 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().constraintNameProperty());
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-//		representationColumn.setCellValueFactory(cellData -> cellData.getValue().getConstraintLingTreeSVG());
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
@@ -178,13 +178,9 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		descriptionColumn.setCellFactory(column -> {
 			return new AnalysisWrappingTableCell();
 		});
-//		representationColumn.setCellFactory(column -> {
-//			return new WrappingTableCell(true);
-//		});
 
 		makeColumnHeaderWrappable(nameColumn);
 		makeColumnHeaderWrappable(descriptionColumn);
-//		makeColumnHeaderWrappable(representationColumn);
 
 		// Clear rule details.
 		showConstraintDetails(null);
@@ -246,6 +242,11 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 				affectedElement2TextField.setText(newValue);
 				currentConstraint.setAffectedElement2(newValue);
 				reportAnyValidationMessage();
+				if (StringUtilities.isNullOrEmpty(newValue)) {
+					pruneElement2CheckBox.setDisable(true);
+				} else {
+					pruneElement2CheckBox.setDisable(false);
+				}
 			}
 		});
 
@@ -355,6 +356,13 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 			}
 			displayFieldsPerActiveSetting(currentConstraint);
 		});
+		pruneElement2CheckBox.setOnAction((event) -> {
+			if (currentConstraint != null) {
+				currentConstraint.setPruneElement2(pruneElement2CheckBox.isSelected());
+				forceTableRowToRedisplayPerActiveSetting(currentConstraint);
+			}
+			displayFieldsPerActiveSetting(currentConstraint);
+		});
 		// Use of Enter move focus to next item.
 		nameField.setOnAction((event) -> {
 			descriptionField.requestFocus();
@@ -416,6 +424,11 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		isUnparsed2CheckBox.setDisable(!fIsActive);
 		isWordFinal2CheckBox.setDisable(!fIsActive);
 		constraintLingTreeSVG.setDisable(!fIsActive);
+		if (fIsActive && constraint != null && StringUtilities.isNullOrEmpty(constraint.getAffectedElement2())) {
+			pruneElement2CheckBox.setDisable(true);
+		} else {
+			pruneElement2CheckBox.setDisable(false);
+		}
 	}
 
 	private void forceTableRowToRedisplayPerActiveSetting(OTConstraint constraint) {
@@ -437,7 +450,6 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 	private void showConstraintDetails(OTConstraint constraint) {
 		currentConstraint = constraint;
 		if (constraint != null) {
-			// Fill the text fields with info from the NPRule object.
 			nameField.setText(constraint.getConstraintName());
 			descriptionField.setText(constraint.getDescription());
 			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
@@ -458,6 +470,7 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 			isCoda2CheckBox.setSelected(constraint.isCoda2());
 			isUnparsed2CheckBox.setSelected(constraint.isUnparsed2());
 			isWordFinal2CheckBox.setSelected(constraint.isWordFinal2());
+			pruneElement2CheckBox.setSelected(constraint.isPruneElement2());
 			activeCheckBox.setSelected(constraint.isActive());
 			int currentItem = otConstraintsTable.getItems().indexOf(currentConstraint);
 			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"

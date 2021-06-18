@@ -24,6 +24,8 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
 public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 
 	OTTraceInfo traceInfo;
+	boolean fSuccess;
+
 	public OTTryAWordHTMLFormatter(OTTraceInfo traceInfo2, LanguageProject language, Locale locale) {
 		super(language, locale);
 		this.traceInfo = traceInfo2;
@@ -36,8 +38,8 @@ public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		StringBuilder sb = new StringBuilder();
 		formatHTMLBeginning(sb);
 		formatOverview(sb);
-		boolean fSuccess = formatSegmentParsing(sb);
-		if (fSuccess) {
+		boolean fSegSuccess = formatSegmentParsing(sb);
+		if (fSegSuccess) {
 			formatSyllablification(sb);
 		}
 		formatHTMLEnding(sb);
@@ -48,7 +50,7 @@ public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		OTSyllabifier syllabifier = traceInfo.getSyllabifier();
 		OTSyllabifierResult sylResult = traceInfo.getSyllabifierResult();
 		if (sylResult != null) {
-			boolean fSuccess = sylResult.success;
+			fSuccess = sylResult.success;
 			if (fSuccess) {
 				appendSuccessMessage(sb);
 				sb.append("<p class='" + SUCCESS + " vernacular'>");
@@ -128,14 +130,14 @@ public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sb.append("</th>\n");
 		}
 		sb.append("</tr>\n");
-		showStructuralOption(sb, tracingStep, previousTracingStep, OTStructuralOptions.ONSET, Constants.OT_STRUCTURAL_OPTION_ONSET);
-		showStructuralOption(sb, tracingStep, previousTracingStep, OTStructuralOptions.NUCLEUS, Constants.OT_STRUCTURAL_OPTION_NUCLEUS);
-		showStructuralOption(sb, tracingStep, previousTracingStep, OTStructuralOptions.CODA, Constants.OT_STRUCTURAL_OPTION_CODA);
-		showStructuralOption(sb, tracingStep, previousTracingStep, OTStructuralOptions.UNPARSED, Constants.OT_STRUCTURAL_OPTION_UNPARSED);
+		formatStructuralOption(sb, tracingStep, previousTracingStep, OTStructuralOptions.ONSET, Constants.OT_STRUCTURAL_OPTION_ONSET);
+		formatStructuralOption(sb, tracingStep, previousTracingStep, OTStructuralOptions.NUCLEUS, Constants.OT_STRUCTURAL_OPTION_NUCLEUS);
+		formatStructuralOption(sb, tracingStep, previousTracingStep, OTStructuralOptions.CODA, Constants.OT_STRUCTURAL_OPTION_CODA);
+		formatStructuralOption(sb, tracingStep, previousTracingStep, OTStructuralOptions.UNPARSED, Constants.OT_STRUCTURAL_OPTION_UNPARSED);
 		sb.append("</table>\n");
 	}
 
-	protected void showStructuralOption(StringBuilder sb, OTTracingStep tracingStep,
+	protected void formatStructuralOption(StringBuilder sb, OTTracingStep tracingStep,
 			OTTracingStep previousTracingStep, int iOption, String sOption) {
 		sb.append("<tr valign='top'>\n");
 		for (OTSegmentInSyllable segInSyl : tracingStep.getSegmentsInWord()) {
@@ -150,7 +152,13 @@ public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 							.get(i);
 					if ((previousSegInSyl.getStructuralOptions() & iOption) > 0) {
 						sb.append(" style='background-color:");
-						sb.append(bundle.getString("report.successcolorword"));
+						String colorWord = "";
+						if (fSuccess) {
+							colorWord = bundle.getString("report.successcolorword");
+						} else {
+							colorWord = bundle.getString("report.failurecolorword");
+						}
+						sb.append(colorWord);
 						sb.append("'>");
 						sb.append(sOption);
 					} else {

@@ -207,24 +207,24 @@ public class OTConstraintLingTreeTest {
 
 	@Test
 	public void constraintOneAffectedElementTest() {
-		constraint = new OTConstraint("one", "", "[V]", "", OTStructuralOptions.NUCLEUS, 0, "", "", true);
+		constraint = new OTConstraint("one", "", "[V]", "", OTStructuralOptions.NUCLEUS, 0, "", "", false, true);
 		constraint.createLingTreeDescription();
 		assertEquals("(\\O(\\O[V](n)))", constraint.getLingTreeDescription());
 
 		constraint = new OTConstraint("one", "", "[V]", "", OTStructuralOptions.NUCLEUS
-				+ OTStructuralOptions.WORD_FINAL, 0, "", "", true);
+				+ OTStructuralOptions.WORD_FINAL, 0, "", "", false, true);
 		constraint.createLingTreeDescription();
 		assertEquals("(\\O(\\O[V] #(n)))", constraint.getLingTreeDescription());
 
 		constraint = new OTConstraint("one", "", "[C]", "", OTStructuralOptions.CODA
-				+ OTStructuralOptions.WORD_FINAL, 0, "", "", true);
+				+ OTStructuralOptions.WORD_FINAL, 0, "", "", false, true);
 		constraint.createLingTreeDescription();
 		assertEquals("(\\O(\\O[C] #(c)))", constraint.getLingTreeDescription());
 
 		constraint = new OTConstraint("one", "", "[C]", "", OTStructuralOptions.WORD_INITIAL
 				+ OTStructuralOptions.ONSET + OTStructuralOptions.NUCLEUS
 				+ OTStructuralOptions.CODA + OTStructuralOptions.UNPARSED
-				+ OTStructuralOptions.WORD_FINAL, 0, "", "", true);
+				+ OTStructuralOptions.WORD_FINAL, 0, "", "", false, true);
 		constraint.createLingTreeDescription();
 		assertEquals("(\\O(\\O# [C] #({o, n, c, u})))", constraint.getLingTreeDescription());
 	}
@@ -234,22 +234,22 @@ public class OTConstraintLingTreeTest {
 		String affected1 = "X";
 		String affected2 = "X";
 		constraint = new OTConstraint("one", "", affected1, affected2, OTStructuralOptions.ONSET,
-				OTStructuralOptions.ONSET, "", "", true);
+				OTStructuralOptions.ONSET, "", "", false, true);
 		constraint.createLingTreeDescription();
 		assertEquals("(\\O(\\OX(o))(\\OX(o)))", constraint.getLingTreeDescription());
 
 		constraint = new OTConstraint("one", "", affected1, "[C]", OTStructuralOptions.ONSET,
-				OTStructuralOptions.ONSET, "", "", true);
+				OTStructuralOptions.ONSET, "", "", false, true);
 		constraint.createLingTreeDescription();
 		assertEquals("(\\O(\\OX(o))(\\O[C](o)))", constraint.getLingTreeDescription());
 
 		constraint = new OTConstraint("one", "", affected1, affected2, OTStructuralOptions.ONSET,
-				OTStructuralOptions.WORD_INITIAL + OTStructuralOptions.ONSET, "", "", true);
+				OTStructuralOptions.WORD_INITIAL + OTStructuralOptions.ONSET, "", "", false, true);
 		constraint.createLingTreeDescription();
 		assertEquals("(\\O(\\OX(o))(\\O# X(o)))", constraint.getLingTreeDescription());
 
 		constraint = new OTConstraint("one", "", "[V]", "[V]", OTStructuralOptions.ONSET | OTStructuralOptions.CODA,
-				OTStructuralOptions.ONSET, "", "", true);
+				OTStructuralOptions.ONSET, "", "", false, true);
 		constraint.createLingTreeDescription();
 		assertEquals("(\\O(\\O[V]({o, c}))(\\O[V](o)))", constraint.getLingTreeDescription());
 

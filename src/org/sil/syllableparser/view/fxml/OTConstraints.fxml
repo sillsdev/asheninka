@@ -62,8 +62,9 @@
                         <Label text="%label.structuraloptions1" GridPane.rowIndex="3" />
                         <Label text="%label.affectedelement2" GridPane.rowIndex="4" />
                         <Label text="%label.structuraloptions2" GridPane.rowIndex="5" />
-                        <Label text="%label.active" GridPane.rowIndex="6" />
-                        <Label fx:id="constraintTreeLabel" text="%label.otconstrainttree" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+                        <Label text="%label.pruneelement2" GridPane.rowIndex="6" />
+                        <Label text="%label.active" GridPane.rowIndex="7" />
+                        <Label fx:id="constraintTreeLabel" text="%label.otconstrainttree" GridPane.rowIndex="8" GridPane.valignment="TOP" />
                         <TextField fx:id="nameField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" />
                         <TextField fx:id="descriptionField" onKeyReleased="#keyboardReleased" onMouseReleased="#toolBarMouseReleased" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -114,8 +115,9 @@
                               <CheckBox fx:id="isUnparsed2CheckBox" mnemonicParsing="false" text="u     " />
                           </children>
                         </HBox>
-                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+                        <CheckBox fx:id="pruneElement2CheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS">
                            <children>
                               <WebView fx:id="constraintLingTreeSVG" prefHeight="200.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                            </children>
