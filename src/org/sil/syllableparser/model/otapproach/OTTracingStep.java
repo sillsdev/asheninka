@@ -22,6 +22,7 @@ public class OTTracingStep {
 	protected boolean addedAsSyllable = false;
 	protected boolean successful;
 	protected OTSyllable syllable;
+	private String failureMessage;
 
 	public OTTracingStep() {
 		super();
@@ -70,6 +71,14 @@ public class OTTracingStep {
 
 	public void setConstraintName(String constraintName) {
 		this.constraintName = constraintName;
+	}
+
+	public String getFailureMessage() {
+		return failureMessage;
+	}
+
+	public void setFailureMessage(String failureMessage) {
+		this.failureMessage = failureMessage;
 	}
 
 	public OTSyllable getSyllable() {

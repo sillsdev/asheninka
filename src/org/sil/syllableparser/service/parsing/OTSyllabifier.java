@@ -122,14 +122,18 @@ public class OTSyllabifier implements Syllabifiable {
 		sSyllabifiedWord = "";
 		rememberSyllabificationStateInTracer(bundle.getString("report.tawotinitialization"), segmentsInWord);
 		if (ota.getActiveOTConstraintRankings().size() == 0) {
-			// TODO: report this
+			tracer.setSuccessful(false);
+			tracer.setFailureMessage(bundle.getString("report.tawotnoconstraints"));
+			tracer.recordStep();
 			return false;
 		}
 		OTConstraintRanking ranking = ota.getActiveOTConstraintRankings().get(0);
 		applyHouseKeeping(segmentsInWord);
 		for (OTConstraint constraint : ranking.getRanking()) {
 			applyConstraint(segmentsInWord, constraint);
-//TODO: is this needed? (the onset before a coda part)		applyHouseKeeping(segmentsInWord);
+			//TODO: do we need the onset before a coda part of housekeeping?
+			// If so, do we remove the onset or the coda or both?
+			//applyHouseKeeping(segmentsInWord);
 			if (evalNoMore(segmentsInWord)) {
 				break;
 			}
@@ -142,9 +146,14 @@ public class OTSyllabifier implements Syllabifiable {
 				return true;
 			} else {
 				tracer.setSuccessful(false);
+				tracer.setFailureMessage(bundle.getString("report.tawotunparsedsegments"));
+				tracer.recordStep();
 				return false;
 			}
 		}
+		tracer.setSuccessful(false);
+		tracer.setFailureMessage(bundle.getString("report.tawotsomesegmentsareambiguous"));
+		tracer.recordStep();
 		return false;
 	}
 
@@ -286,7 +295,9 @@ public class OTSyllabifier implements Syllabifiable {
 				tracer.recordStep();
 			}
 		}
-		syllablesInCurrentWord.add(syllable);
+		if (syllable.getSegmentsInSyllable().size() > 0) {
+			syllablesInCurrentWord.add(syllable);
+		}
 	}
 
 	@Override

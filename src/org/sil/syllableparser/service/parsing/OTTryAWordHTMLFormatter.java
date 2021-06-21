@@ -16,6 +16,7 @@ import org.sil.syllableparser.model.otapproach.OTStructuralOptions;
 import org.sil.syllableparser.model.otapproach.OTTraceInfo;
 import org.sil.syllableparser.model.otapproach.OTTracingStep;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
+import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
@@ -82,8 +83,10 @@ public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			if (tracingSteps.indexOf(tracingStep) > 0) {
 				if (tracingStep.isAddedAsSyllable()) {
 					formatAddingSyllable(sb, tracingStep);
-				} else {
+				} else if (StringUtilities.isNullOrEmpty(tracingStep.getFailureMessage())){
 					formatEvaluatingConstraint(sb, previousTracingStep, tracingStep);
+				} else {
+					formatFailureMessage(sb, tracingStep);
 				}
 			}
 			previousTracingStep = tracingStep;
@@ -117,6 +120,12 @@ public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			sbSyl.append(sis.getGrapheme());
 		}
 		sb.append(getAddedArgument("report.tawotaddsyllable", sbSyl.toString()));
+		sb.append("</p>\n");
+	}
+
+	protected void formatFailureMessage(StringBuilder sb, OTTracingStep tracingStep) {
+		sb.append("<p class='" + FAILURE + "'>");
+		sb.append(tracingStep.getFailureMessage());
 		sb.append("</p>\n");
 	}
 

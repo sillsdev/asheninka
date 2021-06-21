@@ -78,6 +78,12 @@ public class OTTracer {
 		}
 	}
 
+	public void setFailureMessage(String failureMessage) {
+		if (tracing) {
+			tracingStep.setFailureMessage(failureMessage);
+		}
+	}
+
 	public void setSyllable(OTSyllable syllable) {
 		if (tracing) {
 			tracingStep.setSyllable(syllable);

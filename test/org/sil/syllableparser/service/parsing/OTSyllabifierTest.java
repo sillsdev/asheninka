@@ -145,6 +145,9 @@ public class OTSyllabifierTest {
 	public void traceSyllabifyWordTest() {
 		String sInitialization = bundle.getString("report.tawotinitialization");
 		String sHouseKeeping = bundle.getString("report.tawothousekeeping");
+		String unparsedFailure = bundle.getString("report.tawotunparsedsegments");
+		String ambiguousFailure = bundle.getString("report.tawotsomesegmentsareambiguous");
+		String noConstraints = bundle.getString("report.tawotnoconstraints");
 		otSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("Chiko", true, 2, "on.on", "Chi.ko", "(W(σ( o(\\L ch(\\G Ch)))( n(\\L i(\\G i))))(σ( o(\\L k(\\G k)))( n(\\L o(\\G o)))))");
 		List<OTTracingStep> tracingSteps = otSyllabifier.getTracingSteps();
@@ -424,7 +427,7 @@ public class OTSyllabifierTest {
 		otSyllabifier.setDoTrace(true);
 		checkSyllabifyWord("dapbek", false, 1, "ooooo", "dapbek", "(W(σ( o(\\L d(\\G d)))( o(\\L a(\\G a)))( o(\\L p(\\G p)))( o(\\L b(\\G b)))( o(\\L e(\\G e)))))");
 		tracingSteps = otSyllabifier.getTracingSteps();
-		assertEquals(5, tracingSteps.size());
+		assertEquals(6, tracingSteps.size());
 		step = tracingSteps.get(0);
 		assertEquals(sInitialization, step.getConstraintName());
 		checkStructuralOptions(step, 0, OTStructuralOptions.COMBO_O_N_C_U);
@@ -465,6 +468,74 @@ public class OTSyllabifierTest {
 		checkStructuralOptions(step, 3, OTStructuralOptions.ONSET);
 		checkStructuralOptions(step, 4, OTStructuralOptions.ONSET);
 		checkStructuralOptions(step, 5, OTStructuralOptions.UNPARSED);
+		step = tracingSteps.get(5);
+		assertEquals(unparsedFailure, step.getFailureMessage());
+
+		// assuming we're using the second rankings
+		while (rankings.get(0).getRanking().size() > 2) {
+			rankings.get(0).getRanking().remove(2);
+		}
+		ota.setOTConstraintRankings(FXCollections.observableArrayList(rankings));
+		otSyllabifier = new OTSyllabifier(ota);
+		otSyllabifier.setBundle(bundle);
+		otSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("dapbek", false, 0, "", "", "(W)");
+		tracingSteps = otSyllabifier.getTracingSteps();
+		assertEquals(5, tracingSteps.size());
+		step = tracingSteps.get(0);
+		assertEquals(sInitialization, step.getConstraintName());
+		checkStructuralOptions(step, 0, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 1, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 2, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 3, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 4, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 5, OTStructuralOptions.COMBO_O_N_C_U);
+		step = tracingSteps.get(1);
+		assertEquals(sHouseKeeping, step.getConstraintName());
+		checkStructuralOptions(step, 0, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 1, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 2, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 3, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 4, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 5, OTStructuralOptions.COMBO_N_C_U);
+		step = tracingSteps.get(2);
+		assertEquals("NoCoda", step.getConstraintName());
+		checkStructuralOptions(step, 0, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 1, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 2, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 3, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 4, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 5, OTStructuralOptions.COMBO_N_U);
+		step = tracingSteps.get(3);
+		assertEquals("*Peak/C", step.getConstraintName());
+		checkStructuralOptions(step, 0, OTStructuralOptions.COMBO_O_U);
+		checkStructuralOptions(step, 1, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 2, OTStructuralOptions.COMBO_O_U);
+		checkStructuralOptions(step, 3, OTStructuralOptions.COMBO_O_U);
+		checkStructuralOptions(step, 4, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 5, OTStructuralOptions.UNPARSED);
+		step = tracingSteps.get(4);
+		assertEquals(ambiguousFailure, step.getFailureMessage());
+
+		// assuming we're using the second rankings
+		rankings.clear();
+		otSyllabifier = new OTSyllabifier(ota);
+		ota.setOTConstraintRankings(FXCollections.observableArrayList(rankings));
+		otSyllabifier.setBundle(bundle);
+		otSyllabifier.setDoTrace(true);
+		checkSyllabifyWord("dapbek", false, 0, "", "", "(W)");
+		tracingSteps = otSyllabifier.getTracingSteps();
+		assertEquals(2, tracingSteps.size());
+		step = tracingSteps.get(0);
+		assertEquals(sInitialization, step.getConstraintName());
+		checkStructuralOptions(step, 0, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 1, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 2, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 3, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 4, OTStructuralOptions.COMBO_O_N_C_U);
+		checkStructuralOptions(step, 5, OTStructuralOptions.COMBO_O_N_C_U);
+		step = tracingSteps.get(1);
+		assertEquals(noConstraints, step.getFailureMessage());
 	}
 
 	protected void checkStructuralOptions(OTTracingStep step, int iSegment, int iExpectedOptions) {
