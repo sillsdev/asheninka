@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import org.sil.syllableparser.model.npapproach.NPApproach;
@@ -142,12 +141,12 @@ public class NPApproachLanguageComparer extends ONCApproachLanguageComparer {
 						&& ((NPRule) r.getObjectFrom1()).getID().equals(
 								rule.getID())).collect(Collectors.toList());
 		if (sameRuleRepresentation.size() > 0) {
-			DifferentNPRule diffFilter = sameRuleRepresentation.get(0);
-			diffFilter.setObjectFrom2(rule);
+			DifferentNPRule diffRule = sameRuleRepresentation.get(0);
+			diffRule.setObjectFrom2(rule);
 		} else {
-			DifferentNPRule diffFilter = new DifferentNPRule(null,
+			DifferentNPRule diffRule = new DifferentNPRule(null,
 					rule);
-			rulesWhichDiffer.add(diffFilter);
+			rulesWhichDiffer.add(diffRule);
 		}
 	}
 

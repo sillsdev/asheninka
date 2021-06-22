@@ -92,4 +92,34 @@ public class OTConstraintRanking extends SylParserObject {
 		this.rankingRepresentation.set(rankingRepresentation);
 	}
 
+	@Override
+	public int hashCode() {
+		String sCombo = id + name.getValueSafe() + description.getValueSafe()
+				+ rankingRepresentation.getValueSafe() + isActive();
+		return sCombo.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		boolean result = true;
+		OTConstraintRanking ranking = (OTConstraintRanking) obj;
+		if (!id.equals(ranking.getID())) {
+			result = false;
+		} else if (!getName().equals(ranking.getName())) {
+			result = false;
+		} else if (!getDescription().equals(ranking.getDescription())) {
+			result = false;
+		} else if (!getRankingRepresentation().equals(ranking.getRankingRepresentation())) {
+			result = false;
+		} else if (isActive() != ranking.isActive()) {
+			result = false;
+		}
+		return result;
+	}
 }

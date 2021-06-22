@@ -87,9 +87,9 @@ public class NPApproachLanguageComparerTest {
 		// words
 		ObservableList<Word> words;
 		words = npa1.getWords();
-		assertEquals("Moraic words size", 10025, words.size());
+		assertEquals("NP words size", 10025, words.size());
 		words = npa2.getWords();
-		assertEquals("Moraic words size", 10025, words.size());
+		assertEquals("NP words size", 10025, words.size());
 	}
 
 	@Test

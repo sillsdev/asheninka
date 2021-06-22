@@ -173,17 +173,17 @@ public class NPApproachLanguageComparisonHTMLFormatter extends
 			sb.append("</th>\n<th>");
 			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
 			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
-			for (DifferentNPRule differentFilters : diffRules) {
+			for (DifferentNPRule differentRules : diffRules) {
 				sb.append("<tr>\n<td class=\"");
 				sb.append(ANALYSIS_1);
 				sb.append("\" valign=\"top\">");
-				NPRule filter = (NPRule) differentFilters.objectFrom1;
-				formatNPRuleInfo(sb, filter);
+				NPRule rule = (NPRule) differentRules.objectFrom1;
+				formatNPRuleInfo(sb, rule);
 				sb.append("</td>\n<td class=\"");
 				sb.append(ANALYSIS_2);
 				sb.append("\" valign=\"top\">");
-				filter = (NPRule) differentFilters.objectFrom2;
-				formatNPRuleInfo(sb, filter);
+				rule = (NPRule) differentRules.objectFrom2;
+				formatNPRuleInfo(sb, rule);
 				sb.append("</td>\n</tr>\n");
 			}
 			sb.append("</tbody>\n</table>\n");

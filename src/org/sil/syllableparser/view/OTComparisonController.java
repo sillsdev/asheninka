@@ -15,11 +15,8 @@ import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.service.BackupFileRestorer;
-import org.sil.syllableparser.service.comparison.NPApproachLanguageComparer;
-import org.sil.syllableparser.service.comparison.NPApproachLanguageComparisonHTMLFormatter;
 import org.sil.syllableparser.service.comparison.OTApproachLanguageComparer;
 import org.sil.syllableparser.service.comparison.OTApproachLanguageComparisonHTMLFormatter;
 
@@ -92,10 +89,10 @@ public class OTComparisonController extends ComparisonController {
 				comparer.setDataSet1Info(sDataSet1Info);
 				comparer.setDataSet2Info(sDataSet2Info);
 				comparer.compare();
-//				OTApproachLanguageComparisonHTMLFormatter formatter = new OTApproachLanguageComparisonHTMLFormatter(
-//						comparer, locale, LocalDateTime.now());
-//				String result = formatter.format();
-//				webEngine.loadContent(result);
+				OTApproachLanguageComparisonHTMLFormatter formatter = new OTApproachLanguageComparisonHTMLFormatter(
+						comparer, locale, LocalDateTime.now());
+				String result = formatter.format();
+				webEngine.loadContent(result);
 			}
 		});
 		new Thread(sleeper).start();
