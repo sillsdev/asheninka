@@ -136,6 +136,7 @@ public class OTApproachController extends ApproachController {
 		controller.setViewItemUsed(prefs.getLastCVSegmentInventoryViewItemUsed());
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
+		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	private FXMLLoader createFXMLLoader(String sFxml) {
@@ -163,6 +164,7 @@ public class OTApproachController extends ApproachController {
 		controller.setViewItemUsed(i);
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
+		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTConstraints() {
@@ -174,6 +176,7 @@ public class OTApproachController extends ApproachController {
 		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
+		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTConstraintRankings() {
@@ -185,6 +188,7 @@ public class OTApproachController extends ApproachController {
 		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
+		mainApp.getController().enableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTWords() {
@@ -204,6 +208,7 @@ public class OTApproachController extends ApproachController {
 		}
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false);
+		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTWordsPredictedVsCorrect(int index) {
@@ -216,6 +221,7 @@ public class OTApproachController extends ApproachController {
 		controller.setFocusOnWord(index);
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false, true);
+		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTWordsPredictedVsCorrect() {
@@ -233,7 +239,8 @@ public class OTApproachController extends ApproachController {
 		controller.setViewItemUsed(i);
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
-	}
+		mainApp.getController().disableDuplicateRankingMenuItem();
+}
 
 	public void handleEnvironments() {
 		FXMLLoader loader = createFXMLLoader("fxml/Environments.fxml");
@@ -245,6 +252,7 @@ public class OTApproachController extends ApproachController {
 		controller.setViewItemUsed(i);
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
+		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	/*
@@ -266,6 +274,12 @@ public class OTApproachController extends ApproachController {
 	@Override
 	void handleRemoveItem() {
 		currentOTApproachController.handleRemoveItem();
+	}
+
+	@Override
+	public
+	void handleDuplicateRanking() {
+		currentOTApproachController.handleDuplicateRanking();
 	}
 
 	@Override
@@ -302,14 +316,12 @@ public class OTApproachController extends ApproachController {
 				int max = words.size();
 				int i = 0;
 				for (Word word : words) {
-					System.out.println("parsing " + word.getWord());
 					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
 					updateProgress(i++, max);
 
 					String sWord = word.getWord();
 					CVSegmenterResult result = segmenter.segmentWord(sWord);
 					boolean fSuccess = result.success;
-					System.out.println("\tsegmentation: " + fSuccess);
 					if (!fSuccess) {
 						word.setOTParserResult(sSegmentFailure.replace("{0}",
 								sWord.substring(result.iPositionOfFailure)));
@@ -318,7 +330,6 @@ public class OTApproachController extends ApproachController {
 					}
 					List<OTSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 					fSuccess = syllabifier.syllabify(segmentsInWord);
-					System.out.println("\tssyllabifying: " + fSuccess);
 					word.setOTLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
 					if (!fSuccess) {
 						word.setOTParserResult(sSyllabificationFailure);

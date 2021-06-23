@@ -369,6 +369,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
 			nameField.setStyle(sAnalysis);
 			descriptionField.setStyle(sAnalysis);
+			rootController.enableDuplicateRankingMenuItem();
 		}
 	}
 	
@@ -421,6 +422,16 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 
 		OTConstraintRanking newRanking = new OTConstraintRanking();
 		newRanking.setRanking(constraints);
+		otApproach.getOTConstraintRankings().add(newRanking);
+		handleInsertNewItem(otApproach.getOTConstraintRankings(), otRankingsTable);
+	}
+
+	@Override
+	public void handleDuplicateRanking() {
+		OTConstraintRanking newRanking = new OTConstraintRanking();
+		newRanking.setName(currentRanking.getName());
+		newRanking.setDescription(currentRanking.getDescription());
+		newRanking.setRanking(currentRanking.getRanking());
 		otApproach.getOTConstraintRankings().add(newRanking);
 		handleInsertNewItem(otApproach.getOTConstraintRankings(), otRankingsTable);
 	}

@@ -253,7 +253,7 @@ id="tMoraicWords"
 types="tView"
 ></type
 ><type
-before="Nuclear Projection approach"
+before="Nuclear projection approach"
 id="tNPApproach"
 ></type
 ><type
@@ -391,6 +391,57 @@ id="tOnsetMaximization"
 ><type
 before="Onset Principle"
 id="tOnsetPrinciple"
+></type
+><type
+before="Optimailty Theory approach"
+id="tOTApproach"
+></type
+><type
+before="candidate grid"
+id="tOTCandidateGrid"
+></type
+><type
+before="candidate grids"
+id="tOTCandidateGrids"
+></type
+><type
+before="OT Constraint"
+id="tOTConstraint"
+></type
+><type
+before="OT Constraints"
+id="tOTConstraints"
+></type
+><type
+before="OT Constraint Ranking"
+id="tOTConstraintRanking"
+></type
+><type
+before="OT Constraint Rankings"
+id="tOTConstraintRankings"
+></type
+><type
+before="Predicted vs.​ Correct OT Words"
+id="tOTPredictedVsCorrectWords"
+types="tView"
+></type
+><type
+before="structural option"
+id="tOTStructuralOption"
+></type
+><type
+before="structural options"
+id="tOTStructuralOptions"
+></type
+><type
+before="OT Try a Word"
+id="tOTTryAWord"
+types="tView"
+></type
+><type
+before="OT Words"
+id="tOTWords"
+types="tView"
 ></type
 ><type
 before="Paratext"

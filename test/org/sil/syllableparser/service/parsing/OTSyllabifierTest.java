@@ -25,6 +25,7 @@ import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.otapproach.OTConstraint;
 import org.sil.syllableparser.model.otapproach.OTConstraintRanking;
@@ -115,8 +116,28 @@ public class OTSyllabifierTest {
 		checkSyllabifyWord("flu", true, 1, "oon", "flu", "(W(σ( o(\\L f(\\G f)))( o(\\L l(\\G l)))( n(\\L u(\\G u)))))");
 		checkSyllabifyWord("cat", false, 0, "", "", "(W)"); // no c segment
 
+		// check for case where what's left matches the set of structural options
+		swapParseAndStarPeakSlashC();
+		checkSyllabifyWord("blofugh", true, 1, "ooooocc", "blofugh", "(W(σ( o(\\L b(\\G b)))( o(\\L l(\\G l)))( o(\\L o(\\G o)))( o(\\L f(\\G f)))( o(\\L u(\\G u)))( c(\\L g(\\G g)))( c(\\L h(\\G h)))))");
+
 		useSecondRanking();
 		checkSyllabifyWord("dapbek", false, 1, "ooooo", "dapbek", "(W(σ( o(\\L d(\\G d)))( o(\\L a(\\G a)))( o(\\L p(\\G p)))( o(\\L b(\\G b)))( o(\\L e(\\G e)))))");
+	}
+
+	protected void swapParseAndStarPeakSlashC() {
+		int i = SylParserObject.findIndexInListByUuid(ota.getOTConstraints(), "886ca941-5cb8-4b4e-a07b-c7721059d9ca");
+		OTConstraint marginV = ota.getOTConstraints().get(i);
+		marginV.setStructuralOptions1(OTStructuralOptions.ONSET + OTStructuralOptions.NUCLEUS + OTStructuralOptions.CODA);
+		OTConstraintRanking ranking1 = rankings.get(0);
+		ObservableList<OTConstraint> constraints = ranking1.getRanking();
+		OTConstraint temp = constraints.get(2);
+		constraints.set(2, constraints.get(0));
+		constraints.set(0, temp);
+		ranking1.setRanking(constraints);
+		rankings.set(0, ranking1);
+		ota.setOTConstraintRankings(FXCollections.observableArrayList(rankings));
+		otSyllabifier = new OTSyllabifier(ota);
+		otSyllabifier.setBundle(bundle);
 	}
 
 	protected void useSecondRanking() {

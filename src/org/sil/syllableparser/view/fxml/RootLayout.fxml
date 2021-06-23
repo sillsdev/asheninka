@@ -84,6 +84,8 @@
 								text="%menu.insertnew" fx:id="menuItemEditInsert" accelerator="ctrl+i" />
 							<MenuItem mnemonicParsing="true" onAction="#handleRemoveItem"
 								text="%menu.remove" fx:id="menuItemEditRemove" accelerator="ctrl+d" />
+							<MenuItem mnemonicParsing="true" onAction="#handleDuplicateRanking"
+								text="%menu.duplicateranking" fx:id="menuItemEditDuplicateRanking" visible="false" />
 							<SeparatorMenuItem />
 							<MenuItem mnemonicParsing="true" onAction="#handlePreviousItem"
 								text="%menu.previousitem" fx:id="menuItemEditPrevious" accelerator="ctrl+shift+p" />
@@ -241,8 +243,10 @@
 								text="%menu.userdocumentation" />
 							<MenuItem mnemonicParsing="true" onAction="#handleSuggestedSteps"
 								text="%menu.suggestedsteps" />
-								<MenuItem mnemonicParsing="true" onAction="#handleHelpIntro"
+							<MenuItem mnemonicParsing="true" onAction="#handleHelpIntro"
 								text="%menu.helpintro" />
+							<MenuItem mnemonicParsing="true" onAction="#handleHammond1997"
+								text="%menu.helphammond1997" />
 							<MenuItem mnemonicParsing="true" onAction="#handleAbout"
 								text="%menu.about" />
 						</items>

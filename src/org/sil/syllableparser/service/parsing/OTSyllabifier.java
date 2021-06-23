@@ -187,7 +187,17 @@ public class OTSyllabifier implements Syllabifiable {
 				if (constraint.isPruneElement2()) {
 					segInSyl = segInSyl2;
 				}
+				if (segInSyl.getCoreOptionsLeft() == 1) {
+					// nothing to do
+				i++;
+					continue;
+				}
 				int constraintsSO = constraint.getStructuralOptions1();
+				if (constraintsSO == segInSyl.getStructuralOptions()) {
+					// we'll remove what is left; not possible so try next match
+					i++;
+					continue;
+				}
 				if ((constraintsSO & OTStructuralOptions.ONSET) > 0) {
 					segInSyl.removeOnset();
 				}

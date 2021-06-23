@@ -220,6 +220,23 @@ id="iFailureONCSegmenter"
 ></indexTerm
 ></indexTerms
 ></indexTerm
+><indexTerm
+id="iOTFailures"
+><term
+>OT approach</term
+><indexTerms
+><indexTerm
+id="iFailureOTSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+><indexTerm
+id="iFailureOTNaturalClasser"
+><term
+>Parse into syllables</term
+></indexTerm
+></indexTerms
+></indexTerm
 ></indexTerms
 ></indexTerm
 ><indexTerm
@@ -257,6 +274,14 @@ id="iHelp"
 ><term
 >Help</term
 ><indexTerms
+><indexTerm
+id="iHamond1997"
+><term
+><citation
+ref="rHammond"
+></citation
+></term
+></indexTerm
 ><indexTerm
 id="iIntroduction"
 ><term
@@ -610,6 +635,68 @@ see="iProjectOpen"
 id="iOTApproach"
 ><term
 >Optimality Theory approach</term
+><indexTerms
+><indexTerm
+id="iOTApproachAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iOTCompare2Implementstions"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iOTConstraints"
+><term
+>Constraints</term
+></indexTerm
+><indexTerm
+id="iOTConstraintRankings"
+><term
+>Constraint rankings</term
+></indexTerm
+><indexTerm
+id="iOTEnvironments"
+><term
+>Environments</term
+></indexTerm
+><indexTerm
+id="iOTGraphemeNaturalClasses"
+><term
+>Grapheme natural classes</term
+></indexTerm
+><indexTerm
+id="iOTGraphemes"
+><term
+>Graphemes</term
+></indexTerm
+><indexTerm
+id="iOTNaturalClasses"
+><term
+>Natural classes</term
+></indexTerm
+><indexTerm
+id="iOTPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="iOTSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iOTTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iOTWords"
+><term
+>Words</term
+></indexTerm
+></indexTerms
 ></indexTerm
 ><indexTerm
 id="iOrdering"
@@ -687,6 +774,11 @@ id="iNPPredictedSyllabificationCompare"
 id="iONCPredictedSyllabificationCompare"
 ><term
 >Comparing with correct (ONC)</term
+></indexTerm
+><indexTerm
+id="iOTPredictedSyllabificationCompare"
+><term
+>Comparing with correct (OT)</term
 ></indexTerm
 ><indexTerm
 id="iSHPredictedSyllabificationCompare"

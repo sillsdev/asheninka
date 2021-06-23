@@ -95,4 +95,8 @@ public abstract class ApproachController {
 		}
 	}
 
+	public void handleDuplicateRanking() {
+		// default: this does nothing
+	}
+
 }

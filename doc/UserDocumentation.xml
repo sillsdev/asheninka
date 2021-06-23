@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->2 April 2021</date
+>23 June 2021</date
 ><version
->0.8.0 Alpha</version
+>1.0.0</version
 ><contents
 ></contents
 ></frontMatter
@@ -478,7 +478,7 @@ type="tMenuItem"
 ><indexedItem
 term="iHelp"
 ></indexedItem
->Currently, there are four <object
+>Currently, there are five <object
 type="tMenuItem"
 >Help</object
 > menu items:</p
@@ -510,6 +510,20 @@ term="iIntroduction"
 type="tMenuItem"
 >Introduction to syllabification</object
 > which has some general discussion of syllabification issues.</li
+><li
+><indexedItem
+term="iHamond1997"
+></indexedItem
+><object
+type="tMenuItem"
+>Hammond 1997</object
+> which opens <citation
+ref="rHammond"
+></citation
+> in your default PDF viewer.  If you plan to use the <object
+type="tOTApproach"
+></object
+>, we highly recommend you read at least sections 4-7 before doing so.</li
 ><li
 ><object
 type="tMenuItem"
@@ -561,7 +575,7 @@ id="sApproaches"
 ><object
 type="tAsheninka"
 ></object
-> will eventually offer six different syllabification algorithms or approaches. These are covered in <sectionRef
+> offers six different syllabification algorithms or approaches. These are covered in <sectionRef
 sec="sCVApproach"
 textBefore="plural"
 ></sectionRef
@@ -569,27 +583,7 @@ textBefore="plural"
 sec="sOTApproach"
 textBefore="none"
 ></sectionRef
->. Only five are implemented in the current version. See <sectionRef
-sec="sCVApproach"
-textBefore="plural"
-></sectionRef
->, <sectionRef
-sec="sSonorityHiearchyApproach"
-textBefore="none"
-></sectionRef
->, <sectionRef
-sec="sONCApproach"
-textBefore="none"
-></sectionRef
->, <sectionRef
-sec="sMoraicApproach"
-textBefore="none"
-></sectionRef
-> and <sectionRef
-sec="sNuclearProjectionApproach"
-textBefore="none"
-></sectionRef
->.</p
+>. </p
 ><p
 ><indexedItem
 term="iIntroduction"
@@ -4723,7 +4717,7 @@ sec="sCVWords"
 ><section2
 id="sNPPredicitedVsCorrect"
 ><secTitle
->Predicted vs.​ correct Moraic words</secTitle
+>Predicted vs.​ correct NP words</secTitle
 ><p
 ><indexedItem
 term="iNPPredictedVsCorrect"
@@ -4943,7 +4937,7 @@ width="500"
 letter="xNPTryAWordahwiyak2"
 num="xNPTryAWordahwiyak2"
 ></exampleRef
->, it is the first rule which builds a nucleus on each vowel. The resulting tree diagram is shown for each step. Note that in this case, the rule is applied as it matches an affected segment from left to right.  <object
+>, it is the first rule which builds a nucleus on each vowel. The resulting tree diagram is shown for each step. Note that in this case, the rule is applied as it matches an affected segment from left to right. <object
 type="tNPRuleActionAugment"
 ></object
 > rules at the <object
@@ -5072,7 +5066,635 @@ id="sOTApproach"
 ><indexedItem
 term="iOTApproach"
 ></indexedItem
->This approach has not been implemented yet.</p
+>For the <object
+type="tOTApproach"
+></object
+>, you need to define the following items:</p
+><ol
+><li
+>segments (<sectionRef
+sec="sOTSegmentInventory"
+></sectionRef
+>)</li
+><li
+>CV Natural Classes <sectionRef
+sec="sOTCVNaturalClasses"
+></sectionRef
+>)</li
+><li
+><object
+type="tOTConstraints"
+></object
+> (<sectionRef
+sec="sOTConstraints"
+></sectionRef
+>)</li
+><li
+><object
+type="tOTConstraintRankings"
+></object
+> (<sectionRef
+sec="sOTConstraintRankings"
+></sectionRef
+>)</li
+><li
+>grapheme natural classes (<sectionRef
+sec="sNPGraphemeNaturalClasses"
+></sectionRef
+>)</li
+><li
+>environments (<sectionRef
+sec="sNPEnvironments"
+></sectionRef
+>)</li
+></ol
+><p
+>After that, you either use a existing word list, import a word list (see <sectionRef
+sec="sWords"
+></sectionRef
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
+type="tMenuItem"
+>Parser / Parse all Words </object
+> menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/SyllabifyWords.png"
+></img
+> tool bar button. This will apply the algorithm of the <object
+type="tOTApproach"
+></object
+> to all the words. You can then see the results in the <object
+type="tOTWords"
+></object
+> view. See <sectionRef
+sec="sOTWords"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sOTTryAWord"
+textBefore="none"
+></sectionRef
+> for ideas on how to check the results, among other things.</p
+><p
+>The main “game” to play with the <object
+type="tOTApproach"
+></object
+> in <object
+type="tAsheninka"
+></object
+> is to adjust the segment inventory (including graphemes and their environments), the <object
+type="tOTConstraints"
+></object
+>, and the <object
+type="tOTConstraintRankings"
+></object
+> so that one gets most, if not all, words to syllabify correctly.</p
+><p
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to apply each constraint in turn, using a similar approach to that described in <citation
+ref="rHammond"
+></citation
+>. If every segment in the word is in a syllable, then it considers the parse a success. See appendix <appendixRef
+app="aOTAlgorithm"
+></appendixRef
+> for details.  If you are familiar with Optimality Theory, please read at least sections 4-7 of <citation
+page="5-18"
+ref="rHammond"
+></citation
+>.  He explains the need for implementing OT the way it is done here.  For your convenience, we include this paper with <object
+type="tAsheninka"
+></object
+> via the <object
+type="tMenuItem"
+>Help / Hammond (1997)</object
+>.</p
+><p
+>We now give more information on the various views available in the user interface for the <object
+type="tOTApproach"
+></object
+>.</p
+><section2
+id="sOTSegmentInventory"
+><secTitle
+>OT segment inventory</secTitle
+><p
+><indexedItem
+term="iOTSegments"
+></indexedItem
+>The <object
+type="tCVSegmentInventory"
+></object
+> view works exactly like the <object
+type="tCVSegmentInventory"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sOTCVNaturalClasses"
+><secTitle
+>CV natural classes</secTitle
+><p
+>The <object
+type="tCVNaturalClasses"
+></object
+> view is exactly the same as the <object
+type="tCVNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See section <sectionRef
+sec="sCVNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sOTConstraints"
+><secTitle
+>OT Constraints</secTitle
+><p
+><indexedItem
+term="iOTConstraints"
+></indexedItem
+><object
+type="tOTConstraints"
+></object
+> drive the syllabification process in the <object
+type="tOTApproach"
+></object
+>.</p
+><p
+>When defining an <object
+type="tOTConstraint"
+></object
+>, you fill in the fields. The “Name” field is for you to remember this constraint.  (Normally <object
+type="tOTConstraint"
+></object
+> names are shown using small caps letters; unfortunately, we do not have a way to apply such a style automatically in the user interface.<endnote
+id="nSmallCaps"
+><p
+>It is possible to use an overt small caps font to show these, but we have opted not to do that.</p
+></endnote
+> We do use small caps in <object
+type="tOTTryAWord"
+></object
+> because it is possible there.)</p
+><p
+>As described in <citation
+page="15-18"
+ref="rHammond"
+></citation
+>, each <object
+type="tOTConstraint"
+></object
+> involves one or two sets of an affected element and structural options.</p
+><p
+>The “Affected element 1” field lets you select the first segment or natural class that the constraint applies to.  You can also indicate if the element must occur word initially and/or word finally.</p
+><p
+>The “Structural Options 1” check boxes let you select the set of <object
+type="tOTStructuralOptions"
+></object
+> the constraint will remove.  See <citation
+page="11ff"
+ref="rHammond"
+></citation
+> for more on the <object
+type="tOTStructuralOptions"
+></object
+>; we use the same abbreviations here:</p
+><example
+num="xStructuralOptions"
+><table
+border="1"
+><tr
+><th
+>Structural Option</th
+><th
+>Meaning</th
+></tr
+><tr
+><td
+>o</td
+><td
+>Onset</td
+></tr
+><tr
+><td
+>n</td
+><td
+>Nucleus</td
+></tr
+><tr
+><td
+>c</td
+><td
+>Coda</td
+></tr
+><tr
+><td
+>u</td
+><td
+>Unsyllabified (or unparsed)</td
+></tr
+></table
+></example
+><p
+>The “Affected element 2” field is optional.  When it and the “Structural Options 2” fields are set, then both elements 1 and 2 must match before the constraint will apply.</p
+><p
+>The “Prune element 2” check box should be checked whenever the second set of <object
+type="tOTStructuralOptions"
+></object
+> are to be removed instead of the first set.</p
+><p
+><object
+type="tAsheninka"
+></object
+> expects that the first affected element must be set and that at least one of the <object
+type="tOTStructuralOptions"
+></object
+> for the first set must be checked.  Similarly for the second set: if a second <object
+type="tOTStructuralOption"
+></object
+> is set, then the second affected element must be set, and vice versa.  Whenever <object
+type="tAsheninka"
+></object
+> detects something awry, it will show an error message in red, suggesting what is needed.  When the settings are valid, a tree diagram of the constraint will appear.</p
+></section2
+><section2
+id="sOTConstraintRankings"
+><secTitle
+>OT Constraint Rankings</secTitle
+><p
+><indexedItem
+term="iOTConstraintRankings"
+></indexedItem
+>The set of <object
+type="tOTConstraints"
+></object
+> need to be placed into a ranking.  While you can have multiple rankings, only the one ordered first will be used when parsing.  This way, you can experiment with different rankings to see how well the syllabification of that ranking works.</p
+><p
+>When defining a <object
+type="tOTConstraintRanking"
+></object
+>, you fill in the fields. The “Name” field is for you to remember this ranking.</p
+><p
+>Its "Description” field lets you define it more fully, perhaps including some example words as to why you added the ranking.</p
+><p
+>The “Constraint Ranking” field lets you select the order of the <object
+type="tOTConstraints"
+></object
+> of this ranking.  Clicking on the chooser button brings up a dialog showing the <object
+type="tOTConstraints"
+></object
+>.  The order in which the constraints occur is important. The items are in order of application: the first to be tried is higher and the last to be tried is lower. You control the order of the constraints by clicking on a constraint and then using the up and down arrows to change its order.</p
+><p
+>Similarly, the order in which the rankings occur is somewhat important. Only the first/topmost ranking will be used. You control the order of the rankings by clicking on a ranking in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+><p
+>You can create a copy of a given ranking by clicking on a ranking in the middle pane and then using <object
+type="tMenuItem"
+>Edit / Duplicate <object
+type="tOTConstraintRanking"
+></object
+>.</object
+> This is intended to make it easier to make small changes for testing purposes.</p
+></section2
+><section2
+id="sOTWords"
+><secTitle
+>OT words</secTitle
+><p
+><indexedItem
+term="iOTWords"
+></indexedItem
+>This works like the <object
+type="tCVWords"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>, except that the <object
+type="tPredictedSyllableBreaks"
+></object
+> values, the <object
+type="tParserResult"
+></object
+> values, and the <object
+type="tParserTreeDiagram"
+></object
+> are the result of the <object
+type="tOTApproach"
+></object
+> algorithm. If the parse fails and some word structure was built, then this partial word structure is shown by <object
+type="tParserTreeDiagram"
+></object
+>. In the tree diagram, a syllable consists of the segments parsed into it.  Above each segment (and its grapheme) is the structural option used. See <sectionRef
+sec="sCVWords"
+></sectionRef
+> for more on this view.</p
+></section2
+><section2
+id="sOTPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct OT words</secTitle
+><p
+><indexedItem
+term="iOTPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iOTPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tOTPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the results of applying the <object
+type="tOTApproach"
+></object
+> differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
+></section2
+><section2
+id="sOTGraphemeNaturalClasses"
+><secTitle
+>Grapheme natural classes</secTitle
+><p
+><indexedItem
+term="iOTGraphemes"
+></indexedItem
+>This works exactly like the <object
+type="tGraphemeNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sOTEnvironments"
+><secTitle
+>Environments</secTitle
+><p
+><indexedItem
+term="iOTEnvironments"
+></indexedItem
+>This works exactly like the <object
+type="tEnvironments"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sEnvironments"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sOTTryAWord"
+><secTitle
+>OT Try a Word</secTitle
+><p
+><indexedItem
+term="iOTTryAWord"
+></indexedItem
+><indexedItem
+term="iTryAWord"
+></indexedItem
+>There are times when it may be difficult to know just why a given word is not syllabifying correctly. That's where the <object
+type="tTryAWord"
+></object
+> dialog box can be useful. To see it, use the <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> menu item. This brings up a dialog box like the one shown in example <exampleRef
+letter="xOTTryAWord"
+num="xOTTryAWord"
+></exampleRef
+>. Unlike most dialog boxes, you can keep the <object
+type="tTryAWord"
+></object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
+type="tTryAWord"
+></object
+> dialog box for the <object
+type="tCVPatternApproach"
+></object
+>, the <object
+type="tSHApproach"
+></object
+>, the <object
+type="tONCApproach"
+></object
+>, the <object
+type="tMoraicApproach"
+></object
+>, the <object
+type="tNPApproach"
+></object
+>,and the one for the <object
+type="tOTApproach"
+></object
+> can be set independently; you can have several <object
+type="tTryAWord"
+></object
+> dialog boxes open at the same time if you wish.</p
+><example
+num="xOTTryAWord"
+><chart
+><img
+src="resources/CVTryAWord1.png"
+width="500"
+></img
+></chart
+></example
+><p
+>You can key a word to try in the text box. By default, <object
+type="tAsheninka"
+></object
+> shows the current word selected in the <object
+type="tOTWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tOTPredictedVsCorrectWords"
+></object
+> view (if you are showing that view) or the last word you used (or nothing if you've never used <object
+type="tTryAWord"
+></object
+> before and are not showing the <object
+type="tOTWords"
+></object
+> view).</p
+><p
+>When you either press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>Try it</object
+> button, <object
+type="tAsheninka"
+></object
+> will try to parse the word in the text box and report the result in the Results portion of the dialog box.</p
+><p
+>For the <object
+type="tOTApproach"
+></object
+>, there are at most two steps that are tried:</p
+><ol
+><li
+>Parsing into segments.</li
+><li
+>Parsing segments into syllables (via the optimality theory algorithm; see appendix <appendixRef
+app="aOTAlgorithm"
+></appendixRef
+> below).</li
+></ol
+><p
+>The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into syllables. Successful steps are shown in <object
+type="tGreen"
+></object
+> while unsuccessful ones are shown in <object
+type="tRed"
+></object
+>. An example of a successful parse is shown in example <exampleRef
+letter="xOTTryAWordahwiyak1"
+num="xOTTryAWordahwiyak1"
+></exampleRef
+>.</p
+><example
+num="xOTTryAWordahwiyak1"
+><chart
+><img
+src="resources/OTTryAWord2.png"
+width="500"
+></img
+></chart
+></example
+><p
+><indexedItem
+term="iFailureOTSegmenter"
+></indexedItem
+>The parsing into segments part is exactly the same as it is for the <object
+type="tCVPatternApproach"
+></object
+>. If any constituent structure was built during the parse, the tree diagram is also shown. The <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>σ</object
+> constituent indicates a syllable. A syllable will have one or more <object
+type="tOTStructuralOptions"
+></object
+>. Below these are the segment and then its grapheme. If the parse succeeded, then the segments and their graphemes are shown in green. If the parse failed but some of the tree was built, then the segments and their graphemes are shown in red.</p
+><p
+>Scrolling the results window down shows the next part:</p
+><example
+num="xOTTryAWordahwiyak2"
+><chart
+><img
+src="resources/OTTryAWord3.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>Each step in the parse consists of two <object
+type="tOTCandidateGrids"
+></object
+> (see <citation
+page="13"
+ref="rHammond"
+></citation
+>), one on the left (the before <object
+type="tOTCandidateGrid"
+></object
+>) and one on the right (the after <object
+type="tOTCandidateGrid"
+></object
+>.  Any <object
+type="tOTStructuralOptions"
+></object
+> in the <object
+type="tOTCandidateGrid"
+></object
+> on the left which are to be removed by the constraint being applied have a background color (green if the parse succeeded; red if it failed).</pc
+><p
+>Every parse begins with a <object
+type="tOTCandidateGrid"
+></object
+> with all <object
+type="tOTStructuralOptions"
+></object
+> available.  The first “constraint” is the word initial/word final housekeeping one (see <citation
+page="14"
+ref="rHammond"
+></citation
+><endnote
+id="nHousekeepingOnetBeforeACoda"
+><p
+>We are not implementing the "onset before a coda" portion of Hammond's housekeeping.</p
+></endnote
+>) that ensures codas cannot occur word initially and onsets cannot occur word finally. </p
+><p
+>Whenever a constraint is applied, its name is shown above the <object
+type="tOTCandidateGrid"
+></object
+>. Scrolling down more, shows the next part:</p
+><example
+num="xOTTryAWordahwiyak3"
+><chart
+><img
+src="resources/OTTryAWord4.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>When only one <object
+type="tOTStructuralOption"
+></object
+> remains for each segment in the <object
+type="tOTCandidateGrid"
+></object
+>, parsing stops.  It then builds the syllables as it is able and shows each one in turn.</pc
+><p
+>A parse fails whenever any of the following conditions occur:</p
+><ul
+><li
+>The only <object
+type="tOTStructuralOption"
+></object
+> remaining for some segment is “u” (i.e., it was unsyllabified or unparsed).</li
+><li
+>All constraints were applied and some segment still has two or more <object
+type="tOTStructuralOptions"
+></object
+>.</li
+></ul
+><p
+>When a word fails to parse, there will be a message at the bottom to indicate why as shown in example <exampleRef
+letter="xOTTryAWordFailure"
+num="xOTTryAWordFailure"
+></exampleRef
+>.</p
+><example
+num="xOTTryAWordFailure"
+><chart
+><img
+src="resources/OTTryAWordFailure..png"
+width="500"
+></img
+></chart
+></example
+></section2
 ></section1
 ><section1
 id="sConvertPredictedToCorrect"
@@ -6605,7 +7227,7 @@ type="tNPRuleLevelNDoubleBar"
 > is onset and <object
 type="tNPRuleLevelNBar"
 ></object
-> is rime and coda).  If any filter fails, quit.  Otherwise add the affected segment to the constituent structure at the rule's level.</li
+> is rime and coda). If any filter fails, quit. Otherwise add the affected segment to the constituent structure at the rule's level.</li
 ><li
 >If it is an <object
 type="tNPRuleActionLeftAdjoin"
@@ -6621,7 +7243,7 @@ type="tNPRuleActionRightAdjoin"
 ></ol
 ></li
 ><li
->Check every segment in the word to see if it has been made a part of a syllable.  If not, fail.</li
+>Check every segment in the word to see if it has been made a part of a syllable. If not, fail.</li
 ><li
 >Check the Onset Principle setting:<ol
 ><li
@@ -6656,6 +7278,81 @@ type="tOPOnsetsNotRequired"
 > is set, then there is nothing to do.</li
 ></ol
 ></li
+><li
+>Succeed.</li
+></ol
+></appendix
+><appendix
+id="aOTAlgorithm"
+><secTitle
+>OT algorithm in detail</secTitle
+><p
+><indexedItem
+term="iOTApproachAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm for the <object
+type="tOTApproach"
+></object
+> is as follows:</p
+><ol
+><li
+>Initialize the <object
+type="tOTCandidateGrid"
+></object
+>.</li
+><li
+>Apply word initial/word final housekeeping: remove the coda <object
+type="tOTStructuralOption"
+></object
+> from the first segment in the word and the onset <object
+type="tOTStructuralOption"
+></object
+> from the last segment of the word.</li
+><li
+>For each constraint in the first ranking in the <object
+type="tOTConstraintRankings"
+></object
+>:<ol
+><li
+>Determine the set of segments, if any, that match the affected element(s) part of the constraint.</li
+><li
+>For each match:<ol
+><li
+>If the set of <object
+type="tOTStructuralOptions"
+></object
+> in the constraint are exactly the same as the remaining <object
+type="tOTStructuralOptions"
+></object
+> in the segment, do nothing.</li
+><li
+>Otherwise, remove any <object
+type="tOTStructuralOptions"
+></object
+> in that segment per the <object
+type="tOTStructuralOptions"
+></object
+> of the constraint as long as there is at least one <object
+type="tOTStructuralOption"
+></object
+> left.</li
+></ol
+></li
+><li
+>If every segment has at most one <object
+type="tOTStructuralOption"
+></object
+> in it, check no more constraints.</li
+></ol
+></li
+><li
+>Check every segment in the word to see if it has been made a part of a syllable and has at most one <object
+type="tOTStructuralOption"
+></object
+>. If not, fail.</li
 ><li
 >Succeed.</li
 ></ol
