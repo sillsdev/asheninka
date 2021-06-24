@@ -22,9 +22,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->24 September 2019</date
+>24 June 2021</date
 ><version
->0.7.0 Alpha</version
+>1.0.0</version
 ><contents
 ></contents
 ></frontMatter
@@ -64,10 +64,15 @@ type="tMenuItem"
 ></endnote
 ></li
 ><li
+>Set the font and sort order needed for both the vernacular and analysis languages (use menu item <object
+type="tMenuItem"
+>Settings</object
+>).</li
+><li
 >Make sure that what is in the <object
 type="tCVSegmentInventory"
 ></object
-> covers all the segments you have in the orthography. Depending on the orthography, you may find that you'll need to add environments for some graphemes within some segments.  For the <object
+> covers all the segments you have in the orthography. Depending on the orthography, you may find that you'll need to add environments for some graphemes within some segments. For the <object
 type="tONCApproach"
 ></object
 >, check the onset, nucleus, and coda boxes as needed for each segment.</li
@@ -75,7 +80,7 @@ type="tONCApproach"
 >Make sure that every segment is in a natural class for the <object
 type="tCVPatternApproach"
 ></object
-> or is somewhere in the sonority hierarchy for the other approaches.</li
+> or is somewhere in the sonority hierarchy for the other approaches that use it.</li
 ><li
 >For the <object
 type="tCVPatternApproach"
@@ -85,13 +90,20 @@ type="tCVSyllablePatterns"
 ></object
 > that cover the kinds of syllables you think the language has.  Be sure to allow for vowel-initial syllables if the language has them.</li
 ><li
->For the <object
-type="tONCApproach"
-></object
->, set the <object
+>For those approaches needing them, set the <object
 type="tSyllabificationParameters"
 ></object
 >.</li
+><li
+>For the <object
+type="tNPApproach"
+></object
+>, write some rules.</li
+><li
+>For the <object
+type="tOTApproach"
+></object
+> create some constraints and rank them.</li
 ><li
 >Import a list of words (or key them one by one).</li
 ><li
@@ -117,44 +129,26 @@ type="tMenuItem"
 > to have <object
 type="tAsheninka"
 ></object
-> parse all the words in the <object
-type="tCVWords"
-></object
-> (or <object
-type="tSHWords"
-></object
-> or <object
-type="tONCWords"
-></object
->) view.</li
+> parse all the words in the current “Words” view.</li
 ><li
->Look at the results. You can click on a column header to sort by that column (it currently only sorts by Unicode code point). Doing this on the <object
+>Look at the results. You can click on a column header to sort by that column. Doing this on the <object
 type="tParserResult"
 ></object
-> column in the <object
-type="tCVWords"
-></object
-> (or <object
-type="tSHWords"
-></object
-> or <object
-type="tONCWords"
-></object
->) view will show all the words which failed at the top (at least in the English user interface language).</li
+> column in the current “Words” view will show all the words which failed at the top (at least in the English user interface language).</li
 ><li
 >Make frequent (labeled) backups via menu item <object
 type="tMenuItem"
 >File / Project Management / Back up this project</object
->. You can make a backup, try something else (e.g., add a segment or class; re-order the syllable patterns or add a new one; adjust the sonority hierarchy; or change the <object
+>. You can make a backup, try something else (e.g., add a segment or class; re-order the syllable patterns or add a new one; adjust the sonority hierarchy; change the <object
 type="tSyllabificationParameters"
 ></object
->), perform the <object
+>, etc.), perform the <object
 type="tMenuItem"
 >Parser / Parse all Words</object
 > process and see how it goes. If it's worse, just restore from the backup. If it's better, make a backup of that and go on.</li
 ></ol
 ><p
->This is the basic process while playing the game. In addition, the following items may be helpful, too, at various points in the process.</p
+>This is the basic process while playing the game. In addition, the following items may be helpful at various points in the process.</p
 ><ol
 ><li
 >Use menu item <object
@@ -172,21 +166,17 @@ type="tMenuItem"
 >Tools / Find Word</object
 > to look for sequences of characters, if that helps you see patterns in the data.</li
 ><li
+>Use one of the word-oriented filters (via menu item <object
+type="tMenuItem"
+>Tools</object
+>) to look for patterns that may help you see what is going on.</li
+><li
+>Use the current “Predicted vs. Correct” view to discover any words whose parse does not match what is in the correct column. There may well be cases where it is not worth the effort to get the parser to correctly syllabify certain words (e.g., loan words in a different orthography or words which may well be misspelled). In such cases, just manually set the correct syllabification and do not worry that these fail to parse successfully.</li
+><li
 >Use menu item <object
 type="tMenuItem"
 >Tools / Predicted to correct syllabification</object
 > to more quickly set which words are correctly syllabified. In fact, you should use this before exporting the results.</li
-><li
->Use the <object
-type="tCVPredictedVsCorrectWords"
-></object
-> (or <object
-type="tSHPredictedVsCorrectWords"
-></object
-> or <object
-type="tONCPredictedVsCorrectWords"
-></object
->) view to discover any words whose parse does not match what is in the correct column. There may well be cases where it is not worth the effort to get the parser to correctly syllabify certain words (e.g., loan words in a different orthography or words which may well be misspelled).  In such cases, just manually set the correct syllabification and do not worry that these fail to parse successfully.</li
 ></ol
 ></section2
 ></section1
@@ -203,11 +193,6 @@ xmlns:xi="http://www.w3.org/2001/XInclude"
 ></xi:include
 ><xi:include
 href="Types.xml"
-xpointer="element(/1)"
-xmlns:xi="http://www.w3.org/2001/XInclude"
-></xi:include
-><xi:include
-href="IndexTerms.xml"
 xpointer="element(/1)"
 xmlns:xi="http://www.w3.org/2001/XInclude"
 ></xi:include
