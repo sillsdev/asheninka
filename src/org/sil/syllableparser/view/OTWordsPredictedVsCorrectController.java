@@ -36,7 +36,7 @@ public class OTWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 		super.setWordsTable(otWordsPredictedVsCorrectTable);
 		super.initialize(location, resources);
 		wordPredictedVsCorrectColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.cvPredictedVsCorrectSyllabificationProperty());
+				.otPredictedVsCorrectSyllabificationProperty());
 	}
 
 	public void setData(OTApproach otApproachData, ObservableList<Word> words) {
@@ -52,6 +52,9 @@ public class OTWordsPredictedVsCorrectController extends WordsPredictedVsCorrect
 		SortedList<Word> wordsSorted = wordsToShow.sorted();
 		wordsSorted.comparatorProperty().bind(otWordsPredictedVsCorrectTable.comparatorProperty());
 		wordsPredictedVsCorrectTable.setItems(wordsSorted);
+		for (Word w : wordsSorted) {
+			System.out.println("otp:" + w.getOTPredictedSyllabification());
+		}
 		int iLastIndex = mainApp.getApplicationPreferences().getLastOTWordsPredictedVsCorrectViewItemUsed();
 		focusOnLastItemUsed(iLastIndex);
 		updateStatusBar();
