@@ -133,7 +133,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 				protected double computePrefHeight(double width) {
 					Object g = getGraphic();
 					if (g instanceof TextFlow) {
-						return guessPrefHeightAnalysisOnly(g, column.widthProperty().get() - 20);
+						return guessPrefHeight(g, column.widthProperty().get()-15);
 					}
 					return super.computePrefHeight(-1);
 				}
