@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->23 June 2021</date
+>24 June 2021</date
 ><version
 >1.0.0</version
 ><contents
@@ -520,7 +520,7 @@ type="tMenuItem"
 > which opens <citation
 ref="rHammond"
 ></citation
-> in your default PDF viewer.  If you plan to use the <object
+> in your default PDF viewer. If you plan to use the <object
 type="tOTApproach"
 ></object
 >, we highly recommend you read at least sections 4-7 before doing so.</li
@@ -583,7 +583,7 @@ textBefore="plural"
 sec="sOTApproach"
 textBefore="none"
 ></sectionRef
->. </p
+>.</p
 ><p
 ><indexedItem
 term="iIntroduction"
@@ -1478,16 +1478,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, <object
-type="tSHApproach"
-></object
->, and the one for the <object
-type="tONCApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -2034,16 +2025,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, <object
-type="tSHApproach"
-></object
->, and the one for the <object
-type="tONCApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -2957,16 +2939,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, <object
-type="tSHApproach"
-></object
->, and the one for the <object
-type="tONCApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -3626,19 +3599,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, <object
-type="tSHApproach"
-></object
->, the <object
-type="tONCApproach"
-></object
->, and the one for the <object
-type="tMoraicApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -4798,22 +4759,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, <object
-type="tSHApproach"
-></object
->, the <object
-type="tONCApproach"
-></object
->, the <object
-type="tMoraicApproach"
-></object
->, and the one for the <object
-type="tNPApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -5061,7 +5007,10 @@ lang="lVernacular"
 ><section1
 id="sOTApproach"
 ><secTitle
->Optimality theory approach</secTitle
+><object
+type="tOTApproach"
+></object
+></secTitle
 ><p
 ><indexedItem
 term="iOTApproach"
@@ -5158,11 +5107,11 @@ ref="rHammond"
 >. If every segment in the word is in a syllable, then it considers the parse a success. See appendix <appendixRef
 app="aOTAlgorithm"
 ></appendixRef
-> for details.  If you are familiar with Optimality Theory, please read at least sections 4-7 of <citation
+> for details. If you are familiar with Optimality Theory, please read at least sections 4-7 of <citation
 page="5-18"
 ref="rHammond"
 ></citation
->.  He explains the need for implementing OT the way it is done here.  For your convenience, we include this paper with <object
+>. He explains the need for implementing OT the way it is done here. For your convenience, we include this paper with <object
 type="tAsheninka"
 ></object
 > via the <object
@@ -5234,7 +5183,7 @@ type="tOTApproach"
 >When defining an <object
 type="tOTConstraint"
 ></object
->, you fill in the fields. The “Name” field is for you to remember this constraint.  (Normally <object
+>, you fill in the fields. The “Name” field is for you to remember this constraint. (Normally <object
 type="tOTConstraint"
 ></object
 > names are shown using small caps letters; unfortunately, we do not have a way to apply such a style automatically in the user interface.<endnote
@@ -5256,12 +5205,12 @@ type="tOTConstraint"
 ></object
 > involves one or two sets of an affected element and structural options.</p
 ><p
->The “Affected element 1” field lets you select the first segment or natural class that the constraint applies to.  You can also indicate if the element must occur word initially and/or word finally.</p
+>The “Affected element 1” field lets you select the first segment or natural class that the constraint applies to. You can also indicate if the element must occur word initially and/or word finally.</p
 ><p
 >The “Structural Options 1” check boxes let you select the set of <object
 type="tOTStructuralOptions"
 ></object
-> the constraint will remove.  See <citation
+> the constraint will remove. See <citation
 page="11ff"
 ref="rHammond"
 ></citation
@@ -5306,7 +5255,7 @@ border="1"
 ></table
 ></example
 ><p
->The “Affected element 2” field is optional.  When it and the “Structural Options 2” fields are set, then both elements 1 and 2 must match before the constraint will apply.</p
+>The “Affected element 2” field is optional. When it and the “Structural Options 2” fields are set, then both elements 1 and 2 must match before the constraint will apply.</p
 ><p
 >The “Prune element 2” check box should be checked whenever the second set of <object
 type="tOTStructuralOptions"
@@ -5319,13 +5268,13 @@ type="tAsheninka"
 > expects that the first affected element must be set and that at least one of the <object
 type="tOTStructuralOptions"
 ></object
-> for the first set must be checked.  Similarly for the second set: if a second <object
+> for the first set must be checked. Similarly for the second set: if a second <object
 type="tOTStructuralOption"
 ></object
-> is set, then the second affected element must be set, and vice versa.  Whenever <object
+> is set, then the second affected element must be set, and vice versa. Whenever <object
 type="tAsheninka"
 ></object
-> detects something awry, it will show an error message in red, suggesting what is needed.  When the settings are valid, a tree diagram of the constraint will appear.</p
+> detects something awry, it will show an error message in red, suggesting what is needed. When the settings are valid, a tree diagram of the constraint will appear.</p
 ></section2
 ><section2
 id="sOTConstraintRankings"
@@ -5338,7 +5287,7 @@ term="iOTConstraintRankings"
 >The set of <object
 type="tOTConstraints"
 ></object
-> need to be placed into a ranking.  While you can have multiple rankings, only the one ordered first will be used when parsing.  This way, you can experiment with different rankings to see how well the syllabification of that ranking works.</p
+> need to be placed into a ranking. While you can have multiple rankings, only the one ordered first will be used when parsing. This way, you can experiment with different rankings to see how well the syllabification of that ranking works.</p
 ><p
 >When defining a <object
 type="tOTConstraintRanking"
@@ -5350,10 +5299,10 @@ type="tOTConstraintRanking"
 >The “Constraint Ranking” field lets you select the order of the <object
 type="tOTConstraints"
 ></object
-> of this ranking.  Clicking on the chooser button brings up a dialog showing the <object
+> of this ranking. Clicking on the chooser button brings up a dialog showing the <object
 type="tOTConstraints"
 ></object
->.  The order in which the constraints occur is important. The items are in order of application: the first to be tried is higher and the last to be tried is lower. You control the order of the constraints by clicking on a constraint and then using the up and down arrows to change its order.</p
+>. The order in which the constraints occur is important. The items are in order of application: the first to be tried is higher and the last to be tried is lower. You control the order of the constraints by clicking on a constraint and then using the up and down arrows to change its order.</p
 ><p
 >Similarly, the order in which the rankings occur is somewhat important. Only the first/topmost ranking will be used. You control the order of the rankings by clicking on a ranking in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
 ><p
@@ -5394,7 +5343,7 @@ type="tOTApproach"
 > algorithm. If the parse fails and some word structure was built, then this partial word structure is shown by <object
 type="tParserTreeDiagram"
 ></object
->. In the tree diagram, a syllable consists of the segments parsed into it.  Above each segment (and its grapheme) is the structural option used. See <sectionRef
+>. In the tree diagram, a syllable consists of the segments parsed into it. Above each segment (and its grapheme) is the structural option used. See <sectionRef
 sec="sCVWords"
 ></sectionRef
 > for more on this view.</p
@@ -5483,25 +5432,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, the <object
-type="tSHApproach"
-></object
->, the <object
-type="tONCApproach"
-></object
->, the <object
-type="tMoraicApproach"
-></object
->, the <object
-type="tNPApproach"
-></object
->,and the one for the <object
-type="tOTApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -5619,7 +5550,7 @@ type="tOTCandidateGrid"
 >) and one on the right (the after <object
 type="tOTCandidateGrid"
 ></object
->.  Any <object
+>. Any <object
 type="tOTStructuralOptions"
 ></object
 > in the <object
@@ -5633,7 +5564,7 @@ type="tOTCandidateGrid"
 > with all <object
 type="tOTStructuralOptions"
 ></object
-> available.  The first “constraint” is the word initial/word final housekeeping one (see <citation
+> available. The first “constraint” is the word initial/word final housekeeping one (see <citation
 page="14"
 ref="rHammond"
 ></citation
@@ -5642,7 +5573,7 @@ id="nHousekeepingOnetBeforeACoda"
 ><p
 >We are not implementing the "onset before a coda" portion of Hammond's housekeeping.</p
 ></endnote
->) that ensures codas cannot occur word initially and onsets cannot occur word finally. </p
+>) that ensures codas cannot occur word initially and onsets cannot occur word finally.</p
 ><p
 >Whenever a constraint is applied, its name is shown above the <object
 type="tOTCandidateGrid"
@@ -5664,7 +5595,7 @@ type="tOTStructuralOption"
 > remains for each segment in the <object
 type="tOTCandidateGrid"
 ></object
->, parsing stops.  It then builds the syllables as it is able and shows each one in turn.</pc
+>, parsing stops. It then builds the syllables as it is able and shows each one in turn.</pc
 ><p
 >A parse fails whenever any of the following conditions occur:</p
 ><ul
@@ -6435,6 +6366,58 @@ width="500"
 ></chart
 ></example
 ></section3
+><section3
+id="sNPCompare"
+><secTitle
+><object
+type="tNPApproach"
+></object
+> comparison</secTitle
+><p
+>When I did this for one project while showing the <object
+type="tNPApproach"
+></object
+>, I got what is shown in example <exampleRef
+letter="xNPCompareImplementationsResult"
+num="xNPCompareImplementationsResult"
+></exampleRef
+>.</p
+><example
+num="xNPCompareImplementationsResult"
+><chart
+><img
+src="resources/NPCompareImplementationsResult.png"
+width="500"
+></img
+></chart
+></example
+></section3
+><section3
+id="sOTCompare"
+><secTitle
+><object
+type="tOTApproach"
+></object
+> comparison</secTitle
+><p
+>When I did this for one project while showing the <object
+type="tOTApproach"
+></object
+>, I got what is shown in example <exampleRef
+letter="xOTCompareImplementationsResult"
+num="xOTCompareImplementationsResult"
+></exampleRef
+>.</p
+><example
+num="xOTCompareImplementationsResult"
+><chart
+><img
+src="resources/OTCompareImplementationsResult.png"
+width="500"
+></img
+></chart
+></example
+></section3
 ></section2
 ><section2
 id="sCompareSyllabificationResults"
@@ -6450,7 +6433,7 @@ type="tAsheninka"
 > also offers a way to more easily see how the words are syllabified between the approaches. Use the <object
 type="tMenuItem"
 >Tools / Compare Syllabification Results between Approaches</object
-> menu item to do this. This immediately does a comparison of the predicted syllabification of all words and shows the result in a dialog box. In one implementaton I did, it looked like what is in example <exampleRef
+> menu item to do this. This immediately does a comparison of the predicted syllabification of all words and shows the result in a dialog box. In one implementation I did, it looked like what is in example <exampleRef
 letter="xCompareSyllabifications"
 num="xCompareSyllabifications"
 ></exampleRef
