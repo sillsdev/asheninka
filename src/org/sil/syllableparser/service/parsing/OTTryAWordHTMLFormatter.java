@@ -114,12 +114,22 @@ public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 	}
 
 	protected void formatAddingSyllable(StringBuilder sb, OTTracingStep tracingStep) {
-		sb.append("<p>");
+		sb.append("<p class='");
+		if (tracingStep.isSuccessful()) {
+			sb.append(SUCCESS);
+		} else {
+			sb.append(FAILURE);
+		}
+		sb.append("'>");
 		StringBuilder sbSyl = new StringBuilder();
 		for (OTSegmentInSyllable sis : tracingStep.getSyllable().getSegmentsInSyllable()) {
 			sbSyl.append(sis.getGrapheme());
 		}
 		sb.append(getAddedArgument("report.tawotaddsyllable", sbSyl.toString()));
+		if (!StringUtilities.isNullOrEmpty(tracingStep.getFailureMessage())) {
+			sb.append("</br>");
+			sb.append(tracingStep.getFailureMessage());
+		}
 		sb.append("</p>\n");
 	}
 

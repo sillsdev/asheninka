@@ -204,7 +204,7 @@ public class OTApproachLanguageComparerTest {
 	protected void compareWords(OTApproachLanguageComparer comparer) {
 		comparer.compareWords();
 		SortedSet<DifferentWord> diffs = comparer.getWordsWhichDiffer();
-		assertEquals("number of different words", 5844, diffs.size());
+		assertEquals("number of different words", 5864, diffs.size());
 		List<DifferentWord> listOfDiffs = new ArrayList<DifferentWord>();
 		listOfDiffs.addAll(diffs);
 		DifferentWord diffWord = listOfDiffs.get(0);

@@ -314,7 +314,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 1606, diffs.size());
+		assertEquals("number of different words", 1603, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(0);
@@ -405,15 +405,15 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 1327, diffs.size());
+		assertEquals("number of different words", 1329, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("ab.we.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(263);
-		assertEquals("ke.dar", diffWord.getSHPredictedSyllabification());
-		assertEquals("ke.da.r", diffWord.getOTPredictedSyllabification());
+		assertEquals("ke.dor.la.ga.mer", diffWord.getSHPredictedSyllabification());
+		assertEquals("ke.do.rla.ga.me.r", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -474,7 +474,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4077, diffs.size());
+		assertEquals("number of different words", 3999, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -482,7 +482,7 @@ public class SyllabificationsComparerTest {
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(1263);
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("ki.te.na.mi.kisk.ya.ya", diffWord.getOTPredictedSyllabification());
+		assertEquals("kit.ka.til.ti", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -518,7 +518,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 2612, diffs.size());
+		assertEquals("number of different words", 2540, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -526,7 +526,7 @@ public class SyllabificationsComparerTest {
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(263);
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("a.tad", diffWord.getOTPredictedSyllabification());
+		assertEquals("a.ten.ko", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -539,7 +539,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		 comparer.compareSyllabifications();
 		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 4152, diffs.size());
+		 assertEquals("number of different words", 4074, diffs.size());
 		 List<Word> listOfDiffs = new ArrayList<Word>();
 		 listOfDiffs.addAll(diffs);
 		 Word diffWord = listOfDiffs.get(10);
@@ -547,7 +547,7 @@ public class SyllabificationsComparerTest {
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(457);
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("ge.re.ka", diffWord.getOTPredictedSyllabification());
+		assertEquals("go.mo.rra", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -645,7 +645,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 2237, diffs.size());
+		assertEquals("number of different words", 2234, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -653,13 +653,13 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(315);
-		assertEquals("bi.wat", diffWord.getCVPredictedSyllabification());
+		assertEquals("bor.don", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getSHPredictedSyllabification());
-		assertEquals("bi.wat", diffWord.getOTPredictedSyllabification());
+		assertEquals("bo.rdon", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(258);
 		assertEquals("", diffWord.getCVPredictedSyllabification());
-		assertEquals("as.ti.ya.lo.ya", diffWord.getSHPredictedSyllabification());
-		assertEquals("as.ti.ya.lo.ya", diffWord.getOTPredictedSyllabification());
+		assertEquals("as.ti.ya.ya", diffWord.getSHPredictedSyllabification());
+		assertEquals("as.ti.ya.ya", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -720,7 +720,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4294, diffs.size());
+		assertEquals("number of different words", 4254, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -730,7 +730,7 @@ public class SyllabificationsComparerTest {
 		diffWord = listOfDiffs.get(274);
 		assertEquals("", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("a.yah.mo", diffWord.getOTPredictedSyllabification());
+		assertEquals("a.yas.ke", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -768,7 +768,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 2865, diffs.size());
+		assertEquals("number of different words", 2828, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -776,9 +776,9 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(1274);
-		assertEquals("mo.chan.tis.ke", diffWord.getCVPredictedSyllabification());
+		assertEquals("", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
-		assertEquals("mo.chan.tis.ke", diffWord.getOTPredictedSyllabification());
+		assertEquals("mo.kah.ka.sro.ti.kat.ka", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -791,7 +791,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4336, diffs.size());
+		assertEquals("number of different words", 4296, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -799,9 +799,9 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(2274);
-		assertEquals("ni.nih.nih.wan", diffWord.getCVPredictedSyllabification());
-		assertEquals("ni.ni.hni.hwan", diffWord.getNPPredictedSyllabification());
-		assertEquals("ni.nih.nih.wan", diffWord.getOTPredictedSyllabification());
+		assertEquals("nin.ta.chi.wa.lis.te", diffWord.getCVPredictedSyllabification());
+		assertEquals("", diffWord.getNPPredictedSyllabification());
+		assertEquals("nin.ta.chi.wa.lis.te", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -866,7 +866,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		 comparer.compareSyllabifications();
 		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 4093, diffs.size());
+		 assertEquals("number of different words", 4090, diffs.size());
 		 List<Word> listOfDiffs = new ArrayList<Word>();
 		 listOfDiffs.addAll(diffs);
 		 Word diffWord = listOfDiffs.get(10);
@@ -874,9 +874,9 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(3298);
-		assertEquals("ta.nas.te.kal", diffWord.getSHPredictedSyllabification());
+		assertEquals("ta.na.wa.tik", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("ta.nas.te.kal", diffWord.getOTPredictedSyllabification());
+		assertEquals("ta.na.wa.tik", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -916,7 +916,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		 comparer.compareSyllabifications();
 		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 3102, diffs.size());
+		 assertEquals("number of different words", 3099, diffs.size());
 		 List<Word> listOfDiffs = new ArrayList<Word>();
 		 listOfDiffs.addAll(diffs);
 		 Word diffWord = listOfDiffs.get(10);
@@ -924,9 +924,9 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(2298);
-		assertEquals("shik.chi.wi.li.ti", diffWord.getSHPredictedSyllabification());
+		assertEquals("shi.kin.kis.ti", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
-		assertEquals("shik.chi.wi.li.ti", diffWord.getOTPredictedSyllabification());
+		assertEquals("shi.kin.kis.ti", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -939,7 +939,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4168, diffs.size());
+		assertEquals("number of different words", 4165, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -947,9 +947,9 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(3298);
-		assertEquals("ta.kwih.kwi.lo.li", diffWord.getSHPredictedSyllabification());
+		assertEquals("ta.kwi.hwi.lol.me", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("tak.wihk.wi.lo.li", diffWord.getOTPredictedSyllabification());
+		assertEquals("tak.wih.wi.lol.me", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -987,7 +987,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4166, diffs.size());
+		assertEquals("number of different words", 4091, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -996,8 +996,8 @@ public class SyllabificationsComparerTest {
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(2298);
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("nis.nek", diffWord.getMoraicPredictedSyllabification());
-		assertEquals("nis.nek", diffWord.getOTPredictedSyllabification());
+		assertEquals("ni.ta.ko.nis", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("ni.ta.ko.nis", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1010,7 +1010,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		 comparer.compareSyllabifications();
 		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 4152, diffs.size());
+		 assertEquals("number of different words", 4074, diffs.size());
 		 List<Word> listOfDiffs = new ArrayList<Word>();
 		 listOfDiffs.addAll(diffs);
 		 Word diffWord = listOfDiffs.get(10);
@@ -1020,7 +1020,7 @@ public class SyllabificationsComparerTest {
 		diffWord = listOfDiffs.get(2298);
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("ni.tah.ta.ni.lis.te", diffWord.getOTPredictedSyllabification());
+		assertEquals("ni.ta.na.wa.ti.lan.hel.me", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1033,7 +1033,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		 comparer.compareSyllabifications();
 		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 4166, diffs.size());
+		 assertEquals("number of different words", 4091, diffs.size());
 		 List<Word> listOfDiffs = new ArrayList<Word>();
 		 listOfDiffs.addAll(diffs);
 		 Word diffWord = listOfDiffs.get(10);
@@ -1041,9 +1041,9 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(3296);
-		assertEquals("tak.we.ta.wil", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("tak.we.ta.wil", diffWord.getOTPredictedSyllabification());
+		assertEquals("ta.misk.ya", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1109,7 +1109,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4310, diffs.size());
+		assertEquals("number of different words", 4307, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1118,10 +1118,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(298);
-		assertEquals("be.ker", diffWord.getCVPredictedSyllabification());
+		assertEquals("be.la", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("be.ke.r", diffWord.getOTPredictedSyllabification());
+		assertEquals("be.la", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1161,7 +1161,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 3296, diffs.size());
+		assertEquals("number of different words", 3293, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1170,10 +1170,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(2398);
-		assertEquals("shi.kin.kish.ti", diffWord.getCVPredictedSyllabification());
-		assertEquals("", diffWord.getSHPredictedSyllabification());
-		assertEquals("", diffWord.getMoraicPredictedSyllabification());
-		assertEquals("", diffWord.getOTPredictedSyllabification());
+		assertEquals("", diffWord.getCVPredictedSyllabification());
+		assertEquals("shi.kin.kwe.sok", diffWord.getSHPredictedSyllabification());
+		assertEquals("shi.kink.we.sok", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("shi.kink.we.sok", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1186,7 +1186,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4352, diffs.size());
+		assertEquals("number of different words", 4349, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1195,10 +1195,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(1298);
-		assertEquals("ki.ta.pa.chol", diffWord.getCVPredictedSyllabification());
-		assertEquals("ki.ta.pa.chol", diffWord.getSHPredictedSyllabification());
+		assertEquals("ki.ta.pa.cho.ti.kat.ka", diffWord.getCVPredictedSyllabification());
+		assertEquals("ki.ta.pa.cho.ti.kat.ka", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("ki.ta.pa.chol", diffWord.getOTPredictedSyllabification());
+		assertEquals("ki.ta.pa.cho.ti.kat.ka", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1238,7 +1238,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4350, diffs.size());
+		assertEquals("number of different words", 4311, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1247,10 +1247,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(3298);
-		assertEquals("tah.tan.tik", diffWord.getCVPredictedSyllabification());
+		assertEquals("ta.ka.til.me", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("", diffWord.getMoraicPredictedSyllabification());
-		assertEquals("tah.tan.tik", diffWord.getOTPredictedSyllabification());
+		assertEquals("ta.ka.til.me", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("ta.ka.til.me", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1263,7 +1263,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4336, diffs.size());
+		assertEquals("number of different words", 4296, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1272,10 +1272,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(3298);
-		assertEquals("tah.to.ti.kat.ka.ya", diffWord.getCVPredictedSyllabification());
+		assertEquals("", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("tah.to.ti.kat.ka.ya", diffWord.getOTPredictedSyllabification());
+		assertEquals("ta.ket.sask.ya", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1288,7 +1288,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4350, diffs.size());
+		assertEquals("number of different words", 4311, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1297,10 +1297,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(1398);
-		assertEquals("kit.sa.was", diffWord.getCVPredictedSyllabification());
-		assertEquals("", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("ki.wal.ta.ki.chi.lik", diffWord.getCVPredictedSyllabification());
+		assertEquals("ki.wal.ta.ki.chi.lik", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("kit.sa.was", diffWord.getOTPredictedSyllabification());
+		assertEquals("ki.wal.ta.ki.chi.lik", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1343,7 +1343,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4182, diffs.size());
+		assertEquals("number of different words", 4179, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1352,10 +1352,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(1298);
-		assertEquals("ki.te.ta.nik", diffWord.getSHPredictedSyllabification());
+		assertEquals("ki.ti.ki.li.los.kya", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("ki.te.ta.nik", diffWord.getMoraicPredictedSyllabification());
-		assertEquals("ki.te.ta.nik", diffWord.getOTPredictedSyllabification());
+		assertEquals("", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("ki.ti.ki.li.losk.ya", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1368,7 +1368,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4168, diffs.size());
+		assertEquals("number of different words", 4165, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1377,10 +1377,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(1298);
-		assertEquals("ki.ti.pa.no.lis.te", diffWord.getSHPredictedSyllabification());
+		assertEquals("ki.ti.ta.nik", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("ki.ti.pa.no.lis.te", diffWord.getOTPredictedSyllabification());
+		assertEquals("ki.ti.ta.nik", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1393,7 +1393,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4182, diffs.size());
+		assertEquals("number of different words", 4179, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1402,10 +1402,10 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(1298);
-		assertEquals("ki.te.ta.nik", diffWord.getSHPredictedSyllabification());
-		assertEquals("ki.te.ta.nik", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("ki.ti.ki.li.los.kya", diffWord.getSHPredictedSyllabification());
+		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("ki.te.ta.nik", diffWord.getOTPredictedSyllabification());
+		assertEquals("ki.ti.ki.li.losk.ya", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1418,7 +1418,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4166, diffs.size());
+		assertEquals("number of different words", 4091, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1428,9 +1428,9 @@ public class SyllabificationsComparerTest {
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(3245);
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("ta.kil.me", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("ta.kil.me", diffWord.getOTPredictedSyllabification());
+		assertEquals("tak.wi.tap.ti.kat", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1472,7 +1472,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4366, diffs.size());
+		assertEquals("number of different words", 4363, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1482,11 +1482,11 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(298);
-		assertEquals("be.ker", diffWord.getCVPredictedSyllabification());
+		assertEquals("be.la", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
-		assertEquals("be.ke.r", diffWord.getOTPredictedSyllabification());
+		assertEquals("be.la", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1499,7 +1499,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4352, diffs.size());
+		assertEquals("number of different words", 4349, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1509,11 +1509,11 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(298);
-		assertEquals("be.ker", diffWord.getCVPredictedSyllabification());
+		assertEquals("be.la", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("be.ke.r", diffWord.getOTPredictedSyllabification());
+		assertEquals("be.la", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1526,7 +1526,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4366, diffs.size());
+		assertEquals("number of different words", 4363, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1536,11 +1536,11 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(298);
-		assertEquals("be.ker", diffWord.getCVPredictedSyllabification());
+		assertEquals("be.la", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("be.ke.r", diffWord.getOTPredictedSyllabification());
+		assertEquals("be.la", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1553,7 +1553,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4350, diffs.size());
+		assertEquals("number of different words", 4311, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1563,11 +1563,11 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(298);
-		assertEquals("be.ker", diffWord.getCVPredictedSyllabification());
+		assertEquals("be.lo", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("be.ke.r", diffWord.getOTPredictedSyllabification());
+		assertEquals("be.lo", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1580,7 +1580,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4182, diffs.size());
+		assertEquals("number of different words", 4179, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1590,11 +1590,11 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(1298);
-		assertEquals("ki.te.ta.nik", diffWord.getSHPredictedSyllabification());
+		assertEquals("ki.ti.ki.li.los.kya", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
-		assertEquals("ki.te.ta.nik", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("ki.te.ta.nik", diffWord.getOTPredictedSyllabification());
+		assertEquals("ki.ti.ki.li.losk.ya", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test
@@ -1607,7 +1607,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseOTApproach(true);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		assertEquals("number of different words", 4366, diffs.size());
+		assertEquals("number of different words", 4363, diffs.size());
 		List<Word> listOfDiffs = new ArrayList<Word>();
 		listOfDiffs.addAll(diffs);
 		Word diffWord = listOfDiffs.get(10);
@@ -1618,12 +1618,12 @@ public class SyllabificationsComparerTest {
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(298);
-		assertEquals("be.ker", diffWord.getCVPredictedSyllabification());
+		assertEquals("be.la", diffWord.getCVPredictedSyllabification());
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
-		assertEquals("be.ke.r", diffWord.getOTPredictedSyllabification());
+		assertEquals("be.la", diffWord.getOTPredictedSyllabification());
 	}
 
 	@Test

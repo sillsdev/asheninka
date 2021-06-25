@@ -70,9 +70,21 @@ public class OTConstraintMatcher {
 		}
 		boolean seg2Matches = true;
 		boolean seg1Matches = segMatches(constraint.getAffectedSegOrNC1(), snc1);
+		if (seg1Matches) {
+			if ((snc1.getStructuralOptions() & constraint.getStructuralOptions1()) == 0) {
+				// the structural options do not match
+				return false;
+			}
+		}
 		if (!StringUtilities.isNullOrEmpty(constraint.getAffectedElement2())) {
 			if (segInSylsAvailable > 1) {
 				seg2Matches = segMatches(constraint.getAffectedSegOrNC2(), snc2);
+				if (seg2Matches) {
+					if ((snc2.getStructuralOptions() & constraint.getStructuralOptions2()) == 0) {
+						// the structural options do not match
+						return false;
+					}
+				}
 			} else {
 				seg2Matches = false;
 			}

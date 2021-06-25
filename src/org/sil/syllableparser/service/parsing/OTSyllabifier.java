@@ -138,22 +138,16 @@ public class OTSyllabifier implements Syllabifiable {
 				break;
 			}
 		}
-		buildSyllabificationOfCurrentWord(segmentsInWord);
+		boolean buildWasGood = buildSyllabificationOfCurrentWord(segmentsInWord);
 		sSyllabifiedWord = getSyllabificationOfCurrentWord(segmentsInWord);
-		if (evalNoMore(segmentsInWord)) {
+		if (buildWasGood && evalNoMore(segmentsInWord)) {
 			if (allSegmentsParsed(segmentsInWord)) {
 				tracer.setSuccessful(true);
 				return true;
 			} else {
-				tracer.setSuccessful(false);
-				tracer.setFailureMessage(bundle.getString("report.tawotunparsedsegments"));
-				tracer.recordStep();
 				return false;
 			}
 		}
-		tracer.setSuccessful(false);
-		tracer.setFailureMessage(bundle.getString("report.tawotsomesegmentsareambiguous"));
-		tracer.recordStep();
 		return false;
 	}
 
@@ -277,27 +271,39 @@ public class OTSyllabifier implements Syllabifiable {
 		tracer.recordStep();
 	}
 
-	public void buildSyllabificationOfCurrentWord(List<OTSegmentInSyllable> segmentsInWord) {
+	public boolean buildSyllabificationOfCurrentWord(List<OTSegmentInSyllable> segmentsInWord) {
 		int i = 0;
 		int iSize = segmentsInWord.size();
 		OTSyllable syllable = new OTSyllable();
 		for (OTSegmentInSyllable segInSyl: segmentsInWord) {
 			if (segInSyl.getCoreOptionsLeft() != 1) {
-				// parsing failed; stop here
-				break;
+				tracer.setSuccessful(false);
+				tracer.setFailureMessage(bundle.getString("report.tawotsomesegmentsareambiguous"));
+				tracer.recordStep();
+				return false;
 			}
 			if (segInSyl.isUnparsed()) {
-				// parsing failed; stop here
-				break;
+				tracer.setSuccessful(false);
+				tracer.setFailureMessage(bundle.getString("report.tawotunparsedsegments"));
+				tracer.recordStep();
+				return false;
 			}
-			if ((i+1) < iSize) {
+			if ((i + 1) < iSize) {
 				syllable.getSegmentsInSyllable().add(segInSyl);
 				OTSegmentInSyllable segInSyl2 = segmentsInWord.get(++i);
 				if (isSyllableBreak(segInSyl, segInSyl2)) {
-					syllablesInCurrentWord.add(syllable);
-					tracer.setSyllable(syllable);
-					tracer.recordStep();
-					syllable = new OTSyllable();
+					if (syllableHasNucleus(syllable)) {
+						syllablesInCurrentWord.add(syllable);
+						tracer.setSyllable(syllable);
+						tracer.setSuccessful(true);
+						tracer.recordStep();
+						syllable = new OTSyllable();
+					} else {
+						tracer.setSuccessful(false);
+						tracer.setFailureMessage(bundle.getString("report.tawotnonucleusinsyllable"));
+						tracer.recordStep();
+						return false;
+					}
 				}
 			} else {
 				syllable.getSegmentsInSyllable().add(segInSyl);
@@ -307,7 +313,33 @@ public class OTSyllabifier implements Syllabifiable {
 		}
 		if (syllable.getSegmentsInSyllable().size() > 0) {
 			syllablesInCurrentWord.add(syllable);
+			int lastStepIndex = tracer.getTracingSteps().size() - 1;
+			if (lastStepIndex >= 0) {
+				OTTracingStep lastStep = tracer.getTracingSteps().get(lastStepIndex);
+				if (!syllableHasNucleus(syllable)) {
+					lastStep.setSuccessful(false);
+					lastStep.setFailureMessage(bundle.getString("report.tawotnonucleusinsyllable"));
+					return false;
+				} else {
+					lastStep.setSuccessful(true);
+				}
+				tracer.getTracingSteps().set(lastStepIndex, lastStep);
+			} else {
+				if (!syllableHasNucleus(syllable)) {
+					return false;
+				}
+			}
 		}
+		return true;
+	}
+
+	public boolean syllableHasNucleus(OTSyllable syllable) {
+		for (OTSegmentInSyllable sis : syllable.getSegmentsInSyllable()) {
+			if ((sis.getStructuralOptions() & OTStructuralOptions.NUCLEUS) > 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

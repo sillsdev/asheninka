@@ -108,20 +108,20 @@ public class OTSyllabifierTest {
 		checkSyllabifyWord("dapbek", true, 2, "onc.onc", "dap.bek", "(W(σ( o(\\L d(\\G d)))( n(\\L a(\\G a)))( c(\\L p(\\G p))))(σ( o(\\L b(\\G b)))( n(\\L e(\\G e)))( c(\\L k(\\G k)))))");
 		checkSyllabifyWord("bampidon", true, 3, "onc.on.onc", "bam.pi.don", "(W(σ( o(\\L b(\\G b)))( n(\\L a(\\G a)))( c(\\L m(\\G m))))(σ( o(\\L p(\\G p)))( n(\\L i(\\G i))))(σ( o(\\L d(\\G d)))( n(\\L o(\\G o)))( c(\\L n(\\G n)))))");
 		checkSyllabifyWord("bovdek", true, 2, "onc.onc", "bov.dek", "(W(σ( o(\\L b(\\G b)))( n(\\L o(\\G o)))( c(\\L v(\\G v))))(σ( o(\\L d(\\G d)))( n(\\L e(\\G e)))( c(\\L k(\\G k)))))");
-		checkSyllabifyWord("fuhgt", true, 1, "onccc", "fuhgt", "(W(σ( o(\\L f(\\G f)))( n(\\L u(\\G u)))( c(\\L h(\\G h)))( c(\\L g(\\G g)))( c(\\L t(\\G t)))))");
-		checkSyllabifyWord("blofugh", true, 2, "oon.oncc", "blo.fugh", "(W(σ( o(\\L b(\\G b)))( o(\\L l(\\G l)))( n(\\L o(\\G o))))(σ( o(\\L f(\\G f)))( n(\\L u(\\G u)))( c(\\L g(\\G g)))( c(\\L h(\\G h)))))");
+		checkSyllabifyWord("fuhgt", false, 2, "onc.oc", "fuh.gt", "(W(σ( o(\\L f(\\G f)))( n(\\L u(\\G u)))( c(\\L h(\\G h))))(σ( o(\\L g(\\G g)))( c(\\L t(\\G t)))))");
+		checkSyllabifyWord("blofugh", false, 3, "oon.on.oc", "blo.fu.gh", "(W(σ( o(\\L b(\\G b)))( o(\\L l(\\G l)))( n(\\L o(\\G o))))(σ( o(\\L f(\\G f)))( n(\\L u(\\G u))))(σ( o(\\L g(\\G g)))( c(\\L h(\\G h)))))");
 		checkSyllabifyWord("bo", true, 1, "on", "bo", "(W(σ( o(\\L b(\\G b)))( n(\\L o(\\G o)))))");
 		checkSyllabifyWord("funglo", true, 2, "oncc.on", "fung.lo", "(W(σ( o(\\L f(\\G f)))( n(\\L u(\\G u)))( c(\\L n(\\G n)))( c(\\L g(\\G g))))(σ( o(\\L l(\\G l)))( n(\\L o(\\G o)))))");
-		checkSyllabifyWord("fugh", true, 1, "oncc", "fugh", "(W(σ( o(\\L f(\\G f)))( n(\\L u(\\G u)))( c(\\L g(\\G g)))( c(\\L h(\\G h)))))");
+		checkSyllabifyWord("fugh", false, 2, "on.oc", "fu.gh", "(W(σ( o(\\L f(\\G f)))( n(\\L u(\\G u))))(σ( o(\\L g(\\G g)))( c(\\L h(\\G h)))))");
 		checkSyllabifyWord("flu", true, 1, "oon", "flu", "(W(σ( o(\\L f(\\G f)))( o(\\L l(\\G l)))( n(\\L u(\\G u)))))");
 		checkSyllabifyWord("cat", false, 0, "", "", "(W)"); // no c segment
 
 		// check for case where what's left matches the set of structural options
 		swapParseAndStarPeakSlashC();
-		checkSyllabifyWord("blofugh", true, 1, "ooooocc", "blofugh", "(W(σ( o(\\L b(\\G b)))( o(\\L l(\\G l)))( o(\\L o(\\G o)))( o(\\L f(\\G f)))( o(\\L u(\\G u)))( c(\\L g(\\G g)))( c(\\L h(\\G h)))))");
+		checkSyllabifyWord("blofugh", false, 1, "ooooooc", "blofugh", "(W(σ( o(\\L b(\\G b)))( o(\\L l(\\G l)))( o(\\L o(\\G o)))( o(\\L f(\\G f)))( o(\\L u(\\G u)))( o(\\L g(\\G g)))( c(\\L h(\\G h)))))");
 
 		useSecondRanking();
-		checkSyllabifyWord("dapbek", false, 1, "ooooo", "dapbek", "(W(σ( o(\\L d(\\G d)))( o(\\L a(\\G a)))( o(\\L p(\\G p)))( o(\\L b(\\G b)))( o(\\L e(\\G e)))))");
+		checkSyllabifyWord("dapbek", false, 0, "", "dapbek", "(W)");
 	}
 
 	protected void swapParseAndStarPeakSlashC() {
@@ -160,6 +160,47 @@ public class OTSyllabifierTest {
 		assertEquals(expectedSyllabification, otSyllabifier.getSyllabificationOfCurrentWord());
 		assertEquals(expectedLTDescription, otSyllabifier.getLingTreeDescriptionOfCurrentWord());
 
+	}
+
+	@Test
+	public void syllableHasNucleusTest() {
+		checkSyllableHasNucleus("a", true);
+		checkSyllableHasNucleus("ta", true);
+		checkSyllableHasNucleus("at", true);
+		checkSyllableHasNucleus("t", false);
+		checkSyllableHasNucleus("tl", false);
+		checkSyllableHasNucleus("tla", true);
+		checkSyllableHasNucleus("ark", true);
+		checkSyllableHasNucleus("tlark", true);
+	}
+
+	protected void checkSyllableHasNucleus(String word, boolean expectedResult) {
+		CVSegmenterResult segResult = segmenter.segmentWord(word);
+		boolean fSuccess = segResult.success;
+		assertTrue(fSuccess);
+		List<OTSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+		for (OTSegmentInSyllable sis : segmentsInWord) {
+			switch (sis.getGrapheme()) {
+			case "a":
+				sis.setStructuralOptions(OTStructuralOptions.NUCLEUS);
+				break;
+			case "k":
+				sis.setStructuralOptions(OTStructuralOptions.CODA);
+				break;
+			case "l":
+				sis.setStructuralOptions(OTStructuralOptions.ONSET);
+				break;
+			case "r":
+				sis.setStructuralOptions(OTStructuralOptions.CODA);
+				break;
+			case "t":
+				sis.setStructuralOptions(OTStructuralOptions.ONSET);
+				break;
+			}
+		}
+		OTSyllable syllable = new OTSyllable(segmentsInWord);
+		boolean result = otSyllabifier.syllableHasNucleus(syllable);
+		assertEquals(expectedResult, result);
 	}
 
 	@Test
@@ -446,9 +487,9 @@ public class OTSyllabifierTest {
 
 		useSecondRanking();
 		otSyllabifier.setDoTrace(true);
-		checkSyllabifyWord("dapbek", false, 1, "ooooo", "dapbek", "(W(σ( o(\\L d(\\G d)))( o(\\L a(\\G a)))( o(\\L p(\\G p)))( o(\\L b(\\G b)))( o(\\L e(\\G e)))))");
+		checkSyllabifyWord("dapbek", false, 0, "", "dapbek", "(W)");
 		tracingSteps = otSyllabifier.getTracingSteps();
-		assertEquals(6, tracingSteps.size());
+		assertEquals(9, tracingSteps.size());
 		step = tracingSteps.get(0);
 		assertEquals(sInitialization, step.getConstraintName());
 		checkStructuralOptions(step, 0, OTStructuralOptions.COMBO_O_N_C_U);
@@ -484,12 +525,36 @@ public class OTSyllabifierTest {
 		step = tracingSteps.get(4);
 		assertEquals("Onset1", step.getConstraintName());
 		checkStructuralOptions(step, 0, OTStructuralOptions.ONSET);
-		checkStructuralOptions(step, 1, OTStructuralOptions.ONSET);
-		checkStructuralOptions(step, 2, OTStructuralOptions.ONSET);
+		checkStructuralOptions(step, 1, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 2, OTStructuralOptions.COMBO_O_U);
 		checkStructuralOptions(step, 3, OTStructuralOptions.ONSET);
-		checkStructuralOptions(step, 4, OTStructuralOptions.ONSET);
+		checkStructuralOptions(step, 4, OTStructuralOptions.COMBO_O_N_U);
 		checkStructuralOptions(step, 5, OTStructuralOptions.UNPARSED);
 		step = tracingSteps.get(5);
+		assertEquals("*Complex/Onset", step.getConstraintName());
+		checkStructuralOptions(step, 0, OTStructuralOptions.ONSET);
+		checkStructuralOptions(step, 1, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 2, OTStructuralOptions.UNPARSED);
+		checkStructuralOptions(step, 3, OTStructuralOptions.ONSET);
+		checkStructuralOptions(step, 4, OTStructuralOptions.COMBO_O_N_U);
+		checkStructuralOptions(step, 5, OTStructuralOptions.UNPARSED);
+		step = tracingSteps.get(6);
+		assertEquals("*Margin/V", step.getConstraintName());
+		checkStructuralOptions(step, 0, OTStructuralOptions.ONSET);
+		checkStructuralOptions(step, 1, OTStructuralOptions.COMBO_N_U);
+		checkStructuralOptions(step, 2, OTStructuralOptions.UNPARSED);
+		checkStructuralOptions(step, 3, OTStructuralOptions.ONSET);
+		checkStructuralOptions(step, 4, OTStructuralOptions.COMBO_N_U);
+		checkStructuralOptions(step, 5, OTStructuralOptions.UNPARSED);
+		step = tracingSteps.get(7);
+		assertEquals("Onset2", step.getConstraintName());
+		checkStructuralOptions(step, 0, OTStructuralOptions.ONSET);
+		checkStructuralOptions(step, 1, OTStructuralOptions.UNPARSED);
+		checkStructuralOptions(step, 2, OTStructuralOptions.UNPARSED);
+		checkStructuralOptions(step, 3, OTStructuralOptions.ONSET);
+		checkStructuralOptions(step, 4, OTStructuralOptions.UNPARSED);
+		checkStructuralOptions(step, 5, OTStructuralOptions.UNPARSED);
+		step = tracingSteps.get(8);
 		assertEquals(unparsedFailure, step.getFailureMessage());
 
 		// assuming we're using the second rankings

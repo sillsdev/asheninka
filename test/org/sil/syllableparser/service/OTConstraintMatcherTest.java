@@ -22,6 +22,7 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.otapproach.OTConstraint;
 import org.sil.syllableparser.model.otapproach.OTSegmentInSyllable;
+import org.sil.syllableparser.model.otapproach.OTStructuralOptions;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.OTSegmenter;
 
@@ -35,7 +36,9 @@ public class OTConstraintMatcherTest {
 	OTConstraintMatcher matcher;
 	OTConstraint constraint;
 	List<OTConstraint> constraints;
-	
+	OTSegmentInSyllable segInSyl1 = null;
+	OTSegmentInSyllable segInSyl2 = null;
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -84,6 +87,8 @@ public class OTConstraintMatcherTest {
 		checkMatch("t", false, 1);
 		checkMatch("tl", true, 2);
 		checkMatch("ta", true, 2);
+		checkMatchPresetValues("tl", true, 2, OTStructuralOptions.COMBO_N_C_U, OTStructuralOptions.NUCLEUS);
+		checkMatchPresetValues("tl", false, 2, OTStructuralOptions.COMBO_N_C_U, OTStructuralOptions.CODA);
 	}
 
 	@Test
@@ -149,6 +154,8 @@ public class OTConstraintMatcherTest {
 		checkMatch("tl", true, 2);
 		checkMatch("a", false, 1);
 		checkMatch("at", false, 2);
+		checkMatchPresetValues("tl", true, 2, OTStructuralOptions.ONSET, OTStructuralOptions.COMBO_O_C);
+		checkMatchPresetValues("tl", false, 2, OTStructuralOptions.ONSET, OTStructuralOptions.CODA);
 	}
 
 	private void checkMatch(String wordPortion, boolean expectedMatch, int expectedSegments) {
@@ -157,13 +164,25 @@ public class OTConstraintMatcherTest {
 		assertTrue(fSuccess);
 		List<OTSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		assertEquals(expectedSegments, segmentsInWord.size());
-		OTSegmentInSyllable segInSyl1 = null;
-		OTSegmentInSyllable segInSyl2 = null;
+		segInSyl1 = null;
+		segInSyl2 = null;
 		if (expectedSegments > 0) {
 			segInSyl1 = segmentsInWord.get(0);
 		}
 		if (expectedSegments == 2) {
 			segInSyl2 = segmentsInWord.get(1);
+		}
+		assertEquals(expectedMatch, matcher.match(constraint, segInSyl1, segInSyl2, expectedSegments));
+	}
+
+	private void checkMatchPresetValues(String wordPortion, boolean expectedMatch, int expectedSegments,
+			int structuralOptions1, int structuralOptions2) {
+		checkMatch(wordPortion, true, expectedSegments);
+		if (segInSyl1 != null) {
+			segInSyl1.setStructuralOptions(structuralOptions1);
+		}
+		if (segInSyl2 != null) {
+			segInSyl2.setStructuralOptions(structuralOptions2);
 		}
 		assertEquals(expectedMatch, matcher.match(constraint, segInSyl1, segInSyl2, expectedSegments));
 	}
