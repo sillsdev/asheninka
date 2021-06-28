@@ -156,7 +156,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatSegmentInfo(StringBuilder sb, Segment seg) {
 		if (seg == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			List<Grapheme> graphemes = seg.getActiveGraphs();
 			int iNumGraphemes = graphemes.size();
@@ -236,7 +236,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatGraphemeNaturalClassInfo(StringBuilder sb, GraphemeNaturalClass gnc) {
 		if (gnc == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(gnc.getNCName());
 			sb.append(" (");
@@ -276,7 +276,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatEnvironmentInfo(StringBuilder sb, Environment env) {
 		if (env == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(env.getEnvironmentRepresentation());
 		}
@@ -412,7 +412,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatWordInfo(StringBuilder sb, Word word) {
 		if (word == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getWord());
 		}
@@ -462,7 +462,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatNaturalClassInfo(StringBuilder sb, CVNaturalClass naturalClass, String vernacularCSS) {
 		if (naturalClass == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(naturalClass.getNCName());
 			sb.append(" (<span class=\"");

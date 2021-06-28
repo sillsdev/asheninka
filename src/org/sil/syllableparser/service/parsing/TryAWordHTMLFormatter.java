@@ -164,7 +164,7 @@ public abstract class TryAWordHTMLFormatter {
 			boolean fShowGrapheme) {
 		sb.append("<td class='" + VERNACULAR + "'>");
 		if (seg == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			if (fShowGrapheme) {
 				sb.append(seg.getGrapheme());

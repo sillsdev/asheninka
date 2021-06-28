@@ -15,6 +15,7 @@ import java.util.SortedSet;
 
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
 
@@ -88,7 +89,7 @@ public class CVApproachLanguageComparisonHTMLFormatter extends ApproachLanguageC
 
 	protected void formatSyllablePatternInfo(StringBuilder sb, CVSyllablePattern syllablePattern) {
 		if (syllablePattern == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(syllablePattern.getSPName());
 			sb.append(" (");
@@ -155,7 +156,7 @@ public class CVApproachLanguageComparisonHTMLFormatter extends ApproachLanguageC
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
 		if (word == null || word.getCVPredictedSyllabification().length() == 0) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getCVPredictedSyllabification());
 		}

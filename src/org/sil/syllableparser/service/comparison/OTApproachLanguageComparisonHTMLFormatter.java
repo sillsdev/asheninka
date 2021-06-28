@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
 import org.sil.lingtree.model.FontInfo;
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.otapproach.OTConstraint;
 import org.sil.syllableparser.model.otapproach.OTConstraintRanking;
@@ -97,12 +98,12 @@ public class OTApproachLanguageComparisonHTMLFormatter extends
 		}
 	}
 
-	protected void formatOTConstraintInfo(StringBuilder sb, OTConstraint rule) {
-		if (rule == null) {
-			sb.append("&#xa0;");
+	protected void formatOTConstraintInfo(StringBuilder sb, OTConstraint constraint) {
+		if (constraint == null) {
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
-			sb.append("&#xa0;");
-			sb.append(rule.getConstraintName());
+			sb.append(Constants.NON_BREAKING_SPACE);
+			sb.append(constraint.getConstraintName());
 			sb.append("<br/>");
 			ltInteractor.initializeParameters(langProj1);
 			FontInfo fiAnalysis = new FontInfo(langProj1.getAnalysisLanguage().getFont());
@@ -111,7 +112,7 @@ public class OTApproachLanguageComparisonHTMLFormatter extends
 			ltInteractor.setVerticalGap(30.0);
 			double yInit = ltInteractor.getInitialYCoordinate();
 			ltInteractor.setInitialYCoordinate(yInit-(ltInteractor.getVerticalGap()));
-			String ltSVG = ltInteractor.createSVG(rule.getLingTreeDescription(), true);
+			String ltSVG = ltInteractor.createSVG(constraint.getLingTreeDescription(), true);
 			sb.append(ltSVG);
 		}
 	}
@@ -132,13 +133,13 @@ public class OTApproachLanguageComparisonHTMLFormatter extends
 				sb.append("<tr>\n<td class=\"");
 				sb.append(ANALYSIS_1);
 				sb.append("\" valign=\"top\">");
-				OTConstraintRanking constraint = (OTConstraintRanking) differentconstraints.objectFrom1;
-				formatOTConstraintRankingInfo(sb, constraint);
+				OTConstraintRanking ranking = (OTConstraintRanking) differentconstraints.objectFrom1;
+				formatOTConstraintRankingInfo(sb, ranking);
 				sb.append("</td>\n<td class=\"");
 				sb.append(ANALYSIS_2);
 				sb.append("\" valign=\"top\">");
-				constraint = (OTConstraintRanking) differentconstraints.objectFrom2;
-				formatOTConstraintRankingInfo(sb, constraint);
+				ranking = (OTConstraintRanking) differentconstraints.objectFrom2;
+				formatOTConstraintRankingInfo(sb, ranking);
 				sb.append("</td>\n</tr>\n");
 			}
 			sb.append("</tbody>\n</table>\n");
@@ -146,9 +147,13 @@ public class OTApproachLanguageComparisonHTMLFormatter extends
 	}
 
 	protected void formatOTConstraintRankingInfo(StringBuilder sb, OTConstraintRanking ranking) {
-		sb.append(ranking.getName());
-		sb.append("<br/>");
-		sb.append(ranking.getRankingRepresentation());
+		if (ranking == null) {
+			sb.append(Constants.NON_BREAKING_SPACE);
+		} else {
+			sb.append(ranking.getName());
+			sb.append("<br/>");
+			sb.append(ranking.getRankingRepresentation());
+		}
 	}
 
 	protected void formatOTRankingsOrder(StringBuilder sb) {
@@ -186,7 +191,7 @@ public class OTApproachLanguageComparisonHTMLFormatter extends
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
 		if (word == null || word.getOTPredictedSyllabification().length() == 0) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getOTPredictedSyllabification());
 		}

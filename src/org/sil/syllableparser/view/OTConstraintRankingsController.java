@@ -412,7 +412,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 					currentRanking = controller.getCurrentRanking();
 					constraints = currentRanking.getRanking();
 				} else {
-					return;
+					constraints = otApproach.getOTConstraints();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

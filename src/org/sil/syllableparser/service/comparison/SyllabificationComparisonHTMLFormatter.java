@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.SortedSet;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.utility.StringUtilities;
 
@@ -135,7 +136,7 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 			String approachName) {
 		sb.append("<tr>\n<td>");
 		sb.append(approachAbbreviation);
-		sb.append("&#xa0;");
+		sb.append(Constants.NON_BREAKING_SPACE);
 		sb.append("</td>\n");
 		sb.append("<td>&#xa0;=&#xa0;</td>\n");
 		sb.append("<td>&#xa0;");
@@ -150,7 +151,7 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 		}
 		sb.append("<td>");
 		sb.append(approachAbbreviation);
-		sb.append("&#xa0;");
+		sb.append(Constants.NON_BREAKING_SPACE);
 		sb.append("</td>\n");
 		sb.append("<td class=\"");
 		sb.append(VERNACULAR_1);
@@ -173,7 +174,7 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 
 	protected void formatSyllabificationInfo(StringBuilder sb, String syllabification) {
 		if (StringUtilities.isNullOrEmpty(syllabification)) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(syllabification);
 		}

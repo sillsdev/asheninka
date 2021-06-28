@@ -14,6 +14,7 @@ import java.util.SortedSet;
 
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
@@ -90,21 +91,21 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 		if (seg.isOnset()) {
 			sb.append("X");
 		} else {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		}
 		sb.append("</td>\n");
 		sb.append(tdContent);
 		if (seg.isNucleus()) {
 			sb.append("X");
 		} else {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		}
 		sb.append("</td>\n");
 		sb.append(tdContent);
 		if (seg.isCoda()) {
 			sb.append("X");
 		} else {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		}
 		sb.append("</td>\n");
 	}
@@ -141,7 +142,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatNaturalClassInfo(StringBuilder sb, SHNaturalClass naturalClass) {
 		if (naturalClass == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(naturalClass.getNCName());
 			sb.append(" (");
@@ -214,7 +215,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatTemplateInfo(StringBuilder sb, Template template) {
 		if (template == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(template.getTemplateFilterName());
 			sb.append(" [");
@@ -300,7 +301,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatFilterInfo(StringBuilder sb, Filter filter) {
 		if (filter == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(filter.getTemplateFilterName());
 			sb.append(" {");
@@ -349,7 +350,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
 		if (word == null || word.getONCPredictedSyllabification().length() == 0) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getONCPredictedSyllabification());
 		}

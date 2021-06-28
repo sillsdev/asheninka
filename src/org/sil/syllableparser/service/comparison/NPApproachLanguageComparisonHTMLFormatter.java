@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
 import org.sil.lingtree.model.FontInfo;
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.npapproach.NPFilter;
@@ -107,7 +108,7 @@ public class NPApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatFilterInfo(StringBuilder sb, Filter filter) {
 		if (filter == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(filter.getTemplateFilterName());
 			sb.append(" {");
@@ -192,7 +193,7 @@ public class NPApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatNPRuleInfo(StringBuilder sb, NPRule rule) {
 		if (rule == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(rule.getRuleName());
 			sb.append(" {");
@@ -245,7 +246,7 @@ public class NPApproachLanguageComparisonHTMLFormatter extends
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
 		if (word == null || word.getNPPredictedSyllabification().length() == 0) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getNPPredictedSyllabification());
 		}

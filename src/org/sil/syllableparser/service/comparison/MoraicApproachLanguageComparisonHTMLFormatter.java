@@ -9,6 +9,7 @@ package org.sil.syllableparser.service.comparison;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
 
@@ -84,7 +85,7 @@ public class MoraicApproachLanguageComparisonHTMLFormatter extends
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
 		if (word == null || word.getMoraicPredictedSyllabification().length() == 0) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getMoraicPredictedSyllabification());
 		}

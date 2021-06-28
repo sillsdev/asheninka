@@ -186,7 +186,7 @@ public class OTTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 				} else {
 					sb.append(">");
 				}
-				sb.append("&#xa0;");
+				sb.append(Constants.NON_BREAKING_SPACE);
 			}
 			sb.append("</td>\n");
 		}

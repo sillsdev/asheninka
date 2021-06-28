@@ -25,6 +25,7 @@ public class Constants {
 	public static final String OT_STRUCTURAL_OPTION_NUCLEUS = "n";
 	public static final String OT_STRUCTURAL_OPTION_ONSET = "o";
 	public static final String OT_STRUCTURAL_OPTION_UNPARSED = "u";
+	public static final String NON_BREAKING_SPACE = "&#xa0;";
 
 	// file-related constants
 	public static final String ASHENINKA_BACKUP_FILE_EXTENSION = "ashebackup";
