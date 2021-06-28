@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->24 June 2021</date
+>28 June 2021</date
 ><version
 >1.0.0</version
 ><contents
@@ -5568,11 +5568,6 @@ type="tOTStructuralOptions"
 page="14"
 ref="rHammond"
 ></citation
-><endnote
-id="nHousekeepingOnetBeforeACoda"
-><p
->We are not implementing the "onset before a coda" portion of Hammond's housekeeping.</p
-></endnote
 >) that ensures codas cannot occur word initially and onsets cannot occur word finally.</p
 ><p
 >Whenever a constraint is applied, its name is shown above the <object
@@ -7324,6 +7319,8 @@ type="tOTStructuralOption"
 > left.</li
 ></ol
 ></li
+><li
+>If the "onset before coda” housekeeping applies, remove the onset. </li
 ><li
 >If every segment has at most one <object
 type="tOTStructuralOption"

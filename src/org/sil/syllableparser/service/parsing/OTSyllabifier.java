@@ -128,12 +128,12 @@ public class OTSyllabifier implements Syllabifiable {
 			return false;
 		}
 		OTConstraintRanking ranking = ota.getActiveOTConstraintRankings().get(0);
-		applyHouseKeeping(segmentsInWord);
+		applyWordBoundaryHouseKeeping(segmentsInWord);
 		for (OTConstraint constraint : ranking.getRanking()) {
 			applyConstraint(segmentsInWord, constraint);
-			//TODO: do we need the onset before a coda part of housekeeping?
-			// If so, do we remove the onset or the coda or both?
-			//applyHouseKeeping(segmentsInWord);
+			if (applyOnsetBeforeCodaHouseKeeping(segmentsInWord)) {
+				rememberSyllabificationStateInTracer(bundle.getString("report.tawothousekeeping2"), segmentsInWord);
+			}
 			if (evalNoMore(segmentsInWord)) {
 				break;
 			}
@@ -160,14 +160,33 @@ public class OTSyllabifier implements Syllabifiable {
 		return true;
 	}
 
-	private void applyHouseKeeping(List<OTSegmentInSyllable> segmentsInWord) {
+	private void applyWordBoundaryHouseKeeping(List<OTSegmentInSyllable> segmentsInWord) {
 		segmentsInWord.get(0).removeCoda();
 		int wordFinalPos = segmentsInWord.size()-1;
 		segmentsInWord.get(wordFinalPos).removeOnset();
-		// TODO: remove an onset before a coda
 		rememberSyllabificationStateInTracer(bundle.getString("report.tawothousekeeping"), segmentsInWord);
 	}
 	
+	public boolean applyOnsetBeforeCodaHouseKeeping(List<OTSegmentInSyllable> segmentsInWord) {
+		boolean result = false;
+		int i = 0;
+		int iSize = segmentsInWord.size();
+		for (OTSegmentInSyllable segInSyl1 : segmentsInWord) {
+			OTSegmentInSyllable segInSyl2 = null;
+			if ((i+1) < iSize) {
+				segInSyl2 = segmentsInWord.get(i+1);
+			} else {
+				break;
+			}
+			if (segInSyl1.hasOnset() && segInSyl1.hasCoda() && segInSyl2.isCoda()) {
+				segInSyl1.removeOnset();
+				result = true;
+			}
+			i++;
+		}
+		return result;
+	}
+
 	private void applyConstraint(List<OTSegmentInSyllable> segmentsInWord, OTConstraint constraint) {
 		int i = 0;
 		int iSize = segmentsInWord.size();

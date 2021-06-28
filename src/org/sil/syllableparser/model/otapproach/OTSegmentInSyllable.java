@@ -70,7 +70,35 @@ public class OTSegmentInSyllable extends CVSegmentInSyllable {
 		}
 		return result;
 	}
-	
+
+	public boolean hasOnset() {
+		if ((structuralOptions & OTStructuralOptions.ONSET) > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasNucleus() {
+		if ((structuralOptions & OTStructuralOptions.NUCLEUS) > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasCoda() {
+		if ((structuralOptions & OTStructuralOptions.CODA) > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasUnparsed() {
+		if ((structuralOptions & OTStructuralOptions.UNPARSED) > 0) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean isOnset() {
 		if (coreOptionsLeft == 1 && (structuralOptions & OTStructuralOptions.ONSET) > 0) {
 			return true;
