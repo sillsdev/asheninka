@@ -9,6 +9,7 @@ package org.sil.syllableparser.view;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.ApplicationPreferences;
@@ -252,9 +253,19 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 	}
 
 	private void showOTRankingDetails(OTConstraintRanking ranking) {
+		ObservableList<OTConstraint> currentConstraints = otApproach.getOTConstraints();
+		for (Iterator<OTConstraint> iterator = ranking.getRanking().iterator(); iterator.hasNext();) {
+			if (!currentConstraints.contains(iterator.next())) {
+				iterator.remove();
+			}
+		}
+		for (OTConstraint constraint : currentConstraints) {
+			if (!ranking.getRanking().contains(constraint)) {
+				ranking.getRanking().add(constraint);
+			}
+		}
 		currentRanking = ranking;
 		if (ranking != null) {
-			// Fill the text fields with info from the NPRule object.
 			nameField.setText(ranking.getName());
 			descriptionField.setText(ranking.getDescription());
 			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
