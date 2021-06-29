@@ -136,7 +136,6 @@ public class OTApproachController extends ApproachController {
 		controller.setViewItemUsed(prefs.getLastCVSegmentInventoryViewItemUsed());
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
-		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	private FXMLLoader createFXMLLoader(String sFxml) {
@@ -164,7 +163,6 @@ public class OTApproachController extends ApproachController {
 		controller.setViewItemUsed(i);
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
-		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTConstraints() {
@@ -176,7 +174,6 @@ public class OTApproachController extends ApproachController {
 		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
-		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTConstraintRankings() {
@@ -188,7 +185,6 @@ public class OTApproachController extends ApproachController {
 		mainApp.updateStatusBarNumberOfItems("");
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
-		mainApp.getController().enableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTWords() {
@@ -208,7 +204,6 @@ public class OTApproachController extends ApproachController {
 		}
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false);
-		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTWordsPredictedVsCorrect(int index) {
@@ -221,7 +216,6 @@ public class OTApproachController extends ApproachController {
 		controller.setFocusOnWord(index);
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(false, true);
-		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	public void handleOTWordsPredictedVsCorrect() {
@@ -239,7 +233,6 @@ public class OTApproachController extends ApproachController {
 		controller.setViewItemUsed(i);
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
-		mainApp.getController().disableDuplicateRankingMenuItem();
 }
 
 	public void handleEnvironments() {
@@ -252,7 +245,6 @@ public class OTApproachController extends ApproachController {
 		controller.setViewItemUsed(i);
 		prefs.setLastOTApproachViewUsed(getViewUsed());
 		mainApp.getController().setFiltersDisabled(true);
-		mainApp.getController().disableDuplicateRankingMenuItem();
 	}
 
 	/*
@@ -276,11 +268,6 @@ public class OTApproachController extends ApproachController {
 		currentOTApproachController.handleRemoveItem();
 	}
 
-	@Override
-	public
-	void handleDuplicateRanking() {
-		currentOTApproachController.handleDuplicateRanking();
-	}
 
 	@Override
 	void handlePreviousItem() {

@@ -1,4 +1,3 @@
-// Copyright (c) 2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -253,19 +252,19 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 	}
 
 	private void showOTRankingDetails(OTConstraintRanking ranking) {
-		ObservableList<OTConstraint> currentConstraints = otApproach.getOTConstraints();
-		for (Iterator<OTConstraint> iterator = ranking.getRanking().iterator(); iterator.hasNext();) {
-			if (!currentConstraints.contains(iterator.next())) {
-				iterator.remove();
-			}
-		}
-		for (OTConstraint constraint : currentConstraints) {
-			if (!ranking.getRanking().contains(constraint)) {
-				ranking.getRanking().add(constraint);
-			}
-		}
 		currentRanking = ranking;
 		if (ranking != null) {
+			ObservableList<OTConstraint> currentConstraints = otApproach.getOTConstraints();
+			for (Iterator<OTConstraint> iterator = ranking.getRanking().iterator(); iterator.hasNext();) {
+				if (!currentConstraints.contains(iterator.next())) {
+					iterator.remove();
+				}
+			}
+			for (OTConstraint constraint : currentConstraints) {
+				if (!ranking.getRanking().contains(constraint)) {
+					ranking.getRanking().add(constraint);
+				}
+			}
 			nameField.setText(ranking.getName());
 			descriptionField.setText(ranking.getDescription());
 			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
@@ -380,7 +379,6 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
 			nameField.setStyle(sAnalysis);
 			descriptionField.setStyle(sAnalysis);
-			rootController.enableDuplicateRankingMenuItem();
 		}
 	}
 	
@@ -433,16 +431,6 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 
 		OTConstraintRanking newRanking = new OTConstraintRanking();
 		newRanking.setRanking(constraints);
-		otApproach.getOTConstraintRankings().add(newRanking);
-		handleInsertNewItem(otApproach.getOTConstraintRankings(), otRankingsTable);
-	}
-
-	@Override
-	public void handleDuplicateRanking() {
-		OTConstraintRanking newRanking = new OTConstraintRanking();
-		newRanking.setName(currentRanking.getName());
-		newRanking.setDescription(currentRanking.getDescription());
-		newRanking.setRanking(currentRanking.getRanking());
 		otApproach.getOTConstraintRankings().add(newRanking);
 		handleInsertNewItem(otApproach.getOTConstraintRankings(), otRankingsTable);
 	}

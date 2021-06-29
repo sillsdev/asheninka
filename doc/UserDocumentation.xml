@@ -5306,13 +5306,13 @@ type="tOTConstraints"
 ><p
 >Similarly, the order in which the rankings occur is somewhat important. Only the first/topmost ranking will be used. You control the order of the rankings by clicking on a ranking in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
 ><p
->You can create a copy of a given ranking by clicking on a ranking in the middle pane and then using <object
-type="tMenuItem"
->Edit / Duplicate <object
-type="tOTConstraintRanking"
-></object
->.</object
-> This is intended to make it easier to make small changes for testing purposes.</p
+>When you create a new ranking, you will be shown a dialog box to select an existing ranking as a starting point for the new ranking.  If you click on <object
+type="tButton"
+>Cancel</object
+>, the new ranking will be the same as the order of the list of constraints in the <object
+type="tView"
+>OT Contraints</object
+> view.</p
 ></section2
 ><section2
 id="sOTWords"
@@ -7320,7 +7320,7 @@ type="tOTStructuralOption"
 ></ol
 ></li
 ><li
->If the "onset before coda” housekeeping applies, remove the onset. </li
+>If the "onset before coda” housekeeping applies, remove the onset.</li
 ><li
 >If every segment has at most one <object
 type="tOTStructuralOption"

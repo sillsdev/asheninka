@@ -84,8 +84,6 @@
 								text="%menu.insertnew" fx:id="menuItemEditInsert" accelerator="ctrl+i" />
 							<MenuItem mnemonicParsing="true" onAction="#handleRemoveItem"
 								text="%menu.remove" fx:id="menuItemEditRemove" accelerator="ctrl+d" />
-							<MenuItem mnemonicParsing="true" onAction="#handleDuplicateRanking"
-								text="%menu.duplicateranking" fx:id="menuItemEditDuplicateRanking" visible="false" />
 							<SeparatorMenuItem />
 							<MenuItem mnemonicParsing="true" onAction="#handlePreviousItem"
 								text="%menu.previousitem" fx:id="menuItemEditPrevious" accelerator="ctrl+shift+p" />

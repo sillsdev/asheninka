@@ -266,7 +266,4 @@ public abstract class ApproachEditorController {
 		}
 	}
 
-	public void handleDuplicateRanking() {
-		// default does nothing
-	}
 }

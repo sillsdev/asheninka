@@ -172,8 +172,6 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private MenuItem menuItemEditRemove;
 	@FXML
-	private MenuItem menuItemEditDuplicateRanking;
-	@FXML
 	private MenuItem menuItemEditPrevious;
 	@FXML
 	private MenuItem menuItemEditNext;
@@ -321,11 +319,6 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private void handleRemoveItem() {
 		currentApproachController.handleRemoveItem();
-	}
-
-	@FXML
-	private void handleDuplicateRanking() {
-		currentApproachController.handleDuplicateRanking();
 	}
 
 	@FXML
@@ -955,7 +948,6 @@ public class RootLayoutController implements Initializable {
 		menuItemEditInsert.setDisable(true);
 		buttonToolbarEditRemove.setDisable(true);
 		menuItemEditRemove.setDisable(true);
-		disableDuplicateRankingMenuItem();
 		buttonToolbarSyllabify.setDisable(false);
 		menuItemSyllabify.setDisable(false);
 		buttonToolbarConvertPredictedToCorrectSyllabification.setDisable(false);
@@ -2119,16 +2111,6 @@ public class RootLayoutController implements Initializable {
 	 */
 	public void setLanguageProject(LanguageProject languageProject) {
 		this.languageProject = languageProject;
-	}
-
-	public void disableDuplicateRankingMenuItem() {
-		menuItemEditDuplicateRanking.setDisable(true);
-		menuItemEditDuplicateRanking.setVisible(false);
-	}
-
-	public void enableDuplicateRankingMenuItem() {
-		menuItemEditDuplicateRanking.setDisable(false);
-		menuItemEditDuplicateRanking.setVisible(true);
 	}
 
 	public void setNumberOfItems(String sNumberOfItems) {
