@@ -82,6 +82,8 @@ public class OTApproachLanguageComparer extends ONCApproachLanguageComparer {
 			e.printStackTrace();
 			MainApp.reportException(e, null);
 		}
+		compareCVNaturalClasses(ota1.getActiveCVNaturalClasses(), ota2.getActiveCVNaturalClasses(),
+				cvNaturalClassesWhichDiffer);
 		compareGraphemeNaturalClasses();
 		compareEnvironments();
 		compareOTConstraints();

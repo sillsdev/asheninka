@@ -59,6 +59,7 @@ public class OTApproachLanguageComparisonHTMLFormatter extends
 		formatHTMLBeginning(sb, sTitle);
 		formatOverview(sb, sComparisonOf);
 		formatSegmentInventory(sb);
+		formatNaturalClasses(sb, otComparer.getCVNaturalClassesWhichDiffer());
 		formatGraphemeNaturalClasses(sb);
 		formatEnvironments(sb);
 		formatOTConstraints(sb);
