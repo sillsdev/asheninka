@@ -165,6 +165,12 @@ public class OTSyllabifierTest {
 		checkSyllabifyWord("flu", true, 1, "oon", "flu", "(W(σ( o(\\L f(\\G f)))( o(\\L l(\\G l)))( n(\\L u(\\G u)))))");
 		checkSyllabifyWord("cat", false, 0, "", "", "(W)"); // no c segment
 
+		int i = SylParserObject.findIndexInListByUuid(ota.getOTConstraints(), "886ca941-5cb8-4b4e-a07b-c7721059d9ca");
+		OTConstraint marginV = ota.getOTConstraints().get(i);
+		marginV.setActive(false);
+		checkSyllabifyWord("Chiko", true, 1, "ooon", "Chiko", "(W(σ( o(\\L ch(\\G Ch)))( o(\\L i(\\G i)))( o(\\L k(\\G k)))( n(\\L o(\\G o)))))");
+		marginV.setActive(true);
+
 		// check for case where what's left matches the set of structural options
 		swapParseAndStarPeakSlashC();
 		checkSyllabifyWord("blofugh", true, 1, "ooooncc", "blofugh", "(W(σ( o(\\L b(\\G b)))( o(\\L l(\\G l)))( o(\\L o(\\G o)))( o(\\L f(\\G f)))( n(\\L u(\\G u)))( c(\\L g(\\G g)))( c(\\L h(\\G h)))))");

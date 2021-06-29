@@ -130,6 +130,9 @@ public class OTSyllabifier implements Syllabifiable {
 		OTConstraintRanking ranking = ota.getActiveOTConstraintRankings().get(0);
 		applyWordBoundaryHouseKeeping(segmentsInWord);
 		for (OTConstraint constraint : ranking.getRanking()) {
+			if (!constraint.isActive()) {
+				continue;
+			}
 			applyConstraint(segmentsInWord, constraint);
 			if (applyOnsetBeforeCodaHouseKeeping(segmentsInWord)) {
 				rememberSyllabificationStateInTracer(bundle.getString("report.tawothousekeeping2"), segmentsInWord);
@@ -197,15 +200,16 @@ public class OTSyllabifier implements Syllabifiable {
 			}
 			if (matcher.match(constraint, segInSyl1, segInSyl2, iSize - i)) {
 				OTSegmentInSyllable segInSyl = segInSyl1;
+				int constraintsSO = constraint.getStructuralOptions1();
 				if (constraint.isPruneElement2()) {
 					segInSyl = segInSyl2;
+					constraintsSO = constraint.getStructuralOptions2();
 				}
 				if (segInSyl.getCoreOptionsLeft() == 1) {
 					// nothing to do
 				i++;
 					continue;
 				}
-				int constraintsSO = constraint.getStructuralOptions1();
 				if (constraintsSO == segInSyl.getStructuralOptions()) {
 					// we'll remove what is left; not possible so try next match
 					i++;
