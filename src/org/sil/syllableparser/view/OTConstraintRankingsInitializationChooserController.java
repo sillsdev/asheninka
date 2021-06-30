@@ -157,7 +157,7 @@ public class OTConstraintRankingsInitializationChooserController extends TableVi
 			if (currentRanking != null && !(currentRanking.isActive() && activeCheckBox.isSelected())) {
 				t.setFill(Constants.INACTIVE);
 			}
-			Text tBar = new Text(Constants.OT_SET_PRECEDES_OPERATOR);
+			Text tBar = new Text(Constants.OT_SET_SUCCEEDS_OPERATOR);
 			tBar.setStyle("-fx-stroke: lightgrey;");
 			if (i < iCount) {
 				tf.getChildren().addAll(t, tBar);

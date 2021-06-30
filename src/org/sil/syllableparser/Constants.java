@@ -20,7 +20,7 @@ public class Constants {
 	public static final String SYLLABLE_SYMBOL = "σ";
 	public static final String MORA_SYMBOL = "μ";
 	public static final String CODA_IN_MORA_SYMBOL = "c";
-	public static final String OT_SET_PRECEDES_OPERATOR = " < ";
+	public static final String OT_SET_SUCCEEDS_OPERATOR = " >> ";
 	public static final String OT_STRUCTURAL_OPTION_CODA = "c";
 	public static final String OT_STRUCTURAL_OPTION_NUCLEUS = "n";
 	public static final String OT_STRUCTURAL_OPTION_ONSET = "o";

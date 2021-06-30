@@ -316,7 +316,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 			t.setFill(analysis.getColor());
 			t.setNodeOrientation(analysis.getOrientation());
 			sb.append(s);
-			Text tBar = new Text(Constants.OT_SET_PRECEDES_OPERATOR);
+			Text tBar = new Text(Constants.OT_SET_SUCCEEDS_OPERATOR);
 			tBar.setStyle("-fx-stroke: lightgrey;");
 			if (!(constraint.isActive() && activeCheckBox.isSelected())) {
 				t.setFill(Constants.INACTIVE);
@@ -504,7 +504,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 			if (currentRanking != null && !(currentRanking.isActive() && activeCheckBox.isSelected())) {
 				t.setFill(Constants.INACTIVE);
 			}
-			Text tBar = new Text(Constants.OT_SET_PRECEDES_OPERATOR);
+			Text tBar = new Text(Constants.OT_SET_SUCCEEDS_OPERATOR);
 			tBar.setStyle("-fx-stroke: lightgrey;");
 			if (i < iCount) {
 				tf.getChildren().addAll(t, tBar);
