@@ -7,6 +7,8 @@
 package org.sil.syllableparser.model.otapproach;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -19,6 +21,7 @@ import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 
 /**
  * @author Andy Black
@@ -90,4 +93,90 @@ public class OTApproach extends Approach {
 	public List<CVNaturalClass> getActiveCVNaturalClasses() {
 		return getLanguageProject().getCVApproach().getActiveCVNaturalClasses();
 	}
+
+	public void createDefaultSetOfConstraints(ResourceBundle bundle) {
+		CVSegmentOrNaturalClass emptySegOrNC = null;
+		Optional<CVNaturalClass> ncVowelsOpt = getActiveCVNaturalClasses().stream()
+				.filter(nc -> nc.getNCName().equals("V")).findFirst();
+		CVSegmentOrNaturalClass vowelsSegOrNC = new CVSegmentOrNaturalClass();
+		CVNaturalClass ncVowels = null;
+		if (ncVowelsOpt.isPresent()) {
+			ncVowels = ncVowelsOpt.get();
+			vowelsSegOrNC = new CVSegmentOrNaturalClass(ncVowels.getNCName(),
+					ncVowels.getDescription(), false, ncVowels.getID(), true);
+			OTConstraint marginV = new OTConstraint("*Margin/V",
+					"Vowels are neither onsets nor codas", vowelsSegOrNC, emptySegOrNC,
+					OTStructuralOptions.COMBO_O_C, OTStructuralOptions.INITIALIZED, "", "", false,
+					true);
+			marginV.setAffectedElement1(ncVowels.getNCName());
+			marginV.setAffectedElement2("");
+			marginV.setLingTreeDescription("(\\O(\\O[V]({o, c})))");
+			getOTConstraints().add(marginV);
+		}
+		Optional<CVNaturalClass> ncCOpt = getActiveCVNaturalClasses().stream()
+				.filter(nc -> nc.getNCName().equals("C")).findFirst();
+		CVSegmentOrNaturalClass cSegOrNC = new CVSegmentOrNaturalClass();
+		CVNaturalClass ncC = null;
+		if (ncCOpt.isPresent()) {
+			ncC = ncCOpt.get();
+			cSegOrNC = new CVSegmentOrNaturalClass(ncC.getNCName(), ncC.getDescription(), false,
+					ncC.getID(), true);
+			OTConstraint peakC = new OTConstraint("*Peak/C", "Syllable peaks are not consonants",
+					cSegOrNC, emptySegOrNC, OTStructuralOptions.NUCLEUS,
+					OTStructuralOptions.INITIALIZED, "", "", false, true);
+			peakC.setAffectedElement1(ncC.getNCName());
+			peakC.setAffectedElement2("");
+			peakC.setLingTreeDescription("(\\O(\\O[C](n)))");
+			getOTConstraints().add(peakC);
+
+			OTConstraint complexOnset = new OTConstraint("*Complex/Onset", "Avoid complex onsets",
+					cSegOrNC, cSegOrNC, OTStructuralOptions.ONSET, OTStructuralOptions.ONSET, "",
+					"", false, true);
+			complexOnset.setAffectedElement1(ncC.getNCName());
+			complexOnset.setAffectedElement2(ncC.getNCName());
+			complexOnset.setLingTreeDescription("(\\O(\\O[C](o))(\\O[C](o)))");
+			getOTConstraints().add(complexOnset);
+
+			OTConstraint complexCoda = new OTConstraint("*Complex/Coda", "Avoid complex codas",
+					cSegOrNC, cSegOrNC, OTStructuralOptions.CODA, OTStructuralOptions.CODA, "", "",
+					true, true);
+			complexCoda.setAffectedElement1(ncC.getNCName());
+			complexCoda.setAffectedElement2(ncC.getNCName());
+			complexCoda.setLingTreeDescription("(\\O(\\O[C](c))(\\O[C](c)))");
+			getOTConstraints().add(complexCoda);
+		}
+		OTConstraint noCoda = new OTConstraint("NoCoda", "Codas not allowed", emptySegOrNC,
+				emptySegOrNC, OTStructuralOptions.CODA, OTStructuralOptions.INITIALIZED, "", "",
+				false, true);
+		noCoda.setAffectedElement1(bundle.getString("label.any"));
+		noCoda.setAffectedElement2("");
+		noCoda.setLingTreeDescription("(\\O(\\O<Any>(c)))");
+		getOTConstraints().add(noCoda);
+
+		OTConstraint parse = new OTConstraint("Parse", "Every segment should be parsed",
+				emptySegOrNC, emptySegOrNC, OTStructuralOptions.UNPARSED,
+				OTStructuralOptions.INITIALIZED, "", "", false, true);
+		parse.setAffectedElement1(bundle.getString("label.any"));
+		parse.setAffectedElement2("");
+		parse.setLingTreeDescription("(\\O(\\O<Any>(u)))");
+		getOTConstraints().add(parse);
+
+		OTConstraint onset1 = new OTConstraint("Onset1",
+				"Avoid anything other than an onset before a nucleus", emptySegOrNC, emptySegOrNC,
+				OTStructuralOptions.COMBO_N_C_U, OTStructuralOptions.NUCLEUS, "", "", false, true);
+		onset1.setAffectedElement1(bundle.getString("label.any"));
+		onset1.setAffectedElement2(bundle.getString("label.any"));
+		onset1.setLingTreeDescription("(\\O(\\O<Any>(u)))");
+		getOTConstraints().add(onset1);
+
+		OTConstraint onset2 = new OTConstraint("Onset2", "Avoid a nucleus word initially",
+				emptySegOrNC, emptySegOrNC, OTStructuralOptions.WORD_INITIAL
+						+ OTStructuralOptions.NUCLEUS, OTStructuralOptions.INITIALIZED, "", "",
+				false, true);
+		onset2.setAffectedElement1(bundle.getString("label.any"));
+		onset2.setAffectedElement2("");
+		onset2.setLingTreeDescription("(\\O(\\O# <Any>(n)))");
+		getOTConstraints().add(onset2);
+	}
+
 }

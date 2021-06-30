@@ -8,6 +8,7 @@ package org.sil.syllableparser.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.sil.lingtree.model.FontInfo;
@@ -30,13 +31,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -514,8 +518,13 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 	public void setData(OTApproach otApproachData) {
 		otApproach = otApproachData;
 		languageProject = otApproach.getLanguageProject();
-		// no sorting needed
+		setColumnICURules(nameColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
+		setColumnICURules(descriptionColumn, languageProject.getAnalysisLanguage().getAnyIcuRules());
 
+		if (otApproach.getOTConstraints().size() == 0) {
+			// no data yet; offer to create default set of constraints
+			askIfWantToSetDefaultConstraints();
+		}
 		// Add observable list data to the table
 		otConstraintsTable.setItems(otApproachData.getOTConstraints());
 		int max = otConstraintsTable.getItems().size();
@@ -672,6 +681,28 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		sb.append(ltSVG);
 		sb.append("</div></body></html>");
 		webEngine.loadContent(sb.toString());
+	}
+
+	protected void askIfWantToSetDefaultConstraints() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(bundle.getString("program.name"));
+		alert.setHeaderText(bundle.getString("label.otconstraints"));
+		alert.setContentText(bundle.getString("label.otsetdefaultconstraints"));
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(mainApp.getNewMainIconImage());
+
+		ButtonType buttonTypeYes = ButtonType.YES;
+		ButtonType buttonTypeNo = ButtonType.NO;
+		ButtonType buttonTypeCancel = ButtonType.CANCEL;
+
+		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		alert = rootController.localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo,
+				buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeYes) {
+			otApproach.createDefaultSetOfConstraints(bundle);
+		}
 	}
 
 	// code taken from

@@ -18,6 +18,9 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.npapproach.NPApproach;
+import org.sil.syllableparser.model.npapproach.NPRule;
+import org.sil.syllableparser.model.npapproach.NPRuleAction;
+import org.sil.syllableparser.model.npapproach.NPRuleLevel;
 
 /**
  * @author Andy Black
@@ -65,5 +68,63 @@ public class NPApproachTest {
 		assertEquals(6, npa.getNPRules().size());
 		assertEquals(4, npa.getActiveNPRules().size());
 		assertEquals(3, npa.getValidActiveNPRules().size());
+	}
+
+	@Test
+	public void createDefaultSetOfRules() {
+		npa.getNPRules().clear();
+		npa.createDefaultSetOfRules();
+		assertEquals(5, npa.getNPRules().size());
+		assertEquals(5, npa.getActiveNPRules().size());
+		assertEquals(5, npa.getValidActiveNPRules().size());
+		NPRule rule = npa.getNPRules().get(0);
+		assertEquals("Nucleus", rule.getRuleName());
+		assertEquals("Build nucleus", rule.getDescription());
+		assertEquals(NPRuleAction.BUILD, rule.getRuleAction());
+		assertEquals(NPRuleLevel.ALL, rule.getRuleLevel());
+		assertNotNull(rule.getAffectedSegOrNC());
+		assertNull(rule.getContextSegOrNC());
+		assertEquals("V", rule.getAffectedSegmentOrNaturalClass());
+		assertEquals("", rule.getContextSegmentOrNaturalClass());
+
+		rule = npa.getNPRules().get(1);
+		assertEquals("Onset", rule.getRuleName());
+		assertEquals("Attach onset to N''", rule.getDescription());
+		assertEquals(NPRuleAction.ATTACH, rule.getRuleAction());
+		assertEquals(NPRuleLevel.N_DOUBLE_BAR, rule.getRuleLevel());
+		assertNotNull(rule.getAffectedSegOrNC());
+		assertNotNull(rule.getContextSegOrNC());
+		assertEquals("C", rule.getAffectedSegmentOrNaturalClass());
+		assertEquals("V", rule.getContextSegmentOrNaturalClass());
+
+		rule = npa.getNPRules().get(2);
+		assertEquals("Coda", rule.getRuleName());
+		assertEquals("Attach coda to N'", rule.getDescription());
+		assertEquals(NPRuleAction.ATTACH, rule.getRuleAction());
+		assertEquals(NPRuleLevel.N_BAR, rule.getRuleLevel());
+		assertNotNull(rule.getAffectedSegOrNC());
+		assertNotNull(rule.getContextSegOrNC());
+		assertEquals("C", rule.getAffectedSegmentOrNaturalClass());
+		assertEquals("V", rule.getContextSegmentOrNaturalClass());
+
+		rule = npa.getNPRules().get(3);
+		assertEquals("Additional onset", rule.getRuleName());
+		assertEquals("Augment onset with another onset", rule.getDescription());
+		assertEquals(NPRuleAction.AUGMENT, rule.getRuleAction());
+		assertEquals(NPRuleLevel.N_DOUBLE_BAR, rule.getRuleLevel());
+		assertNotNull(rule.getAffectedSegOrNC());
+		assertNotNull(rule.getContextSegOrNC());
+		assertEquals("C", rule.getAffectedSegmentOrNaturalClass());
+		assertEquals("C", rule.getContextSegmentOrNaturalClass());
+
+		rule = npa.getNPRules().get(4);
+		assertEquals("Additional coda", rule.getRuleName());
+		assertEquals("Augment coda with another coda", rule.getDescription());
+		assertEquals(NPRuleAction.AUGMENT, rule.getRuleAction());
+		assertEquals(NPRuleLevel.N_BAR, rule.getRuleLevel());
+		assertNotNull(rule.getAffectedSegOrNC());
+		assertNotNull(rule.getContextSegOrNC());
+		assertEquals("C", rule.getAffectedSegmentOrNaturalClass());
+		assertEquals("C", rule.getContextSegmentOrNaturalClass());
 	}
 }

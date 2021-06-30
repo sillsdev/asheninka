@@ -7,6 +7,7 @@
 package org.sil.syllableparser.model.npapproach;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -20,6 +21,7 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -111,4 +113,61 @@ public class NPApproach extends Approach {
 	public List<CVNaturalClass> getActiveCVNaturalClasses() {
 		return getLanguageProject().getCVApproach().getActiveCVNaturalClasses();
 	}
+
+	public void createDefaultSetOfRules() {
+		CVSegmentOrNaturalClass emptySegOrNC = null;
+		Optional<CVNaturalClass> ncVowelsOpt = getActiveCVNaturalClasses().stream()
+				.filter(nc -> nc.getNCName().equals("V")).findFirst();
+		CVSegmentOrNaturalClass vowelsSegOrNC = new CVSegmentOrNaturalClass();
+		CVNaturalClass ncVowels = null;
+		if (ncVowelsOpt.isPresent()) {
+			ncVowels = ncVowelsOpt.get();
+			vowelsSegOrNC = new CVSegmentOrNaturalClass(ncVowels.getNCName(),
+					ncVowels.getDescription(), false, ncVowels.getID(), true);
+			NPRule buildNucleus = new NPRule("Nucleus", "Build nucleus", vowelsSegOrNC,
+					emptySegOrNC, NPRuleAction.BUILD, NPRuleLevel.ALL, true, true,
+					"(N''(N'(N(\\L [V]))))");
+			buildNucleus.setAffectedSegmentOrNaturalClass(ncVowels.getNCName());
+			getNPRules().add(buildNucleus);
+		}
+		Optional<CVNaturalClass> ncCOpt = getActiveCVNaturalClasses().stream()
+				.filter(nc -> nc.getNCName().equals("C")).findFirst();
+		CVSegmentOrNaturalClass cSegOrNC = new CVSegmentOrNaturalClass();
+		CVNaturalClass ncC = null;
+		if (ncCOpt.isPresent()) {
+			ncC = ncCOpt.get();
+			cSegOrNC = new CVSegmentOrNaturalClass(ncC.getNCName(), ncC.getDescription(), false,
+					ncC.getID(), true);
+			NPRule attachOnset = new NPRule("Onset", "Attach onset to N''", cSegOrNC,
+					vowelsSegOrNC, NPRuleAction.ATTACH, NPRuleLevel.N_DOUBLE_BAR, true, true,
+					"(N''(\\L [C])(N'(N(\\L [V]))))");
+			attachOnset.setAffectedSegmentOrNaturalClass(ncC.getNCName());
+			attachOnset.setContextSegmentOrNaturalClass(ncVowels.getNCName());
+			getNPRules().add(attachOnset);
+		}
+		if (ncVowelsOpt.isPresent() && ncCOpt.isPresent()) {
+			NPRule attachCoda = new NPRule("Coda", "Attach coda to N'", cSegOrNC,
+					vowelsSegOrNC, NPRuleAction.ATTACH, NPRuleLevel.N_BAR, true, true,
+					"(N'(N(\\L [V]))(\\L [C]))");
+			attachCoda.setAffectedSegmentOrNaturalClass(ncC.getNCName());
+			attachCoda.setContextSegmentOrNaturalClass(ncVowels.getNCName());
+			getNPRules().add(attachCoda);
+		}
+		if (ncCOpt.isPresent()) {
+			NPRule augmentOnset = new NPRule("Additional onset", "Augment onset with another onset", cSegOrNC,
+					cSegOrNC, NPRuleAction.AUGMENT, NPRuleLevel.N_DOUBLE_BAR, true, true,
+					"(N''(\\L [C])(\\L [C]))");
+			augmentOnset.setAffectedSegmentOrNaturalClass(ncC.getNCName());
+			augmentOnset.setContextSegmentOrNaturalClass(ncC.getNCName());
+			getNPRules().add(augmentOnset);
+			NPRule augmentCoda = new NPRule("Additional coda", "Augment coda with another coda", cSegOrNC,
+					cSegOrNC, NPRuleAction.AUGMENT, NPRuleLevel.N_BAR, true, true,
+					"(N'(\\L [C])(\\L [C]))");
+			augmentCoda.setAffectedSegmentOrNaturalClass(ncC.getNCName());
+			augmentCoda.setContextSegmentOrNaturalClass(ncC.getNCName());
+			getNPRules().add(augmentCoda);
+		}
+	}
+
+
 }
