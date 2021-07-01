@@ -484,6 +484,12 @@ public class MoraicSyllabifier implements Syllabifiable {
 				}
 				return false;
 			}
+			if ((segIndex + 1) < segmentsInWord.size()) {
+				Segment seg3 = segmentsInWord.get(segIndex + 1).getSegment();
+				if (seg3.getMoras() > 0) {
+					return false;
+				}
+			}
 			if (result == SHComparisonResult.MORE || result == SHComparisonResult.EQUAL) {
 				return true;
 			} else if (!onsetMaximization & result == SHComparisonResult.LESS) {
