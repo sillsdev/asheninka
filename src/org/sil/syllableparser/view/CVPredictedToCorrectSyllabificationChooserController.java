@@ -154,11 +154,6 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		});
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * @param words TODO
-	 * @param cvApproachController
-	 */
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproachData.getLanguageProject();
