@@ -324,9 +324,11 @@ public class MoraicSyllabifier implements Syllabifiable {
 				int morasInSegment = seg1.getMoras();
 				if (morasInSegment > 0) {
 					if (morasInSyllable < maxMorasInSyllable) {
-						if (!applyAnySyllableTemplates(seg1, seg2, result, segmentsInWord, syl, i, sonorityComparer, tracer)
-								&& morasInSyllable > 0) {
-							// Assume it failed because there is a syllable break here
+						boolean syllableTemplatesSucceeded = applyAnySyllableTemplates(seg1, seg2,
+								result, segmentsInWord, syl, i, sonorityComparer, tracer);
+						if (!syllableTemplatesSucceeded && morasInSyllable > 0) {
+							// Assume it failed because there is a syllable
+							// break here
 							i--;
 							syllablesInCurrentWord.add(syl);
 							syl = createNewSyllable();
@@ -334,6 +336,8 @@ public class MoraicSyllabifier implements Syllabifiable {
 							tracer.setStatus(MoraicSyllabificationStatus.ADDING_SYLLABLE_TO_WORD);
 							tracer.setSuccessful(true);
 							tracer.recordStep();
+						} else if (!syllableTemplatesSucceeded) {
+							return false;
 						} else {
 							syl = addSegmentToSyllableAsMora(segmentsInWord, syl, seg1, i);
 						}
