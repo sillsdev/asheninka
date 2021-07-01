@@ -13,7 +13,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.moraicapproach.MoraicSegmentInSyllable;
 import org.sil.syllableparser.model.moraicapproach.MoraicSyllable;

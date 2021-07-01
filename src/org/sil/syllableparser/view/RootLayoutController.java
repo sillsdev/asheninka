@@ -1589,8 +1589,12 @@ public class RootLayoutController implements Initializable {
 		menuItemFindWord.setDisable(true);
 
 		statusBar.getRightItems().add(new Separator(VERTICAL));
+		Tooltip tooltipPredictedToTotal = new Tooltip(bundle.getString("tooltip.predictedtototal"));
+		Tooltip.install(predictedToTotal, tooltipPredictedToTotal);
 		statusBar.getRightItems().add(predictedToTotal);
 		statusBar.getRightItems().add(new Separator(VERTICAL));
+		Tooltip tooltipPredictedEqualsCorrectToTotal = new Tooltip(bundle.getString("tooltip.predictedequalscorrecttototal"));
+		Tooltip.install(predictedEqualsCorrectToTotal, tooltipPredictedEqualsCorrectToTotal);
 		statusBar.getRightItems().add(predictedEqualsCorrectToTotal);
 		statusBar.getRightItems().add(new Separator(VERTICAL));
 		statusBar.getRightItems().add(numberOfItems);
