@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -30,22 +30,22 @@ public class SyllabificationParametersController extends SylParserBaseController
 		Initializable {
 
 	@FXML
-	private CheckBox codasAllowedCheckBox;
+	protected CheckBox codasAllowedCheckBox;
 	@FXML
-	private CheckBox onsetMaximizationCheckBox;
+	protected CheckBox onsetMaximizationCheckBox;
 	@FXML
 	protected ToggleGroup group;
 	@FXML
-	private RadioButton allButFirstOPRadioButton;
+	protected RadioButton allButFirstOPRadioButton;
 	@FXML
-	private RadioButton everySyllableOPRadioButton;
+	protected RadioButton everySyllableOPRadioButton;
 	@FXML
-	private RadioButton onsetsNotRequiredOPRadioButton;
+	protected RadioButton onsetsNotRequiredOPRadioButton;
 	@FXML
-	private Label lblOnsetPrinciple;
+	protected Label lblOnsetPrinciple;
 
-	private SyllabificationParameters syllabificationParameters;
-	private LanguageProject languageProject;
+	protected SyllabificationParameters syllabificationParameters;
+	protected LanguageProject languageProject;
 
 	public SyllabificationParametersController() {
 

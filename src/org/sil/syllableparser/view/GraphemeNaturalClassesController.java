@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -22,7 +22,10 @@ import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.utility.view.ControllerUtilities;
 
@@ -304,13 +307,39 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 			this.mainApp.updateStatusBarNumberOfItems((iCurrentIndex + 1) + "/"
 					+ graphemeNaturalClassTable.getItems().size() + " ");
 			// remember the selection
-			String sApproach = this.rootController.getApproachUsed();
-			if (sApproach.equals(ApproachType.CV.name())) {
-				mainApp.getApplicationPreferences().setLastCVGraphemeNaturalClassesViewItemUsed(
-						iCurrentIndex);
-			} else if (sApproach.equals(ApproachType.SONORITY_HIERARCHY.name())) {
+			ApproachType approach = this.rootController.getCurrentApproach();
+			switch (approach) {
+			case CV:
+				mainApp.getApplicationPreferences()
+						.setLastCVGraphemeNaturalClassesViewItemUsed(iCurrentIndex);
+				break;
+
+			case SONORITY_HIERARCHY:
 				mainApp.getApplicationPreferences().setLastSHGraphemeNaturalClassesViewItemUsed(
 						iCurrentIndex);
+				break;
+
+			case ONSET_NUCLEUS_CODA:
+				mainApp.getApplicationPreferences().setLastONCGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+
+			case MORAIC:
+				mainApp.getApplicationPreferences().setLastMoraicGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+
+			case NUCLEAR_PROJECTION:
+				mainApp.getApplicationPreferences().setLastNPGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+
+			case OPTIMALITY_THEORY:
+				mainApp.getApplicationPreferences().setLastOTGraphemeNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -375,8 +404,6 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 		TextFlow tf = new TextFlow();
 		Language analysis = languageProject.getAnalysisLanguage();
 		Language vernacular = languageProject.getVernacularLanguage();
-		int i = 1;
-		int iCount = graphemesOrNaturalClasses.size();
 		for (SylParserObject gnc : graphemesOrNaturalClasses) {
 			Text t;
 			String s;
@@ -451,15 +478,34 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
-		cvApproach = languageProject.getCVApproach();
-		setColumnICURules();
-		setTextFieldColors();
-		addDataToTable();
+		setDataCommon();
 	}
 
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	public void setData(MoraicApproach moraicApproachData) {
+		moraicApproach = moraicApproachData;
+		languageProject = moraicApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	public void setData(NPApproach npApproachData) {
+		npApproach = npApproachData;
+		languageProject = npApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	public void setData(OTApproach otApproachData) {
+		otApproach = otApproachData;
+		languageProject = otApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	protected void setDataCommon() {
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
 		setTextFieldColors();

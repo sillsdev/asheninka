@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2021 SIL International
+    This software is licensed under the LGPL, version 2.1 or later 
+    (http://www.gnu.org/licenses/lgpl-2.1.html) -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.web.WebView?>
+
+<StackPane prefHeight="397.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sil.syllableparser.view.NPRulesController">
+   <children>
+      <SplitPane fx:id="splitPane" dividerPositions="0.4373040752351097, 0.5" prefHeight="160.0" prefWidth="200.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="npRulesTable" layoutX="-6.0" layoutY="91.0" prefHeight="598.0" prefWidth="255.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="nameColumn" prefWidth="63.0" text="%label.name" />
+                      <TableColumn fx:id="descriptionColumn" prefWidth="73.0" text="%label.description" />
+                      <TableColumn fx:id="affectedSegmentOrNaturalClassColumn" prefWidth="119.0" text="%label.nprule.affectedsegmentornaturalclass" />
+                      <TableColumn fx:id="contextColumn" prefWidth="119.0" text="%label.nprule.context" />
+                      <TableColumn fx:id="actionColumn" prefWidth="119.0" text="%label.nprule.action" />
+                      <TableColumn fx:id="levelColumn" prefWidth="119.0" text="%label.nprule.level" />
+                      <TableColumn fx:id="obeysSSPColumn" prefWidth="119.0" text="%label.nprule.obeysssp" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane maxWidth="-Infinity" prefHeight="395.0" prefWidth="22.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Button fx:id="buttonMoveDown" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleMoveDown" />
+                  <Button fx:id="buttonMoveUp" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="58.0" mnemonicParsing="false" onAction="#handleMoveUp" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="383.0" AnchorPane.rightAnchor="5.0">
+               <children>
+                  <Label layoutX="1.0" layoutY="7.0" text="%label.nprules" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                  <GridPane layoutX="5.0" layoutY="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="35.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="170.0" minWidth="10.0" prefWidth="70.0" />
+                      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="276.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="%label.name" />
+                        <Label text="%label.description" GridPane.rowIndex="1" />
+                        <Label text="%label.nprule.affectedsegmentornaturalclass" GridPane.rowIndex="2" />
+                        <Label text="%label.nprule.context" GridPane.rowIndex="3" />
+                        <Label text="%label.nprule.action" GridPane.rowIndex="4" />
+                        <Label text="%label.nprule.level" GridPane.rowIndex="5" />
+                        <Label text="%label.nprule.obeysssp" GridPane.rowIndex="6" />
+                        <Label text="%label.active" GridPane.rowIndex="7" />
+                        <Label text="%label.ruletree" GridPane.rowIndex="8" fx:id="ruleTreeLabel" />
+                        <TextField fx:id="nameField" GridPane.columnIndex="1" />
+                        <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES" />
+                        <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                           <children>
+                              <TextField fx:id="affectedTextField" editable="false" prefWidth="234.0" />
+                              <Button fx:id="affectedButton" mnemonicParsing="false" onAction="#handleLaunchAffectedSegOrNCChooser" text="...">
+                                 <FlowPane.margin>
+                                    <Insets left="3.0" />
+                                 </FlowPane.margin>
+                              </Button>
+                           </children>
+                         </FlowPane>
+                        <FlowPane hgap="4.0" prefWidth="200.0" vgap="8.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                           <children>
+                              <TextField fx:id="contextTextField" editable="false" prefWidth="234.0" />
+                              <Button fx:id="contextButton" mnemonicParsing="false" onAction="#handleLaunchContextSegOrNCChooser" text="...">
+                                 <FlowPane.margin>
+                                    <Insets left="3.0" />
+                                 </FlowPane.margin>
+                              </Button>
+                           </children>
+                         </FlowPane>
+                         <ComboBox fx:id="actionComboBox" prefHeight="2.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                         <ComboBox fx:id="levelComboBox" prefHeight="2.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                         <CheckBox fx:id="obeysSSPCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                         <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+						<AnchorPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS">
+                           <children>
+                              <WebView fx:id="ruleLingTreeSVG" prefHeight="300.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</StackPane>

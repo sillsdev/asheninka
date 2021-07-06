@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.LanguageProject;
@@ -390,8 +391,8 @@ public class ONCSyllabifier implements Syllabifiable {
 								tracer.setStatus(ONCSyllabificationStatus.SEGMENT_IS_CODA_OR_ONSET_BUT_ONSET_MAXIMIZATION_BLOCKS_AS_CODA_START_NEW_SYLLABLE);
 								tracer.recordStep();
 							}
-						} else if (!seg2.isOnset()
-								&& opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
+						} else if (!seg2.isOnset()){
+//	TODO: Why was this here?							&& opType != OnsetPrincipleType.ONSETS_NOT_REQUIRED) {
 							i--;
 							syllablesInCurrentWord.add(syl);
 							currentState = syl.getRime().applyAnyFailFilters(segmentsInWord, i,
@@ -865,7 +866,7 @@ public class ONCSyllabifier implements Syllabifiable {
 		int iSize = syllablesInCurrentWord.size();
 		int i = 1;
 		// Begin with any segments in the word initial appendix
-		for (CVSegmentInSyllable seg : segmentsInWordInitialAppendix) {
+		for (int j = 0; j < segmentsInWordInitialAppendix.size(); j++) {
 			sb.append("a");
 		}
 		for (ONCSyllable syl : syllablesInCurrentWord) {
@@ -878,7 +879,7 @@ public class ONCSyllabifier implements Syllabifiable {
 			}
 		}
 		// Append any segments in the word final appendix
-		for (CVSegmentInSyllable seg : segmentsInWordFinalAppendix) {
+		for (int j = 0; j < segmentsInWordFinalAppendix.size(); j++) {
 			sb.append("a");
 		}
 		return sb.toString();
@@ -892,7 +893,8 @@ public class ONCSyllabifier implements Syllabifiable {
 			addAppendixSegmentsToLingTreeDescription(sb, segmentsInWordInitialAppendix);
 		}
 		for (ONCSyllable syl : syllablesInCurrentWord) {
-			sb.append("(σ");
+			sb.append("(");
+			sb.append(Constants.SYLLABLE_SYMBOL);
 			Onset onset = syl.getOnset();
 			onset.createLingTreeDescription(sb);
 			Rime rime = syl.getRime();

@@ -156,7 +156,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatSegmentInfo(StringBuilder sb, Segment seg) {
 		if (seg == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			List<Grapheme> graphemes = seg.getActiveGraphs();
 			int iNumGraphemes = graphemes.size();
@@ -167,10 +167,13 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 				sb.append(bundle.getString("report.graphemes"));
 				sb.append("</th>\n<th>");
 				sb.append(bundle.getString("report.environments"));
-				sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
+				sb.append("</th>\n");
+				formatApproachSpecificSegmentHeader(sb, seg);
+				sb.append("</tr>\n</thead>\n<tbody>\n");
 				sb.append("<tr>\n");
 				sb.append("<td rowspan=\"" + iNumGraphemes + "\" valign=\"top\">");
 				sb.append(seg.getSegment());
+				sb.append("</td>\n");
 				int i = 0;
 				for (Grapheme grapheme : graphemes) {
 					if (i > 0) {
@@ -180,12 +183,24 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 					sb.append(grapheme.getForm());
 					sb.append("</td>\n<td>");
 					sb.append(grapheme.getEnvsRepresentation());
-					sb.append("</td>\n</tr>\n");
+					sb.append("</td>\n");
+					if (i == 0) {
+						formatApproachSpecificSegmentInfo(sb, seg, iNumGraphemes);
+					}
+					sb.append("</tr>\n");
 					i++;
 				}
-				sb.append("</tbody>\n</table>\n");
 			}
+			sb.append("</tbody>\n</table>\n");
 		}
+	}
+
+	protected void formatApproachSpecificSegmentHeader(StringBuilder sb, Segment seg) {
+		// default is to do nothing extra
+	}
+
+	protected void formatApproachSpecificSegmentInfo(StringBuilder sb, Segment seg, int iNumGraphemes) {
+		// default is to do nothing extra
 	}
 
 	protected void formatGraphemeNaturalClasses(StringBuilder sb) {
@@ -221,7 +236,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatGraphemeNaturalClassInfo(StringBuilder sb, GraphemeNaturalClass gnc) {
 		if (gnc == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(gnc.getNCName());
 			sb.append(" (");
@@ -261,7 +276,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatEnvironmentInfo(StringBuilder sb, Environment env) {
 		if (env == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(env.getEnvironmentRepresentation());
 		}
@@ -335,6 +350,11 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		} else {
 			sb.append("<p>" + bundle.getString("report.sameonsetmaximization") + "</p>\n");
 		}
+		formatOnsetPrinciple(sb, s1, s2);
+		formatApproachSpecificSyllabificationParameters(sb);
+	}
+
+	protected void formatOnsetPrinciple(StringBuilder sb, String s1, String s2) {
 		if (comparer.onsetPrincipleDiffers) {
 			switch (comparer.langProj1OnsetPrinciple)
 			{
@@ -366,6 +386,10 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 		}
 	}
 
+	protected void formatApproachSpecificSyllabificationParameters(StringBuilder sb) {
+		// default is to do nothing extra
+	}
+
 	protected void formatSyllabificationParameterInfo(StringBuilder sb, String sTitle, String s1,
 			String s2) {
 		sb.append("<p>" + sTitle + "</p>\n");
@@ -388,7 +412,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatWordInfo(StringBuilder sb, Word word) {
 		if (word == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getWord());
 		}
@@ -438,7 +462,7 @@ public abstract class ApproachLanguageComparisonHTMLFormatter {
 
 	protected void formatNaturalClassInfo(StringBuilder sb, CVNaturalClass naturalClass, String vernacularCSS) {
 		if (naturalClass == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(naturalClass.getNCName());
 			sb.append(" (<span class=\"");

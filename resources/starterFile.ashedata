@@ -87,7 +87,145 @@
         <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
         <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
     </hyphenationParametersXLingPaper>
+    <moraicApproach/>
+    <npApproach>
+        <filters/>
+        <rules>
+            <rule valid="true" id="db138518-fc24-42f5-bd96-ce0257748893" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <affectedSegmentOrNaturalClass>[V]</affectedSegmentOrNaturalClass>
+                <contextSegmentOrNaturalClass></contextSegmentOrNaturalClass>
+                <description>Build nucleus</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>BUILD</ruleAction>
+                <ruleLevel>ALL</ruleLevel>
+                <ruleName>Nucleus</ruleName>
+                <ruleRepresentation>(N''(N'(N(\L [V]))))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="05630978-d262-4aa6-ba24-71dc2a5aa45b" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <contextSegmentOrNaturalClass>[V]</contextSegmentOrNaturalClass>
+                <description>Attach onset to N''</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>ATTACH</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>Onset</ruleName>
+                <ruleRepresentation>(N''(\L [C])(N'(N(\L [V]))))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="5c22d9d8-d09b-4d9d-96f7-d420b66a20fd" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <contextSegmentOrNaturalClass>[V]</contextSegmentOrNaturalClass>
+                <description>Attach coda to N'</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>ATTACH</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Coda</ruleName>
+                <ruleRepresentation>(N'(N(\L [V]))(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="564ef549-8fe4-4714-ba61-adccdd5ca5a9" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description>Augment onset with another onset</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>Additional onset</ruleName>
+                <ruleRepresentation>(N''(\L [C])(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="2ac593ef-7cf3-4a0a-be45-52b7bd386408" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description>Augment coda with another coda</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Additional coda</ruleName>
+                <ruleRepresentation>(N'(\L [C])(\L [C]))</ruleRepresentation>
+            </rule>
+        </rules>
+    </npApproach>
     <oncApproach/>
+    <otApproach>
+        <rankings>
+            <ranking ranking="8634013f-2c6c-477c-b928-1ca9b922feb8 886ca941-5cb8-4b4e-a07b-c7721059d9ca 5274463f-e44c-4474-a306-312fd5c8fd91 fe57515a-d4a3-427c-a739-b7ebb720108a 07751bf8-d3fd-4cce-9fc4-d64dd57a960c 50863688-ec78-4f93-9ba0-1f5f236e35bb 5c1397cb-13d3-4430-9785-06c273aa17a7 377e55fb-ab7f-4f45-803c-137af536c0f9" id="78bf322e-1efa-4f42-a6b5-bcdee3de20a6" active="true">
+                <description>Sample ranking that should be edited.</description>
+                <name>Default ranking</name>
+                <rankingRepresentation>*Peak/C &lt; *Margin/V &lt; Parse &lt; *Complex/Onset &lt; *Complex/Coda &lt; NoCoda &lt; Onset1 &lt; Onset2</rankingRepresentation>
+            </ranking>
+        </rankings>
+        <constraints>
+            <constraint pruneElement2="false" structuralOptions1="2" structuralOptions2="0" valid="true" id="8634013f-2c6c-477c-b928-1ca9b922feb8" active="true">
+                <affectedElement1>[C]</affectedElement1>
+                <affectedElement2></affectedElement2>
+                <affectedSegOrNC1 isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <constraintName>*Peak/C</constraintName>
+                <description>Syllable peaks are not consonants</description>
+                <lingTreeDescription>(\O(\O[C](n)))</lingTreeDescription>
+            </constraint>
+            <constraint pruneElement2="false" structuralOptions1="5" structuralOptions2="0" valid="true" id="886ca941-5cb8-4b4e-a07b-c7721059d9ca" active="true">
+                <affectedElement1>[V]</affectedElement1>
+                <affectedElement2></affectedElement2>
+                <affectedSegOrNC1 isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <constraintName>*Margin/V</constraintName>
+                <description>Vowels are neither onsets nor codas</description>
+                <lingTreeDescription>(\O(\O[V]({o, c})))</lingTreeDescription>
+            </constraint>
+            <constraint pruneElement2="false" structuralOptions1="8" structuralOptions2="0" valid="true" id="5274463f-e44c-4474-a306-312fd5c8fd91" active="true">
+                <affectedElement1>&lt;Any&gt;</affectedElement1>
+                <affectedElement2></affectedElement2>
+                <constraintName>Parse</constraintName>
+                <description>Every segment should be parsed</description>
+                <lingTreeDescription>(\O(\O&lt;Any&gt;(u)))</lingTreeDescription>
+            </constraint>
+            <constraint pruneElement2="false" structuralOptions1="4" structuralOptions2="0" valid="true" id="50863688-ec78-4f93-9ba0-1f5f236e35bb" active="true">
+                <affectedElement1>&lt;Any&gt;</affectedElement1>
+                <affectedElement2></affectedElement2>
+                <constraintName>NoCoda</constraintName>
+                <description>Codas not allowed</description>
+                <lingTreeDescription>(\O(\O&lt;Any&gt;(c)))</lingTreeDescription>
+            </constraint>
+            <constraint pruneElement2="true" structuralOptions1="4" structuralOptions2="4" valid="true" id="07751bf8-d3fd-4cce-9fc4-d64dd57a960c" active="true">
+                <affectedElement1>[C]</affectedElement1>
+                <affectedElement2>[C]</affectedElement2>
+                <affectedSegOrNC1 isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegOrNC2 isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <constraintName>*Complex/Coda</constraintName>
+                <description>Avoid complex codas</description>
+                <lingTreeDescription>(\O(\O[C](c))(\O[C](c)))</lingTreeDescription>
+            </constraint>
+            <constraint pruneElement2="false" structuralOptions1="1" structuralOptions2="1" valid="true" id="fe57515a-d4a3-427c-a739-b7ebb720108a" active="true">
+                <affectedElement1>[C]</affectedElement1>
+                <affectedElement2>[C]</affectedElement2>
+                <affectedSegOrNC1 isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegOrNC2 isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <constraintName>*Complex/Onset</constraintName>
+                <description>Avoid complex onsets</description>
+                <lingTreeDescription>(\O(\O[C](o))(\O[C](o)))</lingTreeDescription>
+            </constraint>
+            <constraint pruneElement2="false" structuralOptions1="14" structuralOptions2="2" valid="true" id="5c1397cb-13d3-4430-9785-06c273aa17a7" active="true">
+                <affectedElement1>&lt;Any&gt;</affectedElement1>
+                <affectedElement2>&lt;Any&gt;</affectedElement2>
+                <constraintName>Onset1</constraintName>
+                <description>Avoid anything other than an onset before a nucleus</description>
+                <lingTreeDescription>(\O(\O&lt;Any&gt;({n, c, u}))(\O&lt;Any&gt;(n)))</lingTreeDescription>
+            </constraint>
+            <constraint pruneElement2="false" structuralOptions1="18" structuralOptions2="0" valid="true" id="377e55fb-ab7f-4f45-803c-137af536c0f9" active="true">
+                <affectedElement1>&lt;Any&gt;</affectedElement1>
+                <affectedElement2></affectedElement2>
+                <constraintName>Onset2</constraintName>
+                <description>Avoid a nucleus word initially</description>
+                <lingTreeDescription>(\O(\O# &lt;Any&gt;(n)))</lingTreeDescription>
+            </constraint>
+        </constraints>
+    </otApproach>
     <shApproach>
         <shSonorityHierarchy>
             <shNaturalClass segs="de664190-dd3c-4bb3-892e-16dc596255ce 92284e25-50b0-4c3a-9043-c5a67c6cfcff 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf 008bb81a-5594-45ee-ae2a-457a058cee16 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="6a2c55b8-fa9e-4661-a39c-af4b981cfe67" active="true">
@@ -136,6 +274,8 @@
                     <form>A</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>a</segment>
@@ -158,6 +298,8 @@
                     <form>B</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>b</segment>
@@ -180,6 +322,8 @@
                     <form>D</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>d</segment>
@@ -202,6 +346,8 @@
                     <form>E</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>e</segment>
@@ -224,6 +370,8 @@
                     <form>F</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>f</segment>
@@ -246,6 +394,8 @@
                     <form>G</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>g</segment>
@@ -268,6 +418,8 @@
                     <form>H</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>h</segment>
@@ -290,6 +442,8 @@
                     <form>I</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>i</segment>
@@ -312,6 +466,8 @@
                     <form>K</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>k</segment>
@@ -334,6 +490,8 @@
                     <form>L</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>l</segment>
@@ -356,6 +514,8 @@
                     <form>M</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>m</segment>
@@ -378,6 +538,8 @@
                     <form>N</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>n</segment>
@@ -400,6 +562,8 @@
                     <form>Ñ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>ɲ</segment>
@@ -422,6 +586,8 @@
                     <form>O</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>o</segment>
@@ -444,6 +610,8 @@
                     <form>P</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>p</segment>
@@ -466,6 +634,8 @@
                     <form>Q</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>q</segment>
@@ -488,6 +658,8 @@
                     <form>R</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>r</segment>
@@ -510,6 +682,8 @@
                     <form>S</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>s</segment>
@@ -532,6 +706,8 @@
                     <form>T</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>t</segment>
@@ -554,6 +730,8 @@
                     <form>U</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>u</segment>
@@ -576,6 +754,8 @@
                     <form>V</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>v</segment>
@@ -598,6 +778,8 @@
                     <form>W</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>w</segment>
@@ -620,6 +802,8 @@
                     <form>X</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>x</segment>
@@ -642,6 +826,8 @@
                     <form>Y</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>y</segment>
@@ -664,6 +850,8 @@
                     <form>Z</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>z</segment>
@@ -671,9 +859,11 @@
     </segments>
     <syllabificationParameters>
         <codasAllowed>true</codasAllowed>
+        <maxMorasPerSyllable>2</maxMorasPerSyllable>
         <onsetMaximization>false</onsetMaximization>
         <onsetPrinciple></onsetPrinciple>
         <onsetPrincipleEnum>EVERY_SYLLABLE_HAS_ONSET</onsetPrincipleEnum>
+        <useWeightByPosition>false</useWeightByPosition>
     </syllabificationParameters>
     <templates/>
     <vernacularLanguage>

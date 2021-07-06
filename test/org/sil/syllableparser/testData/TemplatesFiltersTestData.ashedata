@@ -7,6 +7,7 @@
         <fontSize>14.0</fontSize>
         <fontType>Regular</fontType>
         <icuRules></icuRules>
+        <languageName></languageName>
         <ldmlFile></ldmlFile>
         <rightToLeft>false</rightToLeft>
         <sortingOption>DEFAULT_ORDER</sortingOption>
@@ -48,6 +49,26 @@
                 <description></description>
                 <NCName>Stop</NCName>
                 <SNCRepresentation>b, d, g, k, p, t</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="0c349a88-de1d-4bd8-8845-18775f142719 309bc43b-27b1-43d8-a88d-0d53db07720e 65be3575-5c87-4a7d-8560-d1f32a816b2f e651a3d3-98cd-4d89-a5e4-d971c7356808" id="6ae9e40e-87cd-4f31-8bd6-bf26965e37fe" active="true">
+                <description></description>
+                <NCName>Non-stridentCoronal</NCName>
+                <SNCRepresentation>d, ð, t, θ</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="399e1b20-f7ed-4952-82dd-68b44485673a d4d9613d-4213-471e-986f-e39e8d5452bd 0da358b2-1156-4614-96dd-10a9964fe3c7 cd228d00-8c1d-41b8-a612-aa7d96411f5e" id="9f26fda8-5622-4b4d-96b9-fc5aec82e158" active="true">
+                <description></description>
+                <NCName>Alveo-palatal</NCName>
+                <SNCRepresentation>d͡ʒ, ʃ, t͡ʃ, ʒ</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="5b00fb26-005d-4e73-a7c0-5ffac83a3a97 101d2651-cd84-4671-a286-0d37e22759e4 76e0b311-b742-4eb5-98f9-8670dfce5149 a7d7c0cd-6e3c-4c12-a524-da76d2d3a2df 6fbdfa10-f79d-44c6-a1bf-b474ac386c12" id="8edc52bb-46ce-4fc5-8523-998e039be814" active="true">
+                <description></description>
+                <NCName>Sonorant</NCName>
+                <SNCRepresentation>j, l, ɹ, w, [N]</SNCRepresentation>
+            </cvNaturalClass>
+            <cvNaturalClass snc="0701fe22-3ac3-43a9-8d0d-78940f0ec514 60765d81-b40d-42b2-ace5-9d476355270c 6bc43a79-0aac-42aa-994e-6368a05bc29a 91c1f393-497a-4345-9fcd-cd67fbb5575b 25bdfcdf-242a-49d8-94d2-74e2f666f88b d4d9613d-4213-471e-986f-e39e8d5452bd 65be3575-5c87-4a7d-8560-d1f32a816b2f 0da358b2-1156-4614-96dd-10a9964fe3c7 e651a3d3-98cd-4d89-a5e4-d971c7356808" id="55ed444a-0e90-4908-b2d8-b2714d35de61" active="true">
+                <description>voiceless obstruents</description>
+                <NCName>VoicelessObstruent</NCName>
+                <SNCRepresentation>f, h, k, p, s, ʃ, t, t͡ʃ, θ</SNCRepresentation>
             </cvNaturalClass>
         </cvNaturalClasses>
         <cvSyllablePatterns>
@@ -94,6 +115,7 @@
             <description>Example: ætlæntɪk should be æt.læn.tɪk, not æ.tlæn.tɪk</description>
             <slots>
                 <slot segment="65be3575-5c87-4a7d-8560-d1f32a816b2f">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>true</repairLeftwardFromHere>
@@ -101,6 +123,7 @@
                     <segmentString>t</segmentString>
                 </slot>
                 <slot segment="101d2651-cd84-4671-a286-0d37e22759e4">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -119,12 +142,14 @@
             <description>Must be dipthong or separate syllables; e.g., eɪ.oɹ.tə</description>
             <slots>
                 <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
                     <isSegment>false</isSegment>
                 </slot>
                 <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -142,18 +167,21 @@
             <description></description>
             <slots>
                 <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
                     <isSegment>false</isSegment>
                 </slot>
                 <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
                     <isSegment>false</isSegment>
                 </slot>
                 <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -171,12 +199,14 @@
             <description>Example: æpniə should be æp.ni.ə, not æ.pni.ə</description>
             <slots>
                 <slot natclass="e8f6af08-9f56-43a3-9d86-993c9235df20">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>true</repairLeftwardFromHere>
                     <isSegment>false</isSegment>
                 </slot>
                 <slot natclass="6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -188,6 +218,33 @@
             <type>Onset</type>
             <valid>true</valid>
             <action doRepair="true" repairStartPos="0"/>
+            <templateFilterType>ONSET</templateFilterType>
+        </filter>
+        <filter id="526bcecb-ba24-4727-a4e9-50557393fd54" active="true">
+            <description>/s/ /j/ is not allowed in an onset</description>
+            <slots>
+                <slot segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>s</segmentString>
+                </slot>
+                <slot segment="5b00fb26-005d-4e73-a7c0-5ffac83a3a97">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>true</isSegment>
+                    <segmentString>j</segmentString>
+                </slot>
+            </slots>
+            <templateFilterName>Bad Onset</templateFilterName>
+            <templateFilterRepresentation>s j</templateFilterRepresentation>
+            <type>Onset</type>
+            <valid>true</valid>
+            <action doRepair="false" repairStartPos="0"/>
             <templateFilterType>ONSET</templateFilterType>
         </filter>
     </filters>
@@ -207,6 +264,198 @@
         <startAfterCharactersFromBeginning>2</startAfterCharactersFromBeginning>
         <stopBeforeCharactersFromEnd>2</stopBeforeCharactersFromEnd>
     </hyphenationParametersXLingPaper>
+    <moraicApproach/>
+    <npApproach>
+        <filters>
+            <filter id="4192f242-3cde-45e7-ae6f-3eb06e277faf" active="true">
+                <description>Example: ætlæntɪk should be æt.læn.tɪk, not æ.tlæn.tɪk</description>
+                <slots>
+                    <slot natclass="6ae9e40e-87cd-4f31-8bd6-bf26965e37fe">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot segment="101d2651-cd84-4671-a286-0d37e22759e4">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>true</isSegment>
+                        <segmentString>l</segmentString>
+                    </slot>
+                </slots>
+                <templateFilterName>Disallow non-strident coronal before labial in onset</templateFilterName>
+                <templateFilterRepresentation>[Non-stridentCoronal] l</templateFilterRepresentation>
+                <type>Onset</type>
+                <valid>true</valid>
+                <action doRepair="false" repairStartPos="0"/>
+                <templateFilterType>ONSET</templateFilterType>
+            </filter>
+            <filter id="2b96a172-8809-463a-8712-534724d0a6b7" active="true">
+                <description>Example: æpniə should be æp.ni.ə, not æ.pni.ə</description>
+                <slots>
+                    <slot natclass="e8f6af08-9f56-43a3-9d86-993c9235df20">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot natclass="6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                </slots>
+                <templateFilterName>Disallow stop/nasal in onset</templateFilterName>
+                <templateFilterRepresentation>[Stop] [N]</templateFilterRepresentation>
+                <type>Onset</type>
+                <valid>true</valid>
+                <action doRepair="false" repairStartPos="0"/>
+                <templateFilterType>ONSET</templateFilterType>
+            </filter>
+            <filter id="1e4076a3-1127-4882-8668-5212d021ece3" active="true">
+                <description>Example: kæʃlɛs should be kæʃ.lɛs, not kæ.ʃlɛs and maɹʃlænd should be maɹʃ.lænd, not maɹ.ʃlænd</description>
+                <slots>
+                    <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>false</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot natclass="8edc52bb-46ce-4fc5-8523-998e039be814">
+                        <constituentBeginsHere>true</constituentBeginsHere>
+                        <obeysSSP>false</obeysSSP>
+                        <isOptional>true</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot natclass="9f26fda8-5622-4b4d-96b9-fc5aec82e158">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                    <slot natclass="8edc52bb-46ce-4fc5-8523-998e039be814">
+                        <constituentBeginsHere>false</constituentBeginsHere>
+                        <obeysSSP>true</obeysSSP>
+                        <isOptional>false</isOptional>
+                        <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                        <isSegment>false</isSegment>
+                    </slot>
+                </slots>
+                <templateFilterName>Disallow alveo-palatal before sonorant in non-intial onsets</templateFilterName>
+                <templateFilterRepresentation>*[V] (*[Sonorant]) _ [Alveo-palatal]  [Sonorant]</templateFilterRepresentation>
+                <type>Onset</type>
+                <valid>true</valid>
+                <action doRepair="false" repairStartPos="0"/>
+                <templateFilterType>ONSET</templateFilterType>
+            </filter>
+        </filters>
+        <rules>
+            <rule valid="true" id="b558925e-ea0e-4bea-a9b2-903a08503bb9" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <affectedSegmentOrNaturalClass>[V]</affectedSegmentOrNaturalClass>
+                <contextSegmentOrNaturalClass></contextSegmentOrNaturalClass>
+                <description>Build nucleus</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>BUILD</ruleAction>
+                <ruleLevel>ALL</ruleLevel>
+                <ruleName>Nucleus</ruleName>
+                <ruleRepresentation>(N''(N'(N(\L [V]))))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="c1a2c50d-870d-4b4c-90f2-e813704f5f47" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <contextSegmentOrNaturalClass>[V]</contextSegmentOrNaturalClass>
+                <description>Attach onset to nucleus</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>ATTACH</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>Onset</ruleName>
+                <ruleRepresentation>(N''(\L [C])(N'(N(\L [V]))))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="9ab72b84-1720-4f99-8e8b-17afa6cb2cda" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description></description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>Augment onset with another onset</ruleName>
+                <ruleRepresentation>(N''(\L [C])(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="7d8c3b88-7d72-40ac-a8f2-0f1df56aeef1" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="9821d4ba-8c34-432d-9afe-7c428dcd9afa" active="true"/>
+                <contextSegmentOrNaturalClass>[V]</contextSegmentOrNaturalClass>
+                <description>Attach coda to N'</description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>ATTACH</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Coda</ruleName>
+                <ruleRepresentation>(N'(N(\L [V]))(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="5cce0bbc-28db-4169-a1ca-21f67a2ed1f2" active="true">
+                <affectedSegOrNC isSegment="true" segOrNC="25bdfcdf-242a-49d8-94d2-74e2f666f88b" active="true"/>
+                <affectedSegmentOrNaturalClass>s</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description></description>
+                <obeysSSP>false</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>s case</ruleName>
+                <ruleRepresentation>(N''(\L *s)(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="b70cc8c6-13e8-4dc9-87ef-3a2f9cdcd7eb" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <affectedSegmentOrNaturalClass>[C]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description></description>
+                <obeysSSP>true</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Augment coda with another coda</ruleName>
+                <ruleRepresentation>(N'(\L [C])(\L [C]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="8b5b4b5d-feb2-4ce9-8a54-d9bba1f6f7c6" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="55ed444a-0e90-4908-b2d8-b2714d35de61" active="true"/>
+                <affectedSegmentOrNaturalClass>[VoicelessObstruent]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="55ed444a-0e90-4908-b2d8-b2714d35de61" active="true"/>
+                <contextSegmentOrNaturalClass>[VoicelessObstruent]</contextSegmentOrNaturalClass>
+                <description>Example: gɹæspt</description>
+                <obeysSSP>false</obeysSSP>
+                <ruleAction>AUGMENT</ruleAction>
+                <ruleLevel>N_BAR</ruleLevel>
+                <ruleName>Augment coda with obstruents</ruleName>
+                <ruleRepresentation>(N'(\L [VoicelessObstruent])(\L *[VoicelessObstruent]))</ruleRepresentation>
+            </rule>
+            <rule valid="true" id="b10dd9ab-5480-40eb-bfd7-64e0e77b05fa" active="true">
+                <affectedSegOrNC isSegment="false" segOrNC="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c" active="true"/>
+                <affectedSegmentOrNaturalClass>[Coronal]</affectedSegmentOrNaturalClass>
+                <contextSegOrNC isSegment="false" segOrNC="b500749a-9617-444c-ae28-7552cb3236ec" active="true"/>
+                <contextSegmentOrNaturalClass>[C]</contextSegmentOrNaturalClass>
+                <description></description>
+                <obeysSSP>false</obeysSSP>
+                <ruleAction>RIGHT_ADJOIN</ruleAction>
+                <ruleLevel>N_DOUBLE_BAR</ruleLevel>
+                <ruleName>word final adjoin</ruleName>
+                <ruleRepresentation>(N''(N''(\L [C]))(N''(\L *[Coronal])))</ruleRepresentation>
+            </rule>
+        </rules>
+    </npApproach>
     <oncApproach/>
     <shApproach>
         <shSonorityHierarchy>
@@ -238,70 +487,6 @@
         </shSonorityHierarchy>
     </shApproach>
     <segments>
-        <segment id="de664190-dd3c-4bb3-892e-16dc596255ce" active="true">
-            <coda>false</coda>
-            <description>low central unrounded vowel</description>
-            <graphemes>a</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" id="68687cd5-bf63-4a65-9ea5-3257a9c225c4" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>a</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>a</segment>
-        </segment>
-        <segment id="0186c74d-21d4-4b40-a454-775bffc53db5" active="true">
-            <coda>false</coda>
-            <description>low front unrounded vowel</description>
-            <graphemes>æ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="0186c74d-21d4-4b40-a454-775bffc53db5" id="509e0004-1532-42ad-ad5b-74e7088fdd46" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>æ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>æ</segment>
-        </segment>
-        <segment id="fa281dae-0223-4601-b7b7-8ea213dc4728" active="true">
-            <coda>false</coda>
-            <description>low central-front unrounded diphthong</description>
-            <graphemes>aɪ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="fa281dae-0223-4601-b7b7-8ea213dc4728" id="411ad636-03f5-4383-a365-afd337c48015" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>aɪ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>aɪ</segment>
-        </segment>
-        <segment id="231de858-2cbe-4d68-8f19-58caa3627557" active="true">
-            <coda>false</coda>
-            <description>low back diphthong</description>
-            <graphemes>aʊ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="231de858-2cbe-4d68-8f19-58caa3627557" id="d42d0393-a573-4017-915b-8bf6d63d418c" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>aʊ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>aʊ</segment>
-        </segment>
         <segment id="000e634b-5e9e-479d-82e6-f44ab9e27879" active="true">
             <coda>true</coda>
             <description>voiced bilabial stop</description>
@@ -320,6 +505,8 @@
                     <form>B</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>b</segment>
@@ -327,7 +514,7 @@
         <segment id="0c349a88-de1d-4bd8-8845-18775f142719" active="true">
             <coda>true</coda>
             <description>voiced alveolar stop</description>
-            <graphemes>d</graphemes>
+            <graphemes>d D</graphemes>
             <graphemesAsList>
                 <grapheme envs="" segment="0c349a88-de1d-4bd8-8845-18775f142719" id="cc017a8d-09c9-4615-b4e9-f76b7a115e8c" active="true">
                     <checked>true</checked>
@@ -342,6 +529,8 @@
                     <form>D</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>d</segment>
@@ -358,6 +547,8 @@
                     <form>d͡ʒ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>d͡ʒ</segment>
@@ -374,46 +565,16 @@
                     <form>ð</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>ð</segment>
         </segment>
-        <segment id="92284e25-50b0-4c3a-9043-c5a67c6cfcff" active="true">
-            <coda>false</coda>
-            <description>mid front unrounded vowel</description>
-            <graphemes>e</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" id="fb6349b1-ea12-4f2d-88fb-c8cbcc4ed6bc" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>e</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>e</segment>
-        </segment>
-        <segment id="39943262-c22f-4113-abe5-de17518c4bed" active="true">
-            <coda>false</coda>
-            <description>mid front unrounded diphtong</description>
-            <graphemes>eɪ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="39943262-c22f-4113-abe5-de17518c4bed" id="f89d3b49-a6c6-4027-8660-706f97c9a3b5" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>eɪ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>eɪ</segment>
-        </segment>
         <segment id="0701fe22-3ac3-43a9-8d0d-78940f0ec514" active="true">
             <coda>true</coda>
             <description>voiceless interdental fricative</description>
-            <graphemes>f</graphemes>
+            <graphemes>f F</graphemes>
             <graphemesAsList>
                 <grapheme envs="" segment="0701fe22-3ac3-43a9-8d0d-78940f0ec514" id="016ff681-17a2-48a9-86a9-97ee30d6f448" active="true">
                     <checked>true</checked>
@@ -428,6 +589,8 @@
                     <form>F</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>f</segment>
@@ -444,6 +607,8 @@
                     <form>g</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>g</segment>
@@ -451,7 +616,7 @@
         <segment id="60765d81-b40d-42b2-ace5-9d476355270c" active="true">
             <coda>false</coda>
             <description>voiceless glottal fricative</description>
-            <graphemes>h</graphemes>
+            <graphemes>h H</graphemes>
             <graphemesAsList>
                 <grapheme envs="" segment="60765d81-b40d-42b2-ace5-9d476355270c" id="fc16b3f0-d043-4f6c-a444-b1e1e0831ba7" active="true">
                     <checked>true</checked>
@@ -466,25 +631,11 @@
                     <form>H</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>h</segment>
-        </segment>
-        <segment id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" active="true">
-            <coda>false</coda>
-            <description>high front unrounded vowel</description>
-            <graphemes>i</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" id="4c2ad2fd-db57-4a38-9c01-886e6432e7b9" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>i</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>i</segment>
         </segment>
         <segment id="5b00fb26-005d-4e73-a7c0-5ffac83a3a97" active="true">
             <coda>false</coda>
@@ -498,6 +649,8 @@
                     <form>j</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>j</segment>
@@ -520,6 +673,8 @@
                     <form>K</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>k</segment>
@@ -536,6 +691,8 @@
                     <form>l</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>l</segment>
@@ -552,6 +709,8 @@
                     <form>l̩</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>true</nucleus>
             <onset>false</onset>
             <segment>l̩</segment>
@@ -574,6 +733,8 @@
                     <form>M</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>m</segment>
@@ -596,57 +757,11 @@
                     <form>N</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>n</segment>
-        </segment>
-        <segment id="008bb81a-5594-45ee-ae2a-457a058cee16" active="true">
-            <coda>false</coda>
-            <description>mid back rounded vowel</description>
-            <graphemes>o</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" id="ccf2c768-6462-436d-bdc4-b119a231e8f4" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>o</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>o</segment>
-        </segment>
-        <segment id="4a539f3c-316e-4c42-b913-18c96654020c" active="true">
-            <coda>false</coda>
-            <description>high back unrounded diphthong</description>
-            <graphemes>oɪ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="4a539f3c-316e-4c42-b913-18c96654020c" id="c38c4b9d-101e-4ab1-b571-5c5a9c68259a" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>oɪ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>oɪ</segment>
-        </segment>
-        <segment id="24c712f5-8a88-4650-97ca-bfe6a2724cb3" active="true">
-            <coda>false</coda>
-            <description>mid back rounded diphthong</description>
-            <graphemes>oʊ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="24c712f5-8a88-4650-97ca-bfe6a2724cb3" id="2f97607f-3372-4450-a2e3-eb938311654f" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>oʊ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>oʊ</segment>
         </segment>
         <segment id="91c1f393-497a-4345-9fcd-cd67fbb5575b" active="true">
             <coda>true</coda>
@@ -660,6 +775,8 @@
                     <form>p</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>p</segment>
@@ -682,6 +799,8 @@
                     <form>S</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>s</segment>
@@ -704,6 +823,8 @@
                     <form>T</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>t</segment>
@@ -720,25 +841,11 @@
                     <form>t͡ʃ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>t͡ʃ</segment>
-        </segment>
-        <segment id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true">
-            <coda>false</coda>
-            <description>high back rounded vowel</description>
-            <graphemes>u</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="23cf60ba-dea7-4c51-b8fa-c2ee745c129c" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>u</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>u</segment>
         </segment>
         <segment id="518cf26f-42ab-4555-ac4d-af1667774959" active="true">
             <coda>true</coda>
@@ -758,6 +865,8 @@
                     <form>V</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>v</segment>
@@ -780,6 +889,8 @@
                     <form>W</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>w</segment>
@@ -802,6 +913,8 @@
                     <form>Z</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>z</segment>
@@ -818,73 +931,11 @@
                     <form>ŋ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>false</onset>
             <segment>ŋ</segment>
-        </segment>
-        <segment id="76ffa354-3bdf-4006-99a9-9c910a4d7b4f" active="true">
-            <coda>false</coda>
-            <description>low back unrounded vowel</description>
-            <graphemes>ɑ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="76ffa354-3bdf-4006-99a9-9c910a4d7b4f" id="2cc7fac6-d793-4f70-8038-d42563d8a226" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>ɑ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>ɑ</segment>
-        </segment>
-        <segment id="e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced" active="true">
-            <coda>false</coda>
-            <description>mid central unrounded vowel</description>
-            <graphemes>ə</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced" id="83150f74-0636-47ac-a1d3-4b88df5a8633" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>ə</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>ə</segment>
-        </segment>
-        <segment id="a0860c8f-bbb8-4142-a267-44a4ac2cccaf" active="true">
-            <coda>false</coda>
-            <description>mid-low front unrounded vowel</description>
-            <graphemes>ɛ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="a0860c8f-bbb8-4142-a267-44a4ac2cccaf" id="dfc90ff1-b0ee-4b90-9395-4d871429f787" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>ɛ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>ɛ</segment>
-        </segment>
-        <segment id="ac6479e8-5229-493c-a2eb-76d748784091" active="true">
-            <coda>false</coda>
-            <description>mid-high front unrounded vowel</description>
-            <graphemes>ɪ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="ac6479e8-5229-493c-a2eb-76d748784091" id="9597371e-22f3-4123-bd5e-6bff3b938502" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>ɪ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>ɪ</segment>
         </segment>
         <segment id="76e0b311-b742-4eb5-98f9-8670dfce5149" active="true">
             <coda>true</coda>
@@ -898,6 +949,8 @@
                     <form>ɹ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>ɹ</segment>
@@ -914,25 +967,11 @@
                     <form>ʃ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>ʃ</segment>
-        </segment>
-        <segment id="66b79ebe-57b6-44b2-ae4d-dca2a3dbf999" active="true">
-            <coda>false</coda>
-            <description>mid-high back rounded vowel</description>
-            <graphemes>ʊ</graphemes>
-            <graphemesAsList>
-                <grapheme envs="" segment="66b79ebe-57b6-44b2-ae4d-dca2a3dbf999" id="45946f10-c1f7-4d74-861e-31e72c9e9210" active="true">
-                    <checked>true</checked>
-                    <description></description>
-                    <envsRepresentation></envsRepresentation>
-                    <form>ʊ</form>
-                </grapheme>
-            </graphemesAsList>
-            <nucleus>true</nucleus>
-            <onset>false</onset>
-            <segment>ʊ</segment>
         </segment>
         <segment id="cd228d00-8c1d-41b8-a612-aa7d96411f5e" active="true">
             <coda>false</coda>
@@ -946,6 +985,8 @@
                     <form>ʒ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>ʒ</segment>
@@ -962,6 +1003,8 @@
                     <form>ʔ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>ʔ</segment>
@@ -978,34 +1021,329 @@
                     <form>θ</form>
                 </grapheme>
             </graphemesAsList>
+            <moras>0</moras>
+            <morasBorn>0</morasBorn>
             <nucleus>false</nucleus>
             <onset>true</onset>
             <segment>θ</segment>
         </segment>
+        <segment id="de664190-dd3c-4bb3-892e-16dc596255ce" active="true">
+            <coda>false</coda>
+            <description>low central unrounded vowel</description>
+            <graphemes>a</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="de664190-dd3c-4bb3-892e-16dc596255ce" id="68687cd5-bf63-4a65-9ea5-3257a9c225c4" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>a</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>a</segment>
+        </segment>
+        <segment id="0186c74d-21d4-4b40-a454-775bffc53db5" active="true">
+            <coda>false</coda>
+            <description>low front unrounded vowel</description>
+            <graphemes>æ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="0186c74d-21d4-4b40-a454-775bffc53db5" id="509e0004-1532-42ad-ad5b-74e7088fdd46" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>æ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>æ</segment>
+        </segment>
+        <segment id="92284e25-50b0-4c3a-9043-c5a67c6cfcff" active="true">
+            <coda>false</coda>
+            <description>mid front unrounded vowel</description>
+            <graphemes>e</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="92284e25-50b0-4c3a-9043-c5a67c6cfcff" id="fb6349b1-ea12-4f2d-88fb-c8cbcc4ed6bc" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>e</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>e</segment>
+        </segment>
+        <segment id="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" active="true">
+            <coda>false</coda>
+            <description>high front unrounded vowel</description>
+            <graphemes>i</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf" id="4c2ad2fd-db57-4a38-9c01-886e6432e7b9" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>i</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>i</segment>
+        </segment>
+        <segment id="008bb81a-5594-45ee-ae2a-457a058cee16" active="true">
+            <coda>false</coda>
+            <description>mid back rounded vowel</description>
+            <graphemes>o</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="008bb81a-5594-45ee-ae2a-457a058cee16" id="ccf2c768-6462-436d-bdc4-b119a231e8f4" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>o</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>o</segment>
+        </segment>
+        <segment id="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" active="true">
+            <coda>false</coda>
+            <description>high back rounded vowel</description>
+            <graphemes>u</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="23cf60ba-dea7-4c51-b8fa-c2ee745c129c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>u</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>u</segment>
+        </segment>
+        <segment id="76ffa354-3bdf-4006-99a9-9c910a4d7b4f" active="true">
+            <coda>false</coda>
+            <description>low back unrounded vowel</description>
+            <graphemes>ɑ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="76ffa354-3bdf-4006-99a9-9c910a4d7b4f" id="2cc7fac6-d793-4f70-8038-d42563d8a226" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ɑ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ɑ</segment>
+        </segment>
+        <segment id="e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced" active="true">
+            <coda>false</coda>
+            <description>mid central unrounded vowel</description>
+            <graphemes>ə</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="e9d4ef28-42e4-4f9f-a0f8-eb537ba51ced" id="83150f74-0636-47ac-a1d3-4b88df5a8633" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ə</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ə</segment>
+        </segment>
+        <segment id="a0860c8f-bbb8-4142-a267-44a4ac2cccaf" active="true">
+            <coda>false</coda>
+            <description>mid-low front unrounded vowel</description>
+            <graphemes>ɛ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="a0860c8f-bbb8-4142-a267-44a4ac2cccaf" id="dfc90ff1-b0ee-4b90-9395-4d871429f787" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ɛ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ɛ</segment>
+        </segment>
+        <segment id="ac6479e8-5229-493c-a2eb-76d748784091" active="true">
+            <coda>false</coda>
+            <description>mid-high front unrounded vowel</description>
+            <graphemes>ɪ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="ac6479e8-5229-493c-a2eb-76d748784091" id="9597371e-22f3-4123-bd5e-6bff3b938502" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ɪ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ɪ</segment>
+        </segment>
+        <segment id="66b79ebe-57b6-44b2-ae4d-dca2a3dbf999" active="true">
+            <coda>false</coda>
+            <description>mid-high back rounded vowel</description>
+            <graphemes>ʊ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="66b79ebe-57b6-44b2-ae4d-dca2a3dbf999" id="45946f10-c1f7-4d74-861e-31e72c9e9210" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>ʊ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>1</moras>
+            <morasBorn>1</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>ʊ</segment>
+        </segment>
+        <segment id="fa281dae-0223-4601-b7b7-8ea213dc4728" active="true">
+            <coda>false</coda>
+            <description>low central-front unrounded diphthong</description>
+            <graphemes>aɪ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="fa281dae-0223-4601-b7b7-8ea213dc4728" id="411ad636-03f5-4383-a365-afd337c48015" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aɪ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>2</moras>
+            <morasBorn>2</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>aɪ</segment>
+        </segment>
+        <segment id="231de858-2cbe-4d68-8f19-58caa3627557" active="true">
+            <coda>false</coda>
+            <description>low back diphthong</description>
+            <graphemes>aʊ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="231de858-2cbe-4d68-8f19-58caa3627557" id="d42d0393-a573-4017-915b-8bf6d63d418c" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>aʊ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>2</moras>
+            <morasBorn>2</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>aʊ</segment>
+        </segment>
+        <segment id="39943262-c22f-4113-abe5-de17518c4bed" active="true">
+            <coda>false</coda>
+            <description>mid front unrounded diphtong</description>
+            <graphemes>eɪ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="39943262-c22f-4113-abe5-de17518c4bed" id="f89d3b49-a6c6-4027-8660-706f97c9a3b5" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>eɪ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>2</moras>
+            <morasBorn>2</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>eɪ</segment>
+        </segment>
+        <segment id="4a539f3c-316e-4c42-b913-18c96654020c" active="true">
+            <coda>false</coda>
+            <description>high back unrounded diphthong</description>
+            <graphemes>oɪ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="4a539f3c-316e-4c42-b913-18c96654020c" id="c38c4b9d-101e-4ab1-b571-5c5a9c68259a" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oɪ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>2</moras>
+            <morasBorn>2</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>oɪ</segment>
+        </segment>
+        <segment id="24c712f5-8a88-4650-97ca-bfe6a2724cb3" active="true">
+            <coda>false</coda>
+            <description>mid back rounded diphthong</description>
+            <graphemes>oʊ</graphemes>
+            <graphemesAsList>
+                <grapheme envs="" segment="24c712f5-8a88-4650-97ca-bfe6a2724cb3" id="2f97607f-3372-4450-a2e3-eb938311654f" active="true">
+                    <checked>true</checked>
+                    <description></description>
+                    <envsRepresentation></envsRepresentation>
+                    <form>oʊ</form>
+                </grapheme>
+            </graphemesAsList>
+            <moras>2</moras>
+            <morasBorn>2</morasBorn>
+            <nucleus>true</nucleus>
+            <onset>false</onset>
+            <segment>oʊ</segment>
+        </segment>
     </segments>
     <syllabificationParameters>
         <codasAllowed>true</codasAllowed>
+        <maxMorasPerSyllable>2</maxMorasPerSyllable>
         <onsetMaximization>true</onsetMaximization>
         <onsetPrinciple>ONSETS_NOT_REQUIRED</onsetPrinciple>
         <onsetPrincipleEnum>ONSETS_NOT_REQUIRED</onsetPrincipleEnum>
+        <useWeightByPosition>false</useWeightByPosition>
     </syllabificationParameters>
     <templates>
         <template id="957dfbc1-511c-448a-b874-6c21abcb53d0" active="true">
             <description>Appendix to allow for sɪksθs,, etc.</description>
             <slots>
                 <slot natclass="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>false</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
                     <isSegment>false</isSegment>
                 </slot>
                 <slot natclass="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>false</obeysSSP>
                     <isOptional>true</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
                     <isSegment>false</isSegment>
                 </slot>
                 <slot natclass="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>false</obeysSSP>
                     <isOptional>true</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -1022,6 +1360,7 @@
             <description>Allow s in an onset which violates the SSP</description>
             <slots>
                 <slot segment="25bdfcdf-242a-49d8-94d2-74e2f666f88b">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>false</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -1029,12 +1368,14 @@
                     <segmentString>s</segmentString>
                 </slot>
                 <slot natclass="45577aa3-2c85-4cc6-9aa2-49e999b84c3d">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
                     <isSegment>false</isSegment>
                 </slot>
                 <slot natclass="54c75767-1978-4982-8143-bad6358b27fe">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>true</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -1051,6 +1392,7 @@
             <description>A nucleus has only one vowel (which may be a diphthong)</description>
             <slots>
                 <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -1067,12 +1409,14 @@
             <description></description>
             <slots>
                 <slot natclass="45577aa3-2c85-4cc6-9aa2-49e999b84c3d">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>false</obeysSSP>
                     <isOptional>false</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
                     <isSegment>false</isSegment>
                 </slot>
                 <slot natclass="38f2bd22-e88c-4c1d-9393-0c33fd2d4d8c">
+                    <constituentBeginsHere>false</constituentBeginsHere>
                     <obeysSSP>true</obeysSSP>
                     <isOptional>true</isOptional>
                     <repairLeftwardFromHere>false</repairLeftwardFromHere>
@@ -1085,6 +1429,51 @@
             <valid>true</valid>
             <templateFilterType>WORDFINAL</templateFilterType>
         </template>
+        <template id="603e7989-7664-4bb6-840e-3ef2c2899805" active="false">
+            <description>A syllable can have up to three consonants, a required vowel, and a nasal coda</description>
+            <slots>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="b500749a-9617-444c-ae28-7552cb3236ec">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="9821d4ba-8c34-432d-9afe-7c428dcd9afa">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>false</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+                <slot natclass="6fbdfa10-f79d-44c6-a1bf-b474ac386c12">
+                    <constituentBeginsHere>false</constituentBeginsHere>
+                    <obeysSSP>true</obeysSSP>
+                    <isOptional>true</isOptional>
+                    <repairLeftwardFromHere>false</repairLeftwardFromHere>
+                    <isSegment>false</isSegment>
+                </slot>
+            </slots>
+            <templateFilterName>Syllable Template</templateFilterName>
+            <templateFilterRepresentation>([C]) ([C]) ([C]) [V] ([N]) </templateFilterRepresentation>
+            <type>Syllable</type>
+            <valid>true</valid>
+            <templateFilterType>SYLLABLE</templateFilterType>
+        </template>
     </templates>
     <vernacularLanguage>
         <code></code>
@@ -1093,6 +1482,7 @@
         <fontSize>14.0</fontSize>
         <fontType>Regular</fontType>
         <icuRules></icuRules>
+        <languageName></languageName>
         <ldmlFile></ldmlFile>
         <rightToLeft>false</rightToLeft>
         <sortingOption>DEFAULT_ORDER</sortingOption>
@@ -1105,6 +1495,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L d(\G d))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1119,6 +1512,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L g(\G g))(\L n(\G n)))(R(N(\L a(\G a)))(C(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>æ.gnas.tɪk</oncPredictedSyllabification>
@@ -1133,6 +1529,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1147,6 +1546,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L m(\G m)))))(σ(O(\L b(\G b)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L g(\G g))(\L j(\G j)))(R(N(\L u(\G u))(\L ɪ(\G ɪ)))))(σ(O(\L t(\G t)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>æm.bɪ.gjuɪ.ti</oncPredictedSyllabification>
@@ -1161,6 +1563,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t))(\L l(\G l)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>æn.tlɛɹ</oncPredictedSyllabification>
@@ -1175,6 +1580,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L p(\G p))(\L n(\G n)))(R(N(\L i(\G i))(\L ə(\G ə))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>æ.pniə</oncPredictedSyllabification>
@@ -1189,6 +1597,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1203,6 +1614,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1217,6 +1631,9 @@
             <cvPredictedSyllabification>æt.læn.tɪk</cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>æ.tlæn.tɪk</oncPredictedSyllabification>
@@ -1231,6 +1648,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>æ.təm</oncPredictedSyllabification>
@@ -1245,6 +1665,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>aɹ.tɪk</oncPredictedSyllabification>
@@ -1259,6 +1682,9 @@
             <cvPredictedSyllabification>baɪ</cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L aɪ(\G aɪ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>baɪ</oncPredictedSyllabification>
@@ -1273,6 +1699,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L eɪ(\G eɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>beɪl</oncPredictedSyllabification>
@@ -1287,6 +1716,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L i(\G i)))))(σ(O(\L t(\G t)))(R(N(\L l̩(\G l̩))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>bi.tl̩</oncPredictedSyllabification>
@@ -1301,6 +1733,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L j(\G j)))(R(N(\L u(\G u)))))(σ(O(\L t(\G t)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>bju.ti</oncPredictedSyllabification>
@@ -1315,6 +1750,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>blæk</oncPredictedSyllabification>
@@ -1329,6 +1767,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>bɛl</oncPredictedSyllabification>
@@ -1343,6 +1784,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>bɛlt</oncPredictedSyllabification>
@@ -1357,6 +1801,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ə(\G ə)))(C(\L l(\G l))(\L t͡ʃ(\G t͡ʃ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>bɛlt͡ʃ</oncPredictedSyllabification>
@@ -1371,6 +1818,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))(\L t͡ʃ(\G t͡ʃ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>bɛnt͡ʃ</oncPredictedSyllabification>
@@ -1385,6 +1835,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>bɹɪk</oncPredictedSyllabification>
@@ -1399,6 +1852,9 @@
             <cvPredictedSyllabification>bʊk</cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L b(\G b)))(R(N(\L ʊ(\G ʊ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>bʊk</oncPredictedSyllabification>
@@ -1413,6 +1869,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L u(\G u)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>dun</oncPredictedSyllabification>
@@ -1427,6 +1886,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L w(\G w)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>dwɛl</oncPredictedSyllabification>
@@ -1441,6 +1903,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L ɑ(\G ɑ))(\L i(\G i)))(C(\L k(\G k)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>dɑik.tɪk</oncPredictedSyllabification>
@@ -1455,6 +1920,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d)))(R(N(\L ɛ(\G ɛ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1469,6 +1937,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L i(\G i)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>dɹim</oncPredictedSyllabification>
@@ -1483,6 +1954,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L i(\G i)))(C(\L m(\G m))(\L d(\G d))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>dɹimd</oncPredictedSyllabification>
@@ -1497,6 +1971,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>dɹɛmt</oncPredictedSyllabification>
@@ -1511,6 +1988,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L d(\G d))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>dɹɪp</oncPredictedSyllabification>
@@ -1525,6 +2005,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L eɪ(\G eɪ)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>eɪm</oncPredictedSyllabification>
@@ -1539,6 +2022,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification>eɪ.oɹ.tə</correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L eɪ(\G eɪ))(\L o(\G o)))(C(\L ɹ(\G ɹ)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>eɪoɹ.tə</oncPredictedSyllabification>
@@ -1553,6 +2039,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>faɪl</oncPredictedSyllabification>
@@ -1567,6 +2056,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L v(\G v))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>faɪv</oncPredictedSyllabification>
@@ -1581,6 +2073,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L aɪ(\G aɪ)))(C(\L v(\G v))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1595,6 +2090,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>fjum</oncPredictedSyllabification>
@@ -1609,6 +2107,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L l(\G l)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>floʊ</oncPredictedSyllabification>
@@ -1623,6 +2124,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L ɪ(\G ɪ)))(C(\L f(\G f))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1637,6 +2141,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f)))(R(N(\L ɪ(\G ɪ)))(C(\L f(\G f))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1651,6 +2158,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L ɹ(\G ɹ)))(R(N(\L æ(\G æ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>fɹæn.tɪk</oncPredictedSyllabification>
@@ -1665,6 +2175,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L f(\G f))(\L ɹ(\G ɹ)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>fɹi</oncPredictedSyllabification>
@@ -1679,6 +2192,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L l(\G l)))(R(N(\L æ(\G æ)))(C(\L d(\G d))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>glæd</oncPredictedSyllabification>
@@ -1693,6 +2209,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L w(\G w)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>gwɛn</oncPredictedSyllabification>
@@ -1707,6 +2226,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L g(\G g)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1721,6 +2243,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L g(\G g))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>gɹɪp</oncPredictedSyllabification>
@@ -1735,6 +2260,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>hɛlm</oncPredictedSyllabification>
@@ -1749,6 +2277,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>hɛlp</oncPredictedSyllabification>
@@ -1763,6 +2294,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L θ(\G θ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>hɛlθ</oncPredictedSyllabification>
@@ -1777,6 +2311,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>hɛm</oncPredictedSyllabification>
@@ -1791,6 +2328,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɛ(\G ɛ)))(C(\L m(\G m))(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>hɛmp</oncPredictedSyllabification>
@@ -1805,6 +2345,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L h(\G h)))(R(N(\L ɪ(\G ɪ)))(C(\L n(\G n))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>hɪnt</oncPredictedSyllabification>
@@ -1819,6 +2362,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L j(\G j)))(R(N(\L ə(\G ə)))(C(\L ɹ(\G ɹ))(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>jəɹn</oncPredictedSyllabification>
@@ -1833,6 +2379,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>kaɹt</oncPredictedSyllabification>
@@ -1847,6 +2396,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L aʊ(\G aʊ)))(C(\L n(\G n)))))(σ(O(\L s(\G s)))(R(N(\L ə(\G ə)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>kaʊn.səl</oncPredictedSyllabification>
@@ -1861,6 +2413,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L i(\G i)))(C(\L l(\G l))(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>kiln</oncPredictedSyllabification>
@@ -1875,6 +2430,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>kjut</oncPredictedSyllabification>
@@ -1889,6 +2447,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L l(\G l)))(R(N(\L i(\G i)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>klin</oncPredictedSyllabification>
@@ -1903,6 +2464,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L oɪ(\G oɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>koɪn</oncPredictedSyllabification>
@@ -1917,6 +2481,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L w(\G w)))(R(N(\L ɪ(\G ɪ)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>kwɪt</oncPredictedSyllabification>
@@ -1931,6 +2498,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -1945,6 +2515,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L k(\G k))(\L ɹ(\G ɹ)))(R(N(\L a(\G a)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>kɹal</oncPredictedSyllabification>
@@ -1959,6 +2532,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L l(\G l)))(R(N(\L aʊ(\G aʊ)))(C(\L s(\G s))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>laʊs</oncPredictedSyllabification>
@@ -1973,6 +2549,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L a(\G a)))(C(\L n(\G n))(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>mans.təɹ</oncPredictedSyllabification>
@@ -1987,6 +2566,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n)))))(σ(O(\L t(\G t)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>meɪn.teɪn</oncPredictedSyllabification>
@@ -2001,6 +2583,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L l(\G l))(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>mɪlk</oncPredictedSyllabification>
@@ -2015,6 +2600,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L n(\G n)))(R(N(\L a(\G a)))(C(\L s(\G s)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>nas.tɪk</oncPredictedSyllabification>
@@ -2029,6 +2617,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L n(\G n)))(R(N(\L u(\G u)))))(σ(O(\L m(\G m)))(R(N(\L æ(\G æ)))))(σ(O(\L t(\G t)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>nu.mæ.tɪk</oncPredictedSyllabification>
@@ -2043,6 +2634,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L a(\G a)))(C(\L l(\G l))(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>palm</oncPredictedSyllabification>
@@ -2057,6 +2651,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>peɪnt</oncPredictedSyllabification>
@@ -2071,6 +2668,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p))(\L j(\G j)))(R(N(\L u(\G u)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>pjuk</oncPredictedSyllabification>
@@ -2085,6 +2685,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p))(\L l(\G l)))(R(N(\L e(\G e))(\L i(\G i)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>pleit</oncPredictedSyllabification>
@@ -2099,6 +2702,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L p(\G p)))(R(N(\L ɛ(\G ɛ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>pɛp</oncPredictedSyllabification>
@@ -2113,6 +2719,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription></ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse into segments beginning at 'rist'.</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2127,6 +2736,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2141,6 +2753,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2155,6 +2770,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2169,6 +2787,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2183,6 +2804,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2197,6 +2821,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2211,6 +2838,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L l(\G l)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>sloʊ</oncPredictedSyllabification>
@@ -2225,6 +2855,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L l(\G l)))(R(N(\L ɪ(\G ɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>slɪp</oncPredictedSyllabification>
@@ -2239,6 +2872,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L m(\G m)))(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>smɛl</oncPredictedSyllabification>
@@ -2253,6 +2889,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L n(\G n)))(R(N(\L oʊ(\G oʊ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>snoʊ</oncPredictedSyllabification>
@@ -2267,6 +2906,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2281,6 +2923,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2295,6 +2940,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2309,6 +2957,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2323,6 +2974,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2337,6 +2991,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2351,6 +3008,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2365,6 +3025,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W)</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2379,6 +3042,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L u(\G u)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>sut</oncPredictedSyllabification>
@@ -2393,6 +3059,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s))(\L w(\G w)))(R(N(\L i(\G i)))(C(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>swit</oncPredictedSyllabification>
@@ -2407,6 +3076,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2421,6 +3093,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2435,6 +3110,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L s(\G s)))(R(N(\L ɪ(\G ɪ)))(C(\L m(\G m))(\L p(\G p)))))(σ(O(\L t(\G t)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>sɪmp.təm</oncPredictedSyllabification>
@@ -2449,6 +3127,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L eɪ(\G eɪ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>teɪp</oncPredictedSyllabification>
@@ -2463,6 +3144,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L u(\G u)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>tun</oncPredictedSyllabification>
@@ -2477,6 +3161,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L w(\G w)))(R(N(\L ɪ(\G ɪ)))(C(\L n(\G n))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>twɪn</oncPredictedSyllabification>
@@ -2491,6 +3178,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L ɛ(\G ɛ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Failure: could not parse segments into syllables</ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2505,6 +3195,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t)))(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n))(\L θ(\G θ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>tɛnθ</oncPredictedSyllabification>
@@ -2519,6 +3212,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L æ(\G æ)))(C(\L p(\G p))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>tɹæp</oncPredictedSyllabification>
@@ -2533,6 +3229,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L aɪ(\G aɪ))(\L ə(\G ə)))(C(\L m(\G m))(\L f(\G f))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>tɹaɪəmf</oncPredictedSyllabification>
@@ -2547,6 +3246,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L t͡ʃ(\G t͡ʃ)))(R(N(\L eɪ(\G eɪ)))(C(\L m(\G m)))))(σ(O(\L b(\G b)))(R(N(\L ɛ(\G ɛ)))(C(\L ɹ(\G ɹ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>t͡ʃeɪm.bɛɹ</oncPredictedSyllabification>
@@ -2561,6 +3263,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L w(\G w)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L m(\G m))(\L θ(\G θ))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>waɹmθ</oncPredictedSyllabification>
@@ -2575,6 +3280,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L w(\G w)))(R(N(\L ɑ(\G ɑ))(\L ɪ(\G ɪ)))(C(\L l(\G l))(\L d(\G d))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>wɑɪld</oncPredictedSyllabification>
@@ -2589,6 +3297,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))(C(\L s(\G s)))))(σ(O(\L p(\G p)))(R(N(\L eɪ(\G eɪ)))))(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L g(\G g)))(R(N(\L ə(\G ə)))(C(\L s(\G s))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>əs.peɪ.ɹɪ.gəs</oncPredictedSyllabification>
@@ -2603,6 +3314,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))))(σ(O(\L t(\G t)))(R(N(\L a(\G a)))))(σ(O(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>ə.ta.mɪk</oncPredictedSyllabification>
@@ -2617,6 +3331,9 @@
             <cvPredictedSyllabification>ət.ɹoʊ.ʃɪs</cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ə(\G ə)))))(σ(O(\L t(\G t))(\L ɹ(\G ɹ)))(R(N(\L oʊ(\G oʊ)))))(σ(O(\L ʃ(\G ʃ)))(R(N(\L ɪ(\G ɪ)))(C(\L s(\G s))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>ə.tɹoʊ.ʃɪs</oncPredictedSyllabification>
@@ -2631,6 +3348,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ɛ(\G ɛ)))(C(\L l(\G l))(\L f(\G f))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>ɛlf</oncPredictedSyllabification>
@@ -2645,6 +3365,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription></ONCLingTreeDescription>
             <ONCParserResult></ONCParserResult>
             <oncPredictedSyllabification></oncPredictedSyllabification>
@@ -2659,6 +3382,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(R(N(\L ɛ(\G ɛ)))(C(\L n(\G n)))))(σ(O(\L θ(\G θ)))(R(N(\L u(\G u)))(C(\L z(\G z))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>ɛn.θuz</oncPredictedSyllabification>
@@ -2673,6 +3399,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L ð(\G ð))(\L m(\G m)))(R(N(\L ɪ(\G ɪ)))(C(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>ɹɪ.ðmɪk</oncPredictedSyllabification>
@@ -2687,6 +3416,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))))(σ(O(\L ð(\G ð)))(R(N(\L ə(\G ə)))(C(\L m(\G m))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>ɹɪ.ðəm</oncPredictedSyllabification>
@@ -2701,6 +3433,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L ʃ(\G ʃ))(\L ɹ(\G ɹ)))(R(N(\L ɪ(\G ɪ)))(C(\L l(\G l))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>ʃɹɪl</oncPredictedSyllabification>
@@ -2715,6 +3450,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ)))(R(N(\L eɪ(\G eɪ)))(C(\L n(\G n))(\L k(\G k))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>θeɪnk</oncPredictedSyllabification>
@@ -2729,6 +3467,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ))(\L w(\G w)))(R(N(\L a(\G a)))(C(\L ɹ(\G ɹ))(\L t(\G t))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>θwaɹt</oncPredictedSyllabification>
@@ -2743,6 +3484,9 @@
             <cvPredictedSyllabification></cvPredictedSyllabification>
             <comment></comment>
             <correctSyllabification></correctSyllabification>
+            <moraicLingTreeDescription></moraicLingTreeDescription>
+            <moraicParserResult></moraicParserResult>
+            <moraicPredictedSyllabification></moraicPredictedSyllabification>
             <ONCLingTreeDescription>(W(σ(O(\L θ(\G θ))(\L ɹ(\G ɹ)))(R(N(\L i(\G i))))))</ONCLingTreeDescription>
             <ONCParserResult>Success</ONCParserResult>
             <oncPredictedSyllabification>θɹi</oncPredictedSyllabification>

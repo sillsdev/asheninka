@@ -250,6 +250,9 @@ public class SyllabificationComparisonController implements Initializable {
 				comparer.setUseCVApproach(useCVApproach.isSelected());
 				comparer.setUseSHApproach(useSHApproach.isSelected());
 				comparer.setUseONCApproach(useONCApproach.isSelected());
+				comparer.setUseMoraicApproach(useMoraicApproach.isSelected());
+				comparer.setUseNPApproach(useNuclearProjectionApproach.isSelected());
+				comparer.setUseOTApproach(useOTApproach.isSelected());
 				comparer.compareSyllabifications();
 				SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 						comparer, locale, LocalDateTime.now());

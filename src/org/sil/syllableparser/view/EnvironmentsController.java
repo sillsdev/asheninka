@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -25,10 +25,12 @@ import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-import org.sil.utility.StringUtilities;
 import org.sil.antlr4.environmentparser.EnvironmentConstants;
 import org.sil.antlr4.environmentparser.EnvironmentErrorInfo;
 import org.sil.antlr4.environmentparser.EnvironmentErrorListener;
@@ -54,7 +56,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
@@ -601,6 +602,21 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 				mainApp.getApplicationPreferences().setLastONCEnvironmentsViewItemUsed(
 						iCurrentIndex);
 				break;
+
+			case MORAIC:
+				mainApp.getApplicationPreferences()
+						.setLastMoraicEnvironmentsViewItemUsed(iCurrentIndex);
+				break;
+
+			case NUCLEAR_PROJECTION:
+				mainApp.getApplicationPreferences().setLastNPEnvironmentsViewItemUsed(
+						iCurrentIndex);
+				break;
+
+			case OPTIMALITY_THEORY:
+				mainApp.getApplicationPreferences().setLastOTEnvironmentsViewItemUsed(
+						iCurrentIndex);
+				break;
 			default:
 				break;
 			}
@@ -615,29 +631,7 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 	public void setData(CVApproach cvApproachData) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproach.getLanguageProject();
-		setColumnICURules();
-		setTextFieldColors();
-		iRepresentationCaretPosition = 6;
-		fGncChoicesUsingMouse = false;
-
-		// Add observable list data to the table
-		environmentTable.setItems(cvApproachData.getLanguageProject().getEnvironments());
-		int max = environmentTable.getItems().size();
-		if (max > 0) {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastCVEnvironmentsViewItemUsed();
-					iLastIndex = adjustIndexValue(iLastIndex, max);
-					// select the last one used
-					environmentTable.requestFocus();
-					environmentTable.getSelectionModel().select(iLastIndex);
-					environmentTable.getFocusModel().focus(iLastIndex);
-					environmentTable.scrollTo(iLastIndex);
-				}
-			});
-		}
+		setDataCommon(ApplicationPreferences.LAST_CV_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 
 	protected void setColumnICURules() {
@@ -649,6 +643,10 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 	public void setData(SHApproach shApproachData) {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
+
+	protected void setDataCommon(String sPref) {
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
 		setTextFieldColors();
@@ -656,14 +654,13 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 		fGncChoicesUsingMouse = false;
 
 		// Add observable list data to the table
-		environmentTable.setItems(shApproachData.getLanguageProject().getEnvironments());
+		environmentTable.setItems(languageProject.getEnvironments());
 		int max = environmentTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastSHEnvironmentsViewItemUsed();
+					int iLastIndex = mainApp.getApplicationPreferences().getIntegerValue(sPref, 0);
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					// select the last one used
 					environmentTable.requestFocus();
@@ -678,30 +675,25 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 	public void setData(ONCApproach oncApproachData) {
 		oncApproach = oncApproachData;
 		languageProject = oncApproach.getLanguageProject();
-		cvApproach = languageProject.getCVApproach();
-		setColumnICURules();
-		setTextFieldColors();
-		iRepresentationCaretPosition = 6;
-		fGncChoicesUsingMouse = false;
+		setDataCommon(ApplicationPreferences.LAST_ONC_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
 
-		// Add observable list data to the table
-		environmentTable.setItems(oncApproachData.getLanguageProject().getEnvironments());
-		int max = environmentTable.getItems().size();
-		if (max > 0) {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastONCEnvironmentsViewItemUsed();
-					iLastIndex = adjustIndexValue(iLastIndex, max);
-					// select the last one used
-					environmentTable.requestFocus();
-					environmentTable.getSelectionModel().select(iLastIndex);
-					environmentTable.getFocusModel().focus(iLastIndex);
-					environmentTable.scrollTo(iLastIndex);
-				}
-			});
-		}
+	public void setData(MoraicApproach moraicApproachData) {
+		moraicApproach = moraicApproachData;
+		languageProject = moraicApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_MORAIC_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
+
+	public void setData(NPApproach npApproachData) {
+		npApproach = npApproachData;
+		languageProject = npApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_NP_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
+
+	public void setData(OTApproach otApproachData) {
+		otApproach = otApproachData;
+		languageProject = otApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_OT_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 
 	protected void setTextFieldColors() {

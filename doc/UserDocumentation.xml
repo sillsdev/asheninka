@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->9 December 2020</date
+>6 July 2021</date
 ><version
->0.7.0 Alpha</version
+>1.0.0</version
 ><contents
 ></contents
 ></frontMatter
@@ -457,13 +457,13 @@ type="tMenuItem"
 >Settings / Change the interface language</object
 > menu item. This brings up a dialog box showing the current interface language in a drop down chooser. Click on the chooser's drop down button to see other interface language choices. The choices given use the name of the language in the current interface language followed by the name of the language in its own language. So if the current interface language is English, then it will show “Spanish (español)” as an option; if the current interface language is Spanish, it will show English as “inglés (English)”. When you click on the "OK" button, the program will "flash" and show with the new user interface language.</p
 ><p
->The current version has English, French<endnote
+>The current version has English, French,<endnote
 id="nFrench"
 ><p
 >Many thanks to the folks at <link
 href="https://home.missionassist.org.uk/"
 >Mission Assist</link
->.</p
+> for what is included. More help is needed to complete the French interface.</p
 ></endnote
 > and a rough, most likely often inaccurate version of Spanish. Any corrections to any of the languages are welcome.</p
 ></section2
@@ -478,7 +478,7 @@ type="tMenuItem"
 ><indexedItem
 term="iHelp"
 ></indexedItem
->Currently, there are four <object
+>Currently, there are five <object
 type="tMenuItem"
 >Help</object
 > menu items:</p
@@ -510,6 +510,20 @@ term="iIntroduction"
 type="tMenuItem"
 >Introduction to syllabification</object
 > which has some general discussion of syllabification issues.</li
+><li
+><indexedItem
+term="iHamond1997"
+></indexedItem
+><object
+type="tMenuItem"
+>Hammond 1997</object
+> which opens <citation
+ref="rHammond"
+></citation
+> in your default PDF viewer. If you plan to use the <object
+type="tOTApproach"
+></object
+>, we highly recommend you read at least sections 4-7 (on pages 5-18) before doing so.</li
 ><li
 ><object
 type="tMenuItem"
@@ -550,7 +564,10 @@ type="tMenuItem"
 XeLaTeXSpecial="scaled='500'"
 src="resources/SyllabifyWords.png"
 ></img
-> tool bar button). You can use the first set to help you see potential progress. The second can help you compare how your implementation of a particular approach is doing compared to some other approach.</pc
+> tool bar button). You can use the first set to help you see potential progress. The second can help you compare how your implementation of a particular approach is doing compared to some other approach which has been used to set the correct parse information (see <sectionRef
+sec="sConvertPredictedToCorrect"
+></sectionRef
+>).</pc
 ></section2
 ></section1
 ><section1
@@ -561,7 +578,7 @@ id="sApproaches"
 ><object
 type="tAsheninka"
 ></object
-> will eventually offer six different syllabification algorithms or approaches. These are covered in <sectionRef
+> offers six different syllabification algorithms or approaches. These are covered in <sectionRef
 sec="sCVApproach"
 textBefore="plural"
 ></sectionRef
@@ -569,24 +586,15 @@ textBefore="plural"
 sec="sOTApproach"
 textBefore="none"
 ></sectionRef
->. Only three are implemented in the current version. See <sectionRef
-sec="sCVApproach"
-textBefore="plural"
-></sectionRef
->, <sectionRef
-sec="sSonorityHiearchyApproach"
-textBefore="none"
-></sectionRef
->, and <sectionRef
-sec="sONCApproach"
-textBefore="none"
-></sectionRef
 >.</p
 ><p
 ><indexedItem
 term="iIntroduction"
 ></indexedItem
->The various approaches or algorithms are explained and illustrated in the “Overview” document. You can read this document by clicking <link
+>The various approaches or algorithms are explained and illustrated in the “<object
+type="tOverviewDocument"
+></object
+>” document. You can read this document by clicking <link
 href="Overview.pdf"
 >here</link
 > or by using the <object
@@ -674,80 +682,10 @@ type="tAsheninka"
 ></object
 > is to adjust the segment inventory (including graphemes and their environments), natural classes, and syllable patterns so that one gets most, if not all, words to syllabify correctly.</p
 ><p
-><indexedItem
-term="iCVPatternAlgorithm"
-></indexedItem
-><indexedItem
-term="iParsingResult"
-></indexedItem
->The main algorithm is as follows:</p
-><ol
-><li
->It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
-sec="sCVSegmentInventory"
-></sectionRef
-> for more on this. <indexedItem
-term="iFailureCVSegmenter"
-></indexedItem
->If it cannot find a sequence that covers the whole word, it reports an error of <object
-type="tErrorMessage"
->Failure: could not parse into segments beginning at '<object
-type="tItalic"
->some characters</object
-></object
-> and quits. The '<object
-type="tItalic"
->some characters</object
->' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met. You can use the <object
-type="tTryAWord"
-></object
-> tool to get more details (see <sectionRef
-sec="sCVTryAWord"
-></sectionRef
->).</li
-><li
->If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited, trying to find a sequence of natural classes that covers the entire sequence of segments. It uses the set of segments or natural (sub-)classes defined within a natural class to determine a match with a natural class. If two or more natural classes match, it tries each of them in turn. <indexedItem
-term="iFailureCVNaturalClasser"
-></indexedItem
->If it cannot find a sequence of natural classes that covers the entire sequence of posited segments, it reports an error of <object
-type="tErrorMessage"
->Failure: could not parse into natural classes; did find classes '<object
-type="tItalic"
->some classes</object
->' covering graphemes '<object
-type="tItalic"
->some graphemes</object
->'</object
-> and quits. The '<object
-type="tItalic"
->some classes</object
->' part indicates the sequence of natural classes that were found and the '<object
-type="tItalic"
->some graphemes</object
->' part indicates which graphemes were included in those natural classes. Hopefully this will help you figure out why other natural classes were not found for this word.</li
-><li
->If it succeeded in finding a sequence of natural classes, it performs a left-to-right sweep of the sequence of the natural classes it posited, trying to find a sequence of syllable patterns that covers the entire sequence. It tries the syllable patterns in the order they are arranged in the <object
-type="tCVSyllablePatterns"
-></object
-> view (see <sectionRef
-sec="sCVSyllablePatterns"
-></sectionRef
-> below). <indexedItem
-term="iFailureCVSyllables"
-></indexedItem
->If it cannot find a sequence of syllable patterns that covers the entire sequence of posited natural classes, it reports an error of <object
-type="tErrorMessage"
->Failure: could not parse natural classes into syllables</object
-> and quits.</li
-><li
->If it succeeded in finding a sequence of syllable patterns, it outputs the syllabification into the <object
-type="tPredictedSyllableBreaks"
-></object
-> field and reports <object
-type="tSuccessMessage"
-></object
->.</li
-></ol
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to find a sequence of natural classes that covers the entire sequence of segments. Finally, it tries to find a sequence of syllable patterns that covers the entire sequence of natural classes. See appendix <appendixRef
+app="aCVAlgorithmInDetail"
+></appendixRef
+> for details.</p
 ><p
 >We now give more information on the various views available in the user interface for the <object
 type="tCVPatternApproach"
@@ -893,7 +831,7 @@ type="tCVSyllablePatterns"
 >The <object
 type="tField"
 >Name</object
-> field is for you to define a short name for this syllable pattern. We suggest using something short. The <object
+> field is for you to define a name for this syllable pattern. We suggest using something short. The <object
 type="tField"
 >Description</object
 > field is for your use to document anything special about this syllable pattern.</p
@@ -1401,12 +1339,12 @@ type="tCVWords"
 ><ol
 ><li
 ><object
-type="tPredictedSyllableBreaks"
+type="tComment"
 ></object
 ></li
 ><li
 ><object
-type="tComment"
+type="tPredictedSyllableBreaks"
 ></object
 ></li
 ><li
@@ -1457,7 +1395,10 @@ type="tSyllabifyWords"
 > tool, given the state of the segments, natural classes, and syllable patterns when it was invoked. When there is a result in this column/field, then the <object
 type="tParserResult"
 ></object
-> column/field should have “Success” (in green).</p
+> column/field should have “Success” (in <object
+type="tGreen"
+></object
+>).</p
 ><p
 >Remember that you can click on a column header to sort the contents of the column. If you click on the <object
 type="tParserResult"
@@ -1505,6 +1446,22 @@ sec="sConvertPredictedToCorrect"
 > for more on this.</p
 ></section2
 ><section2
+id="sCVPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct CV words</secTitle
+><p
+><indexedItem
+term="iCVPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iCVPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tCVPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the predictions of the current set of segments, natural classes, and syllable patterns differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
+></section2
+><section2
 id="sCVTryAWord"
 ><secTitle
 >CV Try a Word</secTitle
@@ -1534,16 +1491,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, <object
-type="tSHApproach"
-></object
->, and the one for the <object
-type="tONCApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -1745,7 +1693,11 @@ type="tErrorMessageText"
 ></chart
 ></example
 ><pc
->In this case, the word was <langData
+>In the case of example <exampleRef
+letter="xCVTryAWordNCFailure"
+num="xCVTryAWordNCFailure"
+></exampleRef
+>, the word was <langData
 lang="lVernacular"
 >ambu</langData
 >, but no natural class has the segment <langData
@@ -1797,14 +1749,32 @@ src="resources/CVTryAWordFailedSyl1.png"
 ></chart
 ></example
 ><pc
->Notice that none of the patterns are in green. Four are in red and two are in blue. Recall from above that this means that none of the red patterns matched the beginning of the sequence of natural classes (which was <object
+>Notice that none of the patterns are in <object
+type="tGreen"
+></object
+>. Four are in <object
+type="tRed"
+></object
+> and two are in <object
+type="tBlue"
+></object
+>. Recall from above that this means that none of the <object
+type="tRed"
+></object
+> patterns matched the beginning of the sequence of natural classes (which was <object
 type="tGreenText"
 >C, V, C, C, K, C</object
->). The two blue ones did match the beginning of the sequence, but did not ultimately lead to a successful parse. Example <exampleRef
+>). The two <object
+type="tBlue"
+></object
+> ones did match the beginning of the sequence, but did not ultimately lead to a successful parse. Example <exampleRef
 letter="xCVTryAWordFailedSyl2"
 num="xCVTryAWordFailedSyl2"
 ></exampleRef
-> shows what it looked like when opening the second blue pattern (<object
+> shows what it looked like when opening the second <object
+type="tBlue"
+></object
+> pattern (<object
 type="tBlueText"
 >C, V, C</object
 >).</pc
@@ -1825,22 +1795,6 @@ type="tBlueText"
 type="tGreenText"
 >C, K, C</object
 >).</pc
-></section2
-><section2
-id="sCVPredicitedVsCorrect"
-><secTitle
->Predicted vs.​ correct CV words</secTitle
-><p
-><indexedItem
-term="iCVPredictedVsCorrect"
-></indexedItem
-><indexedItem
-term="iCVPredictedSyllabificationCompare"
-></indexedItem
->The <object
-type="tCVPredictedVsCorrectWords"
-></object
-> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the predictions of the current set of segments, natural classes, and syllable patterns differ from the expected results. In this view, by the way, the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
 ></section2
 ></section1
 ><section1
@@ -1916,74 +1870,15 @@ type="tSHApproach"
 > in <object
 type="tAsheninka"
 ></object
-> is to adjust the segment inventory (including graphemes and their environments), and the sonority hierarchy (i.e., its ordered set of natural classes) so that one gets most, if not all, words to syllabify correctly. Depending on the needs of the language you are modeling, you may find that this algorithm is less than you need as noted in the “Overview” document.</p
+> is to adjust the segment inventory (including graphemes and their environments), and the sonority hierarchy (i.e., its ordered set of natural classes) so that one gets most, if not all, words to syllabify correctly. Depending on the needs of the language you are modeling, you may find that this algorithm is less than you need as noted in the “<object
+type="tOverviewDocument"
+></object
+>” document.</p
 ><p
-><indexedItem
-term="iSHPatternAlgorithm"
-></indexedItem
-><indexedItem
-term="iParsingResult"
-></indexedItem
->The main algorithm is as follows:</p
-><ol
-><li
->It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
-sec="sCVSegmentInventory"
-></sectionRef
-> for more on this. <indexedItem
-term="iFailureCVSegmenter"
-></indexedItem
->If it cannot find a sequence that covers the whole word, it reports an error of <object
-type="tErrorMessage"
->Failure: could not parse into segments beginning at '<object
-type="tItalic"
->some characters</object
-></object
-> and quits. The '<object
-type="tItalic"
->some characters</object
->' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
-id="nSHSegSameAsCV"
-><p
->This is the exact same algorithm used by the <object
-type="tCVPatternApproach"
-></object
->.</p
-></endnote
-> You can use the <object
-type="tTryAWord"
-></object
-> tool to get more details (see <sectionRef
-sec="sSHTryAWord"
-></sectionRef
->).</li
-><li
->If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited. It places the first segment of the word in the first syllable. It then tries to find the natural class of the current segment and the natural class of the following segment (unless the current segment is at the end of the word and also not already in a syllable; in this case, it adds the current segment to the current syllable). It then compares the “level” in the sonority hierarchy of these two natural classes and processes them as follows:<ol
-><li
->If they are at the same level, a new syllable is created and the second segment is added to this new syllable.</li
-><li
->If the natural class of the current segment is less sonorous than the natural class of the following segment, then it adds the following segment to the current syllable.</li
-><li
->If the natural class of the current segment is more sonorous than the natural class of the following segment, then it looks at the segment after the following segment. There are two cases considered:<ol
-><li
->If the second segment's natural class is the same or more sonorous than the third segment's natural class, than the second segment is added to the current syllable. A new syllable is created and the third segment is added to it.</li
-><li
->Otherwise, a new syllable is created and the second segment is added to it.</li
-></ol
-></li
-></ol
-></li
-><li
->Whenever a segment is not found in any natural class, an error is reported.</li
-><li
->If it succeeded in finding natural classes for all segments, it outputs the syllabification into the <object
-type="tPredictedSyllableBreaks"
-></object
-> field and reports <object
-type="tSuccessMessage"
-></object
->.</li
-></ol
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to find a sequence of syllables based on the sonority hierarchy, where segments rise in sonority to the peak and then fall in sonority. See appendix <appendixRef
+app="aSHAlgorithmInDetail"
+></appendixRef
+> for details.</p
 ><p
 >We now give more information on the various views available in the user interface for the <object
 type="tSHApproach"
@@ -2027,7 +1922,7 @@ type="tSHSonorityHierarchy"
 >The <object
 type="tField"
 >Name</object
-> field is for you to define a short name for this natural class. We suggest using something short. The <object
+> field is for you to define a name for this natural class. We suggest using something short. The <object
 type="tField"
 >Description</object
 > field is for your use to document anything more specific about this class.</p
@@ -2054,7 +1949,54 @@ type="tAsheninka"
 ><p
 >If either or both of these conditions exist, a box will appear showing which segments and or segment/class combinations are problematic. It is up to you to fix any problem. If a given segment is not in any class, then any word containing that segment will fail to syllabify. If a given segment is in more than one class, the syllabification algorithm will use the topmost class containing that segment.</p
 ><p
->Finally, the order in which the classes occur is important. The items are in order of sonority: the most sonorous at top and the least sonorous at the bottom. You control the order of the classes by clicking on a class in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+>Finally, the order in which the classes occur is important. The items are in order of sonority: the most sonorous is at top and the least sonorous is at the bottom. You control the order of the classes by clicking on a class in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+></section2
+><section2
+id="sSHWords"
+><secTitle
+>Sonority hierarchy words</secTitle
+><p
+><indexedItem
+term="iSHEnvironments"
+></indexedItem
+>This works like the <object
+type="tCVWords"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>, except that the <object
+type="tPredictedSyllableBreaks"
+></object
+> values, the <object
+type="tParserResult"
+></object
+> values, and the <object
+type="tParserTreeDiagram"
+></object
+> are the result of the <object
+type="tSHApproach"
+></object
+> algorithm. In the tree diagram, there is no intervening structure between the syllable and the segment. See <sectionRef
+sec="sCVWords"
+></sectionRef
+> for more on this view.</p
+></section2
+><section2
+id="sSHPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct Son. Hier. words</secTitle
+><p
+><indexedItem
+term="iSHPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iSHPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tSHPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the predictions of the current set of segments and sonority hierarchy differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
 ></section2
 ><section2
 id="sSHGraphemeNaturalClasses"
@@ -2095,37 +2037,6 @@ sec="sEnvironments"
 > for details.</p
 ></section2
 ><section2
-id="sSHWords"
-><secTitle
->Sonority hierarchy words</secTitle
-><p
-><indexedItem
-term="iSHEnvironments"
-></indexedItem
->This works like the <object
-type="tCVWords"
-></object
-> view for the <object
-type="tCVPatternApproach"
-></object
->, except that the <object
-type="tPredictedSyllableBreaks"
-></object
-> values, the <object
-type="tParserResult"
-></object
-> values, and the <object
-type="tParserTreeDiagram"
-></object
-> are the result of the <object
-type="tSHApproach"
-></object
-> algorithm. In the tree diagram, there is no intervening structure between the syllable and the segment. See <sectionRef
-sec="sCVWords"
-></sectionRef
-> for more on this view.</p
-></section2
-><section2
 id="sSHTryAWord"
 ><secTitle
 >Sonority hierarchy Try a Word</secTitle
@@ -2152,16 +2063,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, <object
-type="tSHApproach"
-></object
->, and the one for the <object
-type="tONCApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -2320,7 +2222,10 @@ term="iFailureSHNaturalClasser"
 >If a word contains a segment that is not in any natural class, the sonority hierarchy results table will end with a row whose <object
 type="tBold"
 >Relation</object
-> column contains “!!!” in red and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
+> column contains “!!!” in <object
+type="tRed"
+></object
+> and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
 letter="xSHTryAWordNCFailure"
 num="xSHTryAWordNCFailure"
 ></exampleRef
@@ -2334,7 +2239,11 @@ src="resources/SHTryAWordNCFailure.png"
 ></chart
 ></example
 ><pc
->In this case, the word was <langData
+>In the case of example <exampleRef
+letter="xSHTryAWordNCFailure"
+num="xSHTryAWordNCFailure"
+></exampleRef
+>, the word was <langData
 lang="lVernacular"
 >ambu</langData
 >, but no natural class has the segment <langData
@@ -2344,22 +2253,6 @@ lang="lVernacular"
 lang="lVernacular"
 >b</langData
 >, it failed</pc
-></section2
-><section2
-id="sSHPredicitedVsCorrect"
-><secTitle
->Predicted vs.​ correct Son. Hier. words</secTitle
-><p
-><indexedItem
-term="iSHPredictedVsCorrect"
-></indexedItem
-><indexedItem
-term="iSHPredictedSyllabificationCompare"
-></indexedItem
->The <object
-type="tSHPredictedVsCorrectWords"
-></object
-> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the predictions of the current set of segments and sonority hierarchy differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
 ></section2
 ></section1
 ><section1
@@ -2418,7 +2311,7 @@ sec="sONCTemplates"
 ></sectionRef
 >)</li
 ><li
->filters section <sectionRef
+>filters (section <sectionRef
 sec="sONCFilters"
 ></sectionRef
 >)</li
@@ -2623,6 +2516,9 @@ term="iONCTemplates"
 >Templates can be used in two situations currently in <object
 type="tAsheninka"
 ></object
+> with the <object
+type="tONCApproach"
+></object
 >:</p
 ><ol
 ><li
@@ -2649,6 +2545,12 @@ sec="sONCCVNaturalClasses"
 type="tSHSonorityHierarchy"
 ></object
 >, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses.</p
+><p
+>If you have a sequence of two or more items consisting of the same segment or class and at least one of the items is required while the rest are optional, then be sure to make the leftmost one(s) be required. (See the word final example in <exampleRef
+letter="xTemplatesEnglish"
+num="xTemplatesEnglish"
+></exampleRef
+> below.)</p
 ><p
 ><indexedItem
 term="iEnglish"
@@ -2738,6 +2640,9 @@ term="iONCFilter"
 >Filters can be used in four situations currently in <object
 type="tAsheninka"
 ></object
+> with the <object
+type="tONCApproach"
+></object
 >:</p
 ><ol
 ><li
@@ -2781,7 +2686,13 @@ sec="sONCCVNaturalClasses"
 >) enclosed in square brackets (e.g., "[C]”). If the segment or the natural class can violate the <object
 type="tSHSonorityHierarchy"
 ></object
->, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses. If it is a repair filter, then key a vertical bar (|) at the point where the repair will occur.</p
+>, then key an asterisk (*) before the segment name or the opening square bracket. If the item is optional, enclose it within parentheses. Just like with keying slots in templates, if you have a sequence of two or more items consisting of the same segment or class and at least one of the items is required while the rest are optional, then be sure to make the leftmost one(s) be required. (See the word final example in <exampleRef
+letter="xTemplatesEnglish"
+num="xTemplatesEnglish"
+></exampleRef
+> above.)</p
+><p
+>If it is a repair filter, then key a vertical bar (|) at the point where the repair will occur.</p
 ><p
 >Note that for onset-oriented repair filters, one can also key an underscore character ( _ ) at the point before the first segment or class at the point where the onset begins (i.e., just before the first segment or class in the onset). This enables you to give some context for the preceding syllable.</p
 ><p
@@ -3057,16 +2968,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box for the <object
-type="tCVPatternApproach"
-></object
->, <object
-type="tSHApproach"
-></object
->, and the one for the <object
-type="tONCApproach"
-></object
-> can be set independently; you can have several <object
+> dialog box can be set independently for all six approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -3116,10 +3018,10 @@ type="tONCApproach"
 ><li
 >Parsing into segments.</li
 ><li
->Parsing segments into syllables (via the onet-nucleus-coda algorithm; see <sectionRef
-sec="sONCApproach"
-></sectionRef
-> above).</li
+>Parsing segments into syllables (via the onset-nucleus-coda algorithm; see appendix <appendixRef
+app="aONCAlgorithmInDetail"
+></appendixRef
+> below).</li
 ></ol
 ><p
 >The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into syllables. Successful steps are shown in <object
@@ -3167,7 +3069,13 @@ type="tCategory"
 > (nucleus) and an optional <object
 type="tCategory"
 >C</object
-> (coda) constituent. Below these are the segment and then its grapheme. If the parse succeeded, then the segments and their graphemes are shown in green. If the parse failed but some of the tree was built, then the segments and their graphemes are shown in red.</p
+> (coda) constituent. Below these are the segment and then its grapheme. If the parse succeeded, then the segments and their graphemes are shown in <object
+type="tGreen"
+></object
+>. If the parse failed but some of the tree was built, then the segments and their graphemes are shown in <object
+type="tRed"
+></object
+>.</p
 ><p
 >Scrolling the results window down shows the last part:</p
 ><example
@@ -3251,7 +3159,10 @@ term="iFailureONCNaturalClasser"
 >If a word contains a segment that is not in any natural class, the onset-nucleus-coda results table will end with a row whose <object
 type="tBold"
 >Relation</object
-> column contains “!!!” in red and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
+> column contains “!!!” in <object
+type="tRed"
+></object
+> and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
 letter="xONCTryAWordNCFailure"
 num="xONCTryAWordNCFailure"
 ></exampleRef
@@ -3266,7 +3177,11 @@ width="500"
 ></chart
 ></example
 ><pc
->In this case, the word was <langData
+>In the case of example <exampleRef
+letter="xONCTryAWordNCFailure"
+num="xONCTryAWordNCFailure"
+></exampleRef
+>, the word was <langData
 lang="lVernacular"
 >tun</langData
 >, but no natural class has the segment <langData
@@ -3279,39 +3194,2529 @@ lang="lVernacular"
 ></section2
 ></section1
 ><section1
-id="sMoriacApproach"
+id="sMoraicApproach"
 ><secTitle
->Moraic approach</secTitle
+><object
+type="tMoraicApproach"
+></object
+></secTitle
 ><p
 ><indexedItem
 term="iMoraicApproach"
 ></indexedItem
->This approach has not been implemented yet.</p
+>The <object
+type="tMoraicApproach"
+></object
+>, in many ways, is similar to the <object
+type="tONCApproach"
+></object
+>. Like with the <object
+type="tONCApproach"
+></object
+>, you need to define the following items:</p
+><ol
+><li
+>segments (<sectionRef
+sec="sMoraicSegmentInventory"
+></sectionRef
+>)</li
+><li
+>a sonority hierarchy via natural classes (<sectionRef
+sec="sMoraicSonorityHierarchy"
+></sectionRef
+>)</li
+><li
+>syllabification parameters (<sectionRef
+sec="sMoraicSyllabificationParameters"
+></sectionRef
+>)</li
+><li
+>grapheme natural classes (<sectionRef
+sec="sMoraicGraphemeNaturalClasses"
+></sectionRef
+>)</li
+><li
+>environments (<sectionRef
+sec="sMoraicEnvironments"
+></sectionRef
+>)</li
+></ol
+><p
+>If needed to successfully parse your language, you may also need to define these items:</p
+><ol
+><li
+>CV Natural Classes which are used in the next two (<sectionRef
+sec="sMoraicCVNaturalClasses"
+></sectionRef
+>)</li
+><li
+>templates (<sectionRef
+sec="sMoraicTemplates"
+></sectionRef
+>)</li
+><li
+>filters <sectionRef
+sec="sMoraicFilters"
+></sectionRef
+>)</li
+></ol
+><p
+>After that, you either use a existing word list, import a word list (see <sectionRef
+sec="sWords"
+></sectionRef
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
+type="tMenuItem"
+>Parser / Parse all Words </object
+> menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/SyllabifyWords.png"
+></img
+> tool bar button. This will apply the algorithm of the <object
+type="tMoraicApproach"
+></object
+> to all the words. You can then see the results in the <object
+type="tMoraicWords"
+></object
+> view. See <sectionRef
+sec="sMoraicWords"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sMoraicTryAWord"
+textBefore="none"
+></sectionRef
+> for ideas on how to check the results, among other things.</p
+><p
+>The main “game” to play with the <object
+type="tMoraicApproach"
+></object
+> in <object
+type="tAsheninka"
+></object
+> is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes) and the syllabification parameters so that one gets most, if not all, words to syllabify correctly. You may also need to write templates and/or filters to get some words to parse.</p
+><p
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to find sequences of segments that can be placed in a syllable with a mora-bearing segment at the “heart,” modulo the parsing parameters. See appendix <appendixRef
+app="aMoraicAlgorithmInDetail"
+></appendixRef
+> for details.</p
+><p
+>We now give more information on the various views available in the user interface for the <object
+type="tMoraicApproach"
+></object
+>.</p
+><section2
+id="sMoraicSegmentInventory"
+><secTitle
+>Moraic segment inventory</secTitle
+><p
+><indexedItem
+term="iMoraicSegments"
+></indexedItem
+>The <object
+type="tMoraicSegmentInventory"
+></object
+> view is similar to the <object
+type="tCVSegmentInventory"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for details. In addition to what the <object
+type="tCVSegmentInventory"
+></object
+> view has, the <object
+type="tMoraicSegmentInventory"
+></object
+> view also has a place to indicate how many moras the segment bears. Typically, consonants bear zero moras and vowels bear one or two.</p
+></section2
+><section2
+id="sMoraicSonorityHierarchy"
+><secTitle
+>Sonority hierarchy</secTitle
+><p
+><indexedItem
+term="iMoraicSonorityHierarchy"
+></indexedItem
+>The <object
+type="tMoraicSonorityHierarchy"
+></object
+> view works exactly like the <object
+type="tSHSonorityHierarchy"
+></object
+> view does for the <object
+type="tSHApproach"
+></object
+>. See <sectionRef
+sec="sSHSonorityHierarchy"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sMoraicSyllabificationParameters"
+><secTitle
+>Syllabification parameters</secTitle
+><p
+><indexedItem
+term="iMoraicSyllabificationParameters"
+></indexedItem
+><indexedItem
+term="iSyllabificationParameters"
+></indexedItem
+>The <object
+type="tSyllabificationParameters"
+></object
+> view is where you set the parameters to control syllabification for your language. To read more about these parameters, you can click <link
+href="Overview.pdf"
+>here</link
+> or use the <object
+type="tMenuItem"
+>Help / Introduction to syllabification</object
+> menu item. Like the <object
+type="tONCApproach"
+></object
+>, the <object
+type="tMoraicApproach"
+></object
+> has the following three parameters:</p
+><p
+><indexedItem
+term="iCodasAllowed"
+></indexedItem
+>The <object
+type="tField"
+>Codas allowed</object
+> field is a check box. If codas are allowed, check the box. Otherwise, leave it unchecked.</p
+><p
+><indexedItem
+term="iOnsetMaximization"
+></indexedItem
+>The <object
+type="tField"
+>Onset maximization</object
+> field is a check box. If onsets should be maximized, then check the box. Otherwise, leave it unchecked.</p
+><p
+><indexedItem
+term="iOnsetPrinciple"
+></indexedItem
+>The <object
+type="tField"
+>Onset principle</object
+> field has three radio buttons. One of them must be set. The three options are:</p
+><ol
+><li
+><indexedItem
+term="iAllButFirst"
+></indexedItem
+>All but the first syllable must have an onset</li
+><li
+><indexedItem
+term="iEverySyllable"
+></indexedItem
+>Every syllable must have an onset</li
+><li
+><indexedItem
+term="iOnsetsNotRequired"
+></indexedItem
+>Onsets are not required</li
+></ol
+><p
+>In addition, the <object
+type="tMoraicApproach"
+></object
+> also has two other parameters:</p
+><p
+><indexedItem
+term="iMaxMoras"
+></indexedItem
+>The <object
+type="tField"
+>Maximum moras per syllable</object
+> field indicates the maximum number of moras a syllable in this language may have. Typically, this is one or two.</p
+><p
+><indexedItem
+term="iUseWeightByPosition"
+></indexedItem
+>The <object
+type="tField"
+>Use weight by position</object
+> field is a check box. If the language uses weight by position, check the box. Otherwise, leave it unchecked.</p
+></section2
+><section2
+id="sMoraicCVNaturalClasses"
+><secTitle
+>CV natural classes</secTitle
+><p
+>The <object
+type="tCVNaturalClasses"
+></object
+> view is exactly the same as the <object
+type="tCVNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See section <sectionRef
+sec="sCVNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sMoraicTemplates"
+><secTitle
+>Moraic templates</secTitle
+><p
+><indexedItem
+term="iMoraicTemplates"
+></indexedItem
+>Templates can be used in two situations currently in <object
+type="tAsheninka"
+></object
+> for the <object
+type="tMoraicApproach"
+></object
+>:</p
+><ol
+><li
+>For a syllable, it provides the pattern of optional and required slots that must be present for a well-formed syllable.</li
+><li
+>For onsets and word-initial and word-final, it provides a way to override <object
+type="tSHSonorityHierarchy"
+></object
+> violations.</li
+></ol
+><p
+>Note that coda, nucleus and rime templates are not implemented for the <object
+type="tMoraicApproach"
+></object
+> because this approach does not model these constituents.</p
+><p
+>See <sectionRef
+sec="sONCTemplates"
+></sectionRef
+> for how to define a template.</p
+></section2
+><section2
+id="sMoraicFilters"
+><secTitle
+>Moraic filters</secTitle
+><p
+><indexedItem
+term="iMoraicFilter"
+></indexedItem
+>Filters can be used for onsets in <object
+type="tAsheninka"
+></object
+> with the <object
+type="tMoraicApproach"
+></object
+>. While other filters are shown, only onset filters are used. See <sectionRef
+sec="sONCFilters"
+></sectionRef
+> for more on using filters.</p
+></section2
+><section2
+id="sMoraicWords"
+><secTitle
+>Moraic words</secTitle
+><p
+><indexedItem
+term="iMoraicWords"
+></indexedItem
+>This works like the <object
+type="tCVWords"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>, except that the <object
+type="tPredictedSyllableBreaks"
+></object
+> values, the <object
+type="tParserResult"
+></object
+> values, and the <object
+type="tParserTreeDiagram"
+></object
+> are the result of the <object
+type="tMoraicApproach"
+></object
+> algorithm. If the parse fails and some word structure was built, then this partial word structure is shown by <object
+type="tParserTreeDiagram"
+></object
+>. In the tree diagram, a syllable will have any onset consonants connected to an onset (<object
+type="tCategory"
+>O</object
+>) constituent<endnote
+id="nMoraOnset"
+><p
+>The use of the <object
+type="tCategory"
+>O</object
+> onset constituent is non-standard. We use it in light of how word games like pig-latin treat onsets as constituents.</p
+></endnote
+> and then to the syllable node. The syllable node will have any mora-bearing segments underneath a Greek mu (<object
+type="tMora"
+></object
+>). See <sectionRef
+sec="sCVWords"
+></sectionRef
+> for more on this view.</p
+></section2
+><section2
+id="sMoraicPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct Moraic words</secTitle
+><p
+><indexedItem
+term="iMoraicPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iMoraicPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tMoraicPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the results of applying the <object
+type="tMoraicApproach"
+></object
+> differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
+></section2
+><section2
+id="sMoraicGraphemeNaturalClasses"
+><secTitle
+>Grapheme natural classes</secTitle
+><p
+><indexedItem
+term="iMoraicGraphemes"
+></indexedItem
+>This works exactly like the <object
+type="tGraphemeNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sMoraicEnvironments"
+><secTitle
+>Environments</secTitle
+><p
+><indexedItem
+term="iMoraicEnvironments"
+></indexedItem
+>This works exactly like the <object
+type="tEnvironments"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sEnvironments"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sMoraicTryAWord"
+><secTitle
+>Moraic Try a Word</secTitle
+><p
+><indexedItem
+term="iMoraicTryAWord"
+></indexedItem
+><indexedItem
+term="iTryAWord"
+></indexedItem
+>There are times when it may be difficult to know just why a given word is not syllabifying correctly. That's where the <object
+type="tTryAWord"
+></object
+> dialog box can be useful. To see it, use the <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> menu item. This brings up a dialog box like the one shown in example <exampleRef
+letter="xMoraicTryAWord"
+num="xMoraicTryAWord"
+></exampleRef
+>. Unlike most dialog boxes, you can keep the <object
+type="tTryAWord"
+></object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
+type="tTryAWord"
+></object
+> dialog box can be set independently for all six approaches; you can have several <object
+type="tTryAWord"
+></object
+> dialog boxes open at the same time if you wish.</p
+><example
+num="xMoraicTryAWord"
+><chart
+><img
+src="resources/CVTryAWord1.png"
+width="500"
+></img
+></chart
+></example
+><p
+>You can key a word to try in the text box. By default, <object
+type="tAsheninka"
+></object
+> shows the current word selected in the <object
+type="tMoraicWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tMoraicPredictedVsCorrectWords"
+></object
+> view (if you are showing that view) or the last word you used (or nothing if you've never used <object
+type="tTryAWord"
+></object
+> before and are not showing the <object
+type="tMoraicWords"
+></object
+> view).</p
+><p
+>When you either press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>Try it</object
+> button, <object
+type="tAsheninka"
+></object
+> will try to parse the word in the text box and report the result in the Results portion of the dialog box.</p
+><p
+>For the <object
+type="tMoraicApproach"
+></object
+>, there are at most two steps that are tried:</p
+><ol
+><li
+>Parsing into segments.</li
+><li
+>Parsing segments into syllables (via the moraic algorithm; see appendix <appendixRef
+app="aMoraicAlgorithmInDetail"
+></appendixRef
+> below).</li
+></ol
+><p
+>The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into syllables. Successful steps are shown in <object
+type="tGreen"
+></object
+> while unsuccessful ones are shown in <object
+type="tRed"
+></object
+>. An example of a successful parse is shown in example <exampleRef
+letter="xMoraicTryAWordahwiyak1"
+num="xMoraicTryAWordahwiyak1"
+></exampleRef
+>.</p
+><example
+num="xMoraicTryAWordahwiyak1"
+><chart
+><img
+src="resources/MoraicTryAWord2.png"
+width="500"
+></img
+></chart
+></example
+><p
+><indexedItem
+term="iFailureMoraicSegmenter"
+></indexedItem
+>The parsing into segments part is exactly the same as it is for the <object
+type="tCVPatternApproach"
+></object
+>. If any constituent structure was built during the parse, the tree diagram is also shown. The <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>σ</object
+> constituent indicates a syllable. A syllable will have a <object
+type="tCategory"
+><object
+type="tMora"
+></object
+></object
+> constituent. Onset segments attach to an <object
+type="tCategory"
+>O</object
+> category and other segments attach to a <object
+type="tCategory"
+><object
+type="tMora"
+></object
+></object
+> constituent. Below these are the segment and then its grapheme. If the parse succeeded, then the segments and their graphemes are shown in <object
+type="tGreen"
+></object
+>. If the parse failed but some of the tree was built, then the segments and their graphemes are shown in <object
+type="tRed"
+></object
+>.</p
+><p
+>Scrolling the results window down shows the last part:</p
+><example
+num="xMoraicTryAWordahwiyak2"
+><chart
+><img
+src="resources/MoraicTryAWord3.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>In the last part, it shows the sequence of segment pairs that were found along with their respective natural class and relationship. The <object
+type="tBold"
+>Relation</object
+> column uses mathematical symbols to indicate the relationship as given in example <exampleRef
+letter="xMoraicTryAWordRelation"
+num="xMoraicTryAWordRelation"
+></exampleRef
+>.</pc
+><example
+num="xMoraicTryAWordRelation"
+><table
+border="1"
+><tr
+><th
+align="center"
+>Relation</th
+><th
+>Meaning</th
+></tr
+><tr
+><td
+align="center"
+>&lt;</td
+><td
+>Segment 1 is less sonorous than segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>=</td
+><td
+>Segment 1 is equal in sonority to segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>&gt;</td
+><td
+>Segment 1 is more sonorous than segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>!!!</td
+><td
+>The segment was not in any natural class.</td
+></tr
+></table
+></example
+><pc
+>The <object
+type="tBold"
+>Status</object
+> column shows what the algorithm did at that part of the processing. Note that if there is a syllable template and especially if that template includes one or more coda slots, then it is possible that the message will show more segments matching the syllable template than will actually end up being in the syllable.</pc
+><p
+>As mentioned above, whenever one of the two steps fails, there is an error message shown for that step. Depending on the error and the state of the parser at the time, more steps may or may not be tried. See <sectionRef
+sec="sCVTryAWord"
+></sectionRef
+> for examples where the segments could not be parsed.</p
+><p
+><indexedItem
+term="iFailureMoraicNaturalClasser"
+></indexedItem
+>If a word contains a segment that is not in any natural class, the moraic results table will end with a row whose <object
+type="tBold"
+>Relation</object
+> column contains “!!!” in <object
+type="tRed"
+></object
+> and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
+letter="xMoraicTryAWordNCFailure"
+num="xMoraicTryAWordNCFailure"
+></exampleRef
+>.</p
+><example
+num="xMoraicTryAWordNCFailure"
+><chart
+><img
+src="resources/MoraicTryAWordNCFailure.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>In the case of <exampleRef
+letter="xMoraicTryAWordNCFailure"
+num="xMoraicTryAWordNCFailure"
+></exampleRef
+>, the word was <langData
+lang="lVernacular"
+>abay</langData
+>, but no natural class has the segment <langData
+lang="lVernacular"
+>b</langData
+> in it. So when it tried to find a natural class for <langData
+lang="lVernacular"
+>b</langData
+>, it failed</pc
+></section2
 ></section1
 ><section1
 id="sNuclearProjectionApproach"
 ><secTitle
->Nuclear projection approach</secTitle
+><object
+type="tNPApproach"
+></object
+></secTitle
 ><p
 ><indexedItem
-term="iNuclearProjectionApproach"
+term="iNPApproach"
 ></indexedItem
->This approach has not been implemented yet.</p
+>For the <object
+type="tNPApproach"
+></object
+>, you need to define the following items:</p
+><ol
+><li
+>segments (<sectionRef
+sec="sNPSegmentInventory"
+></sectionRef
+>)</li
+><li
+>a sonority hierarchy via natural classes (<sectionRef
+sec="sNPSonorityHierarchy"
+></sectionRef
+>)</li
+><li
+>syllabification parameters (<sectionRef
+sec="sNPSyllabificationParameters"
+></sectionRef
+>)</li
+><li
+>CV Natural Classes <sectionRef
+sec="sNPCVNaturalClasses"
+></sectionRef
+>)</li
+><li
+><object
+type="tNPRules"
+></object
+> (<sectionRef
+sec="sNPRules"
+></sectionRef
+>)</li
+><li
+>grapheme natural classes (<sectionRef
+sec="sNPGraphemeNaturalClasses"
+></sectionRef
+>)</li
+><li
+>environments (<sectionRef
+sec="sNPEnvironments"
+></sectionRef
+>)</li
+></ol
+><p
+>If needed to successfully parse your language, you may also need to define <object
+type="tNPFilters"
+></object
+> (<sectionRef
+sec="sNPFilters"
+></sectionRef
+>).</p
+><p
+>After that, you either use a existing word list, import a word list (see <sectionRef
+sec="sWords"
+></sectionRef
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
+type="tMenuItem"
+>Parser / Parse all Words </object
+> menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/SyllabifyWords.png"
+></img
+> tool bar button. This will apply the algorithm of the <object
+type="tNPApproach"
+></object
+> to all the words. You can then see the results in the <object
+type="tNPWords"
+></object
+> view. See <sectionRef
+sec="sNPWords"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sNPTryAWord"
+textBefore="none"
+></sectionRef
+> for ideas on how to check the results, among other things.</p
+><p
+>The main “game” to play with the <object
+type="tNPApproach"
+></object
+> in <object
+type="tAsheninka"
+></object
+> is to adjust the segment inventory (including graphemes and their environments), the sonority hierarchy (i.e., its ordered set of natural classes), the syllabification parameters, and the <object
+type="tNPRules"
+></object
+> so that one gets most, if not all, words to syllabify correctly. You may also need to write <object
+type="tNPFilters"
+></object
+> to get some words to parse.</p
+><p
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to apply each rule in turn. If every segment in the word is in a syllable, then it considers the parse a success. See appendix <appendixRef
+app="aNPAlgorithm"
+></appendixRef
+> for details.</p
+><p
+>We now give more information on the various views available in the user interface for the <object
+type="tNPApproach"
+></object
+>.</p
+><section2
+id="sNPSegmentInventory"
+><secTitle
+>NP segment inventory</secTitle
+><p
+><indexedItem
+term="iNPSegments"
+></indexedItem
+>The <object
+type="tNPSegmentInventory"
+></object
+> view works exactly like the <object
+type="tCVSegmentInventory"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPSonorityHierarchy"
+><secTitle
+>Sonority hierarchy</secTitle
+><p
+><indexedItem
+term="iNPSonorityHierarchy"
+></indexedItem
+>The <object
+type="tNPSonorityHierarchy"
+></object
+> view works exactly like the <object
+type="tSHSonorityHierarchy"
+></object
+> view does for the <object
+type="tSHApproach"
+></object
+>. See <sectionRef
+sec="sSHSonorityHierarchy"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPSyllabificationParameters"
+><secTitle
+>Syllabification parameters</secTitle
+><p
+><indexedItem
+term="iNPSyllabificationParameters"
+></indexedItem
+><indexedItem
+term="iSyllabificationParameters"
+></indexedItem
+>The <object
+type="tSyllabificationParameters"
+></object
+> view is where you set the parameters to control syllabification for your language. To read more about these parameters, you can click <link
+href="Overview.pdf"
+>here</link
+> or use the <object
+type="tMenuItem"
+>Help / Introduction to syllabification</object
+> menu item. Unlike some other approaches, the <object
+type="tNPApproach"
+></object
+> has only one parameter.</p
+><p
+><indexedItem
+term="iOnsetPrinciple"
+></indexedItem
+>The <object
+type="tField"
+>Onset principle</object
+> field has three radio buttons. One of them must be set. The three options are:</p
+><ol
+><li
+><indexedItem
+term="iAllButFirst"
+></indexedItem
+>All but the first syllable must have an onset</li
+><li
+><indexedItem
+term="iEverySyllable"
+></indexedItem
+>Every syllable must have an onset</li
+><li
+><indexedItem
+term="iOnsetsNotRequired"
+></indexedItem
+>Onsets are not required</li
+></ol
+><p
+>The other two parameters are controlled by the <object
+type="tNPRules"
+></object
+>:</p
+><ul
+><li
+><indexedItem
+term="iCodasAllowed"
+></indexedItem
+>Whether codas are allowed or not is controlled by having coda-oriented rules or not having them.</li
+><li
+><indexedItem
+term="iOnsetMaximization"
+></indexedItem
+>Onset maximization is controlled by ordering onset-oriented rules before any coda rules.</li
+></ul
+></section2
+><section2
+id="sNPCVNaturalClasses"
+><secTitle
+>CV natural classes</secTitle
+><p
+>The <object
+type="tCVNaturalClasses"
+></object
+> view is exactly the same as the <object
+type="tCVNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See section <sectionRef
+sec="sCVNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPRules"
+><secTitle
+>NP rules</secTitle
+><p
+><indexedItem
+term="iNPRules"
+></indexedItem
+><object
+type="tNPRules"
+></object
+> drive the syllabification process in the <object
+type="tNPApproach"
+></object
+>. Typically, at least two to five rules need to be defined. The first one must always be one that builds a nucleus and all the needed structure. It is usually built on vowels. The other rules add other segments to this.</p
+><p
+>When defining a <object
+type="tNPRule"
+></object
+>, you fill in the fields. The “Name” field is for you to remember this rule.</p
+><p
+>Its "Description” field lets you define it more fully, perhaps including some example words as to why you added the rule if it is not one of the standard rules.</p
+><p
+>The “Affected” field lets you select the segment or natural class that the rule applies to.</p
+><p
+>The “Context” field lets you select the segment or natural class that must occur before or after the affected item.</p
+><p
+>The “Action” drop-down chooser lets you select the kind of action the rule has. There are five possible values as shown in example <exampleRef
+letter="xRuleActions"
+num="xRuleActions"
+></exampleRef
+>.</p
+><example
+num="xRuleActions"
+><table
+border="1"
+><tr
+><th
+>Action</th
+><th
+>Description</th
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionAttach"
+></object
+></td
+><td
+>Attach the affected segment at the node level of the rule.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionAugment"
+></object
+></td
+><td
+>Augment the affected segment at the node level of the rule.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionBuild"
+></object
+></td
+><td
+>Build the initial nodes. The affected segment will be at the <object
+type="tNPRuleLevelN"
+></object
+> which will be in an <object
+type="tNPRuleLevelNBar"
+></object
+> node which will be in an <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> node which is the first item in a syllable.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionLeftAdjoin"
+></object
+></td
+><td
+>Adjoin the affected segment to the left of the context segment at the indicated node level.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleActionRightAdjoin"
+></object
+></td
+><td
+>Adjoin the affected segment to the right of the context segment at the indicated node level.</td
+></tr
+></table
+></example
+><p
+>The “Level” drop-down chooser lets you select the rule node level of the rule. There are four possible values as shown in example <exampleRef
+letter="xRuleLevels"
+num="xRuleLevels"
+></exampleRef
+>.</p
+><example
+num="xRuleLevels"
+><table
+border="1"
+><tr
+><th
+>Level</th
+><th
+>Description</th
+></tr
+><tr
+><td
+><object
+type="tNPRuleLevelAll"
+></object
+></td
+><td
+>This indicates the rule will build all the levels.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleLevelN"
+></object
+></td
+><td
+>This is the nucleus level.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleLevelNBar"
+></object
+></td
+><td
+>This is the rime level.</td
+></tr
+><tr
+><td
+><object
+type="tNPRuleLevelNDoubleBar"
+></object
+></td
+><td
+>This is the top level to which onsets are attached.</td
+></tr
+></table
+></example
+><p
+>The “Obeys SSP” check box indicates whether or not the affected item and the context item must obey the Sonority Sequencing Principle.</p
+><p
+>Example <exampleRef
+letter="xStandardRules"
+num="xStandardRules"
+></exampleRef
+> below lists the standard five rules. A dashed line indicates the item that being added.</p
+><example
+num="xStandardRules"
+><table
+border="1"
+><tr
+><th
+width="1.35in"
+>Rule</th
+><th
+width=".75in"
+>Affected</th
+><th
+width=".6in"
+>Context</th
+><th
+width=".75in"
+>Action</th
+><th
+width=".45in"
+>Level</th
+><th
+width=".7in"
+>Diagram</th
+></tr
+><tr
+><td
+>Nucleus</td
+><td
+>[V]</td
+><td
+> </td
+><td
+><object
+type="tNPRuleActionBuild"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelAll"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPNucleusRule.svg"
+></img
+></td
+></tr
+><tr
+><td
+>Onset</td
+><td
+>[C]</td
+><td
+>[V]</td
+><td
+><object
+type="tNPRuleActionAttach"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNDoubleBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPOnsetRule.svg"
+></img
+></td
+></tr
+><tr
+><td
+>Coda</td
+><td
+>[C]</td
+><td
+>[V]</td
+><td
+><object
+type="tNPRuleActionAttach"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPCodaRule.svg"
+></img
+></td
+></tr
+><tr
+><td
+>Augmented onsets</td
+><td
+>[C]</td
+><td
+>[C]</td
+><td
+><object
+type="tNPRuleActionAugment"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNDoubleBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPOnsetAugmentRule.svg"
+></img
+></td
+></tr
+><tr
+><td
+>Augmented codas</td
+><td
+>[C]</td
+><td
+>[C]</td
+><td
+><object
+type="tNPRuleActionAugment"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPCodaAugmentRule.svg"
+></img
+></td
+></tr
+></table
+></example
+><pc
+>Notice that the level determines whether the affected segment is attached before (as an onset) or after (as a coda). That is, an <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level means the affected item is attached before. An <object
+type="tNPRuleLevelNBar"
+></object
+> or <object
+type="tNPRuleLevelN"
+></object
+> level means the affected item is attached after.</pc
+><p
+><indexedItem
+term="iCodasAllowed"
+></indexedItem
+>If a language does not have any codas, then you can either de-activate any coda-oriented rules or you can remove them.</p
+><p
+><indexedItem
+term="iOnsetMaximization"
+></indexedItem
+>If a language uses onset maximization, then order the rules so that any onset-oriented rules occur before any coda rules.</p
+><p
+><object
+type="tAsheninka"
+></object
+> only allows certain combinations of affected, context, action and level. Any other combinations will result in an error message stating what the allowed possibilities are. Some of these are summarized here:</p
+><ul
+><li
+>The first active rule must use a <object
+type="tNPRuleActionBuild"
+></object
+> action.</li
+><li
+>Only the <object
+type="tNPRuleActionBuild"
+></object
+> action can use the <object
+type="tNPRuleLevelAll"
+></object
+> level.</li
+><li
+>A context item is required for all but a <object
+type="tNPRuleActionBuild"
+></object
+> action and a <object
+type="tNPRuleActionBuild"
+></object
+> action must not have a context item.</li
+></ul
+><p
+>Any adjunction rules will add the affected segment to the left (before) or to the right (after) depending on the action chosen.</p
+><p
+><indexedItem
+term="iEnglish"
+></indexedItem
+>Example <exampleRef
+letter="xAdjunctionRulesEnglish"
+num="xAdjunctionRulesEnglish"
+></exampleRef
+> has a <object
+type="tNPRuleActionRightAdjoin"
+></object
+> example from an English project. It is for the case of words like <langData
+lang="lIPA"
+>sɪksθ</langData
+> (<langData
+lang="lEnglishExmple"
+>sixth</langData
+>) and <langData
+lang="lIPA"
+>sɪksθs</langData
+> (<langData
+lang="lEnglishExmple"
+>sixths</langData
+>).</p
+><example
+num="xAdjunctionRulesEnglish"
+><table
+border="1"
+><tr
+><th
+width="1in"
+>Rule</th
+><th
+width=".75in"
+>Affected</th
+><th
+width=".6in"
+>Context</th
+><th
+width=".75in"
+>Action</th
+><th
+width=".45in"
+>Level</th
+><th
+width="1.05in"
+>Diagram</th
+></tr
+><tr
+><td
+>Word final adjoin</td
+><td
+>[Coronal]</td
+><td
+>[C]</td
+><td
+><object
+type="tNPRuleActionRightAdjoin"
+></object
+></td
+><td
+><object
+type="tNPRuleLevelNDoubleBar"
+></object
+></td
+><td
+><img
+XeLaTeXSpecial="scaled='1000' vertical-adjustment='-6pt' "
+src="LingTreeDiagrams/NPWordFinalAdjoinRule.svg"
+></img
+></td
+></tr
+></table
+></example
+><pc
+>In this case, the SSP is not obeyed, which is indicated by the asterisk (*) before the affected segment. It uses the <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level because these segments are adjoined at the end of the word, like an appendix.</pc
+><p
+>Finally, the order in which the rules occur is important. The items are in order of application: the first to be tried is higher and the last to be tried is lower. You control the order of the rules by clicking on a rule in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+></section2
+><section2
+id="sNPFilters"
+><secTitle
+>NP filters</secTitle
+><p
+><indexedItem
+term="iNPFilter"
+></indexedItem
+>The set of filters for the <object
+type="tNPApproach"
+></object
+> is a completely different set of filters from those used by the <object
+type="tONCApproach"
+></object
+> and the <object
+type="tMoraicApproach"
+></object
+>. <object
+type="tNPFilters"
+></object
+> can be used for onsets, codas, and rimes in <object
+type="tAsheninka"
+></object
+> with the <object
+type="tNPApproach"
+></object
+>. More precisely, <object
+type="tNPFilters"
+></object
+> are applied to rules whose <object
+type="tNPRuleLevel"
+></object
+> is either <object
+type="tNPRuleLevelNBar"
+></object
+> or <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>. Every <object
+type="tNPFilter"
+></object
+> is a fail filter. There are no repair filters in the <object
+type="tNPApproach"
+></object
+>.</p
+><p
+>You define filters in a similar way to the filters for the <object
+type="tONCApproach"
+></object
+> and <object
+type="tMoraicApproach"
+></object
+>. See <sectionRef
+sec="sONCFilters"
+></sectionRef
+> for more on using filters.</p
+><p
+>One other difference is that for <object
+type="tNPFilters"
+></object
+>, you can use the underscore character ( _ ) at the point before the first segment or class which is being attached or augmented. <indexedItem
+term="iEnglish"
+></indexedItem
+>For example, in an English IPA project, there is an <object
+type="tNPFilter"
+></object
+> which fails whenever an alveo-palatal is to be added before a sonorant. This is to handle cases like <langData
+lang="lIPA"
+>kæʃlɛs</langData
+> (<langData
+lang="lEnglishExmple"
+>cashless</langData
+>) which should be syllabified as <langData
+lang="lIPA"
+>kæʃ.lɛs</langData
+>, not as <langData
+lang="lIPA"
+>kæ.ʃlɛs</langData
+> and <langData
+lang="lIPA"
+>maɹʃlænd</langData
+> (<langData
+lang="lEnglishExmple"
+>marshland</langData
+>) which should be syllabified as <langData
+lang="lIPA"
+>maɹʃ.lænd</langData
+>, not <langData
+lang="lIPA"
+>maɹ.ʃlænd</langData
+>. As an initial attempt, we might write this filter as in example <exampleRef
+letter="xNPFilterPlain"
+num="xNPFilterPlain"
+></exampleRef
+>. This says that when we are about to add a segment that is a member of the Alveo-palatal class and is immediately followed by a segment which is a member of the Sonorant class, do not add it.</p
+><example
+num="xNPFilterPlain"
+><chart
+>[Alveo-palatal] [Sonorant]</chart
+></example
+><pc
+>If we write this onset filter like this, we will discover that words such as <langData
+lang="lIPA"
+>ʃɹəb</langData
+> (<langData
+lang="lEnglishExmple"
+>shrub</langData
+>) will fail to syllabify (the filter blocks adding <langData
+lang="lIPA"
+>ʃ</langData
+> as an onset). To overcome this, we can write the filter as in example <exampleRef
+letter="xNPFilterConstituent"
+num="xNPFilterConstituent"
+></exampleRef
+>.</pc
+><example
+num="xNPFilterConstituent"
+><chart
+>*[V] (*[Sonorant]) _ [Alveo-palatal] [Sonorant]</chart
+></example
+><pc
+>What comes before the underscore is the preceding context (a vowel with an optionally following sonorant). Since a word like <langData
+lang="lIPA"
+>ʃɹəb</langData
+> does not meet this context, the filter will not block the <langData
+lang="lIPA"
+>ʃ</langData
+> being added as an onset. Notice that for both <langData
+lang="lIPA"
+>kæʃlɛs</langData
+> and <langData
+lang="lIPA"
+>maɹʃlænd</langData
+>, the context is met and so the filter does block adding the <langData
+lang="lIPA"
+>ʃ</langData
+> as desired.</pc
+></section2
+><section2
+id="sNPWords"
+><secTitle
+>NP words</secTitle
+><p
+><indexedItem
+term="iNPWords"
+></indexedItem
+>This works like the <object
+type="tCVWords"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>, except that the <object
+type="tPredictedSyllableBreaks"
+></object
+> values, the <object
+type="tParserResult"
+></object
+> values, and the <object
+type="tParserTreeDiagram"
+></object
+> are the result of the <object
+type="tNPApproach"
+></object
+> algorithm. If the parse fails and some word structure was built, then this partial word structure is shown by <object
+type="tParserTreeDiagram"
+></object
+>. In the tree diagram, a syllable always has onsets attached to <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>, a nucleus attached to <object
+type="tNPRuleLevelN"
+></object
+> and codas attached to <object
+type="tNPRuleLevelNBar"
+></object
+>. Any adjoined segments will show the adjoined level. See <sectionRef
+sec="sCVWords"
+></sectionRef
+> for more on this view.</p
+></section2
+><section2
+id="sNPPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct NP words</secTitle
+><p
+><indexedItem
+term="iNPPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iNPPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tNPPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the results of applying the <object
+type="tNPApproach"
+></object
+> differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
+></section2
+><section2
+id="sNPGraphemeNaturalClasses"
+><secTitle
+>Grapheme natural classes</secTitle
+><p
+><indexedItem
+term="iNPGraphemes"
+></indexedItem
+>This works exactly like the <object
+type="tGraphemeNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPEnvironments"
+><secTitle
+>Environments</secTitle
+><p
+><indexedItem
+term="iNPEnvironments"
+></indexedItem
+>This works exactly like the <object
+type="tEnvironments"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sEnvironments"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sNPTryAWord"
+><secTitle
+>NP Try a Word</secTitle
+><p
+><indexedItem
+term="iNPTryAWord"
+></indexedItem
+><indexedItem
+term="iTryAWord"
+></indexedItem
+>There are times when it may be difficult to know just why a given word is not syllabifying correctly. That's where the <object
+type="tTryAWord"
+></object
+> dialog box can be useful. To see it, use the <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> menu item. This brings up a dialog box like the one shown in example <exampleRef
+letter="xNPTryAWord"
+num="xNPTryAWord"
+></exampleRef
+>. Unlike most dialog boxes, you can keep the <object
+type="tTryAWord"
+></object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
+type="tTryAWord"
+></object
+> dialog box can be set independently for all six approaches; you can have several <object
+type="tTryAWord"
+></object
+> dialog boxes open at the same time if you wish.</p
+><example
+num="xNPTryAWord"
+><chart
+><img
+src="resources/CVTryAWord1.png"
+width="500"
+></img
+></chart
+></example
+><p
+>You can key a word to try in the text box. By default, <object
+type="tAsheninka"
+></object
+> shows the current word selected in the <object
+type="tNPWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tNPPredictedVsCorrectWords"
+></object
+> view (if you are showing that view) or the last word you used (or nothing if you've never used <object
+type="tTryAWord"
+></object
+> before and are not showing the <object
+type="tNPWords"
+></object
+> view).</p
+><p
+>When you either press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>Try it</object
+> button, <object
+type="tAsheninka"
+></object
+> will try to parse the word in the text box and report the result in the Results portion of the dialog box.</p
+><p
+>For the <object
+type="tNPApproach"
+></object
+>, there are at most two steps that are tried:</p
+><ol
+><li
+>Parsing into segments.</li
+><li
+>Parsing segments into syllables (via the nuclear projection algorithm; see appendix <appendixRef
+app="aNPAlgorithm"
+></appendixRef
+> below).</li
+></ol
+><p
+>The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into syllables. Successful steps are shown in <object
+type="tGreen"
+></object
+> while unsuccessful ones are shown in <object
+type="tRed"
+></object
+>. An example of a successful parse is shown in example <exampleRef
+letter="xNPTryAWordahwiyak1"
+num="xNPTryAWordahwiyak1"
+></exampleRef
+>.</p
+><example
+num="xNPTryAWordahwiyak1"
+><chart
+><img
+src="resources/NPTryAWord2.png"
+width="500"
+></img
+></chart
+></example
+><p
+><indexedItem
+term="iFailureNPSegmenter"
+></indexedItem
+>The parsing into segments part is exactly the same as it is for the <object
+type="tCVPatternApproach"
+></object
+>. If any constituent structure was built during the parse, the tree diagram is also shown. The <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>σ</object
+> constituent indicates a syllable. A syllable will have <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>, <object
+type="tNPRuleLevelNBar"
+></object
+>, and <object
+type="tNPRuleLevelN"
+></object
+> constituents. Onset segments attach to an <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level, nucleus segments attach to an <object
+type="tNPRuleLevelN"
+></object
+>, and coda segments attach to a <object
+type="tNPRuleLevelNBar"
+></object
+> level. Below these are the segment and then its grapheme. If the parse succeeded, then the segments and their graphemes are shown in <object
+type="tGreen"
+></object
+>. If the parse failed but some of the tree was built, then the segments and their graphemes are shown in <object
+type="tRed"
+></object
+>.</p
+><p
+>Scrolling the results window down shows the next part:</p
+><example
+num="xNPTryAWordahwiyak2"
+><chart
+><img
+src="resources/NPTryAWord3.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>Whenever a rule is applied, its name is shown in a row by itself. In <exampleRef
+letter="xNPTryAWordahwiyak2"
+num="xNPTryAWordahwiyak2"
+></exampleRef
+>, it is the first rule which builds a nucleus on each vowel. The resulting tree diagram is shown for each step. Note that in this case, the rule is applied as it matches an affected segment from left to right. <object
+type="tNPRuleActionAugment"
+></object
+> rules at the <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level and all <object
+type="tNPRuleActionLeftAdjoin"
+></object
+> rules are applied right to left. Scrolling down more, shows the next part:</pc
+><example
+num="xNPTryAWordahwiyak3"
+><chart
+><img
+src="resources/NPTryAWord4.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>This shows the onset rule being applied. The first row shows the checking of the SSP. It shows the sequence of segment pairs that were found along with their respective natural class and relationship. The <object
+type="tBold"
+>Relation</object
+> column uses mathematical symbols to indicate the relationship as given in example <exampleRef
+letter="xNPTryAWordRelation"
+num="xNPTryAWordRelation"
+></exampleRef
+>.</pc
+><example
+num="xNPTryAWordRelation"
+><table
+border="1"
+><tr
+><th
+align="center"
+>Relation</th
+><th
+>Meaning</th
+></tr
+><tr
+><td
+align="center"
+>&lt;</td
+><td
+>Segment 1 is less sonorous than segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>=</td
+><td
+>Segment 1 is equal in sonority to segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>&gt;</td
+><td
+>Segment 1 is more sonorous than segment 2.</td
+></tr
+><tr
+><td
+align="center"
+>!!!</td
+><td
+>The segment was not in any natural class.</td
+></tr
+></table
+></example
+><pc
+>Scrolling down further shows the next part:</pc
+><example
+num="xNPTryAWordahwiyak4"
+><chart
+><img
+src="resources/NPTryAWord5.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>This shows the result of the coda rule and that the other two rules did not apply to any segments.</pc
+><p
+>As mentioned above, whenever one of the two steps fails, there is an error message shown for that step. Depending on the error and the state of the parser at the time, more steps may or may not be tried. See <sectionRef
+sec="sCVTryAWord"
+></sectionRef
+> for examples where the segments could not be parsed.</p
+><p
+><indexedItem
+term="iFailureNPNaturalClasser"
+></indexedItem
+>If a word contains a segment that is not in any natural class, the results table will end with a row whose <object
+type="tBold"
+>Relation</object
+> column contains “!!!” in <object
+type="tRed"
+></object
+> and one of the offending segments will have “(No Natural Class)” after it as shown in example <exampleRef
+letter="xNPTryAWordNCFailure"
+num="xNPTryAWordNCFailure"
+></exampleRef
+>.</p
+><example
+num="xNPTryAWordNCFailure"
+><chart
+><img
+src="resources/NPTryAWordNCFailure.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>In this case, the word was <langData
+lang="lVernacular"
+>abay</langData
+>, but no natural class has the segment <langData
+lang="lVernacular"
+>b</langData
+> in it. So when it tried to find a natural class for <langData
+lang="lVernacular"
+>b</langData
+>, it failed</pc
+></section2
 ></section1
 ><section1
 id="sOTApproach"
 ><secTitle
->Optimality theory approach</secTitle
+><object
+type="tOTApproach"
+></object
+></secTitle
 ><p
 ><indexedItem
 term="iOTApproach"
 ></indexedItem
->This approach has not been implemented yet.</p
+>For the <object
+type="tOTApproach"
+></object
+>, you need to define the following items:</p
+><ol
+><li
+>segments (<sectionRef
+sec="sOTSegmentInventory"
+></sectionRef
+>)</li
+><li
+>CV Natural Classes <sectionRef
+sec="sOTCVNaturalClasses"
+></sectionRef
+>)</li
+><li
+><object
+type="tOTConstraints"
+></object
+> (<sectionRef
+sec="sOTConstraints"
+></sectionRef
+>)</li
+><li
+><object
+type="tOTConstraintRankings"
+></object
+> (<sectionRef
+sec="sOTConstraintRankings"
+></sectionRef
+>)</li
+><li
+>grapheme natural classes (<sectionRef
+sec="sNPGraphemeNaturalClasses"
+></sectionRef
+>)</li
+><li
+>environments (<sectionRef
+sec="sNPEnvironments"
+></sectionRef
+>)</li
+></ol
+><p
+>After that, you either use a existing word list, import a word list (see <sectionRef
+sec="sWords"
+></sectionRef
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
+type="tMenuItem"
+>Parser / Parse all Words </object
+> menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/SyllabifyWords.png"
+></img
+> tool bar button. This will apply the algorithm of the <object
+type="tOTApproach"
+></object
+> to all the words. You can then see the results in the <object
+type="tOTWords"
+></object
+> view. See <sectionRef
+sec="sOTWords"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sOTTryAWord"
+textBefore="none"
+></sectionRef
+> for ideas on how to check the results, among other things.</p
+><p
+>The main “game” to play with the <object
+type="tOTApproach"
+></object
+> in <object
+type="tAsheninka"
+></object
+> is to adjust the segment inventory (including graphemes and their environments), the <object
+type="tOTConstraints"
+></object
+>, and the <object
+type="tOTConstraintRankings"
+></object
+> so that one gets most, if not all, words to syllabify correctly.</p
+><p
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to apply each constraint in turn, using a similar approach to that described in <citation
+ref="rHammond"
+></citation
+>. If every segment in the word is in a syllable, then it considers the parse a success. See appendix <appendixRef
+app="aOTAlgorithm"
+></appendixRef
+> for details. If you are familiar with Optimality Theory, please read at least sections 4-7 of <citation
+page="5-18"
+ref="rHammond"
+></citation
+>. He explains the need for implementing OT the way it is done here. For your convenience, we include this paper with <object
+type="tAsheninka"
+></object
+> via the <object
+type="tMenuItem"
+>Help / Hammond (1997)</object
+> menu item.</p
+><p
+>We now give more information on the various views available in the user interface for the <object
+type="tOTApproach"
+></object
+>.</p
+><section2
+id="sOTSegmentInventory"
+><secTitle
+>OT segment inventory</secTitle
+><p
+><indexedItem
+term="iOTSegments"
+></indexedItem
+>The <object
+type="tCVSegmentInventory"
+></object
+> view works exactly like the <object
+type="tCVSegmentInventory"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sOTCVNaturalClasses"
+><secTitle
+>CV natural classes</secTitle
+><p
+>The <object
+type="tCVNaturalClasses"
+></object
+> view is exactly the same as the <object
+type="tCVNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See section <sectionRef
+sec="sCVNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sOTConstraints"
+><secTitle
+>OT Constraints</secTitle
+><p
+><indexedItem
+term="iOTConstraints"
+></indexedItem
+><object
+type="tOTConstraints"
+></object
+> are crucial for the syllabification process in the <object
+type="tOTApproach"
+></object
+>.</p
+><p
+>When defining an <object
+type="tOTConstraint"
+></object
+>, you fill in the fields. The “Name” field is for you to remember this constraint. (Normally <object
+type="tOTConstraint"
+></object
+> names are shown using small caps letters; unfortunately, we do not have a way to apply such a style automatically in the user interface.<endnote
+id="nSmallCaps"
+><p
+>It is possible to use an overt small caps font to show these, but we have opted not to do that.</p
+></endnote
+> We do use small caps in <object
+type="tOTTryAWord"
+></object
+> because it is possible there.)</p
+><p
+>As described in <citation
+page="15-18"
+ref="rHammond"
+></citation
+>, each <object
+type="tOTConstraint"
+></object
+> involves one or two sets of an affected element and structural options.</p
+><p
+>The “Affected element 1” field lets you select the first segment or natural class that the constraint applies to. You can also indicate if the element must occur word initially and/or word finally.</p
+><p
+>The “Structural Options 1” check boxes let you select the set of <object
+type="tOTStructuralOptions"
+></object
+> the constraint will remove. See <citation
+page="11ff"
+ref="rHammond"
+></citation
+> for more on the <object
+type="tOTStructuralOptions"
+></object
+>; we use the same abbreviations here:</p
+><example
+num="xStructuralOptions"
+><table
+border="1"
+><tr
+><th
+>Structural Option</th
+><th
+>Meaning</th
+></tr
+><tr
+><td
+>o</td
+><td
+>Onset</td
+></tr
+><tr
+><td
+>n</td
+><td
+>Nucleus</td
+></tr
+><tr
+><td
+>c</td
+><td
+>Coda</td
+></tr
+><tr
+><td
+>u</td
+><td
+>Unsyllabified (or unparsed)</td
+></tr
+></table
+></example
+><p
+>The “Affected element 2” field is optional. When it and the “Structural Options 2” fields are set, then both elements 1 and 2 must match before the constraint will apply.</p
+><p
+>The “Prune element 2” check box should be checked whenever the second set of <object
+type="tOTStructuralOptions"
+></object
+> are to be removed instead of the first set.</p
+><p
+><object
+type="tAsheninka"
+></object
+> expects that the first affected element must be set and that at least one of the <object
+type="tOTStructuralOptions"
+></object
+> for the first set must be checked. Similarly for the second set: if a second <object
+type="tOTStructuralOption"
+></object
+> is set, then the second affected element must be set, and vice versa. Whenever <object
+type="tAsheninka"
+></object
+> detects something awry, it will show an error message in red, suggesting what is needed. When the settings are valid, a tree diagram of the constraint will appear.</p
+></section2
+><section2
+id="sOTConstraintRankings"
+><secTitle
+>OT Constraint Rankings</secTitle
+><p
+><indexedItem
+term="iOTConstraintRankings"
+></indexedItem
+>The set of <object
+type="tOTConstraints"
+></object
+> need to be placed into a ranking. While you can have multiple rankings, only the one ordered first will be used when parsing. This way, you can experiment with different rankings to see how well the syllabification of that ranking works.</p
+><p
+>When defining a <object
+type="tOTConstraintRanking"
+></object
+>, you fill in the fields. The “Name” field is for you to remember this ranking.</p
+><p
+>Its "Description” field lets you define it more fully, perhaps including some example words as to why you added the ranking.</p
+><p
+>The “Constraint Ranking” field lets you select the order of the <object
+type="tOTConstraints"
+></object
+> of this ranking. Clicking on the chooser button brings up a dialog showing the <object
+type="tOTConstraints"
+></object
+>. The order in which the constraints occur is important. The items are in order of application: the first to be tried is higher and the last to be tried is lower. You control the order of the constraints by clicking on a constraint and then using the up and down arrows to change its order.</p
+><p
+>Similarly, the order in which the rankings occur is somewhat important. Only the first/topmost ranking will be used. You control the order of the rankings by clicking on a ranking in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+><p
+>When you create a new ranking, you will be shown a dialog box to select an existing ranking as a starting point for the new ranking. If you click on <object
+type="tButton"
+>Cancel</object
+>, the new ranking will be the same as the order of the list of constraints in the <object
+type="tView"
+>OT Contraints</object
+> view.</p
+></section2
+><section2
+id="sOTWords"
+><secTitle
+>OT words</secTitle
+><p
+><indexedItem
+term="iOTWords"
+></indexedItem
+>This works like the <object
+type="tCVWords"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>, except that the <object
+type="tPredictedSyllableBreaks"
+></object
+> values, the <object
+type="tParserResult"
+></object
+> values, and the <object
+type="tParserTreeDiagram"
+></object
+> are the result of the <object
+type="tOTApproach"
+></object
+> algorithm. If the parse fails and some word structure was built, then this partial word structure is shown by <object
+type="tParserTreeDiagram"
+></object
+>. In the tree diagram, a syllable consists of the segments parsed into it. Above each segment (and its grapheme) is the structural option used. See <sectionRef
+sec="sCVWords"
+></sectionRef
+> for more on this view.</p
+></section2
+><section2
+id="sOTPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct OT words</secTitle
+><p
+><indexedItem
+term="iOTPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iOTPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tOTPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the results of applying the <object
+type="tOTApproach"
+></object
+> differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
+></section2
+><section2
+id="sOTGraphemeNaturalClasses"
+><secTitle
+>Grapheme natural classes</secTitle
+><p
+><indexedItem
+term="iOTGraphemes"
+></indexedItem
+>This works exactly like the <object
+type="tGraphemeNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sOTEnvironments"
+><secTitle
+>Environments</secTitle
+><p
+><indexedItem
+term="iOTEnvironments"
+></indexedItem
+>This works exactly like the <object
+type="tEnvironments"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sEnvironments"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sOTTryAWord"
+><secTitle
+>OT Try a Word</secTitle
+><p
+><indexedItem
+term="iOTTryAWord"
+></indexedItem
+><indexedItem
+term="iTryAWord"
+></indexedItem
+>There are times when it may be difficult to know just why a given word is not syllabifying correctly. That's where the <object
+type="tTryAWord"
+></object
+> dialog box can be useful. To see it, use the <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> menu item. This brings up a dialog box like the one shown in example <exampleRef
+letter="xOTTryAWord"
+num="xOTTryAWord"
+></exampleRef
+>. Unlike most dialog boxes, you can keep the <object
+type="tTryAWord"
+></object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
+type="tTryAWord"
+></object
+> dialog box can be set independently for all six approaches; you can have several <object
+type="tTryAWord"
+></object
+> dialog boxes open at the same time if you wish.</p
+><example
+num="xOTTryAWord"
+><chart
+><img
+src="resources/CVTryAWord1.png"
+width="500"
+></img
+></chart
+></example
+><p
+>You can key a word to try in the text box. By default, <object
+type="tAsheninka"
+></object
+> shows the current word selected in the <object
+type="tOTWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tOTPredictedVsCorrectWords"
+></object
+> view (if you are showing that view) or the last word you used (or nothing if you've never used <object
+type="tTryAWord"
+></object
+> before and are not showing the <object
+type="tOTWords"
+></object
+> view).</p
+><p
+>When you either press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>Try it</object
+> button, <object
+type="tAsheninka"
+></object
+> will try to parse the word in the text box and report the result in the Results portion of the dialog box.</p
+><p
+>For the <object
+type="tOTApproach"
+></object
+>, there are at most two steps that are tried:</p
+><ol
+><li
+>Parsing into segments.</li
+><li
+>Parsing segments into syllables (via the optimality theory algorithm; see appendix <appendixRef
+app="aOTAlgorithm"
+></appendixRef
+> below).</li
+></ol
+><p
+>The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into syllables. Successful steps are shown in <object
+type="tGreen"
+></object
+> while unsuccessful ones are shown in <object
+type="tRed"
+></object
+>. An example of a successful parse is shown in example <exampleRef
+letter="xOTTryAWordahwiyak1"
+num="xOTTryAWordahwiyak1"
+></exampleRef
+>.</p
+><example
+num="xOTTryAWordahwiyak1"
+><chart
+><img
+src="resources/OTTryAWord2.png"
+width="500"
+></img
+></chart
+></example
+><p
+><indexedItem
+term="iFailureOTSegmenter"
+></indexedItem
+>The parsing into segments part is exactly the same as it is for the <object
+type="tCVPatternApproach"
+></object
+>. If any constituent structure was built during the parse, the tree diagram is also shown. The <object
+type="tCategory"
+>W</object
+> constituent is the word and the <object
+type="tCategory"
+>σ</object
+> constituent indicates a syllable. A syllable will have one or more <object
+type="tOTStructuralOptions"
+></object
+>. Below these are the segment and then its grapheme. If the parse succeeded, then the segments and their graphemes are shown in <object
+type="tGreen"
+></object
+>. If the parse failed but some of the tree was built, then the segments and their graphemes are shown in <object
+type="tRed"
+></object
+>.</p
+><p
+>Scrolling the results window down shows the next part:</p
+><example
+num="xOTTryAWordahwiyak2"
+><chart
+><img
+src="resources/OTTryAWord3.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>Each step in the parse consists of two <object
+type="tOTCandidateGrids"
+></object
+> (see <citation
+page="13"
+paren="none"
+ref="rHammond"
+></citation
+>), one on the left (the before <object
+type="tOTCandidateGrid"
+></object
+>) and one on the right (the after <object
+type="tOTCandidateGrid"
+></object
+>). Any <object
+type="tOTStructuralOptions"
+></object
+> in the <object
+type="tOTCandidateGrid"
+></object
+> on the left which are to be removed by the constraint being applied have a background color (<object
+type="tGreen"
+></object
+> if the parse succeeded; <object
+type="tRed"
+></object
+> if it failed).</pc
+><p
+>Every parse begins with a <object
+type="tOTCandidateGrid"
+></object
+> with all <object
+type="tOTStructuralOptions"
+></object
+> available. The first “constraint” is the word initial/word final housekeeping one (see <citation
+page="14"
+paren="none"
+ref="rHammond"
+></citation
+>) that ensures codas cannot occur word initially and onsets cannot occur word finally.</p
+><p
+>Whenever a constraint is applied, its name is shown above the <object
+type="tOTCandidateGrid"
+></object
+>. Scrolling down more, shows the next part:</p
+><example
+num="xOTTryAWordahwiyak3"
+><chart
+><img
+src="resources/OTTryAWord4.png"
+width="500"
+></img
+></chart
+></example
+><pc
+>When only one <object
+type="tOTStructuralOption"
+></object
+> remains for each segment in the <object
+type="tOTCandidateGrid"
+></object
+>, parsing stops. It then builds the syllables as it is able and shows each one in turn.</pc
+><p
+>A parse fails whenever any of the following conditions occur:</p
+><ul
+><li
+>The only <object
+type="tOTStructuralOption"
+></object
+> remaining for some segment is “u” (i.e., it was unsyllabified or unparsed).</li
+><li
+>All constraints were applied and some segment still has two or more <object
+type="tOTStructuralOptions"
+></object
+>.</li
+></ul
+><p
+>When a word fails to parse, there will be a message at the bottom to indicate why as shown in example <exampleRef
+letter="xOTTryAWordFailure"
+num="xOTTryAWordFailure"
+></exampleRef
+>.</p
+><example
+num="xOTTryAWordFailure"
+><chart
+><img
+src="resources/OTTryAWordFailure..png"
+width="500"
+></img
+></chart
+></example
+></section2
 ></section1
 ><section1
 id="sConvertPredictedToCorrect"
 ><secTitle
->Converting predicted syllabification to correct syllabification</secTitle
+>Converting predicted syllabification<br
+></br
+>to correct syllabification</secTitle
 ><p
 ><indexedItem
 term="iCVPredictedSyllabificationConvert"
@@ -3407,7 +5812,7 @@ width="600"
 ><p
 >The backups you have made for this project will be shown in the list. The content in the Description column is the description you keyed while making the backup.</p
 ><p
->The idea here is that you can make a backup, try something else (e.g., add a segment or class; or re-order the syllable patterns or add a new one), and see how it goes. If it's worse, just restore to the previous state. If it's better, make a backup of that and go on.</p
+>The idea here is that you can make a backup, try something else (e.g., add a segment or class; or re-order the syllable patterns or add a new one, etc.), and see how it goes. If it's worse, just restore to the previous state. If it's better, make a backup of that and go on.</p
 ></section1
 ><section1
 id="sWords"
@@ -3492,16 +5897,7 @@ type="tParatext"
 ></object
 >, this file can be found in the “My Paratext Projects” folder and then in the folder of your project name.</p
 ><p
->Newly added words will appear in the three words views (<object
-type="tCVWords"
-></object
->, <object
-type="tSHWords"
-></object
->, and <object
-type="tONCWords"
-></object
->) with a <object
+>Newly added words will appear in the words views with a <object
 type="tParserResult"
 ></object
 > showing <object
@@ -3638,7 +6034,7 @@ id="sOtherTools"
 ><object
 type="tAsheninka"
 ></object
-> also offers three other tools not previously covered.</p
+> also offers five other tools not previously covered.</p
 ><section2
 id="sFindWord"
 ><secTitle
@@ -3657,16 +6053,7 @@ type="tKey"
 XeLaTeXSpecial="scaled='500'"
 src="resources/FindWord.png"
 ></img
-> button on the toolbar to find a particular word. This brings up a dialog box which allows you to start typing the word you are looking for. As you type, it has a drop down area showing all words which contain the sequence of characters you have typed. If you are currently showing the <object
-type="tCVPredictedVsCorrectWords"
-></object
->, <object
-type="tSHPredictedVsCorrectWords"
-></object
->, or <object
-type="tONCPredictedVsCorrectWords"
-></object
-> view, then it only uses those words in this view. If you are showing any other view, it shows all words which match what you type. Note that it shows all words which have this sequence anywhere in them, not just at the beginning. For example, with one project when I typed “<object
+> button on the toolbar to find a particular word. This brings up a dialog box which allows you to start typing the word you are looking for. As you type, it has a drop down area showing all words which contain the sequence of characters you have typed. If you are currently showing one of the Predicted vs. correct words views, then it only uses those words in this view. If you are showing any other view, it shows all words which match what you type. Note that it shows all words which have this sequence anywhere in them, not just at the beginning. For example, with one project when I typed “<object
 type="tKey"
 >ach</object
 >”, what is in example <exampleRef
@@ -3697,25 +6084,7 @@ type="tButton"
 > button, <object
 type="tAsheninka"
 ></object
-> will show the selected word in the approach you last used: either via the <object
-type="tCVWords"
-></object
-> view of the <object
-type="tCVPatternApproach"
-></object
->, the <object
-type="tSHWords"
-></object
-> view of the <object
-type="tSHApproach"
-></object
->, or the <object
-type="tONCWords"
-></object
-> view of the <object
-type="tONCApproach"
-></object
->. The exception is if you currently selected any of the predicted vs.​ correct views, it will select the chosen word in that view.</p
+> will show the selected word in the approach you last used. The exception is if you currently selected any of the predicted vs.​ correct views, it will select the chosen word in that view.</p
 ><p
 ><indexedItem
 term="iFiltersColumns"
@@ -3739,16 +6108,7 @@ term="iRemoveWords"
 >Use the <object
 type="tMenuItem"
 >Tools / Remove all words</object
-> menu item to completely clear the list of words in the <object
-type="tCVWords"
-></object
-> view, the <object
-type="tSHWords"
-></object
-> view and the <object
-type="tONCWords"
-></object
-> view. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
+> menu item to completely clear the list of words in all of the words views. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
 letter="xRemoveAllWords"
 num="xRemoveAllWords"
 ></exampleRef
@@ -3785,21 +6145,15 @@ type="tAsheninka"
 ></object
 > will immediately remove all the words from the list of words.</p
 ><p
->Note that when the words are removed, it will happen whether or not the <object
-type="tCVWords"
-></object
-> view, the <object
-type="tSHWords"
-></object
-> view, or the <object
-type="tONCWords"
-></object
-> view is currently being shown. It usually happens very quickly.</p
+>Note that when the words are removed, it will happen whether or not any of the words views are currently being shown. It usually happens very quickly.</p
 ><p
 >If you click on the <object
 type="tButton"
 >Cancel</object
-> button (or close the dialog box using the X in the red area), the dialog box will exit and nothing will change.</p
+> button (or close the dialog box using the X in the <object
+type="tRed"
+></object
+> area), the dialog box will exit and nothing will change.</p
 ></section2
 ><section2
 id="sRemoveCorrectSyllabifcation"
@@ -3815,16 +6169,7 @@ type="tMenuItem"
 > menu item to completely clear the <object
 type="tCorrectSyllableBreaks"
 ></object
-> column in the <object
-type="tCVWords"
-></object
-> view, the <object
-type="tSHWords"
-></object
-> view, and the <object
-type="tONCWords"
-></object
-> view. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
+> column in all the words views. When you invoke this menu item, it will show the dialog box shown in example <exampleRef
 letter="xRemoveCorrectSyllabification"
 num="xRemoveCorrectSyllabification"
 ></exampleRef
@@ -3873,21 +6218,15 @@ type="tCorrectSyllableBreaks"
 >Note that when the <object
 type="tCorrectSyllableBreaks"
 ></object
-> forms are removed, it will happen whether or not the <object
-type="tCVWords"
-></object
-> view, the <object
-type="tSHWords"
-></object
-> view, or the <object
-type="tONCWords"
-></object
-> view is currently being shown. It usually happens very quickly.</p
+> forms are removed, it will happen whether or not any of the words views are currently being shown. It usually happens very quickly.</p
 ><p
 >If you click on the <object
 type="tButton"
 >Cancel</object
-> button (or close the dialog box using the X in the red area), the dialog box will exit and nothing will change.</p
+> button (or close the dialog box using the X in the <object
+type="tRed"
+></object
+> area), the dialog box will exit and nothing will change.</p
 ></section2
 ><section2
 id="sCompareImplementations"
@@ -4021,6 +6360,84 @@ width="500"
 ></chart
 ></example
 ></section3
+><section3
+id="sMoraicCompare"
+><secTitle
+><object
+type="tMoraicApproach"
+></object
+> comparison</secTitle
+><p
+>When I did this for one project while showing the <object
+type="tMoraicApproach"
+></object
+>, I got what is shown in example <exampleRef
+letter="xMoraicCompareImplementationsResult"
+num="xMoraicCompareImplementationsResult"
+></exampleRef
+>.</p
+><example
+num="xMoraicCompareImplementationsResult"
+><chart
+><img
+src="resources/MoraicCompareImplementationsResult.png"
+width="500"
+></img
+></chart
+></example
+></section3
+><section3
+id="sNPCompare"
+><secTitle
+><object
+type="tNPApproach"
+></object
+> comparison</secTitle
+><p
+>When I did this for one project while showing the <object
+type="tNPApproach"
+></object
+>, I got what is shown in example <exampleRef
+letter="xNPCompareImplementationsResult"
+num="xNPCompareImplementationsResult"
+></exampleRef
+>.</p
+><example
+num="xNPCompareImplementationsResult"
+><chart
+><img
+src="resources/NPCompareImplementationsResult.png"
+width="500"
+></img
+></chart
+></example
+></section3
+><section3
+id="sOTCompare"
+><secTitle
+><object
+type="tOTApproach"
+></object
+> comparison</secTitle
+><p
+>When I did this for one project while showing the <object
+type="tOTApproach"
+></object
+>, I got what is shown in example <exampleRef
+letter="xOTCompareImplementationsResult"
+num="xOTCompareImplementationsResult"
+></exampleRef
+>.</p
+><example
+num="xOTCompareImplementationsResult"
+><chart
+><img
+src="resources/OTCompareImplementationsResult.png"
+width="500"
+></img
+></chart
+></example
+></section3
 ></section2
 ><section2
 id="sCompareSyllabificationResults"
@@ -4036,7 +6453,7 @@ type="tAsheninka"
 > also offers a way to more easily see how the words are syllabified between the approaches. Use the <object
 type="tMenuItem"
 >Tools / Compare Syllabification Results between Approaches</object
-> menu item to do this. This immediately does a comparison of the predicted syllabification of all words and shows the result in a dialog box. In one implementaton I did, it looked like what is in example <exampleRef
+> menu item to do this. This does a comparison of the predicted syllabification of all words and shows the result in a dialog box. In one implementation I did, it looked like what is in example <exampleRef
 letter="xCompareSyllabifications"
 num="xCompareSyllabifications"
 ></exampleRef
@@ -4133,7 +6550,7 @@ XeLaTeXSpecial="scaled='200'"
 src="resources/icons8-clear-filters-64.png"
 width="30"
 ></img
-> for Remove all syllable breaks</li
+> for Remove all filters</li
 ></ul
 ></li
 ><li
@@ -4173,11 +6590,16 @@ width="400"
 >Show only non-blanks.</li
 ></ol
 ><pc
->The last two methods are not available for the Words column or the Predicted vs. correct column. They are available for both the Predicted Syllable Breaks and the Correct Syllable Breaks columns.</pc
+>The last two methods are not available for the Words column or the Predicted vs. correct column.<endnote
+id="nBlanksNonBlanks"
+><p
+>The reason is that there are no blank items to show; what is there is all there is. So neither of these options make sense for these columns.</p
+></endnote
+> They are available for both the Predicted Syllable Breaks and the Correct Syllable Breaks columns.</pc
 ><p
 >In addition, you can tell it to match upper/lower case or not.</p
 ><p
->Regular expressions use what is documented at <link
+>Regular expression formulas use what is documented at <link
 href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html"
 >https://​docs.​oracle.​com/​javase/​8/​docs/​api/​java/​util/​regex/​Pattern.html</link
 > beginning at <object
@@ -4197,73 +6619,156 @@ type="tAsheninka"
 ></section1
 ><backMatter
 ><appendix
-id="aAsheninka"
+id="aCVAlgorithmInDetail"
 ><secTitle
->Why is it called <object
-type="tAsheninka"
+>CV algorithm in detail</secTitle
+><p
+><indexedItem
+term="iCVPatternAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm is as follows:</p
+><ol
+><li
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
 ></object
->?</secTitle
-><p
->This syllable parsing program is called <object
-type="tAsheninka"
+> and quits. The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met. You can use the <object
+type="tTryAWord"
 ></object
-> for historic reasons. (The word is pronounced <langData
-lang="lVernacular"
->a.ˈʃɛ.nɪŋ.ka</langData
->.)</p
+> tool to get more details (see <sectionRef
+sec="sCVTryAWord"
+></sectionRef
+>).</li
+><li
+>If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited, trying to find a sequence of natural classes that covers the entire sequence of segments. It uses the set of segments or natural (sub-)classes defined within a natural class to determine a match with a natural class. If two or more natural classes match, it tries each of them in turn. <indexedItem
+term="iFailureCVNaturalClasser"
+></indexedItem
+>If it cannot find a sequence of natural classes that covers the entire sequence of posited segments, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into natural classes; did find classes '<object
+type="tItalic"
+>some classes</object
+>' covering graphemes '<object
+type="tItalic"
+>some graphemes</object
+>'</object
+> and quits. The '<object
+type="tItalic"
+>some classes</object
+>' part indicates the sequence of natural classes that were found and the '<object
+type="tItalic"
+>some graphemes</object
+>' part indicates which graphemes were included in those natural classes. Hopefully this will help you figure out why other natural classes were not found for this word.</li
+><li
+>If it succeeded in finding a sequence of natural classes, it performs a left-to-right sweep of the sequence of the natural classes it posited, trying to find a sequence of syllable patterns that covers the entire sequence. It tries the syllable patterns in the order they are arranged in the <object
+type="tCVSyllablePatterns"
+></object
+> view (see <sectionRef
+sec="sCVSyllablePatterns"
+></sectionRef
+> below). <indexedItem
+term="iFailureCVSyllables"
+></indexedItem
+>If it cannot find a sequence of syllable patterns that covers the entire sequence of posited natural classes, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse natural classes into syllables</object
+> and quits.</li
+><li
+>If it succeeded in finding a sequence of syllable patterns, it outputs the syllabification into the <object
+type="tPredictedSyllableBreaks"
+></object
+> field and reports <object
+type="tSuccessMessage"
+></object
+>.</li
+></ol
+></appendix
+><appendix
+id="aSHAlgorithmInDetail"
+><secTitle
+>Sonority hierarchy algorithm in detail</secTitle
 ><p
->In late 1983 my family and I were living in the jungles of Peru and David Payne came and asked me if I would create a <object
-type="tTool"
->Consistent Changes</object
-> table for him that would insert discretionary hyphens in Asheninka text.<endnote
-id="nCC"
+><indexedItem
+term="iSHPatternAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm is as follows:</p
+><ol
+><li
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
+></object
+> and quits. The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
+id="nSHSegSameAsCV"
 ><p
->A more current version of this program is <citation
-ref="rCC"
-></citation
+>This is the exact same algorithm used by the <object
+type="tCVPatternApproach"
+></object
 >.</p
 ></endnote
-> The algorithm he suggested was the CV Patterns approach (see <sectionRef
-sec="sCVApproach"
-></sectionRef
->). Asheninka has long words and typesetting material in that language would improve readability with such a table. In 1984 I wrote such a table.</p
-><p
->While it was functional, it ran slowly. I then wrote the <object
-type="tTool"
->Hyphen</object
-> program (<citation
-paren="none"
-ref="rDocPrepAids"
-></citation
->) to improve the efficiency. It implemented the same basic approach. Amazingly, the <object
-type="tTool"
->Hyphen</object
-> program is still being used (albeit occasionally) today.</p
-><p
->Because of this beginning, I chose to call this tool <object
-type="tAsheninka"
+> You can use the <object
+type="tTryAWord"
 ></object
->. The program icon (shown in example <exampleRef
-letter="xCushma"
-num="xCushma"
-></exampleRef
-> below) is the kind of material used for clothing by Asheninka people.<endnote
-id="nCushmaImage"
-><p
->This image was gratefully taken from <link
-href="http://www.ecotribal.com/en/shop/ashaninka-cushma-8"
->here</link
-> on 12 November, 2015.</p
-></endnote
-></p
-><example
-num="xCushma"
-><chart
-><img
-src="CushmaSmall.jpg"
-></img
-></chart
-></example
+> tool to get more details (see <sectionRef
+sec="sSHTryAWord"
+></sectionRef
+>).</li
+><li
+>If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited. It places the first segment of the word in the first syllable. It then tries to find the natural class of the current segment and the natural class of the following segment (unless the current segment is at the end of the word and also not already in a syllable; in this case, it adds the current segment to the current syllable). It then compares the “level” in the sonority hierarchy of these two natural classes and processes them as follows:<ol
+><li
+>If they are at the same level, a new syllable is created and the second segment is added to this new syllable.</li
+><li
+>If the natural class of the current segment is less sonorous than the natural class of the following segment, then it adds the following segment to the current syllable.</li
+><li
+>If the natural class of the current segment is more sonorous than the natural class of the following segment, then it looks at the segment after the following segment. There are two cases considered:<ol
+><li
+>If the second segment's natural class is the same or more sonorous than the third segment's natural class, than the second segment is added to the current syllable. A new syllable is created and the third segment is added to it.</li
+><li
+>Otherwise, a new syllable is created and the second segment is added to it.</li
+></ol
+></li
+></ol
+></li
+><li
+>Whenever a segment is not found in any natural class, an error is reported.</li
+><li
+>If it succeeded in finding natural classes for all segments, it outputs the syllabification into the <object
+type="tPredictedSyllableBreaks"
+></object
+> field and reports <object
+type="tSuccessMessage"
+></object
+>.</li
+></ol
 ></appendix
 ><appendix
 id="aONCAlgorithmInDetail"
@@ -4326,7 +6831,7 @@ type="tErrorMessage"
 ><li
 >Otherwise, it performs a left-to-right sweep of the segments. For each segment, it compares the sonority of this onset to the sonority of the following segment. What happens next depends on the onset, nucleus, or coda status of the segment.</li
 ><li
->it looks at the classification of the segment (onset, nucleus, and/or coda).<ol
+>It looks at the classification of the segment (onset, nucleus, and/or coda).<ol
 ><li
 >If it can be an onset, it compares the sonority of this onset to the sonority of the following segment. If the following segment's sonority is less than or equal to this segment's sonority, this segment is added to the current syllable.</li
 ><li
@@ -4508,6 +7013,451 @@ type="tSHSonorityHierarchy"
 >.</p
 ></appendix
 ><appendix
+id="aMoraicAlgorithmInDetail"
+><secTitle
+>Moraic algorithm in detail</secTitle
+><p
+><indexedItem
+term="iMoraicApproachAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm for the <object
+type="tMoraicApproach"
+></object
+> is as follows:</p
+><ol
+><li
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
+></object
+> and quits. The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
+id="nMoraicSegSameAsCV"
+><p
+>This is the exact same algorithm used by the <object
+type="tCVPatternApproach"
+></object
+>.</p
+></endnote
+> You can use the <object
+type="tTryAWord"
+></object
+> tool to get more details (see <sectionRef
+sec="sMoraicTryAWord"
+></sectionRef
+>).</li
+><li
+>If it succeeded in finding a sequence of segments, it then processes the segments one after the other. It starts in an “Onset” state.</li
+><li
+>When in the “Onset” state,<ol
+><li
+>If there is an onset template, it sees if the sequence of segments matches it. If it does, it tries to add the onset segments to the syllable and assumes that any following segments must be mora-bearing.</li
+><li
+>If no onset templates exist or match, <ol
+><li
+>if the segment is not mora-bearing, then:<ol
+><li
+>If there are syllable templates<ol
+><li
+>and one applies, it adds the segment as an onset;</li
+><li
+>if none apply, syllabification fails.</li
+></ol
+></li
+><li
+>If the sonority of this segment is less than what follows, if adds the segment as an onset;</li
+><li
+>otherwise, it fails to syllabify.</li
+></ol
+></li
+><li
+>Otherwise, <ol
+><li
+>if onsets are required at this point in the parse of the word, syllabification fails.</li
+><li
+>Otherwise, it will see if the segment will work as a mora-bearing segment after checking for sonority issues. That is, it changes the state to “Mora.”</li
+></ol
+></li
+></ol
+></li
+></ol
+></li
+><li
+>When in the “Mora” state,<ol
+><li
+>if the segment bears one or more moras,<ol
+><li
+>If the syllable can have another mora,<ol
+><li
+>if no syllable templates apply and there is at least one mora in the syllable already, finish the current syllable and start a new one. The state is changed to “Onset.”</li
+><li
+>Otherwise, add the segment to the syllable as a mora-bearing segment.</li
+></ol
+></li
+><li
+>If the syllable cannot have another mora (because the maximum number of moras in a syllable has been reached), then finish this syllable and start a new one. The state is changed to “Onset.”</li
+></ol
+></li
+><li
+>If the segment can be a coda,<ol
+><li
+>if there already is a coda segment and an onset template applies, it finishes the current syllable, creates a new one, and adds the segments matching the onset template to the new syllable. The state is changed to “Mora.”</li
+><li
+>If weight-by-position is in effect, and another mora can be added to the syllable, it adds the segment as mora-bearing.</li
+><li
+>Otherwise it adds the segment to the preceding mora in the syllable.</li
+></ol
+></li
+><li
+>Otherwise,<ol
+><li
+>if the syllable has at least one mora it adds the syllable to the word and starts a new syllable. The state is changed to “Onset.”<ol
+><li
+>If any onset templates apply, it adds the matching segments to the syllable and the state is changed to “Mora.”</li
+><li
+>Otherwise, if any word final templates apply, syllabification succeeds.</li
+></ol
+></li
+><li
+>Otherwise, syllabification fails.</li
+></ol
+></li
+></ol
+></li
+><li
+>When all of the segments have been processed, the current syllable is added to the word, if needed.</li
+></ol
+><p
+>Whenever a segment is added to a syllable as an onset, it also tries to apply any onset repair filters and applies any onset fail filters.</p
+><p
+>If it succeeded in processing all the segments in the word, it outputs the syllabification into the <object
+type="tPredictedSyllableBreaks"
+></object
+> field and reports <object
+type="tSuccessMessage"
+></object
+>.</p
+></appendix
+><appendix
+id="aNPAlgorithm"
+><secTitle
+>Nuclear Projection algorithm in detail</secTitle
+><p
+><indexedItem
+term="iNPApproachAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm for the <object
+type="tNPApproach"
+></object
+> is as follows:</p
+><ol
+><li
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
+></object
+> and quits. The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
+id="nNPSegSameAsCV"
+><p
+>This is the exact same algorithm used by the <object
+type="tCVPatternApproach"
+></object
+>.</p
+></endnote
+> You can use the <object
+type="tTryAWord"
+></object
+> tool to get more details (see <sectionRef
+sec="sNPTryAWord"
+></sectionRef
+>).</li
+><li
+>For each rule:<ol
+><li
+>Determine the set of segments, if any, that match the affected/context/level part of the rule:<ol
+><li
+>If it is a <object
+type="tNPRuleActionBuild"
+></object
+> rule, match any affected segments.</li
+><li
+>If it is a <object
+type="tNPRuleActionAttach"
+></object
+> or <object
+type="tNPRuleActionAugment"
+></object
+> rule and the level is <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>, match the affected immediately before the context.</li
+><li
+>If it is a <object
+type="tNPRuleActionAttach"
+></object
+> or <object
+type="tNPRuleActionAugment"
+></object
+> rule and the level is not <object
+type="tNPRuleLevelNDoubleBar"
+></object
+>, match the affected immediately after the context.</li
+><li
+>If it is a <object
+type="tNPRuleActionLeftAdjoin"
+></object
+> rule, match the affected immediately before the context.</li
+><li
+>If it is a <object
+type="tNPRuleActionRightAdjoin"
+></object
+> rule, match the affected immediately after the context.</li
+></ol
+></li
+><li
+>For each match:<ol
+><li
+>If the rule must obey the SSP, check the sonority between the affected and context segments. If the affected comes before the context, then sonority must be rising. If the affected comes after the context, then the sonority must decrease.</li
+><li
+>If sonority passes (or is ignored), then:<ol
+><li
+>If it is a <object
+type="tNPRuleActionBuild"
+></object
+> rule, create a new syllable and the constituent structure (syllable to <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> to <object
+type="tNPRuleLevelNBar"
+></object
+> to <object
+type="tNPRuleLevelN"
+></object
+> to the affected segment that matched).</li
+><li
+>If it is an <object
+type="tNPRuleActionAttach"
+></object
+> or <object
+type="tNPRuleActionAugment"
+></object
+> rule, apply any appropriate filters for the level (<object
+type="tNPRuleLevelNDoubleBar"
+></object
+> is onset and <object
+type="tNPRuleLevelNBar"
+></object
+> is rime and coda). If any filter fails, quit. Otherwise add the affected segment to the constituent structure at the rule's level.</li
+><li
+>If it is an <object
+type="tNPRuleActionLeftAdjoin"
+></object
+> or <object
+type="tNPRuleActionRightAdjoin"
+></object
+> rule, adjoin the segment to a new instance of the level node.</li
+></ol
+></li
+></ol
+></li
+></ol
+></li
+><li
+>Check every segment in the word to see if it has been made a part of a syllable. If not, fail.</li
+><li
+>Check the Onset Principle setting:<ol
+><li
+><indexedItem
+term="iAllButFirst"
+></indexedItem
+>If the <object
+type="tOPAllButFirstHasOnset"
+></object
+> is set, then if any syllable after the first does not have an onset (i.e., a segment in the <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level), fail.</li
+><li
+><indexedItem
+term="iEverySyllable"
+></indexedItem
+>If the <object
+type="tOPEverySyllableHasOnset"
+></object
+> is set, then if any syllable does not have an onset (i.e., a segment in the <object
+type="tNPRuleLevelNDoubleBar"
+></object
+> level), fail.</li
+><li
+><indexedItem
+term="iOnsetsNotRequired"
+></indexedItem
+>If the <object
+type="tOPOnsetsNotRequired"
+></object
+> is set, then there is nothing to do.</li
+></ol
+></li
+><li
+>If it succeeded in processing all the segments in the word, it outputs the syllabification into the <object
+type="tPredictedSyllableBreaks"
+></object
+> field and reports <object
+type="tSuccessMessage"
+></object
+>.</li
+></ol
+></appendix
+><appendix
+id="aOTAlgorithm"
+><secTitle
+>OT algorithm in detail</secTitle
+><p
+><indexedItem
+term="iOTApproachAlgorithm"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm for the <object
+type="tOTApproach"
+></object
+> is as follows:</p
+><ol
+><li
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
+></object
+> and quits. The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
+id="nOTSegSameAsCV"
+><p
+>This is the exact same algorithm used by the <object
+type="tCVPatternApproach"
+></object
+>.</p
+></endnote
+> You can use the <object
+type="tTryAWord"
+></object
+> tool to get more details (see <sectionRef
+sec="sOTTryAWord"
+></sectionRef
+>).</li
+><li
+>Initialize the <object
+type="tOTCandidateGrid"
+></object
+>.</li
+><li
+>Apply word initial/word final housekeeping: remove the coda <object
+type="tOTStructuralOption"
+></object
+> from the first segment in the word and the onset <object
+type="tOTStructuralOption"
+></object
+> from the last segment of the word.</li
+><li
+>For each constraint in the first ranking in the <object
+type="tOTConstraintRankings"
+></object
+>:<ol
+><li
+>Determine the set of segments, if any, that match the affected element(s) part of the constraint.</li
+><li
+>For each match:<ol
+><li
+>If the set of <object
+type="tOTStructuralOptions"
+></object
+> in the constraint are exactly the same as the remaining <object
+type="tOTStructuralOptions"
+></object
+> in the segment, do nothing.<endnote
+id="nAllSOMatch"
+><p
+>This is because removing all that match would leave no <object
+type="tOTStructuralOptions"
+></object
+> at all. This would be an invalid state.</p
+></endnote
+></li
+><li
+>Otherwise, remove any <object
+type="tOTStructuralOptions"
+></object
+> in that segment per the <object
+type="tOTStructuralOptions"
+></object
+> of the constraint as long as there is at least one <object
+type="tOTStructuralOption"
+></object
+> left.</li
+></ol
+></li
+><li
+>If the "onset before coda” housekeeping applies, remove the onset.</li
+><li
+>If every segment has at most one <object
+type="tOTStructuralOption"
+></object
+> in it, check no more constraints.</li
+></ol
+></li
+><li
+>Check every segment in the word to see if it has been made a part of a syllable and has at most one <object
+type="tOTStructuralOption"
+></object
+>. If not, fail.</li
+><li
+>If it succeeded in processing all the segments in the word, it outputs the syllabification into the <object
+type="tPredictedSyllableBreaks"
+></object
+> field and reports <object
+type="tSuccessMessage"
+></object
+>.</li
+></ol
+></appendix
+><appendix
 id="aKnownIssues"
 ><secTitle
 >Known issues</secTitle
@@ -4522,6 +7472,8 @@ type="tField"
 type="tField"
 >Grapheme or Natural Class</object
 > field will do the same.</li
+><li
+>The dialog boxes which can remain open while you do other things do not have a way to be minimized.</li
 ></ol
 ></appendix
 ><appendix
@@ -4530,10 +7482,13 @@ id="aSampleDataSets"
 ><secTitle
 >Sample data sets</secTitle
 ><p
-><object
+>The <object
 type="tAsheninka"
 ></object
-> comes with some sample data sets in case you find these of value. There are two.</p
+> website has some sample data sets in case you find these of value. There are two.  They are located at <link
+href="http://software.sil.org/downloads/r/asheninka/resources/SampleProjects.zip"
+>http://​software.sil.org/downloads/r/​asheninka/​resources/​SampleProjects.zip</link
+></p
 ><section1
 id="sSampleEnglishIPA"
 ><secTitle
@@ -4543,13 +7498,24 @@ id="sSampleEnglishIPA"
 paren="none"
 ref="rIPA"
 ></citation
->) per my dialect. It illustrates the need for some templates and filters which are described in the “Overview” document. You can read this document by clicking <link
+>) per my dialect. It illustrates the need for some templates and filters which are described in the “<object
+type="tOverviewDocument"
+></object
+>” document. You can read this document by clicking <link
 href="Overview.pdf"
 >here</link
 > or by using the <object
 type="tMenuItem"
 >Help / Introduction to syllabification</object
 > menu item.</p
+><p
+>Please note that the <object
+type="tCVPatternApproach"
+></object
+> fails to parse many of the words as does the <object
+type="tSHApproach"
+></object
+>.  The other approaches have successful parses for the words.</p
 ></section1
 ><section1
 id="sSampleAsheninka"
@@ -4576,7 +7542,10 @@ lang="lVernacular"
 >o</langData
 >.</li
 ><li
->No templates or filters are needed.</li
+>There is one template used only for the <object
+type="tMoraicApproach"
+></object
+>. No filters are needed.</li
 ></ol
 ><p
 >In this implementation, I chose to model the geminates and diphthongs as separate segments. The reasons for this are as follows:</p
@@ -4590,9 +7559,83 @@ type="tCVPatternApproach"
 >The <object
 type="tSHApproach"
 ></object
-> forces a syllable break whenever there are two consecutive top-level segments. Since vowels are the highest level, this means the geminates and diphthongs are broken into two syllables. This is incorrect.</li
+> forces a syllable break whenever there are two consecutive top-level segments. Since vowels are the highest level, this means the geminates and diphthongs are broken into two syllables. This would be incorrect.</li
 ></ol
+><p
+>All words parse except for an onomatopoeiaic word, with the exception of the <object
+type="tSHApproach"
+></object
+>.  This word parses for that approach.</p
 ></section1
+></appendix
+><appendix
+id="aAsheninka"
+><secTitle
+>Why is it called <object
+type="tAsheninka"
+></object
+>?</secTitle
+><p
+>This syllable parsing program is called <object
+type="tAsheninka"
+></object
+> for historic reasons. (The word is pronounced <langData
+lang="lVernacular"
+>a.ˈʃɛ.nɪŋ.ka</langData
+>.)</p
+><p
+>In late 1983 my family and I were living in the jungles of Peru and David Payne came and asked me if I would create a <object
+type="tTool"
+>Consistent Changes</object
+><endnote
+id="nCC"
+><p
+>A more current version of this program is <citation
+ref="rCC"
+></citation
+>.</p
+></endnote
+> table for him that would insert discretionary hyphens in Asheninka text. The algorithm he suggested was the CV Patterns approach (see <sectionRef
+sec="sCVApproach"
+></sectionRef
+>). Asheninka has long words and typesetting material in that language would improve readability with such a table. In 1984 I wrote such a table.</p
+><p
+>While it was functional, it ran slowly. I then wrote the <object
+type="tTool"
+>Hyphen</object
+> program (<citation
+paren="none"
+ref="rDocPrepAids"
+></citation
+>) to improve the efficiency. It implemented the same basic approach. Amazingly, the <object
+type="tTool"
+>Hyphen</object
+> program is still being used (albeit occasionally) today.</p
+><p
+>Because of this beginning, I chose to call this tool <object
+type="tAsheninka"
+></object
+>. The program icon (shown in example <exampleRef
+letter="xCushma"
+num="xCushma"
+></exampleRef
+> below) is the kind of material used for clothing by Asheninka people.<endnote
+id="nCushmaImage"
+><p
+>This image was gratefully taken from <link
+href="http://www.ecotribal.com/en/shop/ashaninka-cushma-8"
+>here</link
+> on 12 November, 2015.</p
+></endnote
+></p
+><example
+num="xCushma"
+><chart
+><img
+src="CushmaSmall.jpg"
+></img
+></chart
+></example
 ></appendix
 ><endnotes
 ></endnotes
@@ -4630,10 +7673,10 @@ id="ctNoSampleData"
 ></contentTypes
 ><contentControlChoices
 ><contentControlChoice
-active="no"
+active="yes"
 >Include sample data sets</contentControlChoice
 ><contentControlChoice
-active="yes"
+active="no"
 exclude="ctSampleData"
 >Exclude sample data sets</contentControlChoice
 ></contentControlChoices

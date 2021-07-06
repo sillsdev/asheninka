@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -19,22 +19,19 @@ import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
-import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Template;
+import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.oncapproach.ONCApproach;
-import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
  *
  */
-public class TemplatesController extends TemplatesFiltersController {
+public abstract class TemplatesController extends TemplatesFiltersController {
 
 	@FXML
 	protected TableView<Template> templateTable;
@@ -43,9 +40,7 @@ public class TemplatesController extends TemplatesFiltersController {
 
 	protected ObservableList<Template> templateList = FXCollections.observableArrayList();
 
-	public void setData(ONCApproach oncApproachData) {
-		oncApproach = oncApproachData;
-		languageProject = oncApproach.getLanguageProject();
+	protected void setDataProcessing(String sLastView) {
 		// no sorting allowed
 		templateList = languageProject.getTemplates();
 		iRepresentationCaretPosition = 6;
@@ -57,8 +52,8 @@ public class TemplatesController extends TemplatesFiltersController {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastONCTemplatesViewItemUsed();
+					ApplicationPreferences prefs = mainApp.getApplicationPreferences();
+					int iLastIndex = prefs.getIntegerValue(sLastView, 0);
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					selectAndScrollToItem(iLastIndex);
 				}
@@ -106,8 +101,8 @@ public class TemplatesController extends TemplatesFiltersController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-//						System.out.println("SelectedValue="	+ selectedValue);
 						currentTemplateFilter.setTemplateFilterType(selectedValue);
+						showTypeWarning(currentTemplateFilter);
 					}
 				});
 			}
@@ -115,6 +110,7 @@ public class TemplatesController extends TemplatesFiltersController {
 		typeComboBox.setPromptText(resources.getString("label.choosetype"));
 	}
 
+	protected abstract void showTypeWarning(TemplateFilter template);
 	/**
 	 * Fills all text fields to show details about the environment.
 	 *
@@ -128,8 +124,6 @@ public class TemplatesController extends TemplatesFiltersController {
 			nameField.setText(tf.getTemplateFilterName());
 			descriptionField.setText(tf.getDescription());
 			representationField.setText(tf.getTemplateFilterRepresentation());
-			NodeOrientation vernacularOrientation = languageProject.getVernacularLanguage()
-					.getOrientation();
 			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
 					.getOrientation();
 			nameField.setNodeOrientation(analysisOrientation);
@@ -161,11 +155,6 @@ public class TemplatesController extends TemplatesFiltersController {
 		}
 	}
 
-	protected void rememberSelection(int iCurrentIndex) {
-		mainApp.getApplicationPreferences().setLastONCTemplatesViewItemUsed(
-				iCurrentIndex);
-	}
-	
 	@Override
 	public void setViewItemUsed(int value) {
 		int max = templateTable.getItems().size();

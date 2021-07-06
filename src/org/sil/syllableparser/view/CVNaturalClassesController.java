@@ -289,13 +289,27 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 					+ cvNaturalClassTable.getItems().size() + " ");
 			// remember the selection
 			switch (approachType) {
+			case CV:
+				mainApp.getApplicationPreferences().setLastCVNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
 			case ONSET_NUCLEUS_CODA:
 				mainApp.getApplicationPreferences().setLastONCCVNaturalClassesViewItemUsed(
 						iCurrentIndex);
 				break;
-			default:
-				mainApp.getApplicationPreferences().setLastCVNaturalClassesViewItemUsed(
+			case MORAIC:
+				mainApp.getApplicationPreferences().setLastMoraicCVNaturalClassesViewItemUsed(
 						iCurrentIndex);
+				break;
+			case NUCLEAR_PROJECTION:
+				mainApp.getApplicationPreferences().setLastNPCVNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+			case OPTIMALITY_THEORY:
+				mainApp.getApplicationPreferences().setLastOTCVNaturalClassesViewItemUsed(
+						iCurrentIndex);
+				break;
+			default:
 				break;
 			}
 		}
@@ -419,13 +433,27 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 					// retrieve selection
 					int iLastIndex = 0;
 					switch (approachType) {
+					case CV:
+						iLastIndex = mainApp.getApplicationPreferences()
+						.getLastCVNaturalClassesViewItemUsed();
+						break;
 					case ONSET_NUCLEUS_CODA:
 						iLastIndex = mainApp.getApplicationPreferences()
 								.getLastONCCVNaturalClassesViewItemUsed();
 						break;
-					default:
+					case MORAIC:
 						iLastIndex = mainApp.getApplicationPreferences()
-								.getLastCVNaturalClassesViewItemUsed();
+								.getLastMoraicCVNaturalClassesViewItemUsed();
+						break;
+					case NUCLEAR_PROJECTION:
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastNPCVNaturalClassesViewItemUsed();
+						break;
+					case OPTIMALITY_THEORY:
+						iLastIndex = mainApp.getApplicationPreferences()
+								.getLastOTCVNaturalClassesViewItemUsed();
+						break;
+					default:
 						break;
 					}
 					iLastIndex = adjustIndexValue(iLastIndex, max);

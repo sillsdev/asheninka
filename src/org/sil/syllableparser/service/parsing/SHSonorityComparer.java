@@ -60,4 +60,16 @@ public class SHSonorityComparer {
 		}
 		return SHComparisonResult.EQUAL;
 	}
+
+	public int getLevel(Segment seg) {
+		if (seg == null) {
+			return -1;
+		}
+		SHNaturalClass natClass = shApproach.getNaturalClassContainingSegment(seg);
+		if (natClass == null) {
+			return -1;
+		}
+		int pos = hierarchy.indexOf(natClass);
+		return pos;
+	}
 }

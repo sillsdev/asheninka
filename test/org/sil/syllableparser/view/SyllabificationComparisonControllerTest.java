@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2018 SIL International 
+ * Copyright (c) 2016-2021 SIL International 
  * This software is licensed under the LGPL, version 2.1 or later 
  * (http://www.gnu.org/licenses/lgpl-2.1.html) 
  */
@@ -69,11 +69,10 @@ public class SyllabificationComparisonControllerTest {
 		assertEquals(false, controller.isUseONCApproach());
 		assertEquals(false, controller.isUseONCApproachDisabled());
 		assertEquals(false, controller.isUseMoraicApproach());
-		assertEquals(true, controller.isUseMoraicApproachDisabled());
+		assertEquals(false, controller.isUseMoraicApproachDisabled());
 		assertEquals(false, controller.isUseNuclearProjectionApproach());
-		assertEquals(true, controller.isUseNuclearProjectionApproachDisabled());
+		assertEquals(false, controller.isUseNuclearProjectionApproachDisabled());
 		assertEquals(false, controller.isUseOTApproach());
-		assertEquals(true, controller.isUseOTApproachDisabled());
 		
 		// set comparison buttons
 		controller.setUseCVApproach(true);
@@ -90,14 +89,33 @@ public class SyllabificationComparisonControllerTest {
 		assertEquals(true, controller.isUseOTApproach());
 		
 		// check at least two options selected
+		controller.setUseCVApproach(true);
+		controller.setUseSHApproach(true);
+		controller.setUseONCApproach(true);
+		controller.setUseMoraicApproach(true);
+		controller.setUseNuclearProjectionApproach(false);
+		controller.setUseOTApproach(false);
+		assertEquals(true, controller.twoOrMoreToCompare());
+		controller.setUseCVApproach(false);
 		assertEquals(true, controller.twoOrMoreToCompare());
 		controller.setUseSHApproach(false);
 		assertEquals(true, controller.twoOrMoreToCompare());
-		controller.setUseCVApproach(false);
+		controller.setUseONCApproach(false);
 		assertEquals(false, controller.twoOrMoreToCompare());
-		controller.setUseCVApproach(true);
-		assertEquals(true, controller.twoOrMoreToCompare());
 
+		controller.setUseCVApproach(true);
+		controller.setUseSHApproach(true);
+		controller.setUseONCApproach(true);
+		controller.setUseMoraicApproach(true);
+		assertEquals(true, controller.twoOrMoreToCompare());
+		controller.setUseMoraicApproach(false);
+		assertEquals(true, controller.twoOrMoreToCompare());
+		controller.setUseSHApproach(false);
+		assertEquals(true, controller.twoOrMoreToCompare());
+		controller.setUseONCApproach(false);
+		assertEquals(false, controller.twoOrMoreToCompare());
+		controller.setUseMoraicApproach(true);
+		assertEquals(true, controller.twoOrMoreToCompare());
 	}
 
 }

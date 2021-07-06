@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -69,6 +69,10 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(false);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
@@ -88,6 +92,10 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(false);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
@@ -107,6 +115,10 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(false);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
@@ -126,6 +138,10 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(false);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
@@ -141,10 +157,60 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 	}
 
 	@Test
+	public void formattingCVNPEnglishTest() {
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(false);
+		comparer.setUseONCApproach(false);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(true);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, locale, dateTime);
+		String result = formatter.format();
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVNPHTMLEnglish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void formattingCVNPSpanishTest() {
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(false);
+		comparer.setUseONCApproach(false);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(true);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, new Locale("es"), dateTime);
+		String result = formatter.format();
+		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVNPHTMLSpanish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath());
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
 	public void formattingCVSHONCEnglishTest() {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
@@ -164,6 +230,10 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(true);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();
@@ -183,6 +253,10 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(false);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
 		String result = formatter.format();
@@ -202,6 +276,10 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseCVApproach(false);
 		comparer.setUseSHApproach(true);
 		comparer.setUseONCApproach(true);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
 		String result = formatter.format();

@@ -38,6 +38,7 @@
 				<include name="Overview.pdf" />
 				<include name="UserDocumentation.pdf" />
 				<include name="SuggestedSteps.pdf"/>
+				<include name="222-1097-HAMMOND-0-0.PDF"/>
 			</fileset>
 		</copy>
 

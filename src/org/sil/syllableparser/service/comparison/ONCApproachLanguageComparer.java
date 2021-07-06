@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -36,22 +36,22 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 	ONCApproach onca1;
 	ONCApproach onca2;
 
-	SortedSet<DifferentSHNaturalClass> naturalClassesWhichDiffer = new TreeSet<>(
+	protected SortedSet<DifferentSHNaturalClass> naturalClassesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentSHNaturalClass::getSortingValue));
-	LinkedList<Diff> sonorityHierarchyOrderDifferences = new LinkedList<>();
-	SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer = new TreeSet<>(
+	protected LinkedList<Diff> sonorityHierarchyOrderDifferences = new LinkedList<>();
+	protected SortedSet<DifferentCVNaturalClass> cvNaturalClassesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentCVNaturalClass::getSortingValue));
-	SortedSet<DifferentFilter> filtersWhichDiffer = new TreeSet<>(
+	protected SortedSet<DifferentFilter> filtersWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentFilter::getSortingValue));
-	LinkedList<Diff> filterOrderDifferences = new LinkedList<>();
-	SortedSet<DifferentTemplate> templatesWhichDiffer = new TreeSet<>(
+	protected LinkedList<Diff> filterOrderDifferences = new LinkedList<>();
+	protected SortedSet<DifferentTemplate> templatesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentTemplate::getSortingValue));
-	LinkedList<Diff> templateOrderDifferences = new LinkedList<>();
+	protected LinkedList<Diff> templateOrderDifferences = new LinkedList<>();
 
-	public ONCApproachLanguageComparer(ONCApproach sha1, ONCApproach sha2) {
-		super(sha1.getLanguageProject(), sha2.getLanguageProject());
-		this.onca1 = sha1;
-		this.onca2 = sha2;
+	public ONCApproachLanguageComparer(ONCApproach onca1, ONCApproach onca2) {
+		super(onca1.getLanguageProject(), onca2.getLanguageProject());
+		this.onca1 = onca1;
+		this.onca2 = onca2;
 	}
 
 	public ONCApproach getOnca1() {
@@ -100,8 +100,12 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 
 	@Override
 	public void compare() {
-		compareSegmentInventory();
-		compareSonorityHierarchy();
+		try {
+			compareSegmentInventory();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		compareGraphemeNaturalClasses();
 		compareEnvironments();
 		compareSonorityHierarchy();
@@ -248,8 +252,8 @@ public class ONCApproachLanguageComparer extends ApproachLanguageComparer {
 			sb.append("\n");
 		});
 		return sb.toString();
-
 	}
+
 	@Override
 	protected void syllabifyWords(List<Word> words1, List<Word> words2) {
 		syllabifyWords(onca1, words1);

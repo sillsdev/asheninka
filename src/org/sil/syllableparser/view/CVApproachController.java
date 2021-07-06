@@ -568,7 +568,7 @@ public class CVApproachController extends ApproachController {
 		try {
 			Stage tryAWordDialogStage = new Stage();
 			String resource = "fxml/CVTryAWord.fxml";
-			String title = bundle.getString("label.tryaword");
+			String title = bundle.getString("label.tryaword") + " - " + bundle.getString("approach.cv");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
 					Constants.RESOURCE_LOCATION);

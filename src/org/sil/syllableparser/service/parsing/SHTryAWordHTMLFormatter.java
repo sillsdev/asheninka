@@ -9,6 +9,7 @@ package org.sil.syllableparser.service.parsing;
 import java.util.List;
 import java.util.Locale;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTraceInfo;
@@ -141,7 +142,7 @@ public class SHTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 			if (sylInfo.startsSyllable) {
 				sb.append("&sigma;");
 			} else {
-				sb.append("&#xa0;");
+				sb.append(Constants.NON_BREAKING_SPACE);
 			}
 			sb.append("</td>");
 			sb.append("</tr>\n");

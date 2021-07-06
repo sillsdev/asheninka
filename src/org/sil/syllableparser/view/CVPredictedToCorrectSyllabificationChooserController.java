@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -14,7 +14,10 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVPredictedSyllabification;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import javafx.collections.FXCollections;
@@ -113,6 +116,8 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 				}
 				break;
 			}
+			default:
+				break;
 			}
 		});
 
@@ -149,11 +154,6 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		});
 	}
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * @param words TODO
-	 * @param cvApproachController
-	 */
 	public void setData(CVApproach cvApproachData, ObservableList<Word> words) {
 		cvApproach = cvApproachData;
 		languageProject = cvApproachData.getLanguageProject();
@@ -197,6 +197,30 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		addWordsToTable();
 	}
 
+	private void createListOfDifferentMoraicWords(ObservableList<Word> words) {
+		for (Word moraicWord : words) {
+			if (!moraicWord.getMoraicPredictedSyllabification().isEmpty()
+					&& !moraicWord.getMoraicPredictedSyllabification().equals(moraicWord.getCorrectSyllabification())) {
+				currentPredictedSyllabification = new CVPredictedSyllabification(
+						moraicWord.getMoraicPredictedSyllabification(), moraicWord.getID());
+				cvPredictedSyllabifications.add(currentPredictedSyllabification);
+			}
+		}
+		addWordsToTable();
+	}
+
+	private void createListOfDifferentNPWords(ObservableList<Word> words) {
+		for (Word npWord : words) {
+			if (!npWord.getNPPredictedSyllabification().isEmpty()
+					&& !npWord.getNPPredictedSyllabification().equals(npWord.getCorrectSyllabification())) {
+				currentPredictedSyllabification = new CVPredictedSyllabification(
+						npWord.getNPPredictedSyllabification(), npWord.getID());
+				cvPredictedSyllabifications.add(currentPredictedSyllabification);
+			}
+		}
+		addWordsToTable();
+	}
+
 	protected void addWordsToTable() {
 		cvPredictedSyllabificationTable.setItems(cvPredictedSyllabifications);
 		if (cvPredictedSyllabificationTable.getItems().size() > 0) {
@@ -219,6 +243,27 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		languageProject = oncApproachData.getLanguageProject();
 		this.words = words;
 		createListOfDifferentONCWords(words);
+	}
+
+	public void setData(MoraicApproach moraicApproachData, ObservableList<Word> words) {
+		moraicApproach = moraicApproachData;
+		languageProject = moraicApproachData.getLanguageProject();
+		this.words = words;
+		createListOfDifferentMoraicWords(words);
+	}
+
+	public void setData(NPApproach npApproachData, ObservableList<Word> words) {
+		npApproach = npApproachData;
+		languageProject = npApproachData.getLanguageProject();
+		this.words = words;
+		createListOfDifferentNPWords(words);
+	}
+
+	public void setData(OTApproach otApproachData, ObservableList<Word> words) {
+		otApproach = otApproachData;
+		languageProject = otApproachData.getLanguageProject();
+		this.words = words;
+		createListOfDifferentNPWords(words);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 
 import javafx.fxml.FXMLLoader;
@@ -64,7 +65,7 @@ public class ApproachViewNavigator {
 
         	//FXMLLoader loader = new FXMLLoader();
             loader.setLocation(ApproachViewNavigator.class.getResource(fxml));
-            loader.setResources(ResourceBundle.getBundle("org.sil.syllableparser.resources.SyllableParser", locale));
+            loader.setResources(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
         	
         	Node node = loader.load();
         			rootLayoutController.setApproachView(node //loader.load()

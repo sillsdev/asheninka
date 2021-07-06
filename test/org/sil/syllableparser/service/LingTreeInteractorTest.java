@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -31,7 +31,7 @@ public class LingTreeInteractorTest {
 	Language vl;
 	FontInfo fia;
 	FontInfo fiv;
-	LingTreeInteractor liInteractor;
+	LingTreeInteractor ltInteractor;
 
 	/**
 	 * @throws java.lang.Exception
@@ -47,7 +47,7 @@ public class LingTreeInteractorTest {
 		fiv = new FontInfo(vl.getFont());
 		fia.setColor(Color.BLUE);
 		fiv.setColor(Color.AQUA);
-		liInteractor = LingTreeInteractor.getInstance();
+		ltInteractor = LingTreeInteractor.getInstance();
 	}
 
 	/**
@@ -59,12 +59,12 @@ public class LingTreeInteractorTest {
 
 	@Test
 	public void svgTest() {
-		liInteractor.initializeParameters(language);
-		String svg = liInteractor.createSVG("", true);
+		ltInteractor.initializeParameters(language);
+		String svg = ltInteractor.createSVG("", true);
 		assertEquals("", svg);
-		svg = liInteractor.createSVG("", false);
+		svg = ltInteractor.createSVG("", false);
 		assertEquals("", svg);
-		svg = liInteractor.createSVG("(W)", true);
+		svg = ltInteractor.createSVG("(W)", true);
 		assertEquals(
 				"﻿<?xml version='1.0' standalone='no'?>\n"
 						+ "<svg width='21.208984375' height='13.81171875' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>\n"
@@ -74,7 +74,7 @@ public class LingTreeInteractorTest {
 						+ "<rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/>\n"
 						+ "<text x=\"0.0\" y=\"7.800000000000001\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">W</text>\n"
 						+ "</svg>\n", svg);
-		svg = liInteractor.createSVG("(W)", false);
+		svg = ltInteractor.createSVG("(W)", false);
 		assertEquals(
 				"﻿<?xml version='1.0' standalone='no'?>\n"
 						+ "<svg width='21.208984375' height='13.81171875' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>\n"
@@ -84,7 +84,7 @@ public class LingTreeInteractorTest {
 						+ "<rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/>\n"
 						+ "<text x=\"0.0\" y=\"7.800000000000001\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">W</text>\n"
 						+ "</svg>\n", svg);
-		svg = liInteractor
+		svg = ltInteractor
 				.createSVG(
 						"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))",
 						true);
@@ -132,7 +132,7 @@ public class LingTreeInteractorTest {
 						"<text x=\"159.48486328125\" y=\"178.212109375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">i</text>\n" +
 						"</svg>\n"
 , svg);
-		svg = liInteractor
+		svg = ltInteractor
 				.createSVG(
 						"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))",
 						false);
@@ -185,12 +185,12 @@ public class LingTreeInteractorTest {
 	@Test
 	public void svgRTLTest() {
 		language.getVernacularLanguage().setRightToLeft(true);
-		liInteractor.initializeParameters(language);
-		String svg = liInteractor.createSVG("", true);
+		ltInteractor.initializeParameters(language);
+		String svg = ltInteractor.createSVG("", true);
 		assertEquals("", svg);
-		svg = liInteractor.createSVG("", false);
+		svg = ltInteractor.createSVG("", false);
 		assertEquals("", svg);
-		svg = liInteractor.createSVG("(W)", true);
+		svg = ltInteractor.createSVG("(W)", true);
 		assertEquals(
 				"﻿<?xml version='1.0' standalone='no'?>\n"
 						+ "<svg width='21.208984375' height='13.81171875' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>\n"
@@ -200,7 +200,7 @@ public class LingTreeInteractorTest {
 						+ "<rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/>\n"
 						+ "<text x=\"0.0\" y=\"7.800000000000001\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">W</text>\n"
 						+ "</svg>\n", svg);
-		svg = liInteractor.createSVG("(W)", false);
+		svg = ltInteractor.createSVG("(W)", false);
 		assertEquals(
 				"﻿<?xml version='1.0' standalone='no'?>\n"
 						+ "<svg width='21.208984375' height='13.81171875' version='1.1' xmlns='http://www.w3.org/2000/svg' contentScriptType='text/javascript'>\n"
@@ -210,7 +210,7 @@ public class LingTreeInteractorTest {
 						+ "<rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/>\n"
 						+ "<text x=\"0.0\" y=\"7.800000000000001\" font-family=\"System\" font-size=\"12.0\" fill=\"#000000\">W</text>\n"
 						+ "</svg>\n", svg);
-		svg = liInteractor
+		svg = ltInteractor
 				.createSVG(
 						"(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o)))))(σ(O(\\L n(\\G n))(\\L n(\\G n))(\\L l(\\G l)))(R(N(\\L i(\\G i))))))",
 						true);
@@ -257,5 +257,39 @@ public class LingTreeInteractorTest {
 						"<line x1=\"4.48828125\" y1=\"121.69453125\" x2=\"4.48828125\" y2=\"138.395703125\" stroke=\"#000000\" stroke-width=\"1.0\"/>\n" +
 						"<text x=\"2.32373046875\" y=\"178.212109375\" font-family=\"Charis SIL\" font-size=\"13.0\" font-weight=\"bold\" fill=\"#008000\">i</text>\n" +
 						"</svg>\n", svg);
+	}
+
+	@Test
+	public void lexicalFontInfoTest() {
+		ltInteractor.initializeParameters(language);
+		checkFontInfo(fiv, ltInteractor.getLexicalFontInfo());
+		Color clti = ltInteractor.getLexicalFontInfo().getColor();
+		assertEquals(null, clti);
+		ltInteractor.setLexicalFontInfo(fia);;
+		checkFontInfo(fia, ltInteractor.getLexicalFontInfo());
+		clti = ltInteractor.getLexicalFontInfo().getColor();
+		assertEquals(Color.BLUE, clti);
+	}
+
+	protected void checkFontInfo(FontInfo fiNew, FontInfo fiOld) {
+		assertEquals(fiOld.getFont(), fiNew.getFont());
+		assertEquals(fiOld.getFontFamily(), fiNew.getFontFamily());
+		assertEquals(fiOld.getFontSize(), fiNew.getFontSize(), 0.0);
+		assertEquals(fiOld.getFontType(), fiNew.getFontType());
+	}
+
+	@Test
+	public void verticalGapTest() {
+		double gap = 20.0;
+		assertEquals(gap, ltInteractor.getVerticalGap(), 0.0);
+		gap = 40.0;
+		ltInteractor.setVerticalGap(40.0);
+		assertEquals(gap, ltInteractor.getVerticalGap(), 0.0);
+	}
+
+	@Test
+	public void initialYCoordinateTest() {
+		ltInteractor.setInitialYCoordinate(40.0);
+		assertEquals(40.0, ltInteractor.getInitialYCoordinate(), 0.0);
 	}
 }

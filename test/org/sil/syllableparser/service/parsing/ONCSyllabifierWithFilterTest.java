@@ -220,7 +220,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierTestBase {
 
 	@Test
 	public void filterFailTest() {
-		assertEquals(3, languageProject.getActiveAndValidFilters().size());
+		assertEquals(4, languageProject.getActiveAndValidFilters().size());
 		Filter f = languageProject.getActiveAndValidFilters().get(1);
 		assertEquals(false, f.getAction().isDoRepair());
 		assertEquals(FilterType.NUCLEUS, f.getTemplateFilterType());
@@ -256,7 +256,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierTestBase {
 
 	@Test
 	public void onsetFilterRepairTest() {
-		assertEquals(3, languageProject.getActiveAndValidFilters().size());
+		assertEquals(4, languageProject.getActiveAndValidFilters().size());
 		Filter f = languageProject.getActiveAndValidFilters().get(0);
 		assertEquals(true, f.getAction().isDoRepair());
 		assertEquals(FilterType.ONSET, f.getTemplateFilterType());
@@ -294,7 +294,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierTestBase {
 
 	@Test
 	public void traceOnsetFilterRepairTest() {
-		assertEquals(3, languageProject.getActiveAndValidFilters().size());
+		assertEquals(4, languageProject.getActiveAndValidFilters().size());
 		Filter f = languageProject.getActiveAndValidFilters().get(0);
 		assertEquals(true, f.getAction().isDoRepair());
 		assertEquals(FilterType.ONSET, f.getTemplateFilterType());
@@ -496,7 +496,7 @@ public class ONCSyllabifierWithFilterTest extends ONCSyllabifierTestBase {
 
 	@Test
 	public void codaFilterRepairTest() {
-		assertEquals(3, languageProject.getActiveAndValidFilters().size());
+		assertEquals(4, languageProject.getActiveAndValidFilters().size());
 		Filter f = languageProject.getActiveAndValidFilters().get(0);
 		Filter fOriginal = f;
 		assertEquals(true, f.getAction().isDoRepair());

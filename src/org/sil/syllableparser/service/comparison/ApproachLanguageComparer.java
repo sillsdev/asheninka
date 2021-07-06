@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -23,7 +23,10 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SyllabificationParameters;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.utility.HandleExceptionMessage;
 import org.sil.utility.StringUtilities;
+
+import com.ibm.icu.text.RuleBasedCollator;
 
 /**
  * @author Andy Black
@@ -55,12 +58,33 @@ public abstract class ApproachLanguageComparer {
 	boolean langProj1OnsetMaximization = false;
 	boolean langProj2OnsetMaximization = false;
 	boolean onsetPrincipleDiffers = true;
+	boolean maxMorasDiffers = true;
+	int langProj1MaxMoras = 0;
+	int langProj2MaxMoras = 0;
+	boolean useWeightByPositionDiffers = true;
+	boolean langProj1UseWeightByPosition = false;
+	boolean langProj2UseWeightByPosition = false;
 	OnsetPrincipleType langProj1OnsetPrinciple = OnsetPrincipleType.ONSETS_NOT_REQUIRED;
 	OnsetPrincipleType langProj2OnsetPrinciple = OnsetPrincipleType.ONSETS_NOT_REQUIRED;
 
 	public ApproachLanguageComparer(LanguageProject lang1, LanguageProject lang2) {
 		langProj1 = lang1;
 		langProj2 = lang2;
+
+		try {
+			RuleBasedCollator collatorViaRules = new RuleBasedCollator(langProj1.getVernacularLanguage()
+					.getAnyIcuRules());
+			Comparator<DifferentSegment> segmentComparatorViaRules = Comparator.comparing(DifferentSegment::getSortingValue, collatorViaRules);
+			segmentsWhichDiffer = new TreeSet<>(segmentComparatorViaRules);
+			Comparator<DifferentGrapheme> graphemeComparatorViaRules = Comparator.comparing(DifferentGrapheme::getSortingValue, collatorViaRules);
+			graphemesWhichDiffer = new TreeSet<>(graphemeComparatorViaRules);
+			Comparator<DifferentWord> wordComparatorViaRules = Comparator.comparing(DifferentWord::getSortingValue, collatorViaRules);
+			wordsWhichDiffer = new TreeSet<>(wordComparatorViaRules);
+		} catch (Exception e) {
+			e.printStackTrace();
+			HandleExceptionMessage.show("ApproachLanguageComparer Error", "Failed to create a RuleBasedCollator", e.getMessage(),
+					true);
+		}
 	}
 
 	public String getDataSet1Info() {
@@ -326,6 +350,12 @@ public abstract class ApproachLanguageComparer {
 		langProj1OnsetPrinciple = sp1.getOnsetPrincipleEnum();
 		langProj2OnsetPrinciple = sp2.getOnsetPrincipleEnum();
 		onsetPrincipleDiffers = (langProj1OnsetPrinciple != langProj2OnsetPrinciple);
+		langProj1UseWeightByPosition = sp1.isUseWeightByPosition();
+		langProj2UseWeightByPosition = sp2.isUseWeightByPosition();
+		useWeightByPositionDiffers = (langProj1UseWeightByPosition != langProj2UseWeightByPosition);
+		langProj1MaxMoras = sp1.getMaxMorasPerSyllable();
+		langProj2MaxMoras = sp2.getMaxMorasPerSyllable();
+		maxMorasDiffers = (langProj1MaxMoras != langProj2MaxMoras);
 	}
 
 	public void compareCVNaturalClasses(List<CVNaturalClass> naturalClasses1,

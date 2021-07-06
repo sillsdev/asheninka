@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,7 +15,10 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.SylParserBase;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 import com.ibm.icu.text.RuleBasedCollator;
@@ -44,6 +47,9 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 	protected CVApproach cvApproach;
 	protected SHApproach shApproach;
 	protected ONCApproach oncApproach;
+	protected MoraicApproach moraicApproach;
+	protected NPApproach npApproach;
+	protected OTApproach otApproach;
 	protected String sICURules = "";
 	protected RuleBasedCollator collatorViaRules;
 
@@ -179,12 +185,22 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 	}
 
 	protected double guessPrefHeight(Object g, double columnWidth) {
-		TextFlow tf = (TextFlow) g;
-		double area = tf.computeAreaInScreen();
 		Language analysis = languageProject.getAnalysisLanguage();
 		Language vernacular = languageProject.getVernacularLanguage();
 		double maxSize = Math.max(vernacular.getFontSize(),
 				analysis.getFontSize());
+		return calculatePrefHeight(g, columnWidth, maxSize);
+	}
+
+	protected double guessPrefHeightAnalysisOnly(Object g, double columnWidth) {
+		Language analysis = languageProject.getAnalysisLanguage();
+		double maxSize = analysis.getFontSize();
+		return calculatePrefHeight(g, columnWidth, maxSize);
+	}
+
+	protected double calculatePrefHeight(Object g, double columnWidth, double maxSize) {
+		TextFlow tf = (TextFlow) g;
+		double area = tf.computeAreaInScreen();
 		if (area > 0.0) {
 			double heightGuess = area / columnWidth;
 			if (heightGuess <= maxSize) {

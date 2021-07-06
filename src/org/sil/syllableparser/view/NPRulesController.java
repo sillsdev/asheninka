@@ -1,0 +1,810 @@
+// Copyright (c) 2021 SIL International
+// This software is licensed under the LGPL, version 2.1 or later
+// (http://www.gnu.org/licenses/lgpl-2.1.html)
+/**
+ *
+ */
+package org.sil.syllableparser.view;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+import org.sil.lingtree.model.FontInfo;
+import org.sil.syllableparser.ApplicationPreferences;
+import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Language;
+import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.SylParserObject;
+import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
+import org.sil.syllableparser.model.npapproach.NPApproach;
+import org.sil.syllableparser.model.npapproach.NPRule;
+import org.sil.syllableparser.model.npapproach.NPRuleAction;
+import org.sil.syllableparser.model.npapproach.NPRuleLevel;
+import org.sil.syllableparser.service.LingTreeInteractor;
+import org.sil.syllableparser.service.NPRuleValidator;
+import org.sil.utility.view.ControllerUtilities;
+
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.StringConverter;
+
+/**
+ * @author Andy Black
+ *
+ */
+
+public class NPRulesController extends SplitPaneWithTableViewController {
+
+	protected final class AnalysisWrappingTableCell extends TableCell<NPRule, String> {
+		private Text text;
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			processAnalysisTableCell(this, text, item, empty);
+		}
+	}
+
+	protected final class WrappingTableCell extends TableCell<NPRule, String> {
+		private Text text;
+		private boolean isAffected = false;
+
+		WrappingTableCell(boolean isAffected) {
+			this.isAffected = isAffected;
+		}
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			NPRule rule = (NPRule) this.getTableRow().getItem();
+			if (rule != null) {
+				CVSegmentOrNaturalClass segOrNC = rule.getAffectedSegOrNC();
+				if (!isAffected) {
+					segOrNC = rule.getContextSegOrNC();
+				}
+				if (segOrNC == null) {
+					processTableCell(this, text, item, empty);
+				} else if (segOrNC.isSegment()) {
+					processVernacularTableCell(this, text, item, empty);
+				} else {
+					processAnalysisTableCell(this, text, item, empty);
+				}
+			} else {
+				processTableCell(this, text, item, empty);
+			}
+		}
+	}
+
+	@FXML
+	private TableView<NPRule> npRulesTable;
+	@FXML
+	private TableColumn<NPRule, String> nameColumn;
+	@FXML
+	private TableColumn<NPRule, String> descriptionColumn;
+	@FXML
+	private TableColumn<NPRule, String> affectedSegmentOrNaturalClassColumn;
+	@FXML
+	private TableColumn<NPRule, String> contextColumn;
+	@FXML
+	private TableColumn<NPRule, String> actionColumn;
+	@FXML
+	private TableColumn<NPRule, String> levelColumn;
+	@FXML
+	private TableColumn<NPRule, Boolean> obeysSSPColumn;
+
+	@FXML
+	private TextField nameField;
+	@FXML
+	private TextField naturalClassesField;
+	@FXML
+	private TextField descriptionField;
+	@FXML
+	private TextField affectedTextField;
+	@FXML
+	private Button affectedButton;
+	@FXML
+	private TextField contextTextField;
+	@FXML
+	private Button contextButton;
+	@FXML
+	private CheckBox activeCheckBox;
+	@FXML
+	private Button buttonMoveUp;
+	@FXML
+	private Button buttonMoveDown;
+	@FXML
+	private Tooltip tooltipMoveUp;
+	@FXML
+	private Tooltip tooltipMoveDown;
+	@FXML
+	protected ComboBox<NPRuleAction> actionComboBox;
+	@FXML
+	protected ComboBox<NPRuleLevel> levelComboBox;
+	@FXML
+	private CheckBox obeysSSPCheckBox;
+	@FXML
+	protected Label ruleTreeLabel;
+	@FXML
+	protected WebView ruleLingTreeSVG;
+	@FXML
+	protected WebEngine webEngine;
+
+	private NPRule currentRule;
+	private NPRuleValidator validator;
+	protected LingTreeInteractor ltInteractor;
+
+	public NPRulesController() {
+		ltInteractor = LingTreeInteractor.getInstance();
+	}
+
+	/**
+	 * Initializes the controller class. This method is automatically called
+	 * after the fxml file has been loaded.
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		super.setApproach(ApplicationPreferences.NP_RULES);
+		super.setTableView(npRulesTable);
+		super.initialize(location, resources);
+		webEngine = ruleLingTreeSVG.getEngine();
+
+		bundle = resources;
+		// Initialize the button icons
+		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",
+				buttonMoveUp, tooltipMoveUp, bundle.getString("sh.view.sonorityhierarchy.up"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+		tooltipMoveDown = ControllerUtilities.createToolbarButtonWithImage("DownArrow.png",
+				buttonMoveDown, tooltipMoveDown,
+				bundle.getString("sh.view.sonorityhierarchy.down"),
+				Constants.RESOURCE_SOURCE_LOCATION);
+
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ruleNameProperty());
+		descriptionColumn
+				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+		affectedSegmentOrNaturalClassColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.affectedSegmentOrNaturalClassProperty());
+		contextColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.contextSegmentOrNaturalClassProperty());
+		actionColumn.setCellValueFactory(cellData -> cellData.getValue().ActionProperty());
+		levelColumn.setCellValueFactory(cellData -> cellData.getValue().LevelProperty());
+
+		// Custom rendering of the table cell.
+		nameColumn.setCellFactory(column -> {
+			return new AnalysisWrappingTableCell();
+		});
+		descriptionColumn.setCellFactory(column -> {
+			return new AnalysisWrappingTableCell();
+		});
+		affectedSegmentOrNaturalClassColumn.setCellFactory(column -> {
+			return new WrappingTableCell(true);
+		});
+		contextColumn.setCellFactory(column -> {
+			return new WrappingTableCell(false);
+		});
+		actionColumn.setCellFactory(column -> {
+			return new AnalysisWrappingTableCell();
+		});
+		levelColumn.setCellFactory(column -> {
+			return new AnalysisWrappingTableCell();
+		});
+
+		makeColumnHeaderWrappable(nameColumn);
+		makeColumnHeaderWrappable(descriptionColumn);
+		makeColumnHeaderWrappable(affectedSegmentOrNaturalClassColumn);
+		makeColumnHeaderWrappable(contextColumn);
+		makeColumnHeaderWrappable(actionColumn);
+		makeColumnHeaderWrappable(levelColumn);
+
+		// Since sonority items are sorted manually, we do not
+		// want the user to be able to click on a column header and sort it
+		nameColumn.setSortable(false);
+		descriptionColumn.setSortable(false);
+		affectedSegmentOrNaturalClassColumn.setSortable(false);
+		contextColumn.setSortable(false);
+		actionColumn.setSortable(false);
+		levelColumn.setSortable(false);
+		obeysSSPColumn.setSortable(false);
+
+		// Clear rule details.
+		showNPRuleDetails(null);
+
+		// Listen for selection changes and show the details when changed.
+		npRulesTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showNPRuleDetails(newValue));
+
+		actionComboBox.setConverter(new StringConverter<NPRuleAction>() {
+			@Override
+			public String toString(NPRuleAction object) {
+				String localizedName = bundle.getString("nprule.action."
+						+ object.toString().toLowerCase());
+				if (currentRule != null) {
+					currentRule.setAction(localizedName);
+				}
+				return localizedName;
+			}
+
+			@Override
+			public NPRuleAction fromString(String string) {
+				// nothing to do
+				return null;
+			}
+		});
+		actionComboBox.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<NPRuleAction>() {
+					@Override
+					public void changed(ObservableValue<? extends NPRuleAction> selected,
+							NPRuleAction oldValue, NPRuleAction selectedValue) {
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								currentRule.setRuleAction(selectedValue);
+								reportAnyValidationMessage();
+							}
+						});
+					}
+				});
+		actionComboBox.setPromptText(resources.getString("label.chooseruleaction"));
+
+		levelComboBox.setConverter(new StringConverter<NPRuleLevel>() {
+			@Override
+			public String toString(NPRuleLevel object) {
+				String localizedName = bundle.getString("nprule.level."
+						+ object.toString().toLowerCase());
+				if (currentRule != null) {
+					currentRule.setLevel(localizedName);
+				}
+				return localizedName;
+			}
+
+			@Override
+			public NPRuleLevel fromString(String string) {
+				// nothing to do
+				return null;
+			}
+		});
+		levelComboBox.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<NPRuleLevel>() {
+					@Override
+					public void changed(ObservableValue<? extends NPRuleLevel> selected,
+							NPRuleLevel oldValue, NPRuleLevel selectedValue) {
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								currentRule.setRuleLevel(selectedValue);
+								reportAnyValidationMessage();
+							}
+						});
+					}
+				});
+		levelComboBox.setPromptText(resources.getString("label.chooserulelevel"));
+
+		// Handle TextField text changes.
+		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentRule != null) {
+				currentRule.setRuleName(nameField.getText());
+			}
+			if (languageProject != null) {
+				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentRule != null) {
+				currentRule.setDescription(descriptionField.getText());
+			}
+			if (languageProject != null) {
+				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		affectedTextField.textProperty().addListener(
+				(observable, oldValue, newValue) -> {
+					if (languageProject != null && currentRule != null) {
+						Language lang = languageProject.getAnalysisLanguage();
+						if (currentRule.getAffectedSegOrNC() != null
+								&& currentRule.getAffectedSegOrNC().isSegment()) {
+							lang = languageProject.getVernacularLanguage();
+						}
+						affectedTextField.setFont(lang.getFont());
+						affectedTextField.setNodeOrientation(lang.getOrientation());
+						String sVernacular = mainApp.getStyleFromColor(lang.getColor());
+						affectedTextField.setStyle(sVernacular);
+					}
+					if (currentRule != null) {
+						affectedTextField.setText(newValue);
+						currentRule.setAffectedSegmentOrNaturalClass(newValue);
+						reportAnyValidationMessage();
+					}
+				});
+		contextTextField.textProperty().addListener(
+				(observable, oldValue, newValue) -> {
+					if (languageProject != null && currentRule != null) {
+						Language lang = languageProject.getAnalysisLanguage();
+						if (currentRule.getContextSegOrNC() != null
+								&& currentRule.getContextSegOrNC().isSegment()) {
+							lang = languageProject.getVernacularLanguage();
+						}
+						contextTextField.setFont(lang.getFont());
+						contextTextField.setNodeOrientation(lang.getOrientation());
+						String sVernacular = mainApp.getStyleFromColor(lang.getColor());
+						contextTextField.setStyle(sVernacular);
+					}
+					if (currentRule != null) {
+						contextTextField.setText(currentRule.getContextSegmentOrNaturalClass());
+						currentRule.setContextSegmentOrNaturalClass(newValue);
+						reportAnyValidationMessage();
+					}
+				});
+
+		obeysSSPColumn.setCellValueFactory(cellData -> cellData.getValue().obeysSSPProperty());
+		obeysSSPColumn.setCellFactory(CheckBoxTableCell.forTableColumn(obeysSSPColumn));
+		obeysSSPColumn.setEditable(true);
+
+		npRulesTable.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Object o = event.getTarget();
+				handleClickOnCheckBoxInTable(o);
+			}
+		});
+
+		activeCheckBox.setOnAction((event) -> {
+			if (currentRule != null) {
+				currentRule.setActive(activeCheckBox.isSelected());
+				reportAnyValidationMessage();
+				forceTableRowToRedisplayPerActiveSetting(currentRule);
+			}
+			displayFieldsPerActiveSetting(currentRule);
+		});
+
+		obeysSSPCheckBox.setOnAction((event) -> {
+			if (currentRule != null) {
+				currentRule.setObeysSSP(obeysSSPCheckBox.isSelected());
+				reportAnyValidationMessage();
+				forceTableRowToRedisplayPerActiveSetting(currentRule);
+			}
+			displayFieldsPerActiveSetting(currentRule);
+		});
+
+		// Use of Enter move focus to next item.
+		nameField.setOnAction((event) -> {
+			descriptionField.requestFocus();
+		});
+		descriptionField.setOnAction((event) -> {
+			naturalClassesField.requestFocus();
+		});
+
+		nameField.requestFocus();
+	}
+
+	protected void reportAnyValidationMessage() {
+		validator = NPRuleValidator.getInstance();
+		validator.setRule(currentRule);
+		validator.validate();
+		boolean firstRuleIsBuild = checkFirstRuleIsBuildAll();
+		ruleLingTreeSVG.setVisible(true);
+		if (validator.isValid() && firstRuleIsBuild) {
+			currentRule.setIsValid(true);
+			ruleTreeLabel.setVisible(true);
+			showRuleContent();
+		} else {
+			ruleTreeLabel.setVisible(false);
+			StringBuilder sb = new StringBuilder();
+			sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head>");
+			sb.append("<body><div style=\"text-align:left;");
+			sb.append("color:");
+			sb.append(Constants.RULES_ERROR_MESSAGE);
+			sb.append("\">");
+			if (firstRuleIsBuild) {
+				sb.append(bundle.getString(validator.getErrorMessageProperty()));
+			} else {
+				sb.append(bundle.getString("nprule.message.buildisfirst"));
+			}
+			sb.append("</div></body></html>");
+			webEngine.loadContent(sb.toString());
+		}
+		currentRule.setIsValid(validator.isValid() && firstRuleIsBuild);
+	}
+
+	protected boolean checkFirstRuleIsBuildAll() {
+		if (npRulesTable.getItems().size() > 0) {
+			Optional<NPRule> rule1 = npRulesTable.getItems().stream().filter(r -> r.isActive())
+					.findFirst();
+			if (!rule1.isPresent()) {
+				return false;
+			}
+			NPRule firstRule = rule1.get();
+			if (firstRule.getRuleAction() != NPRuleAction.BUILD) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected void handleClickOnCheckBoxInTable(Object o) {
+		if (o instanceof CheckBoxTableCell) {
+			@SuppressWarnings("unchecked")
+			CheckBoxTableCell<NPRule, Boolean> cbtc = (CheckBoxTableCell<NPRule, Boolean>) o;
+			int index = cbtc.getIndex();
+			if (index < 0) {
+				return;
+			}
+			NPRule segment = npRulesTable.getItems().get(index);
+			boolean value;
+			if (segment != null) {
+				value = !segment.isObeysSSP();
+				segment.setObeysSSP(value);
+				obeysSSPCheckBox.setSelected(value);
+			}
+		}
+	}
+
+	public void displayFieldsPerActiveSetting(NPRule rule) {
+		boolean fIsActive;
+		if (rule == null) {
+			fIsActive = false;
+		} else {
+			fIsActive = rule.isActive();
+		}
+		nameField.setDisable(!fIsActive);
+		descriptionField.setDisable(!fIsActive);
+		affectedTextField.setDisable(!fIsActive);
+		affectedButton.setDisable(!fIsActive);
+		contextTextField.setDisable(!fIsActive);
+		contextButton.setDisable(!fIsActive);
+		actionComboBox.setDisable(!fIsActive);
+		levelComboBox.setDisable(!fIsActive);
+		obeysSSPCheckBox.setDisable(!fIsActive);
+	}
+
+	private void forceTableRowToRedisplayPerActiveSetting(NPRule rule) {
+		// we need to make the content of the row cells change in order for
+		// the cell factory to fire.
+		// We do this by getting the value, blanking it, and then restoring it.
+		String temp = rule.getRuleName();
+		rule.setRuleName("");
+		rule.setRuleName(temp);
+		temp = rule.getDescription();
+		rule.setDescription("");
+		rule.setDescription(temp);
+		temp = rule.getAffectedSegmentOrNaturalClass();
+		rule.setAffectedSegmentOrNaturalClass("");
+		rule.setAffectedSegmentOrNaturalClass(temp);
+		temp = rule.getContextSegmentOrNaturalClass();
+		rule.setContextSegmentOrNaturalClass("");
+		rule.setContextSegmentOrNaturalClass(temp);
+		temp = rule.getAction();
+		rule.setAction("");
+		rule.setAction(temp);
+		temp = rule.getLevel();
+		rule.setLevel("");
+		rule.setLevel(temp);
+	}
+
+	private void showNPRuleDetails(NPRule rule) {
+		currentRule = rule;
+		if (rule != null) {
+			// Fill the text fields with info from the NPRule object.
+			nameField.setText(rule.getRuleName());
+			descriptionField.setText(rule.getDescription());
+			NodeOrientation analysisOrientation = languageProject.getAnalysisLanguage()
+					.getOrientation();
+			nameField.setNodeOrientation(analysisOrientation);
+			descriptionField.setNodeOrientation(analysisOrientation);
+			affectedTextField.setText(rule.getAffectedSegmentOrNaturalClass());
+			contextTextField.setNodeOrientation(languageProject.getVernacularLanguage()
+					.getOrientation());
+			contextTextField.setText(rule.getContextSegmentOrNaturalClass());
+			actionComboBox.getItems().setAll(NPRuleAction.values());
+			actionComboBox.getSelectionModel().select(rule.getRuleAction());
+			levelComboBox.getItems().setAll(NPRuleLevel.values());
+			levelComboBox.getSelectionModel().select(rule.getRuleLevel());
+			obeysSSPCheckBox.setSelected(rule.isObeysSSP());
+			activeCheckBox.setSelected(rule.isActive());
+			setUpDownButtonDisabled();
+			int currentItem = npRulesTable.getItems().indexOf(currentRule);
+			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
+					+ npRulesTable.getItems().size() + " ");
+			mainApp.getApplicationPreferences().setLastNPRulesViewItemUsed(currentItem);
+			reportAnyValidationMessage();
+		} else {
+			// Segment is null, remove all the text.
+			if (nameField != null) {
+				nameField.setText("");
+			}
+			if (descriptionField != null) {
+				descriptionField.setText("");
+			}
+			if (affectedTextField != null) {
+				affectedTextField.setText("");
+			}
+			if (contextTextField != null) {
+				contextTextField.setText("");
+			}
+			buttonMoveDown.setDisable(true);
+			buttonMoveUp.setDisable(true);
+		}
+		displayFieldsPerActiveSetting(rule);
+	}
+
+	@Override
+	public void setViewItemUsed(int value) {
+		int max = npRulesTable.getItems().size();
+		value = adjustIndexValue(value, max);
+		npRulesTable.getSelectionModel().clearAndSelect(value);
+	}
+
+	protected void setUpDownButtonDisabled() {
+		int iThis = npApproach.getNPRules().indexOf(currentRule) + 1;
+		int iSize = npApproach.getNPRules().size();
+		if (iThis > 1) {
+			buttonMoveUp.setDisable(false);
+		} else {
+			buttonMoveUp.setDisable(true);
+		}
+		if (iThis == iSize) {
+			buttonMoveDown.setDisable(true);
+		} else {
+			buttonMoveDown.setDisable(false);
+		}
+	}
+
+	private void showRuleContent() {
+		if (currentRule.getRuleAction() != null && currentRule.getRuleLevel() != null) {
+			String sLingTreeDescription = currentRule.createLingTreeDescription();
+			if (!sLingTreeDescription.equals("")) {
+				currentRule.setRuleRepresentation(sLingTreeDescription);
+				showLingTreeSVG(sLingTreeDescription);
+			}
+		}
+	}
+
+	public void setData(NPApproach npApproachData) {
+		npApproach = npApproachData;
+		languageProject = npApproach.getLanguageProject();
+		// no sorting needed
+
+		if (npApproach.getNPRules().size() == 0) {
+			// no data yet; offer to create default set of rules
+			askIfWantToSetDefaultRules();
+		}
+		// Add observable list data to the table
+		npRulesTable.setItems(npApproach.getNPRules());
+		int max = npRulesTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastNPRulesViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					npRulesTable.requestFocus();
+					npRulesTable.getSelectionModel().select(iLastIndex);
+					npRulesTable.getFocusModel().focus(iLastIndex);
+					npRulesTable.scrollTo(iLastIndex);
+				}
+			});
+		}
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage()
+					.getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+			validator = NPRuleValidator.getInstance();
+			for (NPRule rule : npApproach.getNPRules()) {
+				if (rule.getAffectedSegOrNC() != null) {
+					rule.setAffectedSegOrNC(createCVSegmentOrNaturalClass(rule.getAffectedSegOrNC()));
+				}
+				if (rule.getContextSegOrNC() != null) {
+					rule.setContextSegOrNC(createCVSegmentOrNaturalClass(rule.getContextSegOrNC()));
+				}
+				String localizedName = bundle.getString("nprule.action."
+						+ rule.getRuleAction().toString().toLowerCase());
+				rule.setAction(localizedName);
+				localizedName = bundle.getString("nprule.level."
+						+ rule.getRuleLevel().toString().toLowerCase());
+				rule.setLevel(localizedName);
+				validator.setRule(rule);
+				validator.validate();
+				rule.setIsValid(validator.isValid());
+			}
+		}
+	}
+
+	protected void askIfWantToSetDefaultRules() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle(bundle.getString("program.name"));
+		alert.setHeaderText(bundle.getString("label.nprules"));
+		alert.setContentText(bundle.getString("label.npsetdefaultrules"));
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(mainApp.getNewMainIconImage());
+
+		ButtonType buttonTypeYes = ButtonType.YES;
+		ButtonType buttonTypeNo = ButtonType.NO;
+		ButtonType buttonTypeCancel = ButtonType.CANCEL;
+
+		alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+		alert = rootController.localizeConfirmationButtons(alert, buttonTypeYes, buttonTypeNo,
+				buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeYes) {
+			npApproach.createDefaultSetOfRules();
+		}
+	}
+
+	protected CVSegmentOrNaturalClass createCVSegmentOrNaturalClass(CVSegmentOrNaturalClass segOrNC) {
+		String name = "";
+		String description = "";
+		if (segOrNC.isSegment()) {
+			int i = SylParserObject.findIndexInListByUuid(languageProject.getSegmentInventory(),
+					segOrNC.getUuid());
+			Segment segment = languageProject.getSegmentInventory().get(i);
+			name = segment.getSegment();
+			description = segment.getDescription();
+		} else {
+			int i = SylParserObject.findIndexInListByUuid(languageProject.getCVApproach()
+					.getCVNaturalClasses(), segOrNC.getUuid());
+			CVNaturalClass segment = languageProject.getCVApproach().getCVNaturalClasses().get(i);
+			name = segment.getNCName();
+			description = segment.getDescription();
+		}
+		segOrNC.setSegmentOrNaturalClass(name);
+		segOrNC.setDescription(description);
+		return segOrNC;
+	}
+
+	@Override
+	void handleInsertNewItem() {
+		NPRule newRule = new NPRule();
+		npApproach.getNPRules().add(newRule);
+		handleInsertNewItem(npApproach.getNPRules(), npRulesTable);
+	}
+
+	@Override
+	void handleRemoveItem() {
+		handleRemoveItem(npApproach.getNPRules(), currentRule, npRulesTable);
+	}
+
+	@Override
+	void handlePreviousItem() {
+		handlePreviousItem(npApproach.getNPRules(), currentRule, npRulesTable);
+	}
+
+	@Override
+	void handleNextItem() {
+		handleNextItem(npApproach.getNPRules(), currentRule, npRulesTable);
+	}
+
+	@FXML
+	void handleLaunchAffectedSegOrNCChooser() {
+		showSegmentChooser(true);
+		reportAnyValidationMessage();
+	}
+
+	@FXML
+	void handleLaunchContextSegOrNCChooser() {
+		showSegmentChooser(false);
+		reportAnyValidationMessage();
+	}
+
+	/**
+	 * Opens a dialog to show and set segments
+	 */
+	public void showSegmentChooser(boolean isAffected) {
+		try {
+			// Load the fxml file and create a new stage for the popup.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ApproachViewNavigator.class
+					.getResource("fxml/NPSegmentNaturalClassChooser.fxml"));
+			loader.setResources(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
+
+			AnchorPane page = loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(mainApp.getPrimaryStage());
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			// set the icon
+			dialogStage.getIcons().add(mainApp.getNewMainIconImage());
+			dialogStage.setTitle(MainApp.kApplicationTitle);
+
+			NPSegmentNaturalClassChooserController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(mainApp);
+			controller.setRule(currentRule);
+			controller.setData(npApproach.getLanguageProject(), isAffected);
+			controller.initializeTableColumnWidths(mainApp.getApplicationPreferences());
+
+			dialogStage.showAndWait();
+
+			if (controller.isOkClicked()) {
+				if (isAffected) {
+					affectedTextField.setText(controller.getRule()
+							.getAffectedSegmentOrNaturalClass());
+					currentRule.setAffectedSegOrNC(controller.getRule().getAffectedSegOrNC());
+				} else {
+					contextTextField
+							.setText(controller.getRule().getContextSegmentOrNaturalClass());
+					currentRule.setContextSegOrNC(controller.getRule().getContextSegOrNC());
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			MainApp.reportException(e, bundle);
+		}
+	}
+
+	protected void showLingTreeSVG(String sLingTreeDescription) {
+		ltInteractor.initializeParameters(languageProject);
+		FontInfo fiAnalysis = new FontInfo(languageProject.getAnalysisLanguage().getFont());
+		fiAnalysis.setColor(Color.BLACK);
+		ltInteractor.setLexicalFontInfo(fiAnalysis);
+
+		ltInteractor.setVerticalGap(30.0);
+		String ltSVG = ltInteractor.createSVG(sLingTreeDescription, true);
+		ltSVG = currentRule.adjustForAffectedSVG(ltSVG);
+		StringBuilder sb = new StringBuilder();
+		sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head>");
+		sb.append("<body><div style=\"text-align:left\">");
+		sb.append(ltSVG);
+		sb.append("</div></body></html>");
+		webEngine.loadContent(sb.toString());
+	}
+
+	@FXML
+	void handleMoveDown() {
+		int i = npApproach.getNPRules().indexOf(currentRule);
+		if ((i + 1) < npApproach.getNPRules().size()) {
+			Collections.swap(npApproach.getNPRules(), i, i + 1);
+		}
+		reportAnyValidationMessage();
+	}
+
+	@FXML
+	void handleMoveUp() {
+		int i = npApproach.getNPRules().indexOf(currentRule);
+		if (i > 0) {
+			Collections.swap(npApproach.getNPRules(), i, i - 1);
+		}
+		reportAnyValidationMessage();
+	}
+
+	// code taken from
+	// http://bekwam.blogspot.com/2014/10/cut-copy-and-paste-from-javafx-menubar.html
+	@Override
+	TextField[] createTextFields() {
+		return new TextField[] { nameField, descriptionField };
+	}
+}

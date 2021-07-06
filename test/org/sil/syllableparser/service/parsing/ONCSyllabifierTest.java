@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -311,8 +311,8 @@ public class ONCSyllabifierTest extends ONCSyllabifierTestBase {
 		checkSyllabification("do", true, 1, "do", "on", "(W(σ(O(\\L d(\\G d)))(R(N(\\L o(\\G o))))))");
 		checkSyllabification("funglo", true, 2, "fun.glo", "onc.oon",
 				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(O(\\L g(\\G g))(\\L l(\\G l)))(R(N(\\L o(\\G o))))))");
-		checkSyllabification("funi", true, 2, "fun.i", "onc.n",
-				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))(C(\\L n(\\G n)))))(σ(R(N(\\L i(\\G i))))))");
+		checkSyllabification("funi", true, 2, "fu.ni", "on.on",
+				"(W(σ(O(\\L f(\\G f)))(R(N(\\L u(\\G u)))))(σ(O(\\L n(\\G n)))(R(N(\\L i(\\G i))))))");
 		checkSyllabification("flu", true, 1, "flu", "oon", "(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u))))))");
 		checkSyllabification("fluka", true, 2, "flu.ka", "oon.on",
 				"(W(σ(O(\\L f(\\G f))(\\L l(\\G l)))(R(N(\\L u(\\G u)))))(σ(O(\\L k(\\G k)))(R(N(\\L a(\\G a))))))");

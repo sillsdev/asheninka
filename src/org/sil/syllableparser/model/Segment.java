@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.sil.utility.StringUtilities;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -39,6 +41,8 @@ public class Segment extends SylParserObject {
 	private BooleanProperty onset;
 	private BooleanProperty nucleus;
 	private BooleanProperty coda;
+	private final StringProperty morasBorn;
+	private int moras;
 
 	public Segment() {
 		super();
@@ -50,10 +54,12 @@ public class Segment extends SylParserObject {
 		this.onset = new SimpleBooleanProperty(false);
 		this.nucleus = new SimpleBooleanProperty(false);
 		this.coda = new SimpleBooleanProperty(false);
+		this.morasBorn = new SimpleStringProperty("0");
+		convertMorasBornToInt(morasBorn.getValue());
 		createUUID();
 	}
 
-	public Segment(String segment, String graphsRepresentation, String description) {
+	public Segment(String segment, String graphsRepresentation, String description, String morasBorn) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
 		this.graphemes = new SimpleStringProperty(graphsRepresentation);
@@ -63,10 +69,12 @@ public class Segment extends SylParserObject {
 		this.onset = new SimpleBooleanProperty(false);
 		this.nucleus = new SimpleBooleanProperty(false);
 		this.coda = new SimpleBooleanProperty(false);
+		this.morasBorn = new SimpleStringProperty(morasBorn);
+		convertMorasBornToInt(morasBorn);
 		createUUID();
 	}
 
-	public Segment(String segment, String description, SimpleListProperty<Grapheme> graphemeList) {
+	public Segment(String segment, String description, SimpleListProperty<Grapheme> graphemeList, String morasBorn) {
 		super();
 		this.segment = new SimpleStringProperty(segment);
 		// this.graphemes = new SimpleStringProperty(graphsRepresentation);
@@ -75,6 +83,8 @@ public class Segment extends SylParserObject {
 		String graphs = graphemeList.stream().map(Grapheme::getForm)
 				.collect(Collectors.joining(" "));
 		this.graphemes = new SimpleStringProperty(graphs);
+		this.morasBorn = new SimpleStringProperty(morasBorn);
+		convertMorasBornToInt(morasBorn);
 		createUUID();
 	}
 
@@ -149,6 +159,33 @@ public class Segment extends SylParserObject {
 
 	public boolean isCoda() {
 		return coda.get();
+	}
+
+	public String getMorasBorn() {
+		return morasBorn.get().trim();
+	}
+
+	public StringProperty morasBornProperty() {
+		return morasBorn;
+	}
+
+	public void setMorasBorn(String morasBorn) {
+		this.morasBorn.set(morasBorn);
+		convertMorasBornToInt(morasBorn);
+	}
+
+	public int getMoras() {
+		return moras;
+	}
+
+	public void setMoras(int moras) {
+		this.moras = moras;
+	}
+
+	protected void convertMorasBornToInt(String morasBorn) {
+		if (!StringUtilities.isNullOrEmpty(morasBorn)) {
+			moras = Integer.parseInt(morasBorn);
+		}
 	}
 
 	@XmlElementWrapper(name = "graphemesAsList")
@@ -243,7 +280,7 @@ public class Segment extends SylParserObject {
 	@Override
 	public int hashCode() {
 		String sCombo = segment.getValueSafe() + graphemes.getValueSafe() + checked.getValue()
-				+ onset.getValue() + nucleus.getValue() + coda.getValue();
+				+ onset.getValue() + nucleus.getValue() + coda.getValue() + moras;
 		return sCombo.hashCode();
 	}
 
@@ -269,6 +306,8 @@ public class Segment extends SylParserObject {
 			result = false;
 		} else if (isCoda() != seg.isCoda()) {
 			result = false;
+		} else if (moras != seg.moras) {
+			return false;
 		}
 		return result;
 	}

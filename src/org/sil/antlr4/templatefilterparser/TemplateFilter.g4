@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 //
@@ -14,7 +14,10 @@
 
 grammar TemplateFilter;
 // @parser::members {public static boolean slotPosition;}
-@lexer::members {public static boolean slotPosition;}
+@lexer::members {
+	public static boolean slotPosition;
+	public static boolean constituentBeginMarker;
+}
 @header {
 	package org.sil.antlr4.templatefilterparser.antlr4generated;
 }
@@ -28,6 +31,7 @@ termSequence : termSequence slotPositionTerm termSequence
 			 | constituentBeginMarkerTerm termSequence
 			 | termSequence slotPositionTerm {notifyErrorListeners("missingClassOrSegment");}
 			 | termSequence constituentBeginMarkerTerm {notifyErrorListeners("missingClassOrSegment");}
+			 | constituentBeginMarkerTerm {notifyErrorListeners("missingClassOrSegment");}
 			 | term
 			 | term termSequence
 			 ;
@@ -72,5 +76,5 @@ literal : ID
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 SLOT_POSITION: '|' {slotPosition}? ;
-CONSTITUENT_BEGIN_MARKER: '_' {slotPosition}? ;
+CONSTITUENT_BEGIN_MARKER: '_' {slotPosition || constituentBeginMarker}? ;
 ID : [\\~`=_|/<>#{},.;:^!?@$%&'"a-zA-Z\u0080-\uFFFF0-9+-]+ ; // Identifier

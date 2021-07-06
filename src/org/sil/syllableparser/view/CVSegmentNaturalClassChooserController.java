@@ -52,7 +52,16 @@ public class CVSegmentNaturalClassChooserController extends TableViewWithCheckBo
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			processTableCell(this, text, item, empty);
+			CVSegmentOrNaturalClass segOrNC = (CVSegmentOrNaturalClass) this.getTableRow().getItem();
+			if (segOrNC != null) {
+				if (segOrNC.isSegment()) {
+					processVernacularTableCell(this, text, item, empty);
+				} else {
+					processAnalysisTableCell(this, text, item, empty);
+				}
+			} else {
+				processTableCell(this, text, item, empty);
+			}
 		}
 	}
 

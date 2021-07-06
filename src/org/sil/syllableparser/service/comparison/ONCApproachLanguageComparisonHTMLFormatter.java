@@ -14,7 +14,9 @@ import java.util.SortedSet;
 
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
+import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.Template;
 import org.sil.syllableparser.model.Word;
@@ -46,10 +48,15 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 		this.oncComparer = comparer;
 	}
 
+	@Override
 	public String format() {
+		return format(bundle.getString("report.onctitle"), bundle.getString("report.onccomparisonof"));
+	}
+
+	public String format(String sTitle, String sComparisonOf) {
 		StringBuilder sb = new StringBuilder();
-		formatHTMLBeginning(sb, bundle.getString("report.onctitle"));
-		formatOverview(sb, bundle.getString("report.onccomparisonof"));
+		formatHTMLBeginning(sb, sTitle);
+		formatOverview(sb, sComparisonOf);
 		formatSegmentInventory(sb);
 		formatGraphemeNaturalClasses(sb);
 		formatEnvironments(sb);
@@ -64,6 +71,43 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 		formatWords(sb);
 		formatHTMLEnding(sb);
 		return sb.toString();
+	}
+
+	@Override
+	protected void formatApproachSpecificSegmentHeader(StringBuilder sb, Segment seg) {
+		sb.append("<th>");
+		sb.append(bundle.getString("report.onset"));
+		sb.append("</th>\n<th>");
+		sb.append(bundle.getString("report.nucleus"));
+		sb.append("</th>\n<th>");
+		sb.append(bundle.getString("report.coda"));
+		sb.append("</th>\n");
+	}
+
+	@Override
+	protected void formatApproachSpecificSegmentInfo(StringBuilder sb, Segment seg, int iNumGraphemes) {
+		String tdContent = "<td rowspan=\"" + iNumGraphemes + "\" align=\"center\" valign=\"top\">";
+		sb.append(tdContent);
+		if (seg.isOnset()) {
+			sb.append("X");
+		} else {
+			sb.append(Constants.NON_BREAKING_SPACE);
+		}
+		sb.append("</td>\n");
+		sb.append(tdContent);
+		if (seg.isNucleus()) {
+			sb.append("X");
+		} else {
+			sb.append(Constants.NON_BREAKING_SPACE);
+		}
+		sb.append("</td>\n");
+		sb.append(tdContent);
+		if (seg.isCoda()) {
+			sb.append("X");
+		} else {
+			sb.append(Constants.NON_BREAKING_SPACE);
+		}
+		sb.append("</td>\n");
 	}
 
 	protected void formatSonorityHierarchy(StringBuilder sb) {
@@ -98,7 +142,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatNaturalClassInfo(StringBuilder sb, SHNaturalClass naturalClass) {
 		if (naturalClass == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(naturalClass.getNCName());
 			sb.append(" (");
@@ -171,7 +215,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatTemplateInfo(StringBuilder sb, Template template) {
 		if (template == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(template.getTemplateFilterName());
 			sb.append(" [");
@@ -257,7 +301,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatFilterInfo(StringBuilder sb, Filter filter) {
 		if (filter == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(filter.getTemplateFilterName());
 			sb.append(" {");
@@ -280,22 +324,22 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 			sb.append("</th>\n<th>");
 			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
 			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
-			List<Filter> sonorityHierarchy1 = oncComparer.getOnca1().getLanguageProject().getActiveAndValidFilters();
-			List<Filter> sonorityHierarchy2 = oncComparer.getOnca2().getLanguageProject().getActiveAndValidFilters();
-			int size1 = sonorityHierarchy1.size();
-			int size2 = sonorityHierarchy2.size();
+			List<Filter> filters1 = oncComparer.getOnca1().getLanguageProject().getActiveAndValidFilters();
+			List<Filter> filters2 = oncComparer.getOnca2().getLanguageProject().getActiveAndValidFilters();
+			int size1 = filters1.size();
+			int size2 = filters2.size();
 			int maxSize = Math.max(size1, size2);
 			for (int i = 0; i < maxSize; i++) {
 				sb.append("<tr>\n<td class=\"");
 				sb.append(ANALYSIS_1);
 				sb.append("\">");
-				Filter naturalClass = (Filter) formatSylParserObjectInOrder(sonorityHierarchy1,
+				Filter naturalClass = (Filter) formatSylParserObjectInOrder(filters1,
 						size1, i);
 				formatFilterInfo(sb, naturalClass);
 				sb.append("</td>\n<td class=\"");
 				sb.append(ANALYSIS_2);
 				sb.append("\">");
-				naturalClass = (Filter) formatSylParserObjectInOrder(sonorityHierarchy2, size2, i);
+				naturalClass = (Filter) formatSylParserObjectInOrder(filters2, size2, i);
 				formatFilterInfo(sb, naturalClass);
 				sb.append("</td>\n</tr>\n");
 			}
@@ -306,7 +350,7 @@ public class ONCApproachLanguageComparisonHTMLFormatter extends
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
 		if (word == null || word.getONCPredictedSyllabification().length() == 0) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getONCPredictedSyllabification());
 		}

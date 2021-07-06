@@ -17,6 +17,8 @@ import javafx.beans.property.StringProperty;
 public class SyllabificationParameters {
 	private BooleanProperty codasAllowed;
 	private BooleanProperty onsetMaximization;
+	private int maxMorasPerSyllable = 2;
+	private BooleanProperty useWeightByPosition;
 	// Using the string property to store and read from storage
 	// as I do not know of a way to do that for an enum.
 	private StringProperty onsetPrincipleAsString;
@@ -25,14 +27,16 @@ public class SyllabificationParameters {
 	public SyllabificationParameters() {
 		codasAllowed = new SimpleBooleanProperty(true);
 		onsetMaximization = new SimpleBooleanProperty(false);
+		useWeightByPosition = new SimpleBooleanProperty(false);
 		onsetPrincipleAsString = new SimpleStringProperty("");
 		setOnsetPrincipleEnum(OnsetPrincipleType.EVERY_SYLLABLE_HAS_ONSET);
 	}
 
-	public SyllabificationParameters(boolean codasAllowed, boolean onsetMaximization, String sOnsetPrinciple) {
+	public SyllabificationParameters(boolean codasAllowed, boolean onsetMaximization, String sOnsetPrinciple, boolean useWeightByPosition) {
 		this.codasAllowed = new SimpleBooleanProperty(codasAllowed);
 		this.onsetMaximization = new SimpleBooleanProperty(onsetMaximization);
 		onsetPrincipleAsString = new SimpleStringProperty(sOnsetPrinciple);
+		this.useWeightByPosition = new SimpleBooleanProperty(useWeightByPosition);
 		convertPrincipleFromStringToEnum(sOnsetPrinciple);
 	}
 	
@@ -40,12 +44,32 @@ public class SyllabificationParameters {
 		return onsetMaximization;
 	}
 
+	public boolean isOnsetMaximization() {
+		return onsetMaximization.get();
+	}
+
 	public void setOnsetMaximization(boolean value) {
 		this.onsetMaximization.set(value);
 	}
 
-	public boolean isOnsetMaximization() {
-		return onsetMaximization.get();
+	public int getMaxMorasPerSyllable() {
+		return maxMorasPerSyllable;
+	}
+
+	public void setMaxMorasPerSyllable(int maxMorasPerSyllable) {
+		this.maxMorasPerSyllable = maxMorasPerSyllable;
+	}
+
+	public BooleanProperty useWeightByPositionProperty() {
+		return useWeightByPosition;
+	}
+
+	public boolean isUseWeightByPosition() {
+		return useWeightByPosition.get();
+	}
+
+	public void setUseWeightByPosition(boolean value) {
+		this.useWeightByPosition.setValue(value);
 	}
 
 	public BooleanProperty codasAllowedProperty() {

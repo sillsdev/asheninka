@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -6,10 +6,12 @@
  */
 package org.sil.syllableparser.service.comparison;
 
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.SortedSet;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.utility.StringUtilities;
 
@@ -36,7 +38,7 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 	}
 
 	public String format() {
-		sylComparer.compareSyllabifications();
+		//sylComparer.compareSyllabifications();
 		StringBuilder sb = new StringBuilder();
 		formatHTMLBeginning(sb, bundle.getString("report.syllabificationstitle"));
 		formatOverview(sb, bundle.getString("report.syllabificationscomparisonof"));
@@ -59,6 +61,18 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 			formatApproachLabelDescription(sb, bundle.getString("report.oncapproachabbreviation"),
 					bundle.getString("approach.onc"));
 		}
+		if (sylComparer.isUseMoraicApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.moraicapproachabbreviation"),
+					bundle.getString("approach.moraic"));
+		}
+		if (sylComparer.isUseNPApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.npapproachabbreviation"),
+					bundle.getString("approach.nuclearprojection"));
+		}
+		if (sylComparer.isUseOTApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.otapproachabbreviation"),
+					bundle.getString("approach.ot"));
+		}
 		sb.append("</tbody>\n</table>\n<p/>\n");
 	}
 
@@ -68,14 +82,18 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 		if (diffWords.size() == 0) {
 			sb.append("<p>" + bundle.getString("report.samesyllabifications") + "</p>\n");
 		} else {
-			sb.append("<p>" + bundle.getString("report.syllabificationswhichdiffer") + "</p>\n");
+			sb.append("<p>");
+			sb.append(getAddedArgument("report.syllabificationswhichdiffer", diffWords.size()));
+			sb.append("</p>\n");
 			formatRowLabelDescriptions(sb);
 			sb.append("<table border=\"1\">\n");
 			sb.append("<tbody>\n");
 			for (Word differentWord : diffWords) {
 				// extra gap between words:
 				sb.append("<tr><td colspan=\"3\"/></tr>\n");
-				sb.append("<tr><td rowspan=\"3\">");
+				sb.append("<tr><td rowspan=\"");
+				sb.append(sylComparer.numberOfApproachesBeingCompared()+1);
+				sb.append("\">");
 				sb.append(differentWord.getWord());
 				sb.append("</td>");
 				boolean isFirstRow = true;
@@ -94,7 +112,21 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 							differentWord.getONCPredictedSyllabification(), isFirstRow);
 					isFirstRow = false;
 				}
-//				sb.append("</tr>\n");
+				if (sylComparer.isUseMoraicApproach()) {
+					formatApproachRow(sb, bundle.getString("report.moraicapproachabbreviation"),
+							differentWord.getMoraicPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
+				}
+				if (sylComparer.isUseNPApproach()) {
+					formatApproachRow(sb, bundle.getString("report.npapproachabbreviation"),
+							differentWord.getNPPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
+				}
+				if (sylComparer.isUseOTApproach()) {
+					formatApproachRow(sb, bundle.getString("report.otapproachabbreviation"),
+							differentWord.getOTPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
+				}
 			}
 			sb.append("</tbody>\n</table>\n");
 		}
@@ -104,7 +136,7 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 			String approachName) {
 		sb.append("<tr>\n<td>");
 		sb.append(approachAbbreviation);
-		sb.append("&#xa0;");
+		sb.append(Constants.NON_BREAKING_SPACE);
 		sb.append("</td>\n");
 		sb.append("<td>&#xa0;=&#xa0;</td>\n");
 		sb.append("<td>&#xa0;");
@@ -119,7 +151,7 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 		}
 		sb.append("<td>");
 		sb.append(approachAbbreviation);
-		sb.append("&#xa0;");
+		sb.append(Constants.NON_BREAKING_SPACE);
 		sb.append("</td>\n");
 		sb.append("<td class=\"");
 		sb.append(VERNACULAR_1);
@@ -142,10 +174,18 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 
 	protected void formatSyllabificationInfo(StringBuilder sb, String syllabification) {
 		if (StringUtilities.isNullOrEmpty(syllabification)) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(syllabification);
 		}
+	}
+
+	protected String getAddedArgument(String mainProperty, int addedArgument) {
+		Object[] args = { addedArgument };
+		MessageFormat msgFormatter = new MessageFormat("");
+		msgFormatter.setLocale(locale);
+		msgFormatter.applyPattern(bundle.getString(mainProperty));
+		return msgFormatter.format(args);
 	}
 
 	@Override

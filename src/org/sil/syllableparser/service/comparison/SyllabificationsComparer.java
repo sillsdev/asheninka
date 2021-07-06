@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International
+// Copyright (c) 2019-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -6,16 +6,23 @@
  */
 package org.sil.syllableparser.service.comparison;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.parsing.CVSyllabifier;
+import org.sil.syllableparser.service.parsing.MoraicSyllabifier;
+import org.sil.syllableparser.service.parsing.NPSyllabifier;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
+import org.sil.syllableparser.service.parsing.OTSyllabifier;
 import org.sil.syllableparser.service.parsing.SHSyllabifier;
 
 /**
@@ -31,12 +38,18 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 	boolean useCVApproach = true;
 	boolean useSHApproach = true;
 	boolean useONCApproach = true;
+	boolean useMoraicApproach = true;
+	boolean useNPApproach = true;
+	boolean useOTApproach = true;
 
-	public enum ApproachesToCompare {
-		CV_SH, CV_ONC, CV_SH_ONC, SH_ONC,
-	}
+	final int usesCVApproach = 1;
+	final int usesSHApproach = 2;
+	final int usesONCApproach = 4;
+	final int usesMoraicApproach = 8;
+	final int usesNPApproach = 16;
+	final int usesOTApproach = 32;
 
-	ApproachesToCompare approachesToCompare = ApproachesToCompare.CV_SH_ONC;
+	int approachesToUse = 0;
 
 	SortedSet<Word> syllabificationsWhichDiffer = new TreeSet<>(
 			Comparator.comparing(Word::getSortingValue));
@@ -78,13 +91,42 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 		this.useONCApproach = useONCApproach;
 	}
 
-	public ApproachesToCompare getApproachesToCompare() {
-		return approachesToCompare;
+	public boolean isUseMoraicApproach() {
+		return useMoraicApproach;
+	}
+
+	public void setUseMoraicApproach(boolean useMoraicApproach) {
+		this.useMoraicApproach = useMoraicApproach;
+	}
+
+	public boolean isUseNPApproach() {
+		return useNPApproach;
+	}
+
+	public void setUseNPApproach(boolean useNPApproach) {
+		this.useNPApproach = useNPApproach;
+	}
+
+	public boolean isUseOTApproach() {
+		return useOTApproach;
+	}
+
+	public void setUseOTApproach(boolean useOTApproach) {
+		this.useOTApproach = useOTApproach;
+	}
+
+	public int getApproachesToUse() {
+		return approachesToUse;
+	}
+
+	public void setApproachesToUse(int approachesToUse) {
+		this.approachesToUse = approachesToUse;
 	}
 
 	public void compareSyllabifications() {
 		// make sure all approaches to compare have been syllabified
 		List<Word> words = langProject.getWords();
+
 		if (useCVApproach) {
 			syllabifyWordsCV(words);
 		}
@@ -94,7 +136,16 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 		if (useONCApproach) {
 			syllabifyWordsONC(words);
 		}
-		calculateApproachesToCompare();
+		if (useMoraicApproach) {
+			syllabifyWordsMoraic(words);
+		}
+		if (useNPApproach) {
+			syllabifyWordsNP(words);
+		}
+		if (useOTApproach) {
+			syllabifyWordsOT(words);
+		}
+		calculateApproachesToUse();
 		List<Word> diffs = words.stream().filter(word -> !syllabificationsAreTheSame(word))
 				.collect(Collectors.toList());
 		for (Word word : diffs) {
@@ -102,44 +153,60 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 		}
 	}
 
-	public void calculateApproachesToCompare() {
-		if (useCVApproach && useSHApproach && useONCApproach) {
-			approachesToCompare = ApproachesToCompare.CV_SH_ONC;
-		} else if (useCVApproach && useONCApproach) {
-			approachesToCompare = ApproachesToCompare.CV_ONC;
-		} else if (useCVApproach && useSHApproach) {
-			approachesToCompare = ApproachesToCompare.CV_SH;
-		} else  if (useSHApproach && useONCApproach) {
-			approachesToCompare = ApproachesToCompare.SH_ONC;
-		} else {
-			// if only one is true or none are true, do them all
-			approachesToCompare = ApproachesToCompare.CV_SH_ONC;
-		}
+	public void calculateApproachesToUse() {
+		approachesToUse = 0;
+		if (useCVApproach)
+			approachesToUse += usesCVApproach;
+		if (useSHApproach)
+			approachesToUse += usesSHApproach;
+		if (useONCApproach)
+			approachesToUse += usesONCApproach;
+		if (useMoraicApproach)
+			approachesToUse += usesMoraicApproach;
+		if (useNPApproach)
+			approachesToUse += usesNPApproach;
+		if (useOTApproach)
+			approachesToUse += usesOTApproach;
 	}
 
 	protected boolean syllabificationsAreTheSame(Word word) {
-		boolean result = true;
-		switch (approachesToCompare) {
-		case CV_ONC:
-			result = word.getCVPredictedSyllabification().equals(
-					word.getONCPredictedSyllabification());
-			break;
-		case CV_SH:
-			result = word.getCVPredictedSyllabification().equals(
-					word.getSHPredictedSyllabification());
-			break;
-		case CV_SH_ONC:
-			result = word.getCVPredictedSyllabification().equals(
-					word.getSHPredictedSyllabification())
-					&& word.getCVPredictedSyllabification().equals(
-							word.getONCPredictedSyllabification());
-			break;
-		case SH_ONC:
-			result = word.getSHPredictedSyllabification().equals(
-					word.getONCPredictedSyllabification());
-			break;
+		List<String> syllabifications = new ArrayList<String>(6);
+		int iUsed = createSyllabificationsToCheck(word, syllabifications);
+		for (int i = 1; i < iUsed; i++) {
+			if (!syllabifications.get(i-1).equals(syllabifications.get(i))) {
+				return false;
+			}
 		}
-		return result;
+		return true;
+	}
+
+	protected int createSyllabificationsToCheck(Word word, List<String> syllabifications) {
+		int iUsed = 0;
+		if ((approachesToUse & usesCVApproach) > 0) {
+			syllabifications.add(word.getCVPredictedSyllabification());
+			iUsed++;
+		}
+		if ((approachesToUse & usesSHApproach) > 0) {
+			syllabifications.add(word.getSHPredictedSyllabification());
+			iUsed++;
+		}
+		if ((approachesToUse & usesONCApproach) > 0) {
+			syllabifications.add(word.getONCPredictedSyllabification());
+			iUsed++;
+		}
+		if ((approachesToUse & usesMoraicApproach) > 0) {
+			syllabifications.add(word.getMoraicPredictedSyllabification());
+			iUsed++;
+		}
+		if ((approachesToUse & usesNPApproach) > 0) {
+			syllabifications.add(word.getNPPredictedSyllabification());
+			iUsed++;
+		}
+		if ((approachesToUse & usesOTApproach) > 0) {
+			syllabifications.add(word.getOTPredictedSyllabification());
+			iUsed++;
+		}
+		return iUsed;
 	}
 
 	protected void syllabifyWordsCV(List<Word> words) {
@@ -172,6 +239,57 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 						.getSyllabificationOfCurrentWord());
 			}
 		}
+	}
+
+	protected void syllabifyWordsMoraic(List<Word> words) {
+		MoraicSyllabifier moraicSyllabifier = new MoraicSyllabifier(langProject.getMoraicApproach());
+		for (Word word : words) {
+			boolean fSuccess = moraicSyllabifier.convertStringToSyllables(word.getWord());
+			if (fSuccess) {
+				word.setMoraicPredictedSyllabification(moraicSyllabifier
+						.getSyllabificationOfCurrentWord());
+			}
+		}
+	}
+
+	protected void syllabifyWordsNP(List<Word> words) {
+		NPSyllabifier npSyllabifier = new NPSyllabifier(langProject.getNPApproach());
+		for (Word word : words) {
+			boolean fSuccess = npSyllabifier.convertStringToSyllables(word.getWord());
+			if (fSuccess) {
+				word.setNPPredictedSyllabification(npSyllabifier.getSyllabificationOfCurrentWord());
+			}
+		}
+	}
+
+	protected void syllabifyWordsOT(List<Word> words) {
+		OTSyllabifier otSyllabifier = new OTSyllabifier(langProject.getOTApproach());
+		Locale locale = new Locale("en");
+		otSyllabifier.setBundle(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
+		for (Word word : words) {
+			boolean fSuccess = otSyllabifier.convertStringToSyllables(word.getWord());
+			if (fSuccess) {
+				word.setOTPredictedSyllabification(otSyllabifier.getSyllabificationOfCurrentWord());
+			}
+		}
+	}
+
+	public int numberOfApproachesBeingCompared() {
+		calculateApproachesToUse();
+		int i = 0;
+		if ((approachesToUse & usesCVApproach) > 0)
+			i++;
+		if ((approachesToUse & usesSHApproach) > 0)
+			i++;
+		if ((approachesToUse & usesONCApproach) > 0)
+			i++;
+		if ((approachesToUse & usesMoraicApproach) > 0)
+			i++;
+		if ((approachesToUse & usesNPApproach) > 0)
+			i++;
+		if ((approachesToUse & usesOTApproach) > 0)
+			i++;
+		return i;
 	}
 
 	@Override

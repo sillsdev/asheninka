@@ -117,6 +117,8 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 	@FXML
 	protected Label slotsErrorMessage;
 	@FXML
+	protected Label typeWarningMessage;
+	@FXML
 	protected ComboBox<String> sncChoicesComboBox;
 
 	protected TemplateFilter currentTemplateFilter;
@@ -130,6 +132,7 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 	
 	protected ObservableList<TemplateFilter> contentList = FXCollections.observableArrayList();
 	protected boolean fAllowSlotPosition = false;
+	protected boolean fAllowConstituentBeginMarker = false;
 
 	public TemplatesFiltersController() {
 
@@ -205,6 +208,10 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 
 		slotsErrorMessage.setTextFill(Constants.SLOTS_ERROR_MESSAGE);
 		slotsErrorMessage.setWrapText(true);
+
+		typeWarningMessage.setTextFill(Constants.TYPE_WARNING_MESSAGE);
+		typeWarningMessage.setWrapText(true);
+		typeWarningMessage.setVisible(false);
 
 		representationField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentTemplateFilter != null) {
@@ -395,10 +402,11 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 		}
 	}
 
-	protected boolean parseSlotsRepresentation(String sRep) {
+	public boolean parseSlotsRepresentation(String sRep) {
 		CharStream input = CharStreams.fromString(sRep);
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
 		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
+		TemplateFilterLexer.constituentBeginMarker = fAllowConstituentBeginMarker;
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
 		parser.removeErrorListeners();

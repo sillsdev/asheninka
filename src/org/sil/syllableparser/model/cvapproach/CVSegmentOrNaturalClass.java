@@ -1,11 +1,16 @@
 /**
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
  * Used in a chooser
  */
 package org.sil.syllableparser.model.cvapproach;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.SylParserBase;
 
 import javafx.beans.property.BooleanProperty;
@@ -17,6 +22,7 @@ import javafx.beans.property.StringProperty;
  * @author Andy Black
  *
  */
+@XmlAccessorType(XmlAccessType.NONE)
 public class CVSegmentOrNaturalClass extends SylParserBase  {
 
 	private StringProperty segmentOrNaturalClass;
@@ -59,10 +65,12 @@ public class CVSegmentOrNaturalClass extends SylParserBase  {
 		return uuid;
 	}
 
+	@XmlAttribute(name="segOrNC")
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 
+	@XmlAttribute(name="isSegment")
 	public boolean isSegment() {
 		return isSegment;
 	}
@@ -74,6 +82,7 @@ public class CVSegmentOrNaturalClass extends SylParserBase  {
 	public void setDescription(String description) {
 		this.description.set(description);
 	}
+
 	public void setChecked(boolean value) {
 		this.checked.set(value);	
 	}
@@ -101,4 +110,37 @@ public class CVSegmentOrNaturalClass extends SylParserBase  {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	public String getSegmentOrNaturalClassForShow() {
+		String s = getSegmentOrNaturalClass();
+		if (!isSegment) {
+			s = Constants.NATURAL_CLASS_PREFIX + s + Constants.NATURAL_CLASS_SUFFIX;
+		}
+		return s;
+	}
+
+	public static boolean equalsCVSegOrNC(CVSegmentOrNaturalClass thisOne, CVSegmentOrNaturalClass thatOne) {
+		boolean result = true;
+		if (thisOne != null) {
+			if (thatOne != null) {
+				if (!thisOne.getUuid().equals(thatOne.getUuid())) {
+					result = false;
+				}
+			} else {
+				result = false;
+			}
+		} else if (thatOne != null) {
+			result = false;
+		}
+		return result;
+	}
+
+	public static void createTextFromCVSegOrNC(CVSegmentOrNaturalClass cvsegc, StringBuilder sb) {
+		if (cvsegc != null) {
+			sb.append(cvsegc.getUuid());
+		} else {
+			sb.append(Constants.NULL_AS_STRING);
+		}
+	}
+
 }

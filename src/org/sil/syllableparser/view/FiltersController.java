@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2021 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -22,23 +22,19 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Filter;
 import org.sil.syllableparser.model.FilterType;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.oncapproach.ONCApproach;
-import org.sil.utility.StringUtilities;
 
 /**
  * @author Andy Black
  *
  */
-public class FiltersController extends TemplatesFiltersController {
+public abstract class FiltersController extends TemplatesFiltersController {
 
 	@FXML
 	protected ComboBox<FilterType> typeComboBox;
@@ -53,11 +49,10 @@ public class FiltersController extends TemplatesFiltersController {
 
 	protected ObservableList<Filter> filterList = FXCollections.observableArrayList();
 
-	public void setData(ONCApproach oncApproachData) {
-		oncApproach = oncApproachData;
-		languageProject = oncApproach.getLanguageProject();
+	@SuppressWarnings("unchecked")
+	protected void setDataProcessing(String sLastView, ObservableList<? extends Filter> filters) {
 		// no sorting allowed
-		filterList = languageProject.getFilters();
+		filterList = (ObservableList<Filter>) filters;
 		iRepresentationCaretPosition = 6;
 		fSncChoicesUsingMouse = false;
 
@@ -69,7 +64,7 @@ public class FiltersController extends TemplatesFiltersController {
 				@Override
 				public void run() {
 					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastONCFiltersViewItemUsed();
+							.getIntegerValue(sLastView, 0);
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					selectAndScrollToItem(iLastIndex);
 				}
@@ -81,6 +76,7 @@ public class FiltersController extends TemplatesFiltersController {
 			descriptionField.setStyle(sAnalysis);
 		}
 	}
+	protected abstract void showTypeWarning(TemplateFilter filter);
 
 	protected void showFilterDetails(Filter tf) {
 		currentTemplateFilter = tf;
@@ -144,11 +140,6 @@ public class FiltersController extends TemplatesFiltersController {
 		filterTable.scrollTo(index);
 	}
 
-	protected void rememberSelection(int iCurrentIndex) {
-		mainApp.getApplicationPreferences().setLastONCFiltersViewItemUsed(
-				iCurrentIndex);
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		super.setApproach(ApplicationPreferences.FILTERS);
@@ -186,8 +177,9 @@ public class FiltersController extends TemplatesFiltersController {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-//						System.out.println("SelectedValue="	+ selectedValue);
 						currentTemplateFilter.setTemplateFilterType(selectedValue);
+						showTypeWarning(currentTemplateFilter);
+						processRepresentationFieldContents();
 					}
 				});
 			}
@@ -214,6 +206,7 @@ public class FiltersController extends TemplatesFiltersController {
 													// reason...
 		fAllowSlotPosition = true;
 		processRepresentationFieldContents();
+		showTypeWarning(f);
 	}
 
 	@FXML
@@ -226,6 +219,7 @@ public class FiltersController extends TemplatesFiltersController {
 													// reason...
 		fAllowSlotPosition = false;
 		processRepresentationFieldContents();
+		showTypeWarning(f);
 	}
 
 	@Override

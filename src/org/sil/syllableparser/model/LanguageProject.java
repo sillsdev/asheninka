@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -19,7 +19,10 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
+import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 
 /**
@@ -32,6 +35,9 @@ public class LanguageProject {
 	private CVApproach cvApproach;
 	private SHApproach shApproach;
 	private ONCApproach oncApproach;
+	private MoraicApproach moraicApproach;
+	private NPApproach npApproach;
+	private OTApproach otApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
@@ -56,6 +62,12 @@ public class LanguageProject {
 		shApproach.setLanguageProject(this);
 		oncApproach = new ONCApproach();
 		oncApproach.setLanguageProject(this);
+		moraicApproach = new MoraicApproach();
+		moraicApproach.setLanguageProject(this);
+		npApproach = new NPApproach();
+		npApproach.setLanguageProject(this);
+		otApproach = new OTApproach();
+		otApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
 		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
@@ -71,6 +83,9 @@ public class LanguageProject {
 		cvApproach.clear();
 		shApproach.clear();
 		oncApproach.clear();
+		moraicApproach.clear();
+		npApproach.clear();
+		otApproach.clear();
 		segmentInventory.clear();
 		words.clear();
 		environments.clear();
@@ -113,6 +128,33 @@ public class LanguageProject {
 	@XmlElement(name = "oncApproach")
 	public void setONCApproach(ONCApproach oncApproach) {
 		this.oncApproach = oncApproach;
+	}
+
+	public MoraicApproach getMoraicApproach() {
+		return moraicApproach;
+	}
+
+	@XmlElement(name = "moraicApproach")
+	public void setMoraicApproach(MoraicApproach moraicApproach) {
+		this.moraicApproach = moraicApproach;
+	}
+
+	public NPApproach getNPApproach() {
+		return npApproach;
+	}
+
+	@XmlElement(name = "npApproach")
+	public void setNPApproach(NPApproach npApproach) {
+		this.npApproach = npApproach;
+	}
+
+	public OTApproach getOTApproach() {
+		return otApproach;
+	}
+
+	@XmlElement(name = "otApproach")
+	public void setOTApproach(OTApproach otApproach) {
+		this.otApproach = otApproach;
 	}
 
 	/**
@@ -246,6 +288,12 @@ public class LanguageProject {
 		shApproach.setLanguageProject(this);
 		oncApproach.load(languageProjectLoaded.getONCApproach());
 		oncApproach.setLanguageProject(this);
+		moraicApproach.load(languageProjectLoaded.getMoraicApproach());
+		moraicApproach.setLanguageProject(this);
+		npApproach.load(languageProjectLoaded.getNPApproach());
+		npApproach.setLanguageProject(this);
+		otApproach.load(languageProjectLoaded.getOTApproach());
+		otApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
 				.getSegmentInventory();
 		for (Segment segment : segmentInventoryLoadedData) {

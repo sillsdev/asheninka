@@ -14,6 +14,7 @@ import java.util.SortedSet;
 
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
@@ -89,7 +90,7 @@ public class SHApproachLanguageComparisonHTMLFormatter extends
 
 	protected void formatNaturalClassInfo(StringBuilder sb, SHNaturalClass naturalClass) {
 		if (naturalClass == null) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(naturalClass.getNCName());
 			sb.append(" (");
@@ -144,7 +145,7 @@ public class SHApproachLanguageComparisonHTMLFormatter extends
 	@Override
 	protected void formatPredictedSyllabification(StringBuilder sb, Word word) {
 		if (word == null || word.getSHPredictedSyllabification().length() == 0) {
-			sb.append("&#xa0;");
+			sb.append(Constants.NON_BREAKING_SPACE);
 		} else {
 			sb.append(word.getSHPredictedSyllabification());
 		}

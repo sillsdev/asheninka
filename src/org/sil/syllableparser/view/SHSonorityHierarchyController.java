@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2020 SIL International
+// Copyright (c) 2018-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -16,8 +16,11 @@ import java.util.Set;
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.Segment;
+import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
+import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
@@ -304,7 +307,31 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 			int currentItem = shSonorityHierarchyTable.getItems().indexOf(currentNaturalClass);
 			this.mainApp.updateStatusBarNumberOfItems((currentItem + 1) + "/"
 					+ shSonorityHierarchyTable.getItems().size() + " ");
-			mainApp.getApplicationPreferences().setLastSHSonorityHierarchyViewItemUsed(currentItem);
+
+			ApproachType approach = this.rootController.getCurrentApproach();
+			switch (approach) {
+			case SONORITY_HIERARCHY:
+				mainApp.getApplicationPreferences().setLastSHSonorityHierarchyViewItemUsed(
+						currentItem);
+				break;
+
+			case ONSET_NUCLEUS_CODA:
+				mainApp.getApplicationPreferences().setLastONCSonorityHierarchyViewItemUsed(
+						currentItem);
+				break;
+
+			case MORAIC:
+				mainApp.getApplicationPreferences().setLastMoraicSonorityHierarchyViewItemUsed(
+						currentItem);
+				break;
+
+			case NUCLEAR_PROJECTION:
+				mainApp.getApplicationPreferences().setLastNPSonorityHierarchyViewItemUsed(
+						currentItem);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
@@ -435,11 +462,30 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 		shSonorityHierarchyTable.setItems(shApproachData.getSHSonorityHierarchy());
 		int max = shSonorityHierarchyTable.getItems().size();
 		if (max > 0) {
+			ApproachType approach = this.rootController.getCurrentApproach();
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastSHSonorityHierarchyViewItemUsed();
+					int iLastIndex = 0;
+					switch (approach) {
+					case SONORITY_HIERARCHY:
+						iLastIndex = mainApp.getApplicationPreferences().getLastSHSonorityHierarchyViewItemUsed();
+						break;
+
+					case ONSET_NUCLEUS_CODA:
+						iLastIndex = mainApp.getApplicationPreferences().getLastONCSonorityHierarchyViewItemUsed();
+						break;
+
+					case MORAIC:
+						iLastIndex = mainApp.getApplicationPreferences().getLastMoraicSonorityHierarchyViewItemUsed();
+						break;
+
+					case NUCLEAR_PROJECTION:
+						iLastIndex = mainApp.getApplicationPreferences().getLastNPSonorityHierarchyViewItemUsed();
+						break;
+					default:
+						break;
+					}
 					iLastIndex = adjustIndexValue(iLastIndex, max);
 					shSonorityHierarchyTable.requestFocus();
 					shSonorityHierarchyTable.getSelectionModel().select(iLastIndex);
@@ -460,6 +506,14 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 
 	public void setData(ONCApproach oncApproachData) {
 		setData(oncApproachData.getLanguageProject().getSHApproach());
+	}
+
+	public void setData(MoraicApproach moraicApproachData) {
+		setData(moraicApproachData.getLanguageProject().getSHApproach());
+	}
+
+	public void setData(NPApproach npApproachData) {
+		setData(npApproachData.getLanguageProject().getSHApproach());
 	}
 
 	@Override
@@ -501,7 +555,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 			loader.setLocation(ApproachViewNavigator.class
 					.getResource("fxml/SHSegmentChooser.fxml"));
 			loader.setResources(ResourceBundle.getBundle(
-					"org.sil.syllableparser.resources.SyllableParser", locale));
+					Constants.RESOURCE_LOCATION, locale));
 
 			AnchorPane page = loader.load();
 			Stage dialogStage = new Stage();

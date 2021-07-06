@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International 
+// Copyright (c) 2019-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -43,6 +43,7 @@ public class TemplateFilterRecognizerTest {
 			"+ant, -cor, -vd");
 
 	boolean fAllowSlotPosition = false;
+	boolean fAllowConstituentBeginMarker = false;
 
 	@Before
 	public void setUp() throws Exception {
@@ -117,6 +118,10 @@ public class TemplateFilterRecognizerTest {
 		checkValidTemplateFilter("a _ b");
 		checkValidTemplateFilter("a_|b");
 		checkValidTemplateFilter("a _ | b");
+		fAllowSlotPosition = false;
+		fAllowConstituentBeginMarker = true;
+		checkValidTemplateFilter("a_b");
+		checkValidTemplateFilter("a _ b");
 	}
 
 	private void checkValidTemplateFilter(String sDesc) {
@@ -127,6 +132,7 @@ public class TemplateFilterRecognizerTest {
 		CharStream input = CharStreams.fromString(sInput);
 		TemplateFilterLexer lexer = new TemplateFilterLexer(input);
 		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
+		TemplateFilterLexer.constituentBeginMarker = fAllowConstituentBeginMarker;
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
 		// begin parsing at rule 'description'
@@ -210,16 +216,21 @@ public class TemplateFilterRecognizerTest {
 		// bad slot position and/or constituent begin marker
 		fAllowSlotPosition = true;
 		checkInvalidTemplateFilter("|", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 2);
-		checkInvalidTemplateFilter("_", TemplateFilterConstants.MISMATCHED_INPUT, 1, 1);
+		checkInvalidTemplateFilter("_", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 1);
 		checkInvalidTemplateFilter("a _", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 3, 1);
 		checkInvalidTemplateFilter("a |", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 3, 1);
 		checkInvalidTemplateFilter("a _ |", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 5, 2);
+		fAllowSlotPosition = false;
+		fAllowConstituentBeginMarker = true;
+		checkInvalidTemplateFilter("_", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 1, 1);
+		checkInvalidTemplateFilter("a _", TemplateFilterConstants.MISSING_CLASS_OR_SEGMENT, 3, 1);
 	}
 
 	private void checkInvalidTemplateFilter(String sDesc, String sFailedPortion, int iPos,
 			int iNumErrors) {
 		// TODO: check position and message
 		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
+		TemplateFilterLexer.constituentBeginMarker = fAllowConstituentBeginMarker;
 		TemplateFilterParser parser = parseAStringExpectFailure(sDesc);
 		assertEquals(iNumErrors, parser.getNumberOfSyntaxErrors());
 		VerboseListener errListener = (VerboseListener) parser.getErrorListeners().get(0);
@@ -249,6 +260,9 @@ public class TemplateFilterRecognizerTest {
 		fAllowSlotPosition = true;
 		checkValidSyntaxBadContent("a | b | f", "f", 7, 0, 0, 0, 1, 2, 0);
 		checkValidSyntaxBadContent("a _ b _ f", "f", 7, 0, 0, 0, 1, 0, 2);
+		fAllowSlotPosition = false;
+		fAllowConstituentBeginMarker = true;
+		checkValidSyntaxBadContent("a _ b _ f", "f", 7, 0, 0, 0, 1, 0, 2);
 	}
 
 	private TemplateFilterParser parseAStringWithContentError(String sInput) {
@@ -271,6 +285,7 @@ public class TemplateFilterRecognizerTest {
 			int iNumSyntaxErrors, int iNumSegmentErrors, int iNumClassErrors, int iPosInFailed, int iSlotPositionsFound, int iConstituentBeginMarkersFound) {
 		// TODO: check position and message
 		TemplateFilterLexer.slotPosition = fAllowSlotPosition;
+		TemplateFilterLexer.constituentBeginMarker = fAllowConstituentBeginMarker;
 		TemplateFilterParser parser = parseAStringWithContentError(sDesc);
 		assertEquals(iNumSyntaxErrors, parser.getNumberOfSyntaxErrors());
 		CheckSegmentAndClassListener listener = (CheckSegmentAndClassListener) parser

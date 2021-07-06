@@ -74,7 +74,10 @@ public class TemplateFilterLexer extends Lexer {
 		return VOCABULARY;
 	}
 
-	public static boolean slotPosition;
+
+		public static boolean slotPosition;
+		public static boolean constituentBeginMarker;
+
 
 	public TemplateFilterLexer(CharStream input) {
 		super(input);
@@ -119,7 +122,7 @@ public class TemplateFilterLexer extends Lexer {
 	private boolean CONSTITUENT_BEGIN_MARKER_sempred(RuleContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 1:
-			return slotPosition;
+			return slotPosition || constituentBeginMarker;
 		}
 		return true;
 	}

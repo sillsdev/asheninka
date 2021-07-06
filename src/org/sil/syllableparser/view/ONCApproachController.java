@@ -108,11 +108,11 @@ public class ONCApproachController extends ApproachController  {
 			sView = ONCApproachView.NATURAL_CLASSES.toString();
 			break;
 
-		case "org.sil.syllableparser.view.TemplatesController":
+		case "org.sil.syllableparser.view.ONCTemplatesController":
 			sView = ONCApproachView.TEMPLATES.toString();
 			break;
 
-		case "org.sil.syllableparser.view.FiltersController":
+		case "org.sil.syllableparser.view.ONCFiltersController":
 			sView = ONCApproachView.FILTERS.toString();
 			break;
 
@@ -203,8 +203,8 @@ public class ONCApproachController extends ApproachController  {
 	}
 
 	public void handleTemplates() {
-		FXMLLoader loader = createFXMLLoader("fxml/Templates.fxml");
-		TemplatesController controller = loader.getController();
+		FXMLLoader loader = createFXMLLoader("fxml/ONCTemplates.fxml");
+		ONCTemplatesController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
@@ -215,8 +215,8 @@ public class ONCApproachController extends ApproachController  {
 	}
 
 	public void handleFilters() {
-		FXMLLoader loader = createFXMLLoader("fxml/Filters.fxml");
-		FiltersController controller = loader.getController();
+		FXMLLoader loader = createFXMLLoader("fxml/ONCFilters.fxml");
+		ONCFiltersController controller = loader.getController();
 		initializeApproachEditorController(controller);
 		controller.setData(oncApproachData);
 		controller.initializeTableColumnWidthsAndSplitDividerPosition();
@@ -584,7 +584,7 @@ public class ONCApproachController extends ApproachController  {
 		try {
 			Stage tryAWordDialogStage = new Stage();
 			String resource = "fxml/ONCTryAWord.fxml";
-			String title = bundle.getString("label.tryaword");
+			String title = bundle.getString("label.tryaword") + " - " + bundle.getString("approach.onc");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
 					Constants.RESOURCE_LOCATION);

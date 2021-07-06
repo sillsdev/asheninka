@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -9,18 +9,11 @@ package org.sil.syllableparser.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.cvapproach.CVSegmentOrNaturalClass;
-
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableCell;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 /**
  * @author Andy Black

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -75,8 +75,8 @@ public class SHApproachTest {
 		missingSegments = sha.getMissingSegmentsFromSonorityHierarchy();
 		assertEquals(3, missingSegments.size());
 		segs = missingSegments.toArray(segs);
-		assertEquals("b", segs[0].getSegment());
-		assertEquals("e", segs[1].getSegment());
+		assertEquals("e", segs[0].getSegment());
+		assertEquals("b", segs[1].getSegment());
 		assertEquals("a", segs[2].getSegment());
 	}
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2021 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -10,15 +10,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.MainApp;
-import org.sil.syllableparser.model.Approach;
-import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.utility.*;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.IndexRange;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -270,4 +265,5 @@ public abstract class ApproachEditorController {
 			}
 		}
 	}
+
 }

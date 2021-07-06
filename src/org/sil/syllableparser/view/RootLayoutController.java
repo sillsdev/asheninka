@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2021 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -221,6 +221,9 @@ public class RootLayoutController implements Initializable {
 	private CVApproachController cvApproachController;
 	private SHApproachController shApproachController;
 	private ONCApproachController oncApproachController;
+	private MoraicApproachController moraicApproachController;
+	private NPApproachController npApproachController;
+	private OTApproachController otApproachController;
 	private ApproachController currentApproachController;
 
 	@FXML
@@ -273,6 +276,15 @@ public class RootLayoutController implements Initializable {
 		oncApproachController.setMainApp(mainApp);
 		oncApproachController.setPrefs(mainApp.getApplicationPreferences());
 		oncApproachController.setRootLayout(this);
+		moraicApproachController.setMainApp(mainApp);
+		moraicApproachController.setPrefs(mainApp.getApplicationPreferences());
+		moraicApproachController.setRootLayout(this);
+		npApproachController.setMainApp(mainApp);
+		npApproachController.setPrefs(mainApp.getApplicationPreferences());
+		npApproachController.setRootLayout(this);
+		otApproachController.setMainApp(mainApp);
+		otApproachController.setPrefs(mainApp.getApplicationPreferences());
+		otApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -288,6 +300,15 @@ public class RootLayoutController implements Initializable {
 		oncApproachController.setONCApproachData(languageProject.getONCApproach(),
 				languageProject.getWords());
 		oncApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		moraicApproachController.setMoraicApproachData(languageProject.getMoraicApproach(),
+				languageProject.getWords());
+		moraicApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		npApproachController.setNPApproachData(languageProject.getNPApproach(),
+				languageProject.getWords());
+		npApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		otApproachController.setOTApproachData(languageProject.getOTApproach(),
+				languageProject.getWords());
+		otApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -895,6 +916,11 @@ public class RootLayoutController implements Initializable {
 		showFileToUser("doc/Overview.pdf");
 	}
 
+	@FXML
+	private void handleHammond1997() {
+		showFileToUser("doc/222-1097-HAMMOND-0-0.PDF");
+	}
+
 	/**
 	 * Closes the application.
 	 */
@@ -945,6 +971,10 @@ public class RootLayoutController implements Initializable {
 			applicationPreferences.setLastSHApproachViewUsed(sCurrentView);
 		} else if (currentApproachController instanceof ONCApproachController) {
 			applicationPreferences.setLastONCApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof MoraicApproachController) {
+			applicationPreferences.setLastMoraicApproachViewUsed(sCurrentView);
+		} else if (currentApproachController instanceof NPApproachController) {
+			applicationPreferences.setLastNPApproachViewUsed(sCurrentView);
 		}
 	}
 
@@ -1154,15 +1184,87 @@ public class RootLayoutController implements Initializable {
 		selectApproachViewItem(Constants.ONC_ENVIRONMENTS_VIEW_INDEX);
 	}
 
-
-
 	/**
 	 * Moraic Approach
 	 */
 	@FXML
 	private void handleMoraicApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonMoraicApproach);
-		mainApp.showNotImplementedYet();
+		approachViews.setItems(moraicApproachController.getViews());
+		currentApproachController = moraicApproachController;
+		setInitialMoraicView();
+		setDisableForSomeMenuAndToolbarItems();
+	}
+
+	@FXML
+	private void handleMoraicSegmentInventory() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicSegmentInventory();
+		selectApproachViewItem(Constants.MORAIC_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicSonorityHierarchy() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicSonorityHierarchy();
+		selectApproachViewItem(Constants.MORAIC_SONORITY_HIERARCHY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicNaturalClasses() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleCVNaturalClasses();
+		selectApproachViewItem(Constants.MORAIC_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicSyllabificationParameters() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicSyllabificationParameters();
+		selectApproachViewItem(Constants.MORAIC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicTemplates() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleTemplates();;
+		selectApproachViewItem(Constants.MORAIC_TEMPLATES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicFilters() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleFilters();;
+		selectApproachViewItem(Constants.MORAIC_FILTERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicWords() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicWords();
+		selectApproachViewItem(Constants.MORAIC_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicWordsPredictedVsCorrect() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleMoraicWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.MORAIC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicGraphemeNaturalClasses() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleMoraicEnvironments() {
+		currentApproachController = moraicApproachController;
+		moraicApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.MORAIC_ENVIRONMENTS_VIEW_INDEX);
 	}
 
 	/**
@@ -1170,8 +1272,82 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleNuclearProjectionApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonNuclearProjectionApproach);
-		mainApp.showNotImplementedYet();
+		approachViews.setItems(npApproachController.getViews());
+		currentApproachController = npApproachController;
+		setInitialNPView();
+		setDisableForSomeMenuAndToolbarItems();
+	}
+
+	@FXML
+	private void handleNPSegmentInventory() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPSegmentInventory();
+		selectApproachViewItem(Constants.NP_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPSonorityHierarchy() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPSonorityHierarchy();
+		selectApproachViewItem(Constants.NP_SONORITY_HIERARCHY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPNaturalClasses() {
+		currentApproachController = npApproachController;
+		npApproachController.handleCVNaturalClasses();
+		selectApproachViewItem(Constants.NP_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPSyllabificationParameters() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPSyllabificationParameters();
+		selectApproachViewItem(Constants.NP_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPRules() {
+		currentApproachController = npApproachController;
+		npApproachController.handleRules();;
+		selectApproachViewItem(Constants.NP_RULES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPFilters() {
+		currentApproachController = npApproachController;
+		npApproachController.handleFilters();;
+		selectApproachViewItem(Constants.NP_FILTERS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPWords() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPWords();
+		selectApproachViewItem(Constants.NP_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPWordsPredictedVsCorrect() {
+		currentApproachController = npApproachController;
+		npApproachController.handleNPWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.NP_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPGraphemeNaturalClasses() {
+		currentApproachController = npApproachController;
+		npApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.NP_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleNPEnvironments() {
+		currentApproachController = npApproachController;
+		npApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.NP_ENVIRONMENTS_VIEW_INDEX);
 	}
 
 	/**
@@ -1179,8 +1355,68 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleOTApproach() {
+		rememberLastApproachViewUsed();
 		toggleButtonSelectedStatus(buttonOTApproach);
-		mainApp.showNotImplementedYet();
+		approachViews.setItems(otApproachController.getViews());
+		currentApproachController = otApproachController;
+		setInitialOTView();
+		setDisableForSomeMenuAndToolbarItems();
+	}
+
+	@FXML
+	private void handleOTSegmentInventory() {
+		currentApproachController = otApproachController;
+		otApproachController.handleCVSegmentInventory();
+		selectApproachViewItem(Constants.OT_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleOTNaturalClasses() {
+		currentApproachController = otApproachController;
+		otApproachController.handleCVNaturalClasses();
+		selectApproachViewItem(Constants.OT_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleOTConstraints() {
+		currentApproachController = otApproachController;
+		otApproachController.handleOTConstraints();
+		selectApproachViewItem(Constants.OT_CONSTRAINTS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleOTConstraintRankings() {
+		currentApproachController = otApproachController;
+		otApproachController.handleOTConstraintRankings();
+		selectApproachViewItem(Constants.OT_CONSTRAINT_RANKINGS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleOTWords() {
+		currentApproachController = otApproachController;
+		otApproachController.handleOTWords();
+		selectApproachViewItem(Constants.OT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleOTWordsPredictedVsCorrect() {
+		currentApproachController = otApproachController;
+		otApproachController.handleOTWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.OT_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleOTGraphemeNaturalClasses() {
+		currentApproachController = otApproachController;
+		otApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.OT_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleOTEnvironments() {
+		currentApproachController = otApproachController;
+		otApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.OT_ENVIRONMENTS_VIEW_INDEX);
 	}
 
 	/**
@@ -1331,6 +1567,9 @@ public class RootLayoutController implements Initializable {
 		cvApproachController = new CVApproachController(bundle, bundle.getLocale());
 		shApproachController = new SHApproachController(bundle, bundle.getLocale());
 		oncApproachController = new ONCApproachController(bundle, bundle.getLocale());
+		moraicApproachController = new MoraicApproachController(bundle, bundle.getLocale());
+		npApproachController = new NPApproachController(bundle, bundle.getLocale());
+		otApproachController = new OTApproachController(bundle, bundle.getLocale());
 
 		createToolbarButtons(bundle);
 
@@ -1350,11 +1589,17 @@ public class RootLayoutController implements Initializable {
 		menuItemFindWord.setDisable(true);
 
 		statusBar.getRightItems().add(new Separator(VERTICAL));
+		Tooltip tooltipPredictedToTotal = new Tooltip(bundle.getString("tooltip.predictedtototal"));
+		Tooltip.install(predictedToTotal, tooltipPredictedToTotal);
 		statusBar.getRightItems().add(predictedToTotal);
 		statusBar.getRightItems().add(new Separator(VERTICAL));
+		Tooltip tooltipPredictedEqualsCorrectToTotal = new Tooltip(bundle.getString("tooltip.predictedequalscorrecttototal"));
+		Tooltip.install(predictedEqualsCorrectToTotal, tooltipPredictedEqualsCorrectToTotal);
 		statusBar.getRightItems().add(predictedEqualsCorrectToTotal);
 		statusBar.getRightItems().add(new Separator(VERTICAL));
-		statusBar.getRightItems().add(numberOfItems);
+		Tooltip tooltipNumberOfItemsToTotal = new Tooltip(bundle.getString("tooltip.numbertototal"));
+		Tooltip.install(numberOfItems, tooltipNumberOfItemsToTotal);
+			statusBar.getRightItems().add(numberOfItems);
 
 		ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 
@@ -1380,10 +1625,12 @@ public class RootLayoutController implements Initializable {
 
 		case "MORAIC":
 			handleMoraicApproach();
+			setInitialMoraicView();
 			break;
 
 		case "NUCLEAR_PROJECTION":
 			handleNuclearProjectionApproach();
+			setInitialNPView();
 			break;
 
 		case "ONSET_NUCLEUS_CODA":
@@ -1393,6 +1640,7 @@ public class RootLayoutController implements Initializable {
 
 		case "OPTIMALITY_THEORY":
 			handleOTApproach();
+			setInitialOTView();
 			break;
 
 		case "SONORITY_HIERARCHY":
@@ -1518,6 +1766,145 @@ public class RootLayoutController implements Initializable {
 
 		case "WORDS":
 			selectApproachViewItem(Constants.ONC_WORDS_VIEW_INDEX);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
+	protected void setInitialMoraicView() {
+		String sLastMoraicApproachViewUsed = applicationPreferences.getLastMoraicApproachViewUsed();
+		switch (sLastMoraicApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(Constants.MORAIC_ENVIRONMENTS_VIEW_INDEX);
+			break;
+
+		case "FILTERS":
+			selectApproachViewItem(Constants.MORAIC_FILTERS_VIEW_INDEX);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(Constants.MORAIC_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "NATURAL_CLASSES":
+			selectApproachViewItem(Constants.MORAIC_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(Constants.MORAIC_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(Constants.MORAIC_SEGMENT_INVENTORY_VIEW_INDEX);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(Constants.MORAIC_SONORITY_HIERARCHY_VIEW_INDEX);
+			break;
+
+		case "SYLLABIFICATION_PARAMETERS":
+			selectApproachViewItem(Constants.MORAIC_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+			break;
+
+		case "TEMPLATES":
+			selectApproachViewItem(Constants.MORAIC_TEMPLATES_VIEW_INDEX);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(Constants.MORAIC_WORDS_VIEW_INDEX);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
+	protected void setInitialNPView() {
+		String sLastNPApproachViewUsed = applicationPreferences.getLastNPApproachViewUsed();
+		switch (sLastNPApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(Constants.NP_ENVIRONMENTS_VIEW_INDEX);
+			break;
+
+		case "FILTERS":
+			selectApproachViewItem(Constants.NP_FILTERS_VIEW_INDEX);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(Constants.NP_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "NATURAL_CLASSES":
+			selectApproachViewItem(Constants.NP_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(Constants.NP_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+			break;
+
+		case "RULES":
+			selectApproachViewItem(Constants.NP_RULES_VIEW_INDEX);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(Constants.NP_SEGMENT_INVENTORY_VIEW_INDEX);
+			break;
+
+		case "SONORITY_HIERARCHY":
+			selectApproachViewItem(Constants.NP_SONORITY_HIERARCHY_VIEW_INDEX);
+			break;
+
+		case "SYLLABIFICATION_PARAMETERS":
+			selectApproachViewItem(Constants.NP_SYLLABIFICATION_PARAMETERS_VIEW_INDEX);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(Constants.NP_WORDS_VIEW_INDEX);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
+
+	protected void setInitialOTView() {
+		String sLastOTApproachViewUsed = applicationPreferences.getLastOTApproachViewUsed();
+		switch (sLastOTApproachViewUsed) {
+		case "CONSTRAINTS":
+			selectApproachViewItem(Constants.OT_CONSTRAINTS_VIEW_INDEX);
+			break;
+
+		case "ENVIRONMENTS":
+			selectApproachViewItem(Constants.OT_ENVIRONMENTS_VIEW_INDEX);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(Constants.OT_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "NATURAL_CLASSES":
+			selectApproachViewItem(Constants.OT_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(Constants.OT_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+			break;
+
+		case "RANKINGS":
+			selectApproachViewItem(Constants.OT_CONSTRAINT_RANKINGS_VIEW_INDEX);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(Constants.OT_SEGMENT_INVENTORY_VIEW_INDEX);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(Constants.OT_WORDS_VIEW_INDEX);
 			break;
 
 		default:
@@ -1672,6 +2059,18 @@ public class RootLayoutController implements Initializable {
 			sApproach = ApproachType.ONSET_NUCLEUS_CODA.name();
 			break;
 
+		case "org.sil.syllableparser.view.MoraicApproachController":
+			sApproach = ApproachType.MORAIC.name();
+			break;
+
+		case "org.sil.syllableparser.view.NPApproachController":
+			sApproach = ApproachType.NUCLEAR_PROJECTION.name();
+			break;
+
+		case "org.sil.syllableparser.view.OTApproachController":
+			sApproach = ApproachType.OPTIMALITY_THEORY.name();
+			break;
+
 		default:
 			break;
 		}
@@ -1692,6 +2091,14 @@ public class RootLayoutController implements Initializable {
 
 		case "org.sil.syllableparser.view.ONCApproachController":
 			approach = ApproachType.ONSET_NUCLEUS_CODA;
+			break;
+
+		case "org.sil.syllableparser.view.MoraicApproachController":
+			approach = ApproachType.MORAIC;
+			break;
+
+		case "org.sil.syllableparser.view.NPApproachController":
+			approach = ApproachType.NUCLEAR_PROJECTION;
 			break;
 
 		default:

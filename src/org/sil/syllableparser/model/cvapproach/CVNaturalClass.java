@@ -130,6 +130,12 @@ public class CVNaturalClass extends SylParserObject {
 		return segments;
 	}
 
+	public boolean hasSegment(Segment seg) {
+		int index = SylParserObject.findIndexInListByUuid(
+				FXCollections.observableList(getAllSegments()), seg.getID());
+		return (index >= 0);
+	}
+
 	@Override
 	public int hashCode() {
 		String sCombo = ncName.getValueSafe() + sncRepresentation.getValueSafe();

@@ -516,7 +516,7 @@ public class SHApproachController extends ApproachController {
 		try {
 			Stage tryAWordDialogStage = new Stage();
 			String resource = "fxml/SHTryAWord.fxml";
-			String title = bundle.getString("label.tryaword");
+			String title = bundle.getString("label.tryaword") + " - " + bundle.getString("approach.sonorityhierarchy");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
 					Constants.RESOURCE_LOCATION);
