@@ -1597,7 +1597,9 @@ public class RootLayoutController implements Initializable {
 		Tooltip.install(predictedEqualsCorrectToTotal, tooltipPredictedEqualsCorrectToTotal);
 		statusBar.getRightItems().add(predictedEqualsCorrectToTotal);
 		statusBar.getRightItems().add(new Separator(VERTICAL));
-		statusBar.getRightItems().add(numberOfItems);
+		Tooltip tooltipNumberOfItemsToTotal = new Tooltip(bundle.getString("tooltip.numbertototal"));
+		Tooltip.install(numberOfItems, tooltipNumberOfItemsToTotal);
+			statusBar.getRightItems().add(numberOfItems);
 
 		ControllerUtilities.setDateInStatusBar(statusBar, bundle);
 
