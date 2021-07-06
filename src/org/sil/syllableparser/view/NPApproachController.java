@@ -584,7 +584,7 @@ public class NPApproachController extends ApproachController  {
 		try {
 			Stage tryAWordDialogStage = new Stage();
 			String resource = "fxml/NPTryAWord.fxml";
-			String title = bundle.getString("label.tryaword");
+			String title = bundle.getString("label.tryaword") + " - " + bundle.getString("approach.nuclearprojection");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
 					Constants.RESOURCE_LOCATION);

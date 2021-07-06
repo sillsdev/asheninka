@@ -584,7 +584,7 @@ public class ONCApproachController extends ApproachController  {
 		try {
 			Stage tryAWordDialogStage = new Stage();
 			String resource = "fxml/ONCTryAWord.fxml";
-			String title = bundle.getString("label.tryaword");
+			String title = bundle.getString("label.tryaword") + " - " + bundle.getString("approach.onc");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
 					Constants.RESOURCE_LOCATION);
