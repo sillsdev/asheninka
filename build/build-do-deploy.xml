@@ -85,7 +85,7 @@
 				title="Asheninka (a Syllable Parser)"
 				vendor="SIL International"
 				license="LGPL"
-				copyright="© 2016-2020 SIL International"
+				copyright="© 2016-2021 SIL International"
 				description="A tool for exploring syllabification algorithms and for inserting discretionay hyphens in word lists.">
 				<fx:association extension="ashedata" mimetype="text/x-asheninka" description="Asheninka file"/>
 			</fx:info>
