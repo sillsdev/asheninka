@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2022 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
@@ -46,9 +48,9 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 		consumeParaTExtPreamble(file);
 
 		// now add all words
-		try (Stream<String> stream = Files.lines(file.toPath()).skip(7)) {
+		try (Stream<String> stream = Files.lines(file.toPath(), StandardCharsets.UTF_8).skip(7)) {
 			stream.forEach(s -> languageProject.createNewWordFromParaTExt(s, sUntested));
-		} catch (IOException e) {
+		} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 			MainApp.reportException(e, null);
 		}
@@ -79,8 +81,8 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 				Cursor currentCursor = scene.getCursor();
 				scene.setCursor(Cursor.WAIT);
 				Path path = file.toPath();
-				try (Stream<String> stream = Files.lines(path).skip(7)) {
-					long max = Files.lines(path).count();
+				try (Stream<String> stream = Files.lines(path, StandardCharsets.UTF_8).skip(7)) {
+					long max = Files.lines(path, StandardCharsets.UTF_8).count();
 					AtomicInteger iProgress = new AtomicInteger();
 					stream.forEach(s -> {
 						updateMessage(bundle.getString("label.importing") + s);
@@ -88,7 +90,7 @@ public class ParaTExtHyphenatedWordsImporter extends WordImporter {
 						updateProgress(iProgress.longValue(), max);
 						languageProject.createNewWordFromParaTExt(s, sUntested);
 					});
-				} catch (IOException e) {
+				} catch (IOException | UncheckedIOException e) {
 					e.printStackTrace();
 					MainApp.reportException(e, bundle);
 				}

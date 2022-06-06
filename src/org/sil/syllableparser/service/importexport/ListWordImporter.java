@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2022 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -8,6 +8,8 @@ package org.sil.syllableparser.service.importexport;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
@@ -42,11 +44,12 @@ public class ListWordImporter extends WordImporter {
 	// TODO: figure out how to get JUnit to deal with a thread so we do
 	// not have two copies of the crucial code.
 	public void importWords(File file, String sUntested) {
-		try (Stream<String> stream = Files.lines(file.toPath())) {
+		try (Stream<String> stream = Files.lines(file.toPath(), StandardCharsets.UTF_8)) {
 			stream.forEach(s -> {
+				System.out.println("s=" +s);
 				languageProject.createNewWord(s, sUntested);
 			});
-		} catch (IOException e) {
+		} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 			MainApp.reportException(e, null);
 		}
@@ -69,8 +72,8 @@ public class ListWordImporter extends WordImporter {
 				Cursor currentCursor = scene.getCursor();
 				scene.setCursor(Cursor.WAIT);
 				Path path = file.toPath();
-				try (Stream<String> stream = Files.lines(path)) {
-					long max = Files.lines(path).count();
+				try (Stream<String> stream = Files.lines(path, StandardCharsets.UTF_8)) {
+					long max = Files.lines(path, StandardCharsets.UTF_8).count();
 					AtomicInteger iProgress = new AtomicInteger();
 					stream.forEach(s -> {
 						updateMessage(bundle.getString("label.importing") + s);
@@ -78,7 +81,7 @@ public class ListWordImporter extends WordImporter {
 						updateProgress(iProgress.longValue(), max);
 						languageProject.createNewWord(s, sUntested);
 					});
-				} catch (IOException e) {
+				} catch (IOException | UncheckedIOException e) {
 					e.printStackTrace();
 					MainApp.reportException(e, bundle);
 				}

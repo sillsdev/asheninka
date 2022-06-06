@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2022 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -8,6 +8,8 @@ package org.sil.syllableparser.service.importexport;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -79,7 +81,7 @@ public class ParaTExtExportedWordListImporter extends WordImporter {
 				Cursor currentCursor = scene.getCursor();
 				scene.setCursor(Cursor.WAIT);
 
-				long max = Files.lines(file.toPath()).count();
+				long max = Files.lines(file.toPath(), StandardCharsets.UTF_8).count();
 				AtomicInteger iProgress = new AtomicInteger();
 				SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 				try {
@@ -93,7 +95,7 @@ public class ParaTExtExportedWordListImporter extends WordImporter {
 						updateProgress(iProgress.longValue(), max);
 						languageProject.createNewWordFromParaTExt(word, sUntested);
 					}
-				} catch (ParserConfigurationException | SAXException | IOException e) {
+				} catch (ParserConfigurationException | SAXException | IOException | UncheckedIOException e) {
 					e.printStackTrace();
 					MainApp.reportException(e, bundle);
 				}

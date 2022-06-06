@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->6 July 2021</date
+>6 June 2022</date
 ><version
->1.0.0</version
+>1.1.0</version
 ><contents
 ></contents
 ></frontMatter
@@ -7474,6 +7474,8 @@ type="tField"
 > field will do the same.</li
 ><li
 >The dialog boxes which can remain open while you do other things do not have a way to be minimized.</li
+><li
+>If you try to import a word list that is not in UTF-8 encoding, then you will get a “A serious error happened.” dialog box.  Convert your file to UTF-8 and try again.</li
 ></ol
 ></appendix
 ><appendix
@@ -7485,7 +7487,7 @@ id="aSampleDataSets"
 >The <object
 type="tAsheninka"
 ></object
-> website has some sample data sets in case you find these of value. There are two.  They are located at <link
+> website has some sample data sets in case you find these of value. There are two. They are located at <link
 href="http://software.sil.org/downloads/r/asheninka/resources/SampleProjects.zip"
 >http://​software.sil.org/downloads/r/​asheninka/​resources/​SampleProjects.zip</link
 ></p
@@ -7515,7 +7517,7 @@ type="tCVPatternApproach"
 > fails to parse many of the words as does the <object
 type="tSHApproach"
 ></object
->.  The other approaches have successful parses for the words.</p
+>. The other approaches have successful parses for the words.</p
 ></section1
 ><section1
 id="sSampleAsheninka"
@@ -7565,7 +7567,7 @@ type="tSHApproach"
 >All words parse except for an onomatopoeiaic word, with the exception of the <object
 type="tSHApproach"
 ></object
->.  This word parses for that approach.</p
+>. This word parses for that approach.</p
 ></section1
 ></appendix
 ><appendix

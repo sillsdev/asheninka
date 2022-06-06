@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2022 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Locale;
 import java.util.stream.Stream;
@@ -76,10 +78,10 @@ public class WordExporterTest {
 		long lineCount = 0;
 		ListWordExporter exporter = new ListWordExporter(languageProject);
 		exporter.exportWords(tempSaveFile, cva);
-		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath(), StandardCharsets.UTF_8)) {
 			lineCount = stream.count();
 			assertEquals(1903,  lineCount);
-		} catch (IOException e1) {
+		} catch (IOException | UncheckedIOException e1) {
 			e1.printStackTrace();
 		}
 		try {
@@ -108,10 +110,10 @@ public class WordExporterTest {
 		languageProject.getHyphenationParametersListWord().setStopBeforeCharactersFromEnd(3);
 		ListWordExporter exporter = new ListWordExporter(languageProject);
 		exporter.exportWords(tempSaveFile, cva);
-		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath(), StandardCharsets.UTF_8)) {
 			lineCount = stream.count();
 			assertEquals(1903,  lineCount);
-		} catch (IOException e1) {
+		} catch (IOException | UncheckedIOException e1) {
 			e1.printStackTrace();
 		}
 		try {
@@ -137,10 +139,10 @@ public class WordExporterTest {
 		long lineCount = 0;
 		ParaTExtHyphenatedWordsExporter exporter = new ParaTExtHyphenatedWordsExporter(languageProject);
 		exporter.exportWords(tempSaveFile, cva);
-		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath(), StandardCharsets.UTF_8)) {
 			lineCount = stream.count();
 			assertEquals(1910,  lineCount);
-		} catch (IOException e1) {
+		} catch (IOException | UncheckedIOException e1) {
 			e1.printStackTrace();
 		}
 		try {
@@ -174,10 +176,10 @@ public class WordExporterTest {
 		languageProject.getHyphenationParametersParaTExt().setStopBeforeCharactersFromEnd(3);
 		ParaTExtHyphenatedWordsExporter exporter = new ParaTExtHyphenatedWordsExporter(languageProject);
 		exporter.exportWords(tempSaveFile, cva);
-		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath(), StandardCharsets.UTF_8)) {
 			lineCount = stream.count();
 			assertEquals(1910,  lineCount);
-		} catch (IOException e1) {
+		} catch (IOException | UncheckedIOException e1) {
 			e1.printStackTrace();
 		}
 		try {
@@ -223,10 +225,10 @@ public class WordExporterTest {
 		long lineCount = 0;
 		XLingPaperHyphenatedWordExporter exporter = new XLingPaperHyphenatedWordExporter(languageProject);
 		exporter.exportWords(tempSaveFile, cva);
-		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath(), StandardCharsets.UTF_8)) {
 			lineCount = stream.count();
 			assertEquals(1907,  lineCount);
-		} catch (IOException e1) {
+		} catch (IOException | UncheckedIOException e1) {
 			e1.printStackTrace();
 		}
 		try {
@@ -268,10 +270,10 @@ public class WordExporterTest {
 		languageProject.getHyphenationParametersXLingPaper().setStopBeforeCharactersFromEnd(0);
 		XLingPaperHyphenatedWordExporter exporter = new XLingPaperHyphenatedWordExporter(languageProject);
 		exporter.exportWords(tempSaveFile, cva);
-		try (Stream<String> stream = Files.lines(tempSaveFile.toPath())) {
+		try (Stream<String> stream = Files.lines(tempSaveFile.toPath(), StandardCharsets.UTF_8)) {
 			lineCount = stream.count();
 			assertEquals(1907,  lineCount);
-		} catch (IOException e1) {
+		} catch (IOException | UncheckedIOException e1) {
 			e1.printStackTrace();
 		}
 		try {

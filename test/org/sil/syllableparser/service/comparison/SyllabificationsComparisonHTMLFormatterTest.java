@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 SIL International
+// Copyright (c) 2019-2022 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,6 +10,8 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -78,11 +80,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHHTMLEnglish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -101,11 +103,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHHTMLSpanish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -124,11 +126,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVONCHTMLEnglish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -147,11 +149,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVONCHTMLSpanish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -170,11 +172,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVNPHTMLEnglish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -193,11 +195,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVNPHTMLSpanish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -216,11 +218,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHONCHTMLEnglish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -239,11 +241,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHONCHTMLSpanish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -262,11 +264,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonSHONCHTMLEnglish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -285,11 +287,11 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonSHONCHTMLSpanish.html");
 		try {
-			Stream<String> contents = Files.lines(file.toPath());
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();
 			assertEquals(scontents, result);
-			} catch (IOException e) {
+			} catch (IOException | UncheckedIOException e) {
 			e.printStackTrace();
 		}
 	}
