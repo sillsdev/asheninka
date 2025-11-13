@@ -12,7 +12,7 @@
 		<concat destfile="${basedir}/package/windows/${mainFileName}.iss" overwrite="true">;This file will be executed next to the application bundle image
 ;I.e. current directory will contain folder PAWS with application files
 [Setup]
-AppId={{fxApplication}}
+AppId={{D9F64A83-8FD9-46D1-81EE-41C6177073D9}
 AppName=Asheninka Syllable Parser
 AppVersion=${version}
 AppVerName=Asheninka Syllable Parser version ${version}
