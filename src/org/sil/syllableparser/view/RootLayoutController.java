@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -42,8 +42,6 @@ import org.sil.syllableparser.service.importexport.SegmentImporterException;
 import org.sil.syllableparser.service.importexport.XLingPaperHyphenatedWordExporter;
 import org.sil.utility.DateTimeNormalizer;
 import org.sil.utility.view.ControllerUtilities;
-import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
-import com.sun.javafx.application.HostServicesDelegate;
 import static javafx.geometry.Orientation.VERTICAL;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -88,6 +86,7 @@ public class RootLayoutController implements Initializable {
 	private MainApp mainApp;
 	private LanguageProject languageProject;
 	private Locale currentLocale;
+	private final String kMacOSInstallDirectory = "/Applications/Asheninka.app/Contents/app/";
 	@FXML
 	private Button buttonCVApproach;
 	@FXML
@@ -891,17 +890,32 @@ public class RootLayoutController implements Initializable {
 	}
 
 	protected void showFileToUser(String sFileToShow) {
-		if (!mainApp.getOperatingSystem().equals("Mac OS X")) {
-			HostServicesDelegate hostServices = HostServicesFactory.getInstance(mainApp);
-			hostServices.showDocument("file:" + sFileToShow);
-		} else {
-			if (Desktop.isDesktopSupported()) {
-				try {
-					File myFile = new File(sFileToShow);
-					Desktop.getDesktop().open(myFile);
-				} catch (IOException ex) {
-					// no application registered for PDFs
+		if (Desktop.isDesktopSupported()) {
+			try {
+				File myFile = new File(sFileToShow);
+				if (!myFile.exists()) {
+					// this can happen on Linux
+					String sUriOfProgram = ControllerUtilities.getUriOfProgram(MainApp.class);
+					String sPathToTry = sUriOfProgram.substring(5) + sFileToShow;
+					myFile = new File(sPathToTry);
 				}
+				String sOS = mainApp.getOperatingSystem().toLowerCase();
+				if (sOS.contains("linux")) {
+					Runtime.getRuntime().exec(new String[] { "xdg-open", myFile.getAbsolutePath() });
+				} else if (sOS.contains("mac")) {
+					if (!myFile.exists()) {
+						String sFullPath = kMacOSInstallDirectory + sFileToShow;
+						System.out
+								.println("File '" + sFileToShow + "' does not exist; trying it as '" + sFullPath + "'");
+						myFile = new File(sFullPath);
+					}
+					Desktop.getDesktop().open(myFile);
+				} else {
+					Desktop.getDesktop().open(myFile);
+				}
+			} catch (IOException ex) {
+				// no application registered for PDFs
+				MainApp.reportException(ex, null);
 			}
 		}
 	}
