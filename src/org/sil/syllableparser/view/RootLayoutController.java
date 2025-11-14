@@ -472,7 +472,7 @@ public class RootLayoutController implements Initializable {
 			String title = bundle.getString(titleResource);
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
-					Constants.RESOURCE_LOCATION);
+					bundle);
 			WritingSystemController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
@@ -826,7 +826,7 @@ public class RootLayoutController implements Initializable {
 			String title = bundle.getString("label.sethyphenationparameters");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
-					Constants.RESOURCE_LOCATION);
+					bundle);
 
 			Object[] args = { bundle.getString(sHyphenationParametersType) };
 			MessageFormat msgFormatter = new MessageFormat("");

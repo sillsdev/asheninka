@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International 
+// Copyright (c) 2019-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -587,7 +587,7 @@ public class ONCApproachController extends ApproachController  {
 			String title = bundle.getString("label.tryaword") + " - " + bundle.getString("approach.onc");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, tryAWordDialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
-					Constants.RESOURCE_LOCATION);
+					bundle);
 
 			ONCTryAWordController controller = loader.getController();
 			controller.setDialogStage(tryAWordDialogStage);
