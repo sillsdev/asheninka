@@ -875,7 +875,7 @@ public class RootLayoutController implements Initializable {
 		alert.setHeaderText(null);
 		alert.setContentText(sAboutContent);
 		Image silLogo = ControllerUtilities.getIconImageFromURL(
-				"file:resources/images/SILLogo.png", Constants.RESOURCE_SOURCE_LOCATION);
+				"file:resources/images/SILLogo.png", Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		// Image silLogo = new
 		// Image("file:src/org/sil/syllableparser/resources/images/SILLogo.png");
 		alert.setGraphic(new ImageView(silLogo));
@@ -1930,55 +1930,55 @@ public class RootLayoutController implements Initializable {
 	protected void createToolbarButtons(ResourceBundle bundle) {
 		tooltipToolbarFileNew = ControllerUtilities.createToolbarButtonWithImage("newAction.png",
 				buttonToolbarFileNew, tooltipToolbarFileNew, bundle.getString("tooltip.new"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarFileOpen = ControllerUtilities.createToolbarButtonWithImage("openAction.png",
 				buttonToolbarFileOpen, tooltipToolbarFileOpen, bundle.getString("tooltip.open"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarFileSave = ControllerUtilities.createToolbarButtonWithImage("saveAction.png",
 				buttonToolbarFileSave, tooltipToolbarFileSave, bundle.getString("tooltip.save"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarEditCut = ControllerUtilities.createToolbarButtonWithImage("cutAction.png",
 				buttonToolbarEditCut, tooltipToolbarEditCut, bundle.getString("tooltip.cut"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarEditCopy = ControllerUtilities.createToolbarButtonWithImage("copyAction.png",
 				buttonToolbarEditCopy, tooltipToolbarEditCopy, bundle.getString("tooltip.copy"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarEditPaste = ControllerUtilities.createToolbarButtonWithImage(
 				"pasteAction.png", buttonToolbarEditPaste, tooltipToolbarEditPaste,
-				bundle.getString("tooltip.paste"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.paste"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarEditInsert = ControllerUtilities.createToolbarButtonWithImage(
 				"insertAction.png", buttonToolbarEditInsert, tooltipToolbarEditInsert,
-				bundle.getString("tooltip.insertnew"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.insertnew"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarEditRemove = ControllerUtilities.createToolbarButtonWithImage(
 				"deleteAction.png", buttonToolbarEditRemove, tooltipToolbarEditRemove,
-				bundle.getString("tooltip.remove"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.remove"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarSyllabify = ControllerUtilities.createToolbarButtonWithImage("syllabify.png",
 				buttonToolbarSyllabify, tooltipToolbarSyllabify,
-				bundle.getString("tooltip.syllabifywords"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.syllabifywords"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarConvertPredictedToCorrectSyllabification = ControllerUtilities
 				.createToolbarButtonWithImage("predictedToCorrect.png",
 						buttonToolbarConvertPredictedToCorrectSyllabification,
 						tooltipToolbarConvertPredictedToCorrectSyllabification,
 						bundle.getString("tooltip.convertpredictedtocorrect"),
-						Constants.RESOURCE_SOURCE_LOCATION);
+						Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarFindWord = ControllerUtilities.createToolbarButtonWithImage("FindWord.png",
 				buttonToolbarFindWord, tooltipToolbarFindWord,
-				bundle.getString("tooltip.findword"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.findword"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipToolbarFilterCorrectSyllabifications = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64-Correct.png",
 				buttonToolbarFilterCorrectSyllabifications, tooltipToolbarFilterCorrectSyllabifications,
-				bundle.getString("tooltip.filtercorrectsyllablebreaks"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.filtercorrectsyllablebreaks"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		buttonToolbarFilterCorrectSyllabifications = adjustImageSize(buttonToolbarFilterCorrectSyllabifications);
 		tooltipToolbarFilterPredictedSyllabifications = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64-Predicted.png",
 				buttonToolbarFilterPredictedSyllabifications, tooltipToolbarFilterPredictedSyllabifications,
-				bundle.getString("tooltip.filterpredictedsyllablebreaks"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.filterpredictedsyllablebreaks"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		buttonToolbarFilterPredictedSyllabifications = adjustImageSize(buttonToolbarFilterPredictedSyllabifications);
 		tooltipToolbarFilterWords = ControllerUtilities.createToolbarButtonWithImage("icons8-filter-64.png",
 				buttonToolbarFilterWords, tooltipToolbarFilterWords,
-				bundle.getString("tooltip.filterwords"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.filterwords"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		buttonToolbarFilterWords = adjustImageSize(buttonToolbarFilterWords);
 		tooltipToolbarRemoveAllFilters = ControllerUtilities.createToolbarButtonWithImage("icons8-clear-filters-64.png",
 				buttonToolbarRemoveAllFilters, tooltipToolbarRemoveAllFilters,
-				bundle.getString("tooltip.removeallfilters"), Constants.RESOURCE_SOURCE_LOCATION);
+				bundle.getString("tooltip.removeallfilters"), Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		buttonToolbarRemoveAllFilters = adjustImageSize(buttonToolbarRemoveAllFilters);
 	}
 

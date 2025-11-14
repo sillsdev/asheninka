@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -27,6 +27,7 @@ import org.sil.antlr4.templatefilterparser.TemplateFilterErrorListener.VerboseLi
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterLexer;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterParser;
 import org.sil.syllableparser.Constants;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateType;
@@ -149,10 +150,10 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 		// Initialize the button icons
 		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",
 				buttonMoveUp, tooltipMoveUp, bundle.getString("sh.view.sonorityhierarchy.up"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipMoveDown = ControllerUtilities.createToolbarButtonWithImage("DownArrow.png",
 				buttonMoveDown, tooltipMoveDown, bundle.getString("sh.view.sonorityhierarchy.down"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().templateFilterNameProperty());
 		typeColumn.setCellValueFactory(cellData -> cellData.getValue().typeProperty());

@@ -1,4 +1,4 @@
-// Copyright (c) 2021 SIL International
+// Copyright (c) 2021-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -105,11 +105,11 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 		// Initialize the button icons
 		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",
 				buttonMoveUp, tooltipMoveUp, bundle.getString("sh.view.sonorityhierarchy.up"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		tooltipMoveDown = ControllerUtilities.createToolbarButtonWithImage("DownArrow.png",
 				buttonMoveDown, tooltipMoveDown,
 				bundle.getString("sh.view.sonorityhierarchy.down"),
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 
 		constraintsTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {

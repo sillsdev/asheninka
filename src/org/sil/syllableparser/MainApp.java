@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 package org.sil.syllableparser;
@@ -325,7 +325,7 @@ public class MainApp extends Application implements MainAppUtilities {
 	 */
 	public Image getNewMainIconImage() {
 		Image img = ControllerUtilities.getIconImageFromURL(kApplicationIconResource,
-				Constants.RESOURCE_SOURCE_LOCATION);
+				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 		return img;
 	}
 
