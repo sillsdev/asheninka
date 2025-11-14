@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021 SIL International
+ * Copyright (c) 2019-2025 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 
 import org.sil.lingtree.model.FontInfo;
 import org.sil.lingtree.model.LingTreeTree;
+import org.sil.lingtree.service.SVGDrawer;
 import org.sil.lingtree.service.TreeBuilder;
-import org.sil.lingtree.service.TreeDrawer;
 import org.sil.syllableparser.model.LanguageProject;
 
 /**
@@ -65,7 +65,7 @@ public class LingTreeInteractor {
 				fiVernacular.setColor(Color.RED);
 			origTree.setFontsAndColors();
 			LingTreeTree ltTree = TreeBuilder.parseAString(lingTreeDescription, origTree);
-			TreeDrawer drawer = new TreeDrawer(ltTree);
+			SVGDrawer drawer = new SVGDrawer(ltTree);
 			StringBuilder sb = drawer.drawAsSVG();
 			result = sb.toString();
 		}
