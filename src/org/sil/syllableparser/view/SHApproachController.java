@@ -354,7 +354,7 @@ public class SHApproachController extends ApproachController {
 			String resource = "fxml/SHComparison.fxml";
 			String title = bundle.getString("label.compareimplementations");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
-					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
+					ApproachViewNavigator.class.getResource(resource), bundle);
 
 			SHComparisonController controller = loader.getController();
 			controller.setDialogStage(dialogStage);

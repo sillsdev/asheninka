@@ -416,7 +416,7 @@ public class NPApproachController extends ApproachController  {
 			String resource = "fxml/NPComparison.fxml";
 			String title = bundle.getString("label.compareimplementations");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
-					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
+					ApproachViewNavigator.class.getResource(resource), bundle);
 
 			NPComparisonController controller = loader.getController();
 			controller.setDialogStage(dialogStage);

@@ -701,7 +701,7 @@ public class RootLayoutController implements Initializable {
 			String title = bundle.getString("label.restoreproject");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage,
 					title, ApproachViewNavigator.class.getResource(resource),
-					Constants.RESOURCE_LOCATION);
+					bundle);
 
 			RestoreBackupChooserController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
@@ -736,7 +736,7 @@ public class RootLayoutController implements Initializable {
 			String resource = "fxml/SyllabificationComparison.fxml";
 			String title = bundle.getString("label.comparesyllabifications");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, currentLocale, dialogStage, title,
-					ApproachViewNavigator.class.getResource(resource), Constants.RESOURCE_LOCATION);
+					ApproachViewNavigator.class.getResource(resource), bundle);
 
 			SyllabificationComparisonController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
