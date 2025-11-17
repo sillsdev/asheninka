@@ -8,6 +8,9 @@ build/dist
 build/doc
 build/externalLibs
 build/project
+installtemp
+input
+output
 resources/images
 oxygen
 *- Copy.ashedata
@@ -16,4 +19,5 @@ oxygen
 *.bak
 *.xso
 *.*~
+*.exe
 target

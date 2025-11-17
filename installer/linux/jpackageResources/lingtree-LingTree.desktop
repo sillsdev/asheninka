@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Asheninka
+Comment=Asheninka Syllable Parser
+Exec=/opt/sil/asheninka/bin/Asheninka
+Path=/opt/sil/asheninka/bin
+Icon=/opt/sil/asheninka/lib/Asheninka.png
+Terminal=false
+Type=Application
+Categories=Education
+MimeType=text/ashedata
