@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="asheninka">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../eclipse/java-2023-09/eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="17"/>
+    <property name="source" value="17"/>
+    <path id="JavaFX SDK.libraryclasspath">
+        <pathelement location="../../../.p2/pool/plugins/org.eclipse.fx.ide.css.jfx8_3.10.0.202303150700.jar"/>
+    </path>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="../../../.p2/pool/plugins/org.junit_4.13.2.v20230809-1000.jar"/>
+        <pathelement location="../../../.p2/pool/plugins/org.hamcrest_2.2.0.jar"/>
+        <pathelement location="../../../.p2/pool/plugins/org.hamcrest.core_2.2.0.v20230809-1000.jar"/>
+    </path>
+    <path id="asheninka.classpath">
+        <pathelement location="bin"/>
+        <path refid="JavaFX SDK.libraryclasspath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="libs/JAXB/jakarta.activation.jar"/>
+        <pathelement location="libs/JAXB/jakarta.xml.bind-api.jar"/>
+        <pathelement location="libs/JAXB/jaxb-core.jar"/>
+        <pathelement location="libs/JAXB/jaxb-impl.jar"/>
+        <pathelement location="libs/JAXB/jaxb-jxc.jar"/>
+        <pathelement location="libs/JAXB/jaxb-xjc.jar"/>
+        <pathelement location="libs/jna/jna-5.11.0.jar"/>
+        <pathelement location="libs/jna/jna-platform-5.11.0.jar"/>
+        <pathelement location="libs/ANTLR/antlr-4.7-complete.jar"/>
+        <pathelement location="libs/ControlsFX/controlsfx-11.0.2.jar"/>
+        <pathelement location="libs/json/json-20230618.jar"/>
+        <pathelement location="libs/LibJavaDev/libjavadev-1.7.1.jar"/>
+        <pathelement location="libs/Richtextfx/richtextfx-fat-0.11.6.jar"/>
+        <pathelement location="libs/diff-match-patch/diff-match-patch.jar"/>
+        <pathelement location="libs/ICU/icu4j-67_1.jar"/>
+        <pathelement location="libs/lingtree/lingtree-1.7.0.jar"/>
+    </path>
+    <path id="run.Asheninka.classpath">
+        <path refid="asheninka.classpath"/>
+        <path refid="JavaFX SDK.libraryclasspath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="libs/JAXB/jakarta.activation.jar"/>
+        <pathelement location="libs/JAXB/jakarta.xml.bind-api.jar"/>
+        <pathelement location="libs/JAXB/jaxb-core.jar"/>
+        <pathelement location="libs/JAXB/jaxb-impl.jar"/>
+        <pathelement location="libs/JAXB/jaxb-xjc.jar"/>
+        <pathelement location="libs/JAXB/jaxb-jxc.jar"/>
+        <pathelement location="libs/jna/jna-5.11.0.jar"/>
+        <pathelement location="libs/jna/jna-platform-5.11.0.jar"/>
+        <pathelement location="libs/ANTLR/antlr-4.7-complete.jar"/>
+        <pathelement location="libs/ControlsFX/controlsfx-11.0.2.jar"/>
+        <pathelement location="libs/json/json-20230618.jar"/>
+        <pathelement location="libs/LibJavaDev/libjavadev-1.7.1.jar"/>
+        <pathelement location="libs/Richtextfx/richtextfx-fat-0.11.6.jar"/>
+        <pathelement location="libs/diff-match-patch/diff-match-patch.jar"/>
+        <pathelement location="libs/ICU/icu4j-67_1.jar"/>
+        <pathelement location="libs/lingtree/lingtree-1.7.0.jar"/>
+    </path>
+    <path id="run.ONCApproachLanguageComparisonHTMLFormatterTest.classpath">
+        <path refid="asheninka.classpath"/>
+        <path refid="JavaFX SDK.libraryclasspath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="libs/JAXB/jakarta.activation.jar"/>
+        <pathelement location="libs/JAXB/jakarta.xml.bind-api.jar"/>
+        <pathelement location="libs/JAXB/jaxb-core.jar"/>
+        <pathelement location="libs/JAXB/jaxb-impl.jar"/>
+        <pathelement location="libs/JAXB/jaxb-xjc.jar"/>
+        <pathelement location="libs/JAXB/jaxb-jxc.jar"/>
+        <pathelement location="libs/jna/jna-5.11.0.jar"/>
+        <pathelement location="libs/jna/jna-platform-5.11.0.jar"/>
+        <pathelement location="libs/ANTLR/antlr-4.7-complete.jar"/>
+        <pathelement location="libs/ControlsFX/controlsfx-11.0.2.jar"/>
+        <pathelement location="libs/json/json-20230618.jar"/>
+        <pathelement location="libs/LibJavaDev/libjavadev-1.7.1.jar"/>
+        <pathelement location="libs/Richtextfx/richtextfx-fat-0.11.6.jar"/>
+        <pathelement location="libs/diff-match-patch/diff-match-patch.jar"/>
+        <pathelement location="libs/ICU/icu4j-67_1.jar"/>
+        <pathelement location="libs/lingtree/lingtree-1.7.0.jar"/>
+    </path>
+    <path id="run.OTApproachLanguageComparisonHTMLFormatterTest.classpath">
+        <path refid="asheninka.classpath"/>
+        <path refid="JavaFX SDK.libraryclasspath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="libs/JAXB/jakarta.activation.jar"/>
+        <pathelement location="libs/JAXB/jakarta.xml.bind-api.jar"/>
+        <pathelement location="libs/JAXB/jaxb-core.jar"/>
+        <pathelement location="libs/JAXB/jaxb-impl.jar"/>
+        <pathelement location="libs/JAXB/jaxb-xjc.jar"/>
+        <pathelement location="libs/JAXB/jaxb-jxc.jar"/>
+        <pathelement location="libs/jna/jna-5.11.0.jar"/>
+        <pathelement location="libs/jna/jna-platform-5.11.0.jar"/>
+        <pathelement location="libs/ANTLR/antlr-4.7-complete.jar"/>
+        <pathelement location="libs/ControlsFX/controlsfx-11.0.2.jar"/>
+        <pathelement location="libs/json/json-20230618.jar"/>
+        <pathelement location="libs/LibJavaDev/libjavadev-1.7.1.jar"/>
+        <pathelement location="libs/Richtextfx/richtextfx-fat-0.11.6.jar"/>
+        <pathelement location="libs/diff-match-patch/diff-match-patch.jar"/>
+        <pathelement location="libs/ICU/icu4j-67_1.jar"/>
+        <pathelement location="libs/lingtree/lingtree-1.7.0.jar"/>
+    </path>
+    <path id="run.test (9).classpath">
+        <path refid="asheninka.classpath"/>
+        <path refid="JavaFX SDK.libraryclasspath"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="libs/JAXB/jakarta.activation.jar"/>
+        <pathelement location="libs/JAXB/jakarta.xml.bind-api.jar"/>
+        <pathelement location="libs/JAXB/jaxb-core.jar"/>
+        <pathelement location="libs/JAXB/jaxb-impl.jar"/>
+        <pathelement location="libs/JAXB/jaxb-xjc.jar"/>
+        <pathelement location="libs/JAXB/jaxb-jxc.jar"/>
+        <pathelement location="libs/jna/jna-5.11.0.jar"/>
+        <pathelement location="libs/jna/jna-platform-5.11.0.jar"/>
+        <pathelement location="libs/ANTLR/antlr-4.7-complete.jar"/>
+        <pathelement location="libs/ControlsFX/controlsfx-11.0.2.jar"/>
+        <pathelement location="libs/json/json-20230618.jar"/>
+        <pathelement location="libs/LibJavaDev/libjavadev-1.7.1.jar"/>
+        <pathelement location="libs/Richtextfx/richtextfx-fat-0.11.6.jar"/>
+        <pathelement location="libs/diff-match-patch/diff-match-patch.jar"/>
+        <pathelement location="libs/ICU/icu4j-67_1.jar"/>
+        <pathelement location="libs/lingtree/lingtree-1.7.0.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.xtend"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="test">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.xtend"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <src path="test"/>
+            <classpath refid="asheninka.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="Asheninka">
+        <java classname="org.sil.syllableparser.MainApp" failonerror="true" fork="yes">
+            <jvmarg line="--add-exports javafx.base/com.sun.javafx.event=org.controlsfx.controls"/>
+            <classpath refid="run.Asheninka.classpath"/>
+        </java>
+    </target>
+    <target name="ONCApproachLanguageComparisonHTMLFormatterTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="org.sil.syllableparser.service.comparison.ONCApproachLanguageComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="run.ONCApproachLanguageComparisonHTMLFormatterTest.classpath"/>
+        </junit>
+    </target>
+    <target name="OTApproachLanguageComparisonHTMLFormatterTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="org.sil.syllableparser.service.comparison.OTApproachLanguageComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="run.OTApproachLanguageComparisonHTMLFormatterTest.classpath"/>
+        </junit>
+    </target>
+    <target name="test (9)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="org.sil.antlr4.environmentparser.EnvironmentRecognizerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.antlr4.environmentparser.GraphemeSequenceValidatorTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.antlr4.templatefilterparser.SegmentSequenceValidatorTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.antlr4.templatefilterparser.TemplateFilterRecognizerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.ApplicationPreferencesTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.backendprovider.XMLBackEndProviderTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.domain.CVApproachTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.BackupFileTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.CVApproachTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.CVSegmentOrNaturalClassTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.EnvironmentTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.LanguageProjectTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.LanguageTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.NPApproachTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.NPRuleSVGTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.OTApproachTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.OTConstraintLingTreeTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.OTStructuralOptionsTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.SHApproachTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.SegmentTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.model.SylParserObjectTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.BackupFileCreatorTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.BackupFileRestorerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.CorrectSyllabificationCleanerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.DatabaseMigratorTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.EnvironmentContextsBuilderTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.LDMLFileExtractorTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.LingTreeInteractorTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.NPRuleMatcherTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.NPRuleValidatorTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.OTConstraintMatcherTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.OTConstraintValidatorTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.TemplateFilterBuilderTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.TemplateFilterMatcherTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.CVApproachLanguageComparerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.CVApproachLanguageComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.MoraicApproachLanguageComparerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.MoraicApproachLanguageComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.NPApproachLanguageComparerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.NPApproachLanguageComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.ONCApproachLanguageComparerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.ONCApproachLanguageComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.OTApproachLanguageComparerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.OTApproachLanguageComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.SHApproachLanguageComparerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.SHApproachLanguageComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.SyllabificationsComparerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.comparison.SyllabificationsComparisonHTMLFormatterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.filter.WordsFilterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.importexport.SegmentImporterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.importexport.WordExporterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.importexport.WordImporterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.CVNaturalClasserTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.CVSegmenterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.CVSyllabifierTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.MoraicSyllabifierAsheninkaTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.MoraicSyllabifierTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.MoraicSyllabifierWithFilterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.MoraicSyllabifierWithTemplateTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.NPSyllabifierTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.NPSyllabifierWithFilterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.ONCSyllabifierTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.ONCSyllabifierWithFilterTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.ONCSyllabifierWithTemplateTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.ONCSyllabifierWithZPIFiltersTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.ONCSyllabifierWithZPITemplatesTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.OTSyllabifierTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.SHSonorityComparerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.service.parsing.SHSyllabifierTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.view.CVComparisonControllerTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.view.CVSyllablePatternsUITest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.view.ICURulesTest" todir="${junit.output.dir}"/>
+            <test name="org.sil.syllableparser.view.SyllabificationComparisonControllerTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="run.test (9).classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>
