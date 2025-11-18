@@ -56,4 +56,5 @@ module org.sil.syllableparser {
 	requires java.base;
 	requires transitive richtextfx.fat;
 	requires org.sil.lingtree;
+	requires transitive com.ibm.icu;
 }
