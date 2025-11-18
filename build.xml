@@ -21,7 +21,7 @@
     <path id="asheninka.classpath">
         <pathelement location="bin"/>
         <path refid="JavaFX SDK.libraryclasspath"/>
-        <path refid="JUnit 4.libraryclasspath"/>
+        <!--<path refid="JUnit 4.libraryclasspath"/>-->
         <pathelement location="libs/JAXB/jakarta.activation.jar"/>
         <pathelement location="libs/JAXB/jakarta.xml.bind-api.jar"/>
         <pathelement location="libs/JAXB/jaxb-core.jar"/>
@@ -39,7 +39,7 @@
         <pathelement location="libs/ICU/icu4j-67_1.jar"/>
         <pathelement location="libs/lingtree/lingtree-1.7.0.jar"/>
     </path>
-    <path id="run.Asheninka.classpath">
+<!--    <path id="run.Asheninka.classpath">
         <path refid="asheninka.classpath"/>
         <path refid="JavaFX SDK.libraryclasspath"/>
         <path refid="JUnit 4.libraryclasspath"/>
@@ -59,8 +59,8 @@
         <pathelement location="libs/diff-match-patch/diff-match-patch.jar"/>
         <pathelement location="libs/ICU/icu4j-67_1.jar"/>
         <pathelement location="libs/lingtree/lingtree-1.7.0.jar"/>
-    </path>
-    <path id="run.ONCApproachLanguageComparisonHTMLFormatterTest.classpath">
+    </path>-->
+<!--    <path id="run.ONCApproachLanguageComparisonHTMLFormatterTest.classpath">
         <path refid="asheninka.classpath"/>
         <path refid="JavaFX SDK.libraryclasspath"/>
         <path refid="JUnit 4.libraryclasspath"/>
@@ -122,7 +122,7 @@
         <pathelement location="libs/diff-match-patch/diff-match-patch.jar"/>
         <pathelement location="libs/ICU/icu4j-67_1.jar"/>
         <pathelement location="libs/lingtree/lingtree-1.7.0.jar"/>
-    </path>
+    </path>-->
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
@@ -174,7 +174,7 @@
             <classpath refid="run.Asheninka.classpath"/>
         </java>
     </target>
-    <target name="ONCApproachLanguageComparisonHTMLFormatterTest">
+<!--    <target name="ONCApproachLanguageComparisonHTMLFormatterTest">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
@@ -191,8 +191,8 @@
             <jvmarg line="-ea"/>
             <classpath refid="run.OTApproachLanguageComparisonHTMLFormatterTest.classpath"/>
         </junit>
-    </target>
-    <target name="test (9)">
+    </target>-->
+<!--    <target name="test (9)">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
@@ -280,5 +280,5 @@
             </fileset>
             <report format="frames" todir="${junit.output.dir}"/>
         </junitreport>
-    </target>
+    </target>-->
 </project>
