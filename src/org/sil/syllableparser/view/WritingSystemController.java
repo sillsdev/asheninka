@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International
+// Copyright (c) 2020-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.Constants;
@@ -17,6 +18,8 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.SortingOption;
 import org.sil.syllableparser.service.LDMLFileExtractor;
+import org.sil.utility.service.keyboards.KeyboardChanger;
+import org.sil.utility.service.keyboards.KeyboardInfo;
 import org.sil.utility.view.ControllerUtilities;
 
 import com.ibm.icu.text.Collator;
@@ -25,6 +28,8 @@ import com.ibm.icu.util.ULocale;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -41,6 +46,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -59,6 +65,8 @@ public class WritingSystemController extends SylParserBaseController implements
 	@FXML
 	private Tab fontTab;
 	@FXML
+	private Tab keyboardTab;
+	@FXML
 	private Tab sortingTab;
 	@FXML
 	private TextField languageNameField;
@@ -74,6 +82,8 @@ public class WritingSystemController extends SylParserBaseController implements
 	private Button okButton;
 	@FXML
 	private ColorPicker colorPicker;
+	@FXML
+	private ComboBox<KeyboardInfo> keyboardCombo = new ComboBox<KeyboardInfo>();
 	// following are public for unit tests
 	@FXML
 	public Label icuRules;
@@ -99,6 +109,9 @@ public class WritingSystemController extends SylParserBaseController implements
 	private Language currentLanguage;
 	private Color color = Color.BLACK;
 	private String sFileFilterDescription = "";
+	KeyboardInfo keyboardInfo = new KeyboardInfo(new Locale("en"), "English");
+	private Text keyboardText = new Text();
+	KeyboardChanger keyboardChanger;
 
 	private String sFileChooserFilterDescription = "*.ldml";
 
@@ -186,6 +199,26 @@ public class WritingSystemController extends SylParserBaseController implements
 		     }
 		 });
 		browseButton.setText(bundle.getString("label.browse"));
+
+		keyboardChanger = KeyboardChanger.getInstance();
+		keyboardChanger.initKeyboardHandler(MainApp.class);
+		ObservableList<KeyboardInfo> activeKeyboards = FXCollections
+				.observableArrayList(keyboardChanger.getActiveKeyboards());
+		keyboardCombo.setItems(activeKeyboards);
+		keyboardCombo.setConverter(new StringConverter<KeyboardInfo>() {
+			@Override
+			public String toString(KeyboardInfo object) {
+				return object.getDescription();
+			}
+			@Override
+			public KeyboardInfo fromString(String string) {
+				return null;
+			}
+		});
+		keyboardCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+			keyboardText.setText(newValue.getDescription());
+			keyboardInfo = newValue;
+		});
 
 		SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
 		selectionModel.select(fontTab);
@@ -275,6 +308,8 @@ public class WritingSystemController extends SylParserBaseController implements
 		}
 		sFileChooserFilterDescription = sFileFilterDescription + " ("
 				+ Constants.LDML_FILE_EXTENSIONS + ")";
+		keyboardInfo = currentLanguage.getKeyboard();
+		keyboardCombo.setValue(keyboardInfo);
 
 	}
 	
@@ -312,6 +347,7 @@ public class WritingSystemController extends SylParserBaseController implements
 		currentLanguage.setSortingOption(sortingChoiceBox.selectionModelProperty().get().getSelectedItem());
 		currentLanguage.setIcuRules(icuRulesTextArea.getText());
 		currentLanguage.setLdmlFile(directoryField.getText());
+		currentLanguage.setKeyboard(keyboardInfo);
 		
 		dialogStage.close();
 	}

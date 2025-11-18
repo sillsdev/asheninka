@@ -44,6 +44,15 @@
                         </AnchorPane>
                   </content>
                 </Tab>
+                <Tab fx:id="keyboardTab" text="%label.keyboard">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ComboBox fx:id="keyboardCombo" prefWidth="209.0" layoutX="46.0" layoutY="52.0"/>
+                            </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
                   <Tab fx:id="sortingTab" text="%label.sorting">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

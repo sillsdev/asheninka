@@ -6,10 +6,12 @@
  */
 package org.sil.syllableparser.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.sil.lingtree.model.ColorXmlAdaptor;
+import org.sil.utility.service.keyboards.KeyboardInfo;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -41,6 +43,7 @@ public class Language  {
 	protected final StringProperty useSameLanguage;
 	protected final StringProperty icuRules;
 	protected NodeOrientation orientation;
+	protected KeyboardInfo keyboard;
 
 	/**
 	 * @return the font
@@ -111,6 +114,15 @@ public class Language  {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	@XmlElement(name = "keyboard")
+	public KeyboardInfo getKeyboard() {
+		return keyboard;
+	}
+
+	public void setKeyboard(KeyboardInfo keyboard) {
+		this.keyboard = keyboard;
 	}
 
 	public String getLanguageName() {
@@ -210,6 +222,7 @@ public class Language  {
 		this.icuRules = new SimpleStringProperty(icuRules);
 		this.useSameLanguage = new SimpleStringProperty(useSameLanguage);
 		this.ldmlFile = new SimpleStringProperty(ldmlFile);
+		this.keyboard = Keyboard.getInstance();
 	}
 
 	public Language() {
@@ -224,6 +237,7 @@ public class Language  {
 		ldmlFile = new SimpleStringProperty("");
 		icuRules = new SimpleStringProperty("");
 		useSameLanguage = new SimpleStringProperty("");
+		this.keyboard = Keyboard.getInstance();
 	}
 
 	public Font createFont(String fontFamily, double fontSize, String fontType) {
