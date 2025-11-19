@@ -4,8 +4,6 @@ name: Windows Build Installer with Version
 
 on:
   push:
-#    paths:
-#      - 'build.xml'
     tags:
       - 'v*'  # Build the app for commits that are tagged starting with 'v' e.g. v1.2.3
       # to tag a commit, use "git tag v1.2.3"
