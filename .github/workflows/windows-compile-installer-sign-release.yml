@@ -61,7 +61,7 @@ jobs:
         env:
           PUBLISH_PATH: 'installer/windows'
         run: |
-          mv ${{env.PUBLISH_PATH}}\Asheninka-${{ env.VERSION }}.exe Asheninka${{ env.VERSION }}.exe
+          mv ${{env.PUBLISH_PATH}}\Asheninka-${{ env.VERSION }}.exe Asheninka-${{ env.VERSION }}.exe
 
       - uses: actions/upload-artifact@v4
         with:
