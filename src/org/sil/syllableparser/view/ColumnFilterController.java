@@ -18,6 +18,7 @@ import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.filter.ColumnFilterType;
 import org.sil.syllableparser.service.filter.WordsFilter;
 import org.sil.syllableparser.service.filter.WordsFilterType;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -78,6 +79,7 @@ public class ColumnFilterController implements Initializable {
 	ColumnFilterType columnFilterType = ColumnFilterType.ANYWHERE;
 	WordsFilter filter;
 	boolean filterIsActive = false;
+	protected KeyboardChanger keyboardChanger;
 	
 	public ObservableList<Word> getWords() {
 		return words;
@@ -243,6 +245,13 @@ public class ColumnFilterController implements Initializable {
 				columnFilterType = (ColumnFilterType) newToggle.getUserData();
 			}
 		});
+		keyboardChanger = KeyboardChanger.getInstance();
+		textToSearchFor.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(mainApp.getLanguageProject().getVernacularLanguage().getKeyboard(), MainApp.class);
+			}
+		});
+
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {

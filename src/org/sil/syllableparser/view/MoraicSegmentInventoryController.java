@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International
+// Copyright (c) 2020-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -11,7 +11,9 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
 import org.sil.syllableparser.ApplicationPreferences;
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Segment;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -57,10 +59,16 @@ public class MoraicSegmentInventoryController extends CVSegmentInventoryControll
 				return change;
 			}
 		};
+		keyboardChanger = KeyboardChanger.getInstance();
 		morasField.setTextFormatter(new TextFormatter<String>(filter));
 		morasField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
 				currentSegment.setMorasBorn(morasField.getText());
+			}
+		});
+		morasField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 	}

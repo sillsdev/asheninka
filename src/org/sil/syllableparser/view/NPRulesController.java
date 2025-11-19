@@ -27,6 +27,7 @@ import org.sil.syllableparser.model.npapproach.NPRuleAction;
 import org.sil.syllableparser.model.npapproach.NPRuleLevel;
 import org.sil.syllableparser.service.LingTreeInteractor;
 import org.sil.syllableparser.service.NPRuleValidator;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -310,6 +311,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 				});
 		levelComboBox.setPromptText(resources.getString("label.chooserulelevel"));
 
+		keyboardChanger = KeyboardChanger.getInstance();
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentRule != null) {
@@ -319,12 +321,22 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
+		nameField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
+			}
+		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentRule != null) {
 				currentRule.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		descriptionField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 		affectedTextField.textProperty().addListener(

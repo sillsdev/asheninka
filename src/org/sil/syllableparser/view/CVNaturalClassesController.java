@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -19,6 +19,7 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -181,6 +182,7 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 				.addListener(
 						(observable, oldValue, newValue) -> showCVNaturalClassDetails(newValue));
 
+		keyboardChanger = KeyboardChanger.getInstance();
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentNaturalClass != null) {
@@ -190,12 +192,22 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
+		nameField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
+			}
+		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentNaturalClass != null) {
 				currentNaturalClass.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		descriptionField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 

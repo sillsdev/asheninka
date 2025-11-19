@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import org.sil.syllableparser.MainApp;
 import org.sil.utility.*;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.IndexRange;
@@ -39,6 +40,7 @@ public abstract class ApproachEditorController {
 	protected RootLayoutController rootController;
 	protected Clipboard systemClipboard = Clipboard.getSystemClipboard();
 	protected ToolBarCutCopyPasteDelegate toolBarDelegate;
+	protected KeyboardChanger keyboardChanger;
 
 	abstract void handleInsertNewItem();
 	abstract void handleRemoveItem();

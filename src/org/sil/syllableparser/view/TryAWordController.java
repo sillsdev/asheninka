@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2016-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,6 +15,7 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Language;
 import org.sil.utility.StringUtilities;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -50,6 +51,7 @@ public abstract class TryAWordController implements Initializable {
 	protected ResourceBundle bundle;
 	protected Locale locale;
 	protected String lastTryAWord;
+	protected KeyboardChanger keyboardChanger;
 
 	/*
 	 * (non-Javadoc)
@@ -65,11 +67,17 @@ public abstract class TryAWordController implements Initializable {
 		// browser = new WebView();
 		webEngine = browser.getEngine();
 
+		keyboardChanger = KeyboardChanger.getInstance();
 		wordToTry.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue,
 					String newValue) {
 				setTryItButtonDisable();
+			}
+		});
+		wordToTry.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(mainApp.getLanguageProject().getVernacularLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 

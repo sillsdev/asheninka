@@ -21,6 +21,7 @@ import org.sil.syllableparser.service.LingTreeInteractor;
 import org.sil.syllableparser.service.filter.ColumnFilterType;
 import org.sil.syllableparser.service.filter.WordsFilter;
 import org.sil.syllableparser.service.filter.WordsFilterType;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -195,6 +196,8 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 		// setFocusOnWord(index)
 		// makeColumnHeaderWrappable(parserResultColumn);
 		initializeContextMenus();
+
+		keyboardChanger = KeyboardChanger.getInstance();
 		// Handle TextField text changes.
 		wordField.textProperty().addListener(
 				(observable, oldValue, newValue) -> {
@@ -213,6 +216,11 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 						commentField.setStyle(sAnalysis);
 					}
 				});
+		wordField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getVernacularLanguage().getKeyboard(), MainApp.class);
+			}
+		});
 		correctSyllabificationField.textProperty()
 				.addListener(
 						(observable, oldValue, newValue) -> {
@@ -225,12 +233,22 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 										.getVernacularLanguage().getFont());
 							}
 						});
+		correctSyllabificationField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getVernacularLanguage().getKeyboard(), MainApp.class);
+			}
+		});
 		commentField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentWord != null) {
 				currentWord.setComment(commentField.getText());
 			}
 			if (languageProject != null) {
 				commentField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		commentField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 

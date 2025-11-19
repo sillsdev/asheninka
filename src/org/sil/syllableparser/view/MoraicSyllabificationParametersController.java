@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International
+// Copyright (c) 2020-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -10,9 +10,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
+import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.OnsetPrincipleType;
 import org.sil.syllableparser.model.SyllabificationParameters;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -94,11 +96,17 @@ public class MoraicSyllabificationParametersController extends SylParserBaseCont
 				return change;
 			}
 		};
+		keyboardChanger = KeyboardChanger.getInstance();
 		maxMoras.setTextFormatter(new TextFormatter<String>(filter));
 		maxMoras.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (syllabificationParameters != null) {
 				int value = Integer.valueOf(maxMoras.getText());
 				syllabificationParameters.setMaxMorasPerSyllable(value);
+			}
+		});
+		maxMoras.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 

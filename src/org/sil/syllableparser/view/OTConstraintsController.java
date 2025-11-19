@@ -1,4 +1,4 @@
-// Copyright (c) 2021 SIL International
+// Copyright (c) 2021-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -25,6 +25,7 @@ import org.sil.syllableparser.model.otapproach.OTConstraint;
 import org.sil.syllableparser.service.LingTreeInteractor;
 import org.sil.syllableparser.service.OTConstraintValidator;
 import org.sil.utility.*;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -197,6 +198,7 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 						(observable, oldValue, newValue) -> showConstraintDetails(newValue));
 		
 
+		keyboardChanger = KeyboardChanger.getInstance();
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentConstraint != null) {
@@ -206,12 +208,22 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
+		nameField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
+			}
+		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentConstraint != null) {
 				currentConstraint.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		descriptionField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 		affectedElement1TextField.textProperty().addListener((observable, oldValue, newValue) -> {

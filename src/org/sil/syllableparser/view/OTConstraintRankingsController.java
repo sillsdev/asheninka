@@ -19,6 +19,7 @@ import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.otapproach.OTConstraint;
 import org.sil.syllableparser.model.otapproach.OTConstraintRanking;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -186,6 +187,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 				.addListener(
 						(observable, oldValue, newValue) -> showOTRankingDetails(newValue));
 		
+		keyboardChanger = KeyboardChanger.getInstance();
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentRanking != null) {
@@ -195,12 +197,22 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
+		nameField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
+			}
+		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentRanking != null) {
 				currentRanking.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		descriptionField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 

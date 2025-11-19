@@ -18,6 +18,7 @@ import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -167,6 +168,7 @@ public class CVSyllablePatternsController extends SplitPaneWithTableViewControll
 				.addListener(
 						(observable, oldValue, newValue) -> showCVSyllablePatternDetails(newValue));
 
+		keyboardChanger = KeyboardChanger.getInstance();
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSyllablePattern != null) {
@@ -176,12 +178,22 @@ public class CVSyllablePatternsController extends SplitPaneWithTableViewControll
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
+		nameField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
+			}
+		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSyllablePattern != null) {
 				currentSyllablePattern.setDescription(descriptionField.getText());
 			}
 			if (languageProject != null) {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		descriptionField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 

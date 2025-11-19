@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -24,6 +24,7 @@ import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.otapproach.OTApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -269,6 +270,7 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 		// INFO: index exceeds maxCellCount.
 		cvSegmentTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
+		keyboardChanger = KeyboardChanger.getInstance();
 		// Handle TextField text changes.
 		segmentField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
@@ -276,6 +278,11 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 			}
 			if (languageProject != null) {
 				segmentField.setFont(languageProject.getVernacularLanguage().getFont());
+			}
+		});
+		segmentField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getVernacularLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 		graphemesField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -293,6 +300,9 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 				currentSegment.updateGraphemes();
 				graphemesTable.refresh();
 			}
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getVernacularLanguage().getKeyboard(), MainApp.class);
+			}
 		});
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentSegment != null) {
@@ -300,6 +310,11 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 			}
 			if (languageProject != null) {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		descriptionField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 

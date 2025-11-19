@@ -33,6 +33,7 @@ import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
 import org.sil.syllableparser.service.AsheninkaSegmentAndClassListener;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -188,6 +189,7 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 		representationColumn.setSortable(false);
 		descriptionColumn.setSortable(false);
 
+		keyboardChanger = KeyboardChanger.getInstance();
 		// Handle TextField text changes.
 		nameField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentTemplateFilter != null) {
@@ -197,6 +199,11 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 				nameField.setFont(languageProject.getAnalysisLanguage().getFont());
 			}
 		});
+		nameField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
+			}
+		});
 
 		descriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (currentTemplateFilter != null) {
@@ -204,6 +211,11 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 			}
 			if (languageProject != null) {
 				descriptionField.setFont(languageProject.getAnalysisLanguage().getFont());
+			}
+		});
+		descriptionField.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+			if (isNowFocused) {
+				keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 			}
 		});
 
@@ -229,6 +241,7 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 						(ObservableValue<? extends Boolean> observable, Boolean oldValue,
 								Boolean newValue) -> {
 							if (newValue) {
+								keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {

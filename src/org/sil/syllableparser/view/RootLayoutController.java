@@ -41,6 +41,7 @@ import org.sil.syllableparser.service.importexport.ParaTExtSegmentImporterNoChar
 import org.sil.syllableparser.service.importexport.SegmentImporterException;
 import org.sil.syllableparser.service.importexport.XLingPaperHyphenatedWordExporter;
 import org.sil.utility.DateTimeNormalizer;
+import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 import static javafx.geometry.Orientation.VERTICAL;
 import javafx.application.Platform;
@@ -248,6 +249,7 @@ public class RootLayoutController implements Initializable {
 	ApplicationPreferences applicationPreferences;
 
 	Clipboard systemClipboard = Clipboard.getSystemClipboard();
+	KeyboardChanger keyboardChanger;
 
 	public ToolBarCutCopyPasteDelegate toolBarDelegate;
 
@@ -266,6 +268,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	public void setMainApp(MainApp mainApp, Locale locale, LanguageProject languageProject) {
 		this.mainApp = mainApp;
+		keyboardChanger.setStage(mainApp.getPrimaryStage());
 		cvApproachController.setMainApp(mainApp);
 		cvApproachController.setPrefs(mainApp.getApplicationPreferences());
 		cvApproachController.setRootLayout(this);
@@ -367,6 +370,8 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private void handleFindWord() {
+		keyboardChanger = KeyboardChanger.getInstance();
+		keyboardChanger.tryToChangeKeyboardTo(languageProject.getVernacularLanguage().getKeyboard(), MainApp.class);
 		currentApproachController.handleFindWord();
 	}
 
@@ -653,6 +658,8 @@ public class RootLayoutController implements Initializable {
 		TextInputDialog dialog = ControllerUtilities.getTextInputDialog(mainApp, title,
 				contentText, bundle);
 		dialog.setResizable(true);
+		keyboardChanger = KeyboardChanger.getInstance();
+		keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
 
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
@@ -840,6 +847,8 @@ public class RootLayoutController implements Initializable {
 			controller.setData(hyphenationParamaters);
 			controller.setHyphenationParametersFor(sParametersForMessage);
 			dialogStage.setResizable(false);
+			keyboardChanger.tryToChangeKeyboardTo(languageProject.getAnalysisLanguage().getKeyboard(), MainApp.class);
+
 			dialogStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1572,6 +1581,9 @@ public class RootLayoutController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		bundle = resources;
+		keyboardChanger = KeyboardChanger.getInstance();
+		keyboardChanger.initKeyboardHandler(MainApp.class);
+
 		sFileFilterDescription = bundle.getString("file.filterdescription");
 		sChangeInterfaceLanguage = bundle.getString("menu.changeinterfacelanguage");
 		sChooseInterfaceLanguage = bundle.getString("dialog.chooseinterfacelanguage");
