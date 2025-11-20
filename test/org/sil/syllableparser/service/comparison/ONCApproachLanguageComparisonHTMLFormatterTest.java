@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2022 SIL International
+// Copyright (c) 2019-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -106,6 +106,7 @@ public class ONCApproachLanguageComparisonHTMLFormatterTest {
 			String result = formatter.format();
 			File file = new File(
 					"test/org/sil/syllableparser/testData/ONCApproachLanguageComparisonHTMLEnglish.html");
+			@SuppressWarnings("resource")
 			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
 			String scontents = contents.collect(Collectors.joining("\n"));
 			contents.close();

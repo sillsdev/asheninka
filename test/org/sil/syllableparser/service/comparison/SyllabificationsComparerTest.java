@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 SIL International
+// Copyright (c) 2019-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -26,7 +26,6 @@ import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
-import org.sil.syllableparser.service.comparison.SyllabificationsComparer;
 
 /**
  * @author Andy Black

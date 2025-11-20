@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2025 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -13,15 +13,9 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.sil.syllableparser.model.Environment;
-import org.sil.syllableparser.model.Filter;
-import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentLexer;
-import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterLexer;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterParser;
 

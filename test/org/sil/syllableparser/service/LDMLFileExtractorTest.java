@@ -1,4 +1,4 @@
-// Copyright (c) 2020 SIL International
+// Copyright (c) 2020-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -9,26 +9,11 @@ package org.sil.syllableparser.service;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Locale;
-
-import javafx.scene.text.Font;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
-import org.sil.syllableparser.model.Grapheme;
-import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.Segment;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.service.DatabaseMigrator;
-import org.sil.utility.view.JavaFXThreadingRule;
 
 /**
  * @author Andy Black

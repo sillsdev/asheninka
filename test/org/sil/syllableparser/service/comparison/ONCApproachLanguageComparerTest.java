@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -36,12 +36,6 @@ import org.sil.syllableparser.model.TemplateType;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
-import org.sil.syllableparser.service.comparison.ONCApproachLanguageComparer;
-import org.sil.syllableparser.service.comparison.DifferentEnvironment;
-import org.sil.syllableparser.service.comparison.DifferentGrapheme;
-import org.sil.syllableparser.service.comparison.DifferentGraphemeNaturalClass;
-import org.sil.syllableparser.service.comparison.DifferentSegment;
-import org.sil.syllableparser.service.comparison.DifferentWord;
 
 /**
  * @author Andy Black

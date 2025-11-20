@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 SIL International
+ * Copyright (c) 2021-2025 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Before;
@@ -65,69 +64,69 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		super.tearDown();
 	}
 
-	@Test
-	public void checkFailFilterTest() {
-		List<Filter> failFilters = (List<Filter>) languageProject
-				.getActiveAndValidFilters()
-				.stream()
-				.filter(f -> f.getTemplateFilterType() == FilterType.NUCLEUS
-						&& !f.getAction().isDoRepair()).collect(Collectors.toList());
-//		Nucleus nuc = new Nucleus();
-//		doCheckFilterFail("", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		doCheckFilterFail("a", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		doCheckFilterFail("t", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		doCheckFilterFail("ta", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-		MoraicSegmentInSyllable segInSyl = createMoraicSegmentInSyllable("a");
-//		nuc.add(segInSyl);
-//		doCheckFilterFail("a", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		doCheckFilterFail("ta", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		segInSyl = createMoraicSegmentInSyllable("e");
-//		nuc.add(segInSyl);
-//		doCheckFilterFail("ae", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		doCheckFilterFail("tae", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		segInSyl = createMoraicSegmentInSyllable("i");
-//		nuc.add(segInSyl);
-//		doCheckFilterFail("aei", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		doCheckFilterFail("aei", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		doCheckFilterFail("taei", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
-//		doCheckFilterFail("taei", 3, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+//	@Test
+//	public void checkFailFilterTest() {
+//		List<Filter> failFilters = (List<Filter>) languageProject
+//				.getActiveAndValidFilters()
+//				.stream()
+//				.filter(f -> f.getTemplateFilterType() == FilterType.NUCLEUS
+//						&& !f.getAction().isDoRepair()).collect(Collectors.toList());
+////		Nucleus nuc = new Nucleus();
+////		doCheckFilterFail("", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		doCheckFilterFail("a", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		doCheckFilterFail("t", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		doCheckFilterFail("ta", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+//		MoraicSegmentInSyllable segInSyl = createMoraicSegmentInSyllable("a");
+////		nuc.add(segInSyl);
+////		doCheckFilterFail("a", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		doCheckFilterFail("ta", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		segInSyl = createMoraicSegmentInSyllable("e");
+////		nuc.add(segInSyl);
+////		doCheckFilterFail("ae", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		doCheckFilterFail("tae", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		segInSyl = createMoraicSegmentInSyllable("i");
+////		nuc.add(segInSyl);
+////		doCheckFilterFail("aei", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		doCheckFilterFail("aei", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		doCheckFilterFail("taei", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////		doCheckFilterFail("taei", 3, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED);
+////
+////		for (Filter f : failFilters) {
+////			f.setTemplateFilterType(FilterType.CODA);
+////		}
+////		Coda coda = new Coda();
+////		doCheckFilterFail("", 0, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.CODA,
+////				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
+////		doCheckFilterFail("a", 0, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.CODA,
+////				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
+////		segInSyl = createMoraicSegmentInSyllable("a");
+////		coda.add(segInSyl);
+////		doCheckFilterFail("a", 0, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.CODA,
+////				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
+////		segInSyl = createMoraicSegmentInSyllable("e");
+////		coda.add(segInSyl);
+////		doCheckFilterFail("ae", 1, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
+////		segInSyl = createMoraicSegmentInSyllable("i");
+////		coda.add(segInSyl);
+////		doCheckFilterFail("aei", 1, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
+////		doCheckFilterFail("aei", 2, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
 //
-//		for (Filter f : failFilters) {
-//			f.setTemplateFilterType(FilterType.CODA);
-//		}
-//		Coda coda = new Coda();
-//		doCheckFilterFail("", 0, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.CODA,
-//				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
-//		doCheckFilterFail("a", 0, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.CODA,
-//				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
-//		segInSyl = createMoraicSegmentInSyllable("a");
-//		coda.add(segInSyl);
-//		doCheckFilterFail("a", 0, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.CODA,
-//				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
-//		segInSyl = createMoraicSegmentInSyllable("e");
-//		coda.add(segInSyl);
-//		doCheckFilterFail("ae", 1, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
-//		segInSyl = createMoraicSegmentInSyllable("i");
-//		coda.add(segInSyl);
-//		doCheckFilterFail("aei", 1, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
-//		doCheckFilterFail("aei", 2, failFilters, coda, MoraicSyllabifierState.CODA, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.CODA_FILTER_FAILED);
-
-	}
+//	}
 
 	public MoraicSegmentInSyllable createMoraicSegmentInSyllable(String segString) {
 		Optional<Segment> optSegment = languageProject.getActiveSegmentsInInventory().stream()
@@ -167,47 +166,47 @@ public class MoraicSyllabifierWithFilterTest extends MoraicSyllabifierTestBase {
 		}
 	}
 
-	@Test
-	public void checkFailFilterTraceTest() {
-		muSyllabifier.setDoTrace(true);
-		muSyllabifier.setTracingStep(new MoraicTracingStep());
-		List<Filter> failFilters = (List<Filter>) languageProject
-				.getActiveAndValidFilters()
-				.stream()
-				.filter(f -> f.getTemplateFilterType() == FilterType.NUCLEUS
-						&& !f.getAction().isDoRepair()).collect(Collectors.toList());
-//		Nucleus nuc = new Nucleus();
-//		doCheckFilterFailWithTrace("", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
-//		doCheckFilterFailWithTrace("a", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
-//		doCheckFilterFailWithTrace("t", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
-//		doCheckFilterFailWithTrace("ta", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
-//		MoraicSegmentInSyllable segInSyl = createMoraicSegmentInSyllable("a");
-//		nuc.add(segInSyl);
-//		doCheckFilterFailWithTrace("a", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
-//		doCheckFilterFailWithTrace("ta", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
-//		segInSyl = createMoraicSegmentInSyllable("e");
-//		nuc.add(segInSyl);
-//		doCheckFilterFailWithTrace("ae", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
-//		doCheckFilterFailWithTrace("tae", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
-//		segInSyl = createMoraicSegmentInSyllable("i");
-//		nuc.add(segInSyl);
-//		doCheckFilterFailWithTrace("aei", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
-//		doCheckFilterFailWithTrace("aei", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
-//		doCheckFilterFailWithTrace("taei", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
-//		doCheckFilterFailWithTrace("taei", 3, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
-//				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
-	}
+//	@Test
+//	public void checkFailFilterTraceTest() {
+//		muSyllabifier.setDoTrace(true);
+//		muSyllabifier.setTracingStep(new MoraicTracingStep());
+//		List<Filter> failFilters = (List<Filter>) languageProject
+//				.getActiveAndValidFilters()
+//				.stream()
+//				.filter(f -> f.getTemplateFilterType() == FilterType.NUCLEUS
+//						&& !f.getAction().isDoRepair()).collect(Collectors.toList());
+////		Nucleus nuc = new Nucleus();
+////		doCheckFilterFailWithTrace("", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
+////		doCheckFilterFailWithTrace("a", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
+////		doCheckFilterFailWithTrace("t", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
+////		doCheckFilterFailWithTrace("ta", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
+////		MoraicSegmentInSyllable segInSyl = createMoraicSegmentInSyllable("a");
+////		nuc.add(segInSyl);
+////		doCheckFilterFailWithTrace("a", 0, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
+////		doCheckFilterFailWithTrace("ta", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.NUCLEUS,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 0);
+////		segInSyl = createMoraicSegmentInSyllable("e");
+////		nuc.add(segInSyl);
+////		doCheckFilterFailWithTrace("ae", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
+////		doCheckFilterFailWithTrace("tae", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
+////		segInSyl = createMoraicSegmentInSyllable("i");
+////		nuc.add(segInSyl);
+////		doCheckFilterFailWithTrace("aei", 1, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
+////		doCheckFilterFailWithTrace("aei", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
+////		doCheckFilterFailWithTrace("taei", 2, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
+////		doCheckFilterFailWithTrace("taei", 3, failFilters, nuc, MoraicSyllabifierState.NUCLEUS, MoraicSyllabifierState.FILTER_FAILED,
+////				MoraicSyllabificationStatus.NUCLEUS_FILTER_FAILED, 1);
+//	}
 
 	@Test
 	public void filterFailTest() {

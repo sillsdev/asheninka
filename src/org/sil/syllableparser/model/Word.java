@@ -8,8 +8,6 @@ package org.sil.syllableparser.model;
 
 import jakarta.xml.bind.annotation.XmlElement;
 
-import org.sil.syllableparser.model.SylParserObject;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

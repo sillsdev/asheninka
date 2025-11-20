@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2020 SIL International
+ * Copyright (c) 2019-2025 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -33,8 +33,6 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
 import org.sil.syllableparser.service.parsing.ONCSegmenter;
 import org.sil.syllableparser.service.parsing.SHSonorityComparer;
-import org.sil.syllableparser.view.TemplatesController;
-import org.sil.syllableparser.view.TemplatesFiltersController;
 
 /**
  * @author Andy Black

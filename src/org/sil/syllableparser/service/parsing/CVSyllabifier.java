@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -35,7 +35,9 @@ import javafx.collections.ObservableList;
 public class CVSyllabifier implements Syllabifiable {
 
 	private LanguageProject languageProject;
+	@SuppressWarnings("unused")
 	private CVApproach cva;
+	@SuppressWarnings("unused")
 	private List<Segment> activeSegmentInventory;
 	private List<CVNaturalClass> activeNaturalClasses;
 	private CVSegmenter segmenter;

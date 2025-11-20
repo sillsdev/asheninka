@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 SIL International
+ * Copyright (c) 2020-2025 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -9,15 +9,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.model.SylParserBase;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 
 /**
  * @author Andy Black

@@ -1,4 +1,4 @@
-// Copyright (c) 2019 SIL International 
+// Copyright (c) 2019-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,7 +15,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sil.antlr4.templatefilterparser.SegmentSequenceValidator;
 
 public class SegmentSequenceValidatorTest {
 	List<String> segmentsMasterList = Arrays.asList("a", "ai", "b", "c", "d", "e", "f", "fl",

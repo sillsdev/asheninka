@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -14,12 +14,7 @@ import javafx.collections.ObservableList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sil.syllableparser.model.Environment;
-import org.sil.syllableparser.model.Grapheme;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.*;
-
-;
 
 /**
  * @author Andy Black

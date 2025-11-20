@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -66,7 +66,6 @@ public class SHSegmentChooserController extends TableViewWithCheckBoxColumnContr
 	private MainApp mainApp;
 	private ApplicationPreferences preferences;
 
-	private Segment currentSegment;
 	private ObservableList<Segment> shSegments = FXCollections.observableArrayList();
 	private SHNaturalClass naturalClass;
 
@@ -112,6 +111,8 @@ public class SHSegmentChooserController extends TableViewWithCheckBoxColumnContr
 				}
 				break;
 			}
+			default:
+				break;
 			}
 		});
 

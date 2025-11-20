@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2021 SIL International 
+// Copyright (c) 2018-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -27,9 +27,6 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
-import org.sil.syllableparser.service.parsing.CVSegmenter;
-import org.sil.syllableparser.service.parsing.CVSegmenterResult;
-import org.sil.syllableparser.service.parsing.SHSyllabifier;
 
 /**
  * @author Andy Black

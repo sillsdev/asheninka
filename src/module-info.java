@@ -10,6 +10,8 @@ module org.sil.syllableparser {
 	exports org.sil.syllableparser.model.otapproach;
 	exports org.sil.syllableparser.model.sonorityhierarchyapproach;
 	exports org.sil.syllableparser.service;
+	exports org.sil.syllableparser.service.filter;
+	exports org.sil.syllableparser.service.parsing;
 	exports org.sil.syllableparser.view;
 	exports org.sil.antlr4;
 	exports org.sil.antlr4.environmentparser;
@@ -28,10 +30,10 @@ module org.sil.syllableparser {
 	requires transitive javafx.fxml;
 	requires javafx.graphics;
 	requires javafx.swing;
-	requires javafx.web;
+	requires transitive javafx.web;
 
 	// JAXB
-	requires jakarta.xml.bind;
+	requires transitive jakarta.xml.bind;
 	requires jakarta.activation;
 	opens org.sil.syllableparser.model;
 
@@ -55,6 +57,7 @@ module org.sil.syllableparser {
 	requires javafx.media;
 	requires java.base;
 	requires transitive richtextfx.fat;
-	requires org.sil.lingtree;
+	requires transitive org.sil.lingtree;
 	requires transitive com.ibm.icu;
+	requires diff.match.patch;
 }

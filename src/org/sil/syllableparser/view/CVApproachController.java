@@ -282,9 +282,11 @@ public class CVApproachController extends ApproachController {
 				scene.setCursor(Cursor.WAIT);
 				ObservableList<CVNaturalClass> naturalClasses;
 				CVSegmenter segmenter;
+				@SuppressWarnings("unused")
 				ObservableList<Segment> segmentInventory;
 				// List<Segment> cvSegmentInventory;
 				CVNaturalClasser naturalClasser;
+				@SuppressWarnings("unused")
 				List<CVNaturalClass> cvNaturalClasses;
 				List<CVSyllablePattern> patterns;
 				CVSyllabifier syllabifier;

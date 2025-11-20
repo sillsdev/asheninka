@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2016-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -22,11 +22,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
-import org.sil.antlr4.environmentparser.CheckGraphemeAndClassListener;
-import org.sil.antlr4.environmentparser.EnvironmentConstants;
-import org.sil.antlr4.environmentparser.EnvironmentErrorInfo;
-import org.sil.antlr4.environmentparser.EnvironmentErrorListener;
-import org.sil.antlr4.environmentparser.GraphemeErrorInfo;
 import org.sil.antlr4.environmentparser.EnvironmentErrorListener.VerboseListener;
 import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentLexer;
 import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
@@ -139,6 +134,7 @@ public class EnvironmentRecognizerTest {
 		errListener.clearErrorMessageList();
 		parser.addErrorListener(errListener);
 		// begin parsing at rule 'environment'
+		@SuppressWarnings("unused")
 		ParseTree tree = parser.environment();
 		//int iNumErrors = parser.getNumberOfSyntaxErrors();
 		// List<EnvironmentErrorInfo> errors = errListener.getErrorMessages();

@@ -1,14 +1,11 @@
 /**
- * Copyright (c) 2020 SIL International
+ * Copyright (c) 2020-2025 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
 package org.sil.syllableparser.service.filter;
 
 import static org.junit.Assert.*;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javafx.collections.ObservableList;
 

@@ -123,6 +123,7 @@ public class WritingSystemController extends SylParserBaseController implements
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -161,6 +162,7 @@ public class WritingSystemController extends SylParserBaseController implements
 					icuRulesErrorArea.setVisible(false);
 					icuRuleError.setVisible(false);
 					okButton.setDisable(false);
+					@SuppressWarnings("unused")
 					RuleBasedCollator collatorViaRules = new RuleBasedCollator(newValue);
 				} catch (ParseException e) {
 					String details = e.getMessage();

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -18,7 +18,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
-import org.sil.syllableparser.service.BackupFileCreator;
 
 /**
  * @author Andy Black

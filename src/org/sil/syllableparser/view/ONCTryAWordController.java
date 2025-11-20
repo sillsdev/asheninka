@@ -17,7 +17,6 @@ import org.sil.syllableparser.service.parsing.ONCSegmenter;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
 import org.sil.syllableparser.service.parsing.ONCSyllabifierResult;
 import org.sil.syllableparser.service.parsing.ONCTryAWordHTMLFormatter;
-import org.sil.syllableparser.service.parsing.TryAWordHTMLFormatter;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;

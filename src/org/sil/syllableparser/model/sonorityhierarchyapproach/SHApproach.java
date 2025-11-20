@@ -22,7 +22,6 @@ import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.Word;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHNaturalClass;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 SIL International
+// Copyright (c) 2019-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,19 +19,12 @@ import org.junit.Test;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.Approach;
-import org.sil.syllableparser.model.Environment;
-import org.sil.syllableparser.model.EnvironmentContext;
-import org.sil.syllableparser.model.EnvironmentContextGraphemeOrNaturalClass;
 import org.sil.syllableparser.model.Filter;
-import org.sil.syllableparser.model.Grapheme;
-import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.TemplateFilter;
 import org.sil.syllableparser.model.TemplateFilterSlotSegmentOrNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.service.AsheninkaGraphemeAndClassListener;
-import org.sil.antlr4.environmentparser.antlr4generated.EnvironmentParser;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterParser;
 
 public class TemplateFilterBuilderTest extends TemplateFilterParsingBase {
@@ -314,7 +306,6 @@ public class TemplateFilterBuilderTest extends TemplateFilterParsingBase {
 	@Test
 	public void FiltersTest() {
 		TemplateFilter tfilter;
-		List<TemplateFilterSlotSegmentOrNaturalClass> slots;
 		TemplateFilterSlotSegmentOrNaturalClass slot;
 
 		tfilter = checkFilterDescription("", 0, 1, true);

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 SIL International 
+// Copyright (c) 2019-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -22,11 +22,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
-import org.sil.antlr4.templatefilterparser.CheckSegmentAndClassListener;
-import org.sil.antlr4.templatefilterparser.SegmentErrorInfo;
-import org.sil.antlr4.templatefilterparser.TemplateFilterConstants;
-import org.sil.antlr4.templatefilterparser.TemplateFilterErrorInfo;
-import org.sil.antlr4.templatefilterparser.TemplateFilterErrorListener;
 import org.sil.antlr4.templatefilterparser.TemplateFilterErrorListener.VerboseListener;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterLexer;
 import org.sil.antlr4.templatefilterparser.antlr4generated.TemplateFilterParser;
@@ -160,6 +155,7 @@ public class TemplateFilterRecognizerTest {
 		errListener.clearErrorMessageList();
 		parser.addErrorListener(errListener);
 		// begin parsing at rule 'description'
+		@SuppressWarnings("unused")
 		ParseTree tree = parser.description();
 		//int iNumErrors = parser.getNumberOfSyntaxErrors();
 //		List<TemplateFilterErrorInfo> errors = errListener.getErrorMessages();
@@ -331,6 +327,7 @@ public class TemplateFilterRecognizerTest {
 		TemplateFilterParser parser = new TemplateFilterParser(tokens);
 		// begin parsing at rule 'description'
 		ParseTree tree = parser.description();
+		@SuppressWarnings("unused")
 		int numErrors = parser.getNumberOfSyntaxErrors();
 		ParseTreeWalker walker = new ParseTreeWalker(); // create standard
 														// walker

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2019 SIL International 
+// Copyright (c) 2016-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -68,6 +68,7 @@ public class CVTryAWordHTMLFormatter extends TryAWordHTMLFormatter {
 		sb.append("<h3>" + bundle.getString("report.tawsyllablepatterns") + "</h3>\n");
 
 		CVSyllabifier syllabifier = traceInfo.getSyllabifier();
+		@SuppressWarnings("unused")
 		List<CVTraceSyllabifierInfo> syllabifierInfo = syllabifier.getSyllabifierTraceInfo();
 		CVSyllabifierResult sylResult = traceInfo.getSyllabifierResult();
 		if (sylResult != null) {

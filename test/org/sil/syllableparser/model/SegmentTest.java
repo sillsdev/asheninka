@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2018 SIL International 
+// Copyright (c) 2016-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -19,9 +19,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
-import org.sil.syllableparser.model.Grapheme;
-import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.Segment;
 import org.sil.utility.view.JavaFXThreadingRule;
 
 /**

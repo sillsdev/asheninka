@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -12,7 +12,6 @@ import javafx.scene.text.Font;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sil.syllableparser.model.Language;
 
 /**
  * @author Andy Black
