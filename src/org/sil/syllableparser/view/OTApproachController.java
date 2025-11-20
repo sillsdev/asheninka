@@ -360,10 +360,10 @@ public class OTApproachController extends ApproachController {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
-			String resource = "fxml/OTPredictedToCorrectSyllabificationChooser.fxml";
+			String resource = "fxml/CVPredictedToCorrectSyllabificationChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
 					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
-					Constants.RESOURCE_LOCATION);
+					bundle);
 
 			CVPredictedToCorrectSyllabificationChooserController controller = loader
 					.getController();

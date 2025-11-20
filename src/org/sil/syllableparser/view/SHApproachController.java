@@ -329,7 +329,7 @@ public class SHApproachController extends ApproachController {
 			String resource = "fxml/CVPredictedToCorrectSyllabificationChooser.fxml";
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
 					MainApp.kApplicationTitle, ApproachViewNavigator.class.getResource(resource),
-					Constants.RESOURCE_LOCATION);
+					bundle);
 
 			CVPredictedToCorrectSyllabificationChooserController controller = loader
 					.getController();
