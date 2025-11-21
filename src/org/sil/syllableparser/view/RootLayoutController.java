@@ -1473,6 +1473,7 @@ public class RootLayoutController implements Initializable {
 				currentLocale = selectedLocale;
 				if (timer != null) {
 					mainApp.getSaveDataPeriodicallyService().restart();
+					keyboardChanger.setStage(mainApp.getPrimaryStage());
 				}
 			}
 		});
