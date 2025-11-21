@@ -4,12 +4,10 @@ name: Windows Build Installer with Version
 
 on:
   push:
-    paths:
-      - 'build.xml'
-#    tags:
-#      - 'v*'  # Build the app for commits that are tagged starting with 'v' e.g. v1.2.3
-#      # to tag a commit, use "git tag v1.2.3"
-#      # when you then use "git push origin v1.2.3" this workflow will be invoked
+    tags:
+      - 'v*'  # Build the app for commits that are tagged starting with 'v' e.g. v1.2.3
+      # to tag a commit, use "git tag v1.2.3"
+      # when you then use "git push origin v1.2.3" this workflow will be invoked
 
 jobs:
   build-installer:
@@ -61,7 +59,7 @@ jobs:
         env:
           PUBLISH_PATH: 'installer/windows'
         run: |
-          mv ${{env.PUBLISH_PATH}}\Asheninka-${{ env.VERSION }}.exe Asheninka${{ env.VERSION }}.exe
+          mv ${{env.PUBLISH_PATH}}\Asheninka-${{ env.VERSION }}.exe Asheninka-${{ env.VERSION }}.exe
 
       - uses: actions/upload-artifact@v4
         with:
