@@ -1473,9 +1473,11 @@ public class RootLayoutController implements Initializable {
 				currentLocale = selectedLocale;
 				if (timer != null) {
 					mainApp.getSaveDataPeriodicallyService().restart();
-					keyboardChanger.initKeyboardHandler(MainApp.class);
-					keyboardChanger.setStage(mainApp.getPrimaryStage());
 				}
+				keyboardChanger = null;
+				keyboardChanger = KeyboardChanger.getInstance();
+				keyboardChanger.initKeyboardHandler(MainApp.class);
+				keyboardChanger.setStage(mainApp.getPrimaryStage());
 			}
 		});
 	}
