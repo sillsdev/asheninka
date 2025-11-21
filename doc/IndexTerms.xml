@@ -345,6 +345,12 @@ see="iAddDataItem"
 >Insert data item</term
 ></indexTerm
 ><indexTerm
+id="iKeyboards"
+see="iLanguage"
+><term
+>Keyboards</term
+></indexTerm
+><indexTerm
 id="iLanguage"
 ><term
 >Language</term
@@ -387,6 +393,11 @@ id="iLanguageVernacular"
 id="iLDMLFile"
 ><term
 >LDML file</term
+></indexTerm
+><indexTerm
+id="iMac"
+><term
+>macOS</term
 ></indexTerm
 ><indexTerm
 id="iMoraicApproach"

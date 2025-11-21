@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->6 June 2022</date
+>21 November 2025</date
 ><version
->1.1.0</version
+>1.2.0</version
 ><contents
 ></contents
 ></frontMatter
@@ -265,6 +265,41 @@ id="nRTLAndHyphensAndOrSyllables"
 >While we do offer this option, we expect that most right-to-left scripts do not normally use discretionary hyphens and/or are not necessarily orthographically designed to allow showing syllable breaks.</p
 ></endnote
 ></p
+></section3
+><section3
+id="sWSKeyboardTab"
+><secTitle
+>Keyboard tab</secTitle
+><p
+><indexedItem
+term="iKeyboards"
+></indexedItem
+>The Keyboard tab has a drop-down chooser.  Click on it to show which keyboards are currently enabled and choose the one that is appropriate for the vernacular or analysis language you have chosen.  <object
+type="tAsheninka"
+></object
+> will automatically switch to this keyboard whenever a vernacular or analysis field is in focus.</p
+><p
+>Currently, this is fully available on Windows and mostly available on <object
+type="tmacOS"
+></object
+>.<endnote
+id="nKeymanOnMac"
+><p
+>On <object
+type="tmacOS"
+></object
+>, <object
+type="tTool"
+>Keyman</object
+> keyboards are handled as a unit. That is, if you have two or more of them, you will need to select the Keyman option. <object
+type="tAsheninka"
+></object
+> will use whichever is the currently selected Keyman keyboard. This is an issue with <object
+type="tmacOS"
+></object
+>.</p
+></endnote
+> </p
 ></section3
 ><section3
 id="sWSSortingTab"
@@ -7475,7 +7510,38 @@ type="tField"
 ><li
 >The dialog boxes which can remain open while you do other things do not have a way to be minimized.</li
 ><li
->If you try to import a word list that is not in UTF-8 encoding, then you will get a “A serious error happened.” dialog box.  Convert your file to UTF-8 and try again.</li
+>If you try to import a word list that is not in UTF-8 encoding, then you will get a “A serious error happened.” dialog box. Convert your file to UTF-8 and try again.</li
+><li
+><indexedItem
+term="iMac"
+></indexedItem
+>On <object
+type="tmacOS"
+></object
+>: if you double click an <object
+type="tAsheninka"
+></object
+> description file in <object
+type="tTool"
+>Finder</object
+>, then <object
+type="tAsheninka"
+></object
+> will open the last opened file, not the one you clicked on. This is due to a communication problem between the <object
+type="tmacOS"
+></object
+> operating system and the Java language <object
+type="tAsheninka"
+></object
+> is written in.</li
+><li
+><indexedItem
+term="iKeyboards"
+></indexedItem
+>When you move a <object
+type="tAsheninka"
+></object
+> file from one computer to another, you may well need to reset the keyboards manually. This is because the keyboard settings may be different on the two machines.</li
 ></ol
 ></appendix
 ><appendix

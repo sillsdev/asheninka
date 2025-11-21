@@ -216,6 +216,10 @@ font-weight="bold"
 id="tKey"
 ></type
 ><type
+before="macOS"
+id="tmacOS"
+></type
+><type
 before="Maximum number of moras per syllable"
 id="tMaxMoras"
 ></type
