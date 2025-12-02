@@ -7,4 +7,4 @@ cp -r input/resources output/Asheninka/lib > /dev/null
 cp -r input/doc output/Asheninka/lib > /dev/null
 #rm -r input/Asheninka/lib/app/doc > /dev/null
 mkdir output/Asheninka/bin/resources
-cp input/reources/starterFile.ashedata output/Asheninka/bin/resources
+cp input/resources/starterFile.ashedata output/Asheninka/bin/resources
