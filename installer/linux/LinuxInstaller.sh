@@ -7,7 +7,7 @@ echo "	invoking jpackage, part 2"
 VERSION=$1
 # 	--verbose \
 #	--linux-shortcut \
-ls -l -R
+#ls -l -R
 jpackage --type deb \
 	--copyright "2021-2025 SIL International" \
 	--description "Asheninka Syllable Parser" \
@@ -15,6 +15,7 @@ jpackage --type deb \
 	--install-dir /opt/sil \
 	--resource-dir jpackageResources \
 	--app-image output/Asheninka \
+	--linux-shortcut \
 	--linux-menu-group "Education" \
 	--license-file License.txt \
 	--icon input/Asheninka.png \
