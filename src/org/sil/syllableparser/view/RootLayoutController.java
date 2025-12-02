@@ -533,7 +533,10 @@ public class RootLayoutController implements Initializable {
 				Constants.ASHENINKA_DATA_FILE_EXTENSION, Constants.ASHENINKA_DATA_FILE_EXTENSIONS,
 				Constants.RESOURCE_LOCATION);
 		if (fileCreated != null) {
+			System.out.println("before new File: '" + Constants.ASHENINKA_STARTER_FILE + "'");
+			System.out.println("before new File: '" + System.getProperty("user.dir") + "'");
 			File file = new File(Constants.ASHENINKA_STARTER_FILE);
+			System.out.println("after new File: '" + file.getAbsolutePath() + "'");
 			mainApp.loadLanguageData(file);
 			mainApp.saveLanguageData(fileCreated);
 			mainApp.updateStageTitle(fileCreated);
