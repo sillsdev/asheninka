@@ -9,7 +9,6 @@ VERSION=$1
 #	--linux-shortcut \
 #ls -l -R
 jpackage --type deb \
-	--verbose \
 	--copyright "2021-2025 SIL International" \
 	--description "Asheninka Syllable Parser" \
 	--name Asheninka \

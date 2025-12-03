@@ -7,6 +7,8 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -534,32 +536,54 @@ public class RootLayoutController implements Initializable {
 				Constants.ASHENINKA_DATA_FILE_EXTENSION, Constants.ASHENINKA_DATA_FILE_EXTENSIONS,
 				Constants.RESOURCE_LOCATION);
 		if (fileCreated != null) {
+			try {
+				String sStarterFile = findStarterFile();
+				URI fileURI = new URI("file://" + sStarterFile);
+				File file = Paths.get(fileURI).toFile();
+				mainApp.loadLanguageData(file);
+				mainApp.saveLanguageData(fileCreated);
+				mainApp.updateStageTitle(fileCreated);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-			System.out.println("before new File: '" + Constants.ASHENINKA_STARTER_FILE + "'");
-			System.out.println("before new File: '" + System.getProperty("user.dir") + "'");
-			String sFxmlPath = fxmlLocation.getPath();
-			int iOrg = sFxmlPath.indexOf("/org/");
-			String sBegin1 = sFxmlPath.substring(0, iOrg);
-			int iLast = sBegin1.lastIndexOf(File.separator);
-			String sBegin = sBegin1.substring(0, iLast).replace("file:","");
-			String sStarterFile = sBegin + File.separatorChar + Constants.ASHENINKA_STARTER_FILE;
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle(MainApp.kApplicationTitle);
-			alert.setHeaderText("");
-			alert.setContentText(System.getProperty("user.dir") + "\n" + fxmlLocation.getPath() + "\n" + sStarterFile);
-			alert.setWidth(1000);
-			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-			alert.showAndWait();
-
-			File file = new File(sStarterFile);
-			System.out.println("after new File: '" + file.getAbsolutePath() + "'");
-			mainApp.loadLanguageData(file);
-			mainApp.saveLanguageData(fileCreated);
-			mainApp.updateStageTitle(fileCreated);
+//			System.out.println("before new File: '" + Constants.ASHENINKA_STARTER_FILE + "'");
+//			System.out.println("before new File: '" + System.getProperty("user.dir") + "'");
+//			try {
+//				String sStarterFile = findStarterFile();
+//				URI fileURI = new URI(sStarterFile);
+//				Alert alert = new Alert(AlertType.INFORMATION);
+//				alert.setTitle(MainApp.kApplicationTitle);
+//				alert.setHeaderText("");
+//				alert.setContentText(System.getProperty("user.dir") + "\n" + fxmlLocation.getPath() + "\n" + sStarterFile);
+//				alert.setWidth(1000);
+//				Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+//				alert.showAndWait();
+//				File file = new File(fileURI);
+//				System.out.println("after new File: '" + file.getAbsolutePath() + "'");
+//				mainApp.loadLanguageData(file);
+//				mainApp.saveLanguageData(fileCreated);
+//				mainApp.updateStageTitle(fileCreated);
+//			} catch (URISyntaxException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 		if (timer != null) {
 			mainApp.getSaveDataPeriodicallyService().restart();
 		}
+	}
+
+	protected String findStarterFile() {
+		String sFxmlPath = fxmlLocation.getPath();
+		int iOrg = sFxmlPath.indexOf("/org/");
+		String sBegin1 = sFxmlPath.substring(0, iOrg);
+		int iLast = sBegin1.lastIndexOf("/");
+		String sBegin = sBegin1.substring(0, iLast);//.replace("file:","");
+//		sBegin = sBegin.replace("/C:/", "/").replaceAll("%20", " ");
+		String sStarterFile = sBegin + "/" + Constants.ASHENINKA_STARTER_FILE;
+		return sStarterFile;
 	}
 
 	protected String tryToGetDefaultDirectoryPath() {
