@@ -87,6 +87,7 @@ public class RootLayoutController implements Initializable {
 	private MainApp mainApp;
 	private LanguageProject languageProject;
 	private Locale currentLocale;
+	private URL fxmlLocation;
 	private final String kMacOSInstallDirectory = "/Applications/Asheninka.app/Contents/app/";
 	@FXML
 	private Button buttonCVApproach;
@@ -536,14 +537,21 @@ public class RootLayoutController implements Initializable {
 
 			System.out.println("before new File: '" + Constants.ASHENINKA_STARTER_FILE + "'");
 			System.out.println("before new File: '" + System.getProperty("user.dir") + "'");
+			String sFxmlPath = fxmlLocation.getPath();
+			int iOrg = sFxmlPath.indexOf("/org/");
+			String sBegin1 = sFxmlPath.substring(0, iOrg);
+			int iLast = sBegin1.lastIndexOf(File.separator);
+			String sBegin = sBegin1.substring(0, iLast).replace("file:","");
+			String sStarterFile = sBegin + File.separatorChar + Constants.ASHENINKA_STARTER_FILE;
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle(MainApp.kApplicationTitle);
 			alert.setHeaderText("");
-			alert.setContentText(System.getProperty("user.dir"));
+			alert.setContentText(System.getProperty("user.dir") + "\n" + fxmlLocation.getPath() + "\n" + sStarterFile);
+			alert.setWidth(1000);
 			Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 			alert.showAndWait();
 
-			File file = new File(Constants.ASHENINKA_STARTER_FILE);
+			File file = new File(sStarterFile);
 			System.out.println("after new File: '" + file.getAbsolutePath() + "'");
 			mainApp.loadLanguageData(file);
 			mainApp.saveLanguageData(fileCreated);
@@ -1592,6 +1600,7 @@ public class RootLayoutController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		bundle = resources;
+		fxmlLocation = location;
 		keyboardChanger = KeyboardChanger.getInstance();
 		keyboardChanger.initKeyboardHandler(MainApp.class);
 
