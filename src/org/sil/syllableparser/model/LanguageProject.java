@@ -19,6 +19,7 @@ import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
@@ -38,6 +39,7 @@ public class LanguageProject {
 	private MoraicApproach moraicApproach;
 	private NPApproach npApproach;
 	private OTApproach otApproach;
+	private HyphenApproach hyphenApproach;
 	private ObservableList<Word> words = FXCollections.observableArrayList();
 	private String sParaTExtHyphenatedWordsPreamble;
 	private ObservableList<Segment> segmentInventory = FXCollections.observableArrayList();
@@ -68,6 +70,8 @@ public class LanguageProject {
 		npApproach.setLanguageProject(this);
 		otApproach = new OTApproach();
 		otApproach.setLanguageProject(this);
+		hyphenApproach = new HyphenApproach();
+		hyphenApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
 		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
@@ -155,6 +159,14 @@ public class LanguageProject {
 	@XmlElement(name = "otApproach")
 	public void setOTApproach(OTApproach otApproach) {
 		this.otApproach = otApproach;
+	}
+
+	public HyphenApproach getHyphenApproach() {
+		return hyphenApproach;
+	}
+
+	public void setHyphenApproach(HyphenApproach hyphenApproach) {
+		this.hyphenApproach = hyphenApproach;
 	}
 
 	/**

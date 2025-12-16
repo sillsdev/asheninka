@@ -22,6 +22,7 @@ import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.Language;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
@@ -514,6 +515,12 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 	public void setData(OTApproach otApproachData) {
 		otApproach = otApproachData;
 		languageProject = otApproach.getLanguageProject();
+		setDataCommon();
+	}
+
+	public void setData(HyphenApproach hyphenApproachData) {
+		hyphenApproach = hyphenApproachData;
+		languageProject = hyphenApproach.getLanguageProject();
 		setDataCommon();
 	}
 

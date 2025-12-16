@@ -32,6 +32,8 @@ public class Word extends SylParserObject {
 	protected StringProperty npPredictedSyllabification;
 	protected StringProperty otParserResult;
 	protected StringProperty otPredictedSyllabification;
+	protected StringProperty hyphenParserResult;
+	protected StringProperty hyphenPredictedSyllabification;
 	protected StringProperty cvLingTreeDescription;
 	protected StringProperty shLingTreeDescription;
 	protected StringProperty oncLingTreeDescription;
@@ -56,6 +58,8 @@ public class Word extends SylParserObject {
 		this.npPredictedSyllabification = new SimpleStringProperty("");
 		this.otParserResult = new SimpleStringProperty("");
 		this.otPredictedSyllabification = new SimpleStringProperty("");
+		this.hyphenParserResult = new SimpleStringProperty("");
+		this.hyphenPredictedSyllabification = new SimpleStringProperty("");
 		this.cvLingTreeDescription = new SimpleStringProperty("");
 		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
@@ -82,6 +86,8 @@ public class Word extends SylParserObject {
 		this.npPredictedSyllabification = new SimpleStringProperty("");
 		this.otParserResult = new SimpleStringProperty(parserResult);
 		this.otPredictedSyllabification = new SimpleStringProperty("");
+		this.hyphenParserResult = new SimpleStringProperty(parserResult);
+		this.hyphenPredictedSyllabification = new SimpleStringProperty("");
 		this.cvLingTreeDescription = new SimpleStringProperty("");
 		this.shLingTreeDescription = new SimpleStringProperty("");
 		this.oncLingTreeDescription = new SimpleStringProperty("");
@@ -314,6 +320,38 @@ public class Word extends SylParserObject {
 	public StringProperty otPredictedVsCorrectSyllabificationProperty() {
 		SimpleStringProperty s = new SimpleStringProperty();
 		s.bind(Bindings.concat(otPredictedSyllabificationProperty(), "\n",
+				correctSyllabificationProperty()));
+		return s;
+	}
+
+	public String getHyphenParserResult() {
+		return hyphenParserResult.get();
+	}
+
+	public StringProperty hyphenParserResultProperty() {
+		return hyphenParserResult;
+	}
+
+	public void setHyphenParserResult(String parserResult) {
+		this.hyphenParserResult.set(parserResult);
+	}
+
+	public String getHyphenPredictedSyllabification() {
+		return hyphenPredictedSyllabification.get();
+	}
+
+	public StringProperty hyphenPredictedSyllabificationProperty() {
+		return hyphenPredictedSyllabification;
+	}
+
+	@XmlElement(name = "hyphenPredictedSyllabification")
+	public void setHyphenPredictedSyllabification(String predictedSyllabification) {
+		this.hyphenPredictedSyllabification.set(predictedSyllabification);
+	}
+
+	public StringProperty hyphenPredictedVsCorrectSyllabificationProperty() {
+		SimpleStringProperty s = new SimpleStringProperty();
+		s.bind(Bindings.concat(hyphenPredictedSyllabificationProperty(), "\n",
 				correctSyllabificationProperty()));
 		return s;
 	}

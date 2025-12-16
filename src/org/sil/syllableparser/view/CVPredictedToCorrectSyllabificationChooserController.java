@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 SIL International
+// Copyright (c) 2016-2025 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -14,6 +14,7 @@ import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.cvapproach.CVPredictedSyllabification;
+import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
@@ -221,6 +222,30 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		addWordsToTable();
 	}
 
+	private void createListOfDifferentOTWords(ObservableList<Word> words) {
+		for (Word otWord : words) {
+			if (!otWord.getOTPredictedSyllabification().isEmpty()
+					&& !otWord.getOTPredictedSyllabification().equals(otWord.getCorrectSyllabification())) {
+				currentPredictedSyllabification = new CVPredictedSyllabification(
+						otWord.getOTPredictedSyllabification(), otWord.getID());
+				cvPredictedSyllabifications.add(currentPredictedSyllabification);
+			}
+		}
+		addWordsToTable();
+	}
+
+	private void createListOfDifferentHyphenWords(ObservableList<Word> words) {
+		for (Word hyphenWord : words) {
+			if (!hyphenWord.getHyphenPredictedSyllabification().isEmpty()
+					&& !hyphenWord.getHyphenPredictedSyllabification().equals(hyphenWord.getCorrectSyllabification())) {
+				currentPredictedSyllabification = new CVPredictedSyllabification(
+						hyphenWord.getOTPredictedSyllabification(), hyphenWord.getID());
+				cvPredictedSyllabifications.add(currentPredictedSyllabification);
+			}
+		}
+		addWordsToTable();
+	}
+
 	protected void addWordsToTable() {
 		cvPredictedSyllabificationTable.setItems(cvPredictedSyllabifications);
 		if (cvPredictedSyllabificationTable.getItems().size() > 0) {
@@ -263,7 +288,14 @@ public class CVPredictedToCorrectSyllabificationChooserController extends TableV
 		otApproach = otApproachData;
 		languageProject = otApproachData.getLanguageProject();
 		this.words = words;
-		createListOfDifferentNPWords(words);
+		createListOfDifferentOTWords(words);
+	}
+
+	public void setData(HyphenApproach hyphenApproachData, ObservableList<Word> words) {
+		hyphenApproach = hyphenApproachData;
+		languageProject = hyphenApproachData.getLanguageProject();
+		this.words = words;
+		createListOfDifferentHyphenWords(words);
 	}
 
 	/**

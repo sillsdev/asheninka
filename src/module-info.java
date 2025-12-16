@@ -4,6 +4,7 @@ module org.sil.syllableparser {
 	exports org.sil.syllableparser.backendprovider;
 	exports org.sil.syllableparser.model;
 	exports org.sil.syllableparser.model.cvapproach;
+	exports org.sil.syllableparser.model.hyphenapproach;
 	exports org.sil.syllableparser.model.moraicapproach;
 	exports org.sil.syllableparser.model.npapproach;
 	exports org.sil.syllableparser.model.oncapproach;

@@ -19,6 +19,7 @@ import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
@@ -490,9 +491,14 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 		setDataCommon(ApproachType.NUCLEAR_PROJECTION);
 	}
 
-	public void setData(OTApproach cvApproachData) {
-		currentApproach = otApproach = cvApproachData;
+	public void setData(OTApproach otApproachData) {
+		currentApproach = otApproach = otApproachData;
 		setDataCommon(ApproachType.OPTIMALITY_THEORY);
+	}
+
+	public void setData(HyphenApproach hyphenApproachData) {
+		currentApproach = hyphenApproach = hyphenApproachData;
+		setDataCommon(ApproachType.HYPHEN);
 	}
 
 	protected void setColumnICURules() {

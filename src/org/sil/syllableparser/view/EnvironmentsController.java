@@ -26,6 +26,7 @@ import org.sil.syllableparser.model.Environment;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.GraphemeNaturalClass;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
+import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
 import org.sil.syllableparser.model.npapproach.NPApproach;
 import org.sil.syllableparser.model.oncapproach.ONCApproach;
@@ -658,6 +659,12 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 		shApproach = shApproachData;
 		languageProject = shApproach.getLanguageProject();
 		setDataCommon(ApplicationPreferences.LAST_SH_ENVIRONMENTS_VIEW_ITEM_USED);
+	}
+
+	public void setData(HyphenApproach hyphenApproachData) {
+		hyphenApproach = hyphenApproachData;
+		languageProject = hyphenApproach.getLanguageProject();
+		setDataCommon(ApplicationPreferences.LAST_HYPHEN_ENVIRONMENTS_VIEW_ITEM_USED);
 	}
 
 	protected void setDataCommon(String sPref) {

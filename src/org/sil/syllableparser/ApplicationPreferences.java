@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 
 import org.sil.syllableparser.model.ApproachType;
 import org.sil.syllableparser.model.cvapproach.CVApproachView;
+import org.sil.syllableparser.model.hyphenapproach.HyphenApproachView;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproachView;
 import org.sil.syllableparser.model.npapproach.NPApproachView;
 import org.sil.syllableparser.model.oncapproach.ONCApproachView;
@@ -100,6 +101,17 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_OT_ENVIRONMENTS_VIEW_ITEM_USED = "lastOTEnvironmentsViewItemUsed";
 	static final String LAST_OT_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastOTWordPredictedVsCorrectViewItemUsed";
 
+	// last Hyphen info
+	static final String LAST_HYPHEN_APPROACH_VIEW_USED = "lastHyphenApproachViewUsed";
+	static final String LAST_HYPHEN_CLASSES_VIEW_ITEM_USED = "lastHyphenClassesViewItemUsed";
+	static final String LAST_HYPHEN_SEGMENT_INVENTORY_VIEW_ITEM_USED = "lastHyphenSegmentInventoryViewItemUsed";
+	static final String LAST_HYPHEN_CHANGE_RULES_VIEW_ITEM_USED = "lastHyphenChnageRulesViewItemUsed";
+	public static final String LAST_HYPHEN_TRY_A_WORD_USED = "lastHyphenTryAWordUsed";
+	static final String LAST_HYPHEN_WORDS_VIEW_ITEM_USED = "lastHyphenWordsViewItemUsed";
+	static final String LAST_HYPHEN_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED = "lastHyphenGraphemeNaturalClassesViewItemUsed";
+	public static final String LAST_HYPHEN_ENVIRONMENTS_VIEW_ITEM_USED = "lastHyphenEnvironmentsViewItemUsed";
+	static final String LAST_HYPHEN_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED = "lastHyphenWordPredictedVsCorrectViewItemUsed";
+
 	// Controller table column widths and splitter position
 	public static final String BACKUP_CHOOSER = "BACKUP_CHOOSER_";
 	public static final String CONSTRAINT_RANKING_CHOOSER = "CONSTRAINT_RANKING_CHOOSER_";
@@ -114,6 +126,11 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String FILTERS = "FILTERS_";
 	public static final String GRAPHEME_NATURAL_CLASS_CHOOSER = "GRAPHEME_NATURAL_CLASSE_CHOOSER_";
 	public static final String GRAPHEME_NATURAL_CLASSES = "GRAPHEME_NATURAL_CLASSES_";
+	public static final String HYPHEN_CLASSES = "HYPHEN_CLASSES_";
+	public static final String HYPHEN_SEGMENT_CHOOSER = "HYPHEN_SEGMENT_CHOOSER_";
+	public static final String HYPHEN_SEGMENTS = "HYPHEN_SEGMENTS_";
+	public static final String HYPHEN_CHANGE_RULES = "HYPHEN_CHANGE_RULES_";
+	public static final String HYPHEN_WORDS = "HYPHEN_WORDS_";
 	public static final String PREDICTED_TO_CORRECT_CHOOSER = "PREDICTED_TO_CORRECT_CHOOSER_";
 	public static final String MORAIC_SEGMENTS = "MORAIC_SEGMENTS_";
 	public static final String MORAIC_WORDS = "MORAIC_WORDS_";
@@ -159,6 +176,9 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	public static final String LAST_SH_COMPARISON = "lastSHComparision";
 	public static final String LAST_SH_SEGMENT = "lastSHSegment";
 	public static final String LAST_SH_TRY_A_WORD = "lastSHTryAWord";
+	public static final String LAST_HYPHEN_COMPARISON = "lastHyphenComparision";
+	public static final String LAST_HYPHEN_SEGMENT = "lastHyphenSegment";
+	public static final String LAST_HYOHEN_TRY_A_WORD = "lastHyphenTryAWord";
 	public static final String LAST_ONC_COMPARISON = "lastONCComparision";
 	public static final String LAST_ONC_SEGMENT = "lastONCSegment";
 	public static final String LAST_ONC_TRY_A_WORD = "lastONCTryAWord";
@@ -691,6 +711,78 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastOTConstraintRankingsViewItemUsed(int value) {
 		setPreferencesKey(LAST_OT_CONSTRAINT_RANKINGS_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastHyphenApproachViewUsed() {
+		return prefs.get(LAST_HYPHEN_APPROACH_VIEW_USED, HyphenApproachView.SEGMENT_INVENTORY.toString());
+	}
+
+	public void setLastHyphenApproachViewUsed(String lastApproachViewUsed) {
+		setPreferencesKey(LAST_HYPHEN_APPROACH_VIEW_USED, lastApproachViewUsed);
+	}
+
+	public int getLastHyphenClassesViewItemUsed() {
+		return prefs.getInt(LAST_HYPHEN_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastHyphenClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_HYPHEN_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastHyphenSegmentInventoryViewItemUsed() {
+		return prefs.getInt(LAST_HYPHEN_SEGMENT_INVENTORY_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastHyphenSegmentInventoryViewItemUsed(int value) {
+		setPreferencesKey(LAST_HYPHEN_SEGMENT_INVENTORY_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastHyphenChangeRulesViewItemUsed() {
+		return prefs.getInt(LAST_HYPHEN_CHANGE_RULES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastHyphenChangeRulesViewItemUsed(int value) {
+		setPreferencesKey(LAST_HYPHEN_CHANGE_RULES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastHyphenWordsViewItemUsed() {
+		return prefs.getInt(LAST_HYPHEN_WORDS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastHyphenWordsViewItemUsed(int value) {
+		setPreferencesKey(LAST_HYPHEN_WORDS_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastHyphenWordsPredictedVsCorrectViewItemUsed() {
+		return prefs.getInt(LAST_HYPHEN_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastHyphenWordsPredictedVsCorrectViewItemUsed(int value) {
+		setPreferencesKey(LAST_HYPHEN_WORDS_PREDICTED_VS_CORRECT_VIEW_ITEM_USED, value);
+	}
+
+	public String getLastHyphenTryAWordUsed() {
+		return prefs.get(LAST_HYPHEN_TRY_A_WORD_USED, null);
+	}
+
+	public void setLastHyphenTryAWordUsed(String lastHyphenTryAWordUsed) {
+		setPreferencesKey(LAST_HYPHEN_TRY_A_WORD_USED, lastHyphenTryAWordUsed);
+	}
+
+	public int getLastHyphenGraphemeNaturalClassesViewItemUsed() {
+		return prefs.getInt(LAST_HYPHEN_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastHyphenGraphemeNaturalClassesViewItemUsed(int value) {
+		setPreferencesKey(LAST_HYPHEN_GRAPHEME_NATURAL_CLASSES_VIEW_ITEM_USED, value);
+	}
+
+	public int getLastHyphenEnvironmentsViewItemUsed() {
+		return prefs.getInt(LAST_HYPHEN_ENVIRONMENTS_VIEW_ITEM_USED, 0);
+	}
+
+	public void setLastHyphenEnvironmentsViewItemUsed(int value) {
+		setPreferencesKey(LAST_HYPHEN_ENVIRONMENTS_VIEW_ITEM_USED, value);
 	}
 
 	public String getLastSHApproachViewUsed() {

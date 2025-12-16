@@ -135,6 +135,14 @@ public class Constants {
 	public static final int OT_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 6;
 	public static final int OT_ENVIRONMENTS_VIEW_INDEX = 7;
 
+	public static final int HYPHEN_SEGMENT_INVENTORY_VIEW_INDEX = 0;
+	public static final int HYPHEN_CLASSES_VIEW_INDEX = 1;
+	public static final int HYPHEN_CHANGE_RULES_VIEW_INDEX = 2;
+	public static final int HYPHEN_WORDS_VIEW_INDEX = 3;
+	public static final int HYPHEN_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX = 4;
+	public static final int HYPHEN_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX = 5;
+	public static final int HYPHEN_ENVIRONMENTS_VIEW_INDEX = 6;
+
 	// Unit Testing constants
 	public static final String UNIT_TEST_DATA_FILE_NAME = "test/org/sil/syllableparser/testData/CVTestData.";
 	public static final String UNIT_TEST_DATA_FILE = "test/org/sil/syllableparser/testData/CVTestData.ashedata";
