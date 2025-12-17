@@ -44,7 +44,7 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane maxWidth="-Infinity" prefHeight="395.0" prefWidth="22.0" SplitPane.resizableWithParent="false">
+            <AnchorPane prefHeight="395.0" prefWidth="22.0" SplitPane.resizableWithParent="true">
                <children>
                   <Button fx:id="buttonMoveDown" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleMoveDown" />
                   <Button fx:id="buttonMoveUp" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="58.0" mnemonicParsing="false" onAction="#handleMoveUp" />
@@ -88,7 +88,7 @@
                          <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
-                  <TextArea fx:id="errorTextArea" layoutX="52.0" layoutY="174.0" prefHeight="200.0" prefWidth="-1.0" />
+                  <TextArea fx:id="errorTextArea" layoutX="52.0" layoutY="174.0" prefHeight="200.0" prefWidth="-1.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
                </children>
             </AnchorPane>
         </items>
