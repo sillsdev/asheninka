@@ -306,6 +306,8 @@ public class LanguageProject {
 		npApproach.setLanguageProject(this);
 		otApproach.load(languageProjectLoaded.getOTApproach());
 		otApproach.setLanguageProject(this);
+		hyphenApproach.load(languageProjectLoaded.getHyphenApproach());
+		hyphenApproach.setLanguageProject(this);
 		ObservableList<Segment> segmentInventoryLoadedData = languageProjectLoaded
 				.getSegmentInventory();
 		for (Segment segment : segmentInventoryLoadedData) {
