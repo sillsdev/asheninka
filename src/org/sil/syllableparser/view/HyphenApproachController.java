@@ -50,7 +50,7 @@ public class HyphenApproachController extends ApproachController {
 		super();
 		this.bundle = bundle;
 		this.locale = locale;
-		views.add(new ApproachView(bundle.getString("hyphen.view.segmentinventory"),
+		views.add(new ApproachView(bundle.getString("cv.view.segmentinventory"),
 				"handleHyphenSegmentInventory"));
 		views.add(new ApproachView(bundle.getString("hyphen.view.hyphenclass"),
 				"handleHyphenClasses"));
@@ -59,9 +59,9 @@ public class HyphenApproachController extends ApproachController {
 		views.add(new ApproachView(bundle.getString("hyphen.view.words"), "handleHyphenWords"));
 		views.add(new ApproachView(bundle.getString("hyphen.view.wordspredictedvscorrect"),
 				"handleHyphenWordsPredictedVsCorrect"));
-		views.add(new ApproachView(bundle.getString("hyphen.view.graphemenaturalclasses"),
+		views.add(new ApproachView(bundle.getString("cv.view.graphemenaturalclasses"),
 				"handleGraphemeNaturalClasses"));
-		views.add(new ApproachView(bundle.getString("hyphen.view.environments"), "handleEnvironments"));
+		views.add(new ApproachView(bundle.getString("cv.view.environments"), "handleEnvironments"));
 	}
 
 	public ObservableList<ApproachView> getViews() {
@@ -80,12 +80,12 @@ public class HyphenApproachController extends ApproachController {
 			sView = HyphenApproachView.SEGMENT_INVENTORY.toString();
 			break;
 
-		case "org.sil.syllableparser.view.HyphenClassesController":
+		case "org.sil.syllableparser.view.HyphenClassController":
 			sView = HyphenApproachView.HYPHEN_CLASSES.toString();
 			break;
 
 		case "org.sil.syllableparser.view.HyphenChangeRulesController":
-			sView = HyphenApproachView.HYPHEN_RULES.toString();
+			sView = HyphenApproachView.HYPHEN_CHANGE_RULES.toString();
 			break;
 
 		case "org.sil.syllableparser.view.HyphenWordsController":

@@ -482,9 +482,14 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 	}
 
 	@FXML
-	void handleLaunchNCSequenceChooser() {
+	void handleLaunchMatchSequenceChooser() {
 		showNCSequenceChooser();
 		showMatchesContent();
+	}
+
+	@FXML
+	void handleLaunchChangeSequenceChooser() {
+		showNCSequenceChooser();
 		showChangesContent();
 	}
 

@@ -102,6 +102,8 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private Button buttonOTApproach;
 	@FXML
+	private Button buttonHyphenApproach;
+	@FXML
 	private Button buttonToolbarFileOpen;
 	@FXML
 	private Button buttonToolbarFileNew;
@@ -225,6 +227,7 @@ public class RootLayoutController implements Initializable {
 	private MoraicApproachController moraicApproachController;
 	private NPApproachController npApproachController;
 	private OTApproachController otApproachController;
+	private HyphenApproachController hyphenApproachController;
 	private ApproachController currentApproachController;
 
 	@FXML
@@ -288,6 +291,9 @@ public class RootLayoutController implements Initializable {
 		otApproachController.setMainApp(mainApp);
 		otApproachController.setPrefs(mainApp.getApplicationPreferences());
 		otApproachController.setRootLayout(this);
+		hyphenApproachController.setMainApp(mainApp);
+		hyphenApproachController.setPrefs(mainApp.getApplicationPreferences());
+		hyphenApproachController.setRootLayout(this);
 		applicationPreferences = mainApp.getApplicationPreferences();
 		this.currentLocale = locale;
 		this.setLanguageProject(languageProject);
@@ -312,6 +318,9 @@ public class RootLayoutController implements Initializable {
 		otApproachController.setOTApproachData(languageProject.getOTApproach(),
 				languageProject.getWords());
 		otApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
+		hyphenApproachController.setHyphenApproachData(languageProject.getHyphenApproach(),
+				languageProject.getWords());
+		hyphenApproachController.setBackupDirectoryPath(getBackupDirectoryPath());
 	}
 
 	@FXML
@@ -1107,6 +1116,54 @@ public class RootLayoutController implements Initializable {
 		selectApproachViewItem(Constants.SH_ENVIRONMENTS_VIEW_INDEX);
 	}
 
+	@FXML
+	private void handleHyphenSegmentInventory() {
+		currentApproachController = hyphenApproachController;
+		hyphenApproachController.handleHyphenSegmentInventory();
+		selectApproachViewItem(Constants.HYPHEN_SEGMENT_INVENTORY_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleHyphenClasses() {
+		currentApproachController = hyphenApproachController;
+		hyphenApproachController.handleHyphenClasses();
+		selectApproachViewItem(Constants.HYPHEN_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleHyphenChangeRules() {
+		currentApproachController = hyphenApproachController;
+		hyphenApproachController.handleHyphenChangeRules();
+		selectApproachViewItem(Constants.HYPHEN_CHANGE_RULES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleHyphenWords() {
+		currentApproachController = hyphenApproachController;
+		hyphenApproachController.handleHyphenWords();
+		selectApproachViewItem(Constants.HYPHEN_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleHyphenWordsPredictedVsCorrect() {
+		currentApproachController = hyphenApproachController;
+		hyphenApproachController.handleHyphenWordsPredictedVsCorrect();
+		selectApproachViewItem(Constants.HYPHEN_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleHyphenGraphemeNaturalClasses() {
+		currentApproachController = hyphenApproachController;
+		hyphenApproachController.handleGraphemeNaturalClasses();
+		selectApproachViewItem(Constants.HYPHEN_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+	}
+
+	@FXML
+	private void handleHyphenEnvironments() {
+		currentApproachController = hyphenApproachController;
+		hyphenApproachController.handleEnvironments();
+		selectApproachViewItem(Constants.HYPHEN_ENVIRONMENTS_VIEW_INDEX);
+	}
 	public void selectApproachViewItem(int iItem) {
 		Platform.runLater(new Runnable() {
 			@Override
@@ -1458,6 +1515,19 @@ public class RootLayoutController implements Initializable {
 	}
 
 	/**
+	 * Hyphen Approach
+	 */
+	@FXML
+	private void handleHyphenApproach() {
+		rememberLastApproachViewUsed();
+		toggleButtonSelectedStatus(buttonHyphenApproach);
+		approachViews.setItems(hyphenApproachController.getViews());
+		currentApproachController = hyphenApproachController;
+		setInitialHyphenView();
+		setDisableForSomeMenuAndToolbarItems();
+	}
+
+	/**
 	 * Change interface language.
 	 */
 	@FXML
@@ -1612,6 +1682,7 @@ public class RootLayoutController implements Initializable {
 		moraicApproachController = new MoraicApproachController(bundle, bundle.getLocale());
 		npApproachController = new NPApproachController(bundle, bundle.getLocale());
 		otApproachController = new OTApproachController(bundle, bundle.getLocale());
+		hyphenApproachController = new HyphenApproachController(bundle, bundle.getLocale());
 
 		createToolbarButtons(bundle);
 
@@ -1663,6 +1734,11 @@ public class RootLayoutController implements Initializable {
 		case "CV":
 			handleCVApproach();
 			setInitialCVView();
+			break;
+
+		case "HYPHEN":
+			handleHyphenApproach();
+			setInitialHyphenView();
 			break;
 
 		case "MORAIC":
@@ -1954,6 +2030,42 @@ public class RootLayoutController implements Initializable {
 			break;
 		}
 	}
+	protected void setInitialHyphenView() {
+		String sLastHyphenApproachViewUsed = applicationPreferences.getLastHyphenApproachViewUsed();
+		switch (sLastHyphenApproachViewUsed) {
+		case "ENVIRONMENTS":
+			selectApproachViewItem(Constants.HYPHEN_ENVIRONMENTS_VIEW_INDEX);
+			break;
+
+		case "GRAPHEME_NATURAL_CLASSES":
+			selectApproachViewItem(Constants.HYPHEN_GRAPHEME_NATURAL_CLASSES_VIEW_INDEX);
+			break;
+
+		case "HYPHEN_CHANGE_RULES":
+			selectApproachViewItem(Constants.HYPHEN_CHANGE_RULES_VIEW_INDEX);
+			break;
+
+		case "HYPHEN_CLASSES":
+			selectApproachViewItem(Constants.HYPHEN_CLASSES_VIEW_INDEX);
+			break;
+
+		case "PREDICTED_VS_CORRECT_WORDS":
+			selectApproachViewItem(Constants.HYPHEN_PREDICTED_VS_CORRECT_WORDS_VIEW_INDEX);
+			break;
+
+		case "SEGMENT_INVENTORY":
+			selectApproachViewItem(Constants.HYPHEN_SEGMENT_INVENTORY_VIEW_INDEX);
+			break;
+
+		case "WORDS":
+			selectApproachViewItem(Constants.HYPHEN_WORDS_VIEW_INDEX);
+			break;
+
+		default:
+			selectApproachViewItem(0);
+			break;
+		}
+	}
 
 	protected void createToolbarButtons(ResourceBundle bundle) {
 		tooltipToolbarFileNew = ControllerUtilities.createToolbarButtonWithImage("newAction.png",
@@ -2113,6 +2225,10 @@ public class RootLayoutController implements Initializable {
 			sApproach = ApproachType.OPTIMALITY_THEORY.name();
 			break;
 
+		case "org.sil.syllableparser.view.HyphenApproachController":
+			sApproach = ApproachType.HYPHEN.name();
+			break;
+
 		default:
 			break;
 		}
@@ -2141,6 +2257,10 @@ public class RootLayoutController implements Initializable {
 
 		case "org.sil.syllableparser.view.NPApproachController":
 			approach = ApproachType.NUCLEAR_PROJECTION;
+			break;
+
+		case "org.sil.syllableparser.view.HyphenApproachController":
+			approach = ApproachType.HYPHEN;
 			break;
 
 		default:
