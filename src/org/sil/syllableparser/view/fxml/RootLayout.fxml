@@ -169,11 +169,49 @@
 								<MenuItem mnemonicParsing="true" onAction="#handleMoraicEnvironments"
 									text="%onc.view.environments" />
 								</Menu>
-							<MenuItem mnemonicParsing="true"
+							<Menu mnemonicParsing="true"
 								onAction="#handleNuclearProjectionApproach" text="%approach.nuclearprojection"
-								fx:id="menuItemNuclearProjectionApproach" />
-							<MenuItem mnemonicParsing="true" onAction="#handleOTApproach"
-								text="%approach.ot" fx:id="menuItemOTApproach" />
+								fx:id="menuItemNuclearProjectionApproach" >
+								<MenuItem mnemonicParsing="true" onAction="#handleNPSegmentInventory"
+									text="%cv.view.segmentinventory" />
+								<MenuItem mnemonicParsing="true" onAction="#handleNPSonorityHierarchy"
+									text="%sh.view.sonorityhierarchy" />
+								<MenuItem mnemonicParsing="true" onAction="#handleNPSyllabificationParameters"
+									text="%onc.view.syllabificationparameters" />
+								<MenuItem mnemonicParsing="true" onAction="#handleNPNaturalClasses"
+									text="%cv.view.naturalclass" />
+								<MenuItem mnemonicParsing="true" onAction="#handleNPRules"
+									text="%np.view.rules" />
+								<MenuItem mnemonicParsing="true" onAction="#handleNPFilters"
+									text="%np.view.filters" />
+								<MenuItem mnemonicParsing="true" onAction="#handleNPWords"
+									text="%np.view.words" />
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleNPWordsPredictedVsCorrect" text="%np.view.wordspredictedvscorrect" />
+								<MenuItem mnemonicParsing="true" onAction="#handleNPGraphemeNaturalClasses"
+									text="%onc.view.graphemenaturalclasses" />
+								<MenuItem mnemonicParsing="true" onAction="#handleNPEnvironments"
+									text="%onc.view.environments" />
+							</Menu>
+							<Menu mnemonicParsing="true" onAction="#handleOTApproach"
+								text="%approach.ot" fx:id="menuItemOTApproach" >
+								<MenuItem mnemonicParsing="true" onAction="#handleOTSegmentInventory"
+									text="%cv.view.segmentinventory" />
+								<MenuItem mnemonicParsing="true" onAction="#handleOTNaturalClasses"
+									text="%cv.view.naturalclass" />
+								<MenuItem mnemonicParsing="true" onAction="#handleOTConstraints"
+									text="%ot.view.constraints" />
+								<MenuItem mnemonicParsing="true" onAction="#handleOTConstraintRankings"
+									text="%ot.view.constraintrankings" />
+								<MenuItem mnemonicParsing="true" onAction="#handleOTWords"
+									text="%ot.view.words" />
+								<MenuItem mnemonicParsing="true"
+									onAction="#handleOTWordsPredictedVsCorrect" text="%ot.view.wordspredictedvscorrect" />
+								<MenuItem mnemonicParsing="true" onAction="#handleOTGraphemeNaturalClasses"
+									text="%onc.view.graphemenaturalclasses" />
+								<MenuItem mnemonicParsing="true" onAction="#handleOTEnvironments"
+									text="%onc.view.environments" />
+							</Menu>
 							<Menu mnemonicParsing="true" onAction="#handleHyphenApproach"
 								text="%approach.hyphen">
 								<MenuItem mnemonicParsing="true" onAction="#handleHyphenSegmentInventory"
