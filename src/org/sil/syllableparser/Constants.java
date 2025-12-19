@@ -57,8 +57,14 @@ public class Constants {
 	public static final String RESOURCE_SOURCE_LOCATION = "src/org/sil/syllableparser/";
 
 	// chooser related constants
+	public static final String INSERT_HYPHEN_SYMBOL = "-";
 	public static final String WORD_BOUNDARY_SYMBOL = "#";
 	public static final String FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN = "cb1";
+	// want unique strings for the next two so we can be sure we get the correct
+	// one
+	public static final String SPECIAL_INSERT_CODE = "Asheninka!@#InsertCode";
+	public static final String SPECIAL_REMOVE_CODE = "Asheninka!@#RemoveCode";
+	public static final String SPECIAL_WORD_BOUNDARY_CODE = "Asheninka!@#WordBoundaryCode";
 
 	// Miscellaneous constants
 	public static final String NULL_AS_STRING = "null";

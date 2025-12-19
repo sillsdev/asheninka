@@ -14,12 +14,12 @@ import org.sil.syllableparser.model.Segment;
 public class SegmentInHyphenClass {
 
 	private Segment segment;
-	private HyphenClass naturalClass;
+	private HyphenClass hyphenClass;
 
 	public SegmentInHyphenClass(Segment segment, HyphenClass hyphenClass) {
 		super();
 		this.segment = segment;
-		this.naturalClass = hyphenClass;
+		this.hyphenClass = hyphenClass;
 	}
 
 	public Segment getSegment() {
@@ -27,12 +27,12 @@ public class SegmentInHyphenClass {
 	}
 
 	public HyphenClass getNaturalClass() {
-		return naturalClass;
+		return hyphenClass;
 	}
 
 	@Override
 	public int hashCode() {
-		return segment.hashCode() * 1000 + naturalClass.hashCode();
+		return segment.hashCode() * 1000 + hyphenClass.hashCode();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SegmentInHyphenClass {
 		HyphenClass nc = ((SegmentInHyphenClass) obj).getNaturalClass();
 		if (!segment.equals(seg)) {
 			result = false;
-		} else if (!naturalClass.equals(nc)) {
+		} else if (!hyphenClass.equals(nc)) {
 			result = false;
 		}
 		return result;

@@ -1,4 +1,4 @@
-// Copyright (c) 2016 SIL International 
+// Copyright (c) 2016-2025 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -51,10 +51,6 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	private CVNaturalClass wordBoundaryNC;
 	private String sSequencePrompt;
 	ResourceBundle bundle;
-	// want unique strings for the next two so we can be sure we get the correct
-	// one
-	private static String kSpecialRemoveCode = "Asheninka!@#RemoveCode";
-	private static String kSpecialWordBoundaryCode = "Asheninka!@#WordBoundaryCode";
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -63,10 +59,10 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	public void initialize(URL location, ResourceBundle resources) {
 		bundle = resources;
 		removeNC = new CVNaturalClass(resources.getString("cv.view.syllablepatterns.remove"), null,
-				"", kSpecialRemoveCode);
+				"", Constants.SPECIAL_REMOVE_CODE);
 		wordBoundaryNC = new CVNaturalClass(
 				resources.getString("cv.view.syllablepatterns.wordboundary"), null, "",
-				kSpecialWordBoundaryCode);
+				Constants.SPECIAL_WORD_BOUNDARY_CODE);
 		sSequencePrompt = resources.getString("cv.view.syllablepatterns.ncsequence");
 
 		int i = 0;
@@ -91,7 +87,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 		cb.setOnAction((event) -> {
 			CVNaturalClass nc = cb.getValue();
 			if (nc != null) {
-				if (nc.getSNCRepresentation() == kSpecialRemoveCode) {
+				if (nc.getSNCRepresentation() == Constants.SPECIAL_REMOVE_CODE) {
 					// if we merely invoke the remove and update label code
 					// directly, we get an IndexOutOfBoundsException. This is
 					// because
@@ -110,7 +106,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 							clearRemoveOptionFromComboBox(cb);
 						}
 					});
-				} else if (nc.getSNCRepresentation() == kSpecialWordBoundaryCode) {
+				} else if (nc.getSNCRepresentation() == Constants.SPECIAL_WORD_BOUNDARY_CODE) {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -204,7 +200,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 	}
 
 	private String getNaturalClassNameToShow(CVNaturalClass nc) {
-		if (nc.getSNCRepresentation() == kSpecialWordBoundaryCode) {
+		if (nc.getSNCRepresentation() == Constants.SPECIAL_WORD_BOUNDARY_CODE) {
 			return Constants.WORD_BOUNDARY_SYMBOL;
 		} else {
 			return nc.getNCName();
@@ -223,7 +219,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 						setText(null);
 					} else {
 						String sCode = item.getSNCRepresentation();
-						if (sCode != kSpecialRemoveCode && sCode != kSpecialWordBoundaryCode) {
+						if (sCode != Constants.SPECIAL_REMOVE_CODE && sCode != Constants.SPECIAL_WORD_BOUNDARY_CODE) {
 							setText(item.getNCName() + " - " + item.getDescription());
 						} else {
 							setText(item.getNCName());
@@ -321,7 +317,7 @@ public class CVSyllablePatternNaturalClassChooserController implements Initializ
 				CVNaturalClass selectedNaturalClass = (CVNaturalClass) cb.getSelectionModel()
 						.getSelectedItem();
 				if (selectedNaturalClass != null) {
-					if (selectedNaturalClass.getSNCRepresentation() == kSpecialWordBoundaryCode) {
+					if (selectedNaturalClass.getSNCRepresentation() == Constants.SPECIAL_WORD_BOUNDARY_CODE) {
 						if (Constants.FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN.equals(cb.getId())) {
 							syllablePattern.setWordInitial(true);
 						} else {

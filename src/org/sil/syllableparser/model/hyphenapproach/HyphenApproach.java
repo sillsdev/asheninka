@@ -18,6 +18,7 @@ import jakarta.xml.bind.Unmarshaller;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Approach;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
@@ -36,9 +37,21 @@ public class HyphenApproach extends Approach {
 	private ObservableList<HyphenClass> hyphenClasses = FXCollections.observableArrayList();
 	private ObservableList<HyphenChangeRule> hyphenRules = FXCollections
 			.observableArrayList();
+	private HyphenClass insertHereHC = new HyphenClass(Constants.INSERT_HYPHEN_SYMBOL, null,
+			"", Constants.SPECIAL_INSERT_CODE, "1eb98e78-8d56-478a-aae0-92c1866ca3fc");
+
 
 	public void afterUnmarshal(Unmarshaller u, Object parent) {
 		this.languageProject = (LanguageProject) parent;
+	}
+
+	@XmlElement(name = "insertHereHC")
+	public HyphenClass getInsertHereHC() {
+		return insertHereHC;
+	}
+
+	public void setInsertHereHC(HyphenClass insertHereHC) {
+		this.insertHereHC = insertHereHC;
 	}
 
 	/**

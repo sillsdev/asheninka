@@ -50,6 +50,16 @@ public class HyphenClass extends SylParserObject {
 		createUUID();
 	}
 
+	public HyphenClass(String className, SimpleListProperty<Segment> segments,
+			String description, String sncRepresentation, String sUUID) {
+		super();
+		this.ncName = new SimpleStringProperty(className);
+		this.segments = new SimpleListProperty<Segment>(segments);
+		this.description = new SimpleStringProperty(description);
+		this.segmentsRepresentation = new SimpleStringProperty(sncRepresentation);
+		this.setID(sUUID);
+	}
+
 	public String getClassName() {
 		return ncName.get();
 	}
@@ -101,12 +111,6 @@ public class HyphenClass extends SylParserObject {
 		this.segmentsRepresentation.set(segmentsRepresentation);
 	}
 
-	/**
-	 * @return
-	 */
-	public StringProperty naturalClassProperty() {
-		return this.ncName;
-	}
 	@Override
 	public int hashCode() {
 		String sCombo = ncName.getValueSafe() + segmentsRepresentation.getValueSafe();
@@ -122,11 +126,11 @@ public class HyphenClass extends SylParserObject {
 		if (getClass() != obj.getClass())
 			return false;
 		boolean result = true;
-		HyphenClass natClass = (HyphenClass) obj;
-		if (!getClassName().equals(natClass.getClassName())) {
+		HyphenClass hyphenClass = (HyphenClass) obj;
+		if (!getClassName().equals(hyphenClass.getClassName())) {
 			result = false;
 		} else {
-			if (!getSegmentsRepresentation().equals(natClass.getSegmentsRepresentation())) {
+			if (!getSegmentsRepresentation().equals(hyphenClass.getSegmentsRepresentation())) {
 				result = false;
 			}
 		}

@@ -44,17 +44,14 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 	private boolean okClicked = false;
 	private MainApp mainApp;
 
-	private HyphenApproach cvApproach;
-	private HyphenChangeRule syllablePattern;
-
-	private HyphenClass removeNC;
-	private HyphenClass wordBoundaryNC;
+	private HyphenApproach hyphenApproach;
+	private HyphenChangeRule changeRule;
+	private ObservableList<HyphenClass> hyphenClasses;
+	private HyphenClass removeHC;
+	private HyphenClass wordBoundaryHC;
 	private String sSequencePrompt;
+	private boolean isChange = false;
 	ResourceBundle bundle;
-	// want unique strings for the next two so we can be sure we get the correct
-	// one
-	private static String kSpecialRemoveCode = "Asheninka!@#RemoveCode";
-	private static String kSpecialWordBoundaryCode = "Asheninka!@#WordBoundaryCode";
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -62,11 +59,11 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
 		bundle = resources;
-		removeNC = new HyphenClass(resources.getString("cv.view.syllablepatterns.remove"), null,
-				"", kSpecialRemoveCode);
-		wordBoundaryNC = new HyphenClass(
+		removeHC = new HyphenClass(resources.getString("cv.view.syllablepatterns.remove"), null,
+				"", Constants.SPECIAL_REMOVE_CODE);
+		wordBoundaryHC = new HyphenClass(
 				resources.getString("cv.view.syllablepatterns.wordboundary"), null, "",
-				kSpecialWordBoundaryCode);
+				Constants.SPECIAL_WORD_BOUNDARY_CODE);
 		sSequencePrompt = resources.getString("cv.view.syllablepatterns.ncsequence");
 
 		int i = 0;
@@ -74,24 +71,28 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 			ObservableList<HyphenClass> ol = FXCollections.observableArrayList();
 			comboBoxDataList.add(ol);
 			cb.setItems(comboBoxDataList.get(i++));
-			cb.setCellFactory(renderNCsInComboBox(cb));
-			cb.setConverter(renderSelectedNCInCombox());
+			cb.setCellFactory(renderHCsInComboBox(cb));
+			cb.setConverter(renderSelectedHCInComboBox());
 			if (i < comboBoxList.size()) {
 				ComboBox<HyphenClass> cbNext = comboBoxList.get(i);
 				handleComboBoxSelectionEvent(cb, cbNext);
 			}
 		}
 		comboBoxList.get(comboBoxList.size() - 1).setOnAction((event) -> {
-			labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+			labelSequence.setText(getHyphenClassSequenceFromComboBoxes());
 		});
+	}
+
+	public void setChangeRule(HyphenChangeRule changeRule) {
+		this.changeRule = changeRule;
 	}
 
 	private void handleComboBoxSelectionEvent(ComboBox<HyphenClass> cb,
 			ComboBox<HyphenClass> cbNext) {
 		cb.setOnAction((event) -> {
-			HyphenClass nc = cb.getValue();
-			if (nc != null) {
-				if (nc.getSegmentsRepresentation() == kSpecialRemoveCode) {
+			HyphenClass hc = cb.getValue();
+			if (hc != null) {
+				if (hc.getSegmentsRepresentation() == Constants.SPECIAL_REMOVE_CODE) {
 					// if we merely invoke the remove and update label code
 					// directly, we get an IndexOutOfBoundsException. This is
 					// because
@@ -106,16 +107,16 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 						@Override
 						public void run() {
 							removeContentFromComboBox(cb);
-							labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
-							clearRemoveOptionFromComboBox(cb);
+							labelSequence.setText(getHyphenClassSequenceFromComboBoxes());
+							clearOptionFromComboBox(removeHC, cb);
 						}
 					});
-				} else if (nc.getSegmentsRepresentation() == kSpecialWordBoundaryCode) {
+				} else if (hc.getSegmentsRepresentation() == Constants.SPECIAL_WORD_BOUNDARY_CODE) {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
-							addRemoveOptionToComboBox(cb);
+							labelSequence.setText(getHyphenClassSequenceFromComboBoxes());
+							addOptionToComboBox(removeHC, cb);
 							if (Constants.FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN.equals(cb.getId())) {
 								// it's the initial one; make sure the second
 								// combo box is visible
@@ -131,9 +132,9 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+							labelSequence.setText(getHyphenClassSequenceFromComboBoxes());
 							cbNext.setVisible(true);
-							addRemoveOptionToComboBox(cb);
+							addOptionToComboBox(removeHC, cb);
 						}
 					});
 				}
@@ -141,11 +142,11 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 		});
 	}
 
-	public void addRemoveOptionToComboBox(ComboBox<HyphenClass> cb) {
+	public void addOptionToComboBox(HyphenClass option, ComboBox<HyphenClass> cb) {
 		int i = comboBoxList.indexOf(cb);
 		ObservableList<HyphenClass> ol = comboBoxDataList.get(i);
-		if (!ol.contains(removeNC)) {
-			ol.add(removeNC);
+		if (!ol.contains(option)) {
+			ol.add(option);
 		}
 	}
 
@@ -159,7 +160,7 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 		}
 		// set next to last one to no longer have a remove option
 		ComboBox<HyphenClass> cbi = comboBoxList.get(i - 1);
-		clearRemoveOptionFromComboBox(cbi);
+		clearOptionFromComboBox(removeHC, cbi);
 		// no longer show final one
 		if (i < comboBoxList.size() && comboBoxList.get(i).isVisible()) {
 			comboBoxList.get(i).setVisible(false);
@@ -176,43 +177,46 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 	}
 
 	// is public for unit testing
-	public String getNaturalClassSequenceFromComboBoxes() {
+	public String getHyphenClassSequenceFromComboBoxes() {
 		StringBuilder sb = new StringBuilder();
 		if (comboBoxList.get(0).getSelectionModel().getSelectedIndex() < 0) {
 			sb.append(sSequencePrompt);
 		} else {
 			for (ComboBox<HyphenClass> cb : comboBoxList) {
 				if (cb.equals(comboBoxList.get(0))) {
-					sb.append(getNaturalClassNameToShow(cb.getSelectionModel().getSelectedItem()));
+					sb.append(getHyphenClassNameToShow(cb.getSelectionModel().getSelectedItem()));
 				} else {
-					getComboBoxSelectedNaturalClassName(cb, sb);
+					getComboBoxSelectedHyphenClassName(cb, sb);
 				}
 			}
 		}
 		return sb.toString();
 	}
 
-	protected void getComboBoxSelectedNaturalClassName(ComboBox<HyphenClass> cb, StringBuilder sb) {
+	protected void getComboBoxSelectedHyphenClassName(ComboBox<HyphenClass> cb, StringBuilder sb) {
 		if (cb.isVisible()) {
 			sb.append(" ");
 			HyphenClass selectedNaturalClass = (HyphenClass) cb.getSelectionModel()
 					.getSelectedItem();
 			if (selectedNaturalClass != null) {
-				sb.append(getNaturalClassNameToShow(selectedNaturalClass));
+				sb.append(getHyphenClassNameToShow(selectedNaturalClass));
 			}
 		}
 	}
 
-	private String getNaturalClassNameToShow(HyphenClass nc) {
-		if (nc.getSegmentsRepresentation() == kSpecialWordBoundaryCode) {
+	private String getHyphenClassNameToShow(HyphenClass nc) {
+		if (nc.getSegmentsRepresentation() == Constants.SPECIAL_WORD_BOUNDARY_CODE) {
 			return Constants.WORD_BOUNDARY_SYMBOL;
-		} else {
+		} else if (nc.getSegmentsRepresentation() == Constants.SPECIAL_INSERT_CODE) {
+			return Constants.INSERT_HYPHEN_SYMBOL;
+		}
+		else {
 			return nc.getClassName();
 		}
 	}
 
 	// Define rendering of the list of values in ComboBox drop down.
-	protected Callback<ListView<HyphenClass>, ListCell<HyphenClass>> renderNCsInComboBox(ComboBox<HyphenClass> cb) {
+	protected Callback<ListView<HyphenClass>, ListCell<HyphenClass>> renderHCsInComboBox(ComboBox<HyphenClass> cb) {
 		return (comboBox) -> {
 			return new ListCell<HyphenClass>() {
 				@Override
@@ -223,16 +227,24 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 						setText(null);
 					} else {
 						String sCode = item.getSegmentsRepresentation();
-						if (sCode != kSpecialRemoveCode && sCode != kSpecialWordBoundaryCode) {
-							setText(item.getClassName() + " - " + item.getDescription());
-						} else {
+						switch (sCode) {
+						case Constants.SPECIAL_INSERT_CODE:
+							setText(item.getDescription());
+							break;
+						case Constants.SPECIAL_REMOVE_CODE:
+							// fall through
+						case Constants.SPECIAL_WORD_BOUNDARY_CODE:
 							setText(item.getClassName());
+							break;
+						default:
+							setText(item.getClassName() + " - " + item.getDescription());
+							break;
 						}
 						// Include the "Remove' option only when some item has been selected
 						HyphenClass selectedNaturalClass = (HyphenClass) cb.getSelectionModel()
 								.getSelectedItem();
 						if (selectedNaturalClass != null) {
-							addRemoveOptionToComboBox(cb);
+							addOptionToComboBox(removeHC, cb);
 						}
 						if (item.isActive()) {
 							this.setDisable(false);
@@ -248,7 +260,7 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 	}
 
 	// Define rendering of selected value shown in ComboBox.
-	protected StringConverter<HyphenClass> renderSelectedNCInCombox() {
+	protected StringConverter<HyphenClass> renderSelectedHCInComboBox() {
 		return new StringConverter<HyphenClass>() {
 			public String toString(HyphenClass natClass) {
 				if (natClass == null) {
@@ -279,16 +291,28 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 	 * 
 	 * @param cvApproachController
 	 */
-	public void setData(HyphenApproach cvApproachData) {
-		cvApproach = cvApproachData;
+	public void setData(HyphenApproach approachData) {
+		hyphenApproach = approachData;
+		hyphenApproach.getInsertHereHC().setDescription(bundle.getString("hyphen.view.hyphenchangerules.inserthyphenafter"));
 		for (ObservableList<HyphenClass> ol : comboBoxDataList) {
 			setComboBoxData(ol);
 		}
 	}
 
 	protected void setComboBoxData(ObservableList<HyphenClass> cbData) {
-		cbData.addAll(cvApproach.getHyphenClasses());
-		cbData.add(wordBoundaryNC);
+		cbData.addAll(hyphenApproach.getHyphenClasses());
+		if (isChange) {
+			cbData.add(hyphenApproach.getInsertHereHC());
+		}
+		cbData.add(wordBoundaryHC);
+	}
+
+	public boolean isChange() {
+		return isChange;
+	}
+
+	public void setChange(boolean isChange) {
+		this.isChange = isChange;
 	}
 
 	/**
@@ -305,32 +329,34 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 	 */
 	@FXML
 	private void handleOk() {
-		getNaturalClassesFromComboBoxes();
+		getHyphenClassesFromComboBoxes(hyphenClasses);
 
 		okClicked = true;
 		dialogStage.close();
 	}
 
 	// is public for unit testing
-	public void getNaturalClassesFromComboBoxes() {
-		syllablePattern.getChangeHyphenClasses().clear();
-		syllablePattern.setWordInitial(false);
-		syllablePattern.setWordFinal(false);
+	public void getHyphenClassesFromComboBoxes(ObservableList<HyphenClass> currentlySelectdHyphenClasses) {
+		currentlySelectdHyphenClasses.clear();
+		changeRule.setWordInitial(false);
+		changeRule.setWordFinal(false);
 		for (ComboBox<HyphenClass> cb : comboBoxList) {
 			if (cb.isVisible()) {
-				HyphenClass selectedNaturalClass = (HyphenClass) cb.getSelectionModel()
+				HyphenClass selectedHyphenClass = (HyphenClass) cb.getSelectionModel()
 						.getSelectedItem();
-				if (selectedNaturalClass != null) {
-					if (selectedNaturalClass.getSegmentsRepresentation() == kSpecialWordBoundaryCode) {
+				if (selectedHyphenClass != null) {
+					if (selectedHyphenClass.getSegmentsRepresentation() == Constants.SPECIAL_WORD_BOUNDARY_CODE) {
 						if (Constants.FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN.equals(cb.getId())) {
-							syllablePattern.setWordInitial(true);
+							changeRule.setWordInitial(true);
 						} else {
-							syllablePattern.setWordFinal(true);
+							changeRule.setWordFinal(true);
 						}
+					} else if (selectedHyphenClass.getSegmentsRepresentation() == Constants.SPECIAL_INSERT_CODE) {
+						currentlySelectdHyphenClasses.add(hyphenApproach.getInsertHereHC());
 					} else {
 						int i = HyphenClass.findIndexInListByUuid(
-								cvApproach.getHyphenClasses(), selectedNaturalClass.getID());
-						syllablePattern.getChangeHyphenClasses().add(cvApproach.getHyphenClasses().get(i));
+								hyphenApproach.getHyphenClasses(), selectedHyphenClass.getID());
+						currentlySelectdHyphenClasses.add(hyphenApproach.getHyphenClasses().get(i));
 					}
 				}
 			}
@@ -358,46 +384,43 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 	}
 
 	public HyphenChangeRule getSyllablePattern() {
-		return syllablePattern;
+		return changeRule;
 	}
 
-	public void setSyllablePattern(HyphenChangeRule syllablePattern) {
-		this.syllablePattern = syllablePattern;
-		// Following assumes that setData() has been called
-		ObservableList<HyphenClass> currentySetNCs = syllablePattern.getChangeHyphenClasses();
-
-		int iNaturalClassesInPattern = currentySetNCs.size();
-		int iCurrentNaturalClass = 0;
-		if (iNaturalClassesInPattern > 0) {
+	public void setPattern(ObservableList<HyphenClass> hyphenClasses) {
+		this.hyphenClasses = hyphenClasses;
+		int iHyphenClassesInPattern = hyphenClasses.size();
+		int iCurrentHyphenClass = 0;
+		if (iHyphenClassesInPattern > 0) {
 			for (ComboBox<HyphenClass> cb : comboBoxList) {
-				if (syllablePattern.isWordInitial()
+				if (changeRule.isWordInitial()
 						&& Constants.FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN.equals(cb.getId())) {
-					cb.setValue(wordBoundaryNC);
+					cb.setValue(wordBoundaryHC);
 					cb.setVisible(true);
 				} else {
-					cb.setValue(currentySetNCs.get(iCurrentNaturalClass++));
-					if (iCurrentNaturalClass < comboBoxList.size()) {
-						comboBoxList.get(iCurrentNaturalClass).setVisible(true);
+					cb.setValue(hyphenClasses.get(iCurrentHyphenClass++));
+					if (iCurrentHyphenClass < comboBoxList.size()) {
+						comboBoxList.get(iCurrentHyphenClass).setVisible(true);
 					}
-					if (iCurrentNaturalClass >= iNaturalClassesInPattern) {
-						if (syllablePattern.isWordInitial()) {
-							comboBoxList.get(++iCurrentNaturalClass).setVisible(true);
+					if (iCurrentHyphenClass >= iHyphenClassesInPattern) {
+						if (changeRule.isWordInitial()) {
+							comboBoxList.get(++iCurrentHyphenClass).setVisible(true);
 						}
-						if (syllablePattern.isWordFinal()) {
-							cb = comboBoxList.get(iCurrentNaturalClass);
-							cb.setValue(wordBoundaryNC);
+						if (changeRule.isWordFinal()) {
+							cb = comboBoxList.get(iCurrentHyphenClass);
+							cb.setValue(wordBoundaryHC);
 							cb.setVisible(true);
 						}
 						break;
 					}
 				}
 			}
-			labelSequence.setText(getNaturalClassSequenceFromComboBoxes());
+			labelSequence.setText(getHyphenClassSequenceFromComboBoxes());
 		}
 	}
 
 	public void setSyllablePatternForUnitTesting(HyphenChangeRule syllablePattern) {
-		this.syllablePattern = syllablePattern;
+		this.changeRule = syllablePattern;
 	}
 
 	void setCurrentCVNaturalClass(HyphenClass naturalClass) {
@@ -408,11 +431,11 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 		return comboBoxList.get(index);
 	}
 
-	protected void clearRemoveOptionFromComboBox(ComboBox<HyphenClass> cb) {
+	protected void clearOptionFromComboBox(HyphenClass option, ComboBox<HyphenClass> cb) {
 		int i = comboBoxList.indexOf(cb);
 		ObservableList<HyphenClass> ol = comboBoxDataList.get(i);
-		if (ol.contains(removeNC)) {
-			ol.remove(removeNC);
+		if (ol.contains(option)) {
+			ol.remove(option);
 		}
 	}
 

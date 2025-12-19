@@ -15,9 +15,6 @@ import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
@@ -341,60 +338,50 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		}
 	}
 
-	private void showMatchesContent() {
+	private String buildContent(TextFlow textFlow, ObservableList<HyphenClass> hyphenClasses) {
 		// TODO: can we do this with lambdas?
 		StringBuilder sb = new StringBuilder();
-		matchesTextFlow.getChildren().clear();
+		textFlow.getChildren().clear();
 		if (currentHyphenChangeRule.isWordInitial()) {
-			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL, true);
+			addNameToContent(sb, matchesTextFlow, Constants.WORD_BOUNDARY_SYMBOL, true);
 			sb.append(", ");
 		}
-		ObservableList<HyphenClass> hyphenClasses = currentHyphenChangeRule.getChangeHyphenClasses();
 		if (languageProject.getAnalysisLanguage().getOrientation() ==  NodeOrientation.LEFT_TO_RIGHT) {
-			createStringOfHyphenClasses(sb, hyphenClasses);
+			createStringOfHyphenClasses(sb, textFlow, hyphenClasses);
 		} else {
 			FXCollections.reverse(hyphenClasses);
-			createStringOfHyphenClasses(sb, hyphenClasses);
+			createStringOfHyphenClasses(sb, textFlow, hyphenClasses);
 			FXCollections.reverse(hyphenClasses);
 		}
 		if (currentHyphenChangeRule.isWordFinal()) {
 			sb.append(", ");
-			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL, true);
+			addNameToContent(sb, textFlow, Constants.WORD_BOUNDARY_SYMBOL, true);
 		}
-		currentHyphenChangeRule.setMatchRepresentation(sb.toString());
+		return sb.toString();
+	}
+
+	private void showMatchesContent() {
+		String rep = buildContent(matchesTextFlow, currentHyphenChangeRule.getMatchHyphenClasses());
+		currentHyphenChangeRule.setMatchRepresentation(rep);
 	}
 
 	private void showChangesContent() {
-		// TODO: can we do this with lambdas?
-		StringBuilder sb = new StringBuilder();
-		changesTextFlow.getChildren().clear();
-		if (currentHyphenChangeRule.isWordInitial()) {
-			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL, true);
-			sb.append(", ");
-		}
-		ObservableList<HyphenClass> hyphenClasses = currentHyphenChangeRule.getChangeHyphenClasses();
-		if (languageProject.getAnalysisLanguage().getOrientation() ==  NodeOrientation.LEFT_TO_RIGHT) {
-			createStringOfHyphenClasses(sb, hyphenClasses);
-		} else {
-			FXCollections.reverse(hyphenClasses);
-			createStringOfHyphenClasses(sb, hyphenClasses);
-			FXCollections.reverse(hyphenClasses);
-		}
-		if (currentHyphenChangeRule.isWordFinal()) {
-			sb.append(", ");
-			addNameToContent(sb, Constants.WORD_BOUNDARY_SYMBOL, true);
-		}
-		currentHyphenChangeRule.setChangeRepresentation(sb.toString());
+		String rep = buildContent(changesTextFlow, currentHyphenChangeRule.getChangeHyphenClasses());
+		currentHyphenChangeRule.setChangeRepresentation(rep);
 	}
 
 	protected void createStringOfHyphenClasses(StringBuilder sb,
-			ObservableList<HyphenClass> hyphenClasses) {
+			TextFlow textFlow, ObservableList<HyphenClass> hyphenClasses) {
 		int i = 1;
 		int iCount = hyphenClasses.size();
 		for (SylParserObject spo : hyphenClasses) {
-			HyphenClass nc = (HyphenClass) spo;
-			if (nc != null) {
-				addNameToContent(sb, nc.getClassName(), spo.isActive());
+			HyphenClass nh = (HyphenClass) spo;
+			if (nh != null) {
+				if (nh.getSegmentsRepresentation().equals(Constants.SPECIAL_INSERT_CODE)) {
+					addNameToContent(sb, textFlow, "-", true);
+				} else {
+					addNameToContent(sb, textFlow, nh.getClassName(), spo.isActive());
+				}
 				if (i++ < iCount) {
 					sb.append(", ");
 				}
@@ -402,7 +389,7 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		}
 	}
 
-	protected void addNameToContent(StringBuilder sb, String sName, boolean isActive) {
+	protected void addNameToContent(StringBuilder sb, TextFlow textFlow, String sName, boolean isActive) {
 		Text t = new Text(sName);
 		t.setFont(languageProject.getAnalysisLanguage().getFont());
 		if (isActive && activeCheckBox.isSelected()) {
@@ -413,7 +400,7 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		}
 		Text tBar = new Text(" | ");
 		tBar.setStyle("-fx-stroke: lightgrey;");
-		changesTextFlow.getChildren().addAll(t, tBar);
+		textFlow.getChildren().addAll(t, tBar);
 		sb.append(sName);
 	}
 
@@ -483,20 +470,26 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 
 	@FXML
 	void handleLaunchMatchSequenceChooser() {
-		showNCSequenceChooser();
+		ObservableList<HyphenClass> hyphenClasses = currentHyphenChangeRule.getMatchHyphenClasses();
+		showHCSequenceChooser(hyphenClasses, false);
 		showMatchesContent();
+		currentHyphenChangeRule.setMatchClasses(hyphenClasses);
 	}
 
 	@FXML
 	void handleLaunchChangeSequenceChooser() {
-		showNCSequenceChooser();
+		ObservableList<HyphenClass> hyphenClasses = currentHyphenChangeRule.getChangeHyphenClasses();
+		showHCSequenceChooser(hyphenClasses, true);
 		showChangesContent();
+		currentHyphenChangeRule.setChangeClasses(hyphenClasses);
 	}
 
 	/**
-	 * Opens a dialog to show and set sequence of natural classes
+	 * Opens a dialog to show and set sequence of hyphen classes
+	 * @param fIsChange TODO
+	 * @param isMatch TODO
 	 */
-	public void showNCSequenceChooser() {
+	public void showHCSequenceChooser(ObservableList<HyphenClass> hyphenClasses, boolean fIsChange) {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			FXMLLoader loader = new FXMLLoader();
@@ -516,13 +509,14 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 			dialogStage.setTitle(MainApp.kApplicationTitle);
 
 			HyphenChangeRuleHyphenClassChooserController controller = loader.getController();
+			controller.setChange(fIsChange);
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(mainApp);
 			controller.setData(hyphenApproach);
-			controller.setSyllablePattern(currentHyphenChangeRule);
+			controller.setChangeRule(currentHyphenChangeRule);
+			controller.setPattern(hyphenClasses);
 
 			dialogStage.showAndWait();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 			MainApp.reportException(e, bundle);
