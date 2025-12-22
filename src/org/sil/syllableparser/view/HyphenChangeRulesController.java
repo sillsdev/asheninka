@@ -9,15 +9,20 @@ package org.sil.syllableparser.view;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
+import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
+import org.sil.syllableparser.model.hyphenapproach.SegmentInHyphenClass;
+import org.sil.syllableparser.service.HyphenChangeRuleValidator;
 import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
 
@@ -33,6 +38,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
@@ -104,8 +110,8 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 	private Tooltip tooltipMoveUp;
 	@FXML
 	private Tooltip tooltipMoveDown;
-	// @FXML
-	// private TextField sncRepresentationField;
+	@FXML
+	private TextArea errorTextArea;
 
 	private HyphenChangeRule currentHyphenChangeRule;
 
@@ -148,6 +154,8 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 				.changeRepresentationProperty());
 		descriptionColumn
 				.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+		errorTextArea.setStyle(Constants.TEXT_COLOR_CSS_BEGIN + "red" + Constants.TEXT_COLOR_CSS_END);
+		errorTextArea.setEditable(false);
 
 		// Custom rendering of the table cell.
 		nameColumn.setCellFactory(column -> {
@@ -233,7 +241,6 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		});
 
 		nameField.requestFocus();
-
 	}
 
 	public void displayFieldsPerActiveSetting(HyphenChangeRule hyphenChangeRule) {
@@ -249,6 +256,11 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		changesTextFlow.setDisable(!fIsActive);
 		changeButton.setDisable(!fIsActive);
 		descriptionField.setDisable(!fIsActive);
+	}
+
+	private void hideErrors(){
+		errorTextArea.setText("");
+		errorTextArea.setVisible(false);
 	}
 
 	private void forceTableRowToRedisplayPerActiveSetting(HyphenChangeRule hyphenChangeRule) {
@@ -314,6 +326,8 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 					+ hyphenChangeRulesTable.getItems().size() + " ");
 			mainApp.getApplicationPreferences().setLastHyphenChangeRulesViewItemUsed(currentItem);
 		}
+		if (hyphenApproach != null && currentHyphenChangeRule != null)
+			showAnyChangeRuleErrrors();
 	}
 
 	@Override
@@ -517,6 +531,7 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 			controller.setPattern(hyphenClasses);
 
 			dialogStage.showAndWait();
+			showAnyChangeRuleErrrors();
 		} catch (IOException e) {
 			e.printStackTrace();
 			MainApp.reportException(e, bundle);
@@ -561,6 +576,20 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 				syllablePattern.setActive(true);
 			}
 			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
+		}
+	}
+
+	protected void showAnyChangeRuleErrrors() {
+		hideErrors();
+		HyphenChangeRuleValidator validator = HyphenChangeRuleValidator.getInstance();
+		validator.setChangeRule(currentHyphenChangeRule);
+		validator.setBundle(bundle);
+		StringBuilder sb = new StringBuilder();
+		validator.validate();
+		sb.append(validator.getErrorMessage());
+		if (sb.toString().length() > 0) {
+			errorTextArea.setVisible(true);
+			errorTextArea.setText(sb.toString());
 		}
 	}
 

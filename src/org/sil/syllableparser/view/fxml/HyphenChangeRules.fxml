@@ -82,6 +82,7 @@
                          <CheckBox fx:id="activeCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
+                  <TextArea fx:id="errorTextArea" layoutX="52.0" layoutY="200.0" prefHeight="200.0" prefWidth="-1.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
                </children>
             </AnchorPane>
         </items>
