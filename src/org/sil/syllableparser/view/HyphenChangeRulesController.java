@@ -357,7 +357,7 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		StringBuilder sb = new StringBuilder();
 		textFlow.getChildren().clear();
 		if (currentHyphenChangeRule.isWordInitial()) {
-			addNameToContent(sb, matchesTextFlow, Constants.WORD_BOUNDARY_SYMBOL, true);
+			addNameToContent(sb, textFlow, Constants.WORD_BOUNDARY_SYMBOL, true);
 			sb.append(", ");
 		}
 		if (languageProject.getAnalysisLanguage().getOrientation() ==  NodeOrientation.LEFT_TO_RIGHT) {

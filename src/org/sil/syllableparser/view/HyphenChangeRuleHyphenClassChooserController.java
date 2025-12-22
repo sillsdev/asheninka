@@ -241,9 +241,9 @@ public class HyphenChangeRuleHyphenClassChooserController implements Initializab
 							break;
 						}
 						// Include the "Remove' option only when some item has been selected
-						HyphenClass selectedNaturalClass = (HyphenClass) cb.getSelectionModel()
+						HyphenClass selectedHyphenClass = (HyphenClass) cb.getSelectionModel()
 								.getSelectedItem();
-						if (selectedNaturalClass != null) {
+						if (selectedHyphenClass != null) {
 							addOptionToComboBox(removeHC, cb);
 						}
 						if (item.isActive()) {

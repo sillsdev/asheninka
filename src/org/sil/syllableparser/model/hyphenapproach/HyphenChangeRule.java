@@ -25,7 +25,6 @@ import javafx.collections.ObservableList;
  */
 public class HyphenChangeRule extends SylParserObject {
 	private final StringProperty hypRuleName;
-//	private final SimpleListProperty<HyphenClass> hyphenClasses;
 	private final StringProperty description;
 	private final StringProperty matchRepresentation;
 	private final StringProperty changeRepresentation;
@@ -37,7 +36,6 @@ public class HyphenChangeRule extends SylParserObject {
 	public HyphenChangeRule() {
 		super();
 		this.hypRuleName = new SimpleStringProperty("");
-//		this.hyphenClasses = new SimpleListProperty<HyphenClass>();
 		this.description = new SimpleStringProperty("");
 		this.matchRepresentation = new SimpleStringProperty("");
 		this.changeRepresentation = new SimpleStringProperty("");
@@ -46,14 +44,15 @@ public class HyphenChangeRule extends SylParserObject {
 		createUUID();
 	}
 
-	public HyphenChangeRule(String ruleName, SimpleListProperty<HyphenClass> hyphenClasses,
-			String description, String matchStringRepresentation, String changeStringRepresentation) {
+	public HyphenChangeRule(String ruleName, String description, SimpleListProperty<HyphenClass> matches,
+			SimpleListProperty<HyphenClass> changes) {
 		super();
 		this.hypRuleName = new SimpleStringProperty(ruleName);
-//		this.hyphenClasses = new SimpleListProperty<HyphenClass>(hyphenClasses);
 		this.description = new SimpleStringProperty(description);
-		this.matchRepresentation = new SimpleStringProperty(matchStringRepresentation);
-		this.changeRepresentation = new SimpleStringProperty(changeStringRepresentation);;
+		this.matchClasses = matches;
+		this.changeClasses = changes;
+		this.matchRepresentation = new SimpleStringProperty("");
+		this.changeRepresentation = new SimpleStringProperty("");;
 		this.fWordInitial = false;
 		this.fWordFinal = false;
 		createUUID();
@@ -70,10 +69,6 @@ public class HyphenChangeRule extends SylParserObject {
 	public void setRuleName(String value) {
 		this.hypRuleName.set(value);
 	}
-
-//	public ObservableList<HyphenClass> getHypenClasses() {
-//		return hyphenClasses;
-//	}
 
 	@XmlAttribute(name="matchClasses")
 	@XmlIDREF
@@ -96,14 +91,6 @@ public class HyphenChangeRule extends SylParserObject {
 	public void setChangeClasses(ObservableList<HyphenClass> value) {
 		this.changeClasses = value;
 	}
-
-//	public SimpleListProperty<HyphenClass> naturalClassesProperty() {
-//		return hyphenClasses;
-//	}
-//
-//	public void setNaturalClasses(ObservableList<HyphenClass> naturalClasses) {
-//		this.hyphenClasses.set(naturalClasses);
-//	}
 
 	public String getDescription() {
 		return description.get();
