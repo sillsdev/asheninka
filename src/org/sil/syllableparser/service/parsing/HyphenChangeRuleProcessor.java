@@ -18,6 +18,7 @@ import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
+import org.sil.syllableparser.model.hyphenapproach.HyphenClassInWord;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
@@ -29,12 +30,12 @@ import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
  *         a Service Takes a sequence of natural classes and parses them into a
  *         sequence of syllables
  */
-public class HyphenSyllabifier implements Syllabifiable {
+public class HyphenChangeRuleProcessor {
 
 	private LanguageProject languageProject;
 	private HyphenApproach hyphenApproach;
 	private CVSegmenter segmenter;
-	private SHSonorityComparer sonorityComparer;
+	private HyphenChangeRuleProcessor hyphenRuleProcessor;
 	private boolean fDoTrace = false;
 	private List<SHTracingStep> syllabifierTraceInfoList = new ArrayList<SHTracingStep>();
 
@@ -42,13 +43,13 @@ public class HyphenSyllabifier implements Syllabifiable {
 			Arrays.asList(new SHSyllable(null)));
 	String sSyllabifiedWord;
 
-	public HyphenSyllabifier(HyphenApproach sonHierApproach) {
+	public HyphenChangeRuleProcessor(HyphenApproach hyphenApproach) {
 		super();
-		this.hyphenApproach = sonHierApproach;
-		languageProject = sonHierApproach.getLanguageProject();
+		this.hyphenApproach = hyphenApproach;
+		languageProject = hyphenApproach.getLanguageProject();
 		segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
 				languageProject.getActiveGraphemeNaturalClasses());
-//		sonorityComparer = new SHSonorityComparer(sonHierApproach);
+		hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproach);
 		sSyllabifiedWord = "";
 	}
 
@@ -80,17 +81,9 @@ public class HyphenSyllabifier implements Syllabifiable {
 		fSuccess = segResult.success;
 		if (fSuccess) {
 			List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-			fSuccess = parseIntoSyllables(segmentsInWord);
+//			fSuccess = parseIntoHyphenClasses(segmentsInWord);
 		}
 		return fSuccess;
-	}
-
-	private boolean parseIntoSyllables(List<? extends CVSegmentInSyllable> segmentsInWord) {
-		if (segmentsInWord.size() == 0) {
-			return false;
-		}
-		boolean fResult = syllabify(segmentsInWord);
-		return fResult;
 	}
 
 	public boolean syllabify(List<? extends CVSegmentInSyllable> segmentsInWord) {
@@ -193,26 +186,6 @@ public class HyphenSyllabifier implements Syllabifiable {
 				sb.append(".");
 			}
 		}
-		return sb.toString();
-	}
-
-	@Override
-	public String getLingTreeDescriptionOfCurrentWord() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("(W");
-		for (SHSyllable syl : syllablesInCurrentWord) {
-			sb.append("(");
-			sb.append(Constants.SYLLABLE_SYMBOL);
-			for (CVSegmentInSyllable seg : syl.getSegmentsInSyllable()) {
-				sb.append("(\\L ");
-				sb.append(seg.getSegmentName());
-				sb.append("(\\G ");
-				sb.append(seg.getGrapheme());
-				sb.append("))");
-			}
-			sb.append(")");
-		}
-		sb.append(")");
 		return sb.toString();
 	}
 

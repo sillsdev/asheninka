@@ -418,11 +418,6 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		sb.append(sName);
 	}
 
-	public void setSyllablePattern(HyphenChangeRule syllablePattern) {
-		nameField.setText(syllablePattern.getRuleName());
-		descriptionField.setText(syllablePattern.getDescription());
-	}
-
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 *

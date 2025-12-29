@@ -39,7 +39,8 @@ public class HyphenApproach extends Approach {
 			.observableArrayList();
 	private HyphenClass insertHereHC = new HyphenClass(Constants.INSERT_HYPHEN_SYMBOL, null,
 			"", Constants.SPECIAL_INSERT_CODE, "1eb98e78-8d56-478a-aae0-92c1866ca3fc");
-
+	private HyphenClass wordBoundaryHC = new HyphenClass(Constants.WORD_BOUNDARY_SYMBOL, null,
+			"", Constants.SPECIAL_WORD_BOUNDARY_CODE, "5f50fa4b-6f46-4937-9564-9bb9be2d58b0");
 
 	public void afterUnmarshal(Unmarshaller u, Object parent) {
 		this.languageProject = (LanguageProject) parent;
@@ -52,6 +53,14 @@ public class HyphenApproach extends Approach {
 
 	public void setInsertHereHC(HyphenClass insertHereHC) {
 		this.insertHereHC = insertHereHC;
+	}
+
+	public HyphenClass getWordBoundaryHC() {
+		return wordBoundaryHC;
+	}
+
+	public void setWordBoundaryHC(HyphenClass wordBoundaryHC) {
+		this.wordBoundaryHC = wordBoundaryHC;
 	}
 
 	/**
