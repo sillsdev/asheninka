@@ -104,14 +104,6 @@
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </hyphenChangeRule>
-            <hyphenChangeRule changeClasses="e3196b49-e7fd-41fc-b12c-6cbddbac7e5a" matchClasses="3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" id="342b35d8-8a97-44a4-a271-14762d1fa223" active="true">
-                <changeRepresentation>#, V, #</changeRepresentation>
-                <description></description>
-                <matchRepresentation>#, C, #</matchRepresentation>
-                <ruleName>ff</ruleName>
-                <wordFinal>true</wordFinal>
-                <wordInitial>true</wordInitial>
-            </hyphenChangeRule>
         </hyphenChangeRules>
         <hyphenClasses>
             <hyphenClass segs="de664190-dd3c-4bb3-892e-16dc596255ce 92284e25-50b0-4c3a-9043-c5a67c6cfcff 6f1ddfe5-8982-4c5f-8bbb-9dba930f29cf b39ebda2-581a-43cc-96f7-c9e8b4a192a5 008bb81a-5594-45ee-ae2a-457a058cee16 70e0b8bf-7ffd-4302-a7ac-2c8b7dbd526f" id="e3196b49-e7fd-41fc-b12c-6cbddbac7e5a" active="true">

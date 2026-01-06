@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 SIL International
+ * Copyright (c) 2025-2026 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -45,6 +45,8 @@ public class HyphenClasser {
 
 	public HyphenClasserResult parseIntoHyphenClasses(List<? extends CVSegmentInSyllable> segmentsInWord) {
 		HyphenClasserResult hcResult = new HyphenClasserResult();
+		segmentToHyphenClassMapping.clear();
+		classesInWord.clear();
 		if (segmentsInWord.size() == 0) {
 			hcResult.success = false;
 			return hcResult;
@@ -63,7 +65,6 @@ public class HyphenClasser {
 	}
 
 	protected void buildSegmentToHyphenClassMapping() {
-		segmentToHyphenClassMapping.clear();
 		for (Segment seg : hyphenApproach.getLanguageProject().getActiveSegmentsInInventory()) {
 			for (HyphenClass hc : hyphenApproach.getActiveHyphenClasses()) {
 				if (hc.getSegments().contains(seg) && !segmentToHyphenClassMapping.containsKey(seg)) {

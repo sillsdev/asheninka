@@ -1,4 +1,4 @@
-// Copyright (c) 2025 SIL International
+// Copyright (c) 2025-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -17,12 +17,15 @@ import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
+import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClassInWord;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
 import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
+
+import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
@@ -35,7 +38,6 @@ public class HyphenChangeRuleProcessor {
 	private LanguageProject languageProject;
 	private HyphenApproach hyphenApproach;
 	private CVSegmenter segmenter;
-	private HyphenChangeRuleProcessor hyphenRuleProcessor;
 	private boolean fDoTrace = false;
 	private List<SHTracingStep> syllabifierTraceInfoList = new ArrayList<SHTracingStep>();
 
@@ -49,7 +51,6 @@ public class HyphenChangeRuleProcessor {
 		languageProject = hyphenApproach.getLanguageProject();
 		segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
 				languageProject.getActiveGraphemeNaturalClasses());
-		hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproach);
 		sSyllabifiedWord = "";
 	}
 
@@ -71,6 +72,68 @@ public class HyphenChangeRuleProcessor {
 
 	public void setDoTrace(boolean fDoTrace) {
 		this.fDoTrace = fDoTrace;
+	}
+
+	public HyphenChangeRuleResult applyChangeRules(List<HyphenClassInWord> classesInWord) {
+		HyphenChangeRuleResult crResult = new HyphenChangeRuleResult();
+		for (HyphenChangeRule rule : hyphenApproach.getHyphenChangeRules()) {
+			HyphenChangeRuleState hcState = new HyphenChangeRuleState(rule, classesInWord, -1);
+			if (!tryRule(hcState)) {
+				crResult.success = false;
+				return crResult;
+			}
+		}
+		return crResult;
+	}
+
+	boolean tryRule(HyphenChangeRuleState hcState) {
+		hcState.setClassIndex(0);
+		while (ruleMatches(hcState)) {
+			applyRule(hcState);
+		}
+
+		return true;
+	}
+
+	public boolean ruleMatches(HyphenChangeRuleState hcState) {
+		ObservableList<HyphenClass> classesToMatch = hcState.rule.getMatchHyphenClasses();
+		int ciwLast = hcState.getClassIndex();
+		if (classesToMatch.size() == 1 && ciwLast != -1) {
+			ciwLast++;
+		}
+		int ciwStart = Math.max(0, ciwLast);
+		List<HyphenClassInWord> classesInWord = hcState.classesInWord;
+		if (hcState.getClassIndex() >= classesInWord.size()) {
+			return false;
+		}
+		HyphenClass hcInMatch = classesToMatch.get(0);
+		for (int iWord = ciwStart; iWord < classesInWord.size(); iWord++) {
+			HyphenClassInWord hciw = classesInWord.get(iWord);
+			if (!hciw.getClassID().equals(hcInMatch.getID())) {
+				continue;
+			}
+			// matches first hc in match
+			int iMatch = classesToMatch.indexOf(hcInMatch);
+			int iClassInWord = classesInWord.indexOf(hciw);
+			boolean matchedAll = true;
+			for (int i = iMatch + 1; i < classesToMatch.size(); i++) {
+				if (++iClassInWord >= classesInWord.size()
+						|| !classesToMatch.get(i).getID().equals(classesInWord.get(iClassInWord).getClassID())) {
+					matchedAll = false;
+					break;
+				}
+			}
+			if (matchedAll) {
+				hcState.setClassIndex(iClassInWord);
+				return true;
+			}
+		}
+		hcState.setClassIndex(-1);
+		return false;
+	}
+
+	void applyRule(HyphenChangeRuleState hcState) {
+		
 	}
 
 	public boolean convertStringToSyllables(String word) {
