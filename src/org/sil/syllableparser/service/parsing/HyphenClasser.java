@@ -60,7 +60,7 @@ public class HyphenClasser {
 			classesInWord.add(hciw);
 		}
 		classesInWord.add(wordBoundary);
-		hcResult.sClasses = classesInWord.stream().map(HyphenClassInWord::getClassName).collect(Collectors.joining(", "));
+		hcResult.sClasses = getClassesRepresentation(classesInWord);
 		return hcResult;
 	}
 
@@ -70,8 +70,11 @@ public class HyphenClasser {
 				if (hc.getSegments().contains(seg) && !segmentToHyphenClassMapping.containsKey(seg)) {
 					segmentToHyphenClassMapping.put(seg, hc);
 				}
-			}			
+			}
 		}
 	}
 
+	public static String getClassesRepresentation(List<HyphenClassInWord> classesInWord) {
+		return classesInWord.stream().map(HyphenClassInWord::getClassName).collect(Collectors.joining(", "));
+	}
 }

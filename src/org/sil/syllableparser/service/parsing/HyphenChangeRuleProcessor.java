@@ -41,8 +41,7 @@ public class HyphenChangeRuleProcessor {
 	private boolean fDoTrace = false;
 	private List<SHTracingStep> syllabifierTraceInfoList = new ArrayList<SHTracingStep>();
 
-	LinkedList<SHSyllable> syllablesInCurrentWord = new LinkedList<SHSyllable>(
-			Arrays.asList(new SHSyllable(null)));
+	LinkedList<SHSyllable> syllablesInCurrentWord = new LinkedList<SHSyllable>(Arrays.asList(new SHSyllable(null)));
 	String sSyllabifiedWord;
 
 	public HyphenChangeRuleProcessor(HyphenApproach hyphenApproach) {
@@ -132,8 +131,24 @@ public class HyphenChangeRuleProcessor {
 		return false;
 	}
 
-	void applyRule(HyphenChangeRuleState hcState) {
-		
+	public void applyRule(HyphenChangeRuleState hcState) {
+		HyphenChangeRule rule = hcState.getRule();
+		List<HyphenClassInWord> classesInWord = hcState.getClassesInWord();
+		List<HyphenClass> classesInChange = rule.getChangeHyphenClasses();
+		int iStartInWord = hcState.getClassIndex() - rule.getMatchHyphenClasses().size() + 1;
+		for (int iInWord = iStartInWord, jInChange = 0; iInWord > -1 && iInWord < classesInWord.size()
+				&& jInChange < rule.getChangeHyphenClasses().size(); iInWord++, jInChange++) {
+			HyphenClass hcChange = classesInChange.get(jInChange);
+			if (hcChange.getID().equals(hyphenApproach.getInsertHereHC().getID())) {
+				HyphenClassInWord insertHere = new HyphenClassInWord(hyphenApproach.getInsertHereHC(), null);
+				classesInWord.add(iInWord, insertHere);
+			} else {
+				HyphenClassInWord ciwMatch = classesInWord.get(iInWord);
+				HyphenClassInWord ciwChanged = new HyphenClassInWord(hcChange, ciwMatch.getSegInWord());
+				classesInWord.set(iInWord, ciwChanged);
+			}
+		}
+		hcState.setClassesInWord(classesInWord);
 	}
 
 	public boolean convertStringToSyllables(String word) {
@@ -228,8 +243,8 @@ public class HyphenChangeRuleProcessor {
 		return true;
 	}
 
-	protected SHSyllable endThisSyllableStartNew(
-			List<? extends CVSegmentInSyllable> segmentsInWord, SHSyllable syl, int i) {
+	protected SHSyllable endThisSyllableStartNew(List<? extends CVSegmentInSyllable> segmentsInWord, SHSyllable syl,
+			int i) {
 		syllablesInCurrentWord.add(syl);
 		syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
 		syl.add(segmentsInWord.get(i));
