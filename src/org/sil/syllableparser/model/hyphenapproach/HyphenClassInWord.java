@@ -30,6 +30,22 @@ public class HyphenClassInWord {
 		this.segInWord = segInWord;
 	}
 
+	public HyphenClass getHyphenClass() {
+		return hyphenClass;
+	}
+
+	public void setHyphenClass(HyphenClass hyphenClass) {
+		this.hyphenClass = hyphenClass;
+	}
+
+	public CVSegmentInSyllable getSegInWord() {
+		return segInWord;
+	}
+
+	public void setSegInWord(CVSegmentInSyllable segInWord) {
+		this.segInWord = segInWord;
+	}
+
 	public String getClassID() {
 		return hyphenClass.getID();
 	}
