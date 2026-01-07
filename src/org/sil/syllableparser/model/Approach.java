@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import jakarta.xml.bind.annotation.XmlTransient;
 
+import org.sil.syllableparser.Constants;
 import org.sil.utility.StringUtilities;
 
 import javafx.collections.ObservableList;
@@ -55,9 +56,9 @@ public abstract class Approach {
 			String sSyllabifiedWord) {
 		int positionFromStart = hyphenationParameters.getStartAfterCharactersFromBeginning();
 		int positionFromEnd = hyphenationParameters.getStopBeforeCharactersFromEnd();
-		String sHyphenatedWord = StringUtilities.removeFromStart(sSyllabifiedWord, ".",
+		String sHyphenatedWord = StringUtilities.removeFromStart(sSyllabifiedWord, Constants.SYLLABLE_BREAK_INDICATOR,
 				positionFromStart);
-		sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord, ".", positionFromEnd);
+		sHyphenatedWord = StringUtilities.removeFromEnd(sHyphenatedWord, Constants.SYLLABLE_BREAK_INDICATOR, positionFromEnd);
 		return sHyphenatedWord;
 	}
 

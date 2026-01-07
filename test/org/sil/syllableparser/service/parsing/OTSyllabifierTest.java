@@ -210,7 +210,7 @@ public class OTSyllabifierTest {
 		List<OTSyllable> syllablesInWord = otSyllabifier.getSyllablesInCurrentWord();
 		assertEquals(numberOfSyllables, syllablesInWord.size());
 		String joined = syllablesInWord.stream().map(OTSyllable::getStructuralOptionsInSyllable)
-				.collect(Collectors.joining("."));
+				.collect(Collectors.joining(Constants.SYLLABLE_BREAK_INDICATOR));
 		assertEquals(expectedstructuralOptions, joined);
 		assertEquals(expectedSyllabification, otSyllabifier.getSyllabificationOfCurrentWord());
 		assertEquals(expectedLTDescription, otSyllabifier.getLingTreeDescriptionOfCurrentWord());

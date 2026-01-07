@@ -18,6 +18,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.cvapproach.CVApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.moraicapproach.MoraicApproach;
@@ -380,7 +381,7 @@ public class LanguageProject {
 		int indexOfHashMark = word.indexOf('*');
 		if (indexOfHashMark == 0) {
 			wordContentOnly = word.substring(1);
-			wordWithCorrectSyllabification = wordContentOnly.replace("=", ".");
+			wordWithCorrectSyllabification = wordContentOnly.replace("=", Constants.SYLLABLE_BREAK_INDICATOR);
 		}
 		if (!wordContentOnly.isEmpty()) {
 			final String wordToCheck = wordContentOnly.replace("=", "");

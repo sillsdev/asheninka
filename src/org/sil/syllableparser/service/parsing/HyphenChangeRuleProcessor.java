@@ -9,6 +9,7 @@ package org.sil.syllableparser.service.parsing;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
@@ -254,7 +255,7 @@ public class HyphenChangeRuleProcessor {
 				continue;
 			}
 			if (classId.equals(hyphenApproach.getInsertHereHC().getID())) {
-				sb.append(".");
+				sb.append(Constants.SYLLABLE_BREAK_INDICATOR);
 				continue;
 			}
 			CVSegmentInSyllable seg = ciw.getSegInWord();

@@ -259,7 +259,7 @@ public class OTSyllabifier implements Syllabifiable {
 				sb.append(segInSyl.getGrapheme());
 				OTSegmentInSyllable segInSyl2 = segmentsInWord.get(++i);
 				if (isSyllableBreak(segInSyl, segInSyl2)) {
-					sb.append(".");
+					sb.append(Constants.SYLLABLE_BREAK_INDICATOR);
 				}
 			} else {
 				sb.append(segInSyl.getGrapheme());

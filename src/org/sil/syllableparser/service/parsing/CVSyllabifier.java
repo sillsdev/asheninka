@@ -226,7 +226,7 @@ public class CVSyllabifier implements Syllabifiable {
 				sb.append(nc.getSegmentInSyllable().getGrapheme());
 			}
 			if (i++ < iSize) {
-				sb.append(".");
+				sb.append(Constants.SYLLABLE_BREAK_INDICATOR);
 			}
 		}
 		return sb.toString();

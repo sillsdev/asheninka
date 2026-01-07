@@ -851,7 +851,7 @@ public class ONCSyllabifier implements Syllabifiable {
 				sb.append(seg.getGrapheme());
 			}
 			if (i++ < iSize) {
-				sb.append(".");
+				sb.append(Constants.SYLLABLE_BREAK_INDICATOR);
 			}
 		}
 		// Append any segments in the word final appendix
@@ -875,7 +875,7 @@ public class ONCSyllabifier implements Syllabifiable {
 			Rime rime = syl.getRime();
 			rime.getONCPattern(sb);
 			if (i++ < iSize) {
-				sb.append(".");
+				sb.append(Constants.SYLLABLE_BREAK_INDICATOR);
 			}
 		}
 		// Append any segments in the word final appendix

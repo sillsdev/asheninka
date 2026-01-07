@@ -580,7 +580,7 @@ public class NPSyllabifier implements Syllabifiable {
 				sb.append(seg.getGrapheme());
 			}
 			if (i++ < iSize) {
-				sb.append(".");
+				sb.append(Constants.SYLLABLE_BREAK_INDICATOR);
 			}
 		}
 		return sb.toString();

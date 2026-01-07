@@ -17,6 +17,7 @@ public class Constants {
 	public static final String VERSION_NUMBER = "1.2.0";
 	public static final int SAVE_DATA_PERIODICITY = 15;
 	public static final int CURRENT_DATABASE_VERSION = 2;
+	public static final String SYLLABLE_BREAK_INDICATOR = ".";
 	public static final String SYLLABLE_SYMBOL = "σ";
 	public static final String MORA_SYMBOL = "μ";
 	public static final String CODA_IN_MORA_SYMBOL = "c";

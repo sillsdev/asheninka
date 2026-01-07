@@ -9,6 +9,7 @@ package org.sil.syllableparser.service.importexport;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.Word;
 import org.sil.utility.*;
 import org.xml.sax.Attributes;
@@ -49,7 +50,7 @@ public class ParaTExtExportedWordListXmlParserHandler extends DefaultHandler {
 	            if (!StringUtilities.isNullOrEmpty(hyphenationApproved) && "True".equalsIgnoreCase(hyphenationApproved)) {
 	            	String correctHyphenation = attributes.getValue("hyphenation");
 	            	if (!StringUtilities.isNullOrEmpty(correctHyphenation)) {
-	            		myWord.setCorrectSyllabification(correctHyphenation.replaceAll("=", "."));
+	            		myWord.setCorrectSyllabification(correctHyphenation.replaceAll("=", Constants.SYLLABLE_BREAK_INDICATOR));
 	            	}
 	            }
 	            //initialize list
