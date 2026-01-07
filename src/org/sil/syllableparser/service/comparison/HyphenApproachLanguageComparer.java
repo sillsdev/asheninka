@@ -19,7 +19,7 @@ import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
-import org.sil.syllableparser.service.parsing.HyphenSyllabifier;
+import org.sil.syllableparser.service.parsing.HyphenChangeRuleProcessor;
 
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
@@ -159,14 +159,14 @@ public class HyphenApproachLanguageComparer extends ApproachLanguageComparer {
 	}
 
 	protected void syllabifyWords(HyphenApproach cva, List<Word> words) {
-		HyphenSyllabifier stringSyllabifier = new HyphenSyllabifier(cva);
-		for (Word word : words) {
-			boolean fSuccess = stringSyllabifier.convertStringToSyllables(word.getWord());
-			if (fSuccess) {
-				word.setHyphenPredictedSyllabification(stringSyllabifier
-						.getSyllabificationOfCurrentWord());
-			}
-		}
+//		HyphenChangeRuleProcessor stringSyllabifier = new HyphenChangeRuleProcessor(cva);
+//		for (Word word : words) {
+//			boolean fSuccess = stringSyllabifier.convertStringToSyllables(word.getWord());
+//			if (fSuccess) {
+//				word.setHyphenPredictedSyllabification(stringSyllabifier
+//						.getSyllabificationOfCurrentWord());
+//			}
+//		}
 
 	}
 

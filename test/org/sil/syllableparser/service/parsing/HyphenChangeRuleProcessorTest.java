@@ -14,11 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sil.syllableparser.model.cvapproach.*;
 import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
-import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
-import org.sil.syllableparser.model.hyphenapproach.HyphenClassInWord;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * @author Andy Black
@@ -31,7 +26,7 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 	List<HyphenChangeRule> changeRules;
 	private HyphenChangeRuleProcessor hyphenRuleProcessor;
 	HyphenChangeRule rule;
-
+	boolean fSuccess;
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -45,22 +40,6 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		assertEquals("Segment inventory size", 27, segmentInventory.size());
 		assertEquals("Hyphen classes size", 3, hyphenClasses.size());
 		assertEquals("Hyphen change rule size", 3, changeRules.size());
-	}
-
-//	@Test
-	public void wordToSegmentToHyphenClassesTest() {
-
-		checkProcessorResults("", false, 0, "", "");
-		checkProcessorResults("a", true, 3, "#, V, #", "a");
-		checkProcessorResults("d", true, 3, "#, C, #", "s");
-		checkProcessorResults("n", true, 3, "#, N, #", "n");
-		checkProcessorResults("Chiko", true, 6, "#, C, V, C, V, #", "Chi.ko");
-		checkProcessorResults("dapbek", true, 8, "#, C, V, C, C, V, C, #", "dap.bak");
-		checkProcessorResults("bampidon", true, 10, "#, C, V, N, C, V, C, V, N, #", "bam.pion");
-		checkProcessorResults("bovdek", true, 8, "#, C, V, C, C, V, C, #", "bov.dek");
-		checkProcessorResults("fuhgt", true, 7, "#, C, V, C, C, C, #", "fuhgt");
-		checkProcessorResults("blofugh", true, 9, "#, C, C, V, C, V, C, C, #", "blo.fugh");
-		checkProcessorResults("bo", true, 4, "#, C, V, #", "bo");
 	}
 
 	@Test
@@ -100,7 +79,7 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 	protected void checkRuleMatch(String word, boolean expectedClasserSuccess, int numberOfClasses,
 			HyphenChangeRule rule, boolean[] expectedRuleSuccess, int[] expectedClassIndex) {
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
-		boolean fSuccess = segResult.success;
+		fSuccess = segResult.success;
 		List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		HyphenClasserResult ncResult = hyphenClasser.parseIntoHyphenClasses(segmentsInWord);
 		fSuccess = ncResult.success;
@@ -145,8 +124,7 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 	}
 
 	protected void checkApplyRule(String word, HyphenChangeRule rule, String expectedClassRepresentation) {
-		CVSegmenterResult segResult = segmenter.segmentWord(word);
-		boolean fSuccess = segResult.success;
+		segmenter.segmentWord(word);
 		List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
 		HyphenClasserResult ncResult = hyphenClasser.parseIntoHyphenClasses(segmentsInWord);
 		fSuccess = ncResult.success;
@@ -157,17 +135,27 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		assertEquals(expectedClassRepresentation, HyphenClasser.getClassesRepresentation(hcrs.getClassesInWord()));
 	}
 
-	protected void checkProcessorResults(String word, boolean success, int numberOfClasses, String expectedClasses,
-			String expectedHyphenation) {
-		CVSegmenterResult segResult = segmenter.segmentWord(word);
-		boolean fSuccess = segResult.success;
+	@Test
+	public void applyChangeRulesTest() {
+
+		checkProcessorResults("", true, "");
+		checkProcessorResults("a", true, "a");
+		checkProcessorResults("d", true, "d");
+		checkProcessorResults("n", true, "n");
+		checkProcessorResults("Chiko", true, "Chi.ko");
+		checkProcessorResults("dapbek", true, "da.pbe.k");
+		checkProcessorResults("bampidon", true, "ba.m.pi.do.n");
+		checkProcessorResults("bovdek", true, "bo.vde.k");
+		checkProcessorResults("fuhgt", true, "fu.hgt");
+		checkProcessorResults("blofugh", true, "blo.fu.gh");
+		checkProcessorResults("bo", true, "bo");
+	}
+
+	protected void checkProcessorResults(String word, boolean success, String expectedHyphenation) {
+		segmenter.segmentWord(word);
 		List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-		HyphenClasserResult ncResult = hyphenClasser.parseIntoHyphenClasses(segmentsInWord);
-		fSuccess = ncResult.success;
-		assertEquals("word classed into hyphen classes", success, fSuccess);
+		hyphenClasser.parseIntoHyphenClasses(segmentsInWord);
 		classesInWord = hyphenClasser.getClassesInWord();
-		assertEquals("Expect " + numberOfClasses + " classes in word", numberOfClasses, classesInWord.size());
-		assertEquals("Expected class sequence", expectedClasses, ncResult.sClasses);
 		HyphenChangeRuleResult crResult = hyphenRuleProcessor.applyChangeRules(classesInWord);
 		fSuccess = crResult.success;
 		assertEquals("rules processed", success, fSuccess);

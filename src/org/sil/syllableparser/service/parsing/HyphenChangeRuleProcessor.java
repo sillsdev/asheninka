@@ -7,23 +7,15 @@
 package org.sil.syllableparser.service.parsing;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClassInWord;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHApproach;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHComparisonResult;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHSyllable;
-import org.sil.syllableparser.model.sonorityhierarchyapproach.SHTracingStep;
+import org.sil.syllableparser.model.hyphenapproach.HyphenTracingStep;
 
 import javafx.collections.ObservableList;
 
@@ -38,10 +30,9 @@ public class HyphenChangeRuleProcessor {
 	private LanguageProject languageProject;
 	private HyphenApproach hyphenApproach;
 	private CVSegmenter segmenter;
+	HyphenClasser hyphenClasser;
 	private boolean fDoTrace = false;
-	private List<SHTracingStep> syllabifierTraceInfoList = new ArrayList<SHTracingStep>();
-
-	LinkedList<SHSyllable> syllablesInCurrentWord = new LinkedList<SHSyllable>(Arrays.asList(new SHSyllable(null)));
+	private List<HyphenTracingStep> syllabifierTraceInfoList = new ArrayList<HyphenTracingStep>();
 	String sSyllabifiedWord;
 
 	public HyphenChangeRuleProcessor(HyphenApproach hyphenApproach) {
@@ -50,18 +41,20 @@ public class HyphenChangeRuleProcessor {
 		languageProject = hyphenApproach.getLanguageProject();
 		segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
 				languageProject.getActiveGraphemeNaturalClasses());
+		hyphenClasser = new HyphenClasser(hyphenApproach);
 		sSyllabifiedWord = "";
 	}
 
-	public List<SHSyllable> getSyllablesInCurrentWord() {
-		return syllablesInCurrentWord;
+	public String getSyllabifiedWord() {
+		return sSyllabifiedWord;
 	}
 
-	public void setSyllablesInCurrentWord(LinkedList<SHSyllable> syllablesInCurrentWord) {
-		this.syllablesInCurrentWord = syllablesInCurrentWord;
+	public void setSyllabifiedWord(String sSyllabifiedWord) {
+		this.sSyllabifiedWord = sSyllabifiedWord;
 	}
 
-	public List<SHTracingStep> getSyllabifierTraceInfo() {
+
+	public List<HyphenTracingStep> getSyllabifierTraceInfo() {
 		return syllabifierTraceInfoList;
 	}
 
@@ -79,9 +72,12 @@ public class HyphenChangeRuleProcessor {
 			HyphenChangeRuleState hcState = new HyphenChangeRuleState(rule, classesInWord, -1);
 			if (!tryRule(hcState)) {
 				crResult.success = false;
+				crResult.sHyphenation = getSyllabificationOfCurrentWord(classesInWord);
 				return crResult;
 			}
 		}
+		sSyllabifiedWord = getSyllabificationOfCurrentWord(classesInWord);
+		crResult.sHyphenation = sSyllabifiedWord;
 		return crResult;
 	}
 
@@ -151,20 +147,26 @@ public class HyphenChangeRuleProcessor {
 		hcState.setClassesInWord(classesInWord);
 	}
 
-	public boolean convertStringToSyllables(String word) {
-		syllablesInCurrentWord.clear();
+	public boolean convertStringToHyphenatedForm(String word) {
+		sSyllabifiedWord = "";
 		syllabifierTraceInfoList.clear();
 		boolean fSuccess = false;
 		CVSegmenterResult segResult = segmenter.segmentWord(word);
 		fSuccess = segResult.success;
 		if (fSuccess) {
 			List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-//			fSuccess = parseIntoHyphenClasses(segmentsInWord);
+			HyphenClasserResult hcResult = hyphenClasser.parseIntoHyphenClasses(segmentsInWord);
+			fSuccess = hcResult.success;
+			if (fSuccess) {
+				List<HyphenClassInWord> classesInWord = hyphenClasser.getClassesInWord();
+				HyphenChangeRuleResult crResult = applyChangeRules(classesInWord);
+				fSuccess = crResult.success;
+			}
 		}
 		return fSuccess;
 	}
 
-	public boolean syllabify(List<? extends CVSegmentInSyllable> segmentsInWord) {
+//	public boolean syllabify(List<? extends CVSegmentInSyllable> segmentsInWord) {
 //		syllablesInCurrentWord.clear();
 //		syllabifierTraceInfoList.clear();
 //		SHTracingStep traceInfo = null;
@@ -240,60 +242,50 @@ public class HyphenChangeRuleProcessor {
 //				syllabifierTraceInfoList.add(traceInfo);
 //			}
 //		}
-		return true;
-	}
+//		return true;
+//	}
 
-	protected SHSyllable endThisSyllableStartNew(List<? extends CVSegmentInSyllable> segmentsInWord, SHSyllable syl,
-			int i) {
-		syllablesInCurrentWord.add(syl);
-		syl = new SHSyllable(new ArrayList<CVSegmentInSyllable>());
-		syl.add(segmentsInWord.get(i));
-		return syl;
-	}
-
-	public String getSyllabificationOfCurrentWord() {
+	public String getSyllabificationOfCurrentWord(List<HyphenClassInWord> classesInWord) {
 		// TODO: figure out a lambda way to do this
 		StringBuilder sb = new StringBuilder();
-		int iSize = syllablesInCurrentWord.size();
-		int i = 1;
-		for (SHSyllable syl : syllablesInCurrentWord) {
-			for (CVSegmentInSyllable seg : syl.getSegmentsInSyllable()) {
-				sb.append(seg.getGrapheme());
+		for (HyphenClassInWord ciw : classesInWord) {
+			String classId = ciw.getHyphenClass().getID();
+			if (classId.equals(hyphenApproach.getWordBoundaryHC().getID())) {
+				continue;
 			}
-			if (i++ < iSize) {
+			if (classId.equals(hyphenApproach.getInsertHereHC().getID())) {
 				sb.append(".");
+				continue;
 			}
+			CVSegmentInSyllable seg = ciw.getSegInWord();
+			sb.append(seg.getGrapheme());
 		}
 		return sb.toString();
 	}
 
-	public String getNaturalClassesInCurrentWord() {
-		StringBuilder sb = new StringBuilder();
-		int iSize = syllabifierTraceInfoList.size();
-		for (int i = 0; i < iSize; i++) {
-			SHTracingStep info = syllabifierTraceInfoList.get(i);
-			if (i > 0) {
-				sb.append(", ");
-			}
-//			sb.append(getNCName(info.naturalClass1));
-			if (i == iSize - 1) {
-				sb.append(", ");
-//				sb.append(getNCName(info.naturalClass2));
-			}
-		}
-		return sb.toString();
-	}
+//	public String getNaturalClassesInCurrentWord() {
+//		StringBuilder sb = new StringBuilder();
+//		int iSize = syllabifierTraceInfoList.size();
+//		for (int i = 0; i < iSize; i++) {
+//			SHTracingStep info = syllabifierTraceInfoList.get(i);
+//			if (i > 0) {
+//				sb.append(", ");
+//			}
+////			sb.append(getNCName(info.naturalClass1));
+//			if (i == iSize - 1) {
+//				sb.append(", ");
+////				sb.append(getNCName(info.naturalClass2));
+//			}
+//		}
+//		return sb.toString();
+//	}
 
-	private String getNCName(HyphenClass natClass) {
-		if (natClass == null) {
-			return "null";
-		} else {
-			return natClass.getClassName();
-		}
-	}
+//	private String getNCName(HyphenClass natClass) {
+//		if (natClass == null) {
+//			return "null";
+//		} else {
+//			return natClass.getClassName();
+//		}
+//	}
 
-	public String getSonorityValuesInCurrentWord() {
-		return syllabifierTraceInfoList.stream().map(SHTracingStep::getComparisonResult)
-				.collect(Collectors.joining(", "));
-	}
 }
