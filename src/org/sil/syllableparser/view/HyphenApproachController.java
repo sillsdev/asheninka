@@ -1,4 +1,4 @@
-// Copyright (c) 2025 SIL International
+// Copyright (c) 2025-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -8,6 +8,7 @@ package org.sil.syllableparser.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -17,8 +18,16 @@ import org.controlsfx.control.textfield.TextFields;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.*;
+import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproachView;
+import org.sil.syllableparser.model.hyphenapproach.HyphenClassInWord;
+import org.sil.syllableparser.service.parsing.CVSegmenter;
+import org.sil.syllableparser.service.parsing.CVSegmenterResult;
+import org.sil.syllableparser.service.parsing.HyphenChangeRuleProcessor;
+import org.sil.syllableparser.service.parsing.HyphenChangeRuleResult;
+import org.sil.syllableparser.service.parsing.HyphenClasser;
+import org.sil.syllableparser.service.parsing.HyphenClasserResult;
 import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
@@ -260,8 +269,8 @@ public class HyphenApproachController extends ApproachController {
 	void handleSyllabifyWords(StatusBar statusBar) {
 		String sSuccess = bundle.getString("label.success");
 		String sSegmentFailure = bundle.getString("label.cvsegmentfailure");
-		String sNaturalClassFailure = bundle.getString("label.cvnaturalclassfailure");
-		String sSyllabificationFailure = bundle.getString("label.cvsyllabificationfailure");
+		String sHyphenClassFailure = bundle.getString("label.hyphenclassfailure");
+		String sProcessFailure = bundle.getString("label.hyphenprocessfailure");
 		long timeStart = System.currentTimeMillis();
 
 		Task<Void> task = new Task<Void>() {
@@ -270,72 +279,56 @@ public class HyphenApproachController extends ApproachController {
 				Scene scene = statusBar.getScene();
 				Cursor currentCursor = scene.getCursor();
 				scene.setCursor(Cursor.WAIT);
-//				ObservableList<CVNaturalClass> naturalClasses;
-//				CVSegmenter segmenter;
+				CVSegmenter segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
+						languageProject.getActiveGraphemeNaturalClasses());
 //				@SuppressWarnings("unused")
 //				ObservableList<Segment> segmentInventory;
-//				// List<Segment> cvSegmentInventory;
-//				CVNaturalClasser naturalClasser;
+				// List<Segment> cvSegmentInventory;
+				HyphenClasser hyphenClasser = new HyphenClasser(hyphenApproachData);
 //				@SuppressWarnings("unused")
-//				List<CVNaturalClass> cvNaturalClasses;
-//				List<CVSyllablePattern> patterns;
-//				CVSyllabifier syllabifier;
-//				List<CVSyllablePattern> cvPatterns;
-//
-//				// segmentInventory = languageProject.getSegmentInventory();
-//				segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
-//						languageProject.getActiveGraphemeNaturalClasses());
-//				// cvSegmentInventory = segmenter.getActiveSegmentInventory();
-//				naturalClasses = hyphenApproachData.getCVNaturalClasses();
-//				naturalClasser = new CVNaturalClasser(naturalClasses);
-//				cvNaturalClasses = naturalClasser.getActiveNaturalClasses();
-//				patterns = hyphenApproachData.getActiveCVSyllablePatterns();
-//				syllabifier = new CVSyllabifier(patterns, null);
-//				cvPatterns = syllabifier.getActiveCVPatterns();
-//
-//				int max = words.size();
-//				int i = 0;
-//				for (Word word : words) {
-//					updateMessage(bundle.getString("label.syllabifying") + word.getWord());
-//					updateProgress(i++, max);
-//
-//					String sWord = word.getWord();
-//					CVSegmenterResult result = segmenter.segmentWord(sWord);
-//					boolean fSuccess = result.success;
-//					if (!fSuccess) {
-//						word.setCVParserResult(sSegmentFailure.replace("{0}",
-//								sWord.substring(result.iPositionOfFailure)));
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-//					CVNaturalClasserResult ncResult = naturalClasser
-//							.convertSegmentsToNaturalClasses(segmentsInWord);
-//					fSuccess = ncResult.success;
-//					if (!fSuccess) {
-//						String sFailureMessage0 = sNaturalClassFailure.replace("{0}",
-//								ncResult.sClassesSoFar);
-//						String sFailureMessage1 = sFailureMessage0.replace("{1}",
-//								ncResult.sGraphemesSoFar);
-//						word.setCVParserResult(sFailureMessage1);
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
-//							.getNaturalClassListsInCurrentWord();
-//					syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
-//					fSuccess = syllabifier.convertNaturalClassesToSyllables();
-//					if (!fSuccess) {
-//						word.setCVParserResult(sSyllabificationFailure);
-//						word.setCVPredictedSyllabification("");
-//						continue;
-//					}
-//					word.setCVPredictedSyllabification(syllabifier
-//							.getSyllabificationOfCurrentWord());
-//					word.setCVLingTreeDescription(syllabifier.getLingTreeDescriptionOfCurrentWord());
-//					word.setCVParserResult(sSuccess);
-//				}
-				ControllerUtilities.formatTimePassed(timeStart, "Syllabifying");
+//				ObservableList<HyphenClass> hyphenClasses;
+				HyphenChangeRuleProcessor hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproachData);
+//				hyphenClasses = hyphenApproachData.getHyphenClasses();
+
+				int max = words.size();
+				int i = 0;
+				for (Word word : words) {
+					updateMessage(bundle.getString("label.processing") + word.getWord());
+					updateProgress(i++, max);
+
+					String sWord = word.getWord();
+					CVSegmenterResult result = segmenter.segmentWord(sWord);
+					boolean fSuccess = result.success;
+					if (!fSuccess) {
+						word.setHyphenParserResult(sSegmentFailure.replace("{0}",
+								sWord.substring(result.iPositionOfFailure)));
+						word.setHyphenPredictedSyllabification("");
+						continue;
+					}
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					HyphenClasserResult ncResult = hyphenClasser.parseIntoHyphenClasses(segmentsInWord);
+					fSuccess = ncResult.success;
+					if (!fSuccess) {
+						String sFailureMessage0 = sHyphenClassFailure.replace("{0}",
+								ncResult.sClassesSoFar);
+						String sFailureMessage1 = sFailureMessage0.replace("{1}",
+								ncResult.sGraphemesSoFar);
+						word.setHyphenParserResult(sFailureMessage1);
+						word.setHyphenPredictedSyllabification("");
+						continue;
+					}
+					List<HyphenClassInWord> classesInWord = hyphenClasser.getClassesInWord();
+					HyphenChangeRuleResult crResult = hyphenRuleProcessor.applyChangeRules(classesInWord);
+					fSuccess = crResult.success;
+					if (!fSuccess) {
+						word.setHyphenParserResult(sProcessFailure);
+						word.setHyphenPredictedSyllabification("");
+						continue;
+					}
+					word.setHyphenPredictedSyllabification(hyphenRuleProcessor.getSyllabificationOfCurrentWord(classesInWord));
+					word.setHyphenParserResult(sSuccess);
+				}
+				ControllerUtilities.formatTimePassed(timeStart, "Processing");
 				scene.setCursor(currentCursor);
 				// sleep for a second since it all happens so quickly
 				Thread.sleep(1000);

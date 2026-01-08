@@ -31,7 +31,7 @@ import javafx.scene.text.Text;
 public class HyphenWordsController extends WordsControllerCommon {
 
 	@FXML
-	protected TableView<Word> cvWordsTable;
+	protected TableView<Word> hyphenWordsTable;
 
 	protected final class ParserResultWrappingTableCell extends TableCell<Word, String> {
 		private Text text;
@@ -48,8 +48,8 @@ public class HyphenWordsController extends WordsControllerCommon {
 				// Get it to wrap.
 				text.wrappingWidthProperty().bind(getTableColumn().widthProperty());
 				Word word = (Word) this.getTableRow().getItem();
-				if (word != null && word.getCVParserResult().length() > 0
-						&& word.getCVPredictedSyllabification().length() == 0) {
+				if (word != null && word.getHyphenParserResult().length() > 0
+						&& word.getHyphenPredictedSyllabification().length() == 0) {
 					text.setFill(Constants.PARSER_FAILURE);
 				} else {
 					text.setFill(Constants.PARSER_SUCCESS);
@@ -60,35 +60,30 @@ public class HyphenWordsController extends WordsControllerCommon {
 		}
 	}
 
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		super.setApproach(ApplicationPreferences.CV_WORDS);
-		super.setWordsTable(cvWordsTable);
+		super.setApproach(ApplicationPreferences.HYPHEN_WORDS);
+		super.setWordsTable(hyphenWordsTable);
 		super.initialize(location, resources);
 		parserResultColumn.setCellFactory(column -> {
 			return new ParserResultWrappingTableCell();
 		});
 
-		predictedSyllabificationColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.cvPredictedSyllabificationProperty());
-		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.cvParserResultProperty());
-		predictedSyllabificationField.textProperty().addListener(
-				(observable, oldValue, newValue) -> {
-					if (currentWord != null) {
-						currentWord.setCVPredictedSyllabification(predictedSyllabificationField
-								.getText());
-					}
-					if (languageProject != null) {
-						predictedSyllabificationField.setFont(languageProject
-								.getVernacularLanguage().getFont());
-					}
-				});
+		predictedSyllabificationColumn
+				.setCellValueFactory(cellData -> cellData.getValue().hyphenPredictedSyllabificationProperty());
+		parserResultColumn.setCellValueFactory(cellData -> cellData.getValue().hyphenParserResultProperty());
+		predictedSyllabificationField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (currentWord != null) {
+				currentWord.setHyphenPredictedSyllabification(predictedSyllabificationField.getText());
+			}
+			if (languageProject != null) {
+				predictedSyllabificationField.setFont(languageProject.getVernacularLanguage().getFont());
+			}
+		});
 		parserResultField.textProperty().addListener((observable, oldValue, newValue) -> {
 			Platform.runLater(() -> {
 				if (currentWord != null) {
-					currentWord.setCVParserResult(parserResultField.getText());
+					currentWord.setHyphenParserResult(parserResultField.getText());
 				}
 				if (languageProject != null) {
 					parserResultField.setFont(languageProject.getAnalysisLanguage().getFont());
@@ -98,14 +93,15 @@ public class HyphenWordsController extends WordsControllerCommon {
 				parserResultField.setEditable(false);
 			});
 		});
-		
-		// Clear cv word details.
-		showCVWordDetails(null);
+
+		parserLingTreeSVG.setVisible(false);
+		// Clear hyphen word details.
+		showHyphenWordDetails(null);
 		// Listen for selection changes and show the details when changed.
 		wordsTable.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> showCVWordDetails(newValue));
+				.addListener((observable, oldValue, newValue) -> showHyphenWordDetails(newValue));
 	}
-	
+
 	public void setData(HyphenApproach hyphenApproachData, ObservableList<Word> words) {
 		hyphenApproach = hyphenApproachData;
 		languageProject = hyphenApproach.getLanguageProject();
@@ -119,37 +115,33 @@ public class HyphenWordsController extends WordsControllerCommon {
 	}
 
 	public ObservableList<Word> getPredictedWords() {
-		return wordsTable.getItems().filtered(
-				w -> !StringUtilities.isNullOrEmpty(w.getCVPredictedSyllabification()));
+		return wordsTable.getItems().filtered(w -> !StringUtilities.isNullOrEmpty(w.getHyphenPredictedSyllabification()));
 	}
 
 	public ObservableList<Word> getPredictedEqualsCorrectWords() {
-		return wordsTable.getItems()
-				.filtered(
-						w -> !StringUtilities.isNullOrEmpty(w.getCVPredictedSyllabification())
-								&& w.getCVPredictedSyllabification().equals(
-										w.getCorrectSyllabification()));
+		return wordsTable.getItems().filtered(w -> !StringUtilities.isNullOrEmpty(w.getHyphenPredictedSyllabification())
+				&& w.getHyphenPredictedSyllabification().equals(w.getCorrectSyllabification()));
 	}
 
 	/**
-	 * Fills all text fields to show details about the CV word. If the specified
+	 * Fills all text fields to show details about the "Hyphen" word. If the specified
 	 * word is null, all text fields are cleared.
 	 * 
-	 * @param cvWord
-	 *            the segment or null
+	 * @param hyphenWord the segment or null
 	 */
-	private void showCVWordDetails(Word cvWord) {
-		currentWord = cvWord;
-		if (cvWord != null) {
+	private void showHyphenWordDetails(Word hyphenWord) {
+		currentWord = hyphenWord;
+		if (hyphenWord != null) {
 			// Fill the text fields with info from the segment object.
-			wordField.setText(cvWord.getWord());
-			commentField.setText(cvWord.getComment());
-			predictedSyllabificationField.setText(cvWord.getCVPredictedSyllabification());
-			correctSyllabificationField.setText(cvWord.getCorrectSyllabification());
-			parserResultField.setText(cvWord.getCVParserResult());
-			setParserResultFieldColor(cvWord.getCVParserResult());
-			showParserResultAndLingTree(cvWord.getCVPredictedSyllabification(), cvWord.getCVParserResult(),
-					cvWord.getCVLingTreeDescription());
+			wordField.setText(hyphenWord.getWord());
+			commentField.setText(hyphenWord.getComment());
+			predictedSyllabificationField.setText(hyphenWord.getHyphenPredictedSyllabification());
+			correctSyllabificationField.setText(hyphenWord.getCorrectSyllabification());
+			parserResultField.setText(hyphenWord.getHyphenParserResult());
+			setParserResultFieldColor(hyphenWord.getHyphenParserResult());
+			// no tree diagram for "Hyphen" approach
+//			showParserResultAndLingTree(hyphenWord.getHyphenPredictedSyllabification(),
+//					hyphenWord.getHyphenParserResult(), hyphenWord.getHyphenLingTreeDescription());
 			setNodeOrientationOnFields();
 		} else {
 			// Segment is null, remove all the text.
@@ -160,9 +152,9 @@ public class HyphenWordsController extends WordsControllerCommon {
 			parserResultField.setText("");
 		}
 
-		if (cvWord != null) {
+		if (hyphenWord != null) {
 			int currentItem = updateStatusBarWords(getPredictedWords(), getPredictedEqualsCorrectWords());
-			mainApp.getApplicationPreferences().setLastCVWordsViewItemUsed(currentItem);
+			mainApp.getApplicationPreferences().setLastHyphenWordsViewItemUsed(currentItem);
 		} else {
 			updateStatusBarWords(FXCollections.observableArrayList(), FXCollections.observableArrayList());
 		}

@@ -87,7 +87,6 @@ public class HyphenChangeRuleProcessor {
 		while (ruleMatches(hcState)) {
 			applyRule(hcState);
 		}
-
 		return true;
 	}
 

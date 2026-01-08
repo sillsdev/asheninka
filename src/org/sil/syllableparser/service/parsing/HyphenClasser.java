@@ -11,10 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSyllable;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClassInWord;
@@ -56,12 +54,27 @@ public class HyphenClasser {
 		classesInWord.add(wordBoundary);
 		for (CVSegmentInSyllable segInWord : segmentsInWord) {
 			HyphenClass hc = segmentToHyphenClassMapping.get(segInWord.getSegment());
+			if (hc == null) {
+				hcResult.success = false;
+				hcResult.sClassesSoFar = getClassesRepresentation(classesInWord);
+				int iCurrentSegment = segmentsInWord.indexOf(segInWord);
+				buildGraphemesSoFar(segmentsInWord, hcResult, iCurrentSegment);
+				return hcResult;
+			}
 			HyphenClassInWord hciw = new HyphenClassInWord(hc, segInWord);
 			classesInWord.add(hciw);
 		}
 		classesInWord.add(wordBoundary);
-		hcResult.sClasses = getClassesRepresentation(classesInWord);
+		hcResult.sClassesSoFar = getClassesRepresentation(classesInWord);
+		buildGraphemesSoFar(segmentsInWord, hcResult, segmentsInWord.size());
 		return hcResult;
+	}
+
+	protected void buildGraphemesSoFar(List<? extends CVSegmentInSyllable> segmentsInWord, HyphenClasserResult hcResult,
+			int iCurrentSegment) {
+		String joined = segmentsInWord.subList(0, iCurrentSegment).stream()
+				.map(CVSegmentInSyllable::getGrapheme).collect(Collectors.joining(", "));
+		hcResult.sGraphemesSoFar = joined;
 	}
 
 	protected void buildSegmentToHyphenClassMapping() {

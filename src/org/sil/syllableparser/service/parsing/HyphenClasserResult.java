@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 SIL International 
+ * Copyright (c) 2025-2026 SIL International 
  * This software is licensed under the LGPL, version 2.1 or later 
  * (http://www.gnu.org/licenses/lgpl-2.1.html) 
  */
@@ -11,8 +11,7 @@ package org.sil.syllableparser.service.parsing;
  * This is essentially a struct so we use public class fields
  * (http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-137265.html#177)
  */
-public class HyphenClasserResult extends ParseResult {
-	public String sClasses = "";
+public class HyphenClasserResult extends CVNaturalClasserResult {
 
 	public HyphenClasserResult() {
 		super();
