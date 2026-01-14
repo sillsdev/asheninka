@@ -188,7 +188,7 @@ public class Constants {
 			+ "\tdisplay: inline-block;\n"
 			+ "\tvertical-align: top;\n"
 			+ "\tcursor: pointer;\n"
-			+ "\t\n";
+			+ "\t}\n";
 	public static final String TRY_A_WORD_JAVASCRIPT = "<script language=\"JavaScript\" id=\"clientEventHandlersJS\">\n"
 			+ "	function ButtonShowDetails()\n"
 			+ "	{\n"

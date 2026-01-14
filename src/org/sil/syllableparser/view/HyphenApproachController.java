@@ -281,14 +281,8 @@ public class HyphenApproachController extends ApproachController {
 				scene.setCursor(Cursor.WAIT);
 				CVSegmenter segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
 						languageProject.getActiveGraphemeNaturalClasses());
-//				@SuppressWarnings("unused")
-//				ObservableList<Segment> segmentInventory;
-				// List<Segment> cvSegmentInventory;
 				HyphenClasser hyphenClasser = new HyphenClasser(hyphenApproachData);
-//				@SuppressWarnings("unused")
-//				ObservableList<HyphenClass> hyphenClasses;
 				HyphenChangeRuleProcessor hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproachData);
-//				hyphenClasses = hyphenApproachData.getHyphenClasses();
 
 				int max = words.size();
 				int i = 0;

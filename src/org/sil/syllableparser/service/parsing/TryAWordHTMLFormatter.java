@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International 
+// Copyright (c) 2016-2026 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -94,7 +94,7 @@ public abstract class TryAWordHTMLFormatter {
 
 	public abstract String format();
 
-	protected void formatHTMLBeginning(StringBuilder sb) {
+	protected void formatHTMLBeginning(StringBuilder sb, String... extraCss) {
 		sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n<title>");
 		sb.append(bundle.getString("report.tawtitle"));
 		sb.append("</title>\n<style type=\"text/css\">\n");
@@ -104,6 +104,9 @@ public abstract class TryAWordHTMLFormatter {
 		createColorCSS(sb, FAILURE, FAILURE_COLOR);
 		createColorCSS(sb, MATCHED, MATCHED_COLOR);
 		sb.append(Constants.TRY_A_WORD_INTERBLOCK_CSS);
+		for (String sCss : extraCss) {
+			sb.append(sCss);
+		}
 		sb.append("</style>\n");
 		sb.append(Constants.TRY_A_WORD_JAVASCRIPT);
 		sb.append("</head>\n<body>\n");

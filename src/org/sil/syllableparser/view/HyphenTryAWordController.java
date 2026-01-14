@@ -1,4 +1,4 @@
-// Copyright (c) 2025 SIL International 
+// Copyright (c) 2025-2026 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -9,23 +9,18 @@ package org.sil.syllableparser.view;
 import java.util.List;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.model.cvapproach.CVApproach;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClass;
-import org.sil.syllableparser.model.cvapproach.CVNaturalClassInSyllable;
 import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
-import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
-import org.sil.syllableparser.model.cvapproach.CVTraceInfo;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
-import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
-import org.sil.syllableparser.service.parsing.CVNaturalClasser;
-import org.sil.syllableparser.service.parsing.CVNaturalClasserResult;
+import org.sil.syllableparser.model.hyphenapproach.HyphenClassInWord;
+import org.sil.syllableparser.model.hyphenapproach.HyphenTraceInfo;
 import org.sil.syllableparser.service.parsing.CVSegmenter;
 import org.sil.syllableparser.service.parsing.CVSegmenterResult;
-import org.sil.syllableparser.service.parsing.CVSyllabifier;
-import org.sil.syllableparser.service.parsing.CVSyllabifierResult;
-import org.sil.syllableparser.service.parsing.CVTryAWordHTMLFormatter;
+import org.sil.syllableparser.service.parsing.HyphenChangeRuleProcessor;
+import org.sil.syllableparser.service.parsing.HyphenChangeRuleResult;
+import org.sil.syllableparser.service.parsing.HyphenClasser;
+import org.sil.syllableparser.service.parsing.HyphenClasserResult;
+import org.sil.syllableparser.service.parsing.HyphenTryAWordHTMLFormatter;
 
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -68,62 +63,43 @@ public class HyphenTryAWordController extends TryAWordController {
 				return null;
 			}
 		};
-//		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-//			@Override
-//			public void handle(WorkerStateEvent event) {
-//
-//				ObservableList<HyphenClass> naturalClasses;
-//				CVSegmenter segmenter;
-//				// ObservableList<Segment> segmentInventory;
-//				CVNaturalClasser naturalClasser;
-//				List<CVSyllablePattern> patterns;
-//				CVSyllabifier syllabifier;
-//				List<CVSyllablePattern> cvPatterns;
-//
-//				// segmentInventory =
-//				// cva.getLanguageProject().getSegmentInventory();
-//				segmenter = new CVSegmenter(hyphena.getLanguageProject().getActiveGraphemes(), hyphena
-//						.getLanguageProject().getActiveGraphemeNaturalClasses());
-//				naturalClasses = hyphena.getHyphenClasses();
-//				naturalClasser = new CVNaturalClasser(naturalClasses);
-//				patterns = hyphena.getActiveCVSyllablePatterns();
-//				syllabifier = new CVSyllabifier(patterns, null);
-//				cvPatterns = syllabifier.getActiveCVPatterns();
-//				CVTraceInfo traceInfo = new CVTraceInfo(sWordToTry, segmenter, naturalClasser,
-//						syllabifier);
-//
-//				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
-//				traceInfo.setSegmenterResult(segResult);
-//				String sLingTreeDescription = "";
-//				boolean fSuccess = segResult.success;
-//				if (fSuccess) {
-//					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
-//					CVNaturalClasserResult ncResult = naturalClasser
-//							.convertSegmentsToNaturalClasses(segmentsInWord);
-//					traceInfo.setNaturalClasserResult(ncResult);
-//					fSuccess = ncResult.success;
-//					if (fSuccess) {
-//						List<List<CVNaturalClassInSyllable>> naturalClassesInWord = naturalClasser
-//								.getNaturalClassListsInCurrentWord();
-//						syllabifier = new CVSyllabifier(cvPatterns, naturalClassesInWord);
-//						syllabifier.setDoTrace(true);
-//						traceInfo.setSyllabifier(syllabifier);
-//						fSuccess = syllabifier.convertNaturalClassesToSyllables();
-//						CVSyllabifierResult syllabifierResult = new CVSyllabifierResult();
-//						syllabifierResult.success = fSuccess;
-//						traceInfo.setSyllabifierResult(syllabifierResult);
-//						sLingTreeDescription = syllabifier.getLingTreeDescriptionOfCurrentWord();
-//					}
-//				}
-//				CVTryAWordHTMLFormatter formatter = new CVTryAWordHTMLFormatter(traceInfo, hyphena
-//						.getLanguageProject(), locale);
-//				formatter.setLingTreeDescription(sLingTreeDescription);
-//				String sResult = formatter.format();
-//				webEngine.loadContent(sResult);
-//			}
-//		});
-//		new Thread(sleeper).start();
-//		createAndShowPleaseWaitMessage();
+		sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				CVSegmenter segmenter = new CVSegmenter(hyphena.getLanguageProject().getActiveGraphemes(), hyphena
+						.getLanguageProject().getActiveGraphemeNaturalClasses());
+				HyphenClasser hyphenClasser = new HyphenClasser(hyphena);
+				HyphenChangeRuleProcessor hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphena);
+
+				HyphenTraceInfo traceInfo = new HyphenTraceInfo(sWordToTry, segmenter, hyphenClasser,
+						hyphenRuleProcessor);
+				CVSegmenterResult segResult = segmenter.segmentWord(sWordToTry);
+				traceInfo.setSegmenterResult(segResult);
+				String sLingTreeDescription = "";
+				boolean fSuccess = segResult.success;
+				if (fSuccess) {
+					List<? extends CVSegmentInSyllable> segmentsInWord = segmenter.getSegmentsInWord();
+					HyphenClasserResult hcResult = hyphenClasser.parseIntoHyphenClasses(segmentsInWord);
+					traceInfo.setHyphenClasserResult(hcResult);
+					fSuccess = hcResult.success;
+					if (fSuccess) {
+						List<HyphenClassInWord> classesInWord = hyphenClasser.getClassesInWord();
+						hyphenRuleProcessor.setDoTrace(true);
+						HyphenChangeRuleResult crResult = hyphenRuleProcessor.applyChangeRules(classesInWord);
+						traceInfo.setStates(hyphenRuleProcessor.getTraceInfo().getStates());
+						traceInfo.setHyphenChangeRuleResult(crResult);
+						fSuccess = crResult.success;
+					}
+				}
+				HyphenTryAWordHTMLFormatter formatter = new HyphenTryAWordHTMLFormatter(traceInfo, hyphena
+						.getLanguageProject(), locale);
+				formatter.setLingTreeDescription(sLingTreeDescription);
+				String sResult = formatter.format();
+				webEngine.loadContent(sResult);
+			}
+		});
+		new Thread(sleeper).start();
+		createAndShowPleaseWaitMessage();
 	}
 
 	@Override
