@@ -91,6 +91,7 @@ public class LanguageProject {
 		moraicApproach.clear();
 		npApproach.clear();
 		otApproach.clear();
+		hyphenApproach.clear();
 		segmentInventory.clear();
 		words.clear();
 		environments.clear();
