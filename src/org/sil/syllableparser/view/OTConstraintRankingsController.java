@@ -535,6 +535,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 		if ((i + 1) < otApproach.getOTConstraintRankings().size()) {
 			Collections.swap(otApproach.getOTConstraintRankings(), i, i + 1);
 		}
+		tableView.refresh();
 	}
 
 	@FXML
@@ -543,6 +544,7 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 		if (i > 0) {
 			Collections.swap(otApproach.getOTConstraintRankings(), i, i - 1);
 		}
+		tableView.refresh();
 	}
 
 	// code taken from

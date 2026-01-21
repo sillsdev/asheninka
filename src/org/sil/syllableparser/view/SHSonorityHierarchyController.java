@@ -600,7 +600,8 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 		if ((i + 1) < shApproach.getSHSonorityHierarchy().size()) {
 			Collections.swap(shApproach.getSHSonorityHierarchy(), i, i + 1);
 		}
-	}
+		tableView.refresh();
+}
 
 	@FXML
 	void handleMoveUp() {
@@ -608,6 +609,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 		if (i > 0) {
 			Collections.swap(shApproach.getSHSonorityHierarchy(), i, i - 1);
 		}
+		tableView.refresh();
 	}
 
 	protected void handleCheckBoxSelectAll() {

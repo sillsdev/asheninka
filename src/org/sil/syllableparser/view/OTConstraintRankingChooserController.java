@@ -224,6 +224,7 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 		if ((i + 1) < constraintsTable.getItems().size()) {
 			Collections.swap(constraintsTable.getItems(), i, i + 1);
 		}
+		tableView.refresh();
 	}
 
 	@FXML
@@ -232,6 +233,7 @@ public class OTConstraintRankingChooserController extends SplitPaneWithTableView
 		if (i > 0) {
 			Collections.swap(constraintsTable.getItems(), i, i - 1);
 		}
+		tableView.refresh();
 	}
 
 	// code taken from

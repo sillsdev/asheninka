@@ -801,6 +801,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		if ((i + 1) < npApproach.getNPRules().size()) {
 			Collections.swap(npApproach.getNPRules(), i, i + 1);
 		}
+		tableView.refresh();
 		reportAnyValidationMessage();
 	}
 
@@ -810,6 +811,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		if (i > 0) {
 			Collections.swap(npApproach.getNPRules(), i, i - 1);
 		}
+		tableView.refresh();
 		reportAnyValidationMessage();
 	}
 

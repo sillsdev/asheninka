@@ -539,6 +539,7 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		if ((i + 1) < hyphenApproach.getHyphenChangeRules().size()) {
 			Collections.swap(hyphenApproach.getHyphenChangeRules(), i, i + 1);
 		}
+		tableView.refresh();
 	}
 
 	@FXML
@@ -547,6 +548,7 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		if (i > 0) {
 			Collections.swap(hyphenApproach.getHyphenChangeRules(), i, i - 1);
 		}
+		tableView.refresh();
 	}
 
 	protected void handleCheckBoxSelectAll() {

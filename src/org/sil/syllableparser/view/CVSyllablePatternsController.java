@@ -478,6 +478,7 @@ public class CVSyllablePatternsController extends SplitPaneWithTableViewControll
 		if ((i + 1) < cvApproach.getCVSyllablePatterns().size()) {
 			Collections.swap(cvApproach.getCVSyllablePatterns(), i, i + 1);
 		}
+		tableView.refresh();
 	}
 
 	@FXML
@@ -486,6 +487,7 @@ public class CVSyllablePatternsController extends SplitPaneWithTableViewControll
 		if (i > 0) {
 			Collections.swap(cvApproach.getCVSyllablePatterns(), i, i - 1);
 		}
+		tableView.refresh();
 	}
 
 	protected void handleCheckBoxSelectAll() {

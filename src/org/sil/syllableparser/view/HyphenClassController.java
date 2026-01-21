@@ -537,6 +537,7 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 		if ((i + 1) < hyphenApproach.getHyphenClasses().size()) {
 			Collections.swap(hyphenApproach.getHyphenClasses(), i, i + 1);
 		}
+		tableView.refresh();
 	}
 
 	@FXML
@@ -545,31 +546,7 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 		if (i > 0) {
 			Collections.swap(hyphenApproach.getHyphenClasses(), i, i - 1);
 		}
-	}
-
-	protected void handleCheckBoxSelectAll() {
-		for (HyphenClass syllablePattern : hyphenApproach.getHyphenClasses()) {
-			syllablePattern.setActive(true);
-			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
-		}
-	}
-
-	protected void handleCheckBoxClearAll() {
-		for (HyphenClass syllablePattern : hyphenApproach.getHyphenClasses()) {
-			syllablePattern.setActive(false);
-			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
-		}
-	}
-
-	protected void handleCheckBoxToggle() {
-		for (HyphenClass syllablePattern : hyphenApproach.getHyphenClasses()) {
-			if (syllablePattern.isActive()) {
-				syllablePattern.setActive(false);
-			} else {
-				syllablePattern.setActive(true);
-			}
-			forceTableRowToRedisplayPerActiveSetting(syllablePattern);
-		}
+		tableView.refresh();
 	}
 
 	// code taken from

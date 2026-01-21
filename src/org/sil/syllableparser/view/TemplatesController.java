@@ -195,11 +195,13 @@ public abstract class TemplatesController extends TemplatesFiltersController {
 	@FXML
 	void handleMoveDown() {
 		handleMoveDown(templateList);
+		tableView.refresh();
 	}
 
 	@FXML
 	void handleMoveUp() {
 		handleMoveUp(templateList);
+		tableView.refresh();
 	}
 
 }
