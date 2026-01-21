@@ -85,7 +85,7 @@ public class HyphenChangeRuleProcessor {
 		if (fDoTrace) {
 			stateHistory.clear();
 		}
-		for (HyphenChangeRule rule : hyphenApproach.getHyphenChangeRules()) {
+		for (HyphenChangeRule rule : hyphenApproach.getActiveHyphenChangeRules()) {
 			HyphenChangeRuleState hcState = new HyphenChangeRuleState(rule, classesInWord, -1);
 			if (!tryRule(hcState)) {
 				crResult.success = false;
@@ -99,7 +99,7 @@ public class HyphenChangeRuleProcessor {
 	}
 
 	boolean tryRule(HyphenChangeRuleState hcState) {
-		hcState.setClassIndex(0);
+		hcState.setClassIndex(-1);
 		while (ruleMatches(hcState)) {
 			applyRule(hcState);
 			if (fDoTrace) {
@@ -110,21 +110,41 @@ public class HyphenChangeRuleProcessor {
 	}
 
 	public boolean ruleMatches(HyphenChangeRuleState hcState) {
+		boolean isWordInitial = hcState.getRule().isWordInitial();
+		boolean isWordFinal  = hcState.getRule().isWordFinal();
 		ObservableList<HyphenClass> classesToMatch = hcState.rule.getMatchHyphenClasses();
 		int ciwLast = hcState.getClassIndex();
 		if (classesToMatch.size() == 1 && ciwLast != -1) {
 			ciwLast++;
 		}
-		int ciwStart = Math.max(0, ciwLast);
 		List<HyphenClassInWord> classesInWord = hcState.classesInWord;
+		// Check for word initial or both word initial and final
+		if (isWordInitial && ciwLast != -1
+				|| (isWordInitial && isWordFinal && (classesInWord.size() - 2) != classesToMatch.size())) {
+			hcState.setClassIndex(-1);
+			return false;
+		}
+		int ciwStart = Math.max(0, ciwLast);
 		if (hcState.getClassIndex() >= classesInWord.size()) {
 			return false;
 		}
 		HyphenClass hcInMatch = classesToMatch.get(0);
 		for (int iWord = ciwStart; iWord < classesInWord.size(); iWord++) {
 			HyphenClassInWord hciw = classesInWord.get(iWord);
+			if (isWordInitial) {
+				if (iWord > 0 && iWord <= classesToMatch.size()) {
+					if (!hciw.getClassID().equals(hcInMatch.getID())) {
+						return false;
+					}
+				}
+			}
 			if (!hciw.getClassID().equals(hcInMatch.getID())) {
 				continue;
+			}
+			if (isWordFinal) {
+				if (iWord < classesInWord.size() - classesToMatch.size() - 1) {
+					continue;
+				}
 			}
 			// matches first hc in match
 			int iMatch = classesToMatch.indexOf(hcInMatch);

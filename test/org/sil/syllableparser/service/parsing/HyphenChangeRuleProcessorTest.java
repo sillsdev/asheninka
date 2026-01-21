@@ -54,6 +54,7 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		checkRuleMatch("dakot", true, 7, rule, new boolean[] { true, true }, new int[] { 3, 5 });
 		checkRuleMatch("dakota", true, 8, rule, new boolean[] { true, true }, new int[] { 3, 5 });
 		checkRuleMatch("dakotab", true, 9, rule, new boolean[] { true, true, true }, new int[] { 3, 5, 7 });
+
 		rule = hyphenApproach.getActiveHyphenChangeRules().get(0);
 		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
 		checkRuleMatch("n", true, 3, rule, new boolean[] { false }, new int[] { -1 });
@@ -64,6 +65,47 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		checkRuleMatch("dankot", true, 8, rule, new boolean[] { true, false }, new int[] { 4, -1 });
 		checkRuleMatch("dankonta", true, 10, rule, new boolean[] { true, true }, new int[] { 4, 7 });
 		checkRuleMatch("dankontamb", true, 12, rule, new boolean[] { true, true, true }, new int[] { 4, 7, 10 });
+		rule.setWordInitial(true);
+		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("n", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("a", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("na", true, 4, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("nak", true, 5, rule, new boolean[] { false, false }, new int[] { -1, -1 });
+		checkRuleMatch("nko", true, 5, rule, new boolean[] { true, false }, new int[] { 2, -1 });
+		checkRuleMatch("nkonta", true, 8, rule, new boolean[] { true, false }, new int[] { 2, -1 });
+		rule.setWordInitial(false);
+		rule.setWordFinal(true);
+		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("n", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("a", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("na", true, 4, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("nak", true, 5, rule, new boolean[] { false, false }, new int[] { -1, -1 });
+		checkRuleMatch("onk", true, 5, rule, new boolean[] { true }, new int[] { 3 });
+		checkRuleMatch("nkont", true, 7, rule, new boolean[] { true }, new int[] { 5 });
+		rule.setWordInitial(true);
+		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("n", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("a", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("na", true, 4, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("nak", true, 5, rule, new boolean[] { false, false }, new int[] { -1, -1 });
+		checkRuleMatch("ank", true, 5, rule, new boolean[] { false, false }, new int[] { -1, -1 });
+		checkRuleMatch("nka", true, 5, rule, new boolean[] { false, false }, new int[] { -1, -1 });
+		checkRuleMatch("nk", true, 4, rule, new boolean[] { true }, new int[] { 2 });
+		// Create rule: # V V # -> # V - V #
+		rule.getMatchHyphenClasses().clear();
+		rule.getMatchHyphenClasses().add(hyphenApproach.getActiveHyphenClasses().get(0));
+		rule.getMatchHyphenClasses().add(hyphenApproach.getActiveHyphenClasses().get(0));
+		rule.getChangeHyphenClasses().clear();
+		rule.getChangeHyphenClasses().add(hyphenApproach.getActiveHyphenClasses().get(0));
+		rule.getChangeHyphenClasses().add(hyphenApproach.getInsertHereHC());
+		rule.getChangeHyphenClasses().add(hyphenApproach.getActiveHyphenClasses().get(0));
+		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("n", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("a", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("na", true, 4, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("aa", true, 4, rule, new boolean[] { true }, new int[] { 2 });
+		checkRuleMatch("aaa", true, 5, rule, new boolean[] { false }, new int[] { -1 });
+
 		rule = hyphenApproach.getActiveHyphenChangeRules().get(1);
 		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
 		checkRuleMatch("n", true, 3, rule, new boolean[] { true }, new int[] { 1 });
@@ -74,6 +116,27 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		checkRuleMatch("dankot", true, 8, rule, new boolean[] { true, false }, new int[] { 3, -1 });
 		checkRuleMatch("dankonta", true, 10, rule, new boolean[] { true, true }, new int[] { 3, 6 });
 		checkRuleMatch("dankontamb", true, 12, rule, new boolean[] { true, true, true }, new int[] { 3, 6, 9 });
+		rule.setWordInitial(true);
+		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("n", true, 3, rule, new boolean[] { true }, new int[] { 1 });
+		checkRuleMatch("a", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("na", true, 4, rule, new boolean[] { true, false }, new int[] { 1, -1 });
+		checkRuleMatch("nak", true, 5, rule, new boolean[] { true, false }, new int[] { 1, -1 });
+		checkRuleMatch("danko", true, 7, rule, new boolean[] { false, false }, new int[] { -1, -1 });
+		rule.setWordInitial(false);
+		rule.setWordFinal(true);
+		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("n", true, 3, rule, new boolean[] { true }, new int[] { 1 });
+		checkRuleMatch("a", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("na", true, 4, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("nan", true, 5, rule, new boolean[] { true }, new int[] { 3 });
+		rule.setWordInitial(true);
+		checkRuleMatch("", false, 0, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("n", true, 3, rule, new boolean[] { true }, new int[] { 1 });
+		checkRuleMatch("a", true, 3, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("na", true, 4, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("an", true, 4, rule, new boolean[] { false }, new int[] { -1 });
+		checkRuleMatch("nan", true, 5, rule, new boolean[] { false }, new int[] { -1 });
 	}
 
 	protected void checkRuleMatch(String word, boolean expectedClasserSuccess, int numberOfClasses,
