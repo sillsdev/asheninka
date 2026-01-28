@@ -381,7 +381,7 @@ public class HyphenApproachController extends ApproachController {
 		try {
 			// Load the fxml file and create a new stage for the popup.
 			Stage dialogStage = new Stage();
-			String resource = "fxml/CVComparison.fxml";
+			String resource = "fxml/HyphenComparison.fxml";
 			String title = bundle.getString("label.compareimplementations");
 			FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage, title,
 					ApproachViewNavigator.class.getResource(resource), bundle);

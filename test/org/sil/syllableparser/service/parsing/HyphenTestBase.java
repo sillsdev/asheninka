@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Before;
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.backendprovider.XMLBackEndProvider;
 import org.sil.syllableparser.model.Grapheme;
 import org.sil.syllableparser.model.LanguageProject;
@@ -52,7 +53,7 @@ public class HyphenTestBase {
 		LanguageProject languageProject = new LanguageProject();
 		Locale locale = new Locale("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
-		File file = new File("test/org/sil/syllableparser/testData/hyphen.ashedata");
+		File file = new File(Constants.UNIT_TEST_HYPHEN_DATA_FILE_NAME);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		hyphenApproach = languageProject.getHyphenApproach();
 		segmentInventory = languageProject.getSegmentInventory();

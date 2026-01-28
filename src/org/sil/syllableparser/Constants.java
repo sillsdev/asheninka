@@ -83,6 +83,7 @@ public class Constants {
 	public static final String PARSER_SUCCESS_COLOR_STRING = "green";
 	public static final String PARSER_FAILURE_COLOR_STRING = "red";
 	public static final String SVG_DASHED_LINE = " stroke-dasharray=\"7,7\"";
+	public static final String RIGHTWARD_ARROW = "→";
 
 	// View constants
 	public static final int CV_SEGMENT_INVENTORY_VIEW_INDEX = 0;
@@ -171,6 +172,8 @@ public class Constants {
 	public static final String UNIT_TEST_DATA_FILE_MORAIC_IS_CODA = "test/org/sil/syllableparser/testData/Asheninka.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_TEMPLATES_FILTERS = "test/org/sil/syllableparser/testData/TemplatesFiltersTestData.ashedata";
 	public static final String UNIT_TEST_DATA_FILE_ICU_RULES = "test/org/sil/syllableparser/testData/ICURulesTestData.ashedata";
+	public static final String UNIT_TEST_HYPHEN_DATA_FILE_NAME = "test/org/sil/syllableparser/testData/hyphen.ashedata";
+	public static final String UNIT_TEST_HYPHEN_DATA_FILE_2_NAME = "test/org/sil/syllableparser/testData/hyphen2.ashedata";
 
 	// Text colors
 	public static final Color ACTIVE = Color.BLACK;

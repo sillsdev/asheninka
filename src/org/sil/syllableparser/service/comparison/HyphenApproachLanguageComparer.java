@@ -1,4 +1,4 @@
-// Copyright (c) 2025 SIL International
+// Copyright (c) 2025-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -30,8 +30,8 @@ import name.fraser.neil.plaintext.diff_match_patch.Diff;
  */
 public class HyphenApproachLanguageComparer extends ApproachLanguageComparer {
 
-	HyphenApproach cva1;
-	HyphenApproach cva2;
+	HyphenApproach ha1;
+	HyphenApproach ha2;
 
 	SortedSet<DifferentHyphenClass> hyphenClassesWhichDiffer = new TreeSet<>(
 			Comparator.comparing(DifferentHyphenClass::getSortingValue));
@@ -39,26 +39,26 @@ public class HyphenApproachLanguageComparer extends ApproachLanguageComparer {
 			Comparator.comparing(DifferentHyphenChangeRule::getSortingValue));
 	LinkedList<Diff> hyphenChangeRuleOrderDifferences = new LinkedList<>();
 
-	public HyphenApproachLanguageComparer(HyphenApproach cva1, HyphenApproach cva2) {
-		super(cva1.getLanguageProject(), cva2.getLanguageProject());
-		this.cva1 = cva1;
-		this.cva2 = cva2;
+	public HyphenApproachLanguageComparer(HyphenApproach ha1, HyphenApproach ha2) {
+		super(ha1.getLanguageProject(), ha2.getLanguageProject());
+		this.ha1 = ha1;
+		this.ha2 = ha2;
 	}
 
-	public HyphenApproach getCva1() {
-		return cva1;
+	public HyphenApproach getHa1() {
+		return ha1;
 	}
 
-	public void setCva1(HyphenApproach cva1) {
-		this.cva1 = cva1;
+	public void setHa1(HyphenApproach ha1) {
+		this.ha1 = ha1;
 	}
 
-	public HyphenApproach getCva2() {
-		return cva2;
+	public HyphenApproach getHa2() {
+		return ha2;
 	}
 
-	public void setCva2(HyphenApproach cva2) {
-		this.cva2 = cva2;
+	public void setHa2(HyphenApproach ha2) {
+		this.ha2 = ha2;
 	}
 
 	public SortedSet<DifferentHyphenClass> getHyphenClassesWhichDiffer() {
@@ -76,7 +76,7 @@ public class HyphenApproachLanguageComparer extends ApproachLanguageComparer {
 	@Override
 	public void compare() {
 		compareSegmentInventory();
-		compareHyphenClasses(cva1.getActiveHyphenClasses(), cva2.getActiveHyphenClasses(),
+		compareHyphenClasses(ha1.getActiveHyphenClasses(), ha2.getActiveHyphenClasses(),
 				hyphenClassesWhichDiffer);
 		compareGraphemeNaturalClasses();
 		compareEnvironments();
@@ -120,66 +120,65 @@ public class HyphenApproachLanguageComparer extends ApproachLanguageComparer {
 	}
 
 	public void compareHyphenChangeRules() {
-		List<HyphenChangeRule> syllablePatterns1 = cva1.getActiveHyphenChangeRules();
-		List<HyphenChangeRule> syllablePatterns2 = cva2.getActiveHyphenChangeRules();
+		List<HyphenChangeRule> changeRules1 = ha1.getActiveHyphenChangeRules();
+		List<HyphenChangeRule> changeRules2 = ha2.getActiveHyphenChangeRules();
 
-		Set<HyphenChangeRule> difference1from2 = new HashSet<HyphenChangeRule>(syllablePatterns1);
+		Set<HyphenChangeRule> difference1from2 = new HashSet<HyphenChangeRule>(changeRules1);
 		// use set difference (removeAll)
-		difference1from2.removeAll(syllablePatterns2);
+		difference1from2.removeAll(changeRules2);
 		difference1from2.stream().forEach(
-				syllablePattern -> hyphenChangeRulesWhichDiffer.add(new DifferentHyphenChangeRule(
-						syllablePattern, null)));
+				changeRule -> hyphenChangeRulesWhichDiffer.add(new DifferentHyphenChangeRule(
+						changeRule, null)));
 
-		Set<HyphenChangeRule> difference2from1 = new HashSet<HyphenChangeRule>(syllablePatterns2);
-		difference2from1.removeAll(syllablePatterns1);
+		Set<HyphenChangeRule> difference2from1 = new HashSet<HyphenChangeRule>(changeRules2);
+		difference2from1.removeAll(changeRules1);
 		difference2from1.stream().forEach(
-				syllablePattern -> mergeSimilarCVSyllablePatterns(syllablePattern));
+				changeRule -> mergeSimilarChangeRules(changeRule));
 	}
 
-	protected void mergeSimilarCVSyllablePatterns(HyphenChangeRule syllablePattern) {
-		List<DifferentHyphenChangeRule> sameSyllablePatternName = hyphenChangeRulesWhichDiffer
+	protected void mergeSimilarChangeRules(HyphenChangeRule changeRule) {
+		List<DifferentHyphenChangeRule> sameChangeRuleName = hyphenChangeRulesWhichDiffer
 				.stream()
 				.filter(dsp -> dsp.getObjectFrom1() != null
 						&& ((HyphenChangeRule) dsp.getObjectFrom1()).getRuleName().equals(
-								syllablePattern.getRuleName())).collect(Collectors.toList());
-		if (sameSyllablePatternName.size() > 0) {
-			DifferentHyphenChangeRule diffSyllablePattern = sameSyllablePatternName.get(0);
-			diffSyllablePattern.setObjectFrom2(syllablePattern);
+								changeRule.getRuleName())).collect(Collectors.toList());
+		if (sameChangeRuleName.size() > 0) {
+			DifferentHyphenChangeRule diffChangeRule = sameChangeRuleName.get(0);
+			diffChangeRule.setObjectFrom2(changeRule);
 		} else {
-			DifferentHyphenChangeRule diffSyllablePattern = new DifferentHyphenChangeRule(null,
-					syllablePattern);
-			hyphenChangeRulesWhichDiffer.add(diffSyllablePattern);
+			DifferentHyphenChangeRule diffChangeRule = new DifferentHyphenChangeRule(null,
+					changeRule);
+			hyphenChangeRulesWhichDiffer.add(diffChangeRule);
 		}
 	}
 
 	@Override
 	protected void syllabifyWords(List<Word> words1, List<Word> words2) {
-		syllabifyWords(cva1, words1);
-		syllabifyWords(cva2, words2);
+		syllabifyWords(ha1, words1);
+		syllabifyWords(ha2, words2);
 	}
 
-	protected void syllabifyWords(HyphenApproach cva, List<Word> words) {
-//		HyphenChangeRuleProcessor stringSyllabifier = new HyphenChangeRuleProcessor(cva);
-//		for (Word word : words) {
-//			boolean fSuccess = stringSyllabifier.convertStringToSyllables(word.getWord());
-//			if (fSuccess) {
-//				word.setHyphenPredictedSyllabification(stringSyllabifier
-//						.getSyllabificationOfCurrentWord());
-//			}
-//		}
+	protected void syllabifyWords(HyphenApproach ha, List<Word> words) {
+		HyphenChangeRuleProcessor ruleProcessor = new HyphenChangeRuleProcessor(ha);
+		for (Word word : words) {
+			boolean fSuccess = ruleProcessor.convertStringToHyphenatedForm(word.getWord());
+			if (fSuccess) {
+				word.setHyphenPredictedSyllabification(ruleProcessor.getSyllabifiedWord());
+			}
+		}
 
 	}
 
 	public void compareHyphenChangeRuleOrder() {
 		diff_match_patch dmp = new diff_match_patch();
-		String syllablePatterns1 = createTextFromSyllablePattern(cva1);
-		String syllablePatterns2 = createTextFromSyllablePattern(cva2);
+		String syllablePatterns1 = createTextFromChangeRules(ha1);
+		String syllablePatterns2 = createTextFromChangeRules(ha2);
 		hyphenChangeRuleOrderDifferences = dmp.diff_main(syllablePatterns1, syllablePatterns2);
 	}
 
-	protected String createTextFromSyllablePattern(HyphenApproach cva) {
+	protected String createTextFromChangeRules(HyphenApproach ha) {
 		StringBuilder sb = new StringBuilder();
-		cva.getActiveHyphenChangeRules().stream().forEach(sp -> {
+		ha.getActiveHyphenChangeRules().stream().forEach(sp -> {
 			sb.append(sp.getRuleName());
 			sb.append("\t");
 			sb.append(sp.getMatchRepresentation());

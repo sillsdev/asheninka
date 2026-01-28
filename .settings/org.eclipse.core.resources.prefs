@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/org/sil/syllableparser/resources/SyllableParser.properties=UTF-8
+encoding//src/org/sil/syllableparser/resources/SyllableParser_en.properties=UTF-8
+encoding//src/org/sil/syllableparser/resources/SyllableParser_es.properties=UTF-8
+encoding//src/org/sil/syllableparser/resources/SyllableParser_fr.properties=UTF-8
 encoding/<project>=UTF-8

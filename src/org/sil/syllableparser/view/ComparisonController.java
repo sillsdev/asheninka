@@ -246,7 +246,7 @@ public abstract class ComparisonController implements Initializable {
 		String title = bundle.getString("label.restoreproject");
 		FXMLLoader loader = ControllerUtilities.getLoader(mainApp, locale, dialogStage,
 				title, ApproachViewNavigator.class.getResource(resource),
-				Constants.RESOURCE_LOCATION);
+				bundle);
 
 		BackupChooserController controller = loader.getController();
 		controller.setDialogStage(dialogStage);
