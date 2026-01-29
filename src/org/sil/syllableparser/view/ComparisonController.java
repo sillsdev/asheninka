@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 SIL International
+// Copyright (c) 2016-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -14,7 +14,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.sil.syllableparser.ApplicationPreferences;
-import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
 import org.sil.syllableparser.model.BackupFile;
 import org.sil.utility.StringUtilities;

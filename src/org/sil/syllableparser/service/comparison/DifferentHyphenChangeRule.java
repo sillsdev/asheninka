@@ -7,7 +7,6 @@
 package org.sil.syllableparser.service.comparison;
 
 import org.sil.syllableparser.model.SylParserObject;
-import org.sil.syllableparser.model.cvapproach.CVSyllablePattern;
 import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
 
 /**

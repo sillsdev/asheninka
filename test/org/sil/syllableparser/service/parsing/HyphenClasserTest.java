@@ -13,8 +13,6 @@ import org.junit.Test;
 import org.sil.syllableparser.model.cvapproach.*;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
 
-import javafx.collections.ObservableList;
-
 /**
  * @author Andy Black
  *

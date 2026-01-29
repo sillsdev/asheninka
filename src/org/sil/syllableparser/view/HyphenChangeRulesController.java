@@ -1,4 +1,4 @@
-// Copyright (c) 2025 SIL International
+// Copyright (c) 2025-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -9,19 +9,15 @@ package org.sil.syllableparser.view;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import org.sil.syllableparser.ApplicationPreferences;
 import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.MainApp;
-import org.sil.syllableparser.model.Segment;
 import org.sil.syllableparser.model.SylParserObject;
 import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
-import org.sil.syllableparser.model.hyphenapproach.SegmentInHyphenClass;
 import org.sil.syllableparser.service.HyphenChangeRuleValidator;
 import org.sil.utility.service.keyboards.KeyboardChanger;
 import org.sil.utility.view.ControllerUtilities;
