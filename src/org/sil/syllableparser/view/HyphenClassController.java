@@ -1,4 +1,4 @@
-// Copyright (c) 2025 SIL International
+// Copyright (c) 2025-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -8,7 +8,6 @@ package org.sil.syllableparser.view;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -22,7 +21,6 @@ import org.sil.syllableparser.model.hyphenapproach.HyphenApproach;
 import org.sil.syllableparser.model.hyphenapproach.HyphenClass;
 import org.sil.syllableparser.model.hyphenapproach.SegmentInHyphenClass;
 import org.sil.utility.service.keyboards.KeyboardChanger;
-import org.sil.utility.view.ControllerUtilities;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -38,7 +36,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
@@ -111,14 +108,6 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 	@FXML
 	private CheckBox activeCheckBox;
 	@FXML
-	private Button buttonMoveUp;
-	@FXML
-	private Button buttonMoveDown;
-	@FXML
-	private Tooltip tooltipMoveUp;
-	@FXML
-	private Tooltip tooltipMoveDown;
-	@FXML
 	private TextArea errorTextArea;
 
 	private HyphenClass currentHyphenClass;
@@ -138,13 +127,6 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 		super.initialize(location, resources);
 
 		bundle = resources;
-		// Initialize the button icons
-		tooltipMoveUp = ControllerUtilities.createToolbarButtonWithImage("UpArrow.png",
-				buttonMoveUp, tooltipMoveUp, bundle.getString("sh.view.sonorityhierarchy.up"),
-				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
-		tooltipMoveDown = ControllerUtilities.createToolbarButtonWithImage("DownArrow.png",
-				buttonMoveDown, tooltipMoveDown, bundle.getString("sh.view.sonorityhierarchy.down"),
-				Constants.RESOURCE_SOURCE_LOCATION, MainApp.class);
 
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().ncNameProperty());
 		classColumn.setCellValueFactory(cellData -> cellData.getValue()
@@ -290,7 +272,6 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 					.getOrientation());
 			activeCheckBox.setSelected(hyphenClass.isActive());
 			showHyphenClassContent();
-			setUpDownButtonDisabled();
 
 		} else {
 			// Segment is null, remove all the text.
@@ -303,8 +284,6 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 			if (ncsTextFlow != null) {
 				ncsTextFlow.getChildren().clear();
 			}
-			buttonMoveDown.setDisable(true);
-			buttonMoveUp.setDisable(true);
 		}
 		displayFieldsPerActiveSetting(hyphenClass);
 
@@ -369,21 +348,6 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 		int max = hyphenClassTable.getItems().size();
 		value = adjustIndexValue(value, max);
 		hyphenClassTable.getSelectionModel().clearAndSelect(value);
-	}
-
-	protected void setUpDownButtonDisabled() {
-		int iThis = hyphenApproach.getHyphenClasses().indexOf(currentHyphenClass) + 1;
-		int iSize = hyphenApproach.getHyphenClasses().size();
-		if (iThis > 1) {
-			buttonMoveUp.setDisable(false);
-		} else {
-			buttonMoveUp.setDisable(true);
-		}
-		if (iThis == iSize) {
-			buttonMoveDown.setDisable(true);
-		} else {
-			buttonMoveDown.setDisable(false);
-		}
 	}
 
 	private void showHyphenClassContent() {
@@ -529,24 +493,6 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 			e.printStackTrace();
 			MainApp.reportException(e, bundle);
 		}
-	}
-
-	@FXML
-	void handleMoveDown() {
-		int i = hyphenApproach.getHyphenClasses().indexOf(currentHyphenClass);
-		if ((i + 1) < hyphenApproach.getHyphenClasses().size()) {
-			Collections.swap(hyphenApproach.getHyphenClasses(), i, i + 1);
-		}
-		tableView.refresh();
-	}
-
-	@FXML
-	void handleMoveUp() {
-		int i = hyphenApproach.getHyphenClasses().indexOf(currentHyphenClass);
-		if (i > 0) {
-			Collections.swap(hyphenApproach.getHyphenClasses(), i, i - 1);
-		}
-		tableView.refresh();
 	}
 
 	// code taken from

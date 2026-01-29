@@ -44,12 +44,6 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="395.0" prefWidth="22.0" SplitPane.resizableWithParent="true">
-               <children>
-                  <Button fx:id="buttonMoveDown" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleMoveDown" />
-                  <Button fx:id="buttonMoveUp" contentDisplay="GRAPHIC_ONLY" layoutX="1.0" layoutY="58.0" mnemonicParsing="false" onAction="#handleMoveUp" />
-               </children>
-            </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="383.0">
                <children>
                   <Label layoutX="1.0" layoutY="7.0" text="%label.hyphenclass" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />

@@ -53,7 +53,6 @@ public class HyphenApproachLanguageComparisonHTMLFormatter extends
 		formatGraphemeNaturalClasses(sb);
 		formatEnvironments(sb);
 		formatHyphenClasses(sb);
-		formatHyphenClasssOrder(sb);
 		formatHyphenChangeRules(sb);
 		formatHyphenChangeRuleOrder(sb);
 		formatWords(sb);
@@ -100,49 +99,6 @@ public class HyphenApproachLanguageComparisonHTMLFormatter extends
 			sb.append(hyphenClass.getSegmentsRepresentation());
 			sb.append(")");
 		}
-	}
-
-	protected void formatHyphenClasssOrder(StringBuilder sb) {
-		LinkedList<Diff> diffs = hyphenComparer.getHyphenChangeRuleOrderDifferences();
-		if (diffs.size() > 1) {
-			sb.append("<p>" + bundle.getString("report.hyphenclassorder") + "</p>\n");
-			sb.append("<table border=\"1\">\n<thead>\n<tr>\n<th>");
-			sb.append(getAdjectivalForm("report.first", "report.adjectivalendingm"));
-			sb.append("</th>\n<th>");
-			sb.append(getAdjectivalForm("report.second", "report.adjectivalendingm"));
-			sb.append("</th>\n</tr>\n</thead>\n<tbody>\n");
-			List<HyphenClass> sonorityHierarchy1 = hyphenComparer.getHa1().getActiveHyphenClasses();
-			List<HyphenClass> sonorityHierarchy2 = hyphenComparer.getHa2().getActiveHyphenClasses();
-			int size1 = sonorityHierarchy1.size();
-			int size2 = sonorityHierarchy2.size();
-			int maxSize = Math.max(size1, size2);
-			for (int i = 0; i < maxSize; i++) {
-				sb.append("<tr>\n<td class=\"");
-				sb.append(ANALYSIS_1);
-				sb.append("\">");
-				HyphenClass naturalClass = formatHyphenCLassesInOrder(sonorityHierarchy1,
-						size1, i);
-				formatHyphenClassInfo(sb, naturalClass);
-				sb.append("</td>\n<td class=\"");
-				sb.append(ANALYSIS_2);
-				sb.append("\">");
-				naturalClass = formatHyphenCLassesInOrder(sonorityHierarchy2, size2, i);
-				formatHyphenClassInfo(sb, naturalClass);
-				sb.append("</td>\n</tr>\n");
-			}
-			sb.append("</tbody>\n</table>\n");
-		}
-	}
-
-	protected HyphenClass formatHyphenCLassesInOrder(List<HyphenClass> hyphenClasses,
-			int size1, int i) {
-		HyphenClass hyphenClass;
-		if (i < size1) {
-			hyphenClass = (HyphenClass) hyphenClasses.get(i);
-		} else {
-			hyphenClass = null;
-		}
-		return hyphenClass;
 	}
 
 	protected void formatHyphenChangeRules(StringBuilder sb) {
