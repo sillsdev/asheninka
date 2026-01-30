@@ -166,7 +166,6 @@ public class HyphenApproachLanguageComparer extends ApproachLanguageComparer {
 				word.setHyphenPredictedSyllabification(ruleProcessor.getSyllabifiedWord());
 			}
 		}
-
 	}
 
 	public void compareHyphenChangeRuleOrder() {

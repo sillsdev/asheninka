@@ -78,121 +78,174 @@ public class SyllabificationsComparerTest {
 	@Test
 	public void calculateApproachesToUseTest() {
 		// zero set
-		checkApproachesToUse(false, false, false, false, false, false, 0);
+		checkApproachesToUse(false, false, false, false, false, false, false, 0);
 
 		// one set
-		checkApproachesToUse(true, false, false, false, false, false, 1);
-		checkApproachesToUse(false, true, false, false, false, false, 2);
-		checkApproachesToUse(false, false, true, false, false, false, 4);
-		checkApproachesToUse(false, false, false, true, false, false, 8);
-		checkApproachesToUse(false, false, false, false, true, false, 16);
-		checkApproachesToUse(false, false, false, false, false, true, 32);
+		checkApproachesToUse(true, false, false, false, false, false, false, 1);
+		checkApproachesToUse(false, true, false, false, false, false, false, 2);
+		checkApproachesToUse(false, false, true, false, false, false, false, 4);
+		checkApproachesToUse(false, false, false, true, false, false, false, 8);
+		checkApproachesToUse(false, false, false, false, true, false, false, 16);
+		checkApproachesToUse(false, false, false, false, false, true, false, 32);
+		checkApproachesToUse(false, false, false, false, false, false, true, 64);
 
 		// two set
-		checkApproachesToUse(true, true, false, false, false, false, 3);
-		checkApproachesToUse(true, false, true, false, false, false, 5);
-		checkApproachesToUse(true, false, false, true, false, false, 9);
-		checkApproachesToUse(true, false, false, false, true, false, 17);
-		checkApproachesToUse(true, false, false, false, false, true, 33);
+		checkApproachesToUse(true, true, false, false, false, false, false, 3);
+		checkApproachesToUse(true, false, true, false, false, false, false, 5);
+		checkApproachesToUse(true, false, false, true, false, false, false, 9);
+		checkApproachesToUse(true, false, false, false, true, false, false, 17);
+		checkApproachesToUse(true, false, false, false, false, true, false, 33);
+		checkApproachesToUse(true, false, false, false, false, false, true, 65);
 
-		checkApproachesToUse(false, true, true, false, false, false, 6);
-		checkApproachesToUse(false, true, false, true, false, false, 10);
-		checkApproachesToUse(false, true, false, false, true, false, 18);
-		checkApproachesToUse(false, true, false, false, false, true, 34);
+		checkApproachesToUse(false, true, true, false, false, false, false, 6);
+		checkApproachesToUse(false, true, false, true, false, false, false, 10);
+		checkApproachesToUse(false, true, false, false, true, false, false, 18);
+		checkApproachesToUse(false, true, false, false, false, true, false, 34);
+		checkApproachesToUse(false, true, false, false, false, false, true, 66);
 
-		checkApproachesToUse(false, false, true, true, false, false, 12);
-		checkApproachesToUse(false, false, true, false, true, false, 20);
-		checkApproachesToUse(false, false, true, false, false, true, 36);
+		checkApproachesToUse(false, false, true, true, false, false, false, 12);
+		checkApproachesToUse(false, false, true, false, true, false, false, 20);
+		checkApproachesToUse(false, false, true, false, false, true, false, 36);
 
-		checkApproachesToUse(false, false, false, true, true, false, 24);
-		checkApproachesToUse(false, false, false, true, false, true, 40);
+		checkApproachesToUse(false, false, false, true, true, false, false, 24);
+		checkApproachesToUse(false, false, false, true, false, true, false, 40);
+		checkApproachesToUse(false, false, false, true, false, false, true, 72);
 
-		checkApproachesToUse(false, false, false, false, true, true, 48);
+		checkApproachesToUse(false, false, false, false, true, true, false, 48);
+		checkApproachesToUse(false, false, false, false, true, false, true, 80);
+
+		checkApproachesToUse(false, false, false, false, false, true, true, 96);
 
 		// three set
-		checkApproachesToUse(true, true, true, false, false, false, 7);
-		checkApproachesToUse(true, true, false, true, false, false, 11);
-		checkApproachesToUse(true, true, false, false, true, false, 19);
-		checkApproachesToUse(true, true, false, false, false, true, 35);
+		checkApproachesToUse(true, true, true, false, false, false, false, 7);
+		checkApproachesToUse(true, true, false, true, false, false, false, 11);
+		checkApproachesToUse(true, true, false, false, true, false, false, 19);
+		checkApproachesToUse(true, true, false, false, false, true, false, 35);
+		checkApproachesToUse(true, true, false, false, false, false, true, 67);
 
-		checkApproachesToUse(true, false, true, true, false, false, 13);
-		checkApproachesToUse(true, false, true, false, true, false, 21);
-		checkApproachesToUse(true, false, true, false, false, true, 37);
+		checkApproachesToUse(true, false, true, true, false, false, false, 13);
+		checkApproachesToUse(true, false, true, false, true, false, false, 21);
+		checkApproachesToUse(true, false, true, false, false, true, false, 37);
+		checkApproachesToUse(true, false, true, false, false, false, true, 69);
 
-		checkApproachesToUse(true, false, false, true, true, false, 25);
-		checkApproachesToUse(true, false, false, true, false, true, 41);
+		checkApproachesToUse(true, false, false, true, true, false, false, 25);
+		checkApproachesToUse(true, false, false, true, false, true, false, 41);
+		checkApproachesToUse(true, false, false, true, false, false, true, 73);
 
-		checkApproachesToUse(true, false, false, false, true, true, 49);
+		checkApproachesToUse(true, false, false, false, true, true, false, 49);
+		checkApproachesToUse(true, false, false, false, true, false, true, 81);
 
-		checkApproachesToUse(false, true, true, true, false, false, 14);
-		checkApproachesToUse(false, true, true, false, true, false, 22);
-		checkApproachesToUse(false, true, true, false, false, true, 38);
+		checkApproachesToUse(true, false, false, false, false, true, true, 97);
 
-		checkApproachesToUse(false, true, false, true, true, false, 26);
-		checkApproachesToUse(false, true, false, true, false, true, 42);
+		checkApproachesToUse(false, true, true, true, false, false, false, 14);
+		checkApproachesToUse(false, true, true, false, true, false, false, 22);
+		checkApproachesToUse(false, true, true, false, false, true, false, 38);
+		checkApproachesToUse(false, true, true, false, false, false, true, 70);
 
-		checkApproachesToUse(false, true, false, false, true, true, 50);
+		checkApproachesToUse(false, true, false, true, true, false, false, 26);
+		checkApproachesToUse(false, true, false, true, false, true, false, 42);
+		checkApproachesToUse(false, true, false, true, false, false, true, 74);
 
-		checkApproachesToUse(false, false, true, true, true, false, 28);
-		checkApproachesToUse(false, false, true, true, false, true, 44);
-		checkApproachesToUse(false, false, true, false, true, true, 52);
+		checkApproachesToUse(false, true, false, false, true, true, false, 50);
+		checkApproachesToUse(false, true, false, false, true, false, true, 82);
 
-		checkApproachesToUse(false, false, false, true, true, true, 56);
+		checkApproachesToUse(false, true, false, false, false, true, true, 98);
+
+		checkApproachesToUse(false, false, true, true, true, false, false, 28);
+		checkApproachesToUse(false, false, true, true, false, true, false, 44);
+		checkApproachesToUse(false, false, true, false, true, true, false, 52);
+		checkApproachesToUse(false, false, true, false, true, false, true, 84);
+		checkApproachesToUse(false, false, true, false, false, true, true, 100);
+
+		checkApproachesToUse(false, false, false, true, true, true, false, 56);
+		checkApproachesToUse(false, false, false, true, true, false, true, 88);
+		checkApproachesToUse(false, false, false, true, false, true, true, 104);
+
+		checkApproachesToUse(false, false, false, false, true, true, true, 112);
 
 		// four set
-		checkApproachesToUse(true, true, true, true, false, false, 15);
-		checkApproachesToUse(true, true, true, false, true, false, 23);
-		checkApproachesToUse(true, true, true, false, false, true, 39);
+		checkApproachesToUse(true, true, true, true, false, false, false, 15);
+		checkApproachesToUse(true, true, true, false, true, false, false, 23);
+		checkApproachesToUse(true, true, true, false, false, true, false, 39);
+		checkApproachesToUse(true, true, true, false, false, false, true, 71);
 
-		checkApproachesToUse(true, true, false, true, true, false, 27);
-		checkApproachesToUse(true, true, false, true, false, true, 43);
-		checkApproachesToUse(true, true, false, false, true, true, 51);
+		checkApproachesToUse(true, true, false, true, true, false, false, 27);
+		checkApproachesToUse(true, true, false, true, false, true, false, 43);
+		checkApproachesToUse(true, true, false, true, false, false, true, 75);
+		checkApproachesToUse(true, true, false, false, true, true, false, 51);
+		checkApproachesToUse(true, true, false, false, true, false, true, 83);
 
-		checkApproachesToUse(true, false, true, true, true, false, 29);
-		checkApproachesToUse(true, false, true, true, false, true, 45);
-		checkApproachesToUse(true, false, true, false, true, true, 53);
+		checkApproachesToUse(true, false, true, true, true, false, false, 29);
+		checkApproachesToUse(true, false, true, true, false, true, false, 45);
+		checkApproachesToUse(true, false, true, true, false, false, true, 77);
+		checkApproachesToUse(true, false, true, false, true, true, false, 53);
+		checkApproachesToUse(true, false, true, false, true, false, true, 85);
+		checkApproachesToUse(true, false, true, false, false, true, true, 101);
 
-		checkApproachesToUse(true, false, false, true, true, true, 57);
+		checkApproachesToUse(true, false, false, true, true, true, false, 57);
+		checkApproachesToUse(true, false, false, true, true, false, true, 89);
+		checkApproachesToUse(true, false, false, true, false, true, true, 105);
 
-		checkApproachesToUse(false, true, true, true, true, false, 30);
-		checkApproachesToUse(false, true, true, true, false, true, 46);
-		checkApproachesToUse(false, true, true, false, true, true, 54);
-		checkApproachesToUse(false, true, false, true, true, true, 58);
+		checkApproachesToUse(false, true, true, true, true, false, false, 30);
+		checkApproachesToUse(false, true, true, true, false, true, false, 46);
+		checkApproachesToUse(false, true, true, true, false, false, true, 78);
+		checkApproachesToUse(false, true, true, false, true, true, false, 54);
+		checkApproachesToUse(false, true, true, false, true, false, true, 86);
+		checkApproachesToUse(false, true, true, false, false, true, true, 102);
+		checkApproachesToUse(false, true, false, true, true, true, false, 58);
+		checkApproachesToUse(false, true, false, true, true, false, true, 90);
+		checkApproachesToUse(false, true, false, true, false, true, true, 106);
 
-		checkApproachesToUse(false, false, true, true, true, true, 60);
+		checkApproachesToUse(false, false, true, true, true, true, false, 60);
+		checkApproachesToUse(false, false, true, true, true, false, true, 92);
+
+		checkApproachesToUse(false, false, false, true, true, true, true, 120);
 
 		// five set
-		checkApproachesToUse(true, true, true, true, true, false, 31);
-		checkApproachesToUse(true, true, true, true, false, true, 47);
-		checkApproachesToUse(true, true, true, false, true, true, 55);
-		checkApproachesToUse(true, true, false, true, true, true, 59);
-		checkApproachesToUse(true, false, true, true, true, true, 61);
-		checkApproachesToUse(false, true, true, true, true, true, 62);
+		checkApproachesToUse(true, true, true, true, true, false, false, 31);
+		checkApproachesToUse(true, true, true, true, false, true, false, 47);
+		checkApproachesToUse(true, true, true, true, false, false, true, 79);
+		checkApproachesToUse(true, true, true, false, true, true, false, 55);
+		checkApproachesToUse(true, true, true, false, true, false, true, 87);
+		checkApproachesToUse(true, true, true, false, false, true, true, 103);
+		checkApproachesToUse(true, true, false, true, true, true, false, 59);
+		checkApproachesToUse(true, true, false, true, true, false, true, 91);
+		checkApproachesToUse(true, false, true, true, true, true, false, 61);
+		checkApproachesToUse(true, false, true, true, true, false, true, 93);
+		checkApproachesToUse(false, true, true, true, true, true, false, 62);
+		checkApproachesToUse(false, true, true, true, true, false, true, 94);
+		checkApproachesToUse(false, false, true, true, true, true, true, 124);
 
 		// six set
-		checkApproachesToUse(true, true, true, true, true, true, 63);
+		checkApproachesToUse(true, true, true, true, true, true, false, 63);
+		checkApproachesToUse(true, true, true, true, true, false, true, 95);
+
+		// seven set
+		checkApproachesToUse(true, true, true, true, true, true, true, 127);
 	}
 
 	protected void checkApproachesToUse(boolean useCV, boolean useSH, boolean useONC,
-			boolean useMoraic, boolean useNP, boolean useOT, int approachesExpected) {
+			boolean useMoraic, boolean useNP, boolean useOT, boolean useHyphen, int approachesExpected) {
 		comparer.setUseCVApproach(useCV);
 		comparer.setUseSHApproach(useSH);
 		comparer.setUseONCApproach(useONC);
 		comparer.setUseMoraicApproach(useMoraic);
 		comparer.setUseNPApproach(useNP);
 		comparer.setUseOTApproach(useOT);
+		comparer.setUseHyphenApproach(useHyphen);
 		comparer.calculateApproachesToUse();
 		assertEquals(approachesExpected, comparer.getApproachesToUse());
 	}
 
 	protected void checkNumberOfApproachesToCompare(boolean useCV, boolean useSH, boolean useONC,
-			boolean useMoraic, boolean useNP, boolean useOT, int numberOfApproachesExpected) {
+			boolean useMoraic, boolean useNP, boolean useOT, boolean useHyphen, int numberOfApproachesExpected) {
 		comparer.setUseCVApproach(useCV);
 		comparer.setUseSHApproach(useSH);
 		comparer.setUseONCApproach(useONC);
 		comparer.setUseMoraicApproach(useMoraic);
 		comparer.setUseNPApproach(useNP);
 		comparer.setUseOTApproach(useOT);
+		comparer.setUseHyphenApproach(useHyphen);
 		comparer.calculateApproachesToUse();
 		assertEquals(numberOfApproachesExpected, comparer.numberOfApproachesBeingCompared());
 	}
@@ -205,6 +258,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 2134, diffs.size());
@@ -237,6 +291,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3040, diffs.size());
@@ -267,6 +322,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 1585, diffs.size());
@@ -289,6 +345,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3002, diffs.size());
@@ -311,6 +368,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 1599, diffs.size());
@@ -332,6 +390,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3723, diffs.size());
@@ -355,6 +414,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 2947, diffs.size());
@@ -379,6 +439,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3801, diffs.size());
@@ -402,6 +463,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 1332, diffs.size());
@@ -423,6 +485,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 1706, diffs.size());
@@ -448,6 +511,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 135, diffs.size());
@@ -471,6 +535,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4070, diffs.size());
@@ -492,6 +557,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 1571, diffs.size());
@@ -515,6 +581,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 2605, diffs.size());
@@ -536,12 +603,13 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
-		 comparer.compareSyllabifications();
-		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 4145, diffs.size());
-		 List<Word> listOfDiffs = new ArrayList<Word>();
-		 listOfDiffs.addAll(diffs);
-		 Word diffWord = listOfDiffs.get(10);
+		comparer.setUseHyphenApproach(false);
+		comparer.compareSyllabifications();
+		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
+		assertEquals("number of different words", 4145, diffs.size());
+		List<Word> listOfDiffs = new ArrayList<Word>();
+		listOfDiffs.addAll(diffs);
+		Word diffWord = listOfDiffs.get(10);
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
 		diffWord = listOfDiffs.get(457);
@@ -557,6 +625,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4233, diffs.size());
@@ -586,6 +655,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3222, diffs.size());
@@ -613,6 +683,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4275, diffs.size());
@@ -642,6 +713,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 2237, diffs.size());
@@ -669,6 +741,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3150, diffs.size());
@@ -693,6 +766,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3082, diffs.size());
@@ -717,6 +791,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4287, diffs.size());
@@ -740,6 +815,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3070, diffs.size());
@@ -765,6 +841,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 2858, diffs.size());
@@ -788,6 +865,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4329, diffs.size());
@@ -811,6 +889,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4027, diffs.size());
@@ -838,6 +917,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3801, diffs.size());
@@ -863,12 +943,13 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
-		 comparer.compareSyllabifications();
-		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 4093, diffs.size());
-		 List<Word> listOfDiffs = new ArrayList<Word>();
-		 listOfDiffs.addAll(diffs);
-		 Word diffWord = listOfDiffs.get(10);
+		comparer.setUseHyphenApproach(false);
+		comparer.compareSyllabifications();
+		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
+		assertEquals("number of different words", 4093, diffs.size());
+		List<Word> listOfDiffs = new ArrayList<Word>();
+		listOfDiffs.addAll(diffs);
+		Word diffWord = listOfDiffs.get(10);
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
@@ -886,6 +967,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4027, diffs.size());
@@ -913,12 +995,13 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
-		 comparer.compareSyllabifications();
-		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 3102, diffs.size());
-		 List<Word> listOfDiffs = new ArrayList<Word>();
-		 listOfDiffs.addAll(diffs);
-		 Word diffWord = listOfDiffs.get(10);
+		comparer.setUseHyphenApproach(false);
+		comparer.compareSyllabifications();
+		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
+		assertEquals("number of different words", 3102, diffs.size());
+		List<Word> listOfDiffs = new ArrayList<Word>();
+		listOfDiffs.addAll(diffs);
+		Word diffWord = listOfDiffs.get(10);
 		assertEquals("", diffWord.getSHPredictedSyllabification());
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
@@ -936,6 +1019,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4168, diffs.size());
@@ -959,6 +1043,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 1706, diffs.size());
@@ -984,6 +1069,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4159, diffs.size());
@@ -1007,12 +1093,13 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
-		 comparer.compareSyllabifications();
-		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 4145, diffs.size());
-		 List<Word> listOfDiffs = new ArrayList<Word>();
-		 listOfDiffs.addAll(diffs);
-		 Word diffWord = listOfDiffs.get(10);
+		comparer.setUseHyphenApproach(false);
+		comparer.compareSyllabifications();
+		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
+		assertEquals("number of different words", 4145, diffs.size());
+		List<Word> listOfDiffs = new ArrayList<Word>();
+		listOfDiffs.addAll(diffs);
+		Word diffWord = listOfDiffs.get(10);
 		assertEquals("", diffWord.getONCPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
@@ -1030,12 +1117,13 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
-		 comparer.compareSyllabifications();
-		 SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
-		 assertEquals("number of different words", 4159, diffs.size());
-		 List<Word> listOfDiffs = new ArrayList<Word>();
-		 listOfDiffs.addAll(diffs);
-		 Word diffWord = listOfDiffs.get(10);
+		comparer.setUseHyphenApproach(false);
+		comparer.compareSyllabifications();
+		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
+		assertEquals("number of different words", 4159, diffs.size());
+		List<Word> listOfDiffs = new ArrayList<Word>();
+		listOfDiffs.addAll(diffs);
+		Word diffWord = listOfDiffs.get(10);
 		assertEquals("", diffWord.getMoraicPredictedSyllabification());
 		assertEquals("", diffWord.getNPPredictedSyllabification());
 		assertEquals("a.bu.e.lol.me", diffWord.getOTPredictedSyllabification());
@@ -1053,6 +1141,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4292, diffs.size());
@@ -1080,6 +1169,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4275, diffs.size());
@@ -1106,6 +1196,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4310, diffs.size());
@@ -1131,6 +1222,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4292, diffs.size());
@@ -1158,6 +1250,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3296, diffs.size());
@@ -1183,6 +1276,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4352, diffs.size());
@@ -1208,6 +1302,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 3150, diffs.size());
@@ -1235,6 +1330,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4343, diffs.size());
@@ -1260,6 +1356,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4329, diffs.size());
@@ -1285,6 +1382,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4343, diffs.size());
@@ -1310,6 +1408,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4027, diffs.size());
@@ -1340,6 +1439,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4182, diffs.size());
@@ -1365,6 +1465,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4168, diffs.size());
@@ -1390,6 +1491,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4182, diffs.size());
@@ -1415,6 +1517,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4159, diffs.size());
@@ -1440,6 +1543,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4292, diffs.size());
@@ -1469,6 +1573,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4366, diffs.size());
@@ -1496,6 +1601,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4352, diffs.size());
@@ -1523,6 +1629,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4366, diffs.size());
@@ -1550,6 +1657,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4343, diffs.size());
@@ -1577,6 +1685,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4182, diffs.size());
@@ -1604,6 +1713,7 @@ public class SyllabificationsComparerTest {
 		comparer.setUseMoraicApproach(true);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(true);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
 		assertEquals("number of different words", 4366, diffs.size());
@@ -1626,100 +1736,169 @@ public class SyllabificationsComparerTest {
 	}
 
 	@Test
+	public void compareCVandHyphenWordsTest() {
+		languageProject = new LanguageProject();
+		Locale locale = new Locale("en");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
+		File file = new File(Constants.UNIT_TEST_HYPHEN_DATA_FILE_NAME);
+		xmlBackEndProvider.loadLanguageDataFromFile(file);
+		comparer = new SyllabificationsComparer(languageProject);
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(false);
+		comparer.setUseONCApproach(false);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(true);
+		comparer.compareSyllabifications();
+		SortedSet<Word> diffs = comparer.getSyllabificationsWhichDiffer();
+		assertEquals("number of different words", 1599, diffs.size());
+		List<Word> listOfDiffs = new ArrayList<Word>();
+		listOfDiffs.addAll(diffs);
+		Word diffWord = listOfDiffs.get(10);
+		assertEquals("Ar.ip.a.et.e", diffWord.getCVPredictedSyllabification());
+		assertEquals("", diffWord.getSHPredictedSyllabification());
+		assertEquals("", diffWord.getONCPredictedSyllabification());
+		assertEquals("", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("", diffWord.getNPPredictedSyllabification());
+		assertEquals("", diffWord.getOTPredictedSyllabification());
+		assertEquals("A.ri.pae.te", diffWord.getHyphenPredictedSyllabification());
+		diffWord = listOfDiffs.get(298);
+		assertEquals("an.ta.ka.ye.mi.ro", diffWord.getCVPredictedSyllabification());
+		assertEquals("", diffWord.getSHPredictedSyllabification());
+		assertEquals("", diffWord.getONCPredictedSyllabification());
+		assertEquals("", diffWord.getMoraicPredictedSyllabification());
+		assertEquals("", diffWord.getNPPredictedSyllabification());
+		assertEquals("", diffWord.getOTPredictedSyllabification());
+		assertEquals("a.n.ta.ka.ye.mi.ro", diffWord.getHyphenPredictedSyllabification());
+	}
+	@Test
 	public void numberOfApproachesBeingComparedTest() {
 		// zero set
-		checkNumberOfApproachesToCompare(false, false, false, false, false, false, 0);
+		checkNumberOfApproachesToCompare(false, false, false, false, false, false, false, 0);
 
 		// one set
-		checkNumberOfApproachesToCompare(true, false, false, false, false, false, 1);
-		checkNumberOfApproachesToCompare(false, true, false, false, false, false, 1);
-		checkNumberOfApproachesToCompare(false, false, true, false, false, false, 1);
-		checkNumberOfApproachesToCompare(false, false, false, true, false, false, 1);
-		checkNumberOfApproachesToCompare(false, false, false, false, true, false, 1);
-		checkNumberOfApproachesToCompare(false, false, false, false, false, true, 1);
+		checkNumberOfApproachesToCompare(true, false, false, false, false, false, false, 1);
+		checkNumberOfApproachesToCompare(false, true, false, false, false, false, false, 1);
+		checkNumberOfApproachesToCompare(false, false, true, false, false, false, false, 1);
+		checkNumberOfApproachesToCompare(false, false, false, true, false, false, false, 1);
+		checkNumberOfApproachesToCompare(false, false, false, false, true, false, false, 1);
+		checkNumberOfApproachesToCompare(false, false, false, false, false, true, false, 1);
+		checkNumberOfApproachesToCompare(false, false, false, false, false, false, true, 1);
 
 		// two set
-		checkNumberOfApproachesToCompare(true, true, false, false, false, false, 2);
-		checkNumberOfApproachesToCompare(true, false, true, false, false, false, 2);
-		checkNumberOfApproachesToCompare(true, false, false, true, false, false, 2);
-		checkNumberOfApproachesToCompare(true, false, false, false, true, false, 2);
-		checkNumberOfApproachesToCompare(true, false, false, false, false, true, 2);
+		checkNumberOfApproachesToCompare(true, true, false, false, false, false, false, 2);
+		checkNumberOfApproachesToCompare(true, false, true, false, false, false, false, 2);
+		checkNumberOfApproachesToCompare(true, false, false, true, false, false, false, 2);
+		checkNumberOfApproachesToCompare(true, false, false, false, true, false, false, 2);
+		checkNumberOfApproachesToCompare(true, false, false, false, false, true, false, 2);
+		checkNumberOfApproachesToCompare(true, false, false, false, false, false, true, 2);
 
-		checkNumberOfApproachesToCompare(false, true, true, false, false, false, 2);
-		checkNumberOfApproachesToCompare(false, true, false, true, false, false, 2);
-		checkNumberOfApproachesToCompare(false, true, false, false, true, false, 2);
-		checkNumberOfApproachesToCompare(false, true, false, false, false, true, 2);
+		checkNumberOfApproachesToCompare(false, true, true, false, false, false, false, 2);
+		checkNumberOfApproachesToCompare(false, true, false, true, false, false, false, 2);
+		checkNumberOfApproachesToCompare(false, true, false, false, true, false, false, 2);
+		checkNumberOfApproachesToCompare(false, true, false, false, false, true, false, 2);
+		checkNumberOfApproachesToCompare(false, true, false, false, false, false, true, 2);
 
-		checkNumberOfApproachesToCompare(false, false, true, true, false, false, 2);
-		checkNumberOfApproachesToCompare(false, false, true, false, true, false, 2);
-		checkNumberOfApproachesToCompare(false, false, true, false, false, true, 2);
+		checkNumberOfApproachesToCompare(false, false, true, true, false, false, false, 2);
+		checkNumberOfApproachesToCompare(false, false, true, false, true, false, false, 2);
+		checkNumberOfApproachesToCompare(false, false, true, false, false, true, false, 2);
+		checkNumberOfApproachesToCompare(false, false, true, false, false, false, true, 2);
 
-		checkNumberOfApproachesToCompare(false, false, false, true, true, false, 2);
-		checkNumberOfApproachesToCompare(false, false, false, true, false, true, 2);
+		checkNumberOfApproachesToCompare(false, false, false, true, true, false, false, 2);
+		checkNumberOfApproachesToCompare(false, false, false, true, false, true, false, 2);
+		checkNumberOfApproachesToCompare(false, false, false, true, false, false, true, 2);
 
-		checkNumberOfApproachesToCompare(false, false, false, false, true, true, 2);
+		checkNumberOfApproachesToCompare(false, false, false, false, true, true, false, 2);
+		checkNumberOfApproachesToCompare(false, false, false, false, true, false, true, 2);
 
 		// three set
-		checkNumberOfApproachesToCompare(true, true, true, false, false, false, 3);
-		checkNumberOfApproachesToCompare(true, true, false, true, false, false, 3);
-		checkNumberOfApproachesToCompare(true, true, false, false, true, false, 3);
-		checkNumberOfApproachesToCompare(true, true, false, false, false, true, 3);
+		checkNumberOfApproachesToCompare(true, true, true, false, false, false, false, 3);
+		checkNumberOfApproachesToCompare(true, true, false, true, false, false, false, 3);
+		checkNumberOfApproachesToCompare(true, true, false, false, true, false, false, 3);
+		checkNumberOfApproachesToCompare(true, true, false, false, false, true, false, 3);
+		checkNumberOfApproachesToCompare(true, true, false, false, false, false, true, 3);
 
-		checkNumberOfApproachesToCompare(true, false, true, true, false, false, 3);
-		checkNumberOfApproachesToCompare(true, false, true, false, true, false, 3);
-		checkNumberOfApproachesToCompare(true, false, true, false, false, true, 3);
+		checkNumberOfApproachesToCompare(true, false, true, true, false, false, false, 3);
+		checkNumberOfApproachesToCompare(true, false, true, false, true, false, false, 3);
+		checkNumberOfApproachesToCompare(true, false, true, false, false, true, false, 3);
+		checkNumberOfApproachesToCompare(true, false, true, false, false, false, true, 3);
 
-		checkNumberOfApproachesToCompare(true, false, false, true, true, false, 3);
-		checkNumberOfApproachesToCompare(true, false, false, true, false, true, 3);
+		checkNumberOfApproachesToCompare(true, false, false, true, true, false, false, 3);
+		checkNumberOfApproachesToCompare(true, false, false, true, false, true, false, 3);
+		checkNumberOfApproachesToCompare(true, false, false, true, false, false, true, 3);
 
-		checkNumberOfApproachesToCompare(true, false, false, false, true, true, 3);
+		checkNumberOfApproachesToCompare(true, false, false, false, true, true, false, 3);
+		checkNumberOfApproachesToCompare(true, false, false, false, true, false, true, 3);
 
-		checkNumberOfApproachesToCompare(false, true, true, true, false, false, 3);
-		checkNumberOfApproachesToCompare(false, true, true, false, true, false, 3);
-		checkNumberOfApproachesToCompare(false, true, true, false, false, true, 3);
+		checkNumberOfApproachesToCompare(true, false, false, false, false, true, true, 3);
 
-		checkNumberOfApproachesToCompare(false, true, false, true, true, false, 3);
-		checkNumberOfApproachesToCompare(false, true, false, true, false, true, 3);
+		checkNumberOfApproachesToCompare(false, true, true, true, false, false, false, 3);
+		checkNumberOfApproachesToCompare(false, true, true, false, true, false, false, 3);
+		checkNumberOfApproachesToCompare(false, true, true, false, false, true, false, 3);
+		checkNumberOfApproachesToCompare(false, true, true, false, false, false, true, 3);
 
-		checkNumberOfApproachesToCompare(false, true, false, false, true, true, 3);
+		checkNumberOfApproachesToCompare(false, true, false, true, true, false, false, 3);
+		checkNumberOfApproachesToCompare(false, true, false, true, false, true, false, 3);
+		checkNumberOfApproachesToCompare(false, true, false, true, false, false, true, 3);
 
-		checkNumberOfApproachesToCompare(false, false, true, true, true, false, 3);
-		checkNumberOfApproachesToCompare(false, false, true, true, false, true, 3);
-		checkNumberOfApproachesToCompare(false, false, true, false, true, true, 3);
+		checkNumberOfApproachesToCompare(false, true, false, false, true, true, false, 3);
+		checkNumberOfApproachesToCompare(false, true, false, false, true, false, true, 3);
 
-		checkNumberOfApproachesToCompare(false, false, false, true, true, true, 3);
+		checkNumberOfApproachesToCompare(false, true, false, false, false, true, true, 3);
+
+		checkNumberOfApproachesToCompare(false, false, true, true, true, false, false, 3);
+		checkNumberOfApproachesToCompare(false, false, true, true, false, true, false, 3);
+		checkNumberOfApproachesToCompare(false, false, true, false, true, true, false, 3);
+
+		checkNumberOfApproachesToCompare(false, false, false, true, true, true, false, 3);
 
 		// four set
-		checkNumberOfApproachesToCompare(true, true, true, true, false, false, 4);
-		checkNumberOfApproachesToCompare(true, true, true, false, true, false, 4);
-		checkNumberOfApproachesToCompare(true, true, true, false, false, true, 4);
+		checkNumberOfApproachesToCompare(true, true, true, true, false, false, false, 4);
+		checkNumberOfApproachesToCompare(true, true, true, false, true, false, false, 4);
+		checkNumberOfApproachesToCompare(true, true, true, false, false, true, false, 4);
+		checkNumberOfApproachesToCompare(true, true, true, false, false, false, true, 4);
 
-		checkNumberOfApproachesToCompare(true, true, false, true, true, false, 4);
-		checkNumberOfApproachesToCompare(true, true, false, true, false, true, 4);
-		checkNumberOfApproachesToCompare(true, true, false, false, true, true, 4);
+		checkNumberOfApproachesToCompare(true, true, false, true, true, false, false, 4);
+		checkNumberOfApproachesToCompare(true, true, false, true, false, true, false, 4);
+		checkNumberOfApproachesToCompare(true, true, false, false, true, true, false, 4);
+		checkNumberOfApproachesToCompare(true, true, false, false, true, false, true, 4);
 
-		checkNumberOfApproachesToCompare(true, false, true, true, true, false, 4);
-		checkNumberOfApproachesToCompare(true, false, true, true, false, true, 4);
-		checkNumberOfApproachesToCompare(true, false, true, false, true, true, 4);
+		checkNumberOfApproachesToCompare(true, false, true, true, true, false, false, 4);
+		checkNumberOfApproachesToCompare(true, false, true, true, false, true, false, 4);
+		checkNumberOfApproachesToCompare(true, false, true, false, true, true, false, 4);
+		checkNumberOfApproachesToCompare(true, false, true, false, true, false, true, 4);
 
-		checkNumberOfApproachesToCompare(true, false, false, true, true, true, 4);
+		checkNumberOfApproachesToCompare(true, false, false, true, true, true, false, 4);
+		checkNumberOfApproachesToCompare(true, false, false, true, true, false, true, 4);
 
-		checkNumberOfApproachesToCompare(false, true, true, true, true, false, 4);
-		checkNumberOfApproachesToCompare(false, true, true, true, false, true, 4);
-		checkNumberOfApproachesToCompare(false, true, true, false, true, true, 4);
-		checkNumberOfApproachesToCompare(false, true, false, true, true, true, 4);
+		checkNumberOfApproachesToCompare(true, false, false, true, false, true, true, 4);
 
-		checkNumberOfApproachesToCompare(false, false, true, true, true, true, 4);
+		checkNumberOfApproachesToCompare(false, true, true, true, true, false, false, 4);
+		checkNumberOfApproachesToCompare(false, true, true, true, false, true, false, 4);
+		checkNumberOfApproachesToCompare(false, true, true, false, true, true, false, 4);
+		checkNumberOfApproachesToCompare(false, true, false, true, true, true, false, 4);
+		checkNumberOfApproachesToCompare(false, true, false, true, true, false, true, 4);
+
+		checkNumberOfApproachesToCompare(false, false, true, true, true, true, false, 4);
+		checkNumberOfApproachesToCompare(false, false, true, true, true, false, true, 4);
+
+		checkNumberOfApproachesToCompare(false, false, true, true, false, true, true, 4);
 
 		// five set
-		checkNumberOfApproachesToCompare(true, true, true, true, true, false, 5);
-		checkNumberOfApproachesToCompare(true, true, true, true, false, true, 5);
-		checkNumberOfApproachesToCompare(true, true, true, false, true, true, 5);
-		checkNumberOfApproachesToCompare(true, true, false, true, true, true, 5);
-		checkNumberOfApproachesToCompare(true, false, true, true, true, true, 5);
-		checkNumberOfApproachesToCompare(false, true, true, true, true, true, 5);
+		checkNumberOfApproachesToCompare(true, true, true, true, true, false, false, 5);
+		checkNumberOfApproachesToCompare(true, true, true, true, false, true, false, 5);
+		checkNumberOfApproachesToCompare(true, true, true, false, true, true, false, 5);
+		checkNumberOfApproachesToCompare(true, true, false, true, true, true, false, 5);
+		checkNumberOfApproachesToCompare(true, false, true, true, true, true, false, 5);
+		checkNumberOfApproachesToCompare(false, true, true, true, true, true, false, 5);
+		checkNumberOfApproachesToCompare(false, true, true, true, true, false, true, 5);
 
 		// six set
-		checkNumberOfApproachesToCompare(true, true, true, true, true, true, 6);
+		checkNumberOfApproachesToCompare(true, true, true, true, true, true, false, 6);
+		checkNumberOfApproachesToCompare(true, true, true, true, true, false, true, 6);
+
+		// seven set
+		checkNumberOfApproachesToCompare(true, true, true, true, true, true, true, 7);
 	}
 }

@@ -72,6 +72,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
@@ -95,6 +96,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
@@ -118,6 +120,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
@@ -141,6 +144,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
@@ -164,6 +168,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
@@ -187,6 +192,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(true);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
@@ -210,6 +216,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
@@ -233,6 +240,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
@@ -256,6 +264,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, locale, dateTime);
@@ -279,6 +288,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseMoraicApproach(false);
 		comparer.setUseNPApproach(false);
 		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 				comparer, new Locale("es"), dateTime);
@@ -293,4 +303,37 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	public void formattingCVHyphenEnglishTest() {
+		languageProject = new LanguageProject();
+		locale = new Locale("en");
+		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
+		File file = new File(Constants.UNIT_TEST_HYPHEN_DATA_FILE_NAME);
+		xmlBackEndProvider.loadLanguageDataFromFile(file);
+		cva = languageProject.getCVApproach();
+		sha = languageProject.getSHApproach();
+		comparer = new SyllabificationsComparer(languageProject);
+		dateTime = LocalDateTime.of(2019, Month.JANUARY, 24, 8, 7, 3);
+		comparer.setUseCVApproach(true);
+		comparer.setUseSHApproach(false);
+		comparer.setUseONCApproach(false);
+		comparer.setUseMoraicApproach(false);
+		comparer.setUseNPApproach(false);
+		comparer.setUseOTApproach(false);
+		comparer.setUseHyphenApproach(true);
+		comparer.compareSyllabifications();
+		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
+				comparer, locale, dateTime);
+		String result = formatter.format();
+		file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVHyphenHTMLEnglish.html");
+		try {
+			Stream<String> contents = Files.lines(file.toPath(), StandardCharsets.UTF_8);
+			String scontents = contents.collect(Collectors.joining("\n"));
+			contents.close();
+			assertEquals(scontents, result);
+			} catch (IOException | UncheckedIOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 SIL International 
+// Copyright (c) 2019-2026 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -73,6 +73,10 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 			formatApproachLabelDescription(sb, bundle.getString("report.otapproachabbreviation"),
 					bundle.getString("approach.ot"));
 		}
+		if (sylComparer.isUseHyphenApproach()) {
+			formatApproachLabelDescription(sb, bundle.getString("report.hyphenapproachabbreviation"),
+					bundle.getString("approach.hyphen"));
+		}
 		sb.append("</tbody>\n</table>\n<p/>\n");
 	}
 
@@ -125,6 +129,11 @@ public class SyllabificationComparisonHTMLFormatter extends ApproachLanguageComp
 				if (sylComparer.isUseOTApproach()) {
 					formatApproachRow(sb, bundle.getString("report.otapproachabbreviation"),
 							differentWord.getOTPredictedSyllabification(), isFirstRow);
+					isFirstRow = false;
+				}
+				if (sylComparer.isUseHyphenApproach()) {
+					formatApproachRow(sb, bundle.getString("report.hyphenapproachabbreviation"),
+							differentWord.getHyphenPredictedSyllabification(), isFirstRow);
 					isFirstRow = false;
 				}
 			}

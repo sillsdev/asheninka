@@ -50,6 +50,8 @@ public class SyllabificationComparisonController implements Initializable {
 	@FXML
 	protected CheckBox useOTApproach;
 	@FXML
+	protected CheckBox useHyphenApproach;
+	@FXML
 	protected WebView browser;
 	@FXML
 	protected WebEngine webEngine;
@@ -81,6 +83,7 @@ public class SyllabificationComparisonController implements Initializable {
 		useMoraicApproach.setSelected(preferences.getLastUseMoraicApproachValue());
 		useNuclearProjectionApproach.setSelected(preferences.getLastUseNuclearProjectionApproachValue());
 		useOTApproach.setSelected(preferences.getLastUseOTApproachValue());
+		useHyphenApproach.setSelected(preferences.getLastUseHyphenApproachValue());
 	}
 
 	public void setData(LanguageProject langProj) {
@@ -146,6 +149,14 @@ public class SyllabificationComparisonController implements Initializable {
 		this.useOTApproach.setSelected(value);
 	}
 
+	public boolean isUseHyphenApproach() {
+		return useHyphenApproach.isSelected();
+	}
+
+	public void setUseHyphenApproach(boolean value) {
+		this.useHyphenApproach.setSelected(value);
+	}
+
 	public boolean isUseCVApproachDisabled() {
 		return useCVApproach.isDisabled();
 	}
@@ -194,6 +205,14 @@ public class SyllabificationComparisonController implements Initializable {
 		this.useOTApproach.setSelected(value);
 	}
 
+	public boolean isUseHyphenApproachDisabled() {
+		return useHyphenApproach.isDisabled();
+	}
+
+	public void setUseHyphenApproachDisabled(boolean value) {
+		this.useHyphenApproach.setSelected(value);
+	}
+
 	public boolean twoOrMoreToCompare() {
 		int i = 0;
 		if (!useCVApproach.isDisabled() && useCVApproach.isSelected()) {
@@ -212,6 +231,9 @@ public class SyllabificationComparisonController implements Initializable {
 			i++;
 		}
 		if (!useOTApproach.isDisabled() && useOTApproach.isSelected()) {
+			i++;
+		}
+		if (!useHyphenApproach.isDisabled() && useHyphenApproach.isSelected()) {
 			i++;
 		}
 		if (i > 1) {
@@ -253,6 +275,7 @@ public class SyllabificationComparisonController implements Initializable {
 				comparer.setUseMoraicApproach(useMoraicApproach.isSelected());
 				comparer.setUseNPApproach(useNuclearProjectionApproach.isSelected());
 				comparer.setUseOTApproach(useOTApproach.isSelected());
+				comparer.setUseHyphenApproach(useHyphenApproach.isSelected());
 				comparer.compareSyllabifications();
 				SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
 						comparer, locale, LocalDateTime.now());
@@ -289,6 +312,7 @@ public class SyllabificationComparisonController implements Initializable {
 		preferences.setLastUseMoraicApproachValue(useMoraicApproach.isSelected());
 		preferences.setLastUseNuclearProjectionApproachValue(useNuclearProjectionApproach.isSelected());
 		preferences.setLastUseOTApproachValue(useOTApproach.isSelected());
+		preferences.setLastUseHyphenApproachValue(useHyphenApproach.isSelected());
 		preferences.setLastWindowParameters(sWindowParams, dialogStage);
 		dialogStage.close();
 	}

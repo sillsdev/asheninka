@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 SIL International
+// Copyright (c) 2019-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -19,6 +19,7 @@ import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.LanguageProject;
 import org.sil.syllableparser.model.Word;
 import org.sil.syllableparser.service.parsing.CVSyllabifier;
+import org.sil.syllableparser.service.parsing.HyphenChangeRuleProcessor;
 import org.sil.syllableparser.service.parsing.MoraicSyllabifier;
 import org.sil.syllableparser.service.parsing.NPSyllabifier;
 import org.sil.syllableparser.service.parsing.ONCSyllabifier;
@@ -41,6 +42,7 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 	boolean useMoraicApproach = true;
 	boolean useNPApproach = true;
 	boolean useOTApproach = true;
+	boolean useHyphenApproach = true;
 
 	final int usesCVApproach = 1;
 	final int usesSHApproach = 2;
@@ -48,6 +50,7 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 	final int usesMoraicApproach = 8;
 	final int usesNPApproach = 16;
 	final int usesOTApproach = 32;
+	final int usesHyphenApproach = 64;
 
 	int approachesToUse = 0;
 
@@ -115,6 +118,14 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 		this.useOTApproach = useOTApproach;
 	}
 
+	public boolean isUseHyphenApproach() {
+		return useHyphenApproach;
+	}
+
+	public void setUseHyphenApproach(boolean useHyphenApproach) {
+		this.useHyphenApproach = useHyphenApproach;
+	}
+
 	public int getApproachesToUse() {
 		return approachesToUse;
 	}
@@ -145,6 +156,9 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 		if (useOTApproach) {
 			syllabifyWordsOT(words);
 		}
+		if (useHyphenApproach) {
+			syllabifyWordsHyphen(words);
+		}
 		calculateApproachesToUse();
 		List<Word> diffs = words.stream().filter(word -> !syllabificationsAreTheSame(word))
 				.collect(Collectors.toList());
@@ -167,10 +181,12 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 			approachesToUse += usesNPApproach;
 		if (useOTApproach)
 			approachesToUse += usesOTApproach;
+		if (useHyphenApproach)
+			approachesToUse += usesHyphenApproach;
 	}
 
 	protected boolean syllabificationsAreTheSame(Word word) {
-		List<String> syllabifications = new ArrayList<String>(6);
+		List<String> syllabifications = new ArrayList<String>(7);
 		int iUsed = createSyllabificationsToCheck(word, syllabifications);
 		for (int i = 1; i < iUsed; i++) {
 			if (!syllabifications.get(i-1).equals(syllabifications.get(i))) {
@@ -204,6 +220,10 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 		}
 		if ((approachesToUse & usesOTApproach) > 0) {
 			syllabifications.add(word.getOTPredictedSyllabification());
+			iUsed++;
+		}
+		if ((approachesToUse & usesHyphenApproach) > 0) {
+			syllabifications.add(word.getHyphenPredictedSyllabification());
 			iUsed++;
 		}
 		return iUsed;
@@ -273,6 +293,16 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 			}
 		}
 	}
+	protected void syllabifyWordsHyphen(List<Word> words) {
+		HyphenChangeRuleProcessor ruleProcessor = new HyphenChangeRuleProcessor(langProject.getHyphenApproach());
+		for (Word word : words) {
+			boolean fSuccess = ruleProcessor.convertStringToHyphenatedForm(word.getWord());
+			if (fSuccess) {
+				word.setHyphenPredictedSyllabification(ruleProcessor.getSyllabifiedWord());
+			}
+		}
+
+	}
 
 	public int numberOfApproachesBeingCompared() {
 		calculateApproachesToUse();
@@ -288,6 +318,8 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 		if ((approachesToUse & usesNPApproach) > 0)
 			i++;
 		if ((approachesToUse & usesOTApproach) > 0)
+			i++;
+		if ((approachesToUse & usesHyphenApproach) > 0)
 			i++;
 		return i;
 	}

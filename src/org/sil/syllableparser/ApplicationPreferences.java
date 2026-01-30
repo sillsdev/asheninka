@@ -158,6 +158,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	static final String LAST_USE_MORAIC_APPROACH_VALUE = "lastUseMoraicApproachValueUsed";
 	static final String LAST_USE_NUCLEAR_PROJECTION_APPROACH_VALUE = "lastUseNuclearProjectionApproachValueUsed";
 	static final String LAST_USE_OT_APPROACH_VALUE = "lastUseOTApproachValueUsed";
+	static final String LAST_USE_HYPHEN_APPROACH_VALUE = "lastUseHyphenApproachValueUsed";
 
 	// Window parameters to remember
 	static final String POSITION_X = "PositionX";
@@ -896,6 +897,14 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 
 	public void setLastUseOTApproachValue(boolean lastUseOtApproachValue) {
 		setPreferencesKey(LAST_USE_OT_APPROACH_VALUE, lastUseOtApproachValue);
+	}
+
+	public boolean getLastUseHyphenApproachValue() {
+		return prefs.getBoolean(LAST_USE_HYPHEN_APPROACH_VALUE, false);
+	}
+
+	public void setLastUseHyphenApproachValue(boolean lastUseHyphenApproachValue) {
+		setPreferencesKey(LAST_USE_HYPHEN_APPROACH_VALUE, lastUseHyphenApproachValue);
 	}
 
 	public Stage getLastWindowParameters(String sWindow, Stage stage, Double defaultHeight, Double defaultWidth) {
