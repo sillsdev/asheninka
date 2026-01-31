@@ -1,4 +1,4 @@
-// Copyright (c) 2025 SIL International
+// Copyright (c) 2025-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -36,7 +36,7 @@ public class HyphenWordsPredictedVsCorrectController extends WordsPredictedVsCor
 		super.setWordsTable(hyphenWordsPredictedVsCorrectTable);
 		super.initialize(location, resources);
 		wordPredictedVsCorrectColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.cvPredictedVsCorrectSyllabificationProperty());
+				.hyphenPredictedVsCorrectSyllabificationProperty());
 	}
 
 	public void setData(HyphenApproach hyphenApproachData, ObservableList<Word> words) {
