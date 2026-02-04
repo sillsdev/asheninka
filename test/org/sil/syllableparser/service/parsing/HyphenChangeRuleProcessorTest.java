@@ -137,7 +137,7 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		checkRuleMatch("na", true, 4, rule, new boolean[] { false }, new int[] { -1 });
 		checkRuleMatch("an", true, 4, rule, new boolean[] { false }, new int[] { -1 });
 		checkRuleMatch("nan", true, 5, rule, new boolean[] { false }, new int[] { -1 });
-	}
+}
 
 	protected void checkRuleMatch(String word, boolean expectedClasserSuccess, int numberOfClasses,
 			HyphenChangeRule rule, boolean[] expectedRuleSuccess, int[] expectedClassIndex) {
@@ -212,6 +212,44 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		checkProcessorResults("fuhgt", true, "fu.hgt");
 		checkProcessorResults("blofugh", true, "blo.fu.gh");
 		checkProcessorResults("bo", true, "bo");
+
+		// insert hyphen before
+		hyphenApproach.getHyphenChangeRules().clear();
+		rule = new HyphenChangeRule();
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(1)); // C
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenApproach.getInsertHereHC());
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(1)); // C
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		hyphenApproach.getHyphenChangeRules().add(rule);
+		hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproach);
+		checkProcessorResults("", true, "");
+		checkProcessorResults("d", true, "d");
+		checkProcessorResults("a", true, "a");
+		checkProcessorResults("da", true, "da");
+		checkProcessorResults("dak", true, "dak");
+		checkProcessorResults("dako", true, "da.ko");
+		checkProcessorResults("dakot", true, "da.kot");
+		checkProcessorResults("dakota", true, "da.ko.ta");
+
+		// insert hyphen after
+		hyphenApproach.getHyphenChangeRules().clear();
+		rule = new HyphenChangeRule();
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(1)); // C
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(1)); // C
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenApproach.getInsertHereHC());
+		hyphenApproach.getHyphenChangeRules().add(rule);
+		hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproach);
+		checkProcessorResults("", true, "");
+		checkProcessorResults("d", true, "d");
+		checkProcessorResults("a", true, "a");
+		checkProcessorResults("da", true, "da");
+		checkProcessorResults("dak", true, "da.k");
+		checkProcessorResults("dako", true, "da.ko");
+		checkProcessorResults("dakot", true, "da.ko.t");
+		checkProcessorResults("dakota", true, "da.ko.ta");
 	}
 
 	protected void checkProcessorResults(String word, boolean success, String expectedHyphenation) {

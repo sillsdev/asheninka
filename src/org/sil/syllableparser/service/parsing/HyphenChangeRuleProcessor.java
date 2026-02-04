@@ -36,10 +36,14 @@ public class HyphenChangeRuleProcessor {
 	HyphenTraceInfo traceInfo = new HyphenTraceInfo("");
 	String sSyllabifiedWord;
 	private List<HyphenChangeRuleState> stateHistory = new ArrayList<HyphenChangeRuleState>();
+	String insertHyphenID = "";
+	String wordBoundaryID = "";
 
 	public HyphenChangeRuleProcessor(HyphenApproach hyphenApproach) {
 		super();
 		this.hyphenApproach = hyphenApproach;
+		insertHyphenID = hyphenApproach.getInsertHereHC().getID();
+		wordBoundaryID = hyphenApproach.getWordBoundaryHC().getID();
 		languageProject = hyphenApproach.getLanguageProject();
 		segmenter = new CVSegmenter(languageProject.getActiveGraphemes(),
 				languageProject.getActiveGraphemeNaturalClasses());
@@ -111,7 +115,7 @@ public class HyphenChangeRuleProcessor {
 
 	public boolean ruleMatches(HyphenChangeRuleState hcState) {
 		boolean isWordInitial = hcState.getRule().isWordInitial();
-		boolean isWordFinal  = hcState.getRule().isWordFinal();
+		boolean isWordFinal = hcState.getRule().isWordFinal();
 		ObservableList<HyphenClass> classesToMatch = hcState.rule.getMatchHyphenClasses();
 		int ciwLast = hcState.getClassIndex();
 		if (classesToMatch.size() == 1 && ciwLast != -1) {
@@ -128,6 +132,7 @@ public class HyphenChangeRuleProcessor {
 		if (hcState.getClassIndex() >= classesInWord.size()) {
 			return false;
 		}
+		ObservableList<HyphenClass> classesInChange = hcState.getRule().getChangeHyphenClasses();
 		HyphenClass hcInMatch = classesToMatch.get(0);
 		for (int iWord = ciwStart; iWord < classesInWord.size(); iWord++) {
 			HyphenClassInWord hciw = classesInWord.get(iWord);
@@ -149,6 +154,29 @@ public class HyphenChangeRuleProcessor {
 			// matches first hc in match
 			int iMatch = classesToMatch.indexOf(hcInMatch);
 			int iClassInWord = classesInWord.indexOf(hciw);
+			// avoid insert hyphen loops
+			if (classesInChange.size() > iMatch) {
+				if (classesInChange.get(iMatch).getID().equals(insertHyphenID)) {
+					String previousClassID = classesInWord.get(iWord - 1).getHyphenClass().getID();
+					if (iClassInWord > 0
+							&& (previousClassID.equals(insertHyphenID) || previousClassID.equals(wordBoundaryID))) {
+						// the change inserts a hyphen at the beginning and there is already a hyphen
+						// inserted or there will be an insert hyphen at the beginning of the word; quit
+						continue;
+					}
+				}
+				if (classesInChange.get(classesInChange.size() - 1).getID().equals(insertHyphenID)) {
+					int iEnd = iWord + classesInChange.size() - 1;
+					if (iEnd < classesInWord.size()) {
+						String nextClassID = classesInWord.get(iEnd).getHyphenClass().getID();
+						if (nextClassID.equals(insertHyphenID) || nextClassID.equals(wordBoundaryID)) {
+							// the change inserts a hyphen at the end and there is already a hyphen inserted
+							// there or it will insert a hyphen at the end of the word; quit
+							continue;
+						}
+					}
+				}
+			}
 			boolean matchedAll = true;
 			for (int i = iMatch + 1; i < classesToMatch.size(); i++) {
 				if (++iClassInWord >= classesInWord.size()
@@ -174,9 +202,10 @@ public class HyphenChangeRuleProcessor {
 		for (int iInWord = iStartInWord, jInChange = 0; iInWord > -1 && iInWord < classesInWord.size()
 				&& jInChange < rule.getChangeHyphenClasses().size(); iInWord++, jInChange++) {
 			HyphenClass hcChange = classesInChange.get(jInChange);
-			if (hcChange.getID().equals(hyphenApproach.getInsertHereHC().getID())) {
+			if (hcChange.getID().equals(insertHyphenID)) {
 				HyphenClassInWord insertHere = new HyphenClassInWord(hyphenApproach.getInsertHereHC(), null);
 				classesInWord.add(iInWord, insertHere);
+				hcState.classIndex++;
 			} else {
 				HyphenClassInWord ciwMatch = classesInWord.get(iInWord);
 				HyphenClassInWord ciwChanged = new HyphenClassInWord(hcChange, ciwMatch.getSegInWord());
@@ -219,7 +248,7 @@ public class HyphenChangeRuleProcessor {
 			if (classId.equals(hyphenApproach.getWordBoundaryHC().getID())) {
 				continue;
 			}
-			if (classId.equals(hyphenApproach.getInsertHereHC().getID())) {
+			if (classId.equals(insertHyphenID)) {
 				sb.append(Constants.SYLLABLE_BREAK_INDICATOR);
 				continue;
 			}
