@@ -72,11 +72,12 @@ public class HyphenChangeRuleValidator {
 			isValid = false;
 		}
 		// name and order the same between match and change
-		if (!sameClassesInMatchAndChange()) {
-			sb.append(bundle.getString("hyphenerror.samenamesandorder"));
-			sb.append("\n");
-			isValid = false;
-		}
+		// will allow for cases like VVV -> Vv-V and then VV -> V-V
+//		if (!sameClassesInMatchAndChange()) {
+//			sb.append(bundle.getString("hyphenerror.samenamesandorder"));
+//			sb.append("\n");
+//			isValid = false;
+//		}
 		// no hyphen in change, but more than one class in change
 		if (!onlyOneHyphenInChange()) {
 			sb.append(bundle.getString("hyphenerror.onlyoneinserthyphenperchange"));
@@ -101,39 +102,39 @@ public class HyphenChangeRuleValidator {
 		return true;
 	}
 	
-	private boolean sameClassesInMatchAndChange() {
-		// this test assumes there's one insert hyphen in the change
-		if (changeRule.getChangeHyphenClasses().filtered(c -> c.getSegmentsRepresentation().equals(Constants.SPECIAL_INSERT_CODE)).size() != 1) {
-			return true;
-		}
-		int iSizeMatches = changeRule.getMatchHyphenClasses().size();
-		int iSizeChanges = changeRule.getChangeHyphenClasses().size();
-		if (iSizeMatches != iSizeChanges - 1) {
-			return false;
-		}
-		if (changeRule.getChangeHyphenClasses()
-				.filtered(c -> c.getSegmentsRepresentation().equals(Constants.SPECIAL_INSERT_CODE)).size() == 1) {
-			for (int i = 0, j = 0; i < iSizeChanges; i++) {
-				HyphenClass changeClass = changeRule.getChangeHyphenClasses().get(i);
-				if (changeClass.getSegmentsRepresentation().equals(Constants.SPECIAL_INSERT_CODE)) {
-					continue;
-				}
-				if (j == changeRule.getMatchHyphenClasses().size()) {
-					return false;
-				}
-				HyphenClass matchClass = changeRule.getMatchHyphenClasses().get(j);
-				if (!changeClass.getClassName().equals(matchClass.getClassName())) {
-					return false;
-				}
-				j++;
-			}
-		} else {
-			if (iSizeChanges > 1 || iSizeMatches > 1) {
-				return false;
-			}
-		}
-		return true;
-	}
+//	private boolean sameClassesInMatchAndChange() {
+//		// this test assumes there's one insert hyphen in the change
+//		if (changeRule.getChangeHyphenClasses().filtered(c -> c.getSegmentsRepresentation().equals(Constants.SPECIAL_INSERT_CODE)).size() != 1) {
+//			return true;
+//		}
+//		int iSizeMatches = changeRule.getMatchHyphenClasses().size();
+//		int iSizeChanges = changeRule.getChangeHyphenClasses().size();
+//		if (iSizeMatches != iSizeChanges - 1) {
+//			return false;
+//		}
+//		if (changeRule.getChangeHyphenClasses()
+//				.filtered(c -> c.getSegmentsRepresentation().equals(Constants.SPECIAL_INSERT_CODE)).size() == 1) {
+//			for (int i = 0, j = 0; i < iSizeChanges; i++) {
+//				HyphenClass changeClass = changeRule.getChangeHyphenClasses().get(i);
+//				if (changeClass.getSegmentsRepresentation().equals(Constants.SPECIAL_INSERT_CODE)) {
+//					continue;
+//				}
+//				if (j == changeRule.getMatchHyphenClasses().size()) {
+//					return false;
+//				}
+//				HyphenClass matchClass = changeRule.getMatchHyphenClasses().get(j);
+//				if (!changeClass.getClassName().equals(matchClass.getClassName())) {
+//					return false;
+//				}
+//				j++;
+//			}
+//		} else {
+//			if (iSizeChanges > 1 || iSizeMatches > 1) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	private boolean onlyOneHyphenInChange() {
 		if (changeRule.getChangeHyphenClasses().filtered(c -> c.getSegmentsRepresentation().equals(Constants.SPECIAL_INSERT_CODE)).size() > 1) {

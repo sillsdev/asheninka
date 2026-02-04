@@ -14,7 +14,7 @@ import org.sil.syllableparser.model.cvapproach.CVSegmentInSyllable;
 public class HyphenClassInWord {
 
 	private HyphenClass hyphenClass;
-	private CVSegmentInSyllable segInWord; 
+	private CVSegmentInSyllable segInWord;
 	 
 	public HyphenClassInWord() {
 		// TODO Auto-generated constructor stub
