@@ -220,14 +220,14 @@ public class HyphenApproachLanguageComparerTest extends HyphenTestBase {
 				((Word) diffWord.getObjectFrom2()).getWord());
 		assertEquals("0's 1's parse is 'aa.ka'", "aa.ka",
 				((Word) diffWord.getObjectFrom1()).getHyphenPredictedSyllabification());
-		assertEquals("0's 2's parse is '.aa.ka'", ".aa.ka",
+		assertEquals("0's 2's parse is 'aa.ka'", "a.a.ka",
 				((Word) diffWord.getObjectFrom2()).getHyphenPredictedSyllabification());
 		diffWord = listOfDiffs.get(1);
 		assertEquals("second's 1 is aakameethatawakagaeya", "aakameethatawakagaeya", ((Word) diffWord.getObjectFrom1()).getWord());
 		assertEquals("second's 2 is aakameethatawakagaeya", "aakameethatawakagaeya", ((Word) diffWord.getObjectFrom2()).getWord());
 		assertEquals("second's 1's parse is 'aa.ka.mee.tha.ta.wa.ka.gae.ya'", "aa.ka.mee.tha.ta.wa.ka.gae.ya",
 				((Word) diffWord.getObjectFrom1()).getHyphenPredictedSyllabification());
-		assertEquals("second's 2's parse is '.aa.ka.mee.tha.ta.wa.ka.gae.ya'", ".aa.ka.mee.tha.ta.wa.ka.gae.ya",
+		assertEquals("second's 2's parse is 'a.a.ka.mee.tha.ta.wa.ka.gae.ya'", "a.a.ka.mee.tha.ta.wa.ka.gae.ya",
 				((Word) diffWord.getObjectFrom2()).getHyphenPredictedSyllabification());
 		diffWord = listOfDiffs.get(2);
 		assertEquals("third's 1 is aakiro", "aakiro",
@@ -236,7 +236,7 @@ public class HyphenApproachLanguageComparerTest extends HyphenTestBase {
 				((Word) diffWord.getObjectFrom2()).getWord());
 		assertEquals("third's 1's parse is 'aa.ki.ro", "aa.ki.ro",
 				((Word) diffWord.getObjectFrom1()).getHyphenPredictedSyllabification());
-		assertEquals("third's 2's parse is '.aa.ki.ro", ".aa.ki.ro",
+		assertEquals("third's 2's parse is 'a.a.ki.ro", "a.a.ki.ro",
 				((Word) diffWord.getObjectFrom2()).getHyphenPredictedSyllabification());
 	}
 

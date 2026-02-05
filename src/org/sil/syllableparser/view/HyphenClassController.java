@@ -308,27 +308,25 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 			errorTextArea.setVisible(true);
 			showMissingSegments(missingSegments);
 		}
-		// Choosing to allow duplicates for cases where we need to mark a class as having been matched already.
-		// E.g., VVV -> Vv-V followed by VV -> V-V
-//		List<SegmentInHyphenClass> duplicateSegments = hyphenApproach.getDuplicateSegmentsFromHyphenClass();
-//		if (duplicateSegments.size() > 0) {
-//			errorTextArea.setVisible(true);
-//			showDuplicateSegments(duplicateSegments);
-//		}
+		List<SegmentInHyphenClass> duplicateSegments = hyphenApproach.getDuplicateSegmentsFromHyphenClass();
+		if (duplicateSegments.size() > 0) {
+			errorTextArea.setVisible(true);
+			showDuplicateSegments(duplicateSegments);
+		}
 	}
 
-//	private void showDuplicateSegments(List<SegmentInHyphenClass> duplicateSegments) {
-//		StringBuilder sb = new StringBuilder();
-//		sb.append(bundle.getString("sonorityhierarchyerror.duplicatesegmentsinhierarchy"));
-//		sb.append("\n");
-//		for (SegmentInHyphenClass segInClass : duplicateSegments) {
-//			sb.append(segInClass.getSegment().getSegment());
-//			sb.append("\t");
-//			sb.append(segInClass.getNaturalClass().getClassName());
-//			sb.append("\n");
-//		}
-//		errorTextArea.setText(sb.toString());
-//	}
+	private void showDuplicateSegments(List<SegmentInHyphenClass> duplicateSegments) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(bundle.getString("sonorityhierarchyerror.duplicatesegmentsinhierarchy"));
+		sb.append("\n");
+		for (SegmentInHyphenClass segInClass : duplicateSegments) {
+			sb.append(segInClass.getSegment().getSegment());
+			sb.append("\t");
+			sb.append(segInClass.getNaturalClass().getClassName());
+			sb.append("\n");
+		}
+		errorTextArea.setText(sb.toString());
+	}
 
 	/**
 	 * @param missingSegments
