@@ -143,7 +143,7 @@ public class HyphenChangeRuleProcessor {
 					}
 				}
 			}
-			if (!hciw.getClassID().equals(hcInMatch.getID())) {
+			if (!hciw.getClassID().equals(hcInMatch.getID()) || hciw.isDoNotMatchClassAgain()) {
 				continue;
 			}
 			if (isWordFinal) {
@@ -180,7 +180,8 @@ public class HyphenChangeRuleProcessor {
 			boolean matchedAll = true;
 			for (int i = iMatch + 1; i < classesToMatch.size(); i++) {
 				if (++iClassInWord >= classesInWord.size()
-						|| !classesToMatch.get(i).getID().equals(classesInWord.get(iClassInWord).getClassID())) {
+						|| !classesToMatch.get(i).getID().equals(classesInWord.get(iClassInWord).getClassID())
+						|| classesInWord.get(iClassInWord).isDoNotMatchClassAgain()) {
 					matchedAll = false;
 					break;
 				}
@@ -209,6 +210,7 @@ public class HyphenChangeRuleProcessor {
 			} else {
 				HyphenClassInWord ciwMatch = classesInWord.get(iInWord);
 				HyphenClassInWord ciwChanged = new HyphenClassInWord(hcChange, ciwMatch.getSegInWord());
+				ciwChanged.setDoNotMatchClassAgain(rule.getDoNotMatchClassAgains().get(jInChange));
 				classesInWord.set(iInWord, ciwChanged);
 			}
 		}

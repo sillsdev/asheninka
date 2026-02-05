@@ -15,6 +15,7 @@ public class HyphenClassInWord {
 
 	private HyphenClass hyphenClass;
 	private CVSegmentInSyllable segInWord;
+	private boolean doNotMatchClassAgain;
 	 
 	public HyphenClassInWord() {
 		// TODO Auto-generated constructor stub
@@ -52,5 +53,13 @@ public class HyphenClassInWord {
 
 	public String getClassName() {
 		return hyphenClass.getClassName();
+	}
+
+	public boolean isDoNotMatchClassAgain() {
+		return doNotMatchClassAgain;
+	}
+
+	public void setDoNotMatchClassAgain(boolean doNotMatchClassAgain) {
+		this.doNotMatchClassAgain = doNotMatchClassAgain;
 	}
 }

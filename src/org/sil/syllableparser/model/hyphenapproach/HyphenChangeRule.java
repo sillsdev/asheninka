@@ -1,4 +1,4 @@
-// Copyright (c) 2025 SIL International
+// Copyright (c) 2025-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -9,6 +9,9 @@ package org.sil.syllableparser.model.hyphenapproach;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlIDREF;
 import jakarta.xml.bind.annotation.XmlList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.sil.syllableparser.model.SylParserObject;
 
@@ -30,6 +33,7 @@ public class HyphenChangeRule extends SylParserObject {
 	private final StringProperty changeRepresentation;
 	ObservableList<HyphenClass> matchClasses = FXCollections.observableArrayList();
 	ObservableList<HyphenClass> changeClasses = FXCollections.observableArrayList();
+	List<Boolean> doNotMatchClassAgains = new ArrayList<>();
 	private Boolean fWordInitial;
 	private Boolean fWordFinal;
 
@@ -137,6 +141,21 @@ public class HyphenChangeRule extends SylParserObject {
 
 	public void setWordFinal(Boolean fWordFinal) {
 		this.fWordFinal = fWordFinal;
+	}
+
+	@XmlAttribute(name="doNotMatchClassAgain")
+	@XmlList
+	public List<Boolean> getDoNotMatchClassAgains() {
+		if (doNotMatchClassAgains.size() == 0) {
+			for (int i = 0; i < changeClasses.size(); i++) {
+				doNotMatchClassAgains.add(false);
+			}
+		}
+		return doNotMatchClassAgains;
+	}
+
+	public void setDoNotMatchClassAgains(List<Boolean> doNotMatchClassAgains) {
+		this.doNotMatchClassAgains = doNotMatchClassAgains;
 	}
 
 	/**

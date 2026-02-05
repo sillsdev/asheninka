@@ -200,7 +200,6 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 
 	@Test
 	public void applyChangeRulesTest() {
-
 		checkProcessorResults("", true, "");
 		checkProcessorResults("a", true, "a");
 		checkProcessorResults("d", true, "d");
@@ -250,6 +249,64 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		checkProcessorResults("dako", true, "da.ko");
 		checkProcessorResults("dakot", true, "da.ko.t");
 		checkProcessorResults("dakota", true, "da.ko.ta");
+
+		// test do not match class again: rule VVC -> v-VC followed by VV -> V-V
+		hyphenApproach.getHyphenChangeRules().clear();
+		// create VVC -> vV-C rule
+		rule = new HyphenChangeRule();
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(1)); // C
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenApproach.getInsertHereHC());
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(1)); // C
+		rule.getDoNotMatchClassAgains().set(0,true);
+		hyphenApproach.getHyphenChangeRules().add(rule);
+		// create VV -> V-V rule
+		rule = new HyphenChangeRule();
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenApproach.getInsertHereHC());
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		hyphenApproach.getHyphenChangeRules().add(rule);
+		hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproach);
+		checkProcessorResults("", true, "");
+		checkProcessorResults("d", true, "d");
+		checkProcessorResults("a", true, "a");
+		checkProcessorResults("aa", true, "a.a");
+		checkProcessorResults("aad", true, "aa.d");
+		checkProcessorResults("daad", true, "daa.d");
+
+		// test do not match class again: rule VVV -> Vv-V followed by VV -> V-V
+		hyphenApproach.getHyphenChangeRules().clear();
+		// create VVV -> Vv-V rule
+		rule = new HyphenChangeRule();
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenApproach.getInsertHereHC());
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getDoNotMatchClassAgains().set(1,true);
+		hyphenApproach.getHyphenChangeRules().add(rule);
+		// create VV -> V-V rule
+		rule = new HyphenChangeRule();
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenApproach.getInsertHereHC());
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		hyphenApproach.getHyphenChangeRules().add(rule);
+		hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproach);
+		checkProcessorResults("", true, "");
+		checkProcessorResults("d", true, "d");
+		checkProcessorResults("a", true, "a");
+		checkProcessorResults("aa", true, "a.a");
+		checkProcessorResults("aaa", true, "aa.a");
+		checkProcessorResults("daaa", true, "daa.a");
 	}
 
 	protected void checkProcessorResults(String word, boolean success, String expectedHyphenation) {

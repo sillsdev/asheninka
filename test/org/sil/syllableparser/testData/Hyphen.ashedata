@@ -80,7 +80,7 @@
     <graphemeNaturalClassess/>
     <hyphenApproach>
         <hyphenChangeRules>
-            <hyphenChangeRule changeClasses="a0f4c3db-046a-409a-9e11-40bea32a0f70 1eb98e78-8d56-478a-aae0-92c1866ca3fc 3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" matchClasses="a0f4c3db-046a-409a-9e11-40bea32a0f70 3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" id="9a255ae1-0125-4f40-accc-dfb5963bd276" active="true">
+            <hyphenChangeRule changeClasses="a0f4c3db-046a-409a-9e11-40bea32a0f70 1eb98e78-8d56-478a-aae0-92c1866ca3fc 3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" doNotMatchClassAgain="false false false" matchClasses="a0f4c3db-046a-409a-9e11-40bea32a0f70 3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" id="9a255ae1-0125-4f40-accc-dfb5963bd276" active="true">
                 <changeRepresentation>N, -, C</changeRepresentation>
                 <description>break between nasal and non'nasal consonant</description>
                 <matchRepresentation>N, C</matchRepresentation>
@@ -88,7 +88,7 @@
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </hyphenChangeRule>
-            <hyphenChangeRule changeClasses="3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" matchClasses="a0f4c3db-046a-409a-9e11-40bea32a0f70" id="529cd3f7-175f-48cf-8c06-2d12638751ee" active="true">
+            <hyphenChangeRule changeClasses="3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" doNotMatchClassAgain="false" matchClasses="a0f4c3db-046a-409a-9e11-40bea32a0f70" id="529cd3f7-175f-48cf-8c06-2d12638751ee" active="true">
                 <changeRepresentation>C</changeRepresentation>
                 <description>Convert N to C</description>
                 <matchRepresentation>N</matchRepresentation>
@@ -96,7 +96,7 @@
                 <wordFinal>false</wordFinal>
                 <wordInitial>false</wordInitial>
             </hyphenChangeRule>
-            <hyphenChangeRule changeClasses="e3196b49-e7fd-41fc-b12c-6cbddbac7e5a 1eb98e78-8d56-478a-aae0-92c1866ca3fc 3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" matchClasses="e3196b49-e7fd-41fc-b12c-6cbddbac7e5a 3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" id="f85be104-661a-416d-9a15-d698657d17c2" active="true">
+            <hyphenChangeRule changeClasses="e3196b49-e7fd-41fc-b12c-6cbddbac7e5a 1eb98e78-8d56-478a-aae0-92c1866ca3fc 3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" doNotMatchClassAgain="false false false" matchClasses="e3196b49-e7fd-41fc-b12c-6cbddbac7e5a 3aa65784-ffb6-41f9-a1d8-6a95b7f1926d" id="f85be104-661a-416d-9a15-d698657d17c2" active="true">
                 <changeRepresentation>V, -, C</changeRepresentation>
                 <description>Break before C after V</description>
                 <matchRepresentation>V, C</matchRepresentation>
@@ -124,12 +124,12 @@
         </hyphenClasses>
         <insertHereHC segs="" id="1eb98e78-8d56-478a-aae0-92c1866ca3fc" active="true">
             <className>-</className>
-            <description></description>
+            <description>Insert hyphen here</description>
             <segmentsRepresentation>Asheninka!@#InsertCode</segmentsRepresentation>
         </insertHereHC>
         <wordBoundaryHC segs="" id="5f50fa4b-6f46-4937-9564-9bb9be2d58b0" active="true">
             <className>#</className>
-            <description></description>
+            <description>word boundary</description>
             <segmentsRepresentation>Asheninka!@#WordBoundaryCode</segmentsRepresentation>
         </wordBoundaryHC>
     </hyphenApproach>
