@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2022 SIL International 
+// Copyright (c) 2016-2026 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -60,6 +60,7 @@ public class Constants {
 	// chooser related constants
 	public static final String INSERT_HYPHEN_SYMBOL = "-";
 	public static final String WORD_BOUNDARY_SYMBOL = "#";
+	public static final String HYPHEN_DO_NOT_MATCH_AGAIN_SYMBOL = "*";
 	public static final String FIRST_COMBO_BOX_IN_SYLLABLE_PATTERN = "cb1";
 	// want unique strings for the next two so we can be sure we get the correct
 	// one
