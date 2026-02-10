@@ -432,7 +432,7 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 	void handleInsertNewItem() {
 		HyphenClass newNaturalCLass = new HyphenClass();
 		hyphenApproach.getHyphenClasses().add(newNaturalCLass);
-		handleInsertNewItem(hyphenApproach.getHyphenClasses(), hyphenClassTable);
+		handleInsertNewItem(hyphenApproach.getHyphenClasses(), hyphenClassTable, nameField);
 	}
 
 	@Override

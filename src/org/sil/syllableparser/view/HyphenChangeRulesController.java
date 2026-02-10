@@ -462,7 +462,7 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 	void handleInsertNewItem() {
 		HyphenChangeRule newHyphenChangeRulen = new HyphenChangeRule();
 		hyphenApproach.getHyphenChangeRules().add(newHyphenChangeRulen);
-		handleInsertNewItem(hyphenApproach.getHyphenChangeRules(), hyphenChangeRulesTable);
+		handleInsertNewItem(hyphenApproach.getHyphenChangeRules(), hyphenChangeRulesTable, nameField);
 	}
 
 	@Override

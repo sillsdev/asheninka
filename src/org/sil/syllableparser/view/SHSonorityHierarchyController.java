@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2025 SIL International
+// Copyright (c) 2018-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -532,7 +532,7 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 	void handleInsertNewItem() {
 		SHNaturalClass newNaturalCLass = new SHNaturalClass();
 		shApproach.getSHSonorityHierarchy().add(newNaturalCLass);
-		handleInsertNewItem(shApproach.getSHSonorityHierarchy(), shSonorityHierarchyTable);
+		handleInsertNewItem(shApproach.getSHSonorityHierarchy(), shSonorityHierarchyTable, nameField);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2025 SIL International
+// Copyright (c) 2021-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -700,7 +700,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	void handleInsertNewItem() {
 		NPRule newRule = new NPRule();
 		npApproach.getNPRules().add(newRule);
-		handleInsertNewItem(npApproach.getNPRules(), npRulesTable);
+		handleInsertNewItem(npApproach.getNPRules(), npRulesTable, nameField);
 	}
 
 	@Override

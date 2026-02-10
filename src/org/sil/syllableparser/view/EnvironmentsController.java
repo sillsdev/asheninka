@@ -730,7 +730,7 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 		Environment newEnvironment = new Environment();
 		cvApproach.getLanguageProject().getEnvironments().add(newEnvironment);
 		newEnvironment.setEnvironmentRepresentation("/  _  ");
-		handleInsertNewItem(cvApproach.getLanguageProject().getEnvironments(), environmentTable);
+		handleInsertNewItem(cvApproach.getLanguageProject().getEnvironments(), environmentTable, nameField);
 	}
 
 	@Override

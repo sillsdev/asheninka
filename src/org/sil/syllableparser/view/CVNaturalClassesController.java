@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International
+// Copyright (c) 2016-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -488,7 +488,7 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 	void handleInsertNewItem() {
 		CVNaturalClass newNaturalClass = new CVNaturalClass();
 		cvApproach.getCVNaturalClasses().add(newNaturalClass);
-		handleInsertNewItem(cvApproach.getCVNaturalClasses(), cvNaturalClassTable);
+		handleInsertNewItem(cvApproach.getCVNaturalClasses(), cvNaturalClassTable, nameField);
 	}
 
 	@Override

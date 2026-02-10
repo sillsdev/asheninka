@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International
+// Copyright (c) 2016-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -543,7 +543,7 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 	void handleInsertNewItem() {
 		GraphemeNaturalClass newNaturalClass = new GraphemeNaturalClass();
 		cvApproach.getLanguageProject().getGraphemeNaturalClasses().add(newNaturalClass);
-		handleInsertNewItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), graphemeNaturalClassTable);
+		handleInsertNewItem(cvApproach.getLanguageProject().getGraphemeNaturalClasses(), graphemeNaturalClassTable, nameField);
 	}
 
 	@Override

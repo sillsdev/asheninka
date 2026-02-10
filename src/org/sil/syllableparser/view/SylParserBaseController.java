@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 SIL International 
+// Copyright (c) 2016-2026 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -79,12 +80,13 @@ public abstract class SylParserBaseController extends ApproachEditorController i
 	}
 
 	protected void handleInsertNewItem(ObservableList<? extends SylParserBase> list,
-			TableView<? extends SylParserBase> tableView) {
+			TableView<? extends SylParserBase> tableView, TextField firstTextField) {
 		int i = list.size() - 1;
 		tableView.requestFocus();
 		tableView.getSelectionModel().select(i);
 		tableView.getFocusModel().focus(i);
 		tableView.scrollTo(i);
+		firstTextField.requestFocus();
 	}
 
 	protected void handleRemoveItem(ObservableList<? extends SylParserBase> list,
