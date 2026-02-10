@@ -111,6 +111,9 @@ public class HyphenSegmentChooserController extends TableViewWithCheckBoxColumnC
 				}
 				break;
 			}
+			case ENTER:
+				handleOk();
+				break;
 			default:
 				break;
 			}
