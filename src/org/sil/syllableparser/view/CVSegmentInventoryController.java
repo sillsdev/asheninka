@@ -172,6 +172,7 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 
 	protected Segment currentSegment;
 	protected Approach currentApproach;
+	protected ApproachType approachType;
 
 	public CVSegmentInventoryController() {
 
@@ -466,6 +467,7 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 
 	protected void setDataCommon(ApproachType approachType) {
 		languageProject = currentApproach.getLanguageProject();
+		this.approachType = approachType;
 		setColumnICURules();
 		setTextFieldColors();
 		populateSegmentTable(approachType);
@@ -656,5 +658,11 @@ public class CVSegmentInventoryController extends SplitPaneWithTableViewWithChec
 	@Override
 	protected TextField[] createTextFields() {
 		return new TextField[] { segmentField, graphemesField, descriptionField };
+	}
+
+	@Override
+	void redraw() {
+		cvSegmentTable.refresh();
+		populateSegmentTable(approachType);
 	}
 }

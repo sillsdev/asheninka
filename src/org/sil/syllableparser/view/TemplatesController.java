@@ -41,12 +41,22 @@ public abstract class TemplatesController extends TemplatesFiltersController {
 	protected ObservableList<Template> templateList = FXCollections.observableArrayList();
 
 	protected void setDataProcessing(String sLastView) {
+		this.sLastView = sLastView;
 		// no sorting allowed
 		templateList = languageProject.getTemplates();
 		iRepresentationCaretPosition = 6;
 		fSncChoicesUsingMouse = false;
 		// Add observable list data to the table
 		templateTable.setItems(templateList);
+		selectLastChosenTableItem();
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = templateTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -58,11 +68,6 @@ public abstract class TemplatesController extends TemplatesFiltersController {
 					selectAndScrollToItem(iLastIndex);
 				}
 			});
-		}
-		if (languageProject != null) {
-			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
-			nameField.setStyle(sAnalysis);
-			descriptionField.setStyle(sAnalysis);
 		}
 	}
 
@@ -204,4 +209,9 @@ public abstract class TemplatesController extends TemplatesFiltersController {
 		tableView.refresh();
 	}
 
+	@Override
+	void redraw() {
+		templateTable.refresh();
+		selectLastChosenTableItem();
+	}
 }

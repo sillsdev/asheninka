@@ -437,6 +437,15 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 
 		// Add observable list data to the table
 		cvNaturalClassTable.setItems(cvApproachData.getCVNaturalClasses());
+		selectLastChosenTableItem();
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = cvNaturalClassTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -476,11 +485,6 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 					cvNaturalClassTable.scrollTo(iLastIndex);
 				}
 			});
-		}
-		if (languageProject != null) {
-			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
-			nameField.setStyle(sAnalysis);
-			descriptionField.setStyle(sAnalysis);
 		}
 	}
 
@@ -567,6 +571,12 @@ public class CVNaturalClassesController extends SplitPaneWithTableViewController
 			}
 			forceTableRowToRedisplayPerActiveSetting(nc);
 		}
+	}
+
+	@Override
+	void redraw() {
+		cvNaturalClassTable.refresh();
+		selectLastChosenTableItem();
 	}
 
 }

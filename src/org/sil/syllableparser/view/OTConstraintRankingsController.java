@@ -373,6 +373,15 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 
 		// Add observable list data to the table
 		otRankingsTable.setItems(otApproachData.getOTConstraintRankings());
+		selectLastChosenTableItem();
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = otRankingsTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -387,11 +396,6 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 					otRankingsTable.scrollTo(iLastIndex);
 				}
 			});
-		}
-		if (languageProject != null) {
-			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
-			nameField.setStyle(sAnalysis);
-			descriptionField.setStyle(sAnalysis);
 		}
 	}
 	
@@ -552,5 +556,11 @@ public class OTConstraintRankingsController extends SplitPaneWithTableViewContro
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };
+	}
+
+	@Override
+	void redraw() {
+		otRankingsTable.refresh();
+		selectLastChosenTableItem();
 	}
 }

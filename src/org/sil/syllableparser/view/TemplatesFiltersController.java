@@ -135,6 +135,7 @@ public abstract class TemplatesFiltersController extends SplitPaneWithTableViewC
 	protected ObservableList<TemplateFilter> contentList = FXCollections.observableArrayList();
 	protected boolean fAllowSlotPosition = false;
 	protected boolean fAllowConstituentBeginMarker = false;
+	protected String sLastView = "";
 
 	public TemplatesFiltersController() {
 

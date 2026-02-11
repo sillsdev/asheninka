@@ -433,6 +433,15 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 
 		// Add observable list data to the table
 		hyphenChangeRulesTable.setItems(hyphenApproachData.getHyphenChangeRules());
+		selectLastChosenTableItem();
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = hyphenChangeRulesTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -450,11 +459,6 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 					hyphenChangeRulesTable.scrollTo(iLastIndex);
 				}
 			});
-		}
-		if (languageProject != null) {
-			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
-			nameField.setStyle(sAnalysis);
-			descriptionField.setStyle(sAnalysis);
 		}
 	}
 
@@ -600,5 +604,11 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };
+	}
+
+	@Override
+	void redraw() {
+		hyphenChangeRulesTable.refresh();
+		selectLastChosenTableItem();
 	}
 }

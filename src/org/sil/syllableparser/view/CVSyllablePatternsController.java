@@ -383,6 +383,15 @@ public class CVSyllablePatternsController extends SplitPaneWithTableViewControll
 
 		// Add observable list data to the table
 		cvSyllablePatternTable.setItems(cvApproachData.getCVSyllablePatterns());
+		selectLastChosenTableItem();
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = cvSyllablePatternTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -400,11 +409,6 @@ public class CVSyllablePatternsController extends SplitPaneWithTableViewControll
 					cvSyllablePatternTable.scrollTo(iLastIndex);
 				}
 			});
-		}
-		if (languageProject != null) {
-			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
-			nameField.setStyle(sAnalysis);
-			descriptionField.setStyle(sAnalysis);
 		}
 	}
 
@@ -520,5 +524,11 @@ public class CVSyllablePatternsController extends SplitPaneWithTableViewControll
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };
+	}
+
+	@Override
+	void redraw() {
+		cvSyllablePatternTable.refresh();
+		selectLastChosenTableItem();
 	}
 }

@@ -470,6 +470,10 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 		// Add observable list data to the table
 		graphemeNaturalClassTable.setItems(languageProject
 				.getGraphemeNaturalClasses());
+		selectLastChosenTableItem();
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = graphemeNaturalClassTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -625,5 +629,11 @@ public class GraphemeNaturalClassesController extends SplitPaneWithTableViewCont
 			}
 			forceTableRowToRedisplayPerActiveSetting(nc);
 		}
+	}
+
+	@Override
+	void redraw() {
+		graphemeNaturalClassTable.refresh();
+		selectLastChosenTableItem();
 	}
 }

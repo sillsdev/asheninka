@@ -539,21 +539,7 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 		}
 		// Add observable list data to the table
 		otConstraintsTable.setItems(otApproachData.getOTConstraints());
-		int max = otConstraintsTable.getItems().size();
-		if (max > 0) {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastNPRulesViewItemUsed();
-					iLastIndex = adjustIndexValue(iLastIndex, max);
-					otConstraintsTable.requestFocus();
-					otConstraintsTable.getSelectionModel().select(iLastIndex);
-					otConstraintsTable.getFocusModel().focus(iLastIndex);
-					otConstraintsTable.scrollTo(iLastIndex);
-				}
-			});
-		}
+		selectLastChosenTableItem();
 		if (languageProject != null) {
 			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
 			nameField.setStyle(sAnalysis);
@@ -570,6 +556,24 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 				validator.validate();
 				constraint.setIsValid(validator.isValid());
 			}
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
+		int max = otConstraintsTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastNPRulesViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					otConstraintsTable.requestFocus();
+					otConstraintsTable.getSelectionModel().select(iLastIndex);
+					otConstraintsTable.getFocusModel().focus(iLastIndex);
+					otConstraintsTable.scrollTo(iLastIndex);
+				}
+			});
 		}
 	}
 	
@@ -722,5 +726,11 @@ public class OTConstraintsController extends SplitPaneWithTableViewController {
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };
+	}
+
+	@Override
+	void redraw() {
+		otConstraintsTable.refresh();
+		selectLastChosenTableItem();
 	}
 }

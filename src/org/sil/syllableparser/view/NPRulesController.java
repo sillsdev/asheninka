@@ -612,21 +612,7 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 		}
 		// Add observable list data to the table
 		npRulesTable.setItems(npApproach.getNPRules());
-		int max = npRulesTable.getItems().size();
-		if (max > 0) {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					int iLastIndex = mainApp.getApplicationPreferences()
-							.getLastNPRulesViewItemUsed();
-					iLastIndex = adjustIndexValue(iLastIndex, max);
-					npRulesTable.requestFocus();
-					npRulesTable.getSelectionModel().select(iLastIndex);
-					npRulesTable.getFocusModel().focus(iLastIndex);
-					npRulesTable.scrollTo(iLastIndex);
-				}
-			});
-		}
+		selectLastChosenTableItem();
 		if (languageProject != null) {
 			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage()
 					.getColor());
@@ -650,6 +636,24 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 				validator.validate();
 				rule.setIsValid(validator.isValid());
 			}
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
+		int max = npRulesTable.getItems().size();
+		if (max > 0) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					int iLastIndex = mainApp.getApplicationPreferences()
+							.getLastNPRulesViewItemUsed();
+					iLastIndex = adjustIndexValue(iLastIndex, max);
+					npRulesTable.requestFocus();
+					npRulesTable.getSelectionModel().select(iLastIndex);
+					npRulesTable.getFocusModel().focus(iLastIndex);
+					npRulesTable.scrollTo(iLastIndex);
+				}
+			});
 		}
 	}
 
@@ -820,5 +824,11 @@ public class NPRulesController extends SplitPaneWithTableViewController {
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };
+	}
+
+	@Override
+	void redraw() {
+		npRulesTable.refresh();
+		selectLastChosenTableItem();
 	}
 }

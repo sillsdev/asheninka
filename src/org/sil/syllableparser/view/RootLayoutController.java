@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International
+// Copyright (c) 2016-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 package org.sil.syllableparser.view;
@@ -644,6 +644,7 @@ public class RootLayoutController implements Initializable {
 			String sDirectoryPath = file.getParent();
 			applicationPreferences.setLastOpenedDirectoryPath(sDirectoryPath);
 			mainApp.updateStageTitle(file);
+			currentApproachController.redraw();
 		} else if (fCloseIfCanceled) {
 			// probably first time running and user chose to open a file
 			// but then canceled. We quit.

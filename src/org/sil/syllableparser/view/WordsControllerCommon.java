@@ -674,4 +674,9 @@ public class WordsControllerCommon extends SplitPaneWithTableViewController {
 		// Add observable list data to the table
 		wordsTable.setItems(words);
 	}
+
+	@Override
+	void redraw() {
+		wordsTable.refresh();
+	}
 }

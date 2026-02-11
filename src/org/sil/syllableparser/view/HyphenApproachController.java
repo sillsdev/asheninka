@@ -653,4 +653,9 @@ public class HyphenApproachController extends ApproachController {
 			controller.handleRemoveFiltersWord();
 		}
 	}
+
+	@Override
+	public void redraw() {
+		currentHyphenApproachController.redraw();
+	}
 }

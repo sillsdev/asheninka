@@ -51,6 +51,7 @@ public abstract class FiltersController extends TemplatesFiltersController {
 
 	@SuppressWarnings("unchecked")
 	protected void setDataProcessing(String sLastView, ObservableList<? extends Filter> filters) {
+		this.sLastView = sLastView;
 		// no sorting allowed
 		filterList = (ObservableList<Filter>) filters;
 		iRepresentationCaretPosition = 6;
@@ -58,6 +59,14 @@ public abstract class FiltersController extends TemplatesFiltersController {
 
 		// Add observable list data to the table
 		filterTable.setItems(filterList);
+		selectLastChosenTableItem();
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+	protected void selectLastChosenTableItem() {
 		int max = filterTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -69,11 +78,6 @@ public abstract class FiltersController extends TemplatesFiltersController {
 					selectAndScrollToItem(iLastIndex);
 				}
 			});
-		}
-		if (languageProject != null) {
-			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
-			nameField.setStyle(sAnalysis);
-			descriptionField.setStyle(sAnalysis);
 		}
 	}
 	protected abstract void showTypeWarning(TemplateFilter filter);
@@ -262,6 +266,12 @@ public abstract class FiltersController extends TemplatesFiltersController {
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField, representationField };
+	}
+
+	@Override
+	void redraw() {
+		filterTable.refresh();
+		selectLastChosenTableItem();
 	}
 
 }

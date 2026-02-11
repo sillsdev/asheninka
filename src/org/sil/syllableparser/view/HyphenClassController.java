@@ -403,6 +403,15 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 
 		// Add observable list data to the table
 		hyphenClassTable.setItems(hypApproachData.getHyphenClasses());
+		selectLastChosenTableItem();
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = hyphenClassTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -420,11 +429,6 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 					hyphenClassTable.scrollTo(iLastIndex);
 				}
 			});
-		}
-		if (languageProject != null) {
-			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
-			nameField.setStyle(sAnalysis);
-			descriptionField.setStyle(sAnalysis);
 		}
 	}
 
@@ -499,5 +503,11 @@ public class HyphenClassController extends SplitPaneWithTableViewController {
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };
+	}
+
+	@Override
+	void redraw() {
+		hyphenClassTable.refresh();
+		selectLastChosenTableItem();
 	}
 }

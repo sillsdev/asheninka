@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International
+// Copyright (c) 2016-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -124,6 +124,7 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 	// the
 	// end of the class name in the representationField
 	private boolean fJustSwitchedFocusFromGncComboBoxToRepField = false;
+	private String sPref = "";
 
 	public EnvironmentsController() {
 
@@ -668,6 +669,7 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 	}
 
 	protected void setDataCommon(String sPref) {
+		this.sPref = sPref;
 		cvApproach = languageProject.getCVApproach();
 		setColumnICURules();
 		setTextFieldColors();
@@ -676,6 +678,10 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 
 		// Add observable list data to the table
 		environmentTable.setItems(languageProject.getEnvironments());
+		selectLastChosenTableItem();
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = environmentTable.getItems().size();
 		if (max > 0) {
 			Platform.runLater(new Runnable() {
@@ -778,5 +784,11 @@ public class EnvironmentsController extends SplitPaneWithTableViewController {
 			}
 			forceTableRowToRedisplayPerActiveSetting(env);
 		}
+	}
+
+	@Override
+	void redraw() {
+		environmentTable.refresh();
+		selectLastChosenTableItem();
 	}
 }

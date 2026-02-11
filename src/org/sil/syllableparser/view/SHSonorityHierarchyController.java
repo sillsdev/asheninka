@@ -472,6 +472,15 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 
 		// Add observable list data to the table
 		shSonorityHierarchyTable.setItems(shApproachData.getSHSonorityHierarchy());
+		selectLastChosenTableItem();
+		if (languageProject != null) {
+			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
+			nameField.setStyle(sAnalysis);
+			descriptionField.setStyle(sAnalysis);
+		}
+	}
+
+	protected void selectLastChosenTableItem() {
 		int max = shSonorityHierarchyTable.getItems().size();
 		if (max > 0) {
 			ApproachType approach = this.rootController.getCurrentApproach();
@@ -508,11 +517,6 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 					shSonorityHierarchyTable.scrollTo(iLastIndex);
 				}
 			});
-		}
-		if (languageProject != null) {
-			String sAnalysis = mainApp.getStyleFromColor(languageProject.getAnalysisLanguage().getColor());
-			nameField.setStyle(sAnalysis);
-			descriptionField.setStyle(sAnalysis);
 		}
 	}
 
@@ -642,5 +646,11 @@ public class SHSonorityHierarchyController extends SplitPaneWithTableViewControl
 	@Override
 	TextField[] createTextFields() {
 		return new TextField[] { nameField, descriptionField };
+	}
+
+	@Override
+	void redraw() {
+		shSonorityHierarchyTable.refresh();
+		selectLastChosenTableItem();
 	}
 }
