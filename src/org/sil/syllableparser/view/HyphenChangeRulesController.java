@@ -590,12 +590,10 @@ public class HyphenChangeRulesController extends SplitPaneWithTableViewControlle
 		HyphenChangeRuleValidator validator = HyphenChangeRuleValidator.getInstance();
 		validator.setChangeRule(currentHyphenChangeRule);
 		validator.setBundle(bundle);
-		StringBuilder sb = new StringBuilder();
-		validator.validate();
-		sb.append(validator.getErrorMessage());
-		if (sb.toString().length() > 0) {
+		currentHyphenChangeRule.setIsValid(validator.validate());
+		if (!currentHyphenChangeRule.isValid()) {
 			errorTextArea.setVisible(true);
-			errorTextArea.setText(sb.toString());
+			errorTextArea.setText(validator.getErrorMessage());
 		}
 	}
 

@@ -36,6 +36,7 @@ public class HyphenChangeRule extends SylParserObject {
 	List<Boolean> doNotMatchClassAgains = new ArrayList<>();
 	private Boolean fWordInitial;
 	private Boolean fWordFinal;
+	private Boolean fIsValid = true;
 
 	public HyphenChangeRule() {
 		super();
@@ -156,6 +157,14 @@ public class HyphenChangeRule extends SylParserObject {
 
 	public void setDoNotMatchClassAgains(List<Boolean> doNotMatchClassAgains) {
 		this.doNotMatchClassAgains = doNotMatchClassAgains;
+	}
+
+	public Boolean isValid() {
+		return fIsValid;
+	}
+
+	public void setIsValid(Boolean isValid) {
+		this.fIsValid = isValid;
 	}
 
 	/**

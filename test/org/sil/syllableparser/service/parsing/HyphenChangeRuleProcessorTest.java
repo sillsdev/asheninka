@@ -9,11 +9,14 @@ package org.sil.syllableparser.service.parsing;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.sil.syllableparser.Constants;
 import org.sil.syllableparser.model.cvapproach.*;
 import org.sil.syllableparser.model.hyphenapproach.HyphenChangeRule;
+import org.sil.syllableparser.service.HyphenChangeRuleValidator;
 
 /**
  * @author Andy Black
@@ -307,7 +310,39 @@ public class HyphenChangeRuleProcessorTest extends HyphenTestBase {
 		checkProcessorResults("aa", true, "a.a");
 		checkProcessorResults("aaa", true, "aa.a");
 		checkProcessorResults("daaa", true, "daa.a");
-	}
+
+		// test not getting invalid rules
+		hyphenApproach.getHyphenChangeRules().clear();
+		// create VVV -> V-V rule
+		rule = new HyphenChangeRule();
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenApproach.getInsertHereHC());
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		HyphenChangeRuleValidator validator = HyphenChangeRuleValidator.getInstance();
+		validator.setBundle(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION));
+		validator.setChangeRule(rule);
+		rule.setIsValid(validator.validate());
+		hyphenApproach.getHyphenChangeRules().add(rule);
+		// create VV -> CV rule
+		rule = new HyphenChangeRule();
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getMatchHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		rule.getChangeHyphenClasses().add(hyphenClasses.get(0)); // V
+		validator.setChangeRule(rule);
+		rule.setIsValid(validator.validate());
+		hyphenApproach.getHyphenChangeRules().add(rule);
+		hyphenRuleProcessor = new HyphenChangeRuleProcessor(hyphenApproach);
+		checkProcessorResults("", true, "");
+		checkProcessorResults("d", true, "d");
+		checkProcessorResults("a", true, "a");
+		checkProcessorResults("aa", true, "aa");
+		checkProcessorResults("aaa", true, "aaa");
+		checkProcessorResults("daaa", true, "daaa");
+}
 
 	protected void checkProcessorResults(String word, boolean success, String expectedHyphenation) {
 		segmenter.segmentWord(word);

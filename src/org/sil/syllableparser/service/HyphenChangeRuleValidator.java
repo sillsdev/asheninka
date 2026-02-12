@@ -63,7 +63,7 @@ public class HyphenChangeRuleValidator {
 		this.bundle = bundle;
 	}
 
-	public void validate() {
+	public boolean validate() {
 		isValid = true;
 		StringBuilder sb = new StringBuilder();
 		if (!sizesCheck()) {
@@ -90,6 +90,7 @@ public class HyphenChangeRuleValidator {
 			isValid = false;
 		}
 		errorMessage = sb.toString();
+		return isValid;
 	}
 
 	private boolean sizesCheck() {

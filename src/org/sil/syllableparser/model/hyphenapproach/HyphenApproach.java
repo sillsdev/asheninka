@@ -92,9 +92,8 @@ public class HyphenApproach extends Approach {
 	}
 
 	public List<HyphenChangeRule> getActiveHyphenChangeRules() {
-		return hyphenRules.stream()
-				.filter(hypRule -> hypRule.isActive() && hypRule.matchClasses.size() != 0 && hypRule.changeClasses.size() != 0)
-				.collect(Collectors.toList());
+		return hyphenRules.stream().filter(hypRule -> hypRule.isActive() && hypRule.isValid()
+				&& hypRule.matchClasses.size() != 0 && hypRule.changeClasses.size() != 0).collect(Collectors.toList());
 	}
 
 	/**
