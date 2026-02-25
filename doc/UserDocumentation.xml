@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->21 November 2025</date
+>23 February 2026</date
 ><version
->1.2.0</version
+>1.3.0</version
 ><contents
 ></contents
 ></frontMatter
@@ -274,7 +274,7 @@ id="sWSKeyboardTab"
 ><indexedItem
 term="iKeyboards"
 ></indexedItem
->The Keyboard tab has a drop-down chooser.  Click on it to show which keyboards are currently enabled and choose the one that is appropriate for the vernacular or analysis language you have chosen.  <object
+>The Keyboard tab has a drop-down chooser. Click on it to show which keyboards are currently enabled and choose the one that is appropriate for the vernacular or analysis language you have chosen. <object
 type="tAsheninka"
 ></object
 > will automatically switch to this keyboard whenever a vernacular or analysis field is in focus.</p
@@ -299,7 +299,7 @@ type="tmacOS"
 ></object
 >.</p
 ></endnote
-> </p
+></p
 ></section3
 ><section3
 id="sWSSortingTab"
@@ -613,12 +613,12 @@ id="sApproaches"
 ><object
 type="tAsheninka"
 ></object
-> offers six different syllabification algorithms or approaches. These are covered in <sectionRef
+> offers seven different syllabification algorithms or approaches. These are covered in <sectionRef
 sec="sCVApproach"
 textBefore="plural"
 ></sectionRef
 >–<sectionRef
-sec="sOTApproach"
+sec="sHyphenApproach"
 textBefore="none"
 ></sectionRef
 >.</p
@@ -1526,7 +1526,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box can be set independently for all six approaches; you can have several <object
+> dialog box can be set independently for all seven approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -2098,7 +2098,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box can be set independently for all six approaches; you can have several <object
+> dialog box can be set independently for all seven approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -3003,7 +3003,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box can be set independently for all six approaches; you can have several <object
+> dialog box can be set independently for all seven approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -3687,7 +3687,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box can be set independently for all six approaches; you can have several <object
+> dialog box can be set independently for all seven approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -4860,7 +4860,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box can be set independently for all six approaches; you can have several <object
+> dialog box can be set independently for all seven approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -5542,7 +5542,7 @@ type="tTryAWord"
 > dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
 type="tTryAWord"
 ></object
-> dialog box can be set independently for all six approaches; you can have several <object
+> dialog box can be set independently for all seven approaches; you can have several <object
 type="tTryAWord"
 ></object
 > dialog boxes open at the same time if you wish.</p
@@ -5744,6 +5744,559 @@ width="500"
 ></img
 ></chart
 ></example
+></section2
+></section1
+><section1
+id="sHyphenApproach"
+><secTitle
+><object
+type="tHyphenApproach"
+></object
+></secTitle
+><p
+><indexedItem
+term="iHyphenApproach"
+></indexedItem
+>In the <object
+type="tHyphenApproach"
+></object
+>, you need to define the following items:</p
+><ol
+><li
+>segments (<sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+>)</li
+><li
+><object
+type="tHyphen"
+></object
+> classes (<sectionRef
+sec="sCVNaturalClasses"
+></sectionRef
+>)</li
+><li
+><object
+type="tHyphen"
+></object
+> change rules (<sectionRef
+sec="sCVSyllablePatterns"
+></sectionRef
+>)</li
+><li
+>grapheme natural classes (<sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+>)</li
+><li
+>environments (<sectionRef
+sec="sEnvironments"
+></sectionRef
+>)</li
+></ol
+><p
+>After that, you import a word list (see <sectionRef
+sec="sWords"
+></sectionRef
+>) or enter a list of words by hand. <indexedItem
+term="iParseAllWords"
+></indexedItem
+>Then you use the <object
+type="tMenuItem"
+>Parser / Parse all Words </object
+> menu item or click on the <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/SyllabifyWords.png"
+></img
+> tool bar button. This will apply the algorithm of the <object
+type="tHyphenApproach"
+></object
+> to all the words. You can then see the results in the <object
+type="tHyphenWords"
+></object
+> view. See <sectionRef
+sec="sCVWords"
+textBefore="plural"
+></sectionRef
+> and <sectionRef
+sec="sCVTryAWord"
+textBefore="none"
+></sectionRef
+> for ideas on how to check the results, among other things.</p
+><p
+>The main “game” to play with the <object
+type="tHyphenApproach"
+></object
+> in <object
+type="tAsheninka"
+></object
+> is to adjust the segment inventory (including graphemes and their environments), <object
+type="tHyphenClasses"
+></object
+>, and <object
+type="tHyphenRules"
+></object
+> so that one gets most, if not all, words to syllabify correctly.</p
+><p
+>In rough terms, it tries to find all possible sequences of segments in the word. If it can do that, it then seeks to find a sequence of <object
+type="tHyphenClasses"
+></object
+> that covers the entire sequence of segments. Finally, it applies the <object
+type="tHyphenRules"
+></object
+> one at a time, each one as many times as it might apply, to insert hyphen breaks in the word. See appendix <appendixRef
+app="aHyphenAlgorithm"
+></appendixRef
+> for details.</p
+><p
+>We now give more information on the various views available in the user interface for the <object
+type="tHyphenApproach"
+></object
+>.</p
+><p
+></p
+><section2
+id="sHyphenSegmentInventory"
+><secTitle
+><object
+type="tHyphen"
+></object
+> segment inventory</secTitle
+><p
+><indexedItem
+term="HyphenSegments"
+></indexedItem
+>The <object
+type="tHyphenSegmentInventory"
+></object
+> view works exactly like the <object
+type="tCVSegmentInventory"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sHypenClasses"
+><secTitle
+><object
+type="tHyphen"
+></object
+> classes</secTitle
+><p
+><indexedItem
+term="iHyphenClasses"
+></indexedItem
+>Make sure that in the <object
+type="tHyphenClasses"
+></object
+> view, every segment is in a class. A given segment must not be in more than one class.</p
+><p
+>The <object
+type="tField"
+>Name</object
+> field is for you to define how this class will appear in change rules. We suggest using something short and if there is more than one character in it, make the first one be capitalized and the rest be in lower case.<endnote
+id="nHyphenClassName"
+><p
+>This is not required, it is just a suggestion.</p
+></endnote
+> While it is possible to use the same name more than once, it will most likely turn out to be confusing. So we recommend you make the name be unique.</p
+><p
+>The <object
+type="tField"
+>Description</object
+> field is for your use to document anything special about this class.</p
+><p
+>The <object
+type="tField"
+>Segments</object
+> field has a chooser button on the far right which looks like <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/ChooserButton.png"
+></img
+>. Click on it to bring up a dialog box which lets you select the segments which belong to this class.</p
+><p
+><object
+type="tAsheninka"
+></object
+> checks to make sure every segment is in some class and that no segment is in more than one class. When either situation is present, a warning message will be shown explaining the situation.</p
+></section2
+><section2
+id="sHyphenChangeRules"
+><secTitle
+><object
+type="tHyphen"
+></object
+> change rules</secTitle
+><p
+><indexedItem
+term="iHyphenChangeRules"
+></indexedItem
+>Use the <object
+type="tHyphenRules"
+></object
+> view to create <object
+type="tHyphen"
+></object
+> change rules. Each rule has a match pattern of <object
+type="tHyphen"
+></object
+> classes and a change pattern of <object
+type="tHyphen"
+></object
+> classes. When a rule is applied, it will look for matches per the match pattern and make the change as indicated in the change pattern.</p
+><p
+>The <object
+type="tField"
+>Name</object
+> field is for you to define a name for this rule. We suggest using something short. The <object
+type="tField"
+>Description</object
+> field is for your use to document anything special about this rule.</p
+><p
+>The <object
+type="tField"
+>Match</object
+> field shows the sequence of any <object
+type="tHyphen"
+></object
+> classes this pattern consists of. It has a chooser button on the far right which looks like <img
+XeLaTeXSpecial="scaled='500'"
+src="resources/ChooserButton.png"
+></img
+>. Click on it to bring up a dialog box which lets you select <object
+type="tHyphen"
+></object
+> classes which constitute this match pattern. This chooser consists of one or more drop-down boxes. Click on the drop-down arrow in the box. It will show you the list of possible <object
+type="tHyphen"
+></object
+> classes to choose from. In addition, if this is the very first drop-down box or the last one currently being shown, it will also include <object
+type="tWordBoundary"
+></object
+>. When you choose <object
+type="tWordBoundary"
+></object
+>, the pattern shown above the drop-down box(es), will show “#” to indicate a word boundary.</p
+><p
+>There also is a <object
+type="tField"
+>Change</object
+> field. Like the <object
+type="tField"
+>Match</object
+> field, it has a chooser button that brings up the same kind of dialog box. With the <object
+type="tField"
+>Match</object
+> field, there are several additional options shown in the drop-down boxes. It not only shows the possible <object
+type="tHyphen"
+></object
+> classes and, when appropriate, <object
+type="tWordBoundary"
+></object
+>, but it also has an option of <object
+type="tInsertHyphenHere"
+></object
+> and then the set of possible <object
+type="tHyphen"
+></object
+> classes but with an asterisk in front of the class name (and the class name is in lower-case).</p
+><p
+>The <object
+type="tInsertHyphenHere"
+></object
+> option indicates that when the match pattern is found, a hyphen will be inserted at that point.<endnote
+id="nHyphenNotSyllable"
+><p
+>The original <object
+type="tHyphen"
+></object
+> program did not claim to mark syllable boundaries but merely to indicate where discretionary hyphens need to be inserted. For this reason, <object
+type="tAsheninka"
+></object
+> uses <object
+type="tInsertHyphenHere"
+></object
+> instead of some kind of syllable notion.</p
+></endnote
+> <object
+type="tAsheninka"
+></object
+> will show it as a period in the result.</p
+><p
+>The set of possible <object
+type="tHyphen"
+></object
+> classes but with an asterisk in front of the class name (and the class name is in lower-case) should be chosen when a given class should not be matched again within the word being processed.</p
+><p
+><object
+type="tAsheninka"
+></object
+> expects that the following to be true for each rule:</p
+><ul
+><li
+>Any change pattern has at most one <object
+type="tInsertHyphenHere"
+></object
+> item.</li
+><li
+>If a change pattern does not have an <object
+type="tInsertHyphenHere"
+></object
+> item, then both the match and change must have one and only one class. (This allows for special handling of exceptional cases. See appendix <appendixRef
+app="aHyphenAlgorithm"
+></appendixRef
+>).</li
+><li
+>When a change has an <object
+type="tInsertHyphenHere"
+></object
+> item, the class names and orders must be the same between the match and change classes. Note that if the change includes one of the special class names used to indicate that it must not be matched again, it must be the class name that corresponds to that position in the match pattern.</li
+></ul
+><p
+>Finally, the order in which the <object
+type="tHyphen"
+></object
+> rules occur is important, as mentioned in <sectionRef
+sec="sHyphenApproach"
+></sectionRef
+>. Recall that with the <object
+type="tHyphenApproach"
+></object
+>, as <object
+type="tAsheninka"
+></object
+> parses a word, it tries to match the patterns in the order in which they appear. You control the order of the rules by clicking on a rule in the middle pane and then using the up and down arrows to change its order. Note that the normal way of sorting by a column via clicking on a column header is disabled for this view.</p
+></section2
+><section2
+id="sHyphenPredicitedVsCorrect"
+><secTitle
+>Predicted vs.​ correct <object
+type="tHyphen"
+></object
+> words</secTitle
+><p
+><indexedItem
+term="iHyphenPredictedVsCorrect"
+></indexedItem
+><indexedItem
+term="iHyphenPredictedSyllabificationCompare"
+></indexedItem
+>The <object
+type="tHyphenPredictedVsCorrectWords"
+></object
+> view shows any words which have both a predicted value and a correct value and, in addition, the two values differ. This is intended to give you a way to quickly see how the results of applying the <object
+type="tHyphenApproach"
+></object
+> differ from the expected results. In this view the predicted and correct words are aligned in pairs with the predicted syllabification immediately above the correct syllabification. This is an attempt to make it easier to see the differences between the two.</p
+></section2
+><section2
+id="sHyphenGraphemeNaturalClasses"
+><secTitle
+>Grapheme natural classes</secTitle
+><p
+><indexedItem
+term="iHyphenGraphemes"
+></indexedItem
+>This works exactly like the <object
+type="tGraphemeNaturalClasses"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sGraphemeNaturalClasses"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sHyphenEnvironments"
+><secTitle
+>Environments</secTitle
+><p
+><indexedItem
+term="iHyphenEnvironments"
+></indexedItem
+>This works exactly like the <object
+type="tEnvironments"
+></object
+> view for the <object
+type="tCVPatternApproach"
+></object
+>. See <sectionRef
+sec="sEnvironments"
+></sectionRef
+> for details.</p
+></section2
+><section2
+id="sHyphenTryAWord"
+><secTitle
+><object
+type="tHyphen"
+></object
+> Try a Word</secTitle
+><p
+><indexedItem
+term="iHyphenTryAWord"
+></indexedItem
+><indexedItem
+term="iTryAWord"
+></indexedItem
+>There are times when it may be difficult to know just why a given word is not processing correctly. That's where the <object
+type="tTryAWord"
+></object
+> dialog box can be useful. To see it, use the <object
+type="tMenuItem"
+>Parser / Try a Word</object
+> menu item. This brings up a dialog box like the one shown in example <exampleRef
+letter="xHyphenTryAWord"
+num="xHyphenTryAWord"
+></exampleRef
+>. Unlike most dialog boxes, you can keep the <object
+type="tTryAWord"
+></object
+> dialog box open while still editing other views in the main window. Unfortunately, the minimize button does not currently work so you cannot minimize the dialog, but you can drag it around and resize it. Further, the size and location of the <object
+type="tTryAWord"
+></object
+> dialog box can be set independently for all seven approaches; you can have several <object
+type="tTryAWord"
+></object
+> dialog boxes open at the same time if you wish.</p
+><example
+num="xHyphenTryAWord"
+><chart
+><img
+XeLaTeXSpecial="scaled='650'"
+src="resources/HyphenTryAWord1.png"
+width="500"
+></img
+></chart
+></example
+><p
+>You can key a word to try in the text box. By default, <object
+type="tAsheninka"
+></object
+> shows the current word selected in the <object
+type="tHyphenWords"
+></object
+> view (if you are showing that view), the current word selected in the <object
+type="tHyphenPredictedVsCorrectWords"
+></object
+> view (if you are showing that view) or the last word you used (or nothing if you've never used <object
+type="tTryAWord"
+></object
+> before and are not showing either the <object
+type="tHyphenWords"
+></object
+> view or the <object
+type="tHyphenPredictedVsCorrectWords"
+></object
+> view).</p
+><p
+>When you either press the <object
+type="tKey"
+>Enter</object
+> key or click on the <object
+type="tButton"
+>Try it</object
+> button, <object
+type="tAsheninka"
+></object
+> will try to parse the word in the text box and report the result in the Results portion of the dialog box.</p
+><p
+>For the <object
+type="tHyphenApproach"
+></object
+>, there are at most three steps that are tried:</p
+><ol
+><li
+>Parsing into segments.</li
+><li
+>Parsing the segments into <object
+type="tHyphen"
+></object
+> classes.</li
+><li
+>Processing <object
+type="tHyphen"
+></object
+> change rules (via the <object
+type="tHyphen"
+></object
+> algorithm; see appendix <appendixRef
+app="aHyphenAlgorithm"
+></appendixRef
+> below).</li
+></ol
+><p
+>The results portion always shows the parsing into segments. If this succeeded, then it also shows the parsing of segments into <object
+type="tHyphen"
+></object
+> classes. If this succeeded, then it also shows the result of processing the <object
+type="tHyphen"
+></object
+> change rules, including the details of how each applicable rule changed the set of classes.</p
+><p
+>Successful steps are shown in <object
+type="tGreen"
+></object
+> while unsuccessful ones are shown in <object
+type="tRed"
+></object
+>. An example of a successful parse is shown in example <exampleRef
+letter="xHyphenTryAWordayawit"
+num="xHyphenTryAWordayawit"
+></exampleRef
+>.</p
+><example
+num="xHyphenTryAWordayawit"
+><chart
+><img
+src="resources/HyphenTryAWord2.png"
+width="500"
+></img
+></chart
+></example
+><p
+><indexedItem
+term="iFailureHyphenSegmenter"
+></indexedItem
+>The parsing into segments part is exactly the same as it is for the <object
+type="tCVPatternApproach"
+></object
+>.</p
+><p
+><indexedItem
+term="iFailureHyphenClasser"
+></indexedItem
+>The parsing into <object
+type="tHyphen"
+></object
+> classes shows which class was used for each segment. Recall that in the <object
+type="tHyphenApproach"
+></object
+>, each segment is to be in one and only one class. Also every segment is to be in a class.</p
+><p
+>Note that the processing of <object
+type="tHyphen"
+></object
+> rules always reports success. This is because there are no failures: each rule either matches and applies or it does not. For a rule to not apply is not a failure.</p
+><p
+>Whenever a rule is applied, its name is shown in a row by itself followed by the result of its application upon the sequence of <object
+type="tHyphen"
+></object
+> classes. Any class that changes will be shown in bold. If the rule included an <object
+type="tInsertHyphenHere"
+></object
+> item, then a hyphen will be shown at that spot. Note that a given rule can apply more than once.</p
+><p
+>As mentioned above, whenever one of the first two steps fails, there is an error message shown for that step. Depending on the error and the state of the parser at the time, more steps may or may not be tried. See <sectionRef
+sec="sCVTryAWord"
+></sectionRef
+> for examples where the segments could not be parsed.</p
 ></section2
 ></section1
 ><section1
@@ -7493,6 +8046,184 @@ type="tSuccessMessage"
 ></ol
 ></appendix
 ><appendix
+id="aHyphenAlgorithm"
+><secTitle
+><object
+type="tHyphen"
+></object
+> algorithm in detail</secTitle
+><p
+><indexedItem
+term="iHyphenApproach"
+></indexedItem
+><indexedItem
+term="iParsingResult"
+></indexedItem
+>The main algorithm for the <object
+type="tHyphenApproach"
+></object
+> is as follows:</p
+><ol
+><li
+>It does a left-to-right sweep of the word, trying to find the sequence of segments which covers the whole word. It uses the graphemes defined in the segment information to determine a match with a segment. It tries all graphemes which match at the current point it is looking at in the left-to-right sweep. It tries the longest match first, but also applies any environments associated with the grapheme. See <sectionRef
+sec="sCVSegmentInventory"
+></sectionRef
+> for more on this. <indexedItem
+term="iFailureCVSegmenter"
+></indexedItem
+>If it cannot find a sequence that covers the whole word, it reports an error of <object
+type="tErrorMessage"
+>Failure: could not parse into segments beginning at '<object
+type="tItalic"
+>some characters</object
+></object
+> and quits. The '<object
+type="tItalic"
+>some characters</object
+>' part indicates the place in the word where it could not find a character or character sequence that matched any graphemes in any of the segments. Most likely, either there was a typo in the word or a grapheme is missing from some segment or its environment was not met.<endnote
+id="nHyphenSegSameAsCV"
+><p
+>This is the exact same algorithm used by the <object
+type="tCVPatternApproach"
+></object
+>.</p
+></endnote
+> You can use the <object
+type="tTryAWord"
+></object
+> tool to get more details (see <sectionRef
+sec="sHyphenTryAWord"
+></sectionRef
+>).</li
+><li
+>If it succeeded in finding a sequence of segments, it then performs a left-to-right sweep of the segments it posited creating a list of each segment's <object
+type="tHyphen"
+></object
+> class. The list begins with a word boundary and ends with a word boundary.</li
+><li
+>If the creation of this list of <object
+type="tHyphen"
+></object
+> classes succeeds, then each <object
+type="tHyphen"
+></object
+> rule is applied to the list of <object
+type="tHyphen"
+></object
+> classes in a left-to-right sweep of the list. When the rule's match pattern is found in the list, the rule's change pattern is applied to that portion of the list. The rule's match pattern is then applied to the list again. Note that if there is a match but its change will insert two instances of an <object
+type="tInsertHyphenHere"
+></object
+>, <object
+type="tAsheninka"
+></object
+> will skip that match and look for the next one. When a rule no longer has any matches, the next rule is tried.</li
+><li
+>Sometimes one rule's change output will mean that a following rule will match when you do not want it to. One can use the change pattern item for the class which has an asterisk and the class name in lower case. That class will not be matched in any following rule.</li
+><li
+>When all rules have been tried, , it outputs the “syllabification” into the <object
+type="tPredictedSyllableBreaks"
+></object
+> field and reports <object
+type="tSuccessMessage"
+></object
+>. This output consists of the original segment in the position of each <object
+type="tHyphen"
+></object
+> class in the list. When there is a hyphen (due to the change pattern having an <object
+type="tInsertHyphenHere"
+></object
+> item), a period is inserted.</li
+></ol
+><p
+><indexedItem
+term="iTicuna"
+></indexedItem
+>In special cases, one may want to have a class that matches in an early rule and then change that class's name to be some other class that applies in a later rule. For example, in <citation
+page="41-42"
+ref="rDocPrepAids"
+></citation
+>, there is an example for Ticuna where an exceptional word-final sequence needs special handling. One way to deal with this is to create separate <object
+type="tHyphen"
+></object
+> classes for each case and then create a rule that maps each such special class to a “normal” class. The special case in Ticuna is that the sequence <langData
+lang="lVernacular"
+>arj</langData
+> is to be hyphenated as <langData
+lang="lVernacular"
+>-arj</langData
+> at the end of a word but as <langData
+lang="lVernacular"
+>a-rj</langData
+> everywhere else. One way to handle this is to create three special classes, one each for <langData
+lang="lVernacular"
+>a</langData
+>, <langData
+lang="lVernacular"
+>r</langData
+>, and <langData
+lang="lVernacular"
+>j</langData
+>. Then map these classes to their more “normal” class after handling the word final case. Example <exampleRef
+letter="xTicunaHyphenRules"
+num="xTicunaHyphenRules"
+></exampleRef
+> shows the set of rules to do this.</p
+><example
+num="xTicunaHyphenRules"
+><table
+border="1"
+><tr
+><th
+>Match</th
+><th
+> </th
+><th
+>Change</th
+></tr
+><tr
+><td
+>A, R, J, #</td
+><td
+>→</td
+><td
+>-, *a, *r, *j, #</td
+></tr
+><tr
+><td
+>A</td
+><td
+>→</td
+><td
+>V</td
+></tr
+><tr
+><td
+>J</td
+><td
+>→</td
+><td
+>V</td
+></tr
+><tr
+><td
+>R</td
+><td
+>→</td
+><td
+>C</td
+></tr
+><tr
+><td
+>V, C, V</td
+><td
+>→</td
+><td
+>V, -, C, V</td
+></tr
+></table
+></example
+></appendix
+><appendix
 id="aKnownIssues"
 ><secTitle
 >Known issues</secTitle
@@ -7562,6 +8293,9 @@ id="sSampleEnglishIPA"
 ><secTitle
 >English IPA</secTitle
 ><p
+><indexedItem
+term="iEnglish"
+></indexedItem
 >This has English words written in IPA (<citation
 paren="none"
 ref="rIPA"
@@ -7590,6 +8324,9 @@ id="sSampleAsheninka"
 ><secTitle
 >Asheninka Pajonal</secTitle
 ><p
+><indexedItem
+term="iAsheninkaPajonal"
+></indexedItem
 >This has an implementation for the Pajonal variety of Asheninka (ISO-639-3 code cjo). Here are some observations about it:</p
 ><ol
 ><li
@@ -7663,8 +8400,11 @@ ref="rCC"
 ></citation
 >.</p
 ></endnote
-> table for him that would insert discretionary hyphens in Asheninka text. The algorithm he suggested was the CV Patterns approach (see <sectionRef
-sec="sCVApproach"
+> table for him that would insert discretionary hyphens in Asheninka text. The algorithm he suggested was the <object
+type="tHyphen"
+></object
+> approach (see <sectionRef
+sec="sHyphenApproach"
 ></sectionRef
 >). Asheninka has long words and typesetting material in that language would improve readability with such a table. In 1984 I wrote such a table.</p
 ><p
@@ -7678,7 +8418,7 @@ ref="rDocPrepAids"
 >) to improve the efficiency. It implemented the same basic approach. Amazingly, the <object
 type="tTool"
 >Hyphen</object
-> program is still being used (albeit occasionally) today.</p
+> program was still being used decades later.</p
 ><p
 >Because of this beginning, I chose to call this tool <object
 type="tAsheninka"

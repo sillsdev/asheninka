@@ -21,6 +21,11 @@ see="iLanguageAnalysis"
 >Analysis language</term
 ></indexTerm
 ><indexTerm
+id="iAsheninkaPajonal"
+><term
+>Asheninka Pajonal</term
+></indexTerm
+><indexTerm
 id="iColor"
 ><term
 >Color</term
@@ -237,6 +242,26 @@ id="iFailureOTNaturalClasser"
 ></indexTerm
 ></indexTerms
 ></indexTerm
+><indexTerm
+id="iHyphenFailures"
+><term
+>Hyphen approach</term
+><indexTerms
+><indexTerm
+id="iFailureHyphenSegmenter"
+><term
+>Parse into segments</term
+></indexTerm
+><indexTerm
+id="iFailureHyphenClasser"
+><term
+>Parse into <object
+type="tHyphen"
+></object
+> classes</term
+></indexTerm
+></indexTerms
+></indexTerm
 ></indexTerms
 ></indexTerm
 ><indexTerm
@@ -296,6 +321,68 @@ id="iTutorial"
 id="iUserDoc"
 ><term
 >User documentation</term
+></indexTerm
+></indexTerms
+></indexTerm
+><indexTerm
+id="iHyphenApproach"
+><term
+>Hyphen approach</term
+><indexTerms
+><indexTerm
+id="iCVPatternAlgorithm"
+><term
+>Algorithm</term
+></indexTerm
+><indexTerm
+id="iHyphenChangeRules"
+><term
+>Change Rules</term
+></indexTerm
+><indexTerm
+id="iHyphenClasses"
+><term
+>Classes</term
+></indexTerm
+><indexTerm
+id="iHyphenCompare2Implementstions"
+><term
+>Compare two implementations</term
+></indexTerm
+><indexTerm
+id="iHyphenEnvironments"
+><term
+>Environments</term
+></indexTerm
+><indexTerm
+id="iHyphenGraphemeNaturalClasses"
+><term
+>Grapheme natural classes</term
+></indexTerm
+><indexTerm
+id="iHyphenGraphemes"
+><term
+>Graphemes</term
+></indexTerm
+><indexTerm
+id="iHyphenPredictedVsCorrect"
+><term
+>Predicted vs. correct syllabification</term
+></indexTerm
+><indexTerm
+id="HyphenSegments"
+><term
+>Segments</term
+></indexTerm
+><indexTerm
+id="iHyphenTryAWord"
+><term
+>Try a Word</term
+></indexTerm
+><indexTerm
+id="iHyphenWords"
+><term
+>Words</term
 ></indexTerm
 ></indexTerms
 ></indexTerm
@@ -772,6 +859,14 @@ id="iCVPredictedSyllabificationCompare"
 >Comparing with correct (CV)</term
 ></indexTerm
 ><indexTerm
+id="iHyphenPredictedSyllabificationCompare"
+><term
+>Comparing with correct (<object
+type="tHyphen"
+></object
+>)</term
+></indexTerm
+><indexTerm
 id="iMoraicPredictedSyllabificationCompare"
 ><term
 >Comparing with correct (Moraic)</term
@@ -1041,6 +1136,11 @@ id="iTemplates"
 see="iONCTemplates"
 ><term
 >Templates</term
+></indexTerm
+><indexTerm
+id="iTicuna"
+><term
+>Ticuna</term
 ></indexTerm
 ><indexTerm
 id="iTryAWord"

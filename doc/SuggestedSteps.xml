@@ -22,9 +22,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->24 June 2021</date
+>23 February 2026</date
 ><version
->1.0.0</version
+>1.3.0</version
 ><contents
 ></contents
 ></frontMatter
@@ -64,7 +64,12 @@ type="tMenuItem"
 ></endnote
 ></li
 ><li
->Set the font and sort order needed for both the vernacular and analysis languages (use menu item <object
+>Set the font, sort order, and keyboard<endnote
+id="nKeyboardNotOnLinux"
+><p
+>Keyboards are not yet implemented on Linux.</p
+></endnote
+> needed for both the vernacular and analysis languages (use menu item <object
 type="tMenuItem"
 >Settings</object
 >).</li
@@ -75,7 +80,10 @@ type="tCVSegmentInventory"
 > covers all the segments you have in the orthography. Depending on the orthography, you may find that you'll need to add environments for some graphemes within some segments. For the <object
 type="tONCApproach"
 ></object
->, check the onset, nucleus, and coda boxes as needed for each segment.</li
+>, check the onset, nucleus, and coda boxes as needed for each segment. For the <object
+type="tMoraicApproach"
+></object
+>, set the number of moras born by each segment.</li
 ><li
 >Make sure that every segment is in a natural class for the <object
 type="tCVPatternApproach"
@@ -89,6 +97,14 @@ type="tCVPatternApproach"
 type="tCVSyllablePatterns"
 ></object
 > that cover the kinds of syllables you think the language has.  Be sure to allow for vowel-initial syllables if the language has them.</li
+><li
+>For the <object
+type="tHyphenApproach"
+></object
+>, create the <object
+type="tHyphen"
+></object
+> classes and rules needed.</li
 ><li
 >For those approaches needing them, set the <object
 type="tSyllabificationParameters"

@@ -200,10 +200,47 @@ color="green"
 id="tGreenText"
 ></type
 ><type
+before="“Hyphen”"
+id="tHyphen"
+></type
+><type
+before="“Hyphen” approach"
+id="tHyphenApproach"
+></type
+><type
+before="“Hyphen” Classes"
+id="tHyphenClasses"
+types="tView"
+></type
+><type
+before="Predicted vs.​ Correct “Hyphen” Words"
+id="tHyphenPredictedVsCorrectWords"
+types="tView"
+></type
+><type
+before="“Hyphen” Rules"
+id="tHyphenRules"
+types="tView"
+></type
+><type
+before="Segment Inventory"
+id="tHyphenSegmentInventory"
+types="tView"
+></type
+><type
+before="“Hyphen” Words"
+id="tHyphenWords"
+types="tView"
+></type
+><type
 before="InDesign"
 color="navy"
 font-weight="bold"
 id="tInDesign"
+></type
+><type
+before="“Insert hyphen here”"
+id="tInsertHyphenHere"
 ></type
 ><type
 color="maroon"
@@ -540,6 +577,10 @@ id="tView"
 ><type
 before="Use weight-by-position"
 id="tWeightByPosition"
+></type
+><type
+before="“Word boundary”"
+id="tWordBoundary"
 ></type
 ><type
 before="XLingPaper"
