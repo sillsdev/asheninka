@@ -40,10 +40,11 @@ jobs:
         shell: bash
 #      - name: Build version ${{ env.VERSION }}
 #      - uses: actions/checkout@v4
-      - name: Set up JDK 25
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '25'
+          java-version: '17'
+          check-latest: true
           distribution: 'zulu'
           java-package: 'jdk+fx'
       - name: Build with Ant
