@@ -98,10 +98,10 @@ jobs:
       # If a notarization fails, uncomment the following and replace the GUID with the one from
       # notarization output
       # Get notarization log of last run
-#      - name: Get notarization log
-#        run: |
-#          echo Before trying to get notarization log of last run
-#          xcrun notarytool log 8e14c2f1-b6f8-4b1b-ae6c-450028b45767 --apple-id ${{ secrets.SIL_APPLE_NOTARIZATION_USERNAME }} --team-id "3YE4W86L3G" --password ${{ secrets.SIL_APPLE_NOTARIZATION_PASSWORD }}
+      - name: Get notarization log
+        run: |
+          echo Before trying to get notarization log of last run
+          xcrun notarytool log de7965b6-f01a-4e78-96d5-116a408594f5 --apple-id ${{ secrets.SIL_APPLE_NOTARIZATION_USERNAME }} --team-id "3YE4W86L3G" --password ${{ secrets.SIL_APPLE_NOTARIZATION_PASSWORD }}
 
       - name: Add certificate to Keychain
         env:
