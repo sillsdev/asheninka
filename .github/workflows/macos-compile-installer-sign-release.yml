@@ -169,7 +169,7 @@ jobs:
           codesign --force --sign "${{ vars.SIL_APPLE_CODESIGN_IDENTITY }}" --timestamp --options runtime --entitlements ../../../../../installer/macos/entitlements.plist resources/Keyboards/macOS/xkbswitch -v
           codesign --force --sign "${{ vars.SIL_APPLE_CODESIGN_IDENTITY }}" --timestamp --options runtime --entitlements ../../../../../installer/macos/entitlements.plist org/sil/syllableparser/resources/Keyboards/macOS/xkbswitch -v
           # need to remove macOS keyboard executable from lingtree jar file or it won't notarize
-          7z d -tzip libs/lingtree-1.7.0.jar/org/sil/lingtree/resources/Keyboards/macOS/xkbswitch org/sil/lingtree/resources/Keyboards/macOS/xkbswitch
+          7z d -tzip libs/lingtree-1.7.0.jar org/sil/lingtree/resources/Keyboards/macOS/xkbswitch
           #echo before updating xkbswitch in asheninka.jar
           jar uf asheninka.jar resources/Keyboards/macOS/xkbswitch org/sil/syllableparser/resources/Keyboards/macOS/xkbswitch
           rm -r org
