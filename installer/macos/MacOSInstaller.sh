@@ -6,7 +6,7 @@ fi
 echo "	invoking jpackage, part 2"
 # 	--verbose \
 jpackage --type dmg \
-	--copyright "2021-2025 SIL International" \
+	--copyright "2021-2026 SIL International" \
 	--description "Asheninka Syllable Parser" \
 	--name Asheninka \
 	--resource-dir input/resources \
