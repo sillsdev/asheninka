@@ -22,7 +22,7 @@ if [ ! -d input/doc ]; then
 else
  rm -r input/doc/* > /dev/null
 fi
-cp -R ../../doc/*.pdf input/doc > /dev/null
+cp -r ../../doc/*.pdf input/doc > /dev/null
 
 echo "	Resources"
 if [ ! -d input/resources ]; then
