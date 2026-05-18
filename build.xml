@@ -7,8 +7,8 @@
     <property environment="env"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="17"/>
-    <property name="source" value="17"/>
+    <property name="target" value="25"/>
+    <property name="source" value="25"/>
     <path id="JavaFX SDK.libraryclasspath">
         <!--        <pathelement location="../../../.p2/pool/plugins/org.eclipse.fx.ide.css.jfx8_3.10.0.202303150700.jar"/>-->
         <pathelement location="../../../Downloads/Java/AzulZulu/zulu17.30.15-ca-fx-jdk17.0.1-win_x64/bin/javac"/>

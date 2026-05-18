@@ -42,7 +42,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '25'
           check-latest: true
           distribution: 'zulu'
           java-package: 'jdk+fx'

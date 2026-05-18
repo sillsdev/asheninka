@@ -45,7 +45,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '25'
           check-latest: true
           distribution: 'zulu'
           java-package: 'jdk+fx'
@@ -63,7 +63,7 @@ jobs:
         env:
           PUBLISH_PATH: 'installer/linux'
         run: |
-          mv ${{env.PUBLISH_PATH}}/asheninka_${{ env.VERSION }}-1_amd64.deb Asheninka-${{ env.VERSION }}-${{ env.LINUXTARGET }}.deb
+          mv ${{env.PUBLISH_PATH}}/asheninka_${{ env.VERSION }}_amd64.deb Asheninka-${{ env.VERSION }}-${{ env.LINUXTARGET }}.deb
 
       - uses: actions/upload-artifact@v4
         with:
