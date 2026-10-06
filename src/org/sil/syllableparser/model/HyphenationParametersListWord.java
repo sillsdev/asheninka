@@ -14,8 +14,11 @@ public class HyphenationParametersListWord extends HyphenationParameters {
 	public HyphenationParametersListWord() {
 		super();
 	}
+
 	public HyphenationParametersListWord(String discretionaryHyphen, int startAfterCharactersFromBeginning,
-			int stopBeforeCharactersFromEnd) {
-		super(discretionaryHyphen, startAfterCharactersFromBeginning, stopBeforeCharactersFromEnd);
+			int stopBeforeCharactersFromEnd, boolean fCountSegments, int startAfterSegmentsFromBeginning,
+			int stopBeforeSegmentsFromEnd) {
+		super(discretionaryHyphen, startAfterCharactersFromBeginning, stopBeforeCharactersFromEnd, fCountSegments,
+				startAfterSegmentsFromBeginning, stopBeforeSegmentsFromEnd);
 	}
 }

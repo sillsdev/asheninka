@@ -75,9 +75,9 @@ public class LanguageProject {
 		hyphenApproach.setLanguageProject(this);
 		vernacularLanguage = new Language();
 		analysisLanguage = new Language();
-		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0);
-		hyphenationParametersParaTExt = new HyphenationParametersParaTExt("=", 2, 2);
-		hyphenationParametersXLingPaper = new HyphenationParametersXLingPaper("-", 2, 2);
+		hyphenationParametersListWord = new HyphenationParametersListWord("=", 0, 0, false, 0, 0);
+		hyphenationParametersParaTExt = new HyphenationParametersParaTExt("=", 2, 2, false, 2, 2);
+		hyphenationParametersXLingPaper = new HyphenationParametersXLingPaper("-", 2, 2, false, 2, 2);
 		syllabificationParameters = new SyllabificationParameters();
 	}
 

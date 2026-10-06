@@ -14,9 +14,11 @@ public class HyphenationParametersXLingPaper extends HyphenationParameters {
 	public HyphenationParametersXLingPaper() {
 		super();
 	}
-	
+
 	public HyphenationParametersXLingPaper(String discretionaryHyphen, int startAfterCharactersFromBeginning,
-			int stopBeforeCharactersFromEnd) {
-		super(discretionaryHyphen, startAfterCharactersFromBeginning, stopBeforeCharactersFromEnd);
+			int stopBeforeCharactersFromEnd, boolean fCountSegments, int startAfterSegmentsFromBeginning,
+			int stopBeforeSegmentsFromEnd) {
+		super(discretionaryHyphen, startAfterCharactersFromBeginning, stopBeforeCharactersFromEnd, fCountSegments,
+				startAfterSegmentsFromBeginning, stopBeforeSegmentsFromEnd);
 	}
 }
