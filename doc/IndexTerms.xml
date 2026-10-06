@@ -392,6 +392,11 @@ id="iHyphenationParameters"
 >Hyphenation parameters</term
 ><indexTerms
 ><indexTerm
+id="iHPCountSegments"
+><term
+>Count segments</term
+></indexTerm
+><indexTerm
 id="iHPDiscretionaryHyphen"
 ><term
 >Discretionary hyphen character(s)</term
@@ -405,12 +410,28 @@ type="tItalic"
 > characters from the front</term
 ></indexTerm
 ><indexTerm
+id="iHPStartSegments"
+><term
+>Start hyphenating at <object
+type="tItalic"
+>i</object
+> segments from the front</term
+></indexTerm
+><indexTerm
 id="iHPStop"
 ><term
 >Stop hyphenating at <object
 type="tItalic"
 >j</object
 > characters from the end</term
+></indexTerm
+><indexTerm
+id="iHPStopSegments"
+><term
+>Stop hyphenating at <object
+type="tItalic"
+>j</object
+> segments from the end</term
 ></indexTerm
 ></indexTerms
 ></indexTerm

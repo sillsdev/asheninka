@@ -66,7 +66,7 @@ public class CVApproachTest {
 	public void getHyphenatedWordsTest() {
 		String sHyphenatedWord = "";
 		HyphenationParametersListWord hypLW = languageProject.getHyphenationParametersListWord();
-		hypLW.setfCountSegments(false);
+		hypLW.setCountSegments(false);
 		hypLW.setStartAfterCharactersFromBeginning(0);
 		hypLW.setStopBeforeCharactersFromEnd(0);
 		assertEquals("Words size", 10025, words.size());
@@ -85,7 +85,7 @@ public class CVApproachTest {
 		sHyphenatedWord = hyphenatedWords0.get(1081);
 		assertEquals("shiktapach = shik=ta=pach", "shik=ta=pach", sHyphenatedWord);
 		
-		hypLW.setfCountSegments(false);
+		hypLW.setCountSegments(false);
 		hypLW.setStartAfterCharactersFromBeginning(2);
 		hypLW.setStopBeforeCharactersFromEnd(2);
 		languageProject.setHyphenationParametersListWord(hypLW);
@@ -104,7 +104,7 @@ public class CVApproachTest {
 		sHyphenatedWord = hyphenatedWords2.get(1081);
 		assertEquals("shiktapach = shik=ta=pach", "shik=ta=pach", sHyphenatedWord);
 
-		hypLW.setfCountSegments(false);
+		hypLW.setCountSegments(false);
 		hypLW.setStartAfterCharactersFromBeginning(3);
 		hypLW.setStopBeforeCharactersFromEnd(3);
 		languageProject.setHyphenationParametersListWord(hypLW);
@@ -123,7 +123,7 @@ public class CVApproachTest {
 		sHyphenatedWord = hyphenatedWords3.get(1081);
 		assertEquals("shiktapach = shik=ta=pach", "shik=ta=pach", sHyphenatedWord);
 
-		hypLW.setfCountSegments(false);
+		hypLW.setCountSegments(false);
 		hypLW.setStartAfterCharactersFromBeginning(4);
 		hypLW.setStopBeforeCharactersFromEnd(4);
 		languageProject.setHyphenationParametersListWord(hypLW);
@@ -142,7 +142,7 @@ public class CVApproachTest {
 		sHyphenatedWord = hyphenatedWords4.get(1081);
 		assertEquals("shiktapach = shik=ta=pach", "shik=ta=pach", sHyphenatedWord);
 
-		hypLW.setfCountSegments(false);
+		hypLW.setCountSegments(false);
 		hypLW.setStartAfterCharactersFromBeginning(5);
 		hypLW.setStopBeforeCharactersFromEnd(5);
 		languageProject.setHyphenationParametersListWord(hypLW);
@@ -161,7 +161,7 @@ public class CVApproachTest {
 		sHyphenatedWord = hyphenatedWords5.get(1081);
 		assertEquals("shiktapach = shik=ta=pach", "shiktapach", sHyphenatedWord);
 
-		hypLW.setfCountSegments(true);
+		hypLW.setCountSegments(true);
 		hypLW.setStartAfterCharactersFromBeginning(3);
 		hypLW.setStopBeforeCharactersFromEnd(3);
 		hypLW.setStartAfterSegmentsFromBeginning(3);
@@ -182,7 +182,7 @@ public class CVApproachTest {
 		sHyphenatedWord = hyphenatedWordsSeg3.get(1081);
 		assertEquals("shiktapach = shik=ta=pach", "shik=ta=pach", sHyphenatedWord);
 
-		hypLW.setfCountSegments(true);
+		hypLW.setCountSegments(true);
 		hypLW.setStartAfterCharactersFromBeginning(4);
 		hypLW.setStopBeforeCharactersFromEnd(4);
 		hypLW.setStartAfterSegmentsFromBeginning(4);

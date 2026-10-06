@@ -25,9 +25,9 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->23 February 2026</date
+>6 October 2026</date
 ><version
->1.3.0</version
+>1.4.0</version
 ><contents
 ></contents
 ></frontMatter
@@ -460,6 +460,24 @@ main="yes"
 term="iHPStop"
 ></indexedItem
 >The number of printable characters from the end of the word where hyphenation stops.</li
+><li
+><indexedItem
+main="yes"
+term="iHPCountSegments"
+></indexedItem
+>Whether or not to count segments (including digraphs or trigraphs as one item) instead of printable characters.</li
+><li
+><indexedItem
+main="yes"
+term="iHPStartSegments"
+></indexedItem
+>The number of segments from the beginning of the word after which hyphenation starts.</li
+><li
+><indexedItem
+main="yes"
+term="iHPStopSegments"
+></indexedItem
+>The number of segmentss from the end of the word where hyphenation stops.</li
 ></ol
 ><p
 >The default values for these can be changed by using the <object
@@ -1319,10 +1337,12 @@ type="TT"
 ><td
 align="left"
 valign="top"
->before an optional word final consonant (assuming there is a grapheme natural class of consonants called <object
+>before an optional word final consonant <comment
+>(assuming there is a grapheme natural class of consonants called <object
 type="TT"
 >C</object
->); that is, either before a word final consonant or word finally</td
+>)</comment
+>; that is, either before a word final consonant or word finally</td
 ></tr
 ></table
 ></example

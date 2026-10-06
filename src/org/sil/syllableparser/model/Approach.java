@@ -61,7 +61,7 @@ public abstract class Approach {
 			String sSyllabifiedWord, String sWord) {
 		int positionFromStart = hyphenationParameters.getStartAfterCharactersFromBeginning();
 		int positionFromEnd = hyphenationParameters.getStopBeforeCharactersFromEnd();
-		if (hyphenationParameters.isfCountSegments()) {
+		if (hyphenationParameters.isCountSegments()) {
 			CVSegmenterResult segResult = segmenter.segmentWord(sWord);
 			if (segResult.success) {
 				int segPostionFromStart = Math.max(0,hyphenationParameters.getStartAfterSegmentsFromBeginning() - 1);

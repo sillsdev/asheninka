@@ -59,10 +59,10 @@ public abstract class HyphenationParameters {
 	public void setStopBeforeCharactersFromEnd(int stopBeforeCharactersFromEnd) {
 		this.stopBeforeCharactersFromEnd = stopBeforeCharactersFromEnd;
 	}
-	public boolean isfCountSegments() {
+	public boolean isCountSegments() {
 		return fCountSegments;
 	}
-	public void setfCountSegments(boolean fCountSegments) {
+	public void setCountSegments(boolean fCountSegments) {
 		this.fCountSegments = fCountSegments;
 	}
 	public int getStartAfterSegmentsFromBeginning() {

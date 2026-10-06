@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International 
+// Copyright (c) 2016-2026 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -15,6 +15,7 @@ import org.sil.syllableparser.model.HyphenationParameters;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -34,6 +35,12 @@ public class HyphenationParametersController implements Initializable {
 	private TextField startIndex;
 	@FXML
 	private TextField endIndex;
+	@FXML
+	private CheckBox useCountSegments;
+	@FXML
+	private TextField startSegmentsIndex;
+	@FXML
+	private TextField endSegmentsIndex;
 
 	Stage dialogStage;
 	private boolean okClicked = false;
@@ -60,6 +67,23 @@ public class HyphenationParametersController implements Initializable {
 
 		startIndex.setTextFormatter(new TextFormatter<String>(filter));
 		endIndex.setTextFormatter(new TextFormatter<String>(filter));
+		startSegmentsIndex.setTextFormatter(new TextFormatter<String>(filter));
+		endSegmentsIndex.setTextFormatter(new TextFormatter<String>(filter));
+
+		useCountSegments.setOnAction((event) -> {
+			// disable/enable segment prompts
+			enableDIsableSegmentValues();
+		});
+	}
+
+	protected void enableDIsableSegmentValues() {
+		if (useCountSegments.isSelected()) {
+			endSegmentsIndex.setDisable(false);
+			startSegmentsIndex.setDisable(false);
+		} else {
+			endSegmentsIndex.setDisable(true);
+			startSegmentsIndex.setDisable(true);
+		}
 	}
 
 	/**
@@ -83,6 +107,10 @@ public class HyphenationParametersController implements Initializable {
 		discretionaryHyphen.setText(parameters.getDiscretionaryHyphen());
 		startIndex.setText(String.valueOf(parameters.getStartAfterCharactersFromBeginning()));
 		endIndex.setText(String.valueOf(parameters.getStopBeforeCharactersFromEnd()));
+		useCountSegments.setSelected(parameters.isCountSegments());
+		startSegmentsIndex.setText(String.valueOf(parameters.getStartAfterSegmentsFromBeginning()));
+		endSegmentsIndex.setText(String.valueOf(parameters.getStopBeforeSegmentsFromEnd()));
+		enableDIsableSegmentValues();
 	}
 
 	/**
@@ -113,6 +141,15 @@ public class HyphenationParametersController implements Initializable {
 		if (endIndex.getText().length() > 0) {
 			int endValue = Integer.valueOf(endIndex.getText());
 			hyphenationParameters.setStopBeforeCharactersFromEnd(endValue);
+		}
+		hyphenationParameters.setCountSegments(useCountSegments.isSelected());
+		if (startSegmentsIndex.getText().length() > 0) {
+			int startValue = Integer.valueOf(startSegmentsIndex.getText());
+			hyphenationParameters.setStartAfterSegmentsFromBeginning(startValue);
+		}
+		if (endSegmentsIndex.getText().length() > 0) {
+			int endValue = Integer.valueOf(endSegmentsIndex.getText());
+			hyphenationParameters.setStopBeforeSegmentsFromEnd(endValue);
 		}
 		okClicked = true;
 		dialogStage.close();
