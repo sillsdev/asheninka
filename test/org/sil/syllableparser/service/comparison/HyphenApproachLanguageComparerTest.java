@@ -50,7 +50,7 @@ public class HyphenApproachLanguageComparerTest extends HyphenTestBase {
 	@Before
 	public void setUp() throws Exception {
 		languageProject1 = new LanguageProject();
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
 		File file = new File(Constants.UNIT_TEST_HYPHEN_DATA_FILE_NAME);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
@@ -244,7 +244,7 @@ public class HyphenApproachLanguageComparerTest extends HyphenTestBase {
 	public void compareHyphenChangeRuleOrderTest() {
 		// setup
 		LanguageProject languageProject3 = new LanguageProject();
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
 		File file = new File(Constants.UNIT_TEST_HYPHEN_DATA_FILE_NAME);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);

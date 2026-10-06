@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International
+// Copyright (c) 2016-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -58,7 +58,7 @@ public class BackupFileCreatorTest {
 			assertEquals(1, zipFile.size());
 			ZipEntry entry = zipFile.getEntry(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_NAME);
 			assertEquals(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_NAME, entry.getName());
-			assertEquals(13179061, entry.getSize());
+			assertEquals(14503373, entry.getSize());
 			assertEquals(Constants.UNIT_TEST_BACKUP_ZIP_ENTRY_COMMENT, zipFile.getComment());
 			zipFile.close();
 		} catch (ZipException e) {

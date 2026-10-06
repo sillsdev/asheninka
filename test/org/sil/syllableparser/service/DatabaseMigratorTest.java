@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International
+// Copyright (c) 2016-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -85,7 +85,7 @@ public class DatabaseMigratorTest {
 		version = migrator.getVersion();
 		assertEquals(2, version);
 		languageProject = new LanguageProject();
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		xmlBackEndProvider.loadLanguageDataFromFile(databaseFile);
 		assertEquals(Constants.CURRENT_DATABASE_VERSION, languageProject.getDatabaseVersion());

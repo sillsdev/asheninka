@@ -284,7 +284,7 @@ public class SyllabificationsComparer extends ApproachLanguageComparer {
 
 	protected void syllabifyWordsOT(List<Word> words) {
 		OTSyllabifier otSyllabifier = new OTSyllabifier(langProject.getOTApproach());
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		otSyllabifier.setBundle(ResourceBundle.getBundle(Constants.RESOURCE_LOCATION, locale));
 		for (Word word : words) {
 			boolean fSuccess = otSyllabifier.convertStringToSyllables(word.getWord());

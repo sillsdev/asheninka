@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 SIL International
+// Copyright (c) 2019-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -47,7 +47,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 	@Before
 	public void setUp() throws Exception {
 		languageProject = new LanguageProject();
-		locale = new Locale("en");
+		locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
@@ -99,7 +99,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
-				comparer, new Locale("es"), dateTime);
+				comparer, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHHTMLSpanish.html");
 		try {
@@ -147,7 +147,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
-				comparer, new Locale("es"), dateTime);
+				comparer, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVONCHTMLSpanish.html");
 		try {
@@ -195,7 +195,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
-				comparer, new Locale("es"), dateTime);
+				comparer, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVNPHTMLSpanish.html");
 		try {
@@ -243,7 +243,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
-				comparer, new Locale("es"), dateTime);
+				comparer, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonCVSHONCHTMLSpanish.html");
 		try {
@@ -291,7 +291,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 		comparer.setUseHyphenApproach(false);
 		comparer.compareSyllabifications();
 		SyllabificationComparisonHTMLFormatter formatter = new SyllabificationComparisonHTMLFormatter(
-				comparer, new Locale("es"), dateTime);
+				comparer, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SyllabificationComparisonSHONCHTMLSpanish.html");
 		try {
@@ -306,7 +306,7 @@ public class SyllabificationsComparisonHTMLFormatterTest {
 	@Test
 	public void formattingCVHyphenEnglishTest() {
 		languageProject = new LanguageProject();
-		locale = new Locale("en");
+		locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		File file = new File(Constants.UNIT_TEST_HYPHEN_DATA_FILE_NAME);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);

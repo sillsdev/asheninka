@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International 
+// Copyright (c) 2016-2026 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -110,7 +110,6 @@ public class CVApproachTest {
 		languageProject.setHyphenationParametersListWord(hypLW);
 		ArrayList<String> hyphenatedWords3 = cva.getHyphenatedWordsListWord(words);
 		assertEquals("Hyphenated words size", 1903, hyphenatedWords3.size());
-		System.out.println(hyphenatedWords3);
 		sHyphenatedWord = hyphenatedWords3.get(0);
 		assertEquals("abba\ua78c = abba\ua78c", "abba\ua78c", sHyphenatedWord);
 		sHyphenatedWord = hyphenatedWords3.get(1);
@@ -130,7 +129,6 @@ public class CVApproachTest {
 		languageProject.setHyphenationParametersListWord(hypLW);
 		ArrayList<String> hyphenatedWords4 = cva.getHyphenatedWordsListWord(words);
 		assertEquals("Hyphenated words size", 1903, hyphenatedWords4.size());
-		System.out.println(hyphenatedWords4);
 		sHyphenatedWord = hyphenatedWords4.get(0);
 		assertEquals("abba\ua78c = abba\ua78c", "abba\ua78c", sHyphenatedWord);
 		sHyphenatedWord = hyphenatedWords4.get(1);
@@ -150,7 +148,6 @@ public class CVApproachTest {
 		languageProject.setHyphenationParametersListWord(hypLW);
 		ArrayList<String> hyphenatedWords5 = cva.getHyphenatedWordsListWord(words);
 		assertEquals("Hyphenated words size", 1903, hyphenatedWords5.size());
-		System.out.println(hyphenatedWords5);
 		sHyphenatedWord = hyphenatedWords5.get(0);
 		assertEquals("abba\ua78c = abba\ua78c", "abba\ua78c", sHyphenatedWord);
 		sHyphenatedWord = hyphenatedWords5.get(1);
@@ -172,7 +169,6 @@ public class CVApproachTest {
 		languageProject.setHyphenationParametersListWord(hypLW);
 		ArrayList<String> hyphenatedWordsSeg3 = cva.getHyphenatedWordsListWord(words);
 		assertEquals("Hyphenated2 words size", 1903, hyphenatedWordsSeg3.size());
-		System.out.println(hyphenatedWordsSeg3);
 		sHyphenatedWord = hyphenatedWordsSeg3.get(0);
 		assertEquals("abba\ua78c = abba\ua78c", "abba\ua78c", sHyphenatedWord);
 		sHyphenatedWord = hyphenatedWordsSeg3.get(1);
@@ -194,10 +190,8 @@ public class CVApproachTest {
 		languageProject.setHyphenationParametersListWord(hypLW);
 		ArrayList<String> hyphenatedWordsSeg4 = cva.getHyphenatedWordsListWord(words);
 		assertEquals("Hyphenated2 words size", 1903, hyphenatedWordsSeg4.size());
-		System.out.println(hyphenatedWordsSeg4);
 		sHyphenatedWord = hyphenatedWordsSeg4.get(0);
 		assertEquals("abba\ua78c = abba\ua78c", "abba\ua78c", sHyphenatedWord);
-		String habby = cva.getHyphenatedWord(hypLW, "a.ba.bras.tro", "ababrastro");
 		sHyphenatedWord = hyphenatedWordsSeg4.get(1);
 		assertEquals("ababrastro = aba=bras=tro", "ababrastro", sHyphenatedWord);
 		sHyphenatedWord = hyphenatedWordsSeg4.get(2);
@@ -208,7 +202,6 @@ public class CVApproachTest {
 		assertEquals("chichiltik = chichiltik", "chichiltik", sHyphenatedWord);
 		sHyphenatedWord = hyphenatedWordsSeg4.get(1081);
 		assertEquals("shiktapach = shik=ta=pach", "shiktapach", sHyphenatedWord);
-		// chichiltik
 	}
 
 }

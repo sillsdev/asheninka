@@ -51,7 +51,7 @@ public class HyphenTestBase {
 	public void setUp() throws Exception {
 	
 		LanguageProject languageProject = new LanguageProject();
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		File file = new File(Constants.UNIT_TEST_HYPHEN_DATA_FILE_NAME);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);

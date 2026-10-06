@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 SIL International
+ * Copyright (c) 2020-2026 SIL International
  * This software is licensed under the LGPL, version 2.1 or later
  * (http://www.gnu.org/licenses/lgpl-2.1.html)
  */
@@ -53,7 +53,7 @@ public class ICURulesTest {
 	@Before
 	public void setUp() throws Exception {
 		LanguageProject languageProject = new LanguageProject();
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE_ICU_RULES);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);

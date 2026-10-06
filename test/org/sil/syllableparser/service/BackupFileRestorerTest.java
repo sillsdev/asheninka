@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International 
+// Copyright (c) 2016-2026 SIL International 
 // This software is licensed under the LGPL, version 2.1 or later 
 // (http://www.gnu.org/licenses/lgpl-2.1.html) 
 /**
@@ -33,7 +33,7 @@ public class BackupFileRestorerTest {
 	@Before
 	public void setUp() throws Exception {
 		languageProject = new LanguageProject();
-		locale = new Locale("en");
+		locale = Locale.of("en");
 		backupFile = new File(Constants.UNIT_TEST_BACKUP_FILE_NAME);
 		//XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject, locale);
 		//File file = new File(Constants.UNIT_TEST_DATA_FILE);

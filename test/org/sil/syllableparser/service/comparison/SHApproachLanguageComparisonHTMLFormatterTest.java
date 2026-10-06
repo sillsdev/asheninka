@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 SIL International
+// Copyright (c) 2019-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -48,7 +48,7 @@ public class SHApproachLanguageComparisonHTMLFormatterTest {
 	@Before
 	public void setUp() throws Exception {
 		languageProject1 = new LanguageProject();
-		locale = new Locale("en");
+		locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
 		File file1 = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file1);
@@ -119,7 +119,7 @@ public class SHApproachLanguageComparisonHTMLFormatterTest {
 	@Test
 	public void formattingSpanishTest() {
 		SHApproachLanguageComparisonHTMLFormatter formatter = new SHApproachLanguageComparisonHTMLFormatter(
-				comparer, new Locale("es"), dateTime);
+				comparer, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SHApproachLanguageComparisonHTMLSpanish.html");
 		try {
@@ -135,7 +135,7 @@ public class SHApproachLanguageComparisonHTMLFormatterTest {
 	@Test
 	public void formattingSameSpanishTest() {
 		SHApproachLanguageComparisonHTMLFormatter formatter = new SHApproachLanguageComparisonHTMLFormatter(
-				comparerSame, new Locale("es"), dateTime);
+				comparerSame, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/SHApproachLanguageComparisonSameHTMLSpanish.html");
 		try {

@@ -109,7 +109,7 @@ public class WritingSystemController extends SylParserBaseController implements
 	private Language currentLanguage;
 	private Color color = Color.BLACK;
 	private String sFileFilterDescription = "";
-	KeyboardInfo keyboardInfo = new KeyboardInfo(new Locale("en"), "English");
+	KeyboardInfo keyboardInfo = new KeyboardInfo(Locale.of("en"), "English");
 	private Text keyboardText = new Text();
 	KeyboardChanger keyboardChanger;
 

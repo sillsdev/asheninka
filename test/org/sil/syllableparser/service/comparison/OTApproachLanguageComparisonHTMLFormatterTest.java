@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 SIL International
+// Copyright (c) 2021-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -60,7 +60,7 @@ public class OTApproachLanguageComparisonHTMLFormatterTest {
 	@Before
 	public void setUp() throws Exception {
 		languageProject1 = new LanguageProject();
-		locale = new Locale("en");
+		locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
 		file1 = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file1);
@@ -134,7 +134,7 @@ public class OTApproachLanguageComparisonHTMLFormatterTest {
 	@Test
 	public void formattingSpanishTest() {
 		OTApproachLanguageComparisonHTMLFormatter formatter = new OTApproachLanguageComparisonHTMLFormatter(
-				comparer, new Locale("es"), dateTime);
+				comparer, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/OTApproachLanguageComparisonHTMLSpanish.html");
 		try {
@@ -150,7 +150,7 @@ public class OTApproachLanguageComparisonHTMLFormatterTest {
 	@Test
 	public void formattingSameSpanishTest() {
 		OTApproachLanguageComparisonHTMLFormatter formatter = new OTApproachLanguageComparisonHTMLFormatter(
-				comparerSame, new Locale("es"), dateTime);
+				comparerSame, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/OTApproachLanguageComparisonSameHTMLSpanish.html");
 		try {

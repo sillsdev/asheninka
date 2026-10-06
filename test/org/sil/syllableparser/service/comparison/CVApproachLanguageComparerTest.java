@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 SIL International
+// Copyright (c) 2016-2026 SIL International
 // This software is licensed under the LGPL, version 2.1 or later
 // (http://www.gnu.org/licenses/lgpl-2.1.html)
 /**
@@ -52,7 +52,7 @@ public class CVApproachLanguageComparerTest {
 	@Before
 	public void setUp() throws Exception {
 		languageProject1 = new LanguageProject();
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
@@ -307,7 +307,7 @@ public class CVApproachLanguageComparerTest {
 	public void compareSyllablePatternOrderTest() {
 		// setup
 		LanguageProject languageProject3 = new LanguageProject();
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE_3);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
@@ -372,7 +372,7 @@ public class CVApproachLanguageComparerTest {
 	public void compareSameSyllablePatternOrderTest() {
 		// setup
 		LanguageProject languageProject3 = new LanguageProject();
-		Locale locale = new Locale("en");
+		Locale locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject3, locale);
 		File file = new File(Constants.UNIT_TEST_DATA_FILE_3);
 		xmlBackEndProvider.loadLanguageDataFromFile(file);

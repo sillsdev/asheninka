@@ -53,7 +53,7 @@ public class HyphenApproachLanguageComparisonHTMLFormatterTest extends HyphenTes
 	@Before
 	public void setUp() throws Exception {
 		languageProject1 = new LanguageProject();
-		locale = new Locale("en");
+		locale = Locale.of("en");
 		XMLBackEndProvider xmlBackEndProvider = new XMLBackEndProvider(languageProject1, locale);
 		File file1 = new File(Constants.UNIT_TEST_HYPHEN_DATA_FILE_NAME);
 		xmlBackEndProvider.loadLanguageDataFromFile(file1);
@@ -118,7 +118,7 @@ public class HyphenApproachLanguageComparisonHTMLFormatterTest extends HyphenTes
 	@Test
 	public void formattingSpanishTest() {
 		ApproachLanguageComparisonHTMLFormatter formatter = new HyphenApproachLanguageComparisonHTMLFormatter(
-				comparer, new Locale("es"), dateTime);
+				comparer, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/HyphenApproachLanguageComparisonHTMLSpanish.html");
 		try {
@@ -134,7 +134,7 @@ public class HyphenApproachLanguageComparisonHTMLFormatterTest extends HyphenTes
 	@Test
 	public void formattingSameSpanishTest() {
 		ApproachLanguageComparisonHTMLFormatter formatter = new HyphenApproachLanguageComparisonHTMLFormatter(
-				comparerSame, new Locale("es"), dateTime);
+				comparerSame, Locale.of("es"), dateTime);
 		String result = formatter.format();
 		File file = new File("test/org/sil/syllableparser/testData/HyphenApproachLanguageComparisonSameHTMLSpanish.html");
 		try {
