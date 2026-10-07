@@ -25,7 +25,7 @@ type="tAsheninka"
 ><emailAddress
 >asheninka_support@sil.org</emailAddress
 ><date
->6 October 2026</date
+>7 October 2026</date
 ><version
 >1.4.0</version
 ><contents
@@ -477,7 +477,7 @@ term="iHPStartSegments"
 main="yes"
 term="iHPStopSegments"
 ></indexedItem
->The number of segmentss from the end of the word where hyphenation stops.</li
+>The number of segments from the end of the word where hyphenation stops.</li
 ></ol
 ><p
 >The default values for these can be changed by using the <object

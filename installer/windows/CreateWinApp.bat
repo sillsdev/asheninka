@@ -10,6 +10,7 @@ jpackage --type app-image ^
 	--main-jar asheninka.jar ^
 	--main-class org.sil.syllableparser.MainApp ^
 	--java-options --add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls ^
+	--java-options --add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED ^
 	--java-options --enable-native-access=javafx.graphics ^
 	--java-options --enable-native-access=javafx.web ^
 	--java-options --enable-native-access=com.sun.jna ^
