@@ -50,11 +50,18 @@ public abstract class Approach {
 			}
 			HyphenationParametersListWord hyphenationParameters = languageProject
 					.getHyphenationParametersListWord();
+			createSegmenterIfNeeded(hyphenationParameters);
 			String sHyphenatedWord = getHyphenatedWord(hyphenationParameters, sSyllabifiedWord, word.getWord());
 			String sDiscretionaryHyphen = hyphenationParameters.getDiscretionaryHyphen();
 			hyphenatedWords.add(sHyphenatedWord.replaceAll("\\.", sDiscretionaryHyphen));
 		}
 		return hyphenatedWords;
+	}
+
+	protected void createSegmenterIfNeeded(HyphenationParameters hyphenationParameters) {
+		if (hyphenationParameters.isCountSegments()) {
+			segmenter = new CVSegmenter(languageProject.getActiveGraphemes(), languageProject.getActiveGraphemeNaturalClasses());
+		}
 	}
 
 	public String getHyphenatedWord(HyphenationParameters hyphenationParameters,
@@ -114,6 +121,7 @@ public abstract class Approach {
 			}
 			HyphenationParametersParaTExt hyphenationParameters = languageProject
 					.getHyphenationParametersParaTExt();
+			createSegmenterIfNeeded(hyphenationParameters);
 			// do not count initial asterisk for removing hyphens from beginning
 			String sWordToCheck = sSyllabifiedWord;
 			if (sWordToCheck.startsWith(kAsterisk)) {
@@ -144,6 +152,7 @@ public abstract class Approach {
 			}
 			HyphenationParametersXLingPaper hyphenationParameters = languageProject
 					.getHyphenationParametersXLingPaper();
+			createSegmenterIfNeeded(hyphenationParameters);
 			String sHyphenatedWord = getHyphenatedWord(hyphenationParameters, sSyllabifiedWord, word.getWord());
 			String sDiscretionaryHyphen = hyphenationParameters.getDiscretionaryHyphen();
 			hyphenatedWords.add(sHyphenatedWord.replaceAll("\\.", sDiscretionaryHyphen));

@@ -51,8 +51,6 @@ public class CVApproachTest {
 		xmlBackEndProvider.loadLanguageDataFromFile(file);
 		cva = languageProject.getCVApproach();
 		words = languageProject.getWords();
-		segmenter = new CVSegmenter(languageProject.getActiveGraphemes(), languageProject.getActiveGraphemeNaturalClasses());
-		cva.setSegmenter(segmenter);
 	}
 
 	/**
