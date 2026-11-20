@@ -922,8 +922,7 @@ public class ApplicationPreferences extends ApplicationPreferencesUtilities {
 	}
 
 	public void setLastWindowParameters(String sWindow, Stage stage) {
-		boolean isMaximized = stage.isMaximized();
-		if (!isMaximized) {
+		if (!stage.isIconified() && !stage.isMaximized()) {
 			setPreferencesKey(sWindow + HEIGHT, stage.getHeight());
 			setPreferencesKey(sWindow + WIDTH, stage.getWidth());
 			setPreferencesKey(sWindow + POSITION_X, stage.getX());
